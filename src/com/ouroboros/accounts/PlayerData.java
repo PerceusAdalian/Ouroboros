@@ -79,17 +79,17 @@ public class PlayerData
 	
 	/**
 	 * @param sType The type of stat to get. See StatType.java
-	 * @param getLevel Toggle whether getStat returns the level (true) or experience (false).
+	 * @param getLevel Returns the level (true) or experience (false).
 	 */
 	public int getStat(StatType sType, boolean getLevel) 
 	{
-		if (getLevel) return config.getInt("stats."+sType.getKey());
-		else return config.getInt("experience."+sType.getKey());
+		String path = getLevel ? "stats." + sType.getKey() : "experience." + sType.getKey();
+		return config.getInt(path);
 	}
 	
 	/**
 	 * @param sType The type of stat to set. See StatType.java
-	 * @param setLevel Toggle whether to set stat level (true) or experience (false).
+	 * @param setLevel Set stat level (true) or experience (false).
 	 * @param value Must be 0 < value < 100. Sets to existing value if not in range.
 	 */
 	public void setStat(StatType sType, boolean setLevel, int value) 
