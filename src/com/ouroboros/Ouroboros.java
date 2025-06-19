@@ -1,9 +1,5 @@
 package com.ouroboros;
 
-import java.io.File;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.accounts.PlayerData;
@@ -26,8 +22,7 @@ public class Ouroboros extends JavaPlugin
 		GuiHandler.registerEvent(instance);
 		GeneralEvents.register(instance);
 		
-		File playerDataFolder = new File(getDataFolder(), "playerdata");
-	    if (!playerDataFolder.exists()) playerDataFolder.mkdirs();
+		PlayerData.initializeDataFolder();
 		
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
 	}
@@ -35,14 +30,15 @@ public class Ouroboros extends JavaPlugin
 	@Override
 	public void onDisable() 
 	{
-		for (Player p : Bukkit.getOnlinePlayers()) 
-		{
-			if (p.isOnline()) 
-			{
-				PlayerData.save(p);
-			}
-		}
+		PlayerData.saveAll();
 		
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
 	}
 }
+
+/*
+ * Project Notes: 
+ * - Add a command to reset stats in playerdata.
+ * - Begin working on xp gain systems.
+ * - Add GUI framework for each stat and representation.
+ */

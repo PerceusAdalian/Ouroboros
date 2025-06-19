@@ -30,16 +30,16 @@ public class GeneralEvents implements Listener
         		{
         			//PH
         		}
-        		
-        		PlayerData.register(p);
+
+        		PlayerData.loadPlayer(p.getUniqueId());
         	}
         	
         	@EventHandler
         	public void onQuit(PlayerQuitEvent e) 
         	{
         		Player p = e.getPlayer();
-        		
-        		PlayerData.save(p);
+
+        		PlayerData.unloadPlayer(p.getUniqueId());
         	}
         	
         }, plugin);
