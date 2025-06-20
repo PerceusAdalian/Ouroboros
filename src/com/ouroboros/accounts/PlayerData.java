@@ -7,17 +7,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.OBParticles;
+import com.ouroboros.utils.PrintUtils;
 
 public class PlayerData 
 {
 	protected final UUID uuid;
 	private final File file;
 	private final YamlConfiguration config;
+	
+	private static final int baseXP = 1000;
+//	private static final int XP_HARDCAP = Integer.MAX_VALUE;
+	private static final double ExpMultiplier = 1.15;
 	
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -95,7 +106,87 @@ public class PlayerData
 	public void setStat(StatType sType, boolean setLevel, int value) 
 	{
 		String path = setLevel ? "stats." + sType.getKey() : "experience." + sType.getKey();
-	    config.set(path, Math.max(0, Math.min(100, value))); // clamped 0–100
+		if (setLevel) value = Math.max(0, Math.min(100, value));
+		config.set(path, value);
+	}
+	
+	public static void addXP(Player p, StatType sType, int value) 
+	{
+		UUID uuid = p.getUniqueId();
+		PlayerData data = PlayerData.getPlayer(uuid);
+		
+		int level = data.getStat(sType, true);
+		int xp = data.getStat(sType, false);
+		int abilityPoints = data.getAbilityPoints();
+
+		char[] chars = sType.getKey().toCharArray();
+		chars[0] = Character.toUpperCase(chars[0]);
+		String statName = new String(chars);
+		
+		xp += value;
+		
+		while (level < 100 && xp >= PlayerData.getNextLevelXP(uuid, sType)) 
+		{
+			xp -= PlayerData.getNextLevelXP(uuid, sType);
+			int preLevel = level;
+			level++;
+			abilityPoints++;
+			
+			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1);
+			OBParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
+			OBParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);
+			PrintUtils.Print(p, "&f&b&l"+statName+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,
+					"&f&nCurrent Skill Points&r&f: &6" + abilityPoints);			
+		}
+		
+		data.setStat(sType, true, level);
+		data.setStat(sType, false, xp);
+		data.setAbilityPoints(abilityPoints);
+		data.save();
+	}
+
+	
+	public static void levelUp(UUID uuid, StatType sType) 
+	{
+		PlayerData.getPlayer(uuid).setStat(sType, true, PlayerData.getPlayer(uuid).getStat(sType, true)+1);
+	}
+	
+	public static void resetXP(UUID uuid, StatType sType) 
+	{
+		PlayerData.getPlayer(uuid).setStat(sType, false, 0);
+	}
+
+	public static void resetAllXP(UUID uuid) 
+	{
+		for (StatType type : StatType.values()) 
+		{
+			PlayerData.getPlayer(uuid).setStat(type, false, 0);
+		}
+	}
+	
+	public static void resetAllLevels(UUID uuid) 
+	{
+		for (StatType type : StatType.values()) 
+		{
+			PlayerData.getPlayer(uuid).setStat(type, true, 0);
+		}
+	}
+	
+	public static void resetAccount(UUID uuid) 
+	{
+		for (StatType type : StatType.values()) 
+		{
+			PlayerData.getPlayer(uuid).setStat(type, false, 0);
+			PlayerData.getPlayer(uuid).setStat(type, true, 0);
+		}
+		PlayerData.getPlayer(uuid).setAccountLevel(0);
+		PlayerData.getPlayer(uuid).setAbilityPoints(0);
+		PlayerData.getPlayer(uuid).setPrestigePoints(0);
+	}
+	
+	public static boolean checkLevelUpReady(UUID uuid, StatType sType) 
+	{
+		return PlayerData.getPlayer(uuid).getStat(sType, false) >= PlayerData.getNextLevelXP(uuid, sType);
 	}
 	
 	public int getAccountLevel() 
@@ -187,6 +278,12 @@ public class PlayerData
 	        data.save();
 	    }
 	}
+	
+	public static int getNextLevelXP(UUID uuid, StatType statType) 
+	{
+		return (int) (baseXP * Math.pow(ExpMultiplier, getPlayer(uuid).getStat(statType, true)));
+	}
+	
 	
 	public static void initializeDataFolder() 
 	{

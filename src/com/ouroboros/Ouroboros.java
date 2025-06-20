@@ -2,6 +2,7 @@ package com.ouroboros;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.ouroboros.accounts.ExpHandler;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.PrintUtils;
@@ -21,6 +22,7 @@ public class Ouroboros extends JavaPlugin
 		
 		GuiHandler.registerEvent(instance);
 		GeneralEvents.register(instance);
+		ExpHandler.register(instance);
 		
 		PlayerData.initializeDataFolder();
 		
@@ -38,7 +40,11 @@ public class Ouroboros extends JavaPlugin
 
 /*
  * Project Notes: 
- * - Add a command to reset stats in playerdata.
- * - Begin working on xp gain systems.
+ * - Add a command to reset stats in playerdata. <DONE>
+ * - Begin working on xp gain systems. <DONE>
  * - Add GUI framework for each stat and representation.
+ * + WHAT TO DO NEXT:
+ * - Make a means to manipulate account level; framework on that.
+ * - Implement Combat XP gain.
+ * - Implement Alchemy XP gain.
  */

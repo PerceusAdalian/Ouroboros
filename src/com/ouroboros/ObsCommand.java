@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -34,7 +35,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		}
 		
 		Player p = (Player) sender;
-		
+		UUID uuid = p.getUniqueId();
 		if (args.length == 0) 
 		{
 			PrintUtils.OBSFormatError(p, "&7Invalid Argument(s)");
@@ -90,42 +91,42 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		if (args[0].equals("stats")) 
 		{
 			if (args.length == 1) 
-			{				
+			{		
 				PrintUtils.Print(p,
 						"&b&l+&r&7-----------------------&f{&bΩ&f}&7-----------------------&b&l+",
 						"                      &b&lOBS Statistical Inquiry&r&f",
 						"                      &f&l- &r&fPlayer: &e&l" + p.getName(),
-						"                          &f&lAccount Level&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getAccountLevel(),
+						"                          &f&lAccount Level&r&7: &a" + PlayerData.getPlayer(uuid).getAccountLevel(),
 						"",
 						"                             &7General Levels:", 
-						"               &f&lTravel&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.TRAVEL, true) +
-						"    &f&lCrafting&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.CRAFTING, true) +
-						"    &f&lAlchemy&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.ALCHEMY, true),
-						"             &f&lWoodcutting&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.WOODCUTTING, true) +
-						"    &f&lMining&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.MINING, true) +
-						"    &f&lFishing&r&7: &a" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.FISHING, true),
+						"               &f&lTravel&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.TRAVEL, true) +
+						"    &f&lCrafting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.CRAFTING, true) +
+						"    &f&lAlchemy&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.ALCHEMY, true),
+						"             &f&lWoodcutting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.WOODCUTTING, true) +
+						"    &f&lMining&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.MINING, true) +
+						"    &f&lFishing&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.FISHING, true),
 						"",
 						"                             &7Combat Levels:",
-						"                 &f&lMelee&r&7: &c" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.MELEE, true) +
-						"    &f&lRanged&r&7: &c" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.RANGED, true) +
-						"    &f&lMagic&r&7: &c" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.MAGIC, true),
+						"                 &f&lMelee&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.MELEE, true) +
+						"    &f&lRanged&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.RANGED, true) +
+						"    &f&lMagic&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.MAGIC, true),
 						"",
 						"                               &7Stat Points:",
-						"             &f&lAbility Points: &6" + PlayerData.getPlayer(p.getUniqueId()).getAbilityPoints() + 
-						"    &f&lPrestige Points: &6" + PlayerData.getPlayer(p.getUniqueId()).getPrestigePoints(),
+						"             &f&lAbility Points: &6" + PlayerData.getPlayer(uuid).getAbilityPoints() + 
+						"    &f&lPrestige Points: &6" + PlayerData.getPlayer(uuid).getPrestigePoints(),
 						"",
 						"   &7General XP:", 
-						"   &f&lTravel&r&7: &b" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.TRAVEL, false),
-						"   &f&lCrafting&r&7: &b" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.CRAFTING, false),
-						"   &f&lAlchemy&r&7: &b" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.ALCHEMY, false),
-						"   &f&lWoodcutting&r&7: &b" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.WOODCUTTING, false),
-						"   &f&lMining&r&7: &b" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.MINING, false),
-						"   &f&lFishing&r&7: &b" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.FISHING, false),
+						"   &f&lTravel&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.TRAVEL, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.TRAVEL),
+						"   &f&lCrafting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.CRAFTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.CRAFTING),
+						"   &f&lAlchemy&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.ALCHEMY, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ALCHEMY),
+						"   &f&lWoodcutting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.WOODCUTTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.WOODCUTTING),
+						"   &f&lMining&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.MINING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MINING),
+						"   &f&lFishing&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.FISHING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FISHING),
 						"",
 						"   &7Combat XP:",
-						"   &f&lMelee&r&7: &d" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.MELEE, false),
-						"   &f&lMagic&r&7: &d" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.MAGIC, false),
-						"   &f&lRanged&r&7: &d" + PlayerData.getPlayer(p.getUniqueId()).getStat(StatType.RANGED, false), 
+						"   &f&lMelee&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.MELEE, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MELEE),
+						"   &f&lRanged&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.RANGED, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.RANGED), 
+						"   &f&lMagic&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.MAGIC, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MAGIC),
 						"&b&l+&r&7-----------------------&f{&bΩ&f}&7-----------------------&b&l+"
 						);
 				
@@ -135,6 +136,26 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				}
 				
 				return true;
+			}
+			
+			if (args[1].equals("reset") && args.length == 3)
+			{
+				if(!affirmOP(p))
+				{
+					return true;
+				}
+				
+		        Player target = Bukkit.getPlayer(args[2]);
+		        if (target == null) 
+		        {
+		            PrintUtils.OBSFormatError(p, "Player not found.");
+		            return true;
+		        }
+		    
+		        PlayerData.resetAccount(target.getUniqueId());
+		        PlayerData.getPlayer(target.getUniqueId()).save();
+		        PrintUtils.OBSFormatDebug(p, "Successfully Reset " + target.getName() + "'s Account");
+		        return true;
 			}
 			
 			if (args[1].equals("set") && args.length == 6) 
@@ -202,7 +223,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "debug" -> List.of();
 					case "menu" -> List.of();
-					case "stats" -> List.of("set");
+					case "stats" -> List.of("set","reset");
 					default -> List.of();
 				};
 			}
@@ -211,6 +232,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				yield switch(args[1]) 
 				{
 					case "set" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					default -> List.of();
 				};
 			}
