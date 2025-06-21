@@ -81,4 +81,11 @@ public class PrintUtils
 		}
 		return ColorParser(""+PlayerData.getNextLevelXP(uuid, sType));
 	}
+	
+	public static String printStatType(StatType sType) 
+	{
+		char[] chars = sType.getKey().toCharArray();
+		chars[0] = Character.toUpperCase(chars[0]);
+		return new String(chars);
+	}
 }

@@ -25,8 +25,8 @@ public class PlayerData
 	protected final UUID uuid;
 	private final File file;
 	private final YamlConfiguration config;
+	private static final int baseXP = 100;
 	
-	private static final int baseXP = 1000;
 //	private static final int XP_HARDCAP = Integer.MAX_VALUE;
 	private static final double ExpMultiplier = 1.15;
 	
@@ -119,10 +119,6 @@ public class PlayerData
 		int xp = data.getStat(sType, false);
 		int abilityPoints = data.getAbilityPoints();
 
-		char[] chars = sType.getKey().toCharArray();
-		chars[0] = Character.toUpperCase(chars[0]);
-		String statName = new String(chars);
-		
 		xp += value;
 		
 		while (level < 100 && xp >= PlayerData.getNextLevelXP(uuid, sType)) 
@@ -135,7 +131,7 @@ public class PlayerData
 			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1);
 			OBParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
 			OBParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);
-			PrintUtils.Print(p, "&f&b&l"+statName+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,
+			PrintUtils.Print(p, "&f&b&l"+PrintUtils.printStatType(sType)+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,
 					"&f&nCurrent Skill Points&r&f: &6" + abilityPoints);			
 		}
 		
