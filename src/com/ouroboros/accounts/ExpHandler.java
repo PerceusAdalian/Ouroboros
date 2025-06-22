@@ -82,8 +82,8 @@ public class ExpHandler implements Listener
 			    }
 				
 				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-				PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(result)+" &b&o"+PrintUtils.printStatType(StatType.CRAFTING));
-				PlayerData.addXP(p, StatType.CRAFTING, XpUtils.getXp(result) * craftedAmount);
+				PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(result)*craftedAmount+" &b&o"+PrintUtils.printStatType(StatType.CRAFTING));
+				PlayerData.addXP(p, StatType.CRAFTING, XpUtils.getXp(result)*craftedAmount);
 			}
 			
 			//Implement Plz ;/
