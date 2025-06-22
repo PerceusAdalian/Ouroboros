@@ -39,15 +39,8 @@ public class Ouroboros extends JavaPlugin
 }
 
 /*
- * Project Notes: 
- * <DONE ITEMS>
- * - Add a command to reset stats in playerdata. <DONE>
- * - Begin working on xp gain systems. <DONE>
- * - Implement Combat XP gain. <DONE>
+ * Project Notes:
  * + WHAT TO DO NEXT:
- * - Implement Alchemy XP gain. 
- * - Stop crafting event from over giving xp: e.g. max stack size on cursor, not enough to merge on cursor, giving infinite xp gain. 
- *      Try: cloning the itemstack, removing result from matrix, and moving it to main inventory, or dropping if full.
  * - Add GUI framework for each stat and representation.
  * - Make a means to manipulate account level; framework on that.
  *      i.e. Every 10 levels of any stat, add 1 account level. 

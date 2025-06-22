@@ -1,13 +1,19 @@
 package com.ouroboros.accounts;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.block.BrewingStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -16,6 +22,7 @@ import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BrewingStartEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -23,8 +30,11 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionType;
 
+import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
@@ -38,7 +48,7 @@ public class ExpHandler implements Listener
 		Bukkit.getPluginManager().registerEvents(new Listener() 
 		{
 			@EventHandler
-			public void craftingXPHandler(CraftItemEvent e) 
+			public void onCraft(CraftItemEvent e) 
 			{
 				if (!(e.getWhoClicked() instanceof Player p)) return;
 				
@@ -86,15 +96,50 @@ public class ExpHandler implements Listener
 				PlayerData.addXP(p, StatType.CRAFTING, XpUtils.getXp(result)*craftedAmount);
 			}
 			
-			//Implement Plz ;/
+			public static final Map<Location, UUID> mapOfBrewers = new HashMap<>();
 			@EventHandler
-			public void alchemyXPHandler(BrewEvent e) 
+			public void onBrewingStart(BrewingStartEvent e) 
 			{
-				
+				if (!(e.getBlock().getState() instanceof BrewingStand stand)) return;
+				List<Player> nearby = stand.getWorld().getPlayers().stream()
+						.filter(p -> p.getLocation().distance(stand.getLocation()) < 4)
+						.collect(Collectors.toList());
+				if (!nearby.isEmpty())
+				{
+					mapOfBrewers.put(stand.getLocation(), nearby.get(0).getUniqueId());
+				}
 			}
 			
 			@EventHandler
-			public void travelXPHandler(PlayerMoveEvent e) 
+			public void onBrewingFinish(BrewEvent e) 
+			{
+				Location loc = e.getBlock().getLocation();
+				UUID brewerId = mapOfBrewers.get(loc);
+				Player p = Bukkit.getPlayer(brewerId);
+				
+				if (brewerId == null || p == null) return;
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, r->
+				{					
+					int xp = 10;
+					for (int i = 0; i < 3; i++) 
+					{
+						ItemStack potion = e.getContents().getItem(i);
+						if (potion == null || potion.getType() != Material.POTION) continue;
+						
+						PotionMeta meta = (PotionMeta) potion.getItemMeta();
+						if (meta == null || !meta.hasBasePotionType()) continue;
+						
+						PotionType pType = meta.getBasePotionType();
+						xp += XpUtils.getXp(pType);
+					}
+					EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.ALCHEMY));
+					PlayerData.addXP(p, StatType.ALCHEMY, xp);
+				}, 5);
+			}
+			
+			@EventHandler
+			public void onMove(PlayerMoveEvent e) 
 			{
 				Player p = e.getPlayer();
 			    Location from = e.getFrom();
@@ -114,7 +159,7 @@ public class ExpHandler implements Listener
 			}
 			
 			@EventHandler
-			public void woodCuttingMiningXPHandler(BlockBreakEvent e) 
+			public void onCollect(BlockBreakEvent e) 
 			{
 				Player p = e.getPlayer();
 				
@@ -141,7 +186,7 @@ public class ExpHandler implements Listener
 			}		
 			
 			@EventHandler
-			public void fishingXPHandler(PlayerFishEvent e) 
+			public void onCatch(PlayerFishEvent e) 
 			{
 				Player p = e.getPlayer();
 				
@@ -155,7 +200,7 @@ public class ExpHandler implements Listener
 			}
 			
 			@EventHandler
-			public void combatXPHandler(EntityDamageByEntityEvent e) 
+			public void onKill(EntityDamageByEntityEvent e) 
 			{
 				if (!(e.getEntity() instanceof LivingEntity target)) return;
 
