@@ -105,6 +105,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						"             &f&lWoodcutting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.WOODCUTTING, true) +
 						"    &f&lMining&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.MINING, true) +
 						"    &f&lFishing&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.FISHING, true),
+						"                    &f&lFarming&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.FARMING, true) +
+						"    &f&lEnchanting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.ENCHANTING, true),
 						"",
 						"                             &7Combat Levels:",
 						"                 &f&lMelee&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.MELEE, true) +
@@ -119,9 +121,11 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						"   &f&lTravel&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.TRAVEL, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.TRAVEL),
 						"   &f&lCrafting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.CRAFTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.CRAFTING),
 						"   &f&lAlchemy&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.ALCHEMY, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ALCHEMY),
+						"   &f&lEnchanting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.ENCHANTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ENCHANTING),
 						"   &f&lWoodcutting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.WOODCUTTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.WOODCUTTING),
 						"   &f&lMining&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.MINING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MINING),
 						"   &f&lFishing&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.FISHING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FISHING),
+						"   &f&lFarming&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.FARMING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FARMING),
 						"",
 						"   &7Combat XP:",
 						"   &f&lMelee&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.MELEE, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MELEE),

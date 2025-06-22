@@ -59,10 +59,12 @@ public class PlayerData
 	        // General Levels
 	    	setStat(StatType.CRAFTING, true, 0);
 	    	setStat(StatType.ALCHEMY, true, 0);
+	    	setStat(StatType.ENCHANTING, true, 0);
 	    	setStat(StatType.TRAVEL, true, 0);
 	    	setStat(StatType.WOODCUTTING, true, 0);
 	    	setStat(StatType.MINING, true, 0);
 	    	setStat(StatType.FISHING, true, 0);
+	    	setStat(StatType.FARMING, true, 0);
 	    	
 	        // Combat Levels
 	    	setStat(StatType.MELEE, true, 0);
@@ -72,10 +74,12 @@ public class PlayerData
 	        // General Stat Experience
 	    	setStat(StatType.CRAFTING, false, 0);
 	    	setStat(StatType.ALCHEMY, false, 0);
+	    	setStat(StatType.ENCHANTING, false, 0);
 	    	setStat(StatType.TRAVEL, false, 0);
 	    	setStat(StatType.WOODCUTTING, false, 0);
 	    	setStat(StatType.MINING, false, 0);
 	    	setStat(StatType.FISHING, false, 0);
+	    	setStat(StatType.FARMING, false, 0);
 	    	
 	        // Combat Stat Experience
 	    	setStat(StatType.MELEE, false, 0);

@@ -7,10 +7,12 @@ public enum StatType
 	//Stat types
 	CRAFTING,
 	ALCHEMY,
+	ENCHANTING,
 	TRAVEL,
 	WOODCUTTING,
 	MINING,
 	FISHING,
+	FARMING,
 	MELEE,
 	RANGED,
 	MAGIC,

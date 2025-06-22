@@ -1,6 +1,7 @@
 package com.ouroboros.utils;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
@@ -146,4 +147,14 @@ public class XpUtils
 		};
 	}
 	
+	public static int getXp(Block block) 
+	{
+		return switch (block.getType()) 
+		{
+			case WHEAT,GLOW_BERRIES,TORCHFLOWER,PITCHER_PLANT,BAMBOO,CACTUS -> 10;
+			case CARROT,POTATO,BEETROOT,SWEET_BERRIES,CHORUS_PLANT -> 15;
+			case PUMPKIN,MELON,NETHER_WART,CHORUS_FLOWER -> 20;
+			default -> 5;
+		};
+	}
 }

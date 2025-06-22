@@ -13,7 +13,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.block.Block;
 import org.bukkit.block.BrewingStand;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -23,10 +25,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BrewingStartEvent;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +41,7 @@ import org.bukkit.potion.PotionType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.XpUtils;
 
@@ -139,6 +144,12 @@ public class ExpHandler implements Listener
 			}
 			
 			@EventHandler
+			public void onEnchant(PrepareItemEnchantEvent e) 
+			{
+				//Player p = e.getEnchanter();
+			}
+			
+			@EventHandler
 			public void onMove(PlayerMoveEvent e) 
 			{
 				Player p = e.getPlayer();
@@ -198,6 +209,25 @@ public class ExpHandler implements Listener
 				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
 				PlayerData.addXP(p, StatType.FISHING, xp);
 			}
+			
+			@EventHandler
+			public void onCropHarvest(PlayerInteractEvent e) 
+			{
+			    if (!PlayerActions.leftClickBlock(e)) return;
+			    
+			    Block block = e.getClickedBlock();
+			    if (block == null) return;
+
+			    if (!(block.getBlockData() instanceof Ageable crop)) return;
+			    if (crop.getAge() != crop.getMaximumAge()) return;
+
+			    Player p = e.getPlayer();
+			    int xp = XpUtils.getXp(block);
+			    EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+			    PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
+			    PlayerData.addXP(p, StatType.FARMING, xp);
+			}
+
 			
 			@EventHandler
 			public void onKill(EntityDamageByEntityEvent e) 
