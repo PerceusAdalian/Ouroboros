@@ -21,6 +21,7 @@ import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -40,14 +41,49 @@ public class ExpHandler implements Listener
 			public void craftingXPHandler(CraftItemEvent e) 
 			{
 				if (!(e.getWhoClicked() instanceof Player p)) return;
-
-				if (p.getItemOnCursor().getAmount() == p.getItemOnCursor().getMaxStackSize()) return;
-					
+				
 				ItemStack result = e.getRecipe().getResult(); // Get the crafted item
-				int xp = result.getType().toString().length(); 
+				int eResultCount = result.getAmount(); // Event result amount, not the itemstack count.
+				int craftedAmount = 1;
+				
+				ItemStack cursor = p.getItemOnCursor();
+				if (cursor != null && cursor.getType() != Material.AIR) 
+				{
+			        if (!cursor.isSimilar(result)) return; // Different items: can't stack
+
+			        int totalAmount = cursor.getAmount() + result.getAmount();
+			        if (totalAmount > cursor.getMaxStackSize()) return; // Would exceed max stack
+			    }
+				
+				if (e.isShiftClick()) 
+				{
+			        CraftingInventory inv = (CraftingInventory) e.getInventory();
+			        ItemStack[] matrix = inv.getMatrix();
+
+			        int possibleCrafts = Integer.MAX_VALUE; // Default possible maxCrafts, even when stack size max is 1;16;32;64.
+			        for (ItemStack ingredient : matrix) // Gets every ingredient in the crafting matrix
+			        {
+			            if (ingredient == null || ingredient.getType() == Material.AIR) continue; // If there's an empty slot, continue iterating
+			            possibleCrafts = Math.min(possibleCrafts, ingredient.getAmount()); // Reassign to the actual number of crafted items
+			        }
+
+			        craftedAmount = eResultCount * possibleCrafts; // Reassign to the total items crafted
+			    } 
+				else // Normal click handling (right/left+!shift)
+				{
+			        if (e.getCurrentItem() != null) // Gets the actual singular item crafted
+			        {
+			            craftedAmount = e.getCurrentItem().getAmount();
+			        }
+			        else // Handles nullpointer
+			        {
+			            craftedAmount = eResultCount; // Fallback crafted amount IS the event result count
+			        }
+			    }
+				
 				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-				PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.WOODCUTTING));
-				PlayerData.addXP(p, StatType.CRAFTING, xp * result.getAmount());
+				PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(result)+" &b&o"+PrintUtils.printStatType(StatType.CRAFTING));
+				PlayerData.addXP(p, StatType.CRAFTING, XpUtils.getXp(result) * craftedAmount);
 			}
 			
 			//Implement Plz ;/
@@ -68,7 +104,7 @@ public class ExpHandler implements Listener
 
 			    double distance = from.distance(to);
 			    
-			    if (distance < 0.01) return;
+			    if (distance < 0.01) return; // Player is likely rotating
 
 			    if (distance >= 1.0) // Awards xp per full traveled block
 			    {
@@ -152,7 +188,6 @@ public class ExpHandler implements Listener
 					PlayerData.addXP(p, sType, XpUtils.getXp(target));
 			    }
 			}
-			
 		}, plugin);
 	}
 }
