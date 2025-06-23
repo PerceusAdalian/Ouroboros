@@ -172,28 +172,58 @@ public class ExpHandler implements Listener
 			@EventHandler
 			public void onCollect(BlockBreakEvent e) 
 			{
-				Player p = e.getPlayer();
+				if (!(e.getPlayer() instanceof Player p)) return;
+
+				Block block = e.getBlock();
 				
-				final Set<Material> WoodCuttingValidBlocks = EnumSet.of(
+				final Set<Material> validWoods = EnumSet.of(
 					Material.OAK_LOG, Material.BIRCH_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG, 
 					Material.DARK_OAK_LOG, Material.ACACIA_LOG,Material.MANGROVE_LOG, Material.CHERRY_LOG);	
 				
-				final Set<Material> miningValidBlocks = EnumSet.of(
+				final Set<Material> validOres = EnumSet.of(
 					Material.COAL_ORE,Material.COPPER_ORE,Material.DEEPSLATE_COAL_ORE,Material.DEEPSLATE_COPPER_ORE,
 					Material.DEEPSLATE_DIAMOND_ORE,Material.DEEPSLATE_EMERALD_ORE,Material.DEEPSLATE_GOLD_ORE,
 					Material.DEEPSLATE_IRON_ORE,Material.DEEPSLATE_LAPIS_ORE,Material.DEEPSLATE_REDSTONE_ORE,
 					Material.DIAMOND_ORE,Material.EMERALD_ORE,Material.GOLD_ORE,Material.IRON_ORE,Material.LAPIS_ORE,
 					Material.NETHER_GOLD_ORE,Material.NETHER_QUARTZ_ORE,Material.REDSTONE_ORE,Material.ANCIENT_DEBRIS);
 				
-				if (WoodCuttingValidBlocks.contains(e.getBlock().getType())) 
+				final Set<Material> validCrops = EnumSet.of(
+						Material.WHEAT,Material.CARROTS,Material.POTATOES,Material.BEETROOTS,
+						Material.SWEET_BERRY_BUSH,Material.CAVE_VINES,Material.CAVE_VINES_PLANT,
+						Material.TWISTING_VINES,Material.WEEPING_VINES,Material.NETHER_WART,Material.COCOA,
+						Material.GLOW_BERRIES,Material.CHORUS_FLOWER,Material.CHORUS_PLANT,
+						Material.BAMBOO,Material.CACTUS,Material.SUGAR_CANE,Material.PUMPKIN,Material.MELON,
+						Material.ATTACHED_MELON_STEM,Material.MELON_STEM,Material.TORCHFLOWER_CROP,Material.TORCHFLOWER,
+						Material.PITCHER_CROP,Material.PITCHER_PLANT,Material.RED_MUSHROOM,Material.BROWN_MUSHROOM);
+
+				if (validWoods.contains(block.getType())) 
 				{
-					PlayerData.addXP(p, StatType.WOODCUTTING, XpUtils.getXp(e.getBlock().getType()));
+					int xp = XpUtils.getXp(block.getType());
+			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.WOODCUTTING));
+			    	PlayerData.addXP(p, StatType.WOODCUTTING, xp);	
 			    }
 				
-				if (miningValidBlocks.contains(e.getBlock().getType())) 
+				if (validOres.contains(block.getType())) 
 				{
-					PlayerData.addXP(p, StatType.MINING, XpUtils.getXp(e.getBlock().getType()));					
+					int xp = XpUtils.getXp(block.getType());
+			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.MINING));
+			    	PlayerData.addXP(p, StatType.MINING, xp);					
 				}
+				
+			    if (validCrops.contains(block.getType())) 
+			    {
+			    	if (block.getBlockData() instanceof Ageable harvestable) 
+			    	{
+			    		if (harvestable.getAge() != harvestable.getMaximumAge()) return;
+			    	}
+			    	
+			    	int xp = XpUtils.getXp(block);
+			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.FARMING));
+			    	PlayerData.addXP(p, StatType.FARMING, xp);			    	
+			    }
 			}		
 			
 			@EventHandler
@@ -213,22 +243,34 @@ public class ExpHandler implements Listener
 			@EventHandler
 			public void onCropHarvest(PlayerInteractEvent e) 
 			{
-			    if (!PlayerActions.leftClickBlock(e)) return;
-			    
-			    Block block = e.getClickedBlock();
-			    if (block == null) return;
-
-			    if (!(block.getBlockData() instanceof Ageable crop)) return;
-			    if (crop.getAge() != crop.getMaximumAge()) return;
-
-			    Player p = e.getPlayer();
-			    int xp = XpUtils.getXp(block);
-			    EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-			    PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
-			    PlayerData.addXP(p, StatType.FARMING, xp);
+				Block block = e.getClickedBlock();
+				Player p = e.getPlayer();
+				
+				if (block == null || block.getType().equals(Material.AIR)) return;
+				
+				if (PlayerActions.leftClickBlock(e)) 
+				{
+					if (block.getType() == Material.SUGAR_CANE) 
+					{
+						int xp = XpUtils.getXp(block.getType());
+					    EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					    PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
+					    PlayerData.addXP(p, StatType.FARMING, xp);
+					}
+				}
+				
+				if (PlayerActions.rightClickBlock(e) && e.getClickedBlock().getBlockData() instanceof Ageable crop) 
+				{
+					if (block.getType() == Material.SWEET_BERRY_BUSH && crop.getAge() == crop.getMaximumAge()) 
+					{
+						int xp = XpUtils.getXp(block.getType());
+					    EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					    PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
+					    PlayerData.addXP(p, StatType.FARMING, xp);
+					}
+				}
 			}
 
-			
 			@EventHandler
 			public void onKill(EntityDamageByEntityEvent e) 
 			{

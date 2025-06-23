@@ -8,6 +8,7 @@ import org.bukkit.potion.PotionType;
 
 public class XpUtils 
 {
+	//Combat
 	public static int getXp(LivingEntity entity) 
 	{
 		return switch(entity.getType()) 
@@ -44,6 +45,7 @@ public class XpUtils
 		};
 	}
 	
+	//Mining/WoodCutting
 	public static int getXp(Material material) 
 	{
 		return switch (material) 
@@ -75,6 +77,7 @@ public class XpUtils
 		};
 	}
 	
+	// Crafting
 	public static int getXp(ItemStack stack) 
 	{
 		return switch (stack.getType()) 
@@ -126,6 +129,7 @@ public class XpUtils
 		};
 	}
 	
+	//Potions
 	public static int getXp(PotionType potionType) 
 	{
 		return switch (potionType) 
@@ -146,14 +150,23 @@ public class XpUtils
 			default -> 5;
 		};
 	}
-	
+
+	//Crops
 	public static int getXp(Block block) 
 	{
 		return switch (block.getType()) 
 		{
-			case WHEAT,GLOW_BERRIES,TORCHFLOWER,PITCHER_PLANT,BAMBOO,CACTUS -> 10;
-			case CARROT,POTATO,BEETROOT,SWEET_BERRIES,CHORUS_PLANT -> 15;
-			case PUMPKIN,MELON,NETHER_WART,CHORUS_FLOWER -> 20;
+			case CACTUS,SUGAR_CANE,MELON_STEM,
+			RED_MUSHROOM,BROWN_MUSHROOM,
+			PITCHER_PLANT,TORCHFLOWER 				-> 5;
+			case WHEAT,CARROTS,POTATOES,BEETROOTS   -> 10;
+			case SWEET_BERRY_BUSH, CAVE_VINES, 
+			CAVE_VINES_PLANT,TWISTING_VINES,
+			WEEPING_VINES,GLOW_BERRIES,
+			TORCHFLOWER_CROP,BAMBOO,PITCHER_CROP	->15;
+			case CHORUS_FLOWER,CHORUS_PLANT,
+			PUMPKIN,MELON 							-> 20;
+			case NETHER_WART,COCOA 					-> 25;
 			default -> 5;
 		};
 	}
