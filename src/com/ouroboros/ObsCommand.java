@@ -142,6 +142,38 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			
+			if (args[1].equals("doLevelUpSound") && args.length == 3) 
+			{
+				Boolean bool = Boolean.parseBoolean(args[2]);
+				if (bool) 
+				{
+					PlayerData.getPlayer(uuid).doLevelUpSound(true);
+					PrintUtils.OBSFormatDebug(p, "XP & Levelup Audio Turned: &a&lON");
+				}
+				else 
+				{
+					PlayerData.getPlayer(uuid).doLevelUpSound(false);
+					PrintUtils.OBSFormatDebug(p, "XP & Levelup Audio Turned: &c&lOFF");
+				}
+				return true;
+			}
+			
+			if (args[1].equals("doXpNotifs") && args.length == 3) 
+			{
+				Boolean bool = Boolean.parseBoolean(args[2]);
+				if (bool) 
+				{
+					PlayerData.getPlayer(uuid).doXpNotification(true);
+					PrintUtils.OBSFormatDebug(p, "Xp & Level Notifications Turned: &a&lON");
+				}
+				else 
+				{
+					PlayerData.getPlayer(uuid).doXpNotification(false);
+					PrintUtils.OBSFormatDebug(p, "Xp & Level Notifications Turned: &c&lOFF");
+				}
+				return true;
+			}
+			
 			if (args[1].equals("reset") && args.length == 3)
 			{
 				if(!affirmOP(p))
@@ -227,7 +259,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "debug" -> List.of();
 					case "menu" -> List.of();
-					case "stats" -> List.of("set","reset");
+					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs");
 					default -> List.of();
 				};
 			}
@@ -237,6 +269,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "set" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					case "doLevelUpSound" -> List.of("true", "false");
+					case "doXpNotifs" -> List.of("true", "false");
 					default -> List.of();
 				};
 			}

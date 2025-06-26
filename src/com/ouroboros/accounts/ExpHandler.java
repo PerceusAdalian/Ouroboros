@@ -16,6 +16,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrewingStand;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -25,7 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BrewingStartEvent;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -43,7 +44,6 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
-import com.ouroboros.utils.XpUtils;
 
 public class ExpHandler implements Listener
 { 
@@ -95,9 +95,11 @@ public class ExpHandler implements Listener
 			            craftedAmount = eResultCount; // Fallback crafted amount IS the event result count
 			        }
 			    }
-				
-				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-				PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(result)*craftedAmount+" &b&o"+PrintUtils.printStatType(StatType.CRAFTING));
+
+				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+					EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(result)*craftedAmount+" &b&o"+PrintUtils.printStatType(StatType.CRAFTING));
 				PlayerData.addXP(p, StatType.CRAFTING, XpUtils.getXp(result)*craftedAmount);
 			}
 			
@@ -137,16 +139,36 @@ public class ExpHandler implements Listener
 						PotionType pType = meta.getBasePotionType();
 						xp += XpUtils.getXp(pType);
 					}
-					EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.ALCHEMY));
+					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.ALCHEMY));
 					PlayerData.addXP(p, StatType.ALCHEMY, xp);
 				}, 5);
 			}
 			
 			@EventHandler
-			public void onEnchant(PrepareItemEnchantEvent e) 
+			public void onEnchant(EnchantItemEvent e) 
 			{
-				//Player p = e.getEnchanter();
+				Player p = e.getEnchanter();
+			    Map<Enchantment, Integer> enchantments = e.getEnchantsToAdd();
+			    int xp = 0;
+			    int stackXp = XpUtils.getXp(e.getItem());
+			    
+			    for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) 
+			    {
+			        Enchantment enchant = entry.getKey();
+			        
+			        int enchantXp = XpUtils.getXp(enchant);
+
+			        xp += enchantXp * entry.getValue() + stackXp;
+			    }
+
+				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+					EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.ENCHANTING));
+				PlayerData.addXP(p, StatType.ENCHANTING, xp);
 			}
 			
 			@EventHandler
@@ -199,16 +221,20 @@ public class ExpHandler implements Listener
 				if (validWoods.contains(block.getType())) 
 				{
 					int xp = XpUtils.getXp(block.getType());
-			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.WOODCUTTING));
+					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.WOODCUTTING));
 			    	PlayerData.addXP(p, StatType.WOODCUTTING, xp);	
 			    }
 				
 				if (validOres.contains(block.getType())) 
 				{
 					int xp = XpUtils.getXp(block.getType());
-			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.MINING));
+					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.MINING));
 			    	PlayerData.addXP(p, StatType.MINING, xp);					
 				}
 				
@@ -220,8 +246,10 @@ public class ExpHandler implements Listener
 			    	}
 			    	
 			    	int xp = XpUtils.getXp(block);
-			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.FARMING));
+					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + xp + " &b&o" + PrintUtils.printStatType(StatType.FARMING));
 			    	PlayerData.addXP(p, StatType.FARMING, xp);			    	
 			    }
 			}		
@@ -235,8 +263,10 @@ public class ExpHandler implements Listener
 				if (entity == null) return;
 				
 				int xp = e.getCaught().getName().length();
-				PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FISHING));
-				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+					EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FISHING));
 				PlayerData.addXP(p, StatType.FISHING, xp);
 			}
 			
@@ -253,8 +283,10 @@ public class ExpHandler implements Listener
 					if (block.getType() == Material.SUGAR_CANE) 
 					{
 						int xp = XpUtils.getXp(block.getType());
-					    EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-					    PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
+						if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+							EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+						if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+							PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
 					    PlayerData.addXP(p, StatType.FARMING, xp);
 					}
 				}
@@ -264,8 +296,10 @@ public class ExpHandler implements Listener
 					if (block.getType() == Material.SWEET_BERRY_BUSH && crop.getAge() == crop.getMaximumAge()) 
 					{
 						int xp = XpUtils.getXp(block.getType());
-					    EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-					    PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
+						if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+							EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+						if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+							PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.FARMING));
 					    PlayerData.addXP(p, StatType.FARMING, xp);
 					}
 				}
@@ -300,8 +334,10 @@ public class ExpHandler implements Listener
 			    // Only award XP if the attack will kill the entity
 			    if (!target.isDead() && target.getHealth() - e.getFinalDamage() <= 0.0) 
 			    {
-			    	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(target)+" &b&o"+PrintUtils.printStatType(sType));
-			    	EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(target)+" &b&o"+PrintUtils.printStatType(sType));
 					PlayerData.addXP(p, sType, XpUtils.getXp(target));
 			    }
 			}

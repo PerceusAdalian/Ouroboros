@@ -1,7 +1,8 @@
-package com.ouroboros.utils;
+package com.ouroboros.accounts;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
@@ -111,7 +112,7 @@ public class XpUtils
 			case GLISTERING_MELON_SLICE,MAGMA_CREAM,GOLDEN_CARROT,
 			GOLDEN_APPLE,BRUSH,LEAD,COMPASS,CLOCK,SPYGLASS,DIAMOND_SWORD,
 			DIAMOND_SHOVEL,DIAMOND_PICKAXE,DIAMOND_AXE,DIAMOND_HOE,DIAMOND_HELMET,
-			DIAMOND_CHESTPLATE,DIAMOND_LEGGINGS,DIAMOND_BOOTS,MACE  		  			-> 40;
+			DIAMOND_CHESTPLATE,DIAMOND_LEGGINGS,DIAMOND_BOOTS,MACE,TRIDENT	  			-> 40;
 			case ANVIL,CONDUIT,LODESTONE,ENCHANTING_TABLE,
 			BREWING_STAND,RECOVERY_COMPASS       									    -> 50;
 			case NETHERITE_UPGRADE_SMITHING_TEMPLATE,SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE,
@@ -123,7 +124,9 @@ public class XpUtils
 			SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE,WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE,
 			SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE,SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE,
 			RAISER_ARMOR_TRIM_SMITHING_TEMPLATE,HOST_ARMOR_TRIM_SMITHING_TEMPLATE,
-			FLOW_ARMOR_TRIM_SMITHING_TEMPLATE,BOLT_ARMOR_TRIM_SMITHING_TEMPLATE 		-> 100;
+			FLOW_ARMOR_TRIM_SMITHING_TEMPLATE,BOLT_ARMOR_TRIM_SMITHING_TEMPLATE,
+			NETHERITE_SWORD,NETHERITE_SHOVEL,NETHERITE_PICKAXE,NETHERITE_AXE,NETHERITE_HOE,
+			NETHERITE_HELMET,NETHERITE_CHESTPLATE,NETHERITE_LEGGINGS,NETHERITE_BOOTS-> 100;
 			
 			default -> 5;
 		};
@@ -170,4 +173,26 @@ public class XpUtils
 			default -> 5;
 		};
 	}
+	
+	public static int getXp(Enchantment enchant) 
+	{
+	    return switch (enchant.getKey().getKey()) 
+	    {
+	        case "projectile_protection","soul_speed","sweeping_edge",
+	        "knockback","bane_of_arthropods","smite","fire_protection",
+	        "protection","punch","luck_of_the_sea","depth_strider",
+	        "unbreaking"  											-> 10;
+	        case "binding_curse","aqua_affinity","quick_charge",
+	        "flame","fortune","vanishing_curse","blast_protection",
+	        "lure","breach" 										-> 15;
+	        case "channeling","density","efficiency","looting",
+	        "riptide","loyalty","frost_walker","impaling" 			-> 20;
+	        case "infinity","multishot","piercing","swift_sneak",
+	        "thorns","feather_falling","fire_aspect" 				-> 25;
+	        case "mending","silk_touch","wind_burst",
+	        "respiration","power","sharpness" 						-> 50;
+	        default -> 5;
+	    };
+	}
+
 }

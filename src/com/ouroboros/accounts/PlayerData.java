@@ -86,6 +86,8 @@ public class PlayerData
 	    	setStat(StatType.RANGED, false, 0);
 	    	setStat(StatType.MAGIC, false, 0);
 	    	
+	    	doLevelUpSound(true);
+	    	doXpNotification(true);
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
 	    }
@@ -120,27 +122,47 @@ public class PlayerData
 		PlayerData data = PlayerData.getPlayer(uuid);
 		
 		int level = data.getStat(sType, true);
+		int accountLevel = data.getAccountLevel();
 		int xp = data.getStat(sType, false);
 		int abilityPoints = data.getAbilityPoints();
-
+		
 		xp += value;
 		
 		while (level < 100 && xp >= PlayerData.getNextLevelXP(uuid, sType)) 
 		{
 			xp -= PlayerData.getNextLevelXP(uuid, sType);
 			int preLevel = level;
+			int preAccountLevel = accountLevel;
 			level++;
 			abilityPoints++;
 			
-			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1);
-			OBParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
-			OBParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);
-			PrintUtils.Print(p, "&f&b&l"+PrintUtils.printStatType(sType)+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,
-					"&f&nCurrent Skill Points&r&f: &6" + abilityPoints);			
+			if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+			{
+				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1);
+				OBParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
+				OBParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);	
+			}
+			if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+				PrintUtils.Print(p, "","&f|&bΩ&f|&b&l "+PrintUtils.printStatType(sType)+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,
+					"&e&l+&f1&6AP&r&f | &nCurrent Ability Points&r&f: &6" + abilityPoints);			
+			
+			if (level % 10 == 0) 
+			{
+				accountLevel++;
+				abilityPoints+=5;
+				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+					EntityEffects.playSound(p, p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1, 1);
+				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+					PrintUtils.Print(p, "","&f|&bΩ&f|&b&l Account Level Up&r&f! | &7Lvl "+preAccountLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + accountLevel,
+						"&e&l+&f5&6AP&r&f | &nCurrent Ability Points&r&f: &6" + abilityPoints);			
+				
+			}
+			
 		}
 		
 		data.setStat(sType, true, level);
 		data.setStat(sType, false, xp);
+		data.setAccountLevel(accountLevel);
 		data.setAbilityPoints(abilityPoints);
 		data.save();
 	}
@@ -239,7 +261,6 @@ public class PlayerData
 	    }
 	}
 
-	
 	public void reload() throws FileNotFoundException, IOException, InvalidConfigurationException
 	{
 		try 
@@ -284,6 +305,25 @@ public class PlayerData
 		return (int) (baseXP * Math.pow(ExpMultiplier, getPlayer(uuid).getStat(statType, true)));
 	}
 	
+	public void doLevelUpSound(boolean bool) 
+	{
+		config.set("dolevelupsound", bool);
+	}
+	
+	public boolean doLevelUpSound() 
+	{
+		return config.getBoolean("dolevelupsound");
+	}
+	
+	public void doXpNotification(boolean bool) 
+	{
+		config.set("doxpnotifs", bool);
+	}
+	
+	public boolean doXpNotification() 
+	{
+		return config.getBoolean("doxpnotifs");
+	}
 	
 	public static void initializeDataFolder() 
 	{
