@@ -42,11 +42,10 @@ public class Ouroboros extends JavaPlugin
  * Project Notes:
  * + WHAT TO DO NEXT:
  * - Add GUI framework for each stat and representation.
- * - Make a means to manipulate account level; framework on that.
- *      i.e. Every 10 levels of any stat, add 1 account level. 
- *      	 OR Every skill point used, +1 account level. 
- *      	 OR Every 1 prestige (This is a stretch), add an account level.
- * - Begin drafting a means to model and implement abilities.
+ *   > Make a reward system for leveling up stats every 10 levels. 
+ *   > Implement prestige system.
+ *   > Low Priority: Stat descriptions, a means to see next levelup rewards, abilities, etc.
+ *  >> Begin drafting a means to model and implement abilities.
  * 		i.e. Through YAML, or TOML (Hard route), model abilities and implement access and event calls. 
  * 			 Abilities such as adding more xp to xp gain events. 
  * 			 Abilities such as seen in combat (Fire arrows, Flame strikes, or more damage to a certain entity type, etc.)

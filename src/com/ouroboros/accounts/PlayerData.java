@@ -1,20 +1,20 @@
 package com.ouroboros.accounts;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.abilities.AbstractOBSAbility;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBParticles;
@@ -26,8 +26,6 @@ public class PlayerData
 	private final File file;
 	private final YamlConfiguration config;
 	private static final int baseXP = 100;
-	
-//	private static final int XP_HARDCAP = Integer.MAX_VALUE;
 	private static final double ExpMultiplier = 1.15;
 	
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
@@ -35,7 +33,7 @@ public class PlayerData
 	public PlayerData(UUID uuid) 
 	{
 		this.uuid = uuid;
-		this.file = new File(getDataFolder(), "playerdata/"+uuid+".yml");
+		this.file = new File(getDataFolder(), "playerdata/"+Bukkit.getPlayer(uuid).getName()+"/"+uuid+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
 		
 		if (!file.exists()) 
@@ -116,6 +114,29 @@ public class PlayerData
 		config.set(path, value);
 	}
 	
+	
+	//Trying to figure out how to register abilities to the player's file and set them either registered or not.
+	public void registerAbility(AbstractOBSAbility ability, boolean setRegistered) 
+	{
+		String path = "abilities." + ability.getInternalName();
+		config.set(path, setRegistered);
+	}
+	
+	public boolean setActive() 
+	{
+		return config.getBoolean("abilities."+AbstractOBSAbility.OBSABILITY, true);
+	}
+//	
+//	public boolean isRegistered(AbstractOBSAbility ability, boolean isRegistered) 
+//	{
+//		
+//	}
+//	
+//	public AbstractOBSAbility getAbility(AbstractOBSAbilty ability) 
+//	{
+//		
+//	}
+//	
 	public static void addXP(Player p, StatType sType, int value) 
 	{
 		UUID uuid = p.getUniqueId();
@@ -167,12 +188,6 @@ public class PlayerData
 		data.save();
 	}
 
-	
-	public static void levelUp(UUID uuid, StatType sType) 
-	{
-		PlayerData.getPlayer(uuid).setStat(sType, true, PlayerData.getPlayer(uuid).getStat(sType, true)+1);
-	}
-	
 	public static void resetXP(UUID uuid, StatType sType) 
 	{
 		PlayerData.getPlayer(uuid).setStat(sType, false, 0);
@@ -259,26 +274,6 @@ public class PlayerData
 	    {
 	        data.save();
 	    }
-	}
-
-	public void reload() throws FileNotFoundException, IOException, InvalidConfigurationException
-	{
-		try 
-		{
-			config.load(file);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (InvalidConfigurationException e) 
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	//Loads a player into a static data cache to finalize data later.
