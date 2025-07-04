@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 
 import net.md_5.bungee.api.ChatMessageType;
@@ -88,4 +89,14 @@ public class PrintUtils
 		chars[0] = Character.toUpperCase(chars[0]);
 		return new String(chars);
 	}
+	
+	public static String assignAbilityType(ObsAbilityType type, ObsAbilityType type2) 
+	{
+		return ColorParser("&r&f&lAbility Type&r&f: {"+ type.getAbilityType() + "&r&f | " + type2.getAbilityType() + "&r&f}");
+	}
+	public static String assignAbilityType(ObsAbilityType type) 
+	{
+		return ColorParser("&r&f&lAbility Type&r&f: {"+type.getAbilityType()+"&r&f}");
+	}
+	
 }

@@ -26,6 +26,15 @@ public enum StatType
 		return this.name().toLowerCase();
 	}
 	
+	public String getFancyKey() 
+	{
+		String name = this.name().toLowerCase();
+		String s = "";
+		char[] chars = name.toCharArray();
+		chars[0] = Character.toUpperCase(chars[0]);
+		return s += new String(chars);
+	}
+	
 	public static Optional<StatType> fromString(String input) 
 	{
         try 

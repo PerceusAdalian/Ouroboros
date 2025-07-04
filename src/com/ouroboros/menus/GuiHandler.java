@@ -22,6 +22,11 @@ public class GuiHandler implements Listener
         openGuis.put(player, gui);
         gui.open();
     }
+    
+    public static void reload(Player player) 
+    {
+    	openGuis.get(player).open();
+    }
 
     public static AbstractOBSGui getOpenGui(Player player) 
     {

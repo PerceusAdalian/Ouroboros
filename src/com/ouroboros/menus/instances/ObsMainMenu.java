@@ -23,23 +23,23 @@ public class ObsMainMenu extends AbstractOBSGui
 	protected void build() 
 	{
 		
-		GuiButton.button(Material.LIGHT).setName("&c&lNotice&r&f:").setLore("&r&7{&c&l!&r&7}&f This menu is a WIP.").place(this, 13, e->
+		GuiButton.button(Material.NETHER_STAR).setName("&c&lAbilities&r&f").setLore("&r&fClick to view available abilities").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, SoundCategory.MASTER, 1, 1);
-			
+			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new AbilityMainPage(p));
 		});
 		
 		//Exits
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit.").place(this, 10, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
 			GuiHandler.close(p);
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit.").place(this, 16, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 16, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);

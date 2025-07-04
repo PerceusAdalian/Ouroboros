@@ -8,12 +8,17 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.StatType;
+import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
 public abstract class AbstractOBSAbility 
@@ -24,19 +29,29 @@ public abstract class AbstractOBSAbility
 	private final String internalName;
 	private final Material icon;
 	private final String[] description;
-	protected boolean isRegistered;
+	private final ObsAbilityType aType, aType2;
+	private final StatType statRequirement;
+	private final int levelRequirement;
+	private final int APCOST;
 	
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
-	public AbstractOBSAbility(String displayName, String internalName, Material icon, String...description) 
+	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
+			ObsAbilityType aType, @Nullable ObsAbilityType aType2, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
+		this.APCOST = APCOST;
 		this.icon = icon;
+		this.statRequirement = statRequirement;
+		this.levelRequirement = levelRequirement;
+		this.aType = aType;
+		this.aType2 = aType2;
 		this.description = description;
 		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
 		
+		if (APCOST < 1) APCOST = 1;
 		if (!file.exists()) 
 		{
 			setInfo();
@@ -49,8 +64,13 @@ public abstract class AbstractOBSAbility
 		config.set("ability_name", displayName);
 		config.set("internal_name", internalName);
 		config.set("icon_material", icon.toString());
+		config.set("ap_cost", APCOST);
+		config.set("stat_requirement", statRequirement.getKey());
+		config.set("level_requirement", levelRequirement);
 		config.set("description", description);
 		config.set("namespace", OBSABILITY.toString());
+		config.set("ability_type1", aType.getKey());
+		if (aType2 != null) config.set("ability_type2", aType2.getKey());
 	}
 	
 	public void save() 
@@ -82,12 +102,27 @@ public abstract class AbstractOBSAbility
 	
 	public Material getIcon() 
 	{
-		return Material.getMaterial(config.get("icon_material").toString());
+		return Material.getMaterial(config.getString("icon_material"));
 	}
 	
 	public String[] getDescription() 
 	{
 		return description;
+	}
+	
+	public String getStatRequirement() 
+	{
+		return config.getString("stat_requirement");
+	}
+	
+	public int getLevelRequirement() 
+	{
+		return config.getInt("level_requirement");
+	}
+	
+	public int getAPCost() 
+	{
+		return config.getInt("ap_cost");
 	}
 	
 	public AbstractOBSAbility getInstance() 
@@ -100,9 +135,10 @@ public abstract class AbstractOBSAbility
 		return OBSABILITY;
 	}
 	
-	public abstract boolean cast(PlayerInteractEvent p);
+	public abstract boolean cast(PlayerInteractEvent e);
 	
-	public ItemStack toIcon() 
+	// For gui display
+	public ItemStack toIcon(Player p) 
 	{
 		ItemStack stack = new ItemStack(icon, 1);
 		ItemMeta meta = stack.getItemMeta();
@@ -110,8 +146,43 @@ public abstract class AbstractOBSAbility
 		
 		meta.setDisplayName(PrintUtils.ColorParser("&r&f"+displayName));
 		lore.add("\n");
-		for (String line : description) 
-			lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
+		
+		if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isRegistered()) 
+		{
+			stack.setType(Material.NETHER_STAR);
+			meta.setDisplayName(PrintUtils.ColorParser("&r&7LOCKED: &f"+displayName));
+			
+			char color = switch(statRequirement) 
+			{
+				case WOODCUTTING,TRAVEL,CRAFTING,ALCHEMY,MINING,FISHING,FARMING,ENCHANTING -> color = 'a';
+				case MELEE,RANGED,MAGIC -> color = 'c';
+				default -> color = '7';
+			};
+			
+			if (aType2 == null) lore.add(PrintUtils.assignAbilityType(aType));
+			else lore.add(PrintUtils.assignAbilityType(aType, aType2));
+			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");	
+			lore.add("");
+			if (PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true) < levelRequirement) 
+			{
+				lore.add(PrintUtils.ColorParser("&r&c&lStat Required&r&f: &b&l"+statRequirement.getFancyKey()+" &r&7@ &flvl&"+color+levelRequirement));
+				lore.add(PrintUtils.ColorParser("&r&fYour &b&l"+statRequirement.getFancyKey()+"&r&f lvl: &"+color+PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true)));
+			}
+			else if (PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true) >= levelRequirement) 
+			{
+				lore.add(PrintUtils.ColorParser("&r&fAP Cost to Register: &6"+APCOST+"&7/"+PlayerData.getPlayer(p.getUniqueId()).getAbilityPoints()));				
+			}
+		}
+		else 
+		{
+			if (aType2 == null) lore.add(PrintUtils.assignAbilityType(aType));
+			else lore.add(PrintUtils.assignAbilityType(aType, aType2));
+			lore.add("");
+			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
+			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "false")));
+			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
+		}
+		
 		lore.add("\n");
 		meta.setLore(lore);
 		meta.getPersistentDataContainer().set(OBSABILITY, PersistentDataType.STRING, internalName.toString());

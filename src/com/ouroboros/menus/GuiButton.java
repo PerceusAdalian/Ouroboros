@@ -23,20 +23,9 @@ public class GuiButton
         meta = item.getItemMeta();
     }
     
-    public GuiButton(ItemStack obj) 
-    {
-		this.item = new ItemStack(obj);
-		this.meta = obj.getItemMeta();
-    }
-    
     public static GuiButton button(Material material) 
     {
         return new GuiButton(material);
-    }
-    
-    public static GuiButton button(ItemStack stack) 
-    {
-    	return new GuiButton(stack);
     }
     
     public GuiButton setName(String name) 
@@ -45,7 +34,7 @@ public class GuiButton
         return this;
     }
 
-    public GuiButton setLore(String... lines) 
+    public GuiButton setLore(String...lines) 
     {
         for (String line : lines) 
         {
@@ -54,9 +43,18 @@ public class GuiButton
         return this;
     }
     
+    public GuiButton setLore(List<String> lines) 
+    {
+    	for (String line : lines) 
+        {
+            lore.add(PrintUtils.ColorParser("&r&f" + line));
+        }
+        return this;
+    }
+    
     public void place(AbstractOBSGui gui, int slot, Consumer<InventoryClickEvent> action) 
     {
-        meta.setLore(lore);
+    	meta.setLore(lore);
         item.setItemMeta(meta);
         gui.getInventory().setItem(slot, item);
         gui.clickActions.put(slot, action);

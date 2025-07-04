@@ -2,6 +2,9 @@ package com.ouroboros;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.ouroboros.abilities.AbilityCastHandler;
+import com.ouroboros.abilities.AbilityRegistry;
+import com.ouroboros.abilities.instances.ImbueFire;
 import com.ouroboros.accounts.ExpHandler;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
@@ -20,12 +23,15 @@ public class Ouroboros extends JavaPlugin
 		
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
-		GuiHandler.registerEvent(instance);
-		GeneralEvents.register(instance);
-		ExpHandler.register(instance);
-		
 		PlayerData.initializeDataFolder();
 		
+		GeneralEvents.register(instance);
+		GuiHandler.registerEvent(instance);
+		ExpHandler.register(instance);
+		AbilityCastHandler.register(instance);
+		AbilityRegistry.itemInit();		
+		ImbueFire.registerCleanupHandler(instance);		
+
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
 	}
 	

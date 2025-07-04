@@ -14,6 +14,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.abilities.AbilityHandler;
+import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.AbstractOBSAbility;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
@@ -53,6 +55,7 @@ public class PlayerData
 	    if (!file.exists()) 
 	    {
 	    	setAccountLevel(0);
+	    	initializeAbilities();
 	    	
 	        // General Levels
 	    	setStat(StatType.CRAFTING, true, 0);
@@ -113,30 +116,7 @@ public class PlayerData
 		if (setLevel) value = Math.max(0, Math.min(100, value));
 		config.set(path, value);
 	}
-	
-	
-	//Trying to figure out how to register abilities to the player's file and set them either registered or not.
-	public void registerAbility(AbstractOBSAbility ability, boolean setRegistered) 
-	{
-		String path = "abilities." + ability.getInternalName();
-		config.set(path, setRegistered);
-	}
-	
-	public boolean setActive() 
-	{
-		return config.getBoolean("abilities."+AbstractOBSAbility.OBSABILITY, true);
-	}
-//	
-//	public boolean isRegistered(AbstractOBSAbility ability, boolean isRegistered) 
-//	{
-//		
-//	}
-//	
-//	public AbstractOBSAbility getAbility(AbstractOBSAbilty ability) 
-//	{
-//		
-//	}
-//	
+
 	public static void addXP(Player p, StatType sType, int value) 
 	{
 		UUID uuid = p.getUniqueId();
@@ -176,9 +156,7 @@ public class PlayerData
 				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
 					PrintUtils.Print(p, "","&f|&bΩ&f|&b&l Account Level Up&r&f! | &7Lvl "+preAccountLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + accountLevel,
 						"&e&l+&f5&6AP&r&f | &nCurrent Ability Points&r&f: &6" + abilityPoints);			
-				
 			}
-			
 		}
 		
 		data.setStat(sType, true, level);
@@ -211,14 +189,20 @@ public class PlayerData
 	
 	public static void resetAccount(UUID uuid) 
 	{
+		PlayerData data = PlayerData.getPlayer(uuid);
 		for (StatType type : StatType.values()) 
 		{
-			PlayerData.getPlayer(uuid).setStat(type, false, 0);
-			PlayerData.getPlayer(uuid).setStat(type, true, 0);
+			data.setStat(type, false, 0);
+			data.setStat(type, true, 0);
 		}
-		PlayerData.getPlayer(uuid).setAccountLevel(0);
-		PlayerData.getPlayer(uuid).setAbilityPoints(0);
-		PlayerData.getPlayer(uuid).setPrestigePoints(0);
+		data.setAccountLevel(0);
+		data.setAbilityPoints(0);
+		data.setPrestigePoints(0);
+		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
+		{
+			data.getAbility(a).setRegistered(false);
+			data.getAbility(a).setActive(false);
+		}
 	}
 	
 	public static boolean checkLevelUpReady(UUID uuid, StatType sType) 
@@ -244,6 +228,29 @@ public class PlayerData
 	public void setAbilityPoints(int value) 
 	{
 		config.set("points.ability", value);
+	}
+	
+	public void initializeAbilities() 
+	{
+		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
+		{
+			String path = "abilities." + a.getInternalName();
+			if (!config.contains(path + ".registered")) 
+				config.set(path + ".registered", false);
+			if (!config.contains(path + ".active"))
+				config.set(path + ".active", false);
+		}
+	}
+	
+	public AbilityHandler getAbility(AbstractOBSAbility ability) 
+	{
+		return new AbilityHandler(ability, config);
+	}
+	
+	public static boolean canRegister(UUID uuid, AbstractOBSAbility ability) 
+	{
+		
+		return !PlayerData.getPlayer(uuid).getAbility(ability).isRegistered() && PlayerData.getPlayer(uuid).getAbilityPoints() >= ability.getAPCost();
 	}
 	
 	public int getPrestigePoints() 

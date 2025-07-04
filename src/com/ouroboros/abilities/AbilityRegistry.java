@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ouroboros.abilities.instances.ImbueFire;
+
 public class AbilityRegistry 
 {
 	public static final Map<String, AbstractOBSAbility> abilityRegistry = new HashMap<>();
@@ -13,7 +15,7 @@ public class AbilityRegistry
     public static void itemInit() 
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(
-            );
+            ImbueFire.class);
         
         for (Class<? extends AbstractOBSAbility> clazz : itemClasses) 
         {
