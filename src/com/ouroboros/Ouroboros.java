@@ -51,8 +51,7 @@ public class Ouroboros extends JavaPlugin
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
  *   > Low Priority: Stat descriptions, a means to see next levelup rewards, abilities, etc.
- *  >> Begin drafting a means to model and implement abilities.
- * 		i.e. Through YAML, or TOML (Hard route), model abilities and implement access and event calls. 
- * 			 Abilities such as adding more xp to xp gain events. 
- * 			 Abilities such as seen in combat (Fire arrows, Flame strikes, or more damage to a certain entity type, etc.)
+ * - Make more abilities and implement them; now's the time to get creative!! <3
+ *   > Low Priority: Make ability upgrades
+ * - Implement Passive Perks!
  */
