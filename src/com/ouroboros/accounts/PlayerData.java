@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
-import com.ouroboros.abilities.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBParticles;
@@ -56,7 +56,6 @@ public class PlayerData
 	    {
 	    	setAccountLevel(0);
 	    	initializeAbilities();
-	    	
 	        // General Levels
 	    	setStat(StatType.CRAFTING, true, 0);
 	    	setStat(StatType.ALCHEMY, true, 0);
@@ -199,10 +198,27 @@ public class PlayerData
 		data.setAbilityPoints(0);
 		data.setPrestigePoints(0);
 		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
-		{
-			data.getAbility(a).setRegistered(false);
-			data.getAbility(a).setActive(false);
-		}
+			data.getAbility(a).setRegistered(false).setActive(false);
+	}
+	
+	public void initializeAbilities() 
+	{
+		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
+    	{
+			String registered = ".registered";
+			String active = ".active";
+			String pathAlpha = switch(a.getAbilityType()) 
+			{
+				case COMBAT -> pathAlpha = "abilities.combat_ability."+a.getInternalName();
+				case PERK -> pathAlpha = "abilities.perk."+a.getInternalName();
+				case SPECIALABILITY -> pathAlpha = "abilities.special_ability."+a.getInternalName();
+				case UTILITY -> pathAlpha = "abilities.utility."+a.getInternalName();
+			};
+			if (!config.contains(pathAlpha + registered))
+				config.set(pathAlpha + registered, false);
+			if (!config.contains(pathAlpha + active))
+				config.set(pathAlpha + active, false);
+    	}
 	}
 	
 	public static boolean checkLevelUpReady(UUID uuid, StatType sType) 
@@ -228,18 +244,6 @@ public class PlayerData
 	public void setAbilityPoints(int value) 
 	{
 		config.set("points.ability", value);
-	}
-	
-	public void initializeAbilities() 
-	{
-		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
-		{
-			String path = "abilities." + a.getInternalName();
-			if (!config.contains(path + ".registered")) 
-				config.set(path + ".registered", false);
-			if (!config.contains(path + ".active"))
-				config.set(path + ".active", false);
-		}
 	}
 	
 	public AbilityHandler getAbility(AbstractOBSAbility ability) 

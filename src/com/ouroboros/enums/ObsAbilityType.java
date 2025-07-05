@@ -2,11 +2,11 @@ package com.ouroboros.enums;
 
 public enum ObsAbilityType 
 {
-	UTILITY("&r&b&oUtility"),
-	OFFENSIVE("&r&c&lOffensive"),
-	DEFENSIVE("&r&6&lDefensive"),
-	SUPPORT("&r&e&oSupport");
-
+	PERK("&r&f&oPerk"),
+	COMBAT("&r&cCombat"),
+	SPECIALABILITY("&r&c&lSpecial"),
+	UTILITY("&r&b&oUtility");
+	
 	private final String abilityType; 
 	
 	ObsAbilityType(String string) 

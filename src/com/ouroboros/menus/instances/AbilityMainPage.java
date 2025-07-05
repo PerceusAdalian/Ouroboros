@@ -10,8 +10,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.ouroboros.abilities.AbstractOBSAbility;
-import com.ouroboros.abilities.instances.ImbueFire;
+import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.ability.instances.combat.ImbueFire;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;

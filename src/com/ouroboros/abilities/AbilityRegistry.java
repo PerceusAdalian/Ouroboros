@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ouroboros.abilities.instances.ImbueFire;
+import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.ability.instances.combat.ImbueFire;
 
 public class AbilityRegistry 
 {
 	public static final Map<String, AbstractOBSAbility> abilityRegistry = new HashMap<>();
-
-    public static void itemInit() 
+    public static void abilityInit() 
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(
             ImbueFire.class);

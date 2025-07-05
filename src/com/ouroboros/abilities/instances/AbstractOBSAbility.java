@@ -1,4 +1,4 @@
-package com.ouroboros.abilities;
+package com.ouroboros.abilities.instances;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,6 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
 public abstract class AbstractOBSAbility 
@@ -29,15 +28,14 @@ public abstract class AbstractOBSAbility
 	private final String internalName;
 	private final Material icon;
 	private final String[] description;
-	private final ObsAbilityType aType, aType2;
+	private final ObsAbilityType aType;
 	private final StatType statRequirement;
 	private final int levelRequirement;
 	private final int APCOST;
-	
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
-			ObsAbilityType aType, @Nullable ObsAbilityType aType2, String...description) 
+			ObsAbilityType aType, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -46,7 +44,6 @@ public abstract class AbstractOBSAbility
 		this.statRequirement = statRequirement;
 		this.levelRequirement = levelRequirement;
 		this.aType = aType;
-		this.aType2 = aType2;
 		this.description = description;
 		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
@@ -70,7 +67,6 @@ public abstract class AbstractOBSAbility
 		config.set("description", description);
 		config.set("namespace", OBSABILITY.toString());
 		config.set("ability_type1", aType.getKey());
-		if (aType2 != null) config.set("ability_type2", aType2.getKey());
 	}
 	
 	public void save() 
@@ -135,6 +131,11 @@ public abstract class AbstractOBSAbility
 		return OBSABILITY;
 	}
 	
+	public ObsAbilityType getAbilityType() 
+	{
+		return aType;
+	}
+	
 	public abstract boolean cast(PlayerInteractEvent e);
 	
 	// For gui display
@@ -159,8 +160,7 @@ public abstract class AbstractOBSAbility
 				default -> color = '7';
 			};
 			
-			if (aType2 == null) lore.add(PrintUtils.assignAbilityType(aType));
-			else lore.add(PrintUtils.assignAbilityType(aType, aType2));
+			lore.add(PrintUtils.assignAbilityType(aType));
 			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");	
 			lore.add("");
 			if (PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true) < levelRequirement) 
@@ -175,15 +175,13 @@ public abstract class AbstractOBSAbility
 		}
 		else 
 		{
-			if (aType2 == null) lore.add(PrintUtils.assignAbilityType(aType));
-			else lore.add(PrintUtils.assignAbilityType(aType, aType2));
+			lore.add(PrintUtils.assignAbilityType(aType));
 			lore.add("");
 			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
 			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "false")));
 			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
 		}
 		
-		lore.add("\n");
 		meta.setLore(lore);
 		meta.getPersistentDataContainer().set(OBSABILITY, PersistentDataType.STRING, internalName.toString());
 		stack.setItemMeta(meta);
