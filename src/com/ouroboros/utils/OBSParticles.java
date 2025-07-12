@@ -8,7 +8,7 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
-public class OBParticles 
+public class OBSParticles 
 {
 	public static <T> void drawPoint(Location source, Particle p, double heightOffset, @Nullable T data) 
 	{

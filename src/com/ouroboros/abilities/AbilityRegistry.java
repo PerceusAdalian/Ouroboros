@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.ability.instances.combat.Flamelash;
 import com.ouroboros.ability.instances.combat.ImbueFire;
 
 public class AbilityRegistry 
@@ -15,7 +16,7 @@ public class AbilityRegistry
     public static void abilityInit() 
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(
-            ImbueFire.class);
+            ImbueFire.class, Flamelash.class);
         
         for (Class<? extends AbstractOBSAbility> clazz : itemClasses) 
         {

@@ -19,7 +19,7 @@ import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
-import com.ouroboros.utils.OBParticles;
+import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
 public class PlayerData 
@@ -139,8 +139,8 @@ public class PlayerData
 			if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
 			{
 				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1);
-				OBParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
-				OBParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);	
+				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
+				OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);	
 			}
 			if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
 				PrintUtils.Print(p, "","&f|&bΩ&f|&b&l "+PrintUtils.printStatType(sType)+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,

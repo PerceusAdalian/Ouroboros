@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.ability.instances.combat.Flamelash;
 import com.ouroboros.ability.instances.combat.ImbueFire;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -48,6 +49,31 @@ public class AbilityMainPage extends AbstractOBSGui
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(imbuefire).isRegistered()) 
 			{
 				abilityConfirmMap.put(p, imbuefire);
+				confirmRegister.put(p, false);
+				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+			}
+			else
+			{
+				e.setCancelled(true);
+				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			}
+		});
+		
+		AbstractOBSAbility flamelash = new Flamelash();
+		ItemStack flamelashStack = flamelash.toIcon(player);
+		GuiButton.button(flamelashStack.getType()).setName(flamelashStack.getItemMeta().getDisplayName()).setLore(flamelashStack.getItemMeta().getLore()).place(this, 11, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			if (PlayerData.canRegister(p.getUniqueId(), flamelash)) 
+			{
+				abilityConfirmMap.put(p, flamelash);
+				confirmRegister.put(p, true);
+				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+			}
+			
+			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(flamelash).isRegistered()) 
+			{
+				abilityConfirmMap.put(p, flamelash);
 				confirmRegister.put(p, false);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}

@@ -47,6 +47,7 @@ public class Ouroboros extends JavaPlugin
 /*
  * Project Notes:
  * + WHAT TO DO NEXT:
+ * > HIGH PRIORITY: Only allow 1 combat ability to be active at a time. 
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
