@@ -22,7 +22,13 @@ public class ObsMainMenu extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		
+		GuiButton.button(Material.BUNDLE).setName("&e&lShop&r&f").setLore("&r&fClick to view the official OBS Store.").place(this, 12, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			e.setCancelled(true);
+			p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_TRADE, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new ObsShopGui(p));
+		});
 		GuiButton.button(Material.NETHER_STAR).setName("&c&lAbilities&r&f").setLore("&r&fClick to view available abilities").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();

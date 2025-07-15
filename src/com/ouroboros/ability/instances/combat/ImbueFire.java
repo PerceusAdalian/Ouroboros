@@ -25,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityDamageType;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
@@ -36,7 +37,7 @@ public class ImbueFire extends AbstractOBSAbility
 
 	public ImbueFire() 
 	{
-		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT, null, 
+		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,  AbilityDamageType.INFERNO,
 				"&r&f&lRight_Click&r&f to enchant your blade with &c&lInferno&r&f energy.",
 				"&r&f&lDuration&r&f: 30 seconds");
 	}

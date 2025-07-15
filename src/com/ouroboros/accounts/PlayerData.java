@@ -18,6 +18,7 @@ import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.interfaces.ObsDisplayMain;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -27,9 +28,8 @@ public class PlayerData
 	protected final UUID uuid;
 	private final File file;
 	private final YamlConfiguration config;
-	private static final int baseXP = 100;
+	private static final int baseXP = 100, maxMoney = 99999999, maxDebt = 99999999;
 	private static final double ExpMultiplier = 1.15;
-	
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
 	public PlayerData(UUID uuid) 
@@ -56,6 +56,8 @@ public class PlayerData
 	    {
 	    	setAccountLevel(0);
 	    	initializeAbilities();
+	    	setFunds(true, 0);
+	    	setFunds(false, 0);
 	        // General Levels
 	    	setStat(StatType.CRAFTING, true, 0);
 	    	setStat(StatType.ALCHEMY, true, 0);
@@ -265,6 +267,56 @@ public class PlayerData
 	public void setPrestigePoints(int value) 
 	{
 		config.set("points.prestige", value);
+	}
+	
+	public int getFunds(boolean getDebt) 
+	{
+		return config.getInt(getDebt?"funds.debt":"funds.money");
+	}
+	
+	public void setFunds(boolean getDebt, int value) 
+	{
+		config.set(getDebt?"funds.debt":"funds.money", value);
+	}
+	
+	public static void addMoney(Player p, int value) 
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		int addedFunds = value;
+		int currentMoney = data.getFunds(false);
+		int currentDebt = data.getFunds(true);
+		
+		while (currentDebt > 0) 
+		{
+			currentDebt -= addedFunds;
+		}
+		
+		currentMoney += addedFunds;
+		if (currentMoney > maxMoney) currentMoney = maxMoney;
+		data.setFunds(false, currentMoney);
+		data.setFunds(true, currentDebt);
+		data.save();
+		ObsDisplayMain.updateHud(p);
+	}
+	
+	public static void subtractMoney(Player p, int value) 
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		int subtractedFunds = value;
+		int currentMoney = data.getFunds(false);
+		int currentDebt = data.getFunds(true);
+		
+		while (currentMoney > 0) 
+		{
+			currentMoney -= subtractedFunds;
+		}
+		
+		currentDebt += subtractedFunds;
+		if (currentDebt > maxDebt) currentDebt = maxDebt;
+		data.setFunds(false, currentMoney);
+		data.setFunds(true, currentDebt);
+		data.save();
+		ObsDisplayMain.updateHud(p);
 	}
 	
 	public void save() 

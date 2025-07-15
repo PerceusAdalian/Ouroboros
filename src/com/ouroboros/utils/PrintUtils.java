@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityDamageType;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 
@@ -37,7 +38,10 @@ public class PrintUtils
 			player.getPlayer().sendMessage(ColorParser(line));
 		}
 	}
-	
+	public static String setCost(int cost) 
+	{
+		return ColorParser("&r&fCost: " + cost + "&e₪&f");
+	}
 	public static void PrintToActionBar(Player player, String msg) 
 	{
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ColorParser(msg)));
@@ -94,9 +98,14 @@ public class PrintUtils
 	{
 		return ColorParser("&r&f&lAbility Type&r&f: {"+ type.getAbilityType() + "&r&f | " + type2.getAbilityType() + "&r&f}");
 	}
+	
 	public static String assignAbilityType(ObsAbilityType type) 
 	{
 		return ColorParser("&r&f&lAbility Type&r&f: {"+type.getAbilityType()+"&r&f}");
 	}
 	
+	public static String assignAbilityDamageType(AbilityDamageType type) 
+	{
+		return ColorParser("&r&f&lDamage Type&r&f: {"+type.getType()+"&r&f}");
+	}
 }

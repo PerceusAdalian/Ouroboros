@@ -1,6 +1,7 @@
 package com.ouroboros;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -15,11 +16,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
+import com.ouroboros.objects.AbstractObsObject;
+import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 
@@ -87,6 +91,88 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
 			return true;
 		}
+		
+		if (args[0].equals("generate") && ObjectRegistry.itemRegistry.containsKey(args[1])) 
+		{
+			AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[1]);
+			ItemStack stack = obj.toItemStack();
+			p.getInventory().addItem(stack);
+			return true;
+		}
+		
+//		if (args[0].equals("money")) 
+//		{
+//			if (args[1].equals("add") && args.length == 3) 
+//			{
+//				int value;
+//				try 
+//				{
+//					value = Integer.parseInt(args[2]);
+//				} 
+//				catch (NumberFormatException e)
+//				{
+//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting Integer in args[2].");
+//					return false;
+//				}
+//				
+//				if (value <= 0 || value > 99999999) 
+//				{
+//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting a value between 0 and 99999999.");
+//					return false;
+//				}
+//				
+//				NexusPlayerMoney.add(player, value);
+//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully added {&r&f&l"+value+"&r&e₪&r&7&o} to: &r&f&l"+player.getName()+"&r&7&o's account.");
+//				return true;
+//			}
+//			
+//			if (args[1].equals("subtract") && args.length == 3) 
+//			{
+//				int value;
+//				try 
+//				{
+//					value = Integer.parseInt(args[2]);
+//				} 
+//				catch (NumberFormatException e)
+//				{
+//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting Integer in args[2].");
+//					return false;
+//				}
+//				
+//				if (value <= 0 || value > 99999999) 
+//				{
+//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting a value between 0 and 99999999.");
+//					return false;
+//				}
+//				
+//				NexusPlayerMoney.subtract(player, value);
+//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully subtracted {&r&f&l"+value+"&r&e₪&r&7&o} from: &r&f&l"+player.getName()+"&r&7&o's account.");
+//				return true;
+//			}
+//			
+//			if (args[1].equals("setMaxMoney") && args.length == 2) 
+//			{
+//				NexusPlayerMoney.setMoney(player, NexusPlayerMoney.getBaseMaxMoney(player));
+//				ObsDisplayMain.updateHud(player);
+//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully added max &r&e₪ &r&7&oto: &r&f&l"+player.getName()+"&r&7&o's account.");
+//				return true;
+//			}
+//			
+//			if (args[1].equals("setMaxDebt") && args.length == 2) 
+//			{
+//				NexusPlayerMoney.setDebt(player, NexusPlayerMoney.getMaxDebt(player));
+//				ObsDisplayMain.updateHud(player);
+//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully added max &r&cЖ &r&7&oto: &r&f&l"+player.getName()+"&r&7&o's account.");
+//				return true;
+//			}
+//			
+//			if (args[1].equals("reset") && args.length == 2) 
+//			{
+//				NexusPlayerMoney.resetValues(player);
+//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully reset { &r&e₪ &r&7&o& &r&cЖ &r&7&o} from: &r&f&l"+player.getName()+"&r&7&o's account.");
+//				return true;
+//			}
+//		}
 		
 		if (args[0].equals("stats")) 
 		{
@@ -242,17 +328,19 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			}
 			return false;
 		}
-		
 		return false;
+	
 	}
 
+	
+	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] args) 
 	{
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats");
+			case 1 -> List.of("debug","menu","stats", "generate");
 			case 2 -> 
 			{
 				yield switch(args[0])
@@ -260,6 +348,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "debug" -> List.of();
 					case "menu" -> List.of();
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs");
+					case "generate" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
 					default -> List.of();
 				};
 			}

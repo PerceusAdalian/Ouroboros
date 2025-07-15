@@ -8,6 +8,10 @@ import com.ouroboros.ability.instances.combat.ImbueFire;
 import com.ouroboros.accounts.ExpHandler;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.store.ShopItemContainer;
+import com.ouroboros.objects.ObjectDropHandler;
+import com.ouroboros.objects.ObjectRegistry;
+import com.ouroboros.objects.ObsObjectCastHandler;
 import com.ouroboros.utils.PrintUtils;
 
 public class Ouroboros extends JavaPlugin
@@ -28,10 +32,17 @@ public class Ouroboros extends JavaPlugin
 		GeneralEvents.register(instance);
 		GuiHandler.registerEvent(instance);
 		ExpHandler.register(instance);
+		
 		AbilityCastHandler.register(instance);
 		AbilityRegistry.abilityInit();		
 		ImbueFire.registerCleanupHandler(instance);		
+		
+		ShopItemContainer.init();
 
+		ObjectRegistry.itemInit();
+		ObsObjectCastHandler.register(instance);
+		ObjectDropHandler.register(instance);
+		
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
 	}
 	
@@ -48,6 +59,9 @@ public class Ouroboros extends JavaPlugin
  * Project Notes:
  * + WHAT TO DO NEXT:
  * > HIGH PRIORITY: Only allow 1 combat ability to be active at a time. 
+ * > Side High Priority: 
+ *     1. Merge Mob Generation from EOL into Ouroboros for full integration.
+ *     2. Write money commands.
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
@@ -56,3 +70,4 @@ public class Ouroboros extends JavaPlugin
  *   > Low Priority: Make ability upgrades
  * - Implement Passive Perks!
  */
+//3295 lines so far!!!

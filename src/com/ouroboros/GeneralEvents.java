@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.interfaces.ObsDisplayMain;
 
 public class GeneralEvents implements Listener
 {
@@ -30,15 +31,15 @@ public class GeneralEvents implements Listener
         		{
         			//PH
         		}
-
         		PlayerData.loadPlayer(p.getUniqueId());
+        		ObsDisplayMain.createHud(p);
         	}
         	
         	@EventHandler
         	public void onQuit(PlayerQuitEvent e) 
         	{
         		Player p = e.getPlayer();
-
+        		
         		PlayerData.unloadPlayer(p.getUniqueId());
         	}
         	

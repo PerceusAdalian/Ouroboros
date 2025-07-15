@@ -19,7 +19,8 @@ public enum StatType
 	
 	//Stat points
 	PRESTIGUEPOINTS,
-	ABILITYPOINTS;
+	ABILITYPOINTS,
+	;
 	
 	public String getKey()
 	{

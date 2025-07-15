@@ -26,11 +26,6 @@ public class AbilityCastHandler implements Listener
         		if (e.getHand() == null) return false;
         		if (e.getHand().equals(EquipmentSlot.OFF_HAND) || !e.getHand().equals(EquipmentSlot.HAND)) return false;
         		if (held == null || held.getType().equals(Material.AIR)) return false;		
-
-//        		if (AbilityRegistry.abilityRegistry.get(held.getItemMeta().getPersistentDataContainer().get(AbstractOBSAbility.OBSABILITY, PersistentDataType.STRING)).cast(e)) 
-//        	    {
-//        			return true;
-//        	    }
         		
         		for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
         		{

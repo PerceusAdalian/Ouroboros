@@ -16,6 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityDamageType;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.PrintUtils;
@@ -30,12 +31,13 @@ public abstract class AbstractOBSAbility
 	private final String[] description;
 	private final ObsAbilityType aType;
 	private final StatType statRequirement;
+	private final AbilityDamageType dType;
 	private final int levelRequirement;
 	private final int APCOST;
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
-			ObsAbilityType aType, String...description) 
+			ObsAbilityType aType, AbilityDamageType dType, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -44,11 +46,11 @@ public abstract class AbstractOBSAbility
 		this.statRequirement = statRequirement;
 		this.levelRequirement = levelRequirement;
 		this.aType = aType;
+		this.dType = dType;
 		this.description = description;
 		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
 		
-		if (APCOST < 1) APCOST = 1;
 		if (!file.exists()) 
 		{
 			setInfo();
@@ -65,8 +67,8 @@ public abstract class AbstractOBSAbility
 		config.set("stat_requirement", statRequirement.getKey());
 		config.set("level_requirement", levelRequirement);
 		config.set("description", description);
-		config.set("namespace", OBSABILITY.toString());
-		config.set("ability_type1", aType.getKey());
+		config.set("ability_type", aType.getKey());
+		config.set("damage_type", dType.getType());
 	}
 	
 	public void save() 
@@ -136,6 +138,11 @@ public abstract class AbstractOBSAbility
 		return aType;
 	}
 	
+	public AbilityDamageType getDamageType() 
+	{
+		return dType;
+	}
+	
 	public abstract boolean cast(PlayerInteractEvent e);
 	
 	// For gui display
@@ -170,12 +177,13 @@ public abstract class AbstractOBSAbility
 			}
 			else if (PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true) >= levelRequirement) 
 			{
-				lore.add(PrintUtils.ColorParser("&r&fAP Cost to Register: &6"+APCOST+"&7/"+PlayerData.getPlayer(p.getUniqueId()).getAbilityPoints()));				
+				lore.add(PrintUtils.ColorParser("&r&fAP Cost to Register: &6"+(APCOST == 0 ? "FREE" : String.valueOf(APCOST))+"&7/"+PlayerData.getPlayer(p.getUniqueId()).getAbilityPoints()));				
 			}
 		}
 		else 
 		{
 			lore.add(PrintUtils.assignAbilityType(aType));
+			lore.add(PrintUtils.assignAbilityDamageType(dType));
 			lore.add("");
 			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
 			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "false")));

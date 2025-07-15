@@ -176,7 +176,7 @@ public class XpUtils
 	
 	public static int getXp(Enchantment enchant) 
 	{
-	    return switch (enchant.getKey().getKey()) 
+		return switch (enchant.getTranslationKey().toLowerCase()) 
 	    {
 	        case "projectile_protection","soul_speed","sweeping_edge",
 	        "knockback","bane_of_arthropods","smite","fire_protection",
