@@ -28,7 +28,7 @@ public class PlayerData
 	protected final UUID uuid;
 	private final File file;
 	private final YamlConfiguration config;
-	private static final int baseXP = 100, maxMoney = 99999999, maxDebt = 99999999;
+	public static final int baseXP = 100, fundsIntegerMax = 99999999;
 	private static final double ExpMultiplier = 1.15;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -282,42 +282,40 @@ public class PlayerData
 	public static void addMoney(Player p, int value) 
 	{
 		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-		int addedFunds = value;
 		int currentMoney = data.getFunds(false);
 		int currentDebt = data.getFunds(true);
-		
-		while (currentDebt > 0) 
-		{
-			currentDebt -= addedFunds;
-		}
-		
-		currentMoney += addedFunds;
-		if (currentMoney > maxMoney) currentMoney = maxMoney;
+
+		int amountToDebt = Math.min(value, currentDebt);
+		currentDebt -= amountToDebt;
+
+		int amountToMoney = value - amountToDebt;
+		currentMoney = Math.min(currentMoney + amountToMoney, fundsIntegerMax);
+
 		data.setFunds(false, currentMoney);
 		data.setFunds(true, currentDebt);
 		data.save();
 		ObsDisplayMain.updateHud(p);
 	}
+
 	
 	public static void subtractMoney(Player p, int value) 
 	{
 		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-		int subtractedFunds = value;
 		int currentMoney = data.getFunds(false);
 		int currentDebt = data.getFunds(true);
-		
-		while (currentMoney > 0) 
-		{
-			currentMoney -= subtractedFunds;
-		}
-		
-		currentDebt += subtractedFunds;
-		if (currentDebt > maxDebt) currentDebt = maxDebt;
+
+		int amountFromMoney = Math.min(value, currentMoney);
+		currentMoney -= amountFromMoney;
+
+		int remaining = value - amountFromMoney;
+		currentDebt = Math.min(currentDebt + remaining, fundsIntegerMax);
+
 		data.setFunds(false, currentMoney);
 		data.setFunds(true, currentDebt);
 		data.save();
 		ObsDisplayMain.updateHud(p);
 	}
+
 	
 	public void save() 
 	{

@@ -61,7 +61,6 @@ public class Ouroboros extends JavaPlugin
  * > HIGH PRIORITY: Only allow 1 combat ability to be active at a time. 
  * > Side High Priority: 
  *     1. Merge Mob Generation from EOL into Ouroboros for full integration.
- *     2. Write money commands.
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
@@ -70,4 +69,3 @@ public class Ouroboros extends JavaPlugin
  *   > Low Priority: Make ability upgrades
  * - Implement Passive Perks!
  */
-//3295 lines so far!!!

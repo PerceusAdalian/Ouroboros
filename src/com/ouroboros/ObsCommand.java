@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.interfaces.ObsDisplayMain;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.objects.AbstractObsObject;
@@ -100,79 +101,90 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			return true;
 		}
 		
-//		if (args[0].equals("money")) 
-//		{
-//			if (args[1].equals("add") && args.length == 3) 
-//			{
-//				int value;
-//				try 
-//				{
-//					value = Integer.parseInt(args[2]);
-//				} 
-//				catch (NumberFormatException e)
-//				{
-//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting Integer in args[2].");
-//					return false;
-//				}
-//				
-//				if (value <= 0 || value > 99999999) 
-//				{
-//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting a value between 0 and 99999999.");
-//					return false;
-//				}
-//				
-//				NexusPlayerMoney.add(player, value);
-//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully added {&r&f&l"+value+"&r&e₪&r&7&o} to: &r&f&l"+player.getName()+"&r&7&o's account.");
-//				return true;
-//			}
-//			
-//			if (args[1].equals("subtract") && args.length == 3) 
-//			{
-//				int value;
-//				try 
-//				{
-//					value = Integer.parseInt(args[2]);
-//				} 
-//				catch (NumberFormatException e)
-//				{
-//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting Integer in args[2].");
-//					return false;
-//				}
-//				
-//				if (value <= 0 || value > 99999999) 
-//				{
-//					NexusPrintUtils.NexusFormatError(player, "&r&7&oExpecting a value between 0 and 99999999.");
-//					return false;
-//				}
-//				
-//				NexusPlayerMoney.subtract(player, value);
-//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully subtracted {&r&f&l"+value+"&r&e₪&r&7&o} from: &r&f&l"+player.getName()+"&r&7&o's account.");
-//				return true;
-//			}
-//			
-//			if (args[1].equals("setMaxMoney") && args.length == 2) 
-//			{
-//				NexusPlayerMoney.setMoney(player, NexusPlayerMoney.getBaseMaxMoney(player));
-//				ObsDisplayMain.updateHud(player);
-//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully added max &r&e₪ &r&7&oto: &r&f&l"+player.getName()+"&r&7&o's account.");
-//				return true;
-//			}
-//			
-//			if (args[1].equals("setMaxDebt") && args.length == 2) 
-//			{
-//				NexusPlayerMoney.setDebt(player, NexusPlayerMoney.getMaxDebt(player));
-//				ObsDisplayMain.updateHud(player);
-//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully added max &r&cЖ &r&7&oto: &r&f&l"+player.getName()+"&r&7&o's account.");
-//				return true;
-//			}
-//			
-//			if (args[1].equals("reset") && args.length == 2) 
-//			{
-//				NexusPlayerMoney.resetValues(player);
-//				NexusPrintUtils.NexusFormatPrint(player, "&r&7&oSuccessfully reset { &r&e₪ &r&7&o& &r&cЖ &r&7&o} from: &r&f&l"+player.getName()+"&r&7&o's account.");
-//				return true;
-//			}
-//		}
+		if (args[0].equals("money")) 
+		{
+			Player target = Bukkit.getPlayer(args[2]);
+			if (target == null) return false;
+			
+			if (args[1].equals("add") && args.length == 4) 
+			{
+				int value;
+				try 
+				{
+					value = Integer.parseInt(args[3]);
+				} 
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+					return false;
+				}
+				
+				if (value <= 0 || value > PlayerData.fundsIntegerMax) 
+				{
+					PrintUtils.OBSFormatError(p, "&r&7&oExpecting a value between 0 and 99999999.");
+					return false;
+				}
+				PlayerData.addMoney(target, value);
+				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added {&r&f&l"+value+"&r&e₪&r&7&o} to: &r&f&l"+target.getName()+"&r&7&o's account.");
+				return true;
+			}
+			
+			if (args[1].equals("subtract") && args.length == 4) 
+			{
+				int value;
+				try 
+				{
+					value = Integer.parseInt(args[3]);
+				} 
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+					return false;
+				}
+				
+				if (value <= 0 || value > PlayerData.fundsIntegerMax) 
+				{
+					PrintUtils.OBSFormatError(p, "&r&7&oExpecting a value between 0 and 99999999.");
+					return false;
+				}
+				PlayerData.subtractMoney(target, value);
+				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully subtracted {&r&f&l"+value+"&r&e₪&r&7&o} from: &r&f&l"+target.getName()+"&r&7&o's account.");
+				return true;
+			}
+			
+			if (args[1].equals("setMaxMoney") && args.length == 3) 
+			{
+				PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+				data.setFunds(true, 0);
+				data.setFunds(false, PlayerData.fundsIntegerMax);
+				data.save();
+				ObsDisplayMain.updateHud(target);
+				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added max &r&e₪ &r&7&oto: &r&f&l"+target.getName()+"&r&7&o's account.");
+				return true;
+			}
+			
+			if (args[1].equals("setMaxDebt") && args.length == 3) 
+			{
+				PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+				data.setFunds(true, PlayerData.fundsIntegerMax);
+				data.setFunds(false, 0);
+				data.save();
+				ObsDisplayMain.updateHud(target);
+				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added max &r&cЖ &r&7&oto: &r&f&l"+target.getName()+"&r&7&o's account.");
+				return true;
+			}
+			
+			if (args[1].equals("resetMoney") && args.length == 3) 
+			{
+				PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+				data.setFunds(false, 0);
+				data.setFunds(true, 0);
+				data.save();
+				ObsDisplayMain.updateHud(target);
+				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully reset { &r&e₪ &r&7&o& &r&cЖ &r&7&o} from: &r&f&l"+target.getName()+"&r&7&o's account.");
+				return true;
+			}
+		}
 		
 		if (args[0].equals("stats")) 
 		{
@@ -340,7 +352,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats", "generate");
+			case 1 -> List.of("debug","menu","stats","generate","money");
 			case 2 -> 
 			{
 				yield switch(args[0])
@@ -349,6 +361,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "menu" -> List.of();
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs");
 					case "generate" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
+					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
 					default -> List.of();
 				};
 			}
@@ -360,14 +373,17 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "doLevelUpSound" -> List.of("true", "false");
 					case "doXpNotifs" -> List.of("true", "false");
-					default -> List.of();
+					case "add","subtract","setMaxMoney","setMaxDebt","resetMoney" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					default -> List.of();	
 				};
+				
 			}
 			case 4 ->
 			{
 				yield switch(args[1]) 
 				{
 					case "set" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
+					case "add","subtract" -> List.of("VALUE<=99999999");
 					default -> List.of();
 				};
 			}
