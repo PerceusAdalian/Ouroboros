@@ -69,7 +69,7 @@ public class Ouroboros extends JavaPlugin
  * + WHAT TO DO NEXT:
  * > HIGH PRIORITY: Only allow 1 combat ability to be active at a time. 
  * > Side High Priority: 
- *     1. Merge Mob Generation from EOL into Ouroboros for full integration. >>>>> ALMOST DONE!! Just write the damage event and compile + test
+ * - Fix known issues with the HP bar not loading properly, and damage event not applying/synching properly after server reboot.
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.

@@ -1,5 +1,8 @@
 package com.ouroboros.mobs;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
@@ -18,8 +21,11 @@ import com.ouroboros.Ouroboros;
 
 public class MobDamageEvent implements Listener
 {
+	public static HashMap<UUID, Boolean> hpBarMap = new HashMap<>();
+	
 	public static void register(JavaPlugin plugin)
 	{
+		
 		Bukkit.getPluginManager().registerEvents(new Listener()
 		{
 			@EventHandler(priority = EventPriority.HIGHEST)
@@ -51,8 +57,15 @@ public class MobDamageEvent implements Listener
 					if (dmgEvent.getDamager() instanceof Player)
 					{
 						ObsMobHealthbar.updateHPBar(target, true);
-						Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
-							ObsMobHealthbar.hideBossBar(target), 150);
+						if (!hpBarMap.containsKey(target.getUniqueId())) 
+						{							
+							hpBarMap.put(target.getUniqueId(), true);
+							Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+							{
+								hpBarMap.remove(target.getUniqueId());
+								ObsMobHealthbar.hideBossBar(target);
+							}, 150);
+						}
 					}
 				}
 				
