@@ -41,6 +41,7 @@ import org.bukkit.potion.PotionType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
@@ -312,7 +313,10 @@ public class ExpHandler implements Listener
 
 			    Player p = null;
 			    StatType sType = null;
-			    
+	
+			    MobData data = MobData.getMob(target.getUniqueId());
+			    if (data == null) return;
+	
 			    if (e.getDamager() instanceof Player player) 
 			    {
 			        p = player;
@@ -332,7 +336,7 @@ public class ExpHandler implements Listener
 			    if (p == null || sType == null) return;
 
 			    // Only award XP if the attack will kill the entity
-			    if (!target.isDead() && target.getHealth() - e.getFinalDamage() <= 0.0) 
+			    if (!data.isDead() && data.getHp(false) - e.getFinalDamage() <= 0.0) 
 			    {
 					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
 						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);

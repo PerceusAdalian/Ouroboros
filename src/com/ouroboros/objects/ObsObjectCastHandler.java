@@ -27,12 +27,13 @@ public class ObsObjectCastHandler
         		if (e.getHand() == null) return false;
         		if (e.getHand().equals(EquipmentSlot.OFF_HAND) || !e.getHand().equals(EquipmentSlot.HAND)) return false;
         		if (held == null || held.getType().equals(Material.AIR)) return false;		
-
+        		if (!held.getItemMeta().getPersistentDataContainer().has(AbstractObsObject.obsObject)) return false;
+        		
         		if (ObjectRegistry.itemRegistry.get(held.getItemMeta().getPersistentDataContainer().get(AbstractObsObject.obsObject, PersistentDataType.STRING)).cast(e)) 
         		{
         			if (Ouroboros.debug) 
         			{
-        				PrintUtils.OBSConsoleDebug(e.getPlayer().getName()+" used: "+ObjectRegistry.itemRegistry.get(((AbstractObsObject) held.getItemMeta()).getInternalName()).getName());
+        				PrintUtils.OBSConsoleDebug(e.getPlayer().getName()+" used: "+held.getItemMeta().getDisplayName());
         			}
         			return true;
         		}

@@ -9,6 +9,10 @@ import com.ouroboros.accounts.ExpHandler;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.store.ShopItemContainer;
+import com.ouroboros.mobs.MobDamageEvent;
+import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.MobDeathEvent;
+import com.ouroboros.mobs.MobGenerateEvent;
 import com.ouroboros.objects.ObjectDropHandler;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
@@ -28,8 +32,13 @@ public class Ouroboros extends JavaPlugin
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
 		PlayerData.initializeDataFolder();
+		MobData.initializeDataFolder();
 		
 		GeneralEvents.register(instance);
+		MobGenerateEvent.register(instance);
+		MobDeathEvent.register(instance);
+		MobDamageEvent.register(instance);
+		
 		GuiHandler.registerEvent(instance);
 		ExpHandler.register(instance);
 		
@@ -50,17 +59,17 @@ public class Ouroboros extends JavaPlugin
 	public void onDisable() 
 	{
 		PlayerData.saveAll();
-		
+		MobData.saveAll();
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
 	}
 }
 
-/*
+/* Ωuroboros
  * Project Notes:
  * + WHAT TO DO NEXT:
  * > HIGH PRIORITY: Only allow 1 combat ability to be active at a time. 
  * > Side High Priority: 
- *     1. Merge Mob Generation from EOL into Ouroboros for full integration.
+ *     1. Merge Mob Generation from EOL into Ouroboros for full integration. >>>>> ALMOST DONE!! Just write the damage event and compile + test
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.

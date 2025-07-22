@@ -303,7 +303,6 @@ public class PlayerData
 		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 		int currentMoney = data.getFunds(false);
 		int currentDebt = data.getFunds(true);
-
 		int amountFromMoney = Math.min(value, currentMoney);
 		currentMoney -= amountFromMoney;
 

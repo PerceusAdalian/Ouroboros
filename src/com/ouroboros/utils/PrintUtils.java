@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.accounts.PlayerData;
@@ -107,5 +108,21 @@ public class PrintUtils
 	public static String assignAbilityDamageType(AbilityDamageType type) 
 	{
 		return ColorParser("&r&f&lDamage Type&r&f: {"+type.getType()+"&r&f}");
+	}
+	
+	public static String getFancyEntityName(EntityType eType)
+	{
+		String inherentName = eType.toString().toLowerCase();
+		String[] splitName = inherentName.split("_");
+		inherentName = "";
+		for (String s : splitName) 
+		{
+			char[] chars = s.toCharArray();
+			chars[0] = Character.toUpperCase(chars[0]);
+			inherentName += new String(chars);
+			inherentName += " ";
+		}
+		inherentName = inherentName.substring(0, inherentName.length() - 1);
+		return inherentName;
 	}
 }
