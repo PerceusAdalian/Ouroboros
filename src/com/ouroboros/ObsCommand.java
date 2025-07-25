@@ -294,10 +294,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("set") && args.length == 6) 
 			{
-				if(!affirmOP(p))
-				{
-					return true;
-				}
+				if(!affirmOP(p)) return true;
 				
 		        Player target = Bukkit.getPlayer(args[2]);
 		        if (target == null) 
@@ -338,6 +335,49 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		        PrintUtils.OBSFormatDebug(p, "Successfully updated stats of " + target.getName());
 		        return true;
 			}
+			
+			if (args[1].equals("addXp") && args.length == 5)
+			{
+				if (!affirmOP(p)) return true;
+				
+				Player target = Bukkit.getPlayer(args[2]);
+				if (target == null) 
+		        {
+		            PrintUtils.OBSFormatError(p, "Player not found.");
+		            return true;
+		        }
+				
+				Optional<StatType> optType = StatType.fromString(args[3]);
+				if (optType.isEmpty()) 
+		        {
+		            PrintUtils.OBSFormatError(p, "Invalid input StatType: "+args[3]);
+		            return true;
+		        }
+		        StatType statType = optType.get();
+		        
+		        int value;
+		        try
+		        {
+		        	value = Integer.parseInt(args[4]);
+		        }
+		        catch (NumberFormatException e) 
+		        {
+		            PrintUtils.OBSFormatError(p, "Value must be a number: \"" + args[5] + "\"");
+		            return true;
+		        }
+		        
+		        if (value < 0 || value > Integer.MAX_VALUE)
+		        {
+		        	PrintUtils.OBSFormatError(p, "Value must be between 0 and "+Integer.MAX_VALUE+".");
+		            return true;
+		        }
+		        PlayerData.getPlayer(target.getUniqueId()).doLevelUpSound(false);
+		        EntityEffects.playSound(target, target.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+		        PlayerData.addXP(p, statType, value);
+		        PrintUtils.OBSFormatDebug(p, "&a&oSuccessfully &r&fadded &l"+value+" &r&b"+statType.getFancyKey()+" &r&eXP&f to &o"+target.getName()+"&r&f's account.");
+		        PlayerData.getPlayer(target.getUniqueId()).doLevelUpSound(true);
+		        return true;
+			}
 			return false;
 		}
 		return false;
@@ -352,14 +392,14 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats","generate","money");
+			case 1 -> List.of("debug","menu","stats","generate","money","version");
 			case 2 -> 
 			{
 				yield switch(args[0])
 				{
 					case "debug" -> List.of();
 					case "menu" -> List.of();
-					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs");
+					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
 					case "generate" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
 					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
 					default -> List.of();
@@ -373,6 +413,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "doLevelUpSound" -> List.of("true", "false");
 					case "doXpNotifs" -> List.of("true", "false");
+					case "addXp" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "add","subtract","setMaxMoney","setMaxDebt","resetMoney" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					default -> List.of();	
 				};
@@ -383,7 +424,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				yield switch(args[1]) 
 				{
 					case "set" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
-					case "add","subtract" -> List.of("VALUE<=99999999");
+					case "addXp" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
+					case "add","subtract" -> List.of("value <= 99999999");
 					default -> List.of();
 				};
 			}
@@ -391,6 +433,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
+					case "addXp" -> List.of("<value>");
 					case "set" -> List.of("true","false");
 					default -> List.of();
 				};

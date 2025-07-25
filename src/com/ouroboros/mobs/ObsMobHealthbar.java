@@ -58,10 +58,10 @@ public class ObsMobHealthbar
 	{
 		String hpBarTitle;
 		BossBar bar = bossBars.get(entity.getUniqueId());
-		MobData data = MobData.getMob(entity.getUniqueId());
 		
 		if (bar != null)
 		{
+			MobData data = MobData.getMob(entity.getUniqueId());
 			if (data.isBreak())
 				hpBarTitle = PrintUtils.ColorParser("&f" + entity.getCustomName() + " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
 			else

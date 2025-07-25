@@ -15,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
@@ -33,8 +34,8 @@ public class MobDamageEvent implements Listener
 			{
 				Entity target = e.getEntity();
 				if (!(target instanceof LivingEntity)) return;
-				if (!target.getPersistentDataContainer().has(AbstractObsMob.OBSMOB)||
-						!(target.getPersistentDataContainer().has(MobGenerateEvent.mobKey))) return;				
+				if (!target.getPersistentDataContainer().has(AbstractObsMob.OBSMOB, PersistentDataType.STRING)||
+						!(target.getPersistentDataContainer().has(MobGenerateEvent.mobKey, PersistentDataType.STRING))) return;				
 				
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
@@ -73,7 +74,7 @@ public class MobDamageEvent implements Listener
 				{
 					((Damageable) target).setHealth(0);
 					ObsMobHealthbar.removeBossBar(target);
-					data.deleteFile(target.getUniqueId());
+					data.deleteFile();
 				}
 			}
 		}, plugin);

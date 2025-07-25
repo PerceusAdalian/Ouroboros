@@ -29,7 +29,7 @@ public class PlayerData
 	private final File file;
 	private final YamlConfiguration config;
 	public static final int baseXP = 100, fundsIntegerMax = 99999999;
-	private static final double ExpMultiplier = 1.15;
+	private static final double ExpMultiplier = 1.5;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
 	public PlayerData(UUID uuid) 

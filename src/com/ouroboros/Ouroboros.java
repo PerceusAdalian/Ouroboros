@@ -13,6 +13,7 @@ import com.ouroboros.mobs.MobDamageEvent;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.MobDeathEvent;
 import com.ouroboros.mobs.MobGenerateEvent;
+import com.ouroboros.mobs.ObsMobHealthbar;
 import com.ouroboros.objects.ObjectDropHandler;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
@@ -33,6 +34,7 @@ public class Ouroboros extends JavaPlugin
 		
 		PlayerData.initializeDataFolder();
 		MobData.initializeDataFolder();
+		MobData.loadAll();
 		
 		GeneralEvents.register(instance);
 		MobGenerateEvent.register(instance);
@@ -59,7 +61,8 @@ public class Ouroboros extends JavaPlugin
 	public void onDisable() 
 	{
 		PlayerData.saveAll();
-		MobData.saveAll();
+		MobData.unloadAll();
+		ObsMobHealthbar.removeBossBars();
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
 	}
 }
@@ -67,9 +70,10 @@ public class Ouroboros extends JavaPlugin
 /* Ωuroboros
  * Project Notes:
  * + WHAT TO DO NEXT:
- * > HIGH PRIORITY: Only allow 1 combat ability to be active at a time. 
+ * > HIGH PRIORITY: 
+ * - MobData persistence is broken across restarts. Find some way to load/unload the data, as right now, it's not *truly* persistent. 
  * > Side High Priority: 
- * - Fix known issues with the HP bar not loading properly, and damage event not applying/synching properly after server reboot.
+ * - Only allow 1 combat ability to be active at a time. 
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.

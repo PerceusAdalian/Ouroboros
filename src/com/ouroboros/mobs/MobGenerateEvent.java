@@ -7,7 +7,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
@@ -35,11 +34,7 @@ public class MobGenerateEvent implements Listener
 				int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
 				
 				data.initialize(entity, level);
-				
-				entity.setCustomName(PrintUtils.ColorParser("&e{&f&lLvl&r&f: &l" + level + "&r&e} &f" + data.getName()));
-				entity.setCustomNameVisible(true);
-				ObsMobHealthbar.initializeHPBar(entity, false);
-				entity.getPersistentDataContainer().set(mobKey, PersistentDataType.INTEGER, level);
+				MobData.setMobVisuals(entity, data);
 				
 				if (Ouroboros.debug == true) 
 				{
