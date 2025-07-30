@@ -1,5 +1,6 @@
 package com.ouroboros;
 
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.abilities.AbilityCastHandler;
@@ -13,7 +14,7 @@ import com.ouroboros.mobs.MobDamageEvent;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.MobDeathEvent;
 import com.ouroboros.mobs.MobGenerateEvent;
-import com.ouroboros.mobs.ObsMobHealthbar;
+import com.ouroboros.mobs.MobManager;
 import com.ouroboros.objects.ObjectDropHandler;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
@@ -23,19 +24,26 @@ public class Ouroboros extends JavaPlugin
 {
 	public static Ouroboros instance; 
 	public static boolean debug;
+	private static boolean enabled = false;
+	
+	public static boolean isActive() 
+	{ 
+		return enabled;
+	}
 	
 	@Override
 	public void onEnable()
 	{
 		instance = this;
 		debug = false;
+		enabled = true;
 		
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
 		PlayerData.initializeDataFolder();
 		MobData.initializeDataFolder();
-		MobData.loadAll();
-		
+		MobManager.respawnAll();		
+
 		GeneralEvents.register(instance);
 		MobGenerateEvent.register(instance);
 		MobDeathEvent.register(instance);
@@ -54,15 +62,18 @@ public class Ouroboros extends JavaPlugin
 		ObsObjectCastHandler.register(instance);
 		ObjectDropHandler.register(instance);
 		
+		
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
 	}
 	
 	@Override
 	public void onDisable() 
 	{
+		enabled = false;
+		HandlerList.unregisterAll(this);
 		PlayerData.saveAll();
-		MobData.unloadAll();
-		ObsMobHealthbar.removeBossBars();
+		MobData.saveAll();
+		MobManager.despawnAll();
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
 	}
 }

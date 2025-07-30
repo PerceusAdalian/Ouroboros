@@ -28,9 +28,9 @@ public class ObsMobHealthbar
 		String hpBarTitle;
 		MobData data = MobData.getMob(entity.getUniqueId());
 		if (data.isBreak())
-			hpBarTitle = PrintUtils.ColorParser("&f" + entity.getCustomName() + " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
+			hpBarTitle = PrintUtils.ColorParser("&f" + PrintUtils.getFancyEntityName(entity.getType()) + " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
 		else
-			hpBarTitle = PrintUtils.ColorParser("&f"+entity.getCustomName()+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true));
+			hpBarTitle = PrintUtils.ColorParser("&f"+PrintUtils.getFancyEntityName(entity.getType())+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true)+"&r&7)");
 		
 		BossBar bar = Bukkit.createBossBar(hpBarTitle, BarColor.GREEN, getBarStyle(data.getLevel()));
 		double baseHP = data.getHp(true);
@@ -63,9 +63,9 @@ public class ObsMobHealthbar
 		{
 			MobData data = MobData.getMob(entity.getUniqueId());
 			if (data.isBreak())
-				hpBarTitle = PrintUtils.ColorParser("&f" + entity.getCustomName() + " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
+				hpBarTitle = PrintUtils.ColorParser("&f" +PrintUtils.getFancyEntityName(entity.getType())+ " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
 			else
-				hpBarTitle = PrintUtils.ColorParser("&f"+entity.getCustomName()+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true));
+				hpBarTitle = PrintUtils.ColorParser("&f"+PrintUtils.getFancyEntityName(entity.getType())+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true));
 			
 			double baseHP = data.getHp(true);
 			double currentHP = data.getHp(false);

@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.ability.instances.combat.Flamelash;
+import com.ouroboros.ability.instances.combat.GeminiSlash;
 import com.ouroboros.ability.instances.combat.ImbueFire;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -82,6 +83,31 @@ public class AbilityMainPage extends AbstractOBSGui
 				e.setCancelled(true);
 				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			}
+		});
+		
+		AbstractOBSAbility geminislash = new GeminiSlash();
+		ItemStack geminislashstack = geminislash.toIcon(player);
+		GuiButton.button(geminislashstack.getType()).setName(geminislashstack.getItemMeta().getDisplayName()).setLore(geminislashstack.getItemMeta().getLore()).place(this, 12, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			if (PlayerData.canRegister(p.getUniqueId(), geminislash)) 
+			{
+				abilityConfirmMap.put(p, geminislash);
+				confirmRegister.put(p, true);
+				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+			}
+			
+			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(geminislash).isRegistered()) 
+			{
+				abilityConfirmMap.put(p, geminislash);
+				confirmRegister.put(p, false);
+				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+			}
+			else
+			{
+				e.setCancelled(true);
+				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			}	
 		});
 		
 		//Exits

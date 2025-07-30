@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,10 +39,16 @@ public class MobData
 		
 		if (!file.exists()) 
 		{
-			int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
-			initialize(entity, level);
+			initialize(entity);
 			save();
 		}
+	}
+	
+	private MobData(UUID uuid, File file, YamlConfiguration config)
+	{
+		this.uuid = uuid;
+		this.file = file;
+		this.config = config;
 	}
 	
 	public static MobData getMob(UUID uuid) 
@@ -48,13 +56,14 @@ public class MobData
 		return dataMap.get(uuid);
 	}
 	
-	public void initialize(Entity entity, int level)
+	public void initialize(Entity entity)
 	{
 		if (!file.exists())
 		{
 			if (!(entity instanceof LivingEntity livingEntity)) return;
 			String name = PrintUtils.getFancyEntityName(entity.getType());
 			double baseHp = livingEntity.getAttribute(Attribute.MAX_HEALTH).getValue();
+			int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
 			double hp = baseHp*((level*0.15d)+1.0);
 			int armor = (int) (hp*0.3);
 			setUUID(uuid);
@@ -66,11 +75,96 @@ public class MobData
 			setArmor(armor, true);
 			setArmor(armor, false);
 			setBreak(false);
-			entity.getPersistentDataContainer().set(MobGenerateEvent.mobKey, PersistentDataType.STRING, uuid.toString());
-			entity.getPersistentDataContainer().set(AbstractObsMob.OBSMOB, PersistentDataType.STRING, getName());
+			setLocation(entity.getLocation());
+			entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
 			save();			
 		}
 		return;
+	}
+	
+	public String serialize()
+	{
+		Location loc = getLocation();
+		return getUUID().toString() + "|" +
+			   getEntityType()+"|"+
+			   getName()+ "|" +
+			   getLevel() + "|" +
+			   getHp(true) + "|" +
+		       getHp(false) + "|" +
+		       getArmor(true) + "|" +
+			   getArmor(false) + "|" +
+			   isBreak() + "|" +
+			   loc.getWorld().getName() + "," +
+			   loc.getX() + "," + 
+			   loc.getY() + "," +
+			   loc.getZ();
+			   
+	}
+	
+	public static MobData deserialize(String data, Server server)
+	{
+		//Parse segments
+		String[] segments = data.split("\\|");
+		if (segments.length != 10) return null;
+		
+		//Data IDs
+		UUID uuid = UUID.fromString(segments[0]);
+		String name = segments[1];
+		EntityType eType = EntityType.valueOf(segments[2].trim().toUpperCase().replace(" ", "_"));
+		int level = Integer.parseInt(segments[3]);
+		double baseHp = Double.parseDouble(segments[4]);
+		double currentHp = Double.parseDouble(segments[5]);
+		int baseArmor = Integer.parseInt(segments[6]);
+		int currentArmor = Integer.parseInt(segments[7]);
+		boolean isBroken = Boolean.parseBoolean(segments[8]);
+		
+		//Loc IDs
+		String[] locSegments = segments[9].split(",");
+		World world = server.getWorld(locSegments[0]);
+		double x = Double.parseDouble(locSegments[1]);
+        double y = Double.parseDouble(locSegments[2]);
+        double z = Double.parseDouble(locSegments[3]);
+        Location loc = new Location(world,x,y,z);
+        
+        //Generate new MobData file and reconstruct the config
+        File mobFile = new File(getDataFolder(), "mobs/"+uuid+".yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(mobFile);
+        MobData mobData = new MobData(uuid, mobFile, config);
+        
+        //Setting the data in their config from the deserialization
+        mobData.setUUID(uuid);
+        mobData.setName(name);
+        mobData.setEntityType(eType);
+        mobData.setLevel(level);
+        mobData.setHp(baseHp, true);
+        mobData.setHp(currentHp, false);
+        mobData.setArmor(baseArmor, true);
+        mobData.setArmor(currentArmor, false);
+        mobData.setBreak(isBroken);
+        mobData.setLocation(loc);
+        
+        //Load the mob into the data map, and save their file
+        dataMap.put(uuid, mobData);
+        mobData.save();
+        
+        return mobData;
+	}
+	
+	public Location getLocation()
+	{
+		World world = Bukkit.getWorld(config.getString("mob.location.world"));
+		double x = config.getDouble("mob.location.x");
+		double y = config.getDouble("mob.location.y");
+		double z = config.getDouble("mob.location.z");
+		return new Location(world,x,y,z);
+	}
+	
+	public void setLocation(Location loc)
+	{
+		config.set("mob.location.world", loc.getWorld().getName());
+		config.set("mob.location.x", loc.getX());
+		config.set("mob.location.y", loc.getY());
+		config.set("mob.location.z", loc.getZ());
 	}
 	
 	public UUID getUUID()
@@ -207,13 +301,14 @@ public class MobData
 	{
 		return this;
 	}
-	
+
 	public static void loadMobData(Entity entity) 
 	{
 		UUID uuid = entity.getUniqueId();
 		if (!dataMap.containsKey(uuid)) dataMap.put(uuid, new MobData(entity));
 	}
 	
+	@Deprecated
 	public static void loadAll()
 	{
 		for (World w : Bukkit.getWorlds())
@@ -226,6 +321,7 @@ public class MobData
 		}
 	}
 	
+	@Deprecated
 	public static void unloadAll()
 	{
 		for (World w : Bukkit.getWorlds())
@@ -241,6 +337,7 @@ public class MobData
 		}
 	}
 	
+	@Deprecated
 	public static void unloadMobData(Entity entity)
 	{
 		MobData data = dataMap.remove(entity.getUniqueId());
@@ -265,6 +362,7 @@ public class MobData
 		return uuid;
 	}
 
+	@Deprecated
 	public static void processEntity(Entity entity)
 	{
 		PersistentDataContainer container = entity.getPersistentDataContainer();
@@ -278,12 +376,12 @@ public class MobData
 			loadExistingEntity(entity);
 		}
 	}
-	
+
+	@Deprecated
 	public static void registerNewEntity(Entity entity)
 	{
 		UUID uuid = entity.getUniqueId();
 		entity.getPersistentDataContainer().set(MobGenerateEvent.mobKey, PersistentDataType.STRING, uuid.toString());
-		int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
 		
 		MobData.loadMobData(entity);
 		MobData data = MobData.getMob(uuid);
@@ -294,10 +392,11 @@ public class MobData
 			return;
 		}
 
-		data.initialize(entity, level);
+		data.initialize(entity);
 		setMobVisuals(entity, data);
 	}
-	
+
+	@Deprecated
 	public static void loadExistingEntity(Entity entity)
 	{
 		MobData data = MobData.getMob(parseUUID(entity));
@@ -307,20 +406,17 @@ public class MobData
 			return;
 		}
 		
-		int level = data.getLevel();
-		
-		data.initialize(entity, level);
+		data.initialize(entity);
 		setMobVisuals(entity, data);
 	}
 	
 	public static void setMobVisuals(Entity entity, MobData data) 
 	{
 		int level = data.getLevel();
-		entity.setCustomName(PrintUtils.ColorParser("&e{&f&lLvl&r&f: &l" + level + "&r&e} &f" + data.getName()));
+		entity.setCustomName(PrintUtils.ColorParser("&e{&f&lLvl&r&f: &l" + level + "&r&e} &f" + PrintUtils.getFancyEntityName(data.getEntityType())));
 		entity.setCustomNameVisible(true);
 		ObsMobHealthbar.initializeHPBar(entity, false);
 	}
-
 	
 	public void deleteFile()
 	{
