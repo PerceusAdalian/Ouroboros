@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -58,6 +58,28 @@ public abstract class AbstractOBSAbility
 		}
 	}
 	
+	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST,
+			ObsAbilityType aType, String...description)
+	{
+		this.displayName = displayName;
+		this.internalName = internalName;
+		this.APCOST = APCOST;
+		this.icon = icon;
+		this.statRequirement = statRequirement;
+		this.levelRequirement = levelRequirement;
+		this.aType = aType;
+		this.dType = null;
+		this.description = description;
+		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
+		this.config = YamlConfiguration.loadConfiguration(file);
+		
+		if (!file.exists()) 
+		{
+			setInfo();
+			save();
+		}
+	}
+	
 	public void setInfo() 
 	{
 		config.set("ability_name", displayName);
@@ -68,7 +90,7 @@ public abstract class AbstractOBSAbility
 		config.set("level_requirement", levelRequirement);
 		config.set("description", description);
 		config.set("ability_type", aType.getKey());
-		config.set("damage_type", dType.getType());
+		if (dType != null) config.set("damage_type", dType.getType());
 	}
 	
 	public void save() 
@@ -143,7 +165,7 @@ public abstract class AbstractOBSAbility
 		return dType;
 	}
 	
-	public abstract boolean cast(PlayerInteractEvent e);
+	public abstract boolean cast(Event e);
 	
 	// For gui display
 	public ItemStack toIcon(Player p) 
@@ -183,7 +205,7 @@ public abstract class AbstractOBSAbility
 		else 
 		{
 			lore.add(PrintUtils.assignAbilityType(aType));
-			lore.add(PrintUtils.assignAbilityDamageType(dType));
+			if (dType != null) lore.add(PrintUtils.assignAbilityDamageType(dType));
 			lore.add("");
 			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
 			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "false")));

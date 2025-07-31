@@ -2,6 +2,7 @@ package com.ouroboros.enums;
 
 public enum AbilityDamageType
 {
+	NONE(null),
 	//Neutral Melee Damage Type
 	NEUTRAL("&r&fNeutral&r&f"),
 	//Normal Melee Damage Types

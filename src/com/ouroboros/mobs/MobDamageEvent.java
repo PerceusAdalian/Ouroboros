@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -20,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.utils.PrintUtils;
 
 public class MobDamageEvent implements Listener
 {
@@ -34,10 +36,10 @@ public class MobDamageEvent implements Listener
 			public void onHit(EntityDamageEvent e)
 			{
 				Entity target = e.getEntity();
-				if (!(target instanceof LivingEntity le)) return;
-				if (!le.getPersistentDataContainer().has(AbstractObsMob.OBSMOB, PersistentDataType.STRING)) return;
+				if (!(target instanceof LivingEntity)) return;
+				if (!target.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
 				
-				MobData data = MobData.getMob(le.getUniqueId());
+				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
 				e.setCancelled(true);
@@ -54,18 +56,21 @@ public class MobDamageEvent implements Listener
 				
 				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p)
 				{
-					le.playHurtAnimation(0);
+					BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
+					if (bar == null) ObsMobHealthbar.initializeHPBar(target, true);
+					else ObsMobHealthbar.updateHPBar(target, true);
+
+					((LivingEntity) target).playHurtAnimation(0);
 					Vector direction = target.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(0.4);
 					target.setVelocity(direction.setY(0.4));	
 					
-					ObsMobHealthbar.updateHPBar(le, true);
-					if (!hpBarMap.containsKey(le.getUniqueId())) 
+					if (!hpBarMap.containsKey(target.getUniqueId())) 
 					{							
-						hpBarMap.put(le.getUniqueId(), true);
+						hpBarMap.put(target.getUniqueId(), true);
 						Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 						{
-							hpBarMap.remove(le.getUniqueId());
-							ObsMobHealthbar.hideBossBar(le);
+							hpBarMap.remove(target.getUniqueId());
+							ObsMobHealthbar.hideBossBar(target);
 						}, 150);
 					}
 				}
@@ -74,13 +79,23 @@ public class MobDamageEvent implements Listener
 				
 				if (data.isDead())
 				{
-					((Damageable) le).setHealth(0);
-					ObsMobHealthbar.removeBossBar(le);
+					((Damageable) target).setHealth(0);
+					ObsMobHealthbar.removeBossBar(target);
 					data.deleteFile();
 				}
 				else
 				{
-					((Damageable) le).setHealth(((Attributable) le).getAttribute(Attribute.MAX_HEALTH).getValue());
+					((Damageable) target).setHealth(((Attributable) target).getAttribute(Attribute.MAX_HEALTH).getValue());
+				}
+				
+				if (Ouroboros.debug) 
+				{
+					String name = target.getCustomName();
+					PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
+							(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+"&7 || &fDamage Dealt: &c"+
+							dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
+							(data.isBreak()?" &7|| &6Break&f: &cTRUE&f":(" &7|| &6Break&f: &aFALSE&7 || &6AR&f: "+
+							data.getArmor(false)+"&7/&f"+data.getArmor(true))+" || &o&7END"));
 				}
 			}
 		}, plugin);

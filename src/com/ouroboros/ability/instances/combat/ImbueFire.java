@@ -11,6 +11,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -50,47 +51,51 @@ public class ImbueFire extends AbstractOBSAbility
 	public final static NamespacedKey enchantKey = new NamespacedKey(Ouroboros.instance, "imbue_fire");
 	
 	@Override
-	public boolean cast(PlayerInteractEvent e) 
+	public boolean cast(Event e) 
 	{
-		if (!PlayerActions.rightClickAir(e)) return false;
-		
-		Player p = e.getPlayer();
-		
-		if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
-		
-		if (castHandler.containsKey(p.getUniqueId())) return false;
-		
-		ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
-		if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
-		
-		ItemMeta meta = held.getItemMeta();
-		if (meta.hasEnchant(Enchantment.FIRE_ASPECT)) 
-		{
-			hasEnchantPreviously = true;
-			previousEnchantLevel = meta.getEnchants().get(Enchantment.FIRE_ASPECT);
-		}
-		
-		meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
-		meta.getPersistentDataContainer().set(enchantKey, PersistentDataType.INTEGER, 1);
-		EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
-		EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER, 1, 1);
-		held.setItemMeta(meta);
-		
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
-		{
-			if (!p.isOnline()) 
+		if (e instanceof PlayerInteractEvent pie)
+		{			
+			if (!PlayerActions.rightClickAir(pie)) return false;
+			
+			Player p = pie.getPlayer();
+			
+			if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
+			
+			if (castHandler.containsKey(p.getUniqueId())) return false;
+			
+			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
+			if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
+			
+			ItemMeta meta = held.getItemMeta();
+			if (meta.hasEnchant(Enchantment.FIRE_ASPECT)) 
 			{
-				cleanUpPlayer.put(p.getUniqueId(), true);
-				return;
+				hasEnchantPreviously = true;
+				previousEnchantLevel = meta.getEnchants().get(Enchantment.FIRE_ASPECT);
 			}
 			
-			removeBuff(p);
+			meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+			meta.getPersistentDataContainer().set(enchantKey, PersistentDataType.INTEGER, 1);
+			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
+			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER, 1, 1);
+			held.setItemMeta(meta);
 			
-			castHandler.remove(p.getUniqueId());
-		}, 600);
-		
-		castHandler.put(p.getUniqueId(), true);
-		return true;
+			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
+			{
+				if (!p.isOnline()) 
+				{
+					cleanUpPlayer.put(p.getUniqueId(), true);
+					return;
+				}
+				
+				removeBuff(p);
+				
+				castHandler.remove(p.getUniqueId());
+			}, 600);
+			
+			castHandler.put(p.getUniqueId(), true);
+			return true;
+		}
+		return false;
 	}
 	
 	public static void registerCleanupHandler(JavaPlugin plugin) 

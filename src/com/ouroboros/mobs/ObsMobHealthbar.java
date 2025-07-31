@@ -25,6 +25,8 @@ public class ObsMobHealthbar
 	
 	public static void initializeHPBar(Entity entity, Boolean bool)
 	{
+		if (!entity.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
+		
 		String hpBarTitle;
 		MobData data = MobData.getMob(entity.getUniqueId());
 		if (data.isBreak())
@@ -52,33 +54,35 @@ public class ObsMobHealthbar
 	    }
 		
 		bossBars.put(entity.getUniqueId(), bar);
+		if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oInitializeHPBar&r&f -- &aOK&f || &7Mob: "+
+				(entity.getCustomName()!=null?entity.getCustomName():PrintUtils.getFancyEntityName(entity.getType())));
 	}
 	
 	public static void updateHPBar(Entity entity, Boolean bool)
 	{
 		String hpBarTitle;
 		BossBar bar = bossBars.get(entity.getUniqueId());
+		if (bar == null) return;
+	
+		MobData data = MobData.getMob(entity.getUniqueId());
+		if (data.isBreak())
+			hpBarTitle = PrintUtils.ColorParser("&f" +PrintUtils.getFancyEntityName(entity.getType())+ " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
+		else
+			hpBarTitle = PrintUtils.ColorParser("&f"+PrintUtils.getFancyEntityName(entity.getType())+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true));
 		
-		if (bar != null)
-		{
-			MobData data = MobData.getMob(entity.getUniqueId());
-			if (data.isBreak())
-				hpBarTitle = PrintUtils.ColorParser("&f" +PrintUtils.getFancyEntityName(entity.getType())+ " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
-			else
-				hpBarTitle = PrintUtils.ColorParser("&f"+PrintUtils.getFancyEntityName(entity.getType())+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true));
-			
-			double baseHP = data.getHp(true);
-			double currentHP = data.getHp(false);
-			double progress = (baseHP <= 0) ? 0.0 : Math.min(1.0, Math.max(0.0, currentHP / baseHP));
-			
-			bar.setColor(getBarColor(currentHP, baseHP));
-			bar.setProgress(progress);
-			bar.setTitle(hpBarTitle);
-			bar.setVisible(bool);
-			entity.getPersistentDataContainer().set(HPBARPROGRESS, PersistentDataType.DOUBLE, progress);
-			return;
-		}
-		initializeHPBar(entity, true);
+		double baseHP = data.getHp(true);
+		double currentHP = data.getHp(false);
+		double progress = (baseHP <= 0) ? 0.0 : Math.min(1.0, Math.max(0.0, currentHP / baseHP));
+		
+		bar.setColor(getBarColor(currentHP, baseHP));
+		bar.setProgress(progress);
+		bar.setTitle(hpBarTitle);
+		bar.setVisible(bool);
+		entity.getPersistentDataContainer().set(HPBARPROGRESS, PersistentDataType.DOUBLE, progress);
+		if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oUpdateHPBar&r&f -- &aOK&f || &7Mob: "+
+				(entity.getCustomName()!=null?entity.getCustomName():PrintUtils.getFancyEntityName(entity.getType())));
+		return;
+	
 	}
 	
 	public static void hideBossBar(Entity entity)

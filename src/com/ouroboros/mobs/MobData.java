@@ -34,7 +34,7 @@ public class MobData
 	public MobData(Entity entity) 
 	{
 		this.uuid = entity.getUniqueId();
-		this.file = new File(getDataFolder(), "mobs/"+uuid.toString()+".yml");
+		this.file = new File(getDataFolder(), "mobs/data/"+uuid.toString()+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
 		
 		if (!file.exists()) 
@@ -70,8 +70,8 @@ public class MobData
 			setName(name);
 			setEntityType(livingEntity.getType());
 			setLevel(level);
-			setHp(hp, true);
-			setHp(hp, false);
+			setHp(Math.ceil(hp), true);
+			setHp(Math.ceil(hp), false);
 			setArmor(armor, true);
 			setArmor(armor, false);
 			setBreak(false);
@@ -127,7 +127,7 @@ public class MobData
         Location loc = new Location(world,x,y,z);
         
         //Generate new MobData file and reconstruct the config
-        File mobFile = new File(getDataFolder(), "mobs/"+uuid+".yml");
+        File mobFile = new File(getDataFolder(), "mobs/data/"+uuid+".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(mobFile);
         MobData mobData = new MobData(uuid, mobFile, config);
         
@@ -302,10 +302,11 @@ public class MobData
 		return this;
 	}
 
-	public static void loadMobData(Entity entity) 
+	public static MobData loadMobData(Entity entity) 
 	{
 		UUID uuid = entity.getUniqueId();
 		if (!dataMap.containsKey(uuid)) dataMap.put(uuid, new MobData(entity));
+		return dataMap.get(uuid);
 	}
 	
 	@Deprecated
@@ -329,7 +330,7 @@ public class MobData
 			for (Entity e : w.getEntities())
 			{
 				if (!(e instanceof LivingEntity)) continue;
-				if (!e.getPersistentDataContainer().has(MobGenerateEvent.mobKey)) continue;
+				if (!e.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY)) continue;
 				
 				MobData.unloadMobData(e);
 				ObsMobHealthbar.removeBossBar(e);
@@ -346,7 +347,7 @@ public class MobData
 	
 	public static UUID parseUUID(Entity entity) 
 	{ 
-		String uuidString = entity.getPersistentDataContainer().get(MobGenerateEvent.mobKey, PersistentDataType.STRING);
+		String uuidString = entity.getPersistentDataContainer().get(MobManager.MOB_DATA_KEY, PersistentDataType.STRING);
 		if (uuidString == null) return null;
 
 		UUID uuid;
@@ -367,7 +368,7 @@ public class MobData
 	{
 		PersistentDataContainer container = entity.getPersistentDataContainer();
 
-		if (!container.has(MobGenerateEvent.mobKey, PersistentDataType.STRING)) 
+		if (!container.has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) 
 		{
 			registerNewEntity(entity);
 		} 
@@ -381,7 +382,7 @@ public class MobData
 	public static void registerNewEntity(Entity entity)
 	{
 		UUID uuid = entity.getUniqueId();
-		entity.getPersistentDataContainer().set(MobGenerateEvent.mobKey, PersistentDataType.STRING, uuid.toString());
+		entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, uuid.toString());
 		
 		MobData.loadMobData(entity);
 		MobData data = MobData.getMob(uuid);

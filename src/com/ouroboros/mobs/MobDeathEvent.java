@@ -18,11 +18,11 @@ public class MobDeathEvent implements Listener
 			@EventHandler
 			public void onDeath(EntityDeathEvent e) 
 			{
-				if (!e.getEntity().getPersistentDataContainer().has(AbstractObsMob.OBSMOB)) return;
+				if (!e.getEntity().getPersistentDataContainer().has(MobManager.MOB_DATA_KEY)) return;
 				if (Ouroboros.debug == true) 
 				{
 					String string = e.getEntity().getCustomName().toString();
-					PrintUtils.OBSConsoleDebug("&fObsMobDeathEvent: &r&f" + string + " || &cDied Successfully");
+					PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 Mob: " + string + " || &c&oDied Successfully");
 				}
 				return;
 			}

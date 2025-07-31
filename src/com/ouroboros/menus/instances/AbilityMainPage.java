@@ -14,6 +14,7 @@ import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.ability.instances.combat.Flamelash;
 import com.ouroboros.ability.instances.combat.GeminiSlash;
 import com.ouroboros.ability.instances.combat.ImbueFire;
+import com.ouroboros.ability.instances.perks.RejuvenateWounds;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
@@ -24,7 +25,7 @@ public class AbilityMainPage extends AbstractOBSGui
 
 	public AbilityMainPage(Player player) 
 	{
-		super(player, "Abilities", 54, Set.of(10,37,43));
+		super(player, "Abilities", 54, Set.of(10,11,12,14,37,43));
 	}
 
 	public static Map<Player, AbstractOBSAbility> abilityConfirmMap = new HashMap<>();
@@ -100,6 +101,31 @@ public class AbilityMainPage extends AbstractOBSGui
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(geminislash).isRegistered()) 
 			{
 				abilityConfirmMap.put(p, geminislash);
+				confirmRegister.put(p, false);
+				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+			}
+			else
+			{
+				e.setCancelled(true);
+				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			}	
+		});
+		
+		AbstractOBSAbility regenperk = new RejuvenateWounds();
+		ItemStack regenperkstack = regenperk.toIcon(player);
+		GuiButton.button(regenperkstack.getType()).setName(regenperkstack.getItemMeta().getDisplayName()).setLore(regenperkstack.getItemMeta().getLore()).place(this, 14, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			if (PlayerData.canRegister(p.getUniqueId(), regenperk)) 
+			{
+				abilityConfirmMap.put(p, regenperk);
+				confirmRegister.put(p, true);
+				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+			}
+			
+			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(regenperk).isRegistered()) 
+			{
+				abilityConfirmMap.put(p, regenperk);
 				confirmRegister.put(p, false);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}

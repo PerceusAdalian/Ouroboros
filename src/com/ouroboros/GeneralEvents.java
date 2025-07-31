@@ -32,11 +32,13 @@ public class GeneralEvents implements Listener
         		
         		if (!p.hasPlayedBefore()) 
         		{
-        			PrintUtils.OBSFormatPrint(p, "Welcome to The Viel, "+p.getName()+"!");
+        			PrintUtils.OBSFormatPrint(p, "Welcome to our server, "+p.getName()+"!");
+        			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnJoin&r&f -- &aOK&7 || &o"+p.getName()+" joined for the first time.");
         		}
         		else 
         		{        			
         			PrintUtils.OBSFormatPrint(p, "Welcome Back "+p.getName());
+        			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnJoin&r&f -- &aOK&7 || &o"+p.getName()+" joined the server.");
         		}
         		
         		PlayerData.loadPlayer(p.getUniqueId());
@@ -50,6 +52,7 @@ public class GeneralEvents implements Listener
         		Player p = e.getPlayer();
         		ObsMobHealthbar.removePlayer(p);
         		PlayerData.unloadPlayer(p.getUniqueId());
+        		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
         	}
         	
         }, plugin);

@@ -13,7 +13,10 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
@@ -25,6 +28,7 @@ import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.ValidObjectsHandler;
 
 public class Flamelash extends AbstractOBSAbility
 {
@@ -41,27 +45,34 @@ public class Flamelash extends AbstractOBSAbility
 	public static Set<UUID> cooldownTimer = new HashSet<>();
 	
 	@Override
-	public boolean cast(PlayerInteractEvent e) 
+	public boolean cast(Event e) 
 	{
-		if (!PlayerActions.rightClickAir(e)) return false;
-				
-		Player p = e.getPlayer();
-		if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
-		if (cooldownTimer.contains(p.getUniqueId())) return false;
-		
-		Entity target = RayCastUtils.getNearestEntity(p, 7);
-		if (target == null || !(target instanceof LivingEntity)) return false;
-		
-		OBSParticles.drawSpiralVortex(target.getLocation(), 5, 3, 0.1, Particle.LAVA, null);
-		EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
-		((Damageable)target).damage(10);
-		target.setFireTicks(200);
-		
-		cooldownTimer.add(p.getUniqueId());
-		
-		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldownTimer.remove(p.getUniqueId()), 100);
-		
-		return true;
+		if (e instanceof PlayerInteractEvent pie)
+		{
+			if (!PlayerActions.rightClickAir(pie)) return false;
+			
+			Player p = pie.getPlayer();
+			
+			if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
+			if (cooldownTimer.contains(p.getUniqueId())) return false;
+			
+			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
+			if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
+			
+			Entity target = RayCastUtils.getNearestEntity(p, 7);
+			if (target == null || !(target instanceof LivingEntity)) return false;
+			
+			OBSParticles.drawSpiralVortex(target.getLocation(), 5, 3, 0.1, Particle.LAVA, null);
+			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
+			((Damageable)target).damage(10);
+			target.setFireTicks(200);
+			
+			cooldownTimer.add(p.getUniqueId());
+			
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldownTimer.remove(p.getUniqueId()), 100);
+			
+			return true;
+		}
+		return false;	
 	}
-	
 }

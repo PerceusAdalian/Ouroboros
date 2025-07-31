@@ -41,9 +41,7 @@ public class Ouroboros extends JavaPlugin
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
 		PlayerData.initializeDataFolder();
-		MobData.initializeDataFolder();
-		MobManager.respawnAll();		
-
+		MobData.initializeDataFolder();	
 		GeneralEvents.register(instance);
 		MobGenerateEvent.register(instance);
 		MobDeathEvent.register(instance);
@@ -62,6 +60,7 @@ public class Ouroboros extends JavaPlugin
 		ObsObjectCastHandler.register(instance);
 		ObjectDropHandler.register(instance);
 		
+		MobManager.respawnAll();
 		
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
 	}
@@ -70,10 +69,12 @@ public class Ouroboros extends JavaPlugin
 	public void onDisable() 
 	{
 		enabled = false;
+		
 		HandlerList.unregisterAll(this);
 		PlayerData.saveAll();
 		MobData.saveAll();
 		MobManager.despawnAll();
+		
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
 	}
 }

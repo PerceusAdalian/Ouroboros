@@ -5,7 +5,10 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
@@ -16,6 +19,7 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.ValidObjectsHandler;
 
 public class GeminiSlash extends AbstractOBSAbility
 {
@@ -28,24 +32,31 @@ public class GeminiSlash extends AbstractOBSAbility
 	}
 
 	@Override
-	public boolean cast(PlayerInteractEvent e) 
+	public boolean cast(Event e) 
 	{
-		//Access methods, params, and validation of ownership of the ability.
-		if (!PlayerActions.rightClickAir(e)) return false;
-		Player p = e.getPlayer();
-		if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
-		
-		//Get a valid target
-		Entity target = RayCastUtils.getNearestEntity(p, 5);
-		if (target == null) return false;
-		
-		//Initalize vectors
-		Vector v1 = target.getLocation().toVector();
-		Vector v2 = p.getLocation().toVector();
-		p.setVelocity(v1.subtract(v2).normalize().multiply(1.5));
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
-		((Damageable) target).damage(10);
-		
-		return true;
+		if (e instanceof PlayerInteractEvent pie)
+		{
+			//Access methods, params, and validation of ownership of the ability.
+			if (!PlayerActions.rightClickAir(pie)) return false;
+			Player p = pie.getPlayer();
+			if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
+			
+			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
+			if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
+			
+			//Get a valid target
+			Entity target = RayCastUtils.getNearestEntity(p, 5);
+			if (target == null) return false;
+			
+			//Initalize vectors
+			Vector v1 = target.getLocation().toVector();
+			Vector v2 = p.getLocation().toVector();
+			p.setVelocity(v1.subtract(v2).normalize().multiply(1.5));
+			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
+			((Damageable) target).damage(10);
+			
+			return true;			
+		}
+		return false;
 	}
 }
