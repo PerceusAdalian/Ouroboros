@@ -1,6 +1,9 @@
 package com.ouroboros.menus.instances;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -9,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -22,6 +26,8 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 	{
 		super(player, "Ability Confirmation", 27, Set.of(10,13,16));
 	}
+
+	public static Map<UUID, AbstractOBSAbility> abilityChangeMap = new HashMap<>();
 
 	@Override
 	protected void build() 
@@ -51,14 +57,38 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 			}
 			else 
 			{
-				if (data.getAbility(ability).isActive()) 
+				if (ability.getAbilityType().equals(ObsAbilityType.COMBAT))
+				{
+					if (data.hasActiveCombatAbility() && data.getActiveCombatAbility() != ability)
+					{
+						abilityChangeMap.put(p.getUniqueId(), ability);
+						GuiHandler.changeMenu(p, new AbilityChangePage(p));
+					}
+					else if (data.getAbility(ability).isActive()) 
+					{
+						data.setActiveCombatAbility(null);
+						data.getAbility(ability).setActive(false);
+						data.save();
+						PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o"+ability.getDisplayName());
+						GuiHandler.changeMenu(p, new AbilityMainPage(p));
+					}
+					else
+					{
+						data.setActiveCombatAbility(ability);
+						data.getAbility(ability).setActive(true);
+						data.save();
+						PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o"+ability.getDisplayName());
+						GuiHandler.changeMenu(p, new AbilityMainPage(p));
+					}
+				}
+				else if (data.getAbility(ability).isActive()) 
 				{
 					data.getAbility(ability).setActive(false);
 					data.save();
 					PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o"+ability.getDisplayName());
 					GuiHandler.changeMenu(p, new AbilityMainPage(p));
 				}
-				else 
+				else
 				{
 					data.getAbility(ability).setActive(true);
 					data.save();

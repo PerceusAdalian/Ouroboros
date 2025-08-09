@@ -47,7 +47,6 @@ public class AbilityMainPage extends AbstractOBSGui
 				confirmRegister.put(p, true);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
-			
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(imbuefire).isRegistered()) 
 			{
 				abilityConfirmMap.put(p, imbuefire);

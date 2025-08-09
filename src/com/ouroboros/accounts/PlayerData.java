@@ -20,6 +20,7 @@ import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.interfaces.ObsDisplayMain;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
@@ -88,6 +89,8 @@ public class PlayerData
 	    	setStat(StatType.RANGED, false, 0);
 	    	setStat(StatType.MAGIC, false, 0);
 	    	
+	    	setActiveCombatAbility(null);
+	    	
 	    	doLevelUpSound(true);
 	    	doXpNotification(true);
 	    	setAbilityPoints(0);
@@ -116,6 +119,29 @@ public class PlayerData
 		String path = setLevel ? "stats." + sType.getKey() : "experience." + sType.getKey();
 		if (setLevel) value = Math.max(0, Math.min(100, value));
 		config.set(path, value);
+	}
+	
+	public boolean hasActiveCombatAbility()
+	{
+		if (getActiveCombatAbility() == null) return false;
+		else return config.getBoolean("stats.abilities.activecombatability");
+	}
+	
+	public AbstractOBSAbility getActiveCombatAbility()
+	{
+		String internalName = config.getString("stats.abilities.activecombatability");
+		if (internalName == null) return null;
+		else return AbstractOBSAbility.fromInternalName(internalName);
+	}
+	
+	/**
+	 * @param ability Assigns the given combat ability to the player's file as an active combat ability.
+	 * Only one ability may be active at any given time. This is assuming the operand is a valid combat ability.
+	 */
+	public void setActiveCombatAbility(@Nullable AbstractOBSAbility ability)
+	{
+		String path = ability != null ? "stats.abilities.activecombatability." + ability.getInternalName() : "stats.abilities.activecombatability."+null;
+		config.set(path, ability != null ? true : false);
 	}
 
 	public static void addXP(Player p, StatType sType, int value) 
@@ -253,10 +279,20 @@ public class PlayerData
 		return new AbilityHandler(ability, config);
 	}
 	
+	public int getStatLevel(StatType sType)
+	{
+		return getStat(sType, true);
+	}
+	
 	public static boolean canRegister(UUID uuid, AbstractOBSAbility ability) 
 	{
+		PlayerData data = PlayerData.getPlayer(uuid);
+		AbstractOBSAbility pAbility = ability.getInstance();
 		
-		return !PlayerData.getPlayer(uuid).getAbility(ability).isRegistered() && PlayerData.getPlayer(uuid).getAbilityPoints() >= ability.getAPCost();
+		boolean statRequirement = data.getStatLevel(pAbility.getStatRequirement()) >= pAbility.getLevelRequirement();
+		boolean notRegistered = (!data.getAbility(pAbility).isRegistered());
+		boolean hasEnoughAP = data.getAbilityPoints() >= pAbility.getAPCost();
+		return statRequirement && hasEnoughAP && notRegistered;
 	}
 	
 	public int getPrestigePoints() 

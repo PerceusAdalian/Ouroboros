@@ -79,6 +79,8 @@ public class Ouroboros extends JavaPlugin
 	}
 }
 
+//Fix combat ability not changing/displaying pages properly; it won't override the previous combat ability, and will just add more to the file. 
+
 /* Ωuroboros
  * Project Notes:
  * + WHAT TO DO NEXT:

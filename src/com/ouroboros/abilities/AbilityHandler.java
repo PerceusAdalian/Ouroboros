@@ -49,7 +49,7 @@ public class AbilityHandler
 		return this;
     }
     
-    public AbstractOBSAbility getAbility() 
+    public AbstractOBSAbility get() 
     {
         return ability;
     }

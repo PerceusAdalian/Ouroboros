@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.AbilityDamageType;
 import com.ouroboros.enums.ObsAbilityType;
@@ -130,9 +131,10 @@ public abstract class AbstractOBSAbility
 		return description;
 	}
 	
-	public String getStatRequirement() 
+	public StatType getStatRequirement() 
 	{
-		return config.getString("stat_requirement");
+		
+		return StatType.fromString(config.getString("stat_requirement"));
 	}
 	
 	public int getLevelRequirement() 
@@ -163,6 +165,16 @@ public abstract class AbstractOBSAbility
 	public AbilityDamageType getDamageType() 
 	{
 		return dType;
+	}
+	
+	public static AbstractOBSAbility fromInternalName(String string)
+	{
+		if (AbilityRegistry.abilityRegistry.containsKey(string))
+		{
+			AbstractOBSAbility ability = AbilityRegistry.abilityRegistry.get(string);
+			return ability;
+		}
+		return null;
 	}
 	
 	public abstract boolean cast(Event e);

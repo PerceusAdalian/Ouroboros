@@ -1,7 +1,5 @@
 package com.ouroboros.enums;
 
-import java.util.Optional;
-
 public enum StatType 
 {
 	//Stat types
@@ -37,15 +35,15 @@ public enum StatType
 		return s += new String(chars);
 	}
 	
-	public static Optional<StatType> fromString(String input) 
+	public static StatType fromString(String input) 
 	{
         try 
         {
-            return Optional.of(StatType.valueOf(input.toUpperCase()));
+            return StatType.valueOf(input.toUpperCase());
         } 
         catch (IllegalArgumentException e) 
         {
-            return Optional.empty();
+            return null;
         }
     }
 }

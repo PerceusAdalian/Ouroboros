@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -303,13 +302,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		            return true;
 		        }
 
-		        Optional<StatType> optType = StatType.fromString(args[3]);
-		        if (optType.isEmpty()) 
+		        StatType statType = StatType.fromString(args[3]);
+		        if (statType == null)
 		        {
 		            PrintUtils.OBSFormatError(p, "Invalid input StatType: "+args[3]);
 		            return true;
 		        }
-		        StatType statType = optType.get();
 		        
 		        boolean setLevel = Boolean.parseBoolean(args[4]);
 		        
@@ -347,13 +345,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		            return true;
 		        }
 				
-				Optional<StatType> optType = StatType.fromString(args[3]);
-				if (optType.isEmpty()) 
+				StatType statType = StatType.fromString(args[3]);
+				if (statType == null) 
 		        {
 		            PrintUtils.OBSFormatError(p, "Invalid input StatType: "+args[3]);
 		            return true;
 		        }
-		        StatType statType = optType.get();
 		        
 		        int value;
 		        try
@@ -383,8 +380,6 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return false;
 	
 	}
-
-	
 	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] args) 
