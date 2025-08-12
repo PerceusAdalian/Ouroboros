@@ -43,13 +43,13 @@ public class AbilityMainPage extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			if (PlayerData.canRegister(p.getUniqueId(), imbuefire)) 
 			{
-				abilityConfirmMap.put(p, imbuefire);
+				abilityConfirmMap.put(p, imbuefire.getInstance());
 				confirmRegister.put(p, true);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(imbuefire).isRegistered()) 
 			{
-				abilityConfirmMap.put(p, imbuefire);
+				abilityConfirmMap.put(p, imbuefire.getInstance());
 				confirmRegister.put(p, false);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
@@ -67,14 +67,14 @@ public class AbilityMainPage extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			if (PlayerData.canRegister(p.getUniqueId(), flamelash)) 
 			{
-				abilityConfirmMap.put(p, flamelash);
+				abilityConfirmMap.put(p, flamelash.getInstance());
 				confirmRegister.put(p, true);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
 			
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(flamelash).isRegistered()) 
 			{
-				abilityConfirmMap.put(p, flamelash);
+				abilityConfirmMap.put(p, flamelash.getInstance());
 				confirmRegister.put(p, false);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
@@ -92,14 +92,14 @@ public class AbilityMainPage extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			if (PlayerData.canRegister(p.getUniqueId(), geminislash)) 
 			{
-				abilityConfirmMap.put(p, geminislash);
+				abilityConfirmMap.put(p, geminislash.getInstance());
 				confirmRegister.put(p, true);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
 			
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(geminislash).isRegistered()) 
 			{
-				abilityConfirmMap.put(p, geminislash);
+				abilityConfirmMap.put(p, geminislash.getInstance());
 				confirmRegister.put(p, false);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
@@ -117,14 +117,14 @@ public class AbilityMainPage extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			if (PlayerData.canRegister(p.getUniqueId(), regenperk)) 
 			{
-				abilityConfirmMap.put(p, regenperk);
+				abilityConfirmMap.put(p, regenperk.getInstance());
 				confirmRegister.put(p, true);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}
 			
 			else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(regenperk).isRegistered()) 
 			{
-				abilityConfirmMap.put(p, regenperk);
+				abilityConfirmMap.put(p, regenperk.getInstance());
 				confirmRegister.put(p, false);
 				GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
 			}

@@ -35,6 +35,7 @@ public class AbilityChangePage extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER, 1, 1);
 			PrintUtils.OBSFormatPrint(p, "Changed active combat ability: &b&o"+data.getActiveCombatAbility().getDisplayName()+" &r&e&l-> &r&b&o"+ability.getDisplayName());
+			data.getAbility(data.getActiveCombatAbility()).setActive(false);
 			data.setActiveCombatAbility(ability);
 			data.getAbility(ability).setActive(true);
 			data.save();

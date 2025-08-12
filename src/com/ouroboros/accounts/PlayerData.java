@@ -17,6 +17,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.interfaces.ObsDisplayMain;
 import com.ouroboros.utils.EntityEffects;
@@ -49,6 +50,11 @@ public class PlayerData
 	public static PlayerData getPlayer(UUID uuid) 
 	{
 	    return dataMap.get(uuid); 
+	}
+	
+	public UUID getUUID(PlayerData data)
+	{
+		return data.uuid;
 	}
 	
 	public void setDefaults() 
@@ -124,24 +130,47 @@ public class PlayerData
 	public boolean hasActiveCombatAbility()
 	{
 		if (getActiveCombatAbility() == null) return false;
-		else return config.getBoolean("stats.abilities.activecombatability");
+		else return true;
 	}
 	
 	public AbstractOBSAbility getActiveCombatAbility()
 	{
 		String internalName = config.getString("stats.abilities.activecombatability");
 		if (internalName == null) return null;
-		else return AbstractOBSAbility.fromInternalName(internalName);
+		return AbstractOBSAbility.fromInternalName(internalName);
 	}
 	
-	/**
-	 * @param ability Assigns the given combat ability to the player's file as an active combat ability.
-	 * Only one ability may be active at any given time. This is assuming the operand is a valid combat ability.
-	 */
-	public void setActiveCombatAbility(@Nullable AbstractOBSAbility ability)
+	public static void deactivateAbility(Player p, AbstractOBSAbility ability)
 	{
-		String path = ability != null ? "stats.abilities.activecombatability." + ability.getInternalName() : "stats.abilities.activecombatability."+null;
-		config.set(path, ability != null ? true : false);
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		boolean combatAbility = ability.getAbilityType() == ObsAbilityType.COMBAT;
+		if (combatAbility) data.setActiveCombatAbility(null);
+		data.getAbility(ability).setActive(false);
+		data.save();
+		PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o"+ability.getDisplayName());
+	}
+	
+	public static void activateAbility(Player p, AbstractOBSAbility ability)
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		boolean combatAbility = ability.getAbilityType() == ObsAbilityType.COMBAT;
+		if (combatAbility) data.setActiveCombatAbility(ability);
+		data.getAbility(ability).setActive(true);
+		data.save();
+		PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o"+ability.getDisplayName());
+	}
+	
+	public void setActiveCombatAbility(@Nullable AbstractOBSAbility ability) 
+	{
+	    String path = "stats.abilities.activecombatability";
+	    if (ability != null) 
+	    {
+	        config.set(path, ability.getInternalName());
+	    } 
+	    else 
+	    {
+	        config.set(path, null);
+	    }
 	}
 
 	public static void addXP(Player p, StatType sType, int value) 
@@ -227,6 +256,7 @@ public class PlayerData
 		data.setPrestigePoints(0);
 		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
 			data.getAbility(a).setRegistered(false).setActive(false);
+		data.setActiveCombatAbility(null);
 	}
 	
 	public void initializeAbilities() 

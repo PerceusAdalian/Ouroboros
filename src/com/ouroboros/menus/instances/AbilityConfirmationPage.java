@@ -57,42 +57,42 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 			}
 			else 
 			{
-				if (ability.getAbilityType().equals(ObsAbilityType.COMBAT))
+				if (ability.getAbilityType().equals(ObsAbilityType.COMBAT)) 
 				{
-					if (data.hasActiveCombatAbility() && data.getActiveCombatAbility() != ability)
-					{
-						abilityChangeMap.put(p.getUniqueId(), ability);
-						GuiHandler.changeMenu(p, new AbilityChangePage(p));
-					}
-					else if (data.getAbility(ability).isActive()) 
-					{
-						data.setActiveCombatAbility(null);
-						data.getAbility(ability).setActive(false);
-						data.save();
-						PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o"+ability.getDisplayName());
-						GuiHandler.changeMenu(p, new AbilityMainPage(p));
-					}
-					else
-					{
-						data.setActiveCombatAbility(ability);
-						data.getAbility(ability).setActive(true);
-						data.save();
-						PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o"+ability.getDisplayName());
-						GuiHandler.changeMenu(p, new AbilityMainPage(p));
-					}
+				    if (data.getActiveCombatAbility() != null) 
+				    {
+				        var combatAbility = data.getAbility(data.getActiveCombatAbility());
+				        if (combatAbility != null && combatAbility.getInstance() != null) 
+				        {
+				            String combatAbilityName = combatAbility.getInstance().getInternalName();
+				            String abilityName = data.getAbility(ability).getInstance().getInternalName();
+
+				            if (!combatAbilityName.equals(abilityName) && !data.getAbility(ability).isActive()) 
+				            {
+				                abilityChangeMap.put(p.getUniqueId(), ability);
+				                GuiHandler.changeMenu(p, new AbilityChangePage(p));
+				                return;
+				            }
+				            if (combatAbilityName.equals(abilityName)) 
+				            {
+				                PlayerData.deactivateAbility(p, ability);
+				                GuiHandler.changeMenu(p, new AbilityMainPage(p));
+				                return;
+				            }
+				        }
+				    }
+
+				    PlayerData.activateAbility(p, ability);
+				    GuiHandler.changeMenu(p, new AbilityMainPage(p));
 				}
 				else if (data.getAbility(ability).isActive()) 
 				{
-					data.getAbility(ability).setActive(false);
-					data.save();
-					PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o"+ability.getDisplayName());
+					PlayerData.deactivateAbility(p, ability);
 					GuiHandler.changeMenu(p, new AbilityMainPage(p));
 				}
 				else
 				{
-					data.getAbility(ability).setActive(true);
-					data.save();
-					PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o"+ability.getDisplayName());
+					PlayerData.activateAbility(p, ability);
 					GuiHandler.changeMenu(p, new AbilityMainPage(p));
 				}
 			}

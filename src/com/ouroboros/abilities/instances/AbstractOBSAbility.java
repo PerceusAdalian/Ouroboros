@@ -196,7 +196,8 @@ public abstract class AbstractOBSAbility
 			
 			char color = switch(statRequirement) 
 			{
-				case WOODCUTTING,TRAVEL,CRAFTING,ALCHEMY,MINING,FISHING,FARMING,ENCHANTING -> color = 'a';
+				case WOODCUTTING,TRAVEL,CRAFTING,ALCHEMY,
+					 MINING,FISHING,FARMING,ENCHANTING -> color = 'a';
 				case MELEE,RANGED,MAGIC -> color = 'c';
 				default -> color = '7';
 			};
@@ -220,7 +221,7 @@ public abstract class AbstractOBSAbility
 			if (dType != null) lore.add(PrintUtils.assignAbilityDamageType(dType));
 			lore.add("");
 			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
-			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "false")));
+			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "False")));
 			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
 		}
 		

@@ -1,5 +1,12 @@
 package com.ouroboros;
 
+import java.util.Set;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -74,7 +81,15 @@ public class Ouroboros extends JavaPlugin
 		PlayerData.saveAll();
 		MobData.saveAll();
 		MobManager.despawnAll();
-		
+		for (World w : Bukkit.getWorlds()) 
+		{
+			for (Entity e : w.getEntities())
+			{
+				Set<EntityType> invalidMobs = Set.of(EntityType.PLAYER, EntityType.ENDER_DRAGON, EntityType.WITHER,EntityType.WARDEN,EntityType.ALLAY,EntityType.VILLAGER,EntityType.IRON_GOLEM);
+				if (!(e instanceof LivingEntity le) || invalidMobs.contains(le.getType())) continue;
+				le.remove();
+			}
+		}
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
 	}
 }
