@@ -17,7 +17,9 @@ import org.bukkit.persistence.PersistentDataType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityCategory;
 import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.PrintUtils;
@@ -33,12 +35,15 @@ public abstract class AbstractOBSAbility
 	private final ObsAbilityType aType;
 	private final StatType statRequirement;
 	private final AbilityDamageType dType;
+	private final CastConditions condition;
+	private final AbilityCategory abilityCategory;
 	private final int levelRequirement;
 	private final int APCOST;
+	
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
-			ObsAbilityType aType, AbilityDamageType dType, String...description) 
+			ObsAbilityType aType, AbilityDamageType dType, CastConditions condition, AbilityCategory abilityCategory, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -48,28 +53,8 @@ public abstract class AbstractOBSAbility
 		this.levelRequirement = levelRequirement;
 		this.aType = aType;
 		this.dType = dType;
-		this.description = description;
-		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
-		this.config = YamlConfiguration.loadConfiguration(file);
-		
-		if (!file.exists()) 
-		{
-			setInfo();
-			save();
-		}
-	}
-	
-	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST,
-			ObsAbilityType aType, String...description)
-	{
-		this.displayName = displayName;
-		this.internalName = internalName;
-		this.APCOST = APCOST;
-		this.icon = icon;
-		this.statRequirement = statRequirement;
-		this.levelRequirement = levelRequirement;
-		this.aType = aType;
-		this.dType = null;
+		this.condition = condition;
+		this.abilityCategory = abilityCategory;
 		this.description = description;
 		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
@@ -167,6 +152,14 @@ public abstract class AbstractOBSAbility
 		return dType;
 	}
 	
+	public CastConditions getCastCondition() 
+	{
+		return condition;
+	}
+	public AbilityCategory getAbilityCategory() 
+	{
+		return abilityCategory;
+	}
 	public static AbstractOBSAbility fromInternalName(String string)
 	{
 		if (AbilityRegistry.abilityRegistry.containsKey(string))
@@ -219,6 +212,8 @@ public abstract class AbstractOBSAbility
 		{
 			lore.add(PrintUtils.assignAbilityType(aType));
 			if (dType != null) lore.add(PrintUtils.assignAbilityDamageType(dType));
+			if (condition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(condition));
+			lore.add(PrintUtils.assignAbilityCategory(abilityCategory));
 			lore.add("");
 			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
 			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "False")));

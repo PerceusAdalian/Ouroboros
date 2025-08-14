@@ -30,8 +30,8 @@ public class PlayerData
 	protected final UUID uuid;
 	private final File file;
 	private final YamlConfiguration config;
-	public static final int baseXP = 100, fundsIntegerMax = 99999999;
-	private static final double ExpMultiplier = 1.5;
+	public static final int baseXP = 225, fundsIntegerMax = 99999999;
+	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
 	public PlayerData(UUID uuid) 
@@ -74,6 +74,7 @@ public class PlayerData
 	    	setStat(StatType.MINING, true, 0);
 	    	setStat(StatType.FISHING, true, 0);
 	    	setStat(StatType.FARMING, true, 0);
+	    	setStat(StatType.DISCOVERY, true, 0);
 	    	
 	        // Combat Levels
 	    	setStat(StatType.MELEE, true, 0);
@@ -89,6 +90,7 @@ public class PlayerData
 	    	setStat(StatType.MINING, false, 0);
 	    	setStat(StatType.FISHING, false, 0);
 	    	setStat(StatType.FARMING, false, 0);
+	    	setStat(StatType.DISCOVERY, false, 0);
 	    	
 	        // Combat Stat Experience
 	    	setStat(StatType.MELEE, false, 0);

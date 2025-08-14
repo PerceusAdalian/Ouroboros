@@ -13,11 +13,14 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.utils.OBSParticles;
@@ -258,6 +261,35 @@ public class MobData
 				}, 600);
 			}
 		}
+	}
+	
+	public static void damageUnnaturally(Player player, Entity target, double value, boolean damageArmor)
+	{
+		MobData data = MobData.getMob(target.getUniqueId());
+		
+		boolean isNull = data == null ? true : false;
+		if (isNull)
+		{
+			((Damageable) target).damage(value);
+		}
+		else 
+		{
+			data.damage(value, damageArmor);
+			data.save();
+
+			ObsMobHealthbar.updateHPBar(target, true);
+			
+			if (data.isDead())
+			{
+				((Damageable) target).setHealth(0);
+				ObsMobHealthbar.removeBossBar(target);
+				data.deleteFile();
+			}
+		}
+		
+		((LivingEntity) target).playHurtAnimation(0);
+		Vector direction = target.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(0.4);
+		target.setVelocity(direction.setY(0.4));	
 	}
 	
 	public void breakDamage(double value, double percent)

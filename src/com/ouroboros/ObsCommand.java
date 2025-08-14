@@ -189,45 +189,48 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		{
 			if (args.length == 1) 
 			{		
+				PlayerData data = PlayerData.getPlayer(uuid);
 				PrintUtils.Print(p,
 						"&b&l+&r&7-----------------------&f{&bΩ&f}&7-----------------------&b&l+",
 						"                      &b&lOBS Statistical Inquiry&r&f",
 						"                      &f&l- &r&fPlayer: &e&l" + p.getName(),
-						"                          &f&lAccount Level&r&7: &a" + PlayerData.getPlayer(uuid).getAccountLevel(),
+						"                          &f&lAccount Level&r&7: &a" + data.getAccountLevel(),
 						"",
 						"                             &7General Levels:", 
-						"               &f&lTravel&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.TRAVEL, true) +
-						"    &f&lCrafting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.CRAFTING, true) +
-						"    &f&lAlchemy&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.ALCHEMY, true),
-						"             &f&lWoodcutting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.WOODCUTTING, true) +
-						"    &f&lMining&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.MINING, true) +
-						"    &f&lFishing&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.FISHING, true),
-						"                    &f&lFarming&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.FARMING, true) +
-						"    &f&lEnchanting&r&7: &a" + PlayerData.getPlayer(uuid).getStat(StatType.ENCHANTING, true),
+						"               &f&lTravel&r&7: &a" + data.getStat(StatType.TRAVEL, true) +
+						"    &f&lCrafting&r&7: &a" + data.getStat(StatType.CRAFTING, true) +
+						"    &f&lAlchemy&r&7: &a" + data.getStat(StatType.ALCHEMY, true),
+						"             &f&lWoodcutting&r&7: &a" + data.getStat(StatType.WOODCUTTING, true) +
+						"    &f&lMining&r&7: &a" + data.getStat(StatType.MINING, true) +
+						"    &f&lFishing&r&7: &a" + data.getStat(StatType.FISHING, true),
+						"        &f&lFarming&r&7: &a" + data.getStat(StatType.FARMING, true) +
+						"    &f&lEnchanting&r&7: &a" + data.getStat(StatType.ENCHANTING, true)+
+						"    &f&lDiscovery&r&7: &a" + data.getStat(StatType.DISCOVERY, true),
 						"",
 						"                             &7Combat Levels:",
-						"                 &f&lMelee&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.MELEE, true) +
-						"    &f&lRanged&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.RANGED, true) +
-						"    &f&lMagic&r&7: &c" + PlayerData.getPlayer(uuid).getStat(StatType.MAGIC, true),
+						"                 &f&lMelee&r&7: &c" + data.getStat(StatType.MELEE, true) +
+						"    &f&lRanged&r&7: &c" + data.getStat(StatType.RANGED, true) +
+						"    &f&lMagic&r&7: &c" + data.getStat(StatType.MAGIC, true),
 						"",
 						"                               &7Stat Points:",
-						"             &f&lAbility Points: &6" + PlayerData.getPlayer(uuid).getAbilityPoints() + 
-						"    &f&lPrestige Points: &6" + PlayerData.getPlayer(uuid).getPrestigePoints(),
+						"             &f&lAbility Points: &6" + data.getAbilityPoints() + 
+						"    &f&lPrestige Points: &6" + data.getPrestigePoints(),
 						"",
 						"   &7General XP:", 
-						"   &f&lTravel&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.TRAVEL, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.TRAVEL),
-						"   &f&lCrafting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.CRAFTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.CRAFTING),
-						"   &f&lAlchemy&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.ALCHEMY, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ALCHEMY),
-						"   &f&lEnchanting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.ENCHANTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ENCHANTING),
-						"   &f&lWoodcutting&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.WOODCUTTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.WOODCUTTING),
-						"   &f&lMining&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.MINING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MINING),
-						"   &f&lFishing&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.FISHING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FISHING),
-						"   &f&lFarming&r&7: &b" + PlayerData.getPlayer(uuid).getStat(StatType.FARMING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FARMING),
+						"   &f&lTravel&r&7: &b" + data.getStat(StatType.TRAVEL, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.TRAVEL),
+						"   &f&lCrafting&r&7: &b" + data.getStat(StatType.CRAFTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.CRAFTING),
+						"   &f&lAlchemy&r&7: &b" + data.getStat(StatType.ALCHEMY, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ALCHEMY),
+						"   &f&lWoodcutting&r&7: &b" + data.getStat(StatType.WOODCUTTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.WOODCUTTING),
+						"   &f&lMining&r&7: &b" + data.getStat(StatType.MINING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MINING),
+						"   &f&lFishing&r&7: &b" + data.getStat(StatType.FISHING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FISHING),
+						"   &f&lFarming&r&7: &b" + data.getStat(StatType.FARMING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FARMING),
+						"   &f&lEnchanting&r&7: &b" + data.getStat(StatType.ENCHANTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ENCHANTING),
+						"   &f&lDiscovery&r&7: &b" + data.getStat(StatType.DISCOVERY, false) + " &7/" + PrintUtils.printNextLevelXP(uuid, StatType.DISCOVERY),
 						"",
 						"   &7Combat XP:",
-						"   &f&lMelee&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.MELEE, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MELEE),
-						"   &f&lRanged&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.RANGED, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.RANGED), 
-						"   &f&lMagic&r&7: &d" + PlayerData.getPlayer(uuid).getStat(StatType.MAGIC, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MAGIC),
+						"   &f&lMelee&r&7: &d" + data.getStat(StatType.MELEE, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MELEE),
+						"   &f&lRanged&r&7: &d" + data.getStat(StatType.RANGED, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.RANGED), 
+						"   &f&lMagic&r&7: &d" + data.getStat(StatType.MAGIC, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MAGIC),
 						"&b&l+&r&7-----------------------&f{&bΩ&f}&7-----------------------&b&l+"
 						);
 				

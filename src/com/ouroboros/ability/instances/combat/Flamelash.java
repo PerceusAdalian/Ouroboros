@@ -9,35 +9,32 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityCategory;
 import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.RayCastUtils;
-import com.ouroboros.utils.ValidObjectsHandler;
 
 public class Flamelash extends AbstractOBSAbility
 {
 
 	public Flamelash() 
 	{
-		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, ObsAbilityType.COMBAT, AbilityDamageType.INFERNO, 
-				"&r&f&lRight-Click&r&f to slash upwards to calcinate",
-				"&r&ftarget mob dealing &l5&r&c♥ &lInferno&r&f damage.",
+		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, ObsAbilityType.COMBAT, AbilityDamageType.SLASH, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+				"&r&fSlash upwards to calcinate target mob dealing ",
+				"&r&f&l5&r&c♥ &f&lSlash&r&f damage and apply &cBurn&f.",
 				"&r&f&lRange: &b7 meters",
 				"&r&f&lCooldown: &b5 seconds");
 	}
@@ -49,22 +46,17 @@ public class Flamelash extends AbstractOBSAbility
 	{
 		if (e instanceof PlayerInteractEvent pie)
 		{
-			if (!PlayerActions.rightClickAir(pie)) return false;
-			
 			Player p = pie.getPlayer();
-			
-			if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
 			if (cooldownTimer.contains(p.getUniqueId())) return false;
-			
-			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
-			if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
-			
 			Entity target = RayCastUtils.getNearestEntity(p, 7);
 			if (target == null || !(target instanceof LivingEntity)) return false;
 			
-			OBSParticles.drawSpiralVortex(target.getLocation(), 5, 3, 0.1, Particle.LAVA, null);
+			OBSParticles.drawLine(p.getLocation(), target.getLocation(), p.getLocation().distance(target.getLocation()), 0.1, Particle.LAVA, null);
 			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
-			((Damageable)target).damage(10);
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null), 10);
+			
+			MobData.damageUnnaturally(p, target, 10, true);
 			target.setFireTicks(200);
 			
 			cooldownTimer.add(p.getUniqueId());

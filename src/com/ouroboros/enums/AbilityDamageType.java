@@ -26,7 +26,7 @@ public enum AbilityDamageType
 	CELESTIO("&r&f&lCelestio&r&f"),
 	MORTIO("&r&4&lMortio&r&f"),
 	COSMO("&r&3&lCosmo&r&f");
-
+	
 	private final String element;	
 	
 	AbilityDamageType(String element) 

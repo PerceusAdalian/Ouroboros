@@ -1,7 +1,7 @@
 main: com.ouroboros.Ouroboros
 name: Ouroboros
 version: 0.1.0
-api-version: 1.21.7
+api-version: 1.21.8
 commands:
     obs:
         description: Ouroboros Command Line

@@ -45,6 +45,7 @@ public class Ouroboros extends JavaPlugin
 		debug = false;
 		enabled = true;
 		
+	
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
 		PlayerData.initializeDataFolder();
@@ -94,20 +95,22 @@ public class Ouroboros extends JavaPlugin
 	}
 }
 
-//Fix combat ability not changing/displaying pages properly; it won't override the previous combat ability, and will just add more to the file. 
-
 /* Ωuroboros
  * Project Notes:
  * + WHAT TO DO NEXT:
  * > HIGH PRIORITY: 
- * - MobData persistence is broken across restarts. Find some way to load/unload the data, as right now, it's not *truly* persistent. 
+ * -
  * > Side High Priority: 
- * - Only allow 1 combat ability to be active at a time. 
+ * - Make items drop from discovery event depending on their level.
+ * - Mob affinities and damage category damage (make cows resistant to CELESTIO damage, but weak to MORTIO damage, for example)
+ * - Combat abilities do not display HP bar decreases; fix the update method.
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
  *   > Low Priority: Stat descriptions, a means to see next levelup rewards, abilities, etc.
  * - Make more abilities and implement them; now's the time to get creative!! <3
  *   > Low Priority: Make ability upgrades
- * - Implement Passive Perks!
+ * - Implement Passive Perks! (DONE..Sort of)..
  */
+///kill @e[type=!minecraft:player]
+///setblock ~ ~ ~ minecraft:chest{LootTable:"minecraft:chests/simple_dungeon"} replace

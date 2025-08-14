@@ -21,6 +21,9 @@ import org.bukkit.potion.PotionEffectType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
@@ -31,7 +34,7 @@ public class RejuvenateWounds extends AbstractOBSAbility
 
 	public RejuvenateWounds() 
 	{
-		super("Rejuvenate Wounds", "random_rejuvenate_perk", Material.EMERALD, StatType.MAGIC, 20, 10, ObsAbilityType.PERK, 
+		super("Rejuvenate Wounds", "random_rejuvenate_perk", Material.EMERALD, StatType.MAGIC, 20, 10, ObsAbilityType.PERK, AbilityDamageType.NONE, CastConditions.PASSIVE, AbilityCategory.ANY,
 				"","&r&fUpon taking damage, invoke a small chance",
 				"&r&fto begin &a&oregenerating&r&f HP over 15s.",
 				"","&r&f&lActivation Chance&r&f: &b30%&f for &d&oMob&r&f & &d&oPlayer&r&f Damage,",

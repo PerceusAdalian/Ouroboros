@@ -25,21 +25,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityCategory;
 import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
-import com.ouroboros.utils.PlayerActions;
-import com.ouroboros.utils.ValidObjectsHandler;
 
 public class ImbueFire extends AbstractOBSAbility
 {
 
 	public ImbueFire() 
 	{
-		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,  AbilityDamageType.INFERNO,
-				"&r&f&lRight_Click&r&f to enchant your blade with &c&lInferno&r&f energy.",
+		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,  AbilityDamageType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+				"&r&d&oEnchant &r&fyour blade with &c&lInferno&r&f energy.",
 				"&r&f&lDuration&r&f: 30 seconds");
 	}
 
@@ -55,17 +54,9 @@ public class ImbueFire extends AbstractOBSAbility
 	{
 		if (e instanceof PlayerInteractEvent pie)
 		{			
-			if (!PlayerActions.rightClickAir(pie)) return false;
-			
 			Player p = pie.getPlayer();
-			
-			if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
-			
 			if (castHandler.containsKey(p.getUniqueId())) return false;
-			
 			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
-			if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
-			
 			ItemMeta meta = held.getItemMeta();
 			if (meta.hasEnchant(Enchantment.FIRE_ASPECT)) 
 			{

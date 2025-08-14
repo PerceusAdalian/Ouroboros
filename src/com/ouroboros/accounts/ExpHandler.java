@@ -11,11 +11,14 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrewingStand;
+import org.bukkit.block.Container;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.craftbukkit.block.CraftChest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -27,6 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BrewingStartEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -36,6 +40,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.loot.Lootable;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionType;
 
@@ -304,6 +311,81 @@ public class ExpHandler implements Listener
 					    PlayerData.addXP(p, StatType.FARMING, xp);
 					}
 				}
+			}
+			
+			@EventHandler
+			public static void onBrush(EntityChangeBlockEvent e)
+			{
+				if (!(e.getEntity() instanceof Player p)) return;
+				
+				Block b = e.getBlock();
+				Material bType = b.getType();
+			    if (bType != Material.SUSPICIOUS_SAND && bType != Material.SUSPICIOUS_GRAVEL) return;
+			    
+			    ItemStack item = p.getInventory().getItemInMainHand();
+			    if (item == null || item.getType() != Material.BRUSH) return;
+				
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					Material newType = b.getBlockData().getMaterial();
+					boolean finished = false;
+					
+					if (bType == Material.SUSPICIOUS_GRAVEL && newType == Material.GRAVEL)
+						finished = true;
+					else if (bType == Material.SUSPICIOUS_SAND && newType == Material.SAND)
+						finished = true;
+					if (finished)
+					{
+						int xp = XpUtils.getXp(b.getBiome());
+						
+						if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+							EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+						if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+							PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.DISCOVERY));
+						
+						PlayerData.addXP(p, StatType.DISCOVERY, xp);
+					}
+				}, 1);
+			}
+			
+			private static final NamespacedKey checkChestID = new NamespacedKey(Ouroboros.instance, "chest_key");
+			//For discovery/loot generation of chests found, add exp to the Discovery stat per item generated.
+			@EventHandler
+			public void onDiscoverLoot(PlayerInteractEvent e)
+			{
+				Player p = e.getPlayer();
+				Block block = e.getClickedBlock();
+				if (!PlayerActions.rightClickBlock(e)) return;
+				if (block == null || block.getType() == Material.AIR) return;
+				if (!(block.getState() instanceof Container container)) return;
+				if (!(container instanceof CraftChest)) return;
+				
+				PersistentDataContainer pdc = container.getPersistentDataContainer();
+				if (pdc.has(checkChestID, PersistentDataType.BYTE)) return;
+				
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					int count = 0;
+					if (container instanceof Lootable lootable && lootable.getLootTable() != null)	
+						for (ItemStack item : container.getInventory().getContents())
+							if (item != null && item.getType() != Material.AIR)
+								count ++;
+					int xp = count * 10;
+					
+					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+xp+" &b&o"+PrintUtils.printStatType(StatType.DISCOVERY));
+					
+					PlayerData.addXP(p, StatType.DISCOVERY, xp);
+					
+					if (!Ouroboros.debug) 
+					{
+						pdc.set(checkChestID, PersistentDataType.BYTE, (byte) 1);
+						container.update();
+					}
+					
+				}, 1L);
 			}
 
 			@EventHandler

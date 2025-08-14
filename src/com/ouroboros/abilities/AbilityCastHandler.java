@@ -14,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.CastConditions;
+import com.ouroboros.utils.AbilityObjectCategory;
 
 public class AbilityCastHandler implements Listener 
 {
@@ -37,6 +39,9 @@ public class AbilityCastHandler implements Listener
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive()) 
             {
+            	if (!CastConditions.isValidAction(e, ability.getCastCondition())) return;
+            	if (!AbilityObjectCategory.canAccept(p, ability.getAbilityCategory())) return;
+            	e.setCancelled(false);
                 ability.cast(e);
             }
         }

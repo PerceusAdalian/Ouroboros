@@ -2,48 +2,44 @@ package com.ouroboros.ability.instances.combat;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.entity.Damageable;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.AbilityCategory;
 import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.mobs.MobData;
+import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.RayCastUtils;
-import com.ouroboros.utils.ValidObjectsHandler;
 
 public class GeminiSlash extends AbstractOBSAbility
 {
 
 	public GeminiSlash() 
 	{
-		super("Gemini Slash", "gemini_slash_ability", Material.ECHO_SHARD, StatType.MELEE, 10, 5, ObsAbilityType.COMBAT, AbilityDamageType.CELESTIO, 
-				"&r&f&lRight-Click&r&f target mob to dash forward, and attack",
-				"&r&fdealing 5 hearts Celestio damage.");
+		super("Gemini Slash", "gemini_slash_ability", Material.ECHO_SHARD, StatType.MELEE, 10, 5, ObsAbilityType.COMBAT, AbilityDamageType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+				"&r&fDash towards target mob and attack instantly, dealing",
+				"&r&f&l5&r&c♥ &r&f&lCelestio&r&f damage and apply &eExposed&f.",
+				"&r&f&lRange&r&f: &b5 meters &r&7| &r&f&lDuration&r&f: &b15 seconds",
+				"&r&f&lCooldown: &b5 seconds");
 	}
 
 	@Override
 	public boolean cast(Event e) 
 	{
 		if (e instanceof PlayerInteractEvent pie)
-		{
-			//Access methods, params, and validation of ownership of the ability.
-			if (!PlayerActions.rightClickAir(pie)) return false;
+		{		
 			Player p = pie.getPlayer();
-			if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(this).isActive()) return false;
-			
-			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
-			if (!ValidObjectsHandler.swords.contains(held.getType())) return false;
-			
 			//Get a valid target
 			Entity target = RayCastUtils.getNearestEntity(p, 5);
 			if (target == null) return false;
@@ -52,9 +48,12 @@ public class GeminiSlash extends AbstractOBSAbility
 			Vector v1 = target.getLocation().toVector();
 			Vector v2 = p.getLocation().toVector();
 			p.setVelocity(v1.subtract(v2).normalize().multiply(1.5));
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
-			((Damageable) target).damage(10);
 			
+			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
+			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER, 0, 0);
+			MobData.damageUnnaturally(p, target, 10, true);
+			EntityEffects.add(target, PotionEffectType.GLOWING, 300, 0);
+
 			return true;			
 		}
 		return false;

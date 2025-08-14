@@ -18,7 +18,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.utils.PrintUtils;
@@ -42,7 +41,7 @@ public class MobDamageEvent implements Listener
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
-				e.setCancelled(true);
+//				e.setCancelled(true);
 				
 				double dmg = e.getFinalDamage();
 				if (data.isBreak()) 
@@ -54,15 +53,11 @@ public class MobDamageEvent implements Listener
 					data.damage(dmg, true);
 				}
 				
-				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p)
+				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player)
 				{
 					BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
 					if (bar == null) ObsMobHealthbar.initializeHPBar(target, true);
 					else ObsMobHealthbar.updateHPBar(target, true);
-
-					((LivingEntity) target).playHurtAnimation(0);
-					Vector direction = target.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(0.4);
-					target.setVelocity(direction.setY(0.4));	
 					
 					if (!hpBarMap.containsKey(target.getUniqueId())) 
 					{							

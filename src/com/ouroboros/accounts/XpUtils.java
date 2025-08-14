@@ -1,6 +1,10 @@
 package com.ouroboros.accounts;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -76,6 +80,28 @@ public class XpUtils
 			case CHERRY_LOG 		   	-> 25;
 			default 				   	-> 10;
 		};
+	}
+	
+	public static final Map<Biome, Integer> biomeXpMap = new HashMap<>();
+	
+	static
+	{
+		biomeXpMap.put(Biome.JUNGLE, 50);
+		biomeXpMap.put(Biome.SPARSE_JUNGLE, 45);
+		biomeXpMap.put(Biome.DESERT, 40);
+		biomeXpMap.put(Biome.BADLANDS, 50);
+		biomeXpMap.put(Biome.COLD_OCEAN, 65);
+		biomeXpMap.put(Biome.WARM_OCEAN, 65);
+		biomeXpMap.put(Biome.TAIGA, 45);
+		biomeXpMap.put(Biome.SNOWY_TAIGA, 40);
+		biomeXpMap.put(Biome.OLD_GROWTH_BIRCH_FOREST, 25);
+		biomeXpMap.put(Biome.OLD_GROWTH_SPRUCE_TAIGA, 25);
+	}
+	
+	public static int getXp(Biome b)
+	{
+		if (!biomeXpMap.containsKey(b)) return 10;
+		return biomeXpMap.get(b);
 	}
 	
 	// Crafting
