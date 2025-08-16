@@ -1,4 +1,4 @@
-package com.ouroboros.mobs;
+package com.ouroboros.mobs.events;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -20,6 +20,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.utils.MobManager;
+import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.PrintUtils;
 
 public class MobDamageEvent implements Listener
@@ -28,7 +31,10 @@ public class MobDamageEvent implements Listener
 	
 	public static void register(JavaPlugin plugin)
 	{
-		
+		/**
+		 * @TODO: Hookup damage event to compare against mob 
+		 * 		  affinities and calculate damage that way instead of vanilla.
+		 */
 		Bukkit.getPluginManager().registerEvents(new Listener()
 		{
 			@EventHandler(priority = EventPriority.HIGHEST)
@@ -41,9 +47,8 @@ public class MobDamageEvent implements Listener
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
-//				e.setCancelled(true);
-				
 				double dmg = e.getFinalDamage();
+				
 				if (data.isBreak()) 
 				{
 					data.breakDamage(dmg, 10);

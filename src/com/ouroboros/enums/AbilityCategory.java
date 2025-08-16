@@ -30,7 +30,7 @@ public enum AbilityCategory
 		char[] chars = str.toCharArray();
 		chars[0] = Character.toUpperCase(chars[0]);
 		key += new String(chars);
-		key = key.substring(0,key.length()-1);
+		key = key.substring(0,key.length());
 		return PrintUtils.ColorParser("&r&b&o"+key+"&r&f");
 	}
 	

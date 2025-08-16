@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.AbilityCategory;
-import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
@@ -115,13 +115,13 @@ public class PrintUtils
 	public static String assignAbilityCategory(AbilityCategory category)
 	{
 		boolean isAnyCategory = category.equals(AbilityCategory.ANY) ? true : false;
-		String printStr = isAnyCategory ? "&r&f&lCast Category&r&f: &b&oAny&r&f" : "&r&f&lCast Category: "+category.getKey()+"only.";
+		String printStr = isAnyCategory ? "&r&f&lCast Category&r&f: &b&oAny&r&f" : "&r&f&lCast Category: "+category.getKey()+" only.";
 		return ColorParser(printStr);
 	}
 	
-	public static String assignAbilityDamageType(AbilityDamageType type) 
+	public static String assignElementType(ElementType type) 
 	{
-		return ColorParser("&r&f&lDamage Type&r&f: {"+type.getType()+"&r&f}");
+		return ColorParser("&r&f&lElement Type&r&f: {"+type.getType()+"&r&f}");
 	}
 	
 	public static String getFancyEntityName(EntityType eType)

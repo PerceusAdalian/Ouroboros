@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.interfaces.ObsDisplayMain;
-import com.ouroboros.mobs.ObsMobHealthbar;
+import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.PrintUtils;
 
 public class GeneralEvents implements Listener

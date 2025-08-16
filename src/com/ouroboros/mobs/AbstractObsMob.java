@@ -9,6 +9,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
+import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
@@ -17,16 +19,18 @@ public abstract class AbstractObsMob
 	public static final NamespacedKey OBSMOB = new NamespacedKey(Ouroboros.instance, "obs_mob");
 	
 	private EntityType eType;
+	private ElementType affinity;
 	private String name;
 	private int level,armor;
 	private double health, HPMOD = (getLevel()*0.15d)+1.0;
 	
-	public AbstractObsMob(EntityType eType, @Nullable String name, int level, double health, int armor)
+	public AbstractObsMob(EntityType eType, @Nullable String name, int level, double health, int armor, ElementType affinity)
 	{
 		this.eType = eType;
 		this.name = name;
 		this.health = health;
 		this.armor = armor;
+		this.affinity = affinity;
 	}
 	
 	public EntityType getEntityType() 
@@ -77,6 +81,11 @@ public abstract class AbstractObsMob
 	public void setArmor(int armor) 
 	{
 		this.armor = armor;
+	}
+	
+	public ElementType getAffinity() 
+	{
+		return affinity;
 	}
 
 	public NamespacedKey getKey() 
@@ -143,4 +152,5 @@ public abstract class AbstractObsMob
 		mobData.save();
 		return obsMob;
 	}
+
 }

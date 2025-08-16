@@ -23,6 +23,10 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
+import com.ouroboros.mobs.utils.LevelTable;
+import com.ouroboros.mobs.utils.MobManager;
+import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
@@ -188,6 +192,17 @@ public class MobData
 	public void setEntityType(EntityType eType) 
 	{
 		config.set("mob.entity_type", eType.name());
+	}
+	
+	public ElementType getAffinity(boolean getWeakness)
+	{
+		
+		return getWeakness ? ElementType.valueOf(config.getString("mob.affinity")) : ElementType.valueOf(config.getString("mob.affinity.weakness"));
+	}
+	
+	public void setAffinity(boolean setWeakness)
+	{
+		
 	}
 	
 	public int getLevel() 

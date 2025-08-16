@@ -1,4 +1,4 @@
-package com.ouroboros.mobs;
+package com.ouroboros.mobs.utils;
 
 import java.util.HashMap;
 import java.util.Map;

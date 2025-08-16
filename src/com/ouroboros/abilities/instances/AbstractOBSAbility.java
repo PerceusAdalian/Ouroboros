@@ -18,7 +18,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.AbilityCategory;
-import com.ouroboros.enums.AbilityDamageType;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
@@ -34,7 +34,7 @@ public abstract class AbstractOBSAbility
 	private final String[] description;
 	private final ObsAbilityType aType;
 	private final StatType statRequirement;
-	private final AbilityDamageType dType;
+	private final ElementType dType;
 	private final CastConditions condition;
 	private final AbilityCategory abilityCategory;
 	private final int levelRequirement;
@@ -43,7 +43,7 @@ public abstract class AbstractOBSAbility
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
-			ObsAbilityType aType, AbilityDamageType dType, CastConditions condition, AbilityCategory abilityCategory, String...description) 
+			ObsAbilityType aType, ElementType dType, CastConditions condition, AbilityCategory abilityCategory, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -147,7 +147,7 @@ public abstract class AbstractOBSAbility
 		return aType;
 	}
 	
-	public AbilityDamageType getDamageType() 
+	public ElementType getDamageType() 
 	{
 		return dType;
 	}
@@ -211,7 +211,7 @@ public abstract class AbstractOBSAbility
 		else 
 		{
 			lore.add(PrintUtils.assignAbilityType(aType));
-			if (dType != null) lore.add(PrintUtils.assignAbilityDamageType(dType));
+			if (dType != null) lore.add(PrintUtils.assignElementType(dType));
 			if (condition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(condition));
 			lore.add(PrintUtils.assignAbilityCategory(abilityCategory));
 			lore.add("");

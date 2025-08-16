@@ -1,6 +1,6 @@
 package com.ouroboros.enums;
 
-public enum AbilityDamageType
+public enum ElementType
 {
 	NONE(null),
 	//Neutral Melee Damage Type
@@ -29,9 +29,14 @@ public enum AbilityDamageType
 	
 	private final String element;	
 	
-	AbilityDamageType(String element) 
+	ElementType(String element) 
 	{
 		this.element = element;
+	}
+	
+	public String getKey()
+	{
+		return this.name();
 	}
 
 	public String getType() 

@@ -37,8 +37,7 @@ public class AbilityObjectCategory
 	public static boolean canAccept(Player player, AbilityCategory category)
 	{
 		ItemStack held = player.getInventory().getItem(EquipmentSlot.HAND);
-		boolean bool = AbilityCategory.get(category).contains(held.getType()) ? true : false;
-		return bool;
+		return AbilityCategory.get(category).contains(held.getType()) ? true : false;
 	}
 	
 }

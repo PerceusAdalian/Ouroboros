@@ -1,4 +1,4 @@
-package com.ouroboros.mobs;
+package com.ouroboros.mobs.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.utils.PrintUtils;
 
 public class MobDeathEvent implements Listener

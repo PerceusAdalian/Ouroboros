@@ -1,4 +1,4 @@
-package com.ouroboros.mobs;
+package com.ouroboros.mobs.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.PrintUtils;
 
 public class MobManager 

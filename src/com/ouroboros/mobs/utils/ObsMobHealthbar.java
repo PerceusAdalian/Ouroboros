@@ -1,4 +1,4 @@
-package com.ouroboros.mobs;
+package com.ouroboros.mobs.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.PrintUtils;
 
 public class ObsMobHealthbar 
