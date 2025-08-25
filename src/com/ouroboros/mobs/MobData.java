@@ -27,6 +27,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.ObsMobHealthbar;
+import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
@@ -259,26 +260,33 @@ public class MobData
 
 		if (damageArmor)
 		{
-			if (data.isBreak()) return;
-			int currentArmor = data.getArmor(false);
-			int newArmor = (int) (currentArmor - (value * 0.5));
-			data.setArmor(newArmor, false);
-			if (data.getArmor(false) <= 0)
-			{
-				data.setBreak(true);
-				Entity entity = Bukkit.getEntity(uuid);
-				OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
-				data.setArmor(0, false);
-				Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
-				{
-					data.setArmor(data.getArmor(true), false);
-					return;
-				}, 600);
-			}
+			damageArmor(value);
 		}
 	}
 	
-	public static void damageUnnaturally(Player player, Entity target, double value, boolean damageArmor)
+	public void damageArmor(double value)
+	{
+		MobData data = MobData.getMob(uuid);
+		
+		if (data.isBreak()) return;
+		int currentArmor = data.getArmor(false);
+		int newArmor = (int) (currentArmor - (value * 0.5));
+		data.setArmor(newArmor, false);
+		if (data.getArmor(false) <= 0)
+		{
+			data.setBreak(true);
+			Entity entity = Bukkit.getEntity(uuid);
+			OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
+			data.setArmor(0, false);
+			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
+			{
+				data.setArmor(data.getArmor(true), false);
+				return;
+			}, 600);
+		}
+	}
+	
+	public static void damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		
@@ -301,10 +309,14 @@ public class MobData
 				data.deleteFile();
 			}
 		}
-		
+
 		((LivingEntity) target).playHurtAnimation(0);
-		Vector direction = target.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(0.4);
-		target.setVelocity(direction.setY(0.4));	
+		
+		if (player!=null) 
+		{
+			Vector direction = target.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(0.4);
+			target.setVelocity(direction.setY(0.4));	
+		}
 	}
 	
 	public void breakDamage(double value, double percent)
@@ -320,9 +332,21 @@ public class MobData
 		return config.getBoolean("mob.broken_status");
 	}
 	
+	/**
+	 * @param bool Sets the status break in the config of the mob.
+	 */
 	public void setBreak(boolean bool) 
 	{
 		config.set("mob.broken_status", bool);
+	}
+	
+	/**
+	 * @return Sets the mob's break status and depletes the mob's AR, directly causing a break. 
+	 */
+	public void setBreak()
+	{
+		MobData data = MobData.getMob(uuid);
+		data.damageArmor(data.getArmor(false));
 	}
 	
 	public boolean isDead()

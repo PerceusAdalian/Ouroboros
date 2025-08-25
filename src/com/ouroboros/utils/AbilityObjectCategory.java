@@ -25,7 +25,7 @@ public class AbilityObjectCategory
 			Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL,
 			Material.DIAMOND_SHOVEL, Material.NETHERITE_SHOVEL);
 	public static final Set<Material> scythes = EnumSet.of(
-			Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_SHOVEL, Material.GOLDEN_HOE,
+			Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE,
 			Material.DIAMOND_HOE, Material.NETHERITE_HOE);
 	public static final Set<Material> bows = EnumSet.of(Material.BOW, Material.CROSSBOW);
 	public static final Material fishing = Material.FISHING_ROD;

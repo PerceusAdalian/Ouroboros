@@ -37,9 +37,7 @@ public class PrintUtils
 	public static void Print(Player player, String...msg) 
 	{
 		for (String line : msg) 
-		{			
 			player.getPlayer().sendMessage(ColorParser(line));
-		}
 	}
 	public static String setCost(int cost) 
 	{
@@ -65,9 +63,17 @@ public class PrintUtils
 		Print(player.getPlayer(), "&f|&bΩ&r&f| "+msg+ " &r&f/&b?&f//");
 	}
 	
-	public static void OBSConsolePrint(String msg) 
+	public static void OBSConsolePrint(String msg)
 	{
 		Print("&f|&eΩ&r&f| "+msg+" &r&f/&e$&f//");
+	}
+	
+	public static void OBSConsolePrint(String...msg) 
+	{
+		Print("&f|&eΩ&r&f| Multiline Message: \n");
+		for (String line : msg)
+			Bukkit.getConsoleSender().sendMessage(ColorParser(line));
+		Print("&r&f\nEND -- &aOK&f /&e$&f//");
 	}
 	
 	public static void OBSConsoleError(String msg) 

@@ -5,16 +5,16 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.AbilityCategory;
-import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
@@ -42,7 +42,7 @@ public class GeminiSlash extends AbstractOBSAbility
 			Player p = pie.getPlayer();
 			//Get a valid target
 			Entity target = RayCastUtils.getNearestEntity(p, 5);
-			if (target == null) return false;
+			if (target == null || target instanceof LivingEntity) return false;
 			
 			//Initalize vectors
 			Vector v1 = target.getLocation().toVector();
@@ -52,7 +52,7 @@ public class GeminiSlash extends AbstractOBSAbility
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
 			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER, 0, 0);
 			MobData.damageUnnaturally(p, target, 10, true);
-			EntityEffects.add(target, PotionEffectType.GLOWING, 300, 0);
+			EntityEffects.addExposed((LivingEntity)target, 300);
 
 			return true;			
 		}

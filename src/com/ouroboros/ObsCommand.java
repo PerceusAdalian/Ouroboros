@@ -13,6 +13,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -48,9 +49,20 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("version")) 
 		{
-			if (affirmOP(p)) 
+			if (sender instanceof ConsoleCommandSender)
+			{
+				PrintUtils.OBSConsolePrint("----------------------------",
+						"                 &b&lOBS",
+						" &f&l- &r&fSystem Time: "+LocalTime.now(),
+						" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",
+						" &f&l- &r&dAPI Version&r&f: "+Bukkit.getVersion().toString(),
+						" &f&l- &r&fPlugins Loaded: &e&l" + Bukkit.getPluginManager().getPlugins().length,
+						"----------------------------");
+				return true;
+			}
+			else if (sender instanceof Player player && affirmOP(player)) 
 			{				
-				PrintUtils.Print(p, "----------------------------",
+				PrintUtils.Print(player, "----------------------------",
 						"                 &b&lOBS",
 						" &f&l- &r&fSystem Time: "+LocalTime.now(),
 						" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",

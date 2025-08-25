@@ -3,21 +3,20 @@ package com.ouroboros.enums;
 public enum ElementType
 {
 	NONE(null),
-	//Neutral Melee Damage Type
+	//Neutral Damage Type
 	NEUTRAL("&r&fNeutral&r&f"),
 	//Normal Melee Damage Types
-	BLUNT("&r&fBlunt&r&f"),
+	BLUNT("&r&fBlunt&r&f"), 
 	PIERCE("&r&fPierce&r&f"),
 	SLASH("&r&fSlash&r&f"),
-	//Almighty/Pure Melee Damage Types
+	//Ranged Damage Type
+	PUNCTURE("&r&fPuncture&r&f"),
+	//Magic Damage Type
+	ARCANO("&r&b&oArcano&r&f"),
+	//Almighty/Pure Damage Types
 	CRUSH("&r&f&o&lCrush&r&f"),
 	SEVER("&r&f&o&lSever&r&f"),
-	//Normal Ranged Damage Type
-	PUNCTURE("&r&fPuncture&r&f"),
-	//Almighty/Pure Ranged Damage Type
 	IMPALE("&r&f&o&lImpale&r&f"),
-	//Neutral Magic Damage Type
-	ARCANO("&r&b&oArcano&r&f"),
 	//Elemental Damage Types
 	GLACIO("&r&b&lGlacio&r&f"),
 	INFERNO("&r&c&lInferno&r&f"),

@@ -99,7 +99,7 @@ public class Ouroboros extends JavaPlugin
  * Project Notes:
  * + WHAT TO DO NEXT:
  * > HIGH PRIORITY: 
- * -
+ * - Finish Hooking up damage types and affinity calcs; start with EntityEffects and implement the rest of the effects, next, go to ability cast handler and implement ability damage.
  * > Side High Priority: 
  * - Make items drop from discovery event depending on their level.
  * - Mob affinities and damage category damage (make cows resistant to CELESTIO damage, but weak to MORTIO damage, for example)
