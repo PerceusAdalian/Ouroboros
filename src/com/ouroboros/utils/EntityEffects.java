@@ -18,6 +18,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
+import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.OBStandardTimer;
 
 public class EntityEffects 
 {
@@ -151,8 +153,12 @@ public class EntityEffects
 	{
 		if (isVoidedRegistry.containsKey(target.getUniqueId())) return;
 		isVoided.put(target.getUniqueId(), true);
+		add(target, PotionEffectType.Glowing, ticks, 0, true);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			isVoidedRegistry.remove(target.getUniqueId()), ticks);
-		add(target, PotionEffectType.Glowing, ticks, 0, true);
+		OBStandardTimer.runWithCancel(Ouroboros, (r)->
+		{
+			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.END_ROD, null);
+		}, 20, ticks);
 	}
 }
