@@ -86,8 +86,11 @@ public class MobDamageEvent implements Listener
 					
 					//Run damage calculations and check the mob's affinity
 					double dmg = dmgEvent.getFinalDamage();
-					if (affinity.immuneTo(element)) dmg = 0;
-					else if (affinity.resists(element)) dmg *= 0.5;
+					if (!EntityEffects.isVoidedRegistry.containsKey(target))
+					{
+						if (affinity.immuneTo(element)) dmg = 0;
+						else if (affinity.resists(element)) dmg *= 0.5;
+					}
 					else if (affinity.weakTo(element)) dmg *= 1.5;
 					
 					if (data.isBreak()) 

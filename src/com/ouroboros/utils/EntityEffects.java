@@ -2,6 +2,7 @@ package com.ouroboros.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -138,5 +139,20 @@ public class EntityEffects
 		}
 		add(target, PotionEffectType.GLOWING, ticks, 0, true);
 		
+	}
+
+	/**
+	 * @Description Cosmo Signature Effect: Voided will remove any mob's immunities and resistances, and make all damage neutral within the set duration.
+	 * @param target The target to set as voided.
+	 * @param ticks The duration to add the entity target into the isVoided registry.
+	 */
+	public static Map<UUID,Boolean> isVoidedRegistry = new HashMap<>();
+	public static void addVoided(LivingEntity target, int ticks)
+	{
+		if (isVoidedRegistry.containsKey(target.getUniqueId())) return;
+		isVoided.put(target.getUniqueId(), true);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+			isVoidedRegistry.remove(target.getUniqueId()), ticks);
+		add(target, PotionEffectType.Glowing, ticks, 0, true);
 	}
 }
