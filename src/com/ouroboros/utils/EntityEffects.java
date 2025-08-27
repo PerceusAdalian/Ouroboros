@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
@@ -18,8 +20,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
 
 public class EntityEffects 
 {
@@ -152,11 +152,11 @@ public class EntityEffects
 	public static void addVoided(LivingEntity target, int ticks)
 	{
 		if (isVoidedRegistry.containsKey(target.getUniqueId())) return;
-		isVoided.put(target.getUniqueId(), true);
-		add(target, PotionEffectType.Glowing, ticks, 0, true);
+		isVoidedRegistry.put(target.getUniqueId(), true);
+		add(target, PotionEffectType.GLOWING, ticks, 0, true);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			isVoidedRegistry.remove(target.getUniqueId()), ticks);
-		OBStandardTimer.runWithCancel(Ouroboros, (r)->
+		OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
 		{
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.END_ROD, null);
 		}, 20, ticks);
