@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ouroboros.objects.instances.EolBlazeArm;
 import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.LuminiteDust;
 import com.ouroboros.objects.instances.LuminiteFragment;
@@ -24,8 +25,8 @@ public class ObjectRegistry
     		LuminiteShard.class,
     		LuminiteFragment.class,
     		LuminiteIngot.class,
-    		LuminiteCore.class
-    		
+    		LuminiteCore.class,
+    		EolBlazeArm.class
         		);
         
         for (Class<? extends AbstractObsObject> clazz : itemClasses) 

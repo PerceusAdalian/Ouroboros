@@ -19,7 +19,7 @@ public class LuminiteFragment extends AbstractObsObject
 
 	public LuminiteFragment() 
 	{
-		super("Luminite Fragment", "money_tier3", Material.RAW_GOLD, true, 
+		super("Luminite Fragment", "money_tier3", Material.RAW_GOLD, true, true,
 				"&r&fA medium concentration of &e&l&oLuminite&r&f.",
 				"&r&fIt is a semi-coherent chunk with a whirring soft glow.",
 				"&r&f&lRight-Click&r&f to harness into &l250&r&e₪&f.",

@@ -11,6 +11,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
@@ -35,6 +36,8 @@ import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
+
+import net.minecraft.world.level.Explosion;
 
 public class MobDamageEvent implements Listener
 {
@@ -80,23 +83,21 @@ public class MobDamageEvent implements Listener
 					{
 						element = ElementType.ARCANO;
 					}
-					
-					//Find element type of the damage source arbitrarily through ElementType and compare to MobAffinity
-					MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
-					
-					//Run damage calculations and check the mob's affinity
-					double dmg = dmgEvent.getFinalDamage();
-					if (!EntityEffects.isVoidedRegistry.containsKey(target))
+					else if (dmgEvent.getDamager() instanceof Fireball fb && fb.getShooter() instanceof Player)
 					{
-						if (affinity.immuneTo(element)) dmg = 0;
-						else if (affinity.resists(element)) dmg *= 0.5;
+						element = ElementType.INFERNO;
 					}
-					else if (affinity.weakTo(element)) dmg *= 1.5;
+					else if (dmgEvent.getDamager() instanceof Explosion ex && ex.getDirectSourceEntity() instanceof Player)
+					{
+						element = ElementType.BLAST;
+					}
+					
+					double dmg = dmgEvent.getFinalDamage();
 					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else 
-						data.damage(dmg, true);
+						data.damage(dmg, true, element);
 
 					//Apply relevent effects based on the combat element used.
 					EntityEffects.checkFromCombat((LivingEntity)target, element);
@@ -119,12 +120,18 @@ public class MobDamageEvent implements Listener
 					
 					if (Ouroboros.debug) 
 					{
+						MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
+						
 						String name = target.getCustomName();
 						PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
 								(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+"&7 || &fDamage Dealt: &c"+
 								dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
 								(data.isBreak()?" &7|| &6Break&f: &cTRUE&f":(" &7|| &6Break&f: &aFALSE&7 || &6AR&f: "+
-								data.getArmor(false)+"&7/&f"+data.getArmor(true))+" || &o&7END"));
+								data.getArmor(false)+"&7/&f"+data.getArmor(true))+
+								" &b&oDamageType&r&f: "+element.getKey()+
+								" &b&oWeakness Damage&r&f: "+(affinity.getWeaknesses().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
+								" &b&oResistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
+								" &b&oImmunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"FALSE&f ")+"|| &o&7END"));
 					}
 				}
 				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
@@ -134,7 +141,7 @@ public class MobDamageEvent implements Listener
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else
-						data.damage(dmg, true);
+						data.damage(dmg, true, null);
 					
 					if (Ouroboros.debug) 
 					{

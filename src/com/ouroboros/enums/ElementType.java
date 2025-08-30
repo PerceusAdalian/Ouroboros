@@ -9,14 +9,19 @@ public enum ElementType
 	BLUNT("&r&fBlunt&r&f"), 
 	PIERCE("&r&fPierce&r&f"),
 	SLASH("&r&fSlash&r&f"),
-	//Ranged Damage Type
+	//Special Explosive Damage Type
+	COMBUST("&r&cCombust&r&f"),
+	//Ranged Damage Types
 	PUNCTURE("&r&fPuncture&r&f"),
+	CORROSIVE("&r&aCorrosive&r&f"),
 	//Magic Damage Type
 	ARCANO("&r&b&oArcano&r&f"),
 	//Almighty/Pure Damage Types
 	CRUSH("&r&f&o&lCrush&r&f"),
 	SEVER("&r&f&o&lSever&r&f"),
 	IMPALE("&r&f&o&lImpale&r&f"),
+	//Special Almighty Explosive Damage Type
+	BLAST("&r&c&o&lBlast&r&f"),
 	//Elemental Damage Types
 	GLACIO("&r&b&lGlacio&r&f"),
 	INFERNO("&r&c&lInferno&r&f"),

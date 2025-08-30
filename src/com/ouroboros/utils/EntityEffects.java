@@ -2,6 +2,7 @@ package com.ouroboros.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -45,26 +46,40 @@ public class EntityEffects
 	
 	public static void checkFromCombat(LivingEntity target, ElementType element)
 	{
+
+		Random r = new Random();
+		
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data == null) return;
 		
 		//Puncture and Pierce remove an extra 20% of the mob's AR as long as they aren't broken.
-		if ((element == ElementType.PUNCTURE || element == ElementType.PIERCE) && (!data.isBreak())) data.damageArmor(data.getArmor(true)*0.2d);
+		if ((element == ElementType.PUNCTURE || element == ElementType.PIERCE) && (!data.isBreak())) data.damageArmor(data.getArmor(false)*0.2d);
 		//Slash damage will deal an additional 50% of the mob's overall health so long as they won't die and are broken.
-		if (element == ElementType.SLASH && data.isBreak() && !data.isDead()) data.damage(data.getHp(false)*0.5, false);
+		if (element == ElementType.SLASH && data.isBreak() && !data.isDead()) data.damage(data.getHp(false)*0.5, false, null);
 		//Blunt damage temporarily slows mobs that aren't yet broken, making it easy to stack stun procs.
 		if (element == ElementType.BLUNT && !data.isBreak()) EntityEffects.add(target, PotionEffectType.SLOWNESS, 200, 0, true);
 		//Impale will force a BREAK so long as they aren't already broken. This is one of three PURE DAMAGE types.
 		if (element == ElementType.IMPALE && !data.isBreak()) data.setBreak();
 		//Sever will remove the remainder of the mob's HP after damage calculations so long as they're broken and not already defeated; the second PURE DAMAGE type.
-		if (element == ElementType.SEVER && data.isBreak() && !data.isDead()) data.damage(data.getHp(false), false);
+		if (element == ElementType.SEVER && data.isBreak() && !data.isDead()) data.damage(data.getHp(false), false, null);
 		//Crush will indefinitely stun a mob, regardless if they recover from the applied break status; the third and final PURE DAMAGE type.
 		if (element == ElementType.CRUSH) 
 		{
 			EntityEffects.add(target, PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 99, true); 
 			data.setBreak();
 		}
-		if (element == ElementType.GLACIO) addChill(target, 300);
+		//Corrosive will erode target's armor by 30% of its current value.
+		if (element == ElementType.CORROSIVE && !data.isBreak()) data.damageArmor(data.getArmor(false)*0.3d); 
+		if (element == ElementType.GLACIO) 
+		{
+			if (r.nextDouble() >= 0.2155) return;
+			addChill(target, 300);
+		}
+		if (element == ElementType.INFERNO) 
+		{
+			if (r.nextDouble() >= 0.1399) return;
+			setBurn(target,300);
+		}
 		
 		
 	}
@@ -129,7 +144,7 @@ public class EntityEffects
 			if (EntityCategories.undead.contains(target.getType()) 
 					&& !EntityCategories.calamity.contains(target.getType())) 
 			{
-				MobData.damageUnnaturally(null, target, data.getHp(false), false);
+				MobData.damageUnnaturally(null, target, data.getHp(false), false, ElementType.CELESTIO);
 			}
 			else if (!EntityCategories.undead.contains(target.getType()) 
 						&& !EntityCategories.calamity.contains(target.getType()) 

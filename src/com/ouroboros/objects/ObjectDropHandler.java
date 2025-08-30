@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +12,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.objects.instances.EolBlazeArm;
 
 public class ObjectDropHandler 
 {
@@ -35,12 +37,21 @@ public class ObjectDropHandler
 				
 				for (AbstractObsObject item : ObjectRegistry.itemRegistry.values()) 
 				{
+					if (!item.canDrop()) continue;
 					if (currentDrops >= maxDrops) break;
 				    if (r.nextDouble() >= dropChance) continue;
 				    if (hasBeenRecentlyDropped.getOrDefault(item, false)) continue;
 			    	e.getDrops().add(item.toItemStack());
 			    	hasBeenRecentlyDropped.put(item, true);
 			    	currentDrops++;
+				}
+				
+				if (e.getEntityType().equals(EntityType.BLAZE))
+				{
+					if (r.nextDouble() >= 0.8559d) return;
+					AbstractObsObject item = new EolBlazeArm();
+					e.getDrops().add(item.toItemStack());
+					return;
 				}
 				
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasBeenRecentlyDropped.clear(), 600L);

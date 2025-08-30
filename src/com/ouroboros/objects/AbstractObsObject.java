@@ -22,14 +22,16 @@ public abstract class AbstractObsObject
 	private String[] itemDescription;
 	private Material material;
 	private boolean isEnchanted = false;
+	private boolean canDrop;
 	
-	public AbstractObsObject(String name, String internalName, Material material, boolean isEnchanted, String...itemDescription) 
+	public AbstractObsObject(String name, String internalName, Material material, boolean isEnchanted, boolean canDrop, String...itemDescription) 
 	{
 		this.name = name;
 		this.internalName = internalName;
 		this.material = material;
 		this.isEnchanted = isEnchanted;
 		this.itemDescription = itemDescription;
+		this.canDrop = canDrop;
 	}
 	public String getName() 
 	{
@@ -66,6 +68,10 @@ public abstract class AbstractObsObject
 	public boolean isEnchanted() 
 	{
 		return isEnchanted;
+	}
+	public boolean canDrop()
+	{
+		return canDrop;
 	}
 	public AbstractObsObject getInstance() 
 	{

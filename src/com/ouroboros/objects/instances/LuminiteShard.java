@@ -19,7 +19,7 @@ public class LuminiteShard extends AbstractObsObject
 
 	public LuminiteShard() 
 	{
-		super("Luminite Shard", "money_tier2", Material.GOLD_NUGGET, true, 
+		super("Luminite Shard", "money_tier2", Material.GOLD_NUGGET, true, true,
 				"&r&fA small concentration of &e&l&oLuminite&r&f.",
 				"&r&fIt is a shard with faint humming and static radiation.",
 				"&r&f&lRight-Click&r&f to harness into &l150&r&e₪&f.",

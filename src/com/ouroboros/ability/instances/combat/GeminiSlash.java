@@ -51,7 +51,7 @@ public class GeminiSlash extends AbstractOBSAbility
 			
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
 			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER, 0, 0);
-			MobData.damageUnnaturally(p, target, 10, true);
+			MobData.damageUnnaturally(p, target, 10, true, this.getElementType());
 			EntityEffects.addExposed((LivingEntity)target, 300);
 
 			return true;			

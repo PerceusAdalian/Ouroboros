@@ -9,9 +9,10 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.AbilityCategory;
-import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 
 import net.md_5.bungee.api.ChatMessageType;
@@ -144,5 +145,23 @@ public class PrintUtils
 		}
 		inherentName = inherentName.substring(0, inherentName.length() - 1);
 		return inherentName;
+	}
+	
+	public static String assignRarity(Rarity rarity)
+	{
+		char color = switch (rarity) 
+		{
+			case ONE -> color = '7';
+			case TWO -> color = '6';
+			case THREE -> color = 'b';
+			case FOUR -> color = 'd';
+			case FIVE -> color = 'e';
+			case SIX -> color = 'c';
+			case SEVEN -> color = '3';
+			case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + rarity);
+			default -> throw new IllegalArgumentException("Unexpected value: " + rarity);	
+		};
+		
+		return ColorParser("&r&n&fRarity&r&f: &l"+color+("✦".repeat(rarity.getRarity())));
 	}
 }

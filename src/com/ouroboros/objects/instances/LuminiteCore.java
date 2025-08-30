@@ -19,7 +19,7 @@ public class LuminiteCore extends AbstractObsObject
 
 	public LuminiteCore() 
 	{
-		super("Luminite Core", "money_tier5", Material.SUNFLOWER, true, 
+		super("Luminite Core", "money_tier5", Material.SUNFLOWER, true, true, 
 				"&r&fA huge concentration of &e&l&oLuminite&r&f.",
 				"&r&fIt is a perfect crystalline orb that resonates harmonic frequencies.",
 				"&r&f&lRight-Click&r&f to harness into &l1000&r&e₪&f.",

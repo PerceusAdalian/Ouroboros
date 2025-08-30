@@ -25,6 +25,7 @@ import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.objects.ObjectDropHandler;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
+import com.ouroboros.objects.instances.EolBlazeArm;
 import com.ouroboros.utils.PrintUtils;
 
 public class Ouroboros extends JavaPlugin
@@ -61,6 +62,7 @@ public class Ouroboros extends JavaPlugin
 		AbilityCastHandler.register(instance);
 		AbilityRegistry.abilityInit();		
 		ImbueFire.registerCleanupHandler(instance);		
+		EolBlazeArm.registerHeldEvent(instance);
 		
 		ShopItemContainer.init();
 

@@ -18,7 +18,7 @@ public class LuminiteIngot extends AbstractObsObject
 {
 	public LuminiteIngot() 
 	{
-		super("Luminite Ingot", "money_tier4", Material.GOLD_INGOT, true, 
+		super("Luminite Ingot", "money_tier4", Material.GOLD_INGOT, true, true,
 				"&r&fA large concentration of &e&l&oLuminite&r&f.",
 				"&r&fIt is a refined, metallic bar that resonates and holds a deeper glow.",
 				"&r&f&lRight-Click&r&f to harness into &l500&r&e₪&f.",

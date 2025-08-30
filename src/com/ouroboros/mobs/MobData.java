@@ -24,9 +24,12 @@ import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.mobs.utils.AffinityRegistry;
 import com.ouroboros.mobs.utils.LevelTable;
+import com.ouroboros.mobs.utils.MobAffinity;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.ObsMobHealthbar;
+import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -250,9 +253,19 @@ public class MobData
 		config.set(path, value);
 	}
 	
-	public void damage(double value, boolean damageArmor)
+	public void damage(double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(uuid);
+		
+		if (element == null) element = ElementType.NEUTRAL;
+		
+		MobAffinity affinity = AffinityRegistry.getAffinity(getEntityType());
+		if (!EntityEffects.isVoidedRegistry.containsKey(uuid))
+		{
+			if (affinity.immuneTo(element)) value = 0;
+			else if (affinity.resists(element)) value *= 0.5;
+		}
+		else if (affinity.weakTo(element)) value *= 1.5;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;
@@ -286,18 +299,29 @@ public class MobData
 		}
 	}
 	
-	public static void damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor)
+	public static void damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		
-		boolean isNull = data == null ? true : false;
-		if (isNull)
+		boolean nullData = data == null ? true : false;
+		if (nullData)
 		{
 			((Damageable) target).damage(value);
 		}
 		else 
 		{
-			data.damage(value, damageArmor);
+			if (element == null) element = ElementType.NEUTRAL;
+			
+			MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
+			if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
+			{
+				if (affinity.immuneTo(element)) value = 0;
+				else if (affinity.resists(element)) value *= 0.5;
+			}
+			else if (affinity.weakTo(element)) value *= 1.5;
+			
+			
+			data.damage(value, damageArmor, element);
 			data.save();
 
 			ObsMobHealthbar.updateHPBar(target, true);
@@ -324,7 +348,7 @@ public class MobData
 		MobData data = MobData.getMob(uuid);
 		double baseHP = data.getHp(true);
 		double damage = ((percent/100.0)*baseHP)+value;
-		damage(damage, false);
+		damage(damage, false, null);
 	}
 	
 	public boolean isBreak() 

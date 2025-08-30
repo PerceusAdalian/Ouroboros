@@ -32,7 +32,7 @@ public class Flamelash extends AbstractOBSAbility
 
 	public Flamelash() 
 	{
-		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, ObsAbilityType.COMBAT, ElementType.SLASH, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, ObsAbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
 				"&r&fSlash upwards to calcinate target mob dealing ",
 				"&r&f&l5&r&c♥ &f&lSlash&r&f damage and apply &cBurn&f.",
 				"&r&f&lRange: &b7 meters",
@@ -56,7 +56,7 @@ public class Flamelash extends AbstractOBSAbility
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null), 10);
 			
-			MobData.damageUnnaturally(p, target, 10, true);
+			MobData.damageUnnaturally(p, target, 10, true, this.getElementType());
 			target.setFireTicks(200);
 			
 			cooldownTimer.add(p.getUniqueId());

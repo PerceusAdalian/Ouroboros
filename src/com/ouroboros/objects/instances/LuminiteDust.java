@@ -19,7 +19,7 @@ public class LuminiteDust extends AbstractObsObject
 
 	public LuminiteDust() 
 	{
-		super("Luminite Dust", "money_tier1", Material.GLOWSTONE_DUST, true, 
+		super("Luminite Dust", "money_tier1", Material.GLOWSTONE_DUST, true, true,
 				"&r&fA tiny concentration of &e&l&oLuminite&r&f.", 
 				"&r&fIt is a fine powder with a yellow shimmer and glows dimly.",
 				"&r&f&lRight-Click&r&f to harness into &l100&r&e₪&f.",

@@ -34,7 +34,7 @@ public abstract class AbstractOBSAbility
 	private final String[] description;
 	private final ObsAbilityType aType;
 	private final StatType statRequirement;
-	private final ElementType dType;
+	private final ElementType eType;
 	private final CastConditions condition;
 	private final AbilityCategory abilityCategory;
 	private final int levelRequirement;
@@ -43,7 +43,7 @@ public abstract class AbstractOBSAbility
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
-			ObsAbilityType aType, ElementType dType, CastConditions condition, AbilityCategory abilityCategory, String...description) 
+			ObsAbilityType aType, ElementType eType, CastConditions condition, AbilityCategory abilityCategory, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -52,7 +52,7 @@ public abstract class AbstractOBSAbility
 		this.statRequirement = statRequirement;
 		this.levelRequirement = levelRequirement;
 		this.aType = aType;
-		this.dType = dType;
+		this.eType = eType;
 		this.condition = condition;
 		this.abilityCategory = abilityCategory;
 		this.description = description;
@@ -76,7 +76,7 @@ public abstract class AbstractOBSAbility
 		config.set("level_requirement", levelRequirement);
 		config.set("description", description);
 		config.set("ability_type", aType.getKey());
-		if (dType != null) config.set("damage_type", dType.getType());
+		if (eType != null) config.set("damage_type", eType.getType());
 	}
 	
 	public void save() 
@@ -147,9 +147,9 @@ public abstract class AbstractOBSAbility
 		return aType;
 	}
 	
-	public ElementType getDamageType() 
+	public ElementType getElementType() 
 	{
-		return dType;
+		return eType;
 	}
 	
 	public CastConditions getCastCondition() 
@@ -211,7 +211,7 @@ public abstract class AbstractOBSAbility
 		else 
 		{
 			lore.add(PrintUtils.assignAbilityType(aType));
-			if (dType != null) lore.add(PrintUtils.assignElementType(dType));
+			if (eType != null) lore.add(PrintUtils.assignElementType(eType));
 			if (condition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(condition));
 			lore.add(PrintUtils.assignAbilityCategory(abilityCategory));
 			lore.add("");
