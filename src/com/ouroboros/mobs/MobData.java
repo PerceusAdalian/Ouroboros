@@ -14,6 +14,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
@@ -26,6 +27,7 @@ import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.mobs.events.MobDamageEvent;
 import com.ouroboros.mobs.utils.AffinityRegistry;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.MobAffinity;
@@ -337,7 +339,21 @@ public class MobData
 			data.damage(value, damageArmor, element);
 			data.save();
 
-			ObsMobHealthbar.updateHPBar(target, true);
+			//Update their HP bar
+			BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
+			if (bar == null) ObsMobHealthbar.initializeHPBar(target, true);
+			else ObsMobHealthbar.updateHPBar(target, true);
+			
+			//And mark for removal later
+			if (!MobDamageEvent.hpBarMap.containsKey(target.getUniqueId())) 
+			{							
+				MobDamageEvent.hpBarMap.put(target.getUniqueId(), true);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					MobDamageEvent.hpBarMap.remove(target.getUniqueId());
+					ObsMobHealthbar.hideBossBar(target);
+				}, 150);
+			}
 			
 			if (data.isDead())
 			{
