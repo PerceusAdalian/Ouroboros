@@ -1,6 +1,9 @@
 package com.ouroboros.mobs.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attributable;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -37,6 +40,10 @@ public class MobGenerateEvent implements Listener
 				
 				data.initialize(entity);
 				MobData.setMobVisuals(entity, data);
+				
+				var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
+				att.setBaseValue(1023.9);
+				((Damageable) entity).setHealth(att.getBaseValue());
 				
 				if (Ouroboros.debug == true) 
 				{

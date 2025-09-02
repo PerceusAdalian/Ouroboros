@@ -42,12 +42,12 @@ public class EolBlazeArm extends AbstractObsObject
 		super("ΣOL: Blaze Arm", "eol_blaze_arm", Material.BLAZE_ROD, true, false, 
 				PrintUtils.assignRarity(Rarity.FIVE),
 				PrintUtils.assignElementType(ElementType.INFERNO),
-				"&r&f&l&nUsage&r&f: ", 
+				"&r&f&l&nUsage&r&f:", 
 				"&d&oLeft-Click&r&f to cast &e&oBlazing Rage &r&fcombo&r&f",
-				"&r&e&oBlazing Rage &r&fSpells&r&f: ",
+				"&r&f> &e&oBlazing Rage &r&fSpells&r&f: ",
 				"&r&f&l1. &r&e&oFlame Whip &r&7| &r&f&l2. &r&e&oFireball &r&b&lII &r&7| &r&f&l3. &r&e&oInferno",
-				"&d&oRight-Click&r&f target block to cast &e&oEruption &lα &7&o(Range: 20m\\CD:30s)",
-				"&r&f&lAlt-Fire: Shift_Right-Click to cast &e&oWard &r&b&lIII &r&7&o(20s\\CD:30s)",
+				"&d&oRight-Click&r&f target block to cast &e&oEruption α &7&o(Range: 20m\\CD:30s)",
+				"&d&oShift_Right-Click&r&f to cast &e&oWard &r&b&lIII &r&7&o(20s\\CD:30s)",
 				"",
 				"&r&b> &oPassive&r&f: Grants &c&oFire Immunity &r&fwhile held.",
 				"",
@@ -83,7 +83,7 @@ public class EolBlazeArm extends AbstractObsObject
 			{
 				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.AMBIENT, 1, 1);
 				PrintUtils.PrintToActionBar(p, "&r&f&oWard is now castable");
-				EruptionCooldown.remove(p.getUniqueId());
+				WardCooldown.remove(p.getUniqueId());
 			}, 600);
 			
 			return true;
@@ -136,6 +136,7 @@ public class EolBlazeArm extends AbstractObsObject
 				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
 				OBSParticles.drawInfernoCastSigil(p);
 				Fireball fb = (Fireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.FIREBALL);
+				fb.setShooter(p);
 				fb.setYield(2);
 				comboTier.put(uuid, 2);
 				return true;
@@ -178,7 +179,8 @@ public class EolBlazeArm extends AbstractObsObject
 			double ticks = b.getLocation().distance(p.getLocation());
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				p.getWorld().createExplosion(b.getLocation(), 4, true, false, p);
+				p.getWorld().createExplosion(b.getLocation(), 4, true, false);
+				OBSParticles.drawPoint(b.getLocation(), Particle.EXPLOSION_EMITTER, 1, null);
 				EntityEffects.playSound(p, b.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.AMBIENT, 1, 1);
 			}, (long) ticks+40);
 			

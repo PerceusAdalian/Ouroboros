@@ -56,7 +56,7 @@ public class Flamelash extends AbstractOBSAbility
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null), 10);
 			
-			MobData.damageUnnaturally(p, target, 10, true, this.getElementType());
+			MobData.damageUnnaturally(p, target, 10, true, ElementType.INFERNO);
 			target.setFireTicks(200);
 			
 			cooldownTimer.add(p.getUniqueId());

@@ -5,11 +5,10 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attributable;
-import org.bukkit.attribute.Attribute;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
@@ -21,6 +20,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -36,8 +36,6 @@ import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
-
-import net.minecraft.world.level.Explosion;
 
 public class MobDamageEvent implements Listener
 {
@@ -61,44 +59,45 @@ public class MobDamageEvent implements Listener
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
+				MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());				
+				ElementType element = ElementType.NEUTRAL;
+				double dmg;
+				
 				//In the event the damage source is as shown below, execute this block
-				if (e instanceof EntityDamageByEntityEvent dmgEvent)
+				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p)
 				{
-					ElementType element = ElementType.NEUTRAL;
-					if (dmgEvent.getDamager() instanceof Player p)
+					if (dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player)
+						element = ElementType.PUNCTURE;
+					else if (dmgEvent.getDamager() instanceof Trident trident && trident.getShooter() instanceof Player)
+						element = ElementType.IMPALE;
+					else if (dmgEvent.getDamager() instanceof ThrownPotion potion && potion.getShooter() instanceof Player)
+						element = ElementType.ARCANO;
+					else if (dmgEvent.getDamager() instanceof Fireball fb && fb.getShooter() instanceof Player)
+						element = ElementType.INFERNO;
+					else
 					{
 						ItemStack held = p.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
 						Material m = held != null ? held.getType() : Material.AIR;
 						element = ResolveCombatElement.getFromMaterial(m);
 					}
-					else if (dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player)
-					{
-						element = ElementType.PUNCTURE;
-					}
-					else if (dmgEvent.getDamager() instanceof Trident trident && trident.getShooter() instanceof Player)
-					{
-						element = ElementType.IMPALE;
-					}
-					else if (dmgEvent.getDamager() instanceof ThrownPotion potion && potion.getShooter() instanceof Player)
-					{
-						element = ElementType.ARCANO;
-					}
-					else if (dmgEvent.getDamager() instanceof Fireball fb && fb.getShooter() instanceof Player)
-					{
-						element = ElementType.INFERNO;
-					}
-					else if (dmgEvent.getDamager() instanceof Explosion ex && ex.getDirectSourceEntity() instanceof Player)
-					{
-						element = ElementType.BLAST;
-					}
 					
-					double dmg = dmgEvent.getFinalDamage();
+					dmg = dmgEvent.getFinalDamage();
 					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else 
 						data.damage(dmg, true, element);
-
+					
+					if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
+					{
+						if (affinity.immuneTo(element)) 
+							EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER, 1, 1);
+						else if (affinity.resists(element)) 
+							EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 1, 1);							
+					}
+					else if (affinity.weakTo(element)) 
+						EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 1);
+					
 					//Apply relevent effects based on the combat element used.
 					EntityEffects.checkFromCombat((LivingEntity)target, element);
 					
@@ -117,36 +116,50 @@ public class MobDamageEvent implements Listener
 							ObsMobHealthbar.hideBossBar(target);
 						}, 150);
 					}
-					
-					if (Ouroboros.debug) 
-					{
-						MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
-						
-						String name = target.getCustomName();
-						PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
-								(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+"&7 || &fDamage Dealt: &c"+
-								dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
-								(data.isBreak()?" &7|| &6Break&f: &cTRUE&f":(" &7|| &6Break&f: &aFALSE&7 || &6AR&f: "+
-								data.getArmor(false)+"&7/&f"+data.getArmor(true))+
-								" &b&oDamageType&r&f: "+element.getKey()+
-								" &b&oWeakness Damage&r&f: "+(affinity.getWeaknesses().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
-								" &b&oResistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
-								" &b&oImmunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"FALSE&f ")+"|| &o&7END"));
-					}
 				}
 				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
 				{
-					double dmg = e.getFinalDamage();
-
+					DamageCause cause = e.getCause();
+					
+					if (cause == DamageCause.ENTITY_EXPLOSION || cause == DamageCause.BLOCK_EXPLOSION)
+						element = ElementType.BLAST;
+					else if (cause == DamageCause.CAMPFIRE || cause == DamageCause.FIRE || cause == DamageCause.LAVA
+							|| cause == DamageCause.FIRE_TICK)
+						element = ElementType.INFERNO;
+					else if (cause == DamageCause.FALL || cause == DamageCause.FALLING_BLOCK)
+						element = ElementType.GEO;
+					else if (cause == DamageCause.CONTACT || cause == DamageCause.PROJECTILE || cause == DamageCause.THORNS)
+						element = ElementType.PIERCE;
+					else if (cause == DamageCause.DRAGON_BREATH || cause == DamageCause.CRAMMING
+							|| cause == DamageCause.WORLD_BORDER || cause == DamageCause.VOID
+							|| cause == DamageCause.SONIC_BOOM)
+						element = ElementType.COSMO;
+					else if (cause == DamageCause.DROWNING || cause == DamageCause.SUFFOCATION
+							|| cause == DamageCause.WITHER || cause == DamageCause.DRYOUT
+							|| cause == DamageCause.STARVATION)
+						element = ElementType.MORTIO;
+					else if (cause == DamageCause.FALLING_BLOCK)
+						element = ElementType.CRUSH;
+					else if (cause == DamageCause.FREEZE)
+						element = ElementType.GLACIO;
+					else if (cause == DamageCause.FLY_INTO_WALL || cause == DamageCause.LIGHTNING)
+						element = ElementType.AERO;
+					else if (cause == DamageCause.POISON)
+						element = ElementType.CORROSIVE;
+					else if (cause == DamageCause.MAGIC)
+						element = ElementType.ARCANO;
+					
+					dmg = e.getFinalDamage();
+					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else
-						data.damage(dmg, true, null);
+						data.damage(dmg, true, element);
 					
 					if (Ouroboros.debug) 
 					{
 						String name = target.getCustomName();
-						PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
+						PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oNormalDamageEvent&r&f -- &aOK&7 || &fMob: "+
 								(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+"&7 || &fDamage Dealt: &c"+
 								dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
 								(data.isBreak()?" &7|| &6Break&f: &cTRUE&f":(" &7|| &6Break&f: &aFALSE&7 || &6AR&f: "+
@@ -158,15 +171,28 @@ public class MobDamageEvent implements Listener
 				
 				if (data.isDead()) //Check for death status and potential removal
 				{
-					((Damageable) target).setHealth(0);
+					LivingEntity le = (LivingEntity) target;
+					Bukkit.getScheduler().runTaskLater(plugin, () -> le.setHealth(0), 5L);
+
 					ObsMobHealthbar.removeBossBar(target);
 					data.deleteFile();
-				}
-				else //Or heal them to full
-				{
-					((Damageable) target).setHealth(((Attributable) target).getAttribute(Attribute.MAX_HEALTH).getValue());
+					return;
 				}
 				
+				if (Ouroboros.debug) 
+				{
+					String name = target.getCustomName();
+					PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
+							(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+
+							"\n                          &7&f- Damage Dealt: &c"+
+							dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
+							(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
+							data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
+							"\n                          &b&o> DamageType&r&f: "+element.getKey()+
+							"\n                          &b&o- Weakness Damage&r&f: "+(affinity.getWeaknesses().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
+							"\n                          &b&o- Resistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
+							"\n                          &b&o- Immunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
+				}
 			}
 		}, plugin);
 	}

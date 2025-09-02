@@ -69,7 +69,7 @@ public class ObsMobHealthbar
 		if (data.isBreak())
 			hpBarTitle = PrintUtils.ColorParser("&f" +PrintUtils.getFancyEntityName(entity.getType())+ " &6AR&f: " + "&f&k0&r&e{&c&lBreak!&r&e}&f&k0");
 		else
-			hpBarTitle = PrintUtils.ColorParser("&f"+PrintUtils.getFancyEntityName(entity.getType())+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true));
+			hpBarTitle = PrintUtils.ColorParser("&f"+PrintUtils.getFancyEntityName(entity.getType())+" &6AR&f: &7(&f"+data.getArmor(false)+"&7/&f"+data.getArmor(true)+"&r&7)");
 		
 		double baseHP = data.getHp(true);
 		double currentHP = data.getHp(false);

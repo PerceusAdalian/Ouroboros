@@ -22,7 +22,6 @@ import com.ouroboros.mobs.events.MobDamageEvent;
 import com.ouroboros.mobs.events.MobDeathEvent;
 import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
-import com.ouroboros.objects.ObjectDropHandler;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
 import com.ouroboros.objects.instances.EolBlazeArm;
@@ -68,7 +67,6 @@ public class Ouroboros extends JavaPlugin
 
 		ObjectRegistry.itemInit();
 		ObsObjectCastHandler.register(instance);
-		ObjectDropHandler.register(instance);
 		
 		MobManager.respawnAll();
 		

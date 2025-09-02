@@ -58,7 +58,7 @@ public class AffinityRegistry
         AFFINITIES.put(EntityType.ARMADILLO, new MobAffinity(
             EnumSet.of(ElementType.GEO),
             EnumSet.of(ElementType.GLACIO),
-            EnumSet.of(ElementType.PIERCE)
+            EnumSet.of(ElementType.BLUNT)
         ));
         
         // Axolotl
@@ -100,7 +100,7 @@ public class AffinityRegistry
         AFFINITIES.put(EntityType.BREEZE, new MobAffinity(
             EnumSet.of(ElementType.PIERCE),
             EnumSet.of(ElementType.GEO),
-            EnumSet.of(ElementType.AERO)
+            EnumSet.of(ElementType.AERO,ElementType.PUNCTURE,ElementType.IMPALE)
         ));
 
         // Camel

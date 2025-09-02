@@ -162,6 +162,6 @@ public class PrintUtils
 			default -> throw new IllegalArgumentException("Unexpected value: " + rarity);	
 		};
 		
-		return ColorParser("&r&n&fRarity&r&f: &l"+color+("✦".repeat(rarity.getRarity())));
+		return ColorParser("&r&f&nRarity&r&f: &"+color+("✦".repeat(rarity.getRarity())));
 	}
 }

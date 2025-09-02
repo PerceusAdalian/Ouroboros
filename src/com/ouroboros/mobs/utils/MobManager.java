@@ -9,8 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.attribute.Attributable;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -54,6 +57,10 @@ public class MobManager
 			Entity e = w.spawnEntity(loc, type);
 
 			MobData.setMobVisuals(e, data);
+			
+			var att = ((Attributable) e).getAttribute(Attribute.MAX_HEALTH);
+			att.setBaseValue(1023.9);
+			((Damageable) e).setHealth(att.getBaseValue());	
 		}
 		
 		file.delete();

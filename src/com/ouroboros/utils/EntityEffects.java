@@ -55,13 +55,13 @@ public class EntityEffects
 		//Puncture and Pierce remove an extra 20% of the mob's AR as long as they aren't broken.
 		if ((element == ElementType.PUNCTURE || element == ElementType.PIERCE) && (!data.isBreak())) data.damageArmor(data.getArmor(false)*0.2d);
 		//Slash damage will deal an additional 50% of the mob's overall health so long as they won't die and are broken.
-		if (element == ElementType.SLASH && data.isBreak() && !data.isDead()) data.damage(data.getHp(false)*0.5, false, null);
+		if (element == ElementType.SLASH && data.isBreak() && !data.isDead()) data.damage(data.getHp(false)*0.5, false, ElementType.NEUTRAL);
 		//Blunt damage temporarily slows mobs that aren't yet broken, making it easy to stack stun procs.
 		if (element == ElementType.BLUNT && !data.isBreak()) EntityEffects.add(target, PotionEffectType.SLOWNESS, 200, 0, true);
 		//Impale will force a BREAK so long as they aren't already broken. This is one of three PURE DAMAGE types.
 		if (element == ElementType.IMPALE && !data.isBreak()) data.setBreak();
 		//Sever will remove the remainder of the mob's HP after damage calculations so long as they're broken and not already defeated; the second PURE DAMAGE type.
-		if (element == ElementType.SEVER && data.isBreak() && !data.isDead()) data.damage(data.getHp(false), false, null);
+		if (element == ElementType.SEVER && data.isBreak() && !data.isDead()) data.damage(data.getHp(false), false, ElementType.NEUTRAL);
 		//Crush will indefinitely stun a mob, regardless if they recover from the applied break status; the third and final PURE DAMAGE type.
 		if (element == ElementType.CRUSH) 
 		{

@@ -42,7 +42,7 @@ public class GeminiSlash extends AbstractOBSAbility
 			Player p = pie.getPlayer();
 			//Get a valid target
 			Entity target = RayCastUtils.getNearestEntity(p, 5);
-			if (target == null || target instanceof LivingEntity) return false;
+			if (target == null || !(target instanceof LivingEntity le)) return false;
 			
 			//Initalize vectors
 			Vector v1 = target.getLocation().toVector();
@@ -50,9 +50,9 @@ public class GeminiSlash extends AbstractOBSAbility
 			p.setVelocity(v1.subtract(v2).normalize().multiply(1.5));
 			
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
-			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER, 0, 0);
-			MobData.damageUnnaturally(p, target, 10, true, this.getElementType());
-			EntityEffects.addExposed((LivingEntity)target, 300);
+			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER, 1, 1);
+			MobData.damageUnnaturally(p, target, 10, true, ElementType.CELESTIO);
+			EntityEffects.addExposed(le, 300);
 
 			return true;			
 		}

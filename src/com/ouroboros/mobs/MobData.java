@@ -10,6 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Server;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -315,11 +317,22 @@ public class MobData
 			MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
 			if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
 			{
-				if (affinity.immuneTo(element)) value = 0;
-				else if (affinity.resists(element)) value *= 0.5;
+				if (affinity.immuneTo(element)) 
+				{
+					EntityEffects.playSound(player, player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER, 1, 1);
+					value = 0;
+				}
+				else if (affinity.resists(element)) 
+				{
+					EntityEffects.playSound(player, player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 1, 1);
+					value *= 0.5;
+				}
 			}
-			else if (affinity.weakTo(element)) value *= 1.5;
-			
+			else if (affinity.weakTo(element)) 
+			{
+				EntityEffects.playSound(player, player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 1);
+				value *= 1.5;
+			}
 			
 			data.damage(value, damageArmor, element);
 			data.save();
@@ -340,6 +353,23 @@ public class MobData
 		{
 			Vector direction = target.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(0.4);
 			target.setVelocity(direction.setY(0.4));	
+		}
+		
+		if (Ouroboros.debug) 
+		{
+			MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
+			
+			String name = target.getCustomName();
+			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
+					(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+
+					"\n                          &7&f- Damage Dealt: &c"+
+					value+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
+					(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
+					data.getArmor(false)+"&7/&f"+data.getArmor(true))+
+					"\n                          &b&o> DamageType&r&f: "+element.getKey()+
+					"\n                          &b&o- Weakness Damage&r&f: "+(affinity.getWeaknesses().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
+					"\n                          &b&o- Resistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
+					"\n                          &b&o- Immunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END"));
 		}
 	}
 	
