@@ -21,7 +21,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
@@ -208,11 +207,6 @@ public class MobData
 		return getWeakness ? ElementType.valueOf(config.getString("mob.affinity")) : ElementType.valueOf(config.getString("mob.affinity.weakness"));
 	}
 	
-	public void setAffinity(boolean setWeakness)
-	{
-		
-	}
-	
 	public int getLevel() 
 	{
 		return config.getInt("mob.level");
@@ -271,33 +265,52 @@ public class MobData
 		}
 		else if (affinity.weakTo(element)) value *= 1.5;
 		
+		if (EntityEffects.isDoomedRegistry.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
+		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;
 		data.setHp(newHP, false);
 
 		if (damageArmor)
-		{
 			damageArmor(value);
-		}
+	}
+	
+	public void heal(double value, boolean setMaxHp, boolean healArmor, boolean setMaxArmor)
+	{
+		setHp(setMaxHp ? getHp(true) : (getHp(false)+value), false);
+		Entity entity = Bukkit.getEntity(uuid);
+		ObsMobHealthbar.updateHPBar(entity, false);
+		if (healArmor)
+			healArmor(value, setMaxArmor);
+		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
+	}
+	
+	public void healArmor(double value, boolean setMax)
+	{
+		if (isBreak()) 
+			setBreak(false);
+		setArmor(setMax ? getArmor(true) : (getArmor(false) + (int) value), false);
+		Entity entity = Bukkit.getEntity(uuid);
+		ObsMobHealthbar.updateHPBar(entity, false);
+		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
 	}
 	
 	public void damageArmor(double value)
 	{
-		MobData data = MobData.getMob(uuid);
 		
-		if (data.isBreak()) return;
-		int currentArmor = data.getArmor(false);
+		if (isBreak()) return;
+		int currentArmor = getArmor(false);
 		int newArmor = (int) (currentArmor - (value * 0.5));
-		data.setArmor(newArmor, false);
-		if (data.getArmor(false) <= 0)
+		setArmor(newArmor, false);
+		if (getArmor(false) <= 0)
 		{
-			data.setBreak(true);
+			setBreak(true);
 			Entity entity = Bukkit.getEntity(uuid);
 			OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
-			data.setArmor(0, false);
+			setArmor(0, false);
 			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
 			{
-				data.setArmor(data.getArmor(true), false);
+				setArmor(getArmor(true), false);
 				return;
 			}, 600);
 		}
@@ -336,6 +349,8 @@ public class MobData
 				value *= 1.5;
 			}
 			
+			if (EntityEffects.isDoomedRegistry.containsKey(target.getUniqueId()) && element == ElementType.MORTIO) value *= 1.25;
+			
 			data.damage(value, damageArmor, element);
 			data.save();
 
@@ -357,7 +372,8 @@ public class MobData
 			
 			if (data.isDead())
 			{
-				((Damageable) target).setHealth(0);
+				LivingEntity le = (LivingEntity) target;
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
 				ObsMobHealthbar.removeBossBar(target);
 				data.deleteFile();
 			}
@@ -387,6 +403,16 @@ public class MobData
 					"\n                          &b&o- Resistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
 					"\n                          &b&o- Immunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END"));
 		}
+	}
+	
+	public void kill()
+	{
+		damage(getHp(false), false, ElementType.NEUTRAL);
+		Entity entity = Bukkit.getEntity(uuid);
+		LivingEntity le = (LivingEntity) entity;
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
+		ObsMobHealthbar.removeBossBar(entity);
+		deleteFile();
 	}
 	
 	public void breakDamage(double value, double percent)
@@ -450,42 +476,6 @@ public class MobData
 		return dataMap.get(uuid);
 	}
 	
-	@Deprecated
-	public static void loadAll()
-	{
-		for (World w : Bukkit.getWorlds())
-		{
-			for (Entity e : w.getEntities())
-			{
-				if (!(e instanceof LivingEntity)) continue;
-				processEntity(e);
-			}
-		}
-	}
-	
-	@Deprecated
-	public static void unloadAll()
-	{
-		for (World w : Bukkit.getWorlds())
-		{
-			for (Entity e : w.getEntities())
-			{
-				if (!(e instanceof LivingEntity)) continue;
-				if (!e.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY)) continue;
-				
-				MobData.unloadMobData(e);
-				ObsMobHealthbar.removeBossBar(e);
-			}
-		}
-	}
-	
-	@Deprecated
-	public static void unloadMobData(Entity entity)
-	{
-		MobData data = dataMap.remove(entity.getUniqueId());
-		if (data != null) data.save();
-	}
-	
 	public static UUID parseUUID(Entity entity) 
 	{ 
 		String uuidString = entity.getPersistentDataContainer().get(MobManager.MOB_DATA_KEY, PersistentDataType.STRING);
@@ -502,54 +492,6 @@ public class MobData
 			return null;
 		}
 		return uuid;
-	}
-
-	@Deprecated
-	public static void processEntity(Entity entity)
-	{
-		PersistentDataContainer container = entity.getPersistentDataContainer();
-
-		if (!container.has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) 
-		{
-			registerNewEntity(entity);
-		} 
-		else 
-		{
-			loadExistingEntity(entity);
-		}
-	}
-
-	@Deprecated
-	public static void registerNewEntity(Entity entity)
-	{
-		UUID uuid = entity.getUniqueId();
-		entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, uuid.toString());
-		
-		MobData.loadMobData(entity);
-		MobData data = MobData.getMob(uuid);
-		
-		if (data == null) 
-		{
-			if (Ouroboros.debug) PrintUtils.OBSConsoleError("No MobData found for UUID: "+uuid);
-			return;
-		}
-
-		data.initialize(entity);
-		setMobVisuals(entity, data);
-	}
-
-	@Deprecated
-	public static void loadExistingEntity(Entity entity)
-	{
-		MobData data = MobData.getMob(parseUUID(entity));
-		if (data == null) 
-		{
-			if (Ouroboros.debug) PrintUtils.OBSConsoleError("No MobData found for UUID: "+parseUUID(entity));
-			return;
-		}
-		
-		data.initialize(entity);
-		setMobVisuals(entity, data);
 	}
 	
 	public static void setMobVisuals(Entity entity, MobData data) 
