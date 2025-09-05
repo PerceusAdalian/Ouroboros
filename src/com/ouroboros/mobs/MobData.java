@@ -265,7 +265,8 @@ public class MobData
 		}
 		else if (affinity.weakTo(element)) value *= 1.5;
 		
-		if (EntityEffects.isDoomedRegistry.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
+		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
+		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;
@@ -333,23 +334,12 @@ public class MobData
 			if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
 			{
 				if (affinity.immuneTo(element)) 
-				{
 					EntityEffects.playSound(player, player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER, 1, 1);
-					value = 0;
-				}
 				else if (affinity.resists(element)) 
-				{
 					EntityEffects.playSound(player, player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 1, 1);
-					value *= 0.5;
-				}
 			}
 			else if (affinity.weakTo(element)) 
-			{
 				EntityEffects.playSound(player, player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 1);
-				value *= 1.5;
-			}
-			
-			if (EntityEffects.isDoomedRegistry.containsKey(target.getUniqueId()) && element == ElementType.MORTIO) value *= 1.25;
 			
 			data.damage(value, damageArmor, element);
 			data.save();

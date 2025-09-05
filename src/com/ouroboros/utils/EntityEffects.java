@@ -251,7 +251,7 @@ public class EntityEffects {
 		}
 	}
 
-	public static Map<UUID, Boolean> isDoomedRegistry = new HashMap<>();
+	public static Map<UUID, Boolean> hasDoom = new HashMap<>();
 	/**
 	 * @Description Mortio Signature Effect: Doom regenerates mortio-based mobs (undead, etc.) and marks celestio-based mobs (non-boss).  
 											 Marked mobs take 1.25x mortio damage, and reapplying Doom instantly kills them.
@@ -273,22 +273,28 @@ public class EntityEffects {
 				{
 					data.heal(1, false, true, false);
 				}, 20, seconds * 20);
+				hasDoom.put(target.getUniqueId(), true);
+				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
+				{
+					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5,Particle.SCULK_SOUL, null);
+				}, 20, seconds * 20);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> hasDoom.remove(target.getUniqueId()), seconds * 20);
 			} 
 			else if (EntityCategories.celestio_mobs.contains(target.getType()) && 
 						!EntityCategories.calamity.contains(target.getType()) &&
-							!isDoomedRegistry.containsKey(target.getUniqueId())) 
+							!hasDoom.containsKey(target.getUniqueId())) 
 			{
-				isDoomedRegistry.put(target.getUniqueId(), true);
+				hasDoom.put(target.getUniqueId(), true);
 				add(target, PotionEffectType.WITHER, seconds * 20, magnitude, true);
 				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
 				{
-					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4,Particle.SCULK_SOUL, null);
+					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5,Particle.SCULK_SOUL, null);
 				}, 20, seconds * 20);
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> isDoomedRegistry.remove(target.getUniqueId()), seconds * 20);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> hasDoom.remove(target.getUniqueId()), seconds * 20);
 			} 
-			else if (isDoomedRegistry.containsKey(target.getUniqueId())) 
+			else if (hasDoom.containsKey(target.getUniqueId()) && !EntityCategories.mortio_mobs.contains(target.getType())) 
 			{
-				isDoomedRegistry.remove(target.getUniqueId());
+				hasDoom.remove(target.getUniqueId());
 				data.kill();
 			} 
 		} 

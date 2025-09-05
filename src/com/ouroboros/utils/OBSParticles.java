@@ -274,4 +274,11 @@ public class OBSParticles
 		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
 		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.ASH, null);
 	}
+
+	public static void drawMortioCastSigil(Player p)
+	{
+		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.ASH, null);
+		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
+		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.CRIMSON_SPORE, null);
+	}
 }
