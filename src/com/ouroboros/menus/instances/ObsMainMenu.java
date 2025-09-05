@@ -16,7 +16,7 @@ public class ObsMainMenu extends AbstractOBSGui
 
 	public ObsMainMenu(Player player) 
 	{
-		super(player, "Ouroboros Main Menu", 27, Set.of(10, 13, 16));
+		super(player, "Ouroboros Main Menu", 27, Set.of(10, 13,14,16));
 	}
 
 	@Override
@@ -36,7 +36,13 @@ public class ObsMainMenu extends AbstractOBSGui
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new AbilityMainPage(p));
 		});
-		
+		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&o&lCodex").setLore("&r&fClick to navigate to the Official in-game codex page.").place(this, 14, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			e.setCancelled(true);
+			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new CodexMainPage(p));
+		});
 		//Exits
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 10, e->
 		{
