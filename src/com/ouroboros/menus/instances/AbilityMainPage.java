@@ -42,7 +42,10 @@ public class AbilityMainPage extends AbstractOBSGui
 		//Testing new rendering technique...
 		for (AbstractOBSAbility ability: AbilityRegistry.abilityRegistry.values())
 		{
-			for (int i = 10; i < 37;i++)
+			int count = AbilityRegistry.abilityRegistry.size();
+			// int iterationCount = 0;
+
+			for (int i = 10 ; i < 37 && i < count ; i++)
 			{
 				ItemStack abilityStack = ability.toIcon(player);
 				GuiButton.button(abilityStack.getType()).setName(abilityStack.getItemMeta().getDisplayName()).setLore(abilityStack.getItemMeta().getLore()).place(this, i, e->
