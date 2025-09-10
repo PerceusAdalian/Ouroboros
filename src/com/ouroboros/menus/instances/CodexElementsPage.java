@@ -97,7 +97,13 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });
         
-        GuiButton.button(Material.BRICK).setName("&6&lGeo").setLore("")
+        GuiButton.button(Material.BRICK).setName("&6&lGeo").setLore(
+                "&r&fThe most versatile school, &6&lGeo&r&f, embodies valor and the strength of Earth.",
+                "&r&fFirst taught in the &e&oHollows of Aig'rsvheild&r&f, it wields nature itself: Plants, stone, and storms alike.",
+                "&r&fMany botanists of &eFantasia&f begin here, drawn to its forgiving yet powerful nature.",
+                "&r&fThe &7**&eArchon&f of &6Earth&f, &7**&6&lNidus&r&f, is known for wisdom and kindness,",
+                "&r&fwhile his &7*&femanator, &6Haephestus&f, stands as a human symbol of leadership and war.",
+                "&r&fRespect the land, for it is our only home. Disrespect it, and even &6&lNidus&r&f will not be so merciful.")
         .place(this, 16, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -105,7 +111,12 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });
         
-        GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero").setLore("")
+        GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero").setLore(
+            "&r&fThe most volatile school, &d&lAero&r&f, commands the fury of &dStorms&f.",
+            "&r&fIts Archon, &d&lSeth&r&f, first appeared only centuries ago, though his emanator remains unknown.",
+            "&r&fStudents of &d&lAero&r&f master both swift boons and devastating winds.",
+            "&r&fMany novices miscast, often blown onto rooftops by failed incantations.",
+            "&r&fYet those who harness the true power of &dAir&f stand among the mightiest in all of &eFantasia&f.")
         .place(this, 25, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -113,7 +124,13 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });        
         
-        GuiButton.button(Material.NETHER_STAR).setName("&f&lCelestio").setLore("")
+        GuiButton.button(Material.NETHER_STAR).setName("&e&lCelestio").setLore(
+            "&r&fThe school of &e&lCelestio&r&f channels the sacred power of &eLight&f.",
+            "&r&fIts magic restores vigor, raises the fallen, and fortifies the soul.",
+            "&r&fThough often seen as gentle, &eLight&f can unleash devastating force against its foes.",
+            "&r&fThe &7*&eEmanator, &eArch Priestess &oLumina&r&f, alone has encountered its hidden &eArchon&f whose name she refuses to speak.",
+            "&r&fTo study &e&lCelestio&r&f under &eLumina&f’s guidance is a rare blessing, reserved for the worthy.",
+            "&r&fWill you bear the responsibility of such divine power?")
         .place(this, 39, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -121,7 +138,14 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });        
         
-        GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo").setLore("")
+        GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo").setLore(
+            "&r&fAnomalous and vast, &3&lCosmo&r&f channels the weight of the &3Cosmos&f itself.",
+            "&r&fOften called the &3Astral&f school, little is truly known of its workings.",
+            "&r&fUnlike other &barcana&f, it does not draw on &bAethereal&f energy, but on the fabric of reality itself.",
+            "&r&eArch Priestess Lumina&f’s records suggest the &7**&3&lNihility&r&f may be both its &eArchon&r&f and &eEmanator&r&f.",
+            "&r&fIts magic bends nature, summons storms, and twists time, but at dire cost.",
+            "&r&fScholars risk madness in their studies, their notes devolving into illegible scrawl and occult ritual.",
+            "&r&e&oThe Fantasian Council&r&f forbids attempts to wield this power, warning of fates far worse than death.")
         .place(this, 40, e->
         {
         	Player p = (Player) e.getWhoClicked();
