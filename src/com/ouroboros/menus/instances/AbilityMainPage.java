@@ -1,23 +1,19 @@
 package com.ouroboros.menus.instances;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.ability.instances.combat.Flamelash;
-import com.ouroboros.ability.instances.combat.GeminiSlash;
-import com.ouroboros.ability.instances.combat.ImbueFire;
-import com.ouroboros.ability.instances.combat.ReapAndSew;
-import com.ouroboros.ability.instances.perks.RejuvenateWounds;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
@@ -28,7 +24,7 @@ public class AbilityMainPage extends AbstractOBSGui
 
 	public AbilityMainPage(Player player) 
 	{
-		super(player, "Abilities", 54, Set.of(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,43));
+		super(player, "Abilities", 54, Set.of(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43));
 	}
 
 	public static Map<Player, AbstractOBSAbility> abilityConfirmMap = new HashMap<>();
@@ -37,180 +33,73 @@ public class AbilityMainPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		//Abilities First Page
-
-		//Testing new rendering technique...
-		for (AbstractOBSAbility ability: AbilityRegistry.abilityRegistry.values())
-		{
-			int count = AbilityRegistry.abilityRegistry.size();
-			// int iterationCount = 0;
-
-			for (int i = 10 ; i < 37 && i < count ; i++)
-			{
-				ItemStack abilityStack = ability.toIcon(player);
-				GuiButton.button(abilityStack.getType()).setName(abilityStack.getItemMeta().getDisplayName()).setLore(abilityStack.getItemMeta().getLore()).place(this, i, e->
-				{
-					Player p = (Player) e.getWhoClicked();
-					if (PlayerData.canRegister(p.getUniqueId(), ability)) 
-					{
-						abilityConfirmMap.put(p, ability.getInstance());
-						confirmRegister.put(p, true);
-						GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-					}
-					else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isRegistered()) 
-					{
-						abilityConfirmMap.put(p, ability.getInstance());
-						confirmRegister.put(p, false);
-						GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-					}
-					else
-					{
-						e.setCancelled(true);
-						p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-					}
-				});
-			}
-		}
-
-		// AbstractOBSAbility imbuefire = new ImbueFire();
-		// ItemStack imbuefirestack = imbuefire.toIcon(player);
-		// GuiButton.button(imbuefirestack.getType()).setName(imbuefirestack.getItemMeta().getDisplayName()).setLore(imbuefirestack.getItemMeta().getLore()).place(this, 10, e->
-		// {
-		// 	Player p = (Player) e.getWhoClicked();
-		// 	if (PlayerData.canRegister(p.getUniqueId(), imbuefire)) 
-		// 	{
-		// 		abilityConfirmMap.put(p, imbuefire.getInstance());
-		// 		confirmRegister.put(p, true);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-		// 	else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(imbuefire).isRegistered()) 
-		// 	{
-		// 		abilityConfirmMap.put(p, imbuefire.getInstance());
-		// 		confirmRegister.put(p, false);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-		// 	else
-		// 	{
-		// 		e.setCancelled(true);
-		// 		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-		// 	}
-		// });
-		
-		// AbstractOBSAbility flamelash = new Flamelash();
-		// ItemStack flamelashStack = flamelash.toIcon(player);
-		// GuiButton.button(flamelashStack.getType()).setName(flamelashStack.getItemMeta().getDisplayName()).setLore(flamelashStack.getItemMeta().getLore()).place(this, 11, e->
-		// {
-		// 	Player p = (Player) e.getWhoClicked();
-		// 	if (PlayerData.canRegister(p.getUniqueId(), flamelash)) 
-		// 	{
-		// 		abilityConfirmMap.put(p, flamelash.getInstance());
-		// 		confirmRegister.put(p, true);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-			
-		// 	else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(flamelash).isRegistered()) 
-		// 	{
-		// 		abilityConfirmMap.put(p, flamelash.getInstance());
-		// 		confirmRegister.put(p, false);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-		// 	else
-		// 	{
-		// 		e.setCancelled(true);
-		// 		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-		// 	}
-		// });
-		
-		// AbstractOBSAbility geminislash = new GeminiSlash();
-		// ItemStack geminislashstack = geminislash.toIcon(player);
-		// GuiButton.button(geminislashstack.getType()).setName(geminislashstack.getItemMeta().getDisplayName()).setLore(geminislashstack.getItemMeta().getLore()).place(this, 12, e->
-		// {
-		// 	Player p = (Player) e.getWhoClicked();
-		// 	if (PlayerData.canRegister(p.getUniqueId(), geminislash)) 
-		// 	{
-		// 		abilityConfirmMap.put(p, geminislash.getInstance());
-		// 		confirmRegister.put(p, true);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-			
-		// 	else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(geminislash).isRegistered()) 
-		// 	{
-		// 		abilityConfirmMap.put(p, geminislash.getInstance());
-		// 		confirmRegister.put(p, false);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-		// 	else
-		// 	{
-		// 		e.setCancelled(true);
-		// 		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-		// 	}	
-		// });
-		
-		// AbstractOBSAbility reapAndSew = new ReapAndSew();
-		// ItemStack reapandsewstack = reapAndSew.toIcon(player);
-		// GuiButton.button(reapandsewstack.getType()).setName(reapandsewstack.getItemMeta().getDisplayName()).setLore(reapandsewstack.getItemMeta().getLore()).place(this, 13, e->
-		// {
-		// 	Player p = (Player) e.getWhoClicked();
-		// 	if (PlayerData.canRegister(p.getUniqueId(), reapAndSew)) 
-		// 	{
-		// 		abilityConfirmMap.put(p, reapAndSew.getInstance());
-		// 		confirmRegister.put(p, true);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-			
-		// 	else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(reapAndSew).isRegistered()) 
-		// 	{
-		// 		abilityConfirmMap.put(p, reapAndSew.getInstance());
-		// 		confirmRegister.put(p, false);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-		// 	else
-		// 	{
-		// 		e.setCancelled(true);
-		// 		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-		// 	}	
-		// });
-
-		// AbstractOBSAbility regenperk = new RejuvenateWounds();
-		// ItemStack regenperkstack = regenperk.toIcon(player);
-		// GuiButton.button(regenperkstack.getType()).setName(regenperkstack.getItemMeta().getDisplayName()).setLore(regenperkstack.getItemMeta().getLore()).place(this, 14, e->
-		// {
-		// 	Player p = (Player) e.getWhoClicked();
-		// 	if (PlayerData.canRegister(p.getUniqueId(), regenperk)) 
-		// 	{
-		// 		abilityConfirmMap.put(p, regenperk.getInstance());
-		// 		confirmRegister.put(p, true);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-			
-		// 	else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(regenperk).isRegistered()) 
-		// 	{
-		// 		abilityConfirmMap.put(p, regenperk.getInstance());
-		// 		confirmRegister.put(p, false);
-		// 		GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-		// 	}
-		// 	else
-		// 	{
-		// 		e.setCancelled(true);
-		// 		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-		// 	}	
-		// });
+		renderAbilities(player, whitelistedSlots);
 		
 		//Exits
-		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE).setName("&a&lGo Back").setLore("Click to return to 'Obs Main Page'").place(this, 37, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 37, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new ObsMainMenu(p));
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 43, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
 			GuiHandler.close(p);
 		});
+		
 		paint();
 	}
 
+	public void renderAbilities(Player player, Set<Integer> whitelistedSlots) 
+	{
+	    Iterator<Integer> validSlots = whitelistedSlots.iterator();
+	    
+	    for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
+	    {
+	        if (!validSlots.hasNext()) break;
+	        int slot = validSlots.next();
+	        if (slot == 37 || slot == 43) slot = validSlots.next();
+	        placeAbilityButton(player, ability, slot);
+	    }
+	}
+	
+	private void placeAbilityButton(Player player, AbstractOBSAbility ability, int slot) 
+	{
+	    ItemStack stack = ability.toIcon(player);
+
+	    GuiButton.button(stack.getType())
+	        .setName(stack.getItemMeta().getDisplayName())
+	        .setLore(stack.getItemMeta().getLore())
+	        .place(this, slot, e -> 
+	        {
+	            Player p = (Player) e.getWhoClicked();
+	            handleAbilityClick(p, ability, e);
+	        });
+	}
+	
+	private void handleAbilityClick(Player p, AbstractOBSAbility ability, InventoryClickEvent e)
+	{
+		if (PlayerData.canRegister(p.getUniqueId(), ability)) 
+		{
+	        abilityConfirmMap.put(p, ability.getInstance());
+	        confirmRegister.put(p, true);
+	        GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+	    }
+	    else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isRegistered()) 
+	    {
+	        abilityConfirmMap.put(p, ability.getInstance());
+	        confirmRegister.put(p, false);
+	        GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
+	    }
+	    else 
+	    {
+	        e.setCancelled(true);
+	        p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+	    }
+	}
+	
 }
+

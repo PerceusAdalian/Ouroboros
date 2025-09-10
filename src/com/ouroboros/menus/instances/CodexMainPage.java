@@ -30,7 +30,7 @@ public class CodexMainPage extends AbstractOBSGui
             GuiHandler.changeMenu(p, new CodexElementsPage(p));
         });
         
-        GuiButton.button(Material.PAPER).setName("&e&lEntity Categories").setLore("Click to navigate to the &e&oEntity Categories&r&f guide.").place(this, 12, e->
+        GuiButton.button(Material.PAPER).setName("&e&lEntity Categories").setLore("Click to navigate to the &e&oEntity Categories&r&f guide.").place(this, 14, e->
         {
             Player p = (Player) e.getWhoClicked();
             p.playSound(p.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER, 1, 1);
@@ -38,14 +38,14 @@ public class CodexMainPage extends AbstractOBSGui
         });
         
         //Exits
-		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE).setName("&a&lGo Back").setLore("Click to return to 'Obs Main Page'").place(this, 10, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_INSERT_ENCHANTED, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new ObsMainMenu(p));
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 16, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);

@@ -11,13 +11,11 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
@@ -41,11 +39,13 @@ public class ReapAndSew extends AbstractOBSAbility
         super("Reap and Sew", "reap_and_sew", Material.BLACK_DYE, StatType.MELEE, 20, 10, ObsAbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,
                 AbilityCategory.SCYTHES, 
                 "&r&b&oAbility&r&f: &d&l&oSew&r&f", 
-                "&r&fUsage: &d&oRight-Click&r&f target mob to inject them with &4&lMortio&r&f energy, inflicting &e&oDoom &r&b&lIII &7&o(10m/20s)&r&f",
+                "&r&fUsage: &d&oRight-Click&r&f target mob to inject them with",
+                "&4&lMortio&r&f energy, inflicting &e&oDoom &r&b&lIII &7&o(10m/20s)&r&f",
                 "&r&b&oAbility&r&f: &d&l&oReap&r&f",
-                "&r&fUsage: &d&oRight-Click&r&f target mob inflicted with doom to catalyze &e&oechoic synergy&r&f.",
+                "&r&fUsage: &d&oRight-Click&r&f target mob inflicted ",
+                "&r&fwith &e&oDoom&r&f to catalyze &e&oechoic synergy&r&f.",
                 "&r&d&oReap&r&f what has been &d&oSewn&r&f to immediately inflict all remaining",
-                "seconds as &4&lMortio&r&f &cdmg&f and &a&oheal&r&f self for half the &cdmg&f dealt.");
+                "&r&fseconds as &4&lMortio&r&f &cdmg&f and &a&oheal&r&f self for half the &cdmg&f dealt.");
     }
 
     private static Map<UUID, Integer> remainingSeconds = new HashMap<>();

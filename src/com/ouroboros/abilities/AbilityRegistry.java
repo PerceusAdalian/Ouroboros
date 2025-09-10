@@ -19,8 +19,8 @@ public class AbilityRegistry
     public static void abilityInit() 
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(
-            ImbueFire.class, Flamelash.class, GeminiSlash.class, ReapAndSew.class,
-            RejuvenateWounds.class);
+            ImbueFire.class, Flamelash.class, GeminiSlash.class, 
+            ReapAndSew.class,RejuvenateWounds.class);
         
         for (Class<? extends AbstractOBSAbility> clazz : itemClasses) 
         {

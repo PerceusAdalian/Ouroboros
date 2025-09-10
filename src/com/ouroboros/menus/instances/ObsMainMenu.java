@@ -22,21 +22,21 @@ public class ObsMainMenu extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.button(Material.BUNDLE).setName("&e&lShop&r&f").setLore("&r&fClick to view the official OBS Store.").place(this, 12, e->
+		GuiButton.button(Material.BUNDLE).setName("&e&lShop").setLore("&r&fClick to view the OBS Store").place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
 			p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_TRADE, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new ObsShopGui(p));
 		});
-		GuiButton.button(Material.NETHER_STAR).setName("&c&lAbilities&r&f").setLore("&r&fClick to view available abilities").place(this, 13, e->
+		GuiButton.button(Material.NETHER_STAR).setName("&c&lAbilities").setLore("&r&fClick to view available abilities").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new AbilityMainPage(p));
 		});
-		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&o&lCodex").setLore("&r&fClick to navigate to the Official in-game codex page.").place(this, 14, e->
+		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&lCodex").setLore("&r&fClick to view the official in-game codex").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
@@ -44,14 +44,14 @@ public class ObsMainMenu extends AbstractOBSGui
 			GuiHandler.changeMenu(p, new CodexMainPage(p));
 		});
 		//Exits
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 10, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
 			GuiHandler.close(p);
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit").place(this, 16, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
