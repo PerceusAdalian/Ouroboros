@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.interfaces.ObsDisplayMain;
+import com.ouroboros.hud.ObsDisplayMain;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.objects.AbstractObsObject;

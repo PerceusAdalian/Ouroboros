@@ -66,8 +66,8 @@ public class CodexElementsPage extends AbstractOBSGui
         });
 
         GuiButton.button(Material.FIRE_CHARGE).setName("&c&lInferno").setLore(
-        		"&r&fThe timeless, all-consuming &cFire&f element, and known across &eFantasia&f as the most ",  
-        		"&r&fdestructive and accessible form of &dmagik&f.","",  
+        		"&r&fThe timeless, all-consuming &cFire&f element,",  
+        		"&r&f and known across &eFantasia&f as the most accessible form of magik&f.","",  
         		"&r&fWith a crack of wand or sword, the &c&lInferno&r&f arcana can reduce all it touches to ash.",  
         		"&r&fYet, despite its fame, it is not &o'Infernal'&r&f&l nor &r&f&o'Occultic'&r&f, but a discipline of balance.","",  
         		"&r&fBorn in the dunes of &e&oAigisva'ard&r&f, long before the &e&oLament of &r&7*&e&oAighil&r&f, this art is tied to",  
@@ -80,16 +80,16 @@ public class CodexElementsPage extends AbstractOBSGui
         });
         
         GuiButton.button(Material.SNOWBALL).setName("&b&lGlacio").setLore(
-        		"&r&fThe elusive, impenetrable &9Water&f element, and is known across &eFantasia&f as the hardest art to master,",  
-        		"&r&fyet the most stable form of &dmagik&f.","",  
-        		"&r&fLegends trace it to &e&oNifl’draug&r&f, a pre-lament mining town in the northern parts of &eFantasia Prime&r&f.",
+        		"&r&fThe elusive, and impenetrable, element of &9Water&f known across &eFantasia&f as",  
+        		"&r&fthe hardest to master, yet most abundant form of magik.","",  
+        		"&r&fLegends trace it to &e&oNifl'heimr VI&r&f, a pre-lament mining town in the northern parts of &eFantasia Prime&r&f.",
         		"&r&fAncient tomes spoke of &7*&b&oBjorn&r&f, an &bIce Giant&r&f, as the original",
-        		"&7*&eemanator&f of the infamous &7**&b&lGlacio&r &eArchon&f, &7**&b&lHræsvelgr&r&f, a Jötunn.","",  
-        		"&r&b&lGlacio &r&fnurtures life as easily as it brings death—freezing,", 
-        		"&r&ficicle impaling, or drowning ones foes in chilling depths.","",  
+        		"&7*&eEmanator&f seen alongside &7**&b&lGlacio&r &eArchon&f, &7**&b&lHræsvelgr&r&f, a Jötunn.","",  
+        		"&r&b&lGlacio &r&fnurtures life as easily as it brings freezing temps,", 
+        		"&r&for for drowning ones foes in chilling depths.","",  
         		"&r&fTo wield it is to brave debuffs and devastating magiks most students of",
         		"&r&eFantasia's Academy for the Natural Arts &r&fmust endure a trek of a thousand miles to learn.",  
-        		"&r&fSo I bid thee answer: &b&ocan you stand the unyielding cold?")
+        		"&r&fScholar freshman normally sign a waver with the first question: &f&oKnow any &r&cFire&f&o magik?")
         .place(this, 19, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -98,12 +98,14 @@ public class CodexElementsPage extends AbstractOBSGui
         });
         
         GuiButton.button(Material.BRICK).setName("&6&lGeo").setLore(
-                "&r&fThe most versatile school, &6&lGeo&r&f, embodies valor and the strength of Earth.",
-                "&r&fFirst taught in the &e&oHollows of Aig'rsvheild&r&f, it wields nature itself: Plants, stone, and storms alike.",
+                "&r&fThe most versatile school, &6&lGeo&r&f, embodies valor and the strength of &6Earth&f.",
+                "&r&fFirst taught in the &e&oHollows of Aig'rsvheild&r&f,", 
+                "&r&fit wields nature itself: Plants, stones, and the like.","",
                 "&r&fMany botanists of &eFantasia&f begin here, drawn to its forgiving yet powerful nature.",
                 "&r&fThe &7**&eArchon&f of &6Earth&f, &7**&6&lNidus&r&f, is known for wisdom and kindness,",
-                "&r&fwhile his &7*&femanator, &6Haephestus&f, stands as a human symbol of leadership and war.",
-                "&r&fRespect the land, for it is our only home. Disrespect it, and even &6&lNidus&r&f will not be so merciful.")
+                "&r&fwhile his &7*&eEmanator&f, &7*&6Haephestus&f, stands as a human symbol of leadership and war.","",
+                "&r&fRespect the land, for it is our only home;",
+                "&r&fdisrespect it, and even &6&lNidus&r&f will not be so merciful.")
         .place(this, 16, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -113,10 +115,12 @@ public class CodexElementsPage extends AbstractOBSGui
         
         GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero").setLore(
             "&r&fThe most volatile school, &d&lAero&r&f, commands the fury of &dStorms&f.",
-            "&r&fIts Archon, &d&lSeth&r&f, first appeared only centuries ago, though his emanator remains unknown.",
+            "&r&fIts &7**&eArchon&f, &7**&d&lSeth&r&f, first appeared only centuries ago,",
+            "&r&fthough his &eEmanator&f remains unknown.","",
             "&r&fStudents of &d&lAero&r&f master both swift boons and devastating winds.",
             "&r&fMany novices miscast, often blown onto rooftops by failed incantations.",
-            "&r&fYet those who harness the true power of &dAir&f stand among the mightiest in all of &eFantasia&f.")
+            "&r&fThis all said, however, those who harness the true power of &dAir&f..",
+            "&r&fThey stand among the mightiest in all of &eFantasia&f.")
         .place(this, 25, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -127,10 +131,11 @@ public class CodexElementsPage extends AbstractOBSGui
         GuiButton.button(Material.NETHER_STAR).setName("&e&lCelestio").setLore(
             "&r&fThe school of &e&lCelestio&r&f channels the sacred power of &eLight&f.",
             "&r&fIts magic restores vigor, raises the fallen, and fortifies the soul.",
-            "&r&fThough often seen as gentle, &eLight&f can unleash devastating force against its foes.",
-            "&r&fThe &7*&eEmanator, &eArch Priestess &oLumina&r&f, alone has encountered its hidden &eArchon&f whose name she refuses to speak.",
-            "&r&fTo study &e&lCelestio&r&f under &eLumina&f’s guidance is a rare blessing, reserved for the worthy.",
-            "&r&fWill you bear the responsibility of such divine power?")
+            "&r&fThough often seen as gentle, &eLight&f can unleash devastating force against its foes.","",
+            "&r&fOnly &e&lCelestio&r&f's &7*&eEmanator, &7*&eArch Priestess Lumina&r&f,",
+            "&r&fhas encountered its hidden &7**&eArchon&f, whose name She refuses to speak.",
+            "&r&fTo study &e&lCelestio&r&f under &eLumina&f’s guidance is a rare blessing indeed,",
+            "&r&freserved for that of only the worthy and purest of heart.")
         .place(this, 39, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -141,11 +146,16 @@ public class CodexElementsPage extends AbstractOBSGui
         GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo").setLore(
             "&r&fAnomalous and vast, &3&lCosmo&r&f channels the weight of the &3Cosmos&f itself.",
             "&r&fOften called the &3Astral&f school, little is truly known of its workings.",
-            "&r&fUnlike other &barcana&f, it does not draw on &bAethereal&f energy, but on the fabric of reality itself.",
-            "&r&eArch Priestess Lumina&f’s records suggest the &7**&3&lNihility&r&f may be both its &eArchon&r&f and &eEmanator&r&f.",
+            "&r&fUnlike other &barcana&f, it does not draw on &bAethereal&f energy,",
+            "&r&fbut on the very fabric of reality.","",
+            "&r&eArch Priestess Lumina&f’s records suggest the &7*&3&lNihility&r&f",
+            "&r&fmay as well be both its &7*&eArchon&r&f and &7*&eEmanator&r&f.",
             "&r&fIts magic bends nature, summons storms, and twists time, but at dire cost.",
-            "&r&fScholars risk madness in their studies, their notes devolving into illegible scrawl and occult ritual.",
-            "&r&e&oThe Fantasian Council&r&f forbids attempts to wield this power, warning of fates far worse than death.")
+            "&r&fScholars risk madness in their studies,",
+            "&r&ftheir notes devolving into illegible scrawl and occult ritual.","",
+            "&r&e&oThe Fantasian Council&r&f heavily cautions against learning it,",
+            "&r&fthough not &oexplicity&r&f forbidding texts, with whitelisted tomes featuring",
+            "&r&fheaders warning of fates far worse than &4Death&f.")
         .place(this, 40, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -153,7 +163,16 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });        
         
-        GuiButton.button(Material.WITHER_ROSE).setName("&4&lMortio").setLore("")
+        GuiButton.button(Material.WITHER_ROSE).setName("&4&lMortio").setLore(
+        		"&r&4Death&f incarnate, the school of &4&lMortio&r&f embodies the power of &4The Anti-Light&f.",
+        		"&r&fIt draws upon the essence of both &eliving&f and",
+        		"&r&4undead&f to raise corpses, drain life, and cripple foes.","",
+        		"&r&fThe &7**&eArchon&f of &4Death&f, &7**&4&lBelial&r&f, and his &7*&eEmanator, &7*&4General Falric&r&f,",
+        		"&r&fmarch with goblin hordes and legions of the undead.","",
+        		"&r&fThose who wield &4&lMortio&r&f are rarely seen alive; leaving only left in ruin, ",
+        		"&r&fas corpses, or made as broken kinships in their wake.","",
+        		"&r&fWhitelisted texts that highlight this school's history and power often",
+        		"&r&fnecessitates excerpts at the top which reads clearly in bold: &c&nDo not attempt.")
         .place(this, 41, e->
         {
         	Player p = (Player) e.getWhoClicked();

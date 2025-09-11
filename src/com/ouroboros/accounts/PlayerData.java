@@ -19,7 +19,7 @@ import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.interfaces.ObsDisplayMain;
+import com.ouroboros.hud.ObsDisplayMain;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;

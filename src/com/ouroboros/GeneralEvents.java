@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.interfaces.ObsDisplayMain;
+import com.ouroboros.hud.ObsDisplayMain;
 import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.PrintUtils;
 

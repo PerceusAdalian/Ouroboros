@@ -1,4 +1,4 @@
-package com.ouroboros.interfaces;
+package com.ouroboros.hud;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
