@@ -31,113 +31,39 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.OBSParticles;
 
-public class ImbueFire extends AbstractOBSAbility
-{
+public class ImbueFire extends AbstractOBSAbility {
 
-	public ImbueFire() 
-	{
-		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,  ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+	public ImbueFire() {
+		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,
+				ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
 				"&r&d&oEnchant &r&fyour blade with &c&lInferno&r&f energy.",
 				"&r&f&lDuration&r&f: 30 seconds");
 	}
 
-	private static boolean hasEnchantPreviously = false;
-	private static int previousEnchantLevel;
-	public static Map<UUID, Boolean> castHandler = new HashMap<>();
-	public static Map<UUID, Boolean> cleanUpPlayer = new HashMap<>();
-	
-	public final static NamespacedKey enchantKey = new NamespacedKey(Ouroboros.instance, "imbue_fire");
-	
+	public static Map<UUID, Boolean> isImbuedPlayer = new HashMap<>();
+
 	@Override
-	public boolean cast(Event e) 
-	{
-		if (e instanceof PlayerInteractEvent pie)
-		{			
+	public boolean cast(Event e) {
+		if (e instanceof PlayerInteractEvent pie) 
+		{
 			Player p = pie.getPlayer();
-			if (castHandler.containsKey(p.getUniqueId())) return false;
-			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
-			ItemMeta meta = held.getItemMeta();
-			if (meta.hasEnchant(Enchantment.FIRE_ASPECT)) 
-			{
-				hasEnchantPreviously = true;
-				previousEnchantLevel = meta.getEnchants().get(Enchantment.FIRE_ASPECT);
-			}
-			
-			meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
-			meta.getPersistentDataContainer().set(enchantKey, PersistentDataType.INTEGER, 1);
+
 			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
 			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER, 1, 1);
-			held.setItemMeta(meta);
-			
-			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
+			OBSParticles.drawInfernoCastSigil(p);
+			isImbuedPlayer.put(p.getUniqueId(), true);
+
+			Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Ouroboros.class), () -> 
 			{
-				if (!p.isOnline()) 
-				{
-					cleanUpPlayer.put(p.getUniqueId(), true);
-					return;
-				}
-				
-				removeBuff(p);
-				
-				castHandler.remove(p.getUniqueId());
+				isImbuedPlayer.remove(p.getUniqueId());
+				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.MASTER, 1, 1);
+				OBSParticles.drawInfernoCastSigil(p);
 			}, 600);
-			
-			castHandler.put(p.getUniqueId(), true);
+
 			return true;
 		}
 		return false;
 	}
-	
-	public static void registerCleanupHandler(JavaPlugin plugin) 
-    {
-        Bukkit.getPluginManager().registerEvents(new Listener() 
-        {	
-        	@EventHandler
-        	public void onJoin(PlayerJoinEvent e) 
-        	{
-        		Player p = e.getPlayer();
-        		if (cleanUpPlayer.containsKey(p.getUniqueId())) 
-        		{
-        			removeBuff(p);
-        			cleanUpPlayer.remove(p.getUniqueId());
-        			castHandler.remove(p.getUniqueId());
-        		}
-        	}
-
-        	@EventHandler
-        	public void onQuit(PlayerQuitEvent e) 
-        	{
-        		Player p = e.getPlayer();
-        		removeBuff(p);
-        		cleanUpPlayer.remove(p.getUniqueId());
-        		castHandler.remove(p.getUniqueId());
-        	}
-        	
-        }, plugin);
-    }
-	
-	public static void removeBuff(Player p) 
-	{
-		for (ItemStack item : p.getInventory()) 
-		{
-	        if (item == null || !item.hasItemMeta()) continue;
-
-	        ItemMeta m = item.getItemMeta();
-	        if (m.getPersistentDataContainer().has(enchantKey, PersistentDataType.INTEGER)) 
-	        {
-	            m.removeEnchant(Enchantment.FIRE_ASPECT);
-	            m.getPersistentDataContainer().remove(enchantKey);
-
-	            if (hasEnchantPreviously) 
-	            {
-	                m.addEnchant(Enchantment.FIRE_ASPECT, previousEnchantLevel, true);
-	            }
-
-	            item.setItemMeta(m);
-	            break;
-	        }
-	    }
-	}
-
 }

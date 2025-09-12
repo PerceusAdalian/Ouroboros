@@ -60,7 +60,6 @@ public class Ouroboros extends JavaPlugin
 		
 		AbilityCastHandler.register(instance);
 		AbilityRegistry.abilityInit();		
-		ImbueFire.registerCleanupHandler(instance);		
 		EolBlazeArm.registerHeldEvent(instance);
 		
 		ShopItemContainer.init();

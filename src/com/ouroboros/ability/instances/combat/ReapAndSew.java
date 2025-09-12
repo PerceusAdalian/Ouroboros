@@ -58,28 +58,28 @@ public class ReapAndSew extends AbstractOBSAbility
             int seconds = 20;
             Player p = pie.getPlayer();
             Entity target = RayCastUtils.getNearestEntity(p, 10);
-            if (!(target instanceof LivingEntity) || target == null) return false;
+            if (target == null || !(target instanceof LivingEntity)) return false;
 
             if (!remainingSeconds.containsKey(target.getUniqueId()))
             {
                 OBSParticles.drawMortioCastSigil(p);
                 EntityEffects.addDoom((LivingEntity) target, 2, 20);
                 remainingSeconds.put(target.getUniqueId(), seconds);
-                OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+                OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
                 {
-                    if (!remainingSeconds.containsKey(target.getUniqueId()) || remainingSeconds.get(target.getUniqueId()) == 0) r.cancel();
-
-                    int secondsRemaining = remainingSeconds.get(target.getUniqueId());
-                    
-                    --secondsRemaining;
-                    
-                    remainingSeconds.put(target.getUniqueId(), secondsRemaining);
+                    Integer secondsRemaining = remainingSeconds.get(target.getUniqueId());
+                    if (secondsRemaining == null || secondsRemaining <= 0) {
+                        r.cancel();
+                        return;
+                    }
+                    remainingSeconds.put(target.getUniqueId(), secondsRemaining - 1);
                 }, 20, 400);
+
                 return true;
             }
             
-            else if (EntityEffects.hasDoom.get(target.getUniqueId()))
-            {
+            else if (EntityEffects.hasDoom.containsKey(target.getUniqueId()))
+    {
                 OBSParticles.drawMortioCastSigil(p);
                 int dmg = remainingSeconds.get(target.getUniqueId());
                 OBSParticles.drawLine(p.getLocation(), target.getLocation(), p.getLocation().distance(target.getLocation())%2+1, 0.5, Particle.SMOKE, null);
@@ -91,18 +91,12 @@ public class ReapAndSew extends AbstractOBSAbility
                 }, 20);
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance,()->
                 {
-                    OBSParticles.drawLine(target.getLocation(), p.getLocation(), target.getLocation().distance(p.getLocation())%2, 0.5, Particle.HAPPY_VILLAGER, null);
+                    OBSParticles.drawLine(target.getLocation(), p.getLocation(), Math.max(1, (int) target.getLocation().distance(p.getLocation())), 0.5, Particle.HAPPY_VILLAGER, null);
                     EntityEffects.playSound(p, p.getLocation(), Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT, 1, 1);
                     OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
-                    try
-                    {
-                        p.setHealth(p.getHealth()+(dmg/2));
-                    } 
-                    catch (Error error)
-                    {
-                        p.setHealth(((Attributable) p).getAttribute(Attribute.MAX_HEALTH).getValue());
-                    }
-
+                    
+                    double maxHealth = ((Attributable) p).getAttribute(Attribute.MAX_HEALTH).getValue();
+                    p.setHealth(Math.min(p.getHealth() + (dmg / 2.0), maxHealth));
                 }, 40);
                 remainingSeconds.remove(target.getUniqueId());
                 EntityEffects.hasDoom.remove(target.getUniqueId());

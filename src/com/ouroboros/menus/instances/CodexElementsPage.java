@@ -180,7 +180,12 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });        
         
-        GuiButton.button(Material.IRON_SWORD).setName("&f&lMelee &r&fDamage Types").setLore("")
+        GuiButton.button(Material.IRON_SWORD).setName("&f&lMelee &r&fDamage Types").setLore(
+                "&r&fMelee damage types modify the base damage of certain melee weapon interactions.",
+                "&r&fThese types are applied based on the weapon used and the nature of the attack.","",
+                "&r&f&lBlunt&r&f: Maces and certain melee attacks.",
+                "&r&f&lPierce&r&f: Pickaxes and Tridents.",
+                "&r&f&lSlash&r&f: Swords and Scythes.")
         .place(this, 13, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -188,7 +193,12 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });       
         
-        GuiButton.button(Material.BOW).setName("&f&lRanged &r&fDamage Types").setLore("")
+        GuiButton.button(Material.BOW).setName("&f&lRanged &r&fDamage Types").setLore(
+                "&r&fRanged damage types modify the base damage of certain ranged weapon interactions.",
+                "&r&fThese types are applied based on the weapon used and the nature of the attack.","",
+                "&r&fPuncture&r&f: Bows and Arrows",
+                "&r&fCorrosive&r&f: Poison pots and &osome&r&f thrown items",
+                "&r&fArcano&r&f: Generic magical projectiles/spells")
         .place(this, 21, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -196,7 +206,14 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });        
         
-        GuiButton.button(Material.HEART_OF_THE_SEA).setName("&a&lCondition Specific&r&f Damage Types").setLore("")
+        GuiButton.button(Material.HEART_OF_THE_SEA).setName("&a&lCondition Specific&r&f Damage Types").setLore(
+                "&r&fCondition specific damage types modify the base damage of certain interactions",
+                "&r&fthat meet specific conditions, often related to environmental or situational factors.",
+                "&r&fThese types are applied based on the context of the attack rather than the weapon used,",
+                "&r&fand typically involve area-of-effect or status-based damage with occasional pure-damage.","",
+                "&r&aToxin: &r&fPoisons &7(e.g. &eAbilities&f/Spiders&7)&f: Permanently poison's applicant.",
+                "&r&cCombust&r&f: Explosions &7(e.g. &dTNT&7)",
+                "&r&eBlast&r&f: &7{&ePure Dmg Type&7} &fExplosions &7(e.g. &eAbilities&7)")
         .place(this, 22, e->
         {
         	Player p = (Player) e.getWhoClicked();
@@ -204,7 +221,14 @@ public class CodexElementsPage extends AbstractOBSGui
             e.setCancelled(true);
         });        
         
-        GuiButton.button(Material.END_CRYSTAL).setName("&e&lAlmighty &r&7(Pure) &r&fDamage Types").setLore("")
+        GuiButton.button(Material.END_CRYSTAL).setName("&e&lAlmighty &r&7(Pure) &r&fDamage Types").setLore(
+                "&r&e&lAlmighty &r&7(Pure)&r&f damage types are special instances related to &eAbilities&r&f",
+                "&r&fthat do not fall under conventional damage categories and occasionally sourced from &e&lEOL&r&f weapons.",
+                "&r&fThese damage types often bypass conventional resistances and defenses,",
+                "&r&fmaking them particularly potent in combat scenarios.","",
+                "&r&e&lCrush&r&f: A powerful, crushing force. Commonly associated with heavy impacts &7(Maces)",
+                "&r&e&lSever&r&f: A sharp, slicing force. Commonly associated with cutting weapons &7(Swords/Axes)",
+                "&r&e&lImpale&r&f: A piercing strike that ignores Armor. Commonly associated with pointed weapons &7(Tridents)")
         .place(this, 23, e->
         {
         	Player p = (Player) e.getWhoClicked();
