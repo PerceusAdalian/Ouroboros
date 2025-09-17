@@ -119,3 +119,7 @@ public class Ouroboros extends JavaPlugin
  */
 ///kill @e[type=!minecraft:player]
 ///setblock ~ ~ ~ minecraft:chest{LootTable:"minecraft:chests/simple_dungeon"} replace
+/*
+ 	Random index method:
+	int randomIndex = new Random().nextInt(list.size()); <- Given some collection. 
+ */
