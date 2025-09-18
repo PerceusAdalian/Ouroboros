@@ -95,7 +95,7 @@ public class Ouroboros extends JavaPlugin
 
 /* Ωuroboros
  * Project Notes:
- * >> IDEA: Make a portable back interface that connects with the player shop. Allow for buttons and item slots to insert items into that is tied to the player file, or is a serialized string alongside
+ * >> IDEA: Make a portable bag interface that connects with the player shop. Allow for buttons and item slots to insert items into that is tied to the player file, or is a serialized string alongside
  			the item's PDC. You can "clear" the bag which would give you item value/a different kind of stat alongside OBS's stat system: Scrap. Where depending on the item, will give you money,
  			effectively "selling" all of the items and adding currency. You can transfer the bag, the item(s) are simply stored on a pdc or, finding the data from one player, checking to see if it's
 			picked up by another player, getting their player data and then transfering the serialized string to their player file. A player can only have 1 bag attached to their account (linked).
@@ -103,12 +103,11 @@ public class Ouroboros extends JavaPlugin
 	  		Item Name: <PH> Bag of Holding ... maybe this could be an EOL in and of itself as a relic item???
  * + WHAT TO DO NEXT:
  * > HIGH PRIORITY: 
- * - Finish Hooking up damage types and affinity calcs; start with EntityEffects and implement the rest of the effects, next, go to ability cast handler and implement ability damage.
+ * - CHECK REAP AND SEW; TEST IMBUE FIRE DAMAGE EVENT.
  * > Side High Priority: 
  * - Make items drop from discovery event depending on their level.
- * - Mob affinities and damage category damage (make cows resistant to CELESTIO damage, but weak to MORTIO damage, for example)
- * - Combat abilities do not display HP bar decreases; fix the update method.
- * - Add GUI framework for each stat and representation.
+ * - Combat abilities do not display HP bar decreases; fix the update method. (FIXED????)
+ * - Add GUI framework for each stat and representation. (UNDERWAY)
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
  *   > Low Priority: Stat descriptions, a means to see next levelup rewards, abilities, etc.
