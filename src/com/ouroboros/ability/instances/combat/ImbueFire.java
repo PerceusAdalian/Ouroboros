@@ -33,19 +33,25 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 
-public class ImbueFire extends AbstractOBSAbility {
+public class ImbueFire extends AbstractOBSAbility 
+{
 
-	public ImbueFire() {
+	public ImbueFire() 
+	{
 		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,
-				ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
-				"&r&d&oEnchant &r&fyour blade with &c&lInferno&r&f energy.",
-				"&r&f&lDuration&r&f: 30 seconds");
+				ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.ANY,
+				"&r&fGrants self the &c&oImbued&r&f effect.","",
+				"&r&c&oImbued&r&f: Surrounds you in &c&lInferno&r&f energy.",
+				"&r&fAll attacks deal &c&lInferno&r&f damage in addition to the normal damage.",
+				"&r&fTargets hit are afflicted with &cBurn &7(5s), and damage dealt is increased by &e+&f&l1.1&r&fx.",
+				"&r&eAbility Duration&r&f: 30s");
 	}
 
 	public static Map<UUID, Boolean> isImbuedPlayer = new HashMap<>();
 
 	@Override
-	public boolean cast(Event e) {
+	public boolean cast(Event e) 
+	{
 		if (e instanceof PlayerInteractEvent pie) 
 		{
 			Player p = pie.getPlayer();

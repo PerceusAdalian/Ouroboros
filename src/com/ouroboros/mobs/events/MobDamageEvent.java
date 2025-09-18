@@ -27,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.ability.instances.combat.ImbueFire;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.AffinityRegistry;
@@ -74,7 +75,7 @@ public class MobDamageEvent implements Listener
 						element = ElementType.ARCANO;
 					else if (dmgEvent.getDamager() instanceof Fireball fb && fb.getShooter() instanceof Player)
 						element = ElementType.INFERNO;
-					else
+					else 
 					{
 						ItemStack held = p.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
 						Material m = held != null ? held.getType() : Material.AIR;
@@ -83,6 +84,13 @@ public class MobDamageEvent implements Listener
 					
 					dmg = dmgEvent.getFinalDamage();
 					
+					if (ImbueFire.isImbuedPlayer.containsKey(p.getUniqueId()))
+					{
+						element = ElementType.INFERNO;
+						dmg *= 1.1;
+						target.setFireTicks(100);
+					}
+
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else 

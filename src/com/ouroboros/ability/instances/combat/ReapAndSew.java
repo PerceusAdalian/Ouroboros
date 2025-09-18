@@ -34,7 +34,7 @@ import com.ouroboros.utils.RayCastUtils;
 public class ReapAndSew extends AbstractOBSAbility
 {
 
-    public ReapAndSew() 
+    public ReapAndSew() // Check for functionality
     {
         super("Reap and Sew", "reap_and_sew", Material.BLACK_DYE, StatType.MELEE, 20, 10, ObsAbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,
                 AbilityCategory.SCYTHES, 
