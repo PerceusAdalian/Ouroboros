@@ -250,6 +250,7 @@ public class CodexElementsPage extends AbstractOBSGui
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
 			GuiHandler.close(p);
 		});
+        
 		paint();
     }
     

@@ -43,7 +43,6 @@ public class Ouroboros extends JavaPlugin
 		instance = this;
 		debug = false;
 		enabled = true;
-		
 	
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
