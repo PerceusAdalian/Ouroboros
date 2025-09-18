@@ -43,7 +43,7 @@ public class AdvancedTimerRunnable
         }
 
         this.timerRunnable = timerTask(); // New timer task instance
-        this.timerRunnable.runTaskLater(Ouroboros.instance, this.ticks); // TODO Replace "null" with your plugin instance
+        this.timerRunnable.runTaskLater(Ouroboros.instance, this.ticks); 
     }
 
     /**
