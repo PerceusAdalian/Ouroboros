@@ -68,20 +68,20 @@ public class EolBlazeArm extends AbstractObsObject
 		{
 			if (WardCooldown.containsKey(p.getUniqueId())) 
 			{
-				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT, 1, 1);
+				EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT);
 				PrintUtils.PrintToActionBar(p, "&r&f&oWard Cooldown");
 				return false;
 			}
 			
 			if (p.hasPotionEffect(PotionEffectType.ABSORPTION)) return false;
-			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT, 1, 1);
+			EntityEffects.playSound(p, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
 			OBSParticles.drawInfernoCastSigil(p);
 			EntityEffects.add(p, PotionEffectType.ABSORPTION, 400, 2, true);
 			WardCooldown.put(p.getUniqueId(), true);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.AMBIENT, 1, 1);
+				EntityEffects.playSound(p, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.AMBIENT);
 				PrintUtils.PrintToActionBar(p, "&r&f&oWard is now castable");
 				WardCooldown.remove(p.getUniqueId());
 			}, 600);
@@ -99,13 +99,13 @@ public class EolBlazeArm extends AbstractObsObject
 					comboEndNaturally.remove(uuid);
 				}
 				
-				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
+				EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
 				OBSParticles.drawInfernoCastSigil(p);
 				SmallFireball fb = (SmallFireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.SMALL_FIREBALL);
 				fb.setShooter(p);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
-					EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
+					EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
 					SmallFireball fb2 = (SmallFireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.SMALL_FIREBALL);
 					fb2.setShooter(p);
 				}, 3);
@@ -122,7 +122,7 @@ public class EolBlazeArm extends AbstractObsObject
 					if (comboTier.containsKey(uuid)) 
 					{	
 						comboTier.remove(uuid);
-						EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
+						EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
 						PrintUtils.PrintToActionBar(p, "Combo Break");
 					}
 				}, 205);
@@ -133,7 +133,7 @@ public class EolBlazeArm extends AbstractObsObject
 			if (comboTier.containsKey(uuid) && comboTier.get(uuid).equals(1)) 
 			{
 				
-				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER, 1, 1);
+				EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
 				OBSParticles.drawInfernoCastSigil(p);
 				Fireball fb = (Fireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.FIREBALL);
 				fb.setShooter(p);
@@ -144,7 +144,7 @@ public class EolBlazeArm extends AbstractObsObject
 			
 			if (comboTier.containsKey(uuid) && comboTier.get(uuid).equals(2)) 
 			{
-				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_WITHER_SHOOT, SoundCategory.MASTER, 1, 1);
+				EntityEffects.playSound(p, Sound.ENTITY_WITHER_SHOOT, SoundCategory.MASTER);
 				OBSParticles.drawInfernoCastSigil(p);					
 				LargeFireball fb = (LargeFireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(2.0)), EntityType.FIREBALL);
 				fb.setShooter(p);
@@ -152,7 +152,7 @@ public class EolBlazeArm extends AbstractObsObject
 				fb.setIsIncendiary(true);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
-					EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
+					EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
 					PrintUtils.PrintToActionBar(p, "Combo End");
 				}, 5);
 				comboTier.remove(uuid);
@@ -165,14 +165,14 @@ public class EolBlazeArm extends AbstractObsObject
 		{
 			if (EruptionCooldown.containsKey(p.getUniqueId())) 
 			{
-				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT, 1, 1);
+				EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT);
 				PrintUtils.PrintToActionBar(p, "&r&f&oEruption Cooldown");
 				return false;
 			}
 			Block b = RayCastUtils.rayTraceBlock(p, 30);
 			if (b == null || b.getType().equals(Material.AIR)) return false;
 			
-			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT, 1, 1);
+			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 			OBSParticles.drawLine(p.getLocation(), b.getLocation(), 4, 0.1, Particle.LAVA, null);
 			OBSParticles.drawSpiralVortex(b.getLocation(), 2, 4, -0.1, Particle.LAVA, null);
 			
@@ -181,13 +181,13 @@ public class EolBlazeArm extends AbstractObsObject
 			{
 				p.getWorld().createExplosion(b.getLocation(), 4, true, false);
 				OBSParticles.drawPoint(b.getLocation(), Particle.EXPLOSION_EMITTER, 1, null);
-				EntityEffects.playSound(p, b.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.AMBIENT, 1, 1);
+				EntityEffects.playSound(p, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.AMBIENT);
 			}, (long) ticks+40);
 			
 			EruptionCooldown.put(p.getUniqueId(), true);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.AMBIENT, 1, 1);
+				EntityEffects.playSound(p, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.AMBIENT);
 				PrintUtils.PrintToActionBar(p, "&r&f&oEruption is now castable");
 				EruptionCooldown.remove(p.getUniqueId());
 			}, 600);

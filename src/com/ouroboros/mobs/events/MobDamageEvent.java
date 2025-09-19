@@ -99,12 +99,12 @@ public class MobDamageEvent implements Listener
 					if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
 					{
 						if (affinity.immuneTo(element)) 
-							EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER, 1, 1);
+							EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER);
 						else if (affinity.resists(element)) 
-							EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 1, 1);							
+							EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER);							
 					}
 					else if (affinity.weakTo(element)) 
-						EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 1);
+						EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER);
 					
 					//Apply relevent effects based on the combat element used.
 					EntityEffects.checkFromCombat((LivingEntity)target, element);

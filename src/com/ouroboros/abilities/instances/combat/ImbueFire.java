@@ -46,15 +46,15 @@ public class ImbueFire extends AbstractOBSAbility
 		{
 			Player p = pie.getPlayer();
 
-			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
-			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER, 1, 1);
+			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
+			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER);
 			OBSParticles.drawInfernoCastSigil(p);
 			isImbuedPlayer.put(p.getUniqueId(), true);
 
 			Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Ouroboros.class), () -> 
 			{
 				isImbuedPlayer.remove(p.getUniqueId());
-				EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.MASTER, 1, 1);
+				EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.MASTER);
 				OBSParticles.drawInfernoCastSigil(p);
 			}, 600);
 

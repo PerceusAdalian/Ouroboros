@@ -3,12 +3,14 @@ package com.ouroboros;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
@@ -18,6 +20,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -29,6 +32,7 @@ import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.mobs.utils.InventoryUtils;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
+import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
@@ -81,6 +85,54 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			return false;
 		}
 		
+		if (args[0].equals("welcomekit"))
+		{
+			PlayerData data = PlayerData.getPlayer(uuid);
+			
+			if (data.hasKitClaimed())
+			{
+				PrintUtils.OBSFormatPrint(p, "You have already claimed this kit!");
+				return true;
+			}
+			
+			AbstractObsObject voucherObj = new ObsStatVoucher();
+			ItemStack voucherStack = voucherObj.toItemStack();
+			
+			ItemMeta meta = voucherStack.getItemMeta();
+			meta.getPersistentDataContainer().set(ObsStatVoucher.voucherKey, PersistentDataType.STRING, p.getUniqueId().toString());
+			voucherStack.setItemMeta(meta);
+			
+			AbstractObsObject luminiteCoreObj = new LuminiteCore();
+			ItemStack luminiteCoreStack = luminiteCoreObj.toItemStack();
+
+			ItemStack bag = new ItemStack(Material.BUNDLE, 1);
+			BundleMeta bagMeta = (BundleMeta) bag.getItemMeta();
+			bagMeta.addItem(luminiteCoreStack);
+			bagMeta.addItem(voucherStack);
+			bagMeta.setDisplayName(PrintUtils.ColorParser("&bOurboros&f Welcome Kit"));
+			bag.setItemMeta(bagMeta);
+			
+			Set<Integer> openSlots = InventoryUtils.getOpenSlots(p);
+			Iterator<Integer> it = openSlots.iterator();
+			
+			if (openSlots.size() >= 1)
+			{
+				EntityEffects.playSound(p, Sound.ITEM_BUNDLE_DROP_CONTENTS, SoundCategory.AMBIENT);
+				PrintUtils.OBSFormatPrint(p, "&fItems have been added to your inventory!","&7[/welcomekit]");
+				p.getInventory().setItem(it.next(), bag);
+			}
+			else
+			{
+				PrintUtils.OBSFormatPrint(p, "&fInventory full. Items have been dropped on the ground!","&7[/welcomekit]");
+				p.getWorld().dropItem(p.getLocation(), bag);
+			}
+			
+			data.setKitClaimed(true);
+			data.save();
+			
+			return true;
+		}
+		
 		if (args[0].equals("debug"))
 		{
 			if (affirmOP(p)) return true;
@@ -105,7 +157,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				PrintUtils.OBSConsoleDebug("&bPlayer&f: " + sender.getName().toString() + "&f opened the OBS Main Menu.");
 			}
 			GuiHandler.open(p, new ObsMainMenu(p));
-			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
+			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			return true;
 		}
 		
@@ -398,53 +450,11 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		            return true;
 		        }
 		        PlayerData.getPlayer(target.getUniqueId()).doLevelUpSound(false);
-		        EntityEffects.playSound(target, target.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
+		        EntityEffects.playSound(target, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
 		        PlayerData.addXP(p, statType, value);
 		        PrintUtils.OBSFormatDebug(p, "&a&oSuccessfully &r&fadded &l"+value+" &r&b"+statType.getFancyKey()+" &r&eXP&f to &o"+target.getName()+"&r&f's account.");
 		        PlayerData.getPlayer(target.getUniqueId()).doLevelUpSound(true);
 		        return true;
-			}
-			
-			if (args[0].equals("kit")) // Doesn't work..
-			{
-				PlayerData data = PlayerData.getPlayer(uuid);
-				
-				if (data.hasKitClaimed())
-				{
-					PrintUtils.Print(p, "You've already claimed this kit!");
-					return true;
-				}
-				
-				AbstractObsObject voucherObj = ObjectRegistry.itemRegistry.get("obs_stat_voucher").getInstance();
-				ItemStack voucherStack = voucherObj.toItemStack();
-				
-				ItemMeta meta = voucherStack.getItemMeta();
-				meta.getPersistentDataContainer().set(ObsStatVoucher.voucherKey, PersistentDataType.STRING, p.getUniqueId().toString());
-				voucherStack.setItemMeta(meta);
-				
-				AbstractObsObject luminiteCoreObj = ObjectRegistry.itemRegistry.get("money_tier5").getInstance();
-				ItemStack luminiteCoreStack = luminiteCoreObj.toItemStack();
-
-				Set<Integer> openSlots = InventoryUtils.getOpenSlots(p);
-				if (!openSlots.isEmpty())
-				{
-					PrintUtils.Print(p, "&7[/kit] &fItems have been added to your inventory!");
-					p.getInventory().setItem(openSlots.iterator().next(), luminiteCoreStack);
-					p.getInventory().setItem(openSlots.iterator().next(), voucherStack);
-				
-					data.setKitClaimed(true);
-					data.save();
-					
-					return true;
-				}
-				PrintUtils.Print(p, "&7[/kit] &fInventory full. Items have been dropped on the ground!");
-				p.getWorld().dropItem(p.getLocation(), luminiteCoreStack);
-				p.getWorld().dropItem(p.getLocation(), voucherStack);
-				
-				data.setKitClaimed(true);
-				data.save();
-				
-				return true;
 			}
 			
 			return false;
@@ -459,7 +469,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats","generate","money","version","kit");
+			case 1 -> List.of("debug","menu","stats","generate","money","version","welcomekit");
 			case 2 -> 
 			{
 				yield switch(args[0])
@@ -469,7 +479,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
 					case "generate" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
 					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
-					case "kit" -> List.of();
+					case "welcomekit" -> List.of();
 					default -> List.of();
 				};
 			}

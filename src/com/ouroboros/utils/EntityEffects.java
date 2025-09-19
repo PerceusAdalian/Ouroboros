@@ -64,6 +64,11 @@ public class EntityEffects {
 		source.getPlayer().playSound(loc, sound, soundCategory, magnitude, magnitude2);
 	}
 
+	public static void playSound(Player source, Sound sound, SoundCategory soundCategory) 
+	{
+		source.getPlayer().playSound(source.getLocation(), sound, soundCategory, 1, 1);
+	}
+	
 	public static void checkFromCombat(LivingEntity target, ElementType element) 
 	{
 

@@ -38,9 +38,20 @@ public class ObsStatVoucher extends AbstractObsObject
 		
 		ItemStack held = e.getItem();
 		ItemMeta meta = held.getItemMeta();
-		if (meta.getPersistentDataContainer().get(voucherKey, PersistentDataType.STRING) != p.getUniqueId().toString())
+		
+		String uuid = meta.getPersistentDataContainer().get(voucherKey, PersistentDataType.STRING);
+
+		if (uuid == null) 
 		{
-			PrintUtils.OBSFormatError(p, "This item is not bound to you. Owner: "+Bukkit.getPlayer(UUID.fromString(meta.getPersistentDataContainer().get(voucherKey, PersistentDataType.STRING))));
+		    PrintUtils.OBSFormatError(p, "This voucher has no owner bound; Adding your credentials.. Please try again.");
+		    meta.getPersistentDataContainer().set(voucherKey, PersistentDataType.STRING, p.getUniqueId().toString());
+		    held.setItemMeta(meta);
+		    return true;
+		}
+
+		if (!UUID.fromString(uuid).equals(p.getUniqueId()))
+		{
+			PrintUtils.OBSFormatError(p, "This item is not bound to you. Owner: "+Bukkit.getPlayer(UUID.fromString(uuid)).getName());
 			return false;
 		}
 		

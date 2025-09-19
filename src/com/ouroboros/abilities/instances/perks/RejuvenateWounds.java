@@ -63,7 +63,7 @@ public class RejuvenateWounds extends AbstractOBSAbility
 						if (cooldownSet.contains(p.getUniqueId())) return false;
 						cooldownSet.add(p.getUniqueId());
 						Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()-> cooldownSet.remove(p.getUniqueId()), 1200);
-						EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.MASTER, 1, 1);
+						EntityEffects.playSound(p, Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.MASTER);
 						OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 2, 20, 0.5, Particle.CRIMSON_SPORE, null);
 						OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 2, 20, 0.5, Particle.SMOKE, null);
 						EntityEffects.add(p, PotionEffectType.REGENERATION, 300, 0);
@@ -85,7 +85,7 @@ public class RejuvenateWounds extends AbstractOBSAbility
 					if (cooldownSet.contains(p.getUniqueId())) return false;
 					cooldownSet.add(p.getUniqueId());
 					Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()-> cooldownSet.remove(p.getUniqueId()), 1200);
-					EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.MASTER, 1, 1);
+					EntityEffects.playSound(p, Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.MASTER);
 					OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 2, 20, 0.5, Particle.CRIMSON_SPORE, null);
 					OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 2, 20, 0.5, Particle.SMOKE, null);
 					EntityEffects.add(p, PotionEffectType.REGENERATION, 300, 0);

@@ -85,14 +85,14 @@ public class ReapAndSew extends AbstractOBSAbility
                 OBSParticles.drawLine(p.getLocation(), target.getLocation(), p.getLocation().distance(target.getLocation())%2+1, 0.5, Particle.SMOKE, null);
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
                 {
-                    EntityEffects.playSound(p, target.getLocation(), Sound.ENTITY_WITHER_AMBIENT, SoundCategory.MASTER, 1, 1);
+                    EntityEffects.playSound(p, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.MASTER);
                     OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()%2, 3, 6, 0.1, Particle.SMOKE, null);
                     MobData.damageUnnaturally(p, target, dmg, true, ElementType.MORTIO);
                 }, 20);
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance,()->
                 {
                     OBSParticles.drawLine(target.getLocation(), p.getLocation(), Math.max(1, (int) target.getLocation().distance(p.getLocation())), 0.5, Particle.HAPPY_VILLAGER, null);
-                    EntityEffects.playSound(p, p.getLocation(), Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT, 1, 1);
+                    EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
                     OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
                     
                     double maxHealth = ((Attributable) p).getAttribute(Attribute.MAX_HEALTH).getValue();

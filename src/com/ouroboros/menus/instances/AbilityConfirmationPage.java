@@ -41,7 +41,7 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE).setName(isRegistering ? confirmRegister : confirmActivate).setLore("Click to Confirm Action").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER, 1, 1);
+			EntityEffects.playSound(p, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER);
 			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 			
 			if (isRegistering) 

@@ -199,7 +199,7 @@ public class PlayerData
 			
 			if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
 			{
-				EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1);
+				EntityEffects.playSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER);
 				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
 				OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);	
 			}
@@ -212,7 +212,7 @@ public class PlayerData
 				accountLevel++;
 				abilityPoints+=5;
 				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
-					EntityEffects.playSound(p, p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1, 1);
+					EntityEffects.playSound(p, Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER);
 				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
 					PrintUtils.Print(p, "","&f|&bΩ&f|&b&l Account Level Up&r&f! | &7Lvl "+preAccountLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + accountLevel,
 						"&e&l+&f5&6AP&r&f | &nCurrent Ability Points&r&f: &6" + abilityPoints);			
