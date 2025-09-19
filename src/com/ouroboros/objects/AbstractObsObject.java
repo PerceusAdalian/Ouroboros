@@ -112,6 +112,10 @@ public abstract class AbstractObsObject
 		
 		meta.setLore(lore);
 		meta.getPersistentDataContainer().set(obsObject, PersistentDataType.STRING, internalName.toString());
+		
+		if (this.getInternalName() == "obs_stat_voucher")
+			meta.setUnbreakable(true);
+		
 		stack.setItemMeta(meta);
 		
 		return stack;

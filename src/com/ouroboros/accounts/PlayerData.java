@@ -103,6 +103,8 @@ public class PlayerData
 	    	doXpNotification(true);
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
+	    	
+	    	setKitClaimed(false);
 	    }
 	    return;
 	}
@@ -446,6 +448,16 @@ public class PlayerData
 	public boolean doXpNotification() 
 	{
 		return config.getBoolean("doxpnotifs");
+	}
+	
+	public boolean hasKitClaimed()
+	{
+		return config.getBoolean("kitclaimed");
+	}
+	
+	public void setKitClaimed(boolean bool)
+	{
+		config.set("kitclaimed", bool);
 	}
 	
 	public static void initializeDataFolder() 

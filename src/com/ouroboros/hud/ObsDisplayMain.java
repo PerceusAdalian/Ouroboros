@@ -18,10 +18,10 @@ public class ObsDisplayMain
     {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective nexusHud = board.registerNewObjective("obs_hud", Criteria.DUMMY, 
-        		PrintUtils.ColorParser("&r&bΩ &7| "+"&r&fOBS Hud&r&f"+" &r&7|&f &r&bΩ"));
+        		PrintUtils.ColorParser("&7|    &bΩBS &fHud    &7|"));
         		nexusHud.setDisplaySlot(DisplaySlot.SIDEBAR);
         
-        nexusHud.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName())).setScore(0);
+        nexusHud.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
         nexusHud.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
         nexusHud.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
        
@@ -32,7 +32,7 @@ public class ObsDisplayMain
     {
     	Scoreboard board = p.getScoreboard();
    	 	Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
-   	 	obj.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName())).setScore(0);
+   	 	obj.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
    	 	obj.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
    	 	obj.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
    	 	

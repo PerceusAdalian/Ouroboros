@@ -12,6 +12,7 @@ import com.ouroboros.objects.instances.LuminiteDust;
 import com.ouroboros.objects.instances.LuminiteFragment;
 import com.ouroboros.objects.instances.LuminiteIngot;
 import com.ouroboros.objects.instances.LuminiteShard;
+import com.ouroboros.objects.instances.ObsStatVoucher;
 
 public class ObjectRegistry 
 {
@@ -26,8 +27,8 @@ public class ObjectRegistry
     		LuminiteFragment.class,
     		LuminiteIngot.class,
     		LuminiteCore.class,
-    		EolBlazeArm.class
-        		);
+    		EolBlazeArm.class,
+        	ObsStatVoucher.class);
         
         for (Class<? extends AbstractObsObject> clazz : itemClasses) 
         {

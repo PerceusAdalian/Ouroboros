@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -17,14 +18,18 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.ObsDisplayMain;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
+import com.ouroboros.mobs.utils.InventoryUtils;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
+import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 
@@ -49,6 +54,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("version")) 
 		{
+			if (affirmOP(p)) return true;
+			
 			if (sender instanceof ConsoleCommandSender)
 			{
 				PrintUtils.OBSConsolePrint("----------------------------",
@@ -76,21 +83,19 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("debug"))
 		{
-			if (affirmOP(p)) 
-			{				
-				if (Ouroboros.debug == false) 
-				{
-					Ouroboros.debug = true;
-					PrintUtils.OBSFormatDebug(p, "&7Console logging has been turned &a&lON");
-					PrintUtils.OBSConsoleDebug("&7Console logging has been turned &a&lON");
-					return true;
-				}
-				Ouroboros.debug = false;
-				PrintUtils.OBSFormatDebug(p, "&7Console logging has been turned &c&lOFF");
-				PrintUtils.OBSConsoleDebug("&7Console logging has been turned &c&lOFF");
+			if (affirmOP(p)) return true;
+			
+			if (Ouroboros.debug == false) 
+			{
+				Ouroboros.debug = true;
+				PrintUtils.OBSFormatDebug(p, "&7Console logging has been turned &a&lON");
+				PrintUtils.OBSConsoleDebug("&7Console logging has been turned &a&lON");
 				return true;
 			}
-			return false;
+			Ouroboros.debug = false;
+			PrintUtils.OBSFormatDebug(p, "&7Console logging has been turned &c&lOFF");
+			PrintUtils.OBSConsoleDebug("&7Console logging has been turned &c&lOFF");
+			return true;
 		}
 		
 		if (args[0].equals("menu")) 
@@ -106,6 +111,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("generate") && ObjectRegistry.itemRegistry.containsKey(args[1])) 
 		{
+			if (affirmOP(p)) return true;
+			
 			AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[1]);
 			ItemStack stack = obj.toItemStack();
 			p.getInventory().addItem(stack);
@@ -114,6 +121,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("money")) 
 		{
+			if (affirmOP(p)) return true;
+			
 			Player target = Bukkit.getPlayer(args[2]);
 			if (target == null) return false;
 			
@@ -142,6 +151,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("subtract") && args.length == 4) 
 			{
+				if (affirmOP(p)) return true;
+				
 				int value;
 				try 
 				{
@@ -165,6 +176,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("setMaxMoney") && args.length == 3) 
 			{
+				if (affirmOP(p)) return true;
+				
 				PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 				data.setFunds(true, 0);
 				data.setFunds(false, PlayerData.fundsIntegerMax);
@@ -176,6 +189,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("setMaxDebt") && args.length == 3) 
 			{
+				if (affirmOP(p)) return true;
+				
 				PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 				data.setFunds(true, PlayerData.fundsIntegerMax);
 				data.setFunds(false, 0);
@@ -187,6 +202,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("resetMoney") && args.length == 3) 
 			{
+				if (affirmOP(p)) return true;
+				
 				PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 				data.setFunds(false, 0);
 				data.setFunds(true, 0);
@@ -288,10 +305,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("reset") && args.length == 3)
 			{
-				if(!affirmOP(p))
-				{
-					return true;
-				}
+				if (affirmOP(p)) return true;
 				
 		        Player target = Bukkit.getPlayer(args[2]);
 		        if (target == null) 
@@ -308,7 +322,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("set") && args.length == 6) 
 			{
-				if(!affirmOP(p)) return true;
+				if (affirmOP(p)) return true;
 				
 		        Player target = Bukkit.getPlayer(args[2]);
 		        if (target == null) 
@@ -351,7 +365,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("addXp") && args.length == 5)
 			{
-				if (!affirmOP(p)) return true;
+				if (affirmOP(p)) return true;
 				
 				Player target = Bukkit.getPlayer(args[2]);
 				if (target == null) 
@@ -390,6 +404,49 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		        PlayerData.getPlayer(target.getUniqueId()).doLevelUpSound(true);
 		        return true;
 			}
+			
+			if (args[0].equals("kit")) // Doesn't work..
+			{
+				PlayerData data = PlayerData.getPlayer(uuid);
+				
+				if (data.hasKitClaimed())
+				{
+					PrintUtils.Print(p, "You've already claimed this kit!");
+					return true;
+				}
+				
+				AbstractObsObject voucherObj = ObjectRegistry.itemRegistry.get("obs_stat_voucher").getInstance();
+				ItemStack voucherStack = voucherObj.toItemStack();
+				
+				ItemMeta meta = voucherStack.getItemMeta();
+				meta.getPersistentDataContainer().set(ObsStatVoucher.voucherKey, PersistentDataType.STRING, p.getUniqueId().toString());
+				voucherStack.setItemMeta(meta);
+				
+				AbstractObsObject luminiteCoreObj = ObjectRegistry.itemRegistry.get("money_tier5").getInstance();
+				ItemStack luminiteCoreStack = luminiteCoreObj.toItemStack();
+
+				Set<Integer> openSlots = InventoryUtils.getOpenSlots(p);
+				if (!openSlots.isEmpty())
+				{
+					PrintUtils.Print(p, "&7[/kit] &fItems have been added to your inventory!");
+					p.getInventory().setItem(openSlots.iterator().next(), luminiteCoreStack);
+					p.getInventory().setItem(openSlots.iterator().next(), voucherStack);
+				
+					data.setKitClaimed(true);
+					data.save();
+					
+					return true;
+				}
+				PrintUtils.Print(p, "&7[/kit] &fInventory full. Items have been dropped on the ground!");
+				p.getWorld().dropItem(p.getLocation(), luminiteCoreStack);
+				p.getWorld().dropItem(p.getLocation(), voucherStack);
+				
+				data.setKitClaimed(true);
+				data.save();
+				
+				return true;
+			}
+			
 			return false;
 		}
 		return false;
@@ -402,7 +459,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats","generate","money","version");
+			case 1 -> List.of("debug","menu","stats","generate","money","version","kit");
 			case 2 -> 
 			{
 				yield switch(args[0])
@@ -412,6 +469,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
 					case "generate" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
 					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
+					case "kit" -> List.of();
 					default -> List.of();
 				};
 			}
@@ -462,9 +520,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 	
 	public static boolean affirmOP(Player p) 
 	{
-	    boolean isOp = p.isOp();
-	    if(!isOp) PrintUtils.OBSFormatError(p, "&r&f&oYou don't have permissions to access this command.");
-	    return isOp;
+	    if(!p.isOp()) PrintUtils.OBSFormatError(p, "&r&f&oYou don't have permissions to access this command.");
+	    return !p.isOp();
 	}
 
 }

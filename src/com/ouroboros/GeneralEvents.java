@@ -33,11 +33,17 @@ public class GeneralEvents implements Listener
         		if (!p.hasPlayedBefore()) 
         		{
         			PrintUtils.OBSFormatPrint(p, "Welcome to our server, "+p.getName()+"!");
+        			PrintUtils.OBSFormatPrint(p, "Type &b&o/obs kit&r&f to get first-timer goodies!");
         			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnJoin&r&f -- &aOK&7 || &o"+p.getName()+" joined for the first time.");
         		}
         		else 
         		{        			
         			PrintUtils.OBSFormatPrint(p, "Welcome Back "+p.getName());
+        			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        			if (data != null && !data.hasKitClaimed())
+        			{
+        				PrintUtils.OBSFormatPrint(p, "You have an unclaimed &b&okit&r&f! Type &b&o/kit&r&f");
+        			}
         			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnJoin&r&f -- &aOK&7 || &o"+p.getName()+" joined the server.");
         		}
         		
