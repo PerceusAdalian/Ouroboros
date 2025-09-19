@@ -1,4 +1,4 @@
-package com.ouroboros.ability.instances.combat;
+package com.ouroboros.abilities.instances.combat;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -27,7 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.ability.instances.combat.ImbueFire;
+import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.AffinityRegistry;
