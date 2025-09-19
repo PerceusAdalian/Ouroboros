@@ -1,5 +1,7 @@
 package com.ouroboros.objects.instances;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -29,6 +31,7 @@ public class ObsStatVoucher extends AbstractObsObject
 	}
 
 	public static final NamespacedKey voucherKey = new NamespacedKey(Ouroboros.instance, "voucher_key");
+	public static Map<UUID, ItemStack> voucherRegistry = new HashMap<>();
 	
 	@Override
 	public boolean cast(PlayerInteractEvent e) 
@@ -55,6 +58,7 @@ public class ObsStatVoucher extends AbstractObsObject
 			return false;
 		}
 		
+		voucherRegistry.put(UUID.fromString(uuid), held);
 		GuiHandler.open(p, new ObsVoucherMenu(p));
 		
 		return true;

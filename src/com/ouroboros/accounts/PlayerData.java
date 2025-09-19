@@ -225,6 +225,15 @@ public class PlayerData
 		data.setAbilityPoints(abilityPoints);
 		data.save();
 	}
+	
+	public static void incrementLevel(Player p, StatType sType, int level)
+	{
+		for (int i = 0; i < level; i++)
+		{
+			int xpToAdd = getNextLevelXP(p.getUniqueId(), sType);
+			addXP(p, sType, xpToAdd);
+		}
+	}
 
 	public static void resetXP(UUID uuid, StatType sType) 
 	{

@@ -118,12 +118,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			if (openSlots.size() >= 1)
 			{
 				EntityEffects.playSound(p, Sound.ITEM_BUNDLE_DROP_CONTENTS, SoundCategory.AMBIENT);
-				PrintUtils.OBSFormatPrint(p, "&fItems have been added to your inventory!","&7[/welcomekit]");
+				PrintUtils.OBSFormatPrint(p, "&fA kit has been added to your inventory!");
 				p.getInventory().setItem(it.next(), bag);
 			}
 			else
 			{
-				PrintUtils.OBSFormatPrint(p, "&fInventory full. Items have been dropped on the ground!","&7[/welcomekit]");
+				PrintUtils.OBSFormatPrint(p, "&fInventory full. A kit has been dropped on the ground!");
 				p.getWorld().dropItem(p.getLocation(), bag);
 			}
 			
