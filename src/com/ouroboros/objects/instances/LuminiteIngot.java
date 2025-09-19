@@ -35,7 +35,7 @@ public class LuminiteIngot extends AbstractObsObject
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, SoundCategory.MASTER, 1, 1);
 			PlayerData.addMoney(p, 500);
-			PrintUtils.Print(p, "&r&f&l500&r&e₪&f has been added to your account.");
+			PrintUtils.PrintToActionBar(p, "&r&b+&f&l500&r&e₪&f Added");
 			ItemCollector.remove(e);
 			return true;
 		}

@@ -6,6 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.joml.Random;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.objects.AbstractObsObject;
@@ -14,16 +15,17 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 
-public class LuminiteCore extends AbstractObsObject
+public class LuminiteEssence extends AbstractObsObject
 {
 
-	public LuminiteCore() 
+	public LuminiteEssence() 
 	{
-		super("Luminite Core", "money_tier5", Material.SUNFLOWER, true, true, 
-				"&r&fA huge concentration of &e&l&oLuminite&r&f.",
-				"&r&fIt is a perfect crystalline orb that resonates harmonic frequencies.",
-				"&r&f&lRight-Click&r&f to harness into &l1000&r&e₪&f.",
+		super("Luminite Essence", "money_random", Material.RESIN_CLUMP, true, false, 
+				"&r&fAn unstable conglomerate of &e&l&oLuminite&r&f.",
+				"&r&fIt is an incandescent resin with variable waveform.. Just looking at it confuses you.",
+				"&r&f&lRight-Click&r&f to harness into &l1-10000&r&e₪&f.",
 				"\n","&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -32,11 +34,14 @@ public class LuminiteCore extends AbstractObsObject
 		Player p = e.getPlayer();
 		if (PlayerActions.rightClickAir(e)) 
 		{
+			Random rand = new Random();
+			int money = rand.nextInt(10000 - 1 + 1) + 1; // Weird range calc, idk, thanks AI Overview.. :)
+			
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, SoundCategory.MASTER, 1, 1);
-			PlayerData.addMoney(p, 1000);
-			PrintUtils.PrintToActionBar(p, "&r&b+&f&l1000&r&e₪&f Added");
+			p.playSound(p.getLocation(), Sound.ITEM_HONEYCOMB_WAX_ON, SoundCategory.MASTER, 1, 1);
+			PlayerData.addMoney(p, money);
+			PrintUtils.PrintToActionBar(p, "&r&b+&f&l"+money+"&r&e₪&f Added");
 			ItemCollector.remove(e);
 			return true;
 		}

@@ -9,6 +9,7 @@ import java.util.Map;
 import com.ouroboros.objects.instances.EolBlazeArm;
 import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.LuminiteDust;
+import com.ouroboros.objects.instances.LuminiteEssence;
 import com.ouroboros.objects.instances.LuminiteFragment;
 import com.ouroboros.objects.instances.LuminiteIngot;
 import com.ouroboros.objects.instances.LuminiteShard;
@@ -27,6 +28,8 @@ public class ObjectRegistry
     		LuminiteFragment.class,
     		LuminiteIngot.class,
     		LuminiteCore.class,
+    		LuminiteEssence.class,
+    		
     		EolBlazeArm.class,
         	ObsStatVoucher.class);
         
