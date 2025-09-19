@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.ability.instances.combat.Flamelash;
-import com.ouroboros.ability.instances.combat.GeminiSlash;
-import com.ouroboros.ability.instances.combat.ImbueFire;
-import com.ouroboros.ability.instances.combat.ReapAndSew;
-import com.ouroboros.ability.instances.perks.RejuvenateWounds;
+import com.ouroboros.abilities.instances.combat.Flamelash;
+import com.ouroboros.abilities.instances.combat.GeminiSlash;
+import com.ouroboros.abilities.instances.combat.ImbueFire;
+import com.ouroboros.abilities.instances.combat.ReapAndSew;
+import com.ouroboros.abilities.instances.perks.RejuvenateWounds;
 
 public class AbilityRegistry 
 {

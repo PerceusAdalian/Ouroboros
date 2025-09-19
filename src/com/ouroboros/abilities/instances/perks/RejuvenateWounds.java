@@ -1,4 +1,4 @@
-package com.ouroboros.ability.instances.perks;
+package com.ouroboros.abilities.instances.perks;
 
 import java.util.HashSet;
 import java.util.Random;

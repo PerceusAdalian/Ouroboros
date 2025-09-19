@@ -1,4 +1,4 @@
-package com.ouroboros.ability.instances.combat;
+package com.ouroboros.abilities.instances.combat;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
