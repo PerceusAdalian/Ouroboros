@@ -32,16 +32,15 @@ public class VoucherConfirmPage extends AbstractOBSGui
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
 		
 		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE).setName("&a&lConfirm").setLore(
-				"Click to confirm incrementing your "+sType.getFancyKey()+" stat",
-				"by 5 levels. Doing so will use up this voucher.", 
-				"You may return to the previous page or exit to cancel.",
-				"&f&lNote&r&f: This action cannot be undone. Using the voucher while your "+sType.getFancyKey()+" is at level 100",
-				"&r&fwill &lNOT&r&f result in consumption.","",
-				"&r&fYour current "+sType.getFancyKey()+" level: "+data.getStat(sType, true))
+				"&r&a&lClick to confirm&r&f incrementing your &b&l"+sType.getFancyKey()+" &r&fstat by 5 levels.",
+				"Doing so will use up this voucher. You may return to the previous page or exit to cancel.",
+				"&f&lNote&r&f: &c&lThis action cannot be undone&r&f. Using the voucher while your &b&l"+sType.getFancyKey(),
+				"&r&f is at &oLevel 100 will &c&lNOT&r&f result in consumption.","",
+				"&r&fYour current &b&l"+sType.getFancyKey()+" &r&eLevel&f: &l"+data.getStat(sType, true))
 		.place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER);
+			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER, 1, 1);
 			if (data.getStat(sType, true) == 100)
 			{
 				ObsVoucherMenu.voucherConfirm.remove(p.getUniqueId());
@@ -60,7 +59,7 @@ public class VoucherConfirmPage extends AbstractOBSGui
 			ItemStack stack = ObsStatVoucher.voucherRegistry.get(p.getUniqueId());
 			stack.setAmount(stack.getAmount() - 1);
 
-			EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.AMBIENT);
+			EntityEffects.playSound(p, p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
 			PrintUtils.OBSFormatDebug(p, "Your "+sType.getFancyKey()+" stat has leveled up! | &7Lvl "+prelevel+" &r&7-> "+ "&f&lLvl &r&b&l" + data.getStat(sType, true)+"\n"+
 					"&e&l+&f5&6AP&r&f | &nCurrent Ability Points&r&f: &6" + abilityPoints);
 			
