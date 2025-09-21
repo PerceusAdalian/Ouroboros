@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.instances.abilities.AbilityMainPage;
+import com.ouroboros.menus.instances.store.ObsShopGui;
 
 public class ObsMainMenu extends AbstractOBSGui
 {

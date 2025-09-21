@@ -277,6 +277,11 @@ public class EntityEffects {
 				hasDoom.put(target.getUniqueId(), true);
 				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
 				{
+					if (!target.hasPotionEffect(PotionEffectType.HUNGER) || target.isDead())
+					{
+						r.cancel();
+						return;
+					}
 					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5,Particle.SCULK_SOUL, null);
 				}, 20, seconds * 20);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> hasDoom.remove(target.getUniqueId()), seconds * 20);
@@ -289,6 +294,11 @@ public class EntityEffects {
 				add(target, PotionEffectType.WITHER, seconds * 20, magnitude, true);
 				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
 				{
+					if (!target.hasPotionEffect(PotionEffectType.WITHER) || target.isDead())
+					{
+						r.cancel();
+						return;
+					}
 					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5,Particle.SCULK_SOUL, null);
 				}, 20, seconds * 20);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> hasDoom.remove(target.getUniqueId()), seconds * 20);

@@ -15,7 +15,7 @@ import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.ExpHandler;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.menus.store.ShopItemContainer;
+import com.ouroboros.menus.instances.store.ShopItemContainer;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.events.MobDamageEvent;
 import com.ouroboros.mobs.events.MobDeathEvent;

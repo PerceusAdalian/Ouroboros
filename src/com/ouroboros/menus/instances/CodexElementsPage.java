@@ -75,7 +75,7 @@ public class CodexElementsPage extends AbstractOBSGui
         .place(this, 10, e->
         {
         	Player p = (Player) e.getWhoClicked();
-            p.playSound(p.getLocation(), Sound.BLOCK_CAMPFIRE_CRACKLE, SoundCategory.MASTER, 1, 1);
+            p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, SoundCategory.MASTER, 1, 1);
             e.setCancelled(true);
         });
         

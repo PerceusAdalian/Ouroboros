@@ -58,11 +58,12 @@ public class ReapAndSew extends AbstractOBSAbility
             int seconds = 20;
             Player p = pie.getPlayer();
             Entity target = RayCastUtils.getNearestEntity(p, 10);
-            if (target == null || !(target instanceof LivingEntity)) return false;
+            if (target == null || !(target instanceof LivingEntity) || target instanceof Player) return false;
 
             if (!remainingSeconds.containsKey(target.getUniqueId()))
             {
                 OBSParticles.drawMortioCastSigil(p);
+                OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
                 EntityEffects.addDoom((LivingEntity) target, 2, 20);
                 remainingSeconds.put(target.getUniqueId(), seconds);
                 OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
@@ -79,16 +80,21 @@ public class ReapAndSew extends AbstractOBSAbility
             }
             
             else if (EntityEffects.hasDoom.containsKey(target.getUniqueId()))
-    {
+            {
                 OBSParticles.drawMortioCastSigil(p);
+                OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
+                OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
+
                 int dmg = remainingSeconds.get(target.getUniqueId());
-                OBSParticles.drawLine(p.getLocation(), target.getLocation(), p.getLocation().distance(target.getLocation())%2+1, 0.5, Particle.SMOKE, null);
+                
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
                 {
+                	p.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).normalize());
                     EntityEffects.playSound(p, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.MASTER);
-                    OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()%2, 3, 6, 0.1, Particle.SMOKE, null);
+                    OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SMOKE, null);
+                    OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SCULK_SOUL, null);
                     MobData.damageUnnaturally(p, target, dmg, true, ElementType.MORTIO);
-                }, 20);
+                }, 10);
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance,()->
                 {
                     OBSParticles.drawLine(target.getLocation(), p.getLocation(), Math.max(1, (int) target.getLocation().distance(p.getLocation())), 0.5, Particle.HAPPY_VILLAGER, null);
@@ -97,7 +103,7 @@ public class ReapAndSew extends AbstractOBSAbility
                     
                     double maxHealth = ((Attributable) p).getAttribute(Attribute.MAX_HEALTH).getValue();
                     p.setHealth(Math.min(p.getHealth() + (dmg / 2.0), maxHealth));
-                }, 40);
+                }, 20);
                 remainingSeconds.remove(target.getUniqueId());
                 EntityEffects.hasDoom.remove(target.getUniqueId());
                 if (((LivingEntity) target).hasPotionEffect(PotionEffectType.WITHER))

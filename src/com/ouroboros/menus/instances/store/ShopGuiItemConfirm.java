@@ -1,4 +1,4 @@
-package com.ouroboros.menus.store;
+package com.ouroboros.menus.instances.store;
 
 import java.util.Set;
 
@@ -12,7 +12,6 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.menus.instances.ObsShopGui;
 import com.ouroboros.utils.PrintUtils;
 
 public class ShopGuiItemConfirm extends AbstractOBSGui

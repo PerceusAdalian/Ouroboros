@@ -14,6 +14,7 @@ import com.ouroboros.objects.instances.LuminiteFragment;
 import com.ouroboros.objects.instances.LuminiteIngot;
 import com.ouroboros.objects.instances.LuminiteShard;
 import com.ouroboros.objects.instances.ObsStatVoucher;
+import com.ouroboros.objects.instances.RemembranceOfHope;
 
 public class ObjectRegistry 
 {
@@ -31,7 +32,9 @@ public class ObjectRegistry
     		LuminiteEssence.class,
     		
     		EolBlazeArm.class,
-        	ObsStatVoucher.class);
+        	ObsStatVoucher.class,
+        	
+        	RemembranceOfHope.class);
         
         for (Class<? extends AbstractObsObject> clazz : itemClasses) 
         {

@@ -22,6 +22,7 @@ import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 
 public class ImbueFire extends AbstractOBSAbility 
 {
@@ -33,7 +34,7 @@ public class ImbueFire extends AbstractOBSAbility
 				"&r&fGrants self the &c&oImbued&r&f effect.","",
 				"&r&c&oImbued&r&f: Surrounds you in &c&lInferno&r&f energy.",
 				"&r&fAll attacks deal &c&lInferno&r&f damage in addition to the normal damage.",
-				"&r&fTargets hit are afflicted with &cBurn &7(5s), and damage dealt is increased by &e+&f&l1.1&r&fx.",
+				"&r&fTargets hit are afflicted with &cBurn &7(5s)&r&f, and damage dealt is increased by &e+&f&l1.1&r&fx.",
 				"&r&eAbility Duration&r&f: 30s");
 	}
 
@@ -46,6 +47,12 @@ public class ImbueFire extends AbstractOBSAbility
 		{
 			Player p = pie.getPlayer();
 
+			if (isImbuedPlayer.containsKey(p.getUniqueId()))
+			{
+				PrintUtils.PrintToActionBar(p, "Already Imbued");
+				return false;
+			}
+			
 			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER);
 			OBSParticles.drawInfernoCastSigil(p);

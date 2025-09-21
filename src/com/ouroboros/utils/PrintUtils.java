@@ -51,7 +51,7 @@ public class PrintUtils
 	
 	public static void OBSFormatPrint(Player player, String msg, @Nullable String callbackMsg) 
 	{
-		Print(player, "&f|&eΩ&r&f| "+msg+" &r&f/&e$&f/"+callbackMsg!=null?callbackMsg:""+"/");
+		Print(player, "&f|&eΩ&r&f| "+msg+" &r&f/&e$&f/"+(callbackMsg!=null?callbackMsg:"")+"/");
 	}
 	
 	public static void OBSFormatPrint(Player player, String msg) 
@@ -66,7 +66,7 @@ public class PrintUtils
 	
 	public static void OBSFormatError(Player player, String msg, @Nullable String callbackMsg) 
 	{
-		Print(player, "&f|&cΩ&r&f| "+msg+" &r&f/&c!&f/"+callbackMsg!=null?callbackMsg:""+"/");
+		Print(player, "&f|&cΩ&r&f| "+msg+" &r&f/&c!&f/"+(callbackMsg!=null?callbackMsg:"")+"/");
 	}
 	
 	public static void OBSFormatDebug(Player player, String msg) 
@@ -76,7 +76,7 @@ public class PrintUtils
 	
 	public static void OBSFormatDebug(Player player, String msg, @Nullable String callbackMsg) 
 	{
-		Print(player.getPlayer(), "&f|&bΩ&r&f| "+msg+ " &r&f/&b?&f/"+callbackMsg!=null?callbackMsg:""+"/");
+		Print(player.getPlayer(), "&f|&bΩ&r&f| "+msg+ " &r&f/&b?&f/"+(callbackMsg!=null?callbackMsg:"")+"/");
 	}
 	
 	public static void OBSConsolePrint(String msg)

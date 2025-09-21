@@ -43,8 +43,13 @@ public class VoucherConfirmPage extends AbstractOBSGui
 			EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER, 1, 1);
 			if (data.getStat(sType, true) == 100)
 			{
+				p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
+				
 				ObsVoucherMenu.voucherConfirm.remove(p.getUniqueId());
-				GuiHandler.changeMenu(p, new ObsVoucherMenu(p));
+				ObsStatVoucher.voucherRegistry.remove(p.getUniqueId());
+				PrintUtils.OBSFormatError(p, "Can't continue operation..", "&7>>&b&l"+sType.getFancyKey()+"&r&f lvl is &c100&f!");
+				GuiHandler.close(p);
+				return;
 			}
 			
 			data.doXpNotification(false);

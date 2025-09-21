@@ -141,7 +141,7 @@ public class AffinityRegistry
         // Cow
         AFFINITIES.put(EntityType.COW, new MobAffinity(
             EnumSet.of(ElementType.PIERCE),
-            EnumSet.of(ElementType.SLASH),
+            EnumSet.of(ElementType.SLASH, ElementType.MORTIO),
             EnumSet.of(ElementType.CELESTIO)
         ));
         

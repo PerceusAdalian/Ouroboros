@@ -1,4 +1,4 @@
-package com.ouroboros.menus.store;
+package com.ouroboros.menus.instances.store;
 
 import java.util.HashMap;
 import java.util.Map;

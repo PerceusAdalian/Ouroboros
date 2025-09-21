@@ -1,4 +1,4 @@
-package com.ouroboros.menus.instances;
+package com.ouroboros.menus.instances.store;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +13,7 @@ import org.bukkit.entity.Player;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.menus.store.ShopGuiItemConfirm;
-import com.ouroboros.menus.store.ShopItemContainer;
+import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.utils.PrintUtils;
 
 public class ObsShopGui extends AbstractOBSGui
