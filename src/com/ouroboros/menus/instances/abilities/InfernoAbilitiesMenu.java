@@ -7,7 +7,6 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.abilities.instances.combat.Flamelash;
 import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -25,11 +24,8 @@ public class InfernoAbilitiesMenu extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		AbstractOBSAbility imbuefire = new ImbueFire();
-		AbilityMainPage.placeAbilityButton(player, imbuefire, 10, this);
-		
-		AbstractOBSAbility flamelash = new Flamelash();
-		AbilityMainPage.placeAbilityButton(player, flamelash, 11, this);
+		GuiButton.placeAbilityButton(player, new ImbueFire(), 10, this);
+		GuiButton.placeAbilityButton(player, new Flamelash(), 11, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Ability Main Page").place(this, 37, e->

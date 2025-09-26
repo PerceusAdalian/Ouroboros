@@ -35,8 +35,8 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 		
 		String confirmActivate = "&a&lConfirm Activation Toggle&r&f?";
 		String confirmRegister = "&a&lConfirm Registration&r&f?";
-		boolean isRegistering = AbilityMainPage.confirmRegister.get(player);
-		AbstractOBSAbility ability = AbilityMainPage.abilityConfirmMap.get(player);
+		boolean isRegistering = GuiButton.confirmRegister.get(player);
+		AbstractOBSAbility ability = GuiButton.abilityConfirmMap.get(player);
 		
 		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE).setName(isRegistering ? confirmRegister : confirmActivate).setLore("Click to Confirm Action").place(this, 13, e->
 		{
@@ -84,6 +84,29 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 
 				    PlayerData.activateAbility(p, ability);
 				    GuiHandler.changeMenu(p, new AbilityMainPage(p));
+				}
+				else if (ability.getAbilityType().equals(ObsAbilityType.UTILITY))
+				{
+					//Full List -- Ability Change Required
+					if (!data.getActiveUtilityAbilities().contains(ability.getInternalName()) && data.getActiveUtilityAbilities().size() == 3)
+					{
+						abilityChangeMap.put(p.getUniqueId(), ability);
+						GuiHandler.changeMenu(p, new AbilityChangePage(p));
+						return;
+					}
+					else if (!data.getActiveUtilityAbilities().contains(ability.getInternalName()) && data.getActiveUtilityAbilities().size() < 3)
+					{
+						PlayerData.activateAbility(p, ability);
+						GuiHandler.changeMenu(p, new AbilityMainPage(p));
+						return;
+					}
+					//Normal Deactivate case
+					else if (data.getActiveUtilityAbilities().contains(ability.getInternalName()))
+					{
+						PlayerData.deactivateAbility(p, ability);
+						GuiHandler.changeMenu(p, new AbilityMainPage(p));
+						return;
+					}
 				}
 				else if (data.getAbility(ability).isActive()) 
 				{

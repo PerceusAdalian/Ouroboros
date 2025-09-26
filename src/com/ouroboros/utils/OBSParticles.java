@@ -270,15 +270,22 @@ public class OBSParticles
 	
 	public static void drawInfernoCastSigil(Player p) 
 	{
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.LAVA, null);
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.ASH, null);
+		drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.LAVA, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.ASH, null);
 	}
 
 	public static void drawMortioCastSigil(Player p)
 	{
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.ASH, null);
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.CRIMSON_SPORE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.ASH, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.CRIMSON_SPORE, null);
+	}
+	
+	public static void drawGeoCastSigil(Player p)
+	{
+		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.ASH, null);
+		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.SMOKE,null);
 	}
 }

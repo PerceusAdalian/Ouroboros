@@ -7,7 +7,6 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.abilities.instances.combat.GeminiSlash;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
@@ -24,8 +23,7 @@ public class CelestioAbilitiesMenu extends AbstractOBSGui
 	protected void build() 
 	{
 
-		AbstractOBSAbility geminislash = new GeminiSlash();
-		AbilityMainPage.placeAbilityButton(player, geminislash, 10, this);
+		GuiButton.placeAbilityButton(player, new GeminiSlash(), 10, this);
 		
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Ability Main Page").place(this, 37, e->
 		{

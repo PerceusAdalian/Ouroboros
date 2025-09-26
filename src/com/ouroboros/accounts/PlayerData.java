@@ -3,6 +3,7 @@ package com.ouroboros.accounts;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -144,38 +145,73 @@ public class PlayerData
 		return AbstractOBSAbility.fromInternalName(internalName);
 	}
 	
-	public static void deactivateAbility(Player p, AbstractOBSAbility ability)
+	public static void activateAbility(Player p, AbstractOBSAbility ability) 
 	{
-		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-		boolean combatAbility = ability.getAbilityType() == ObsAbilityType.COMBAT;
-		if (combatAbility) data.setActiveCombatAbility(null);
-		data.getAbility(ability).setActive(false);
-		data.save();
-		PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o"+ability.getDisplayName());
+	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+
+	    if (ability.getAbilityType() == ObsAbilityType.COMBAT) 
+	    	data.setActiveCombatAbility(ability);
+	    else if (ability.getAbilityType() == ObsAbilityType.UTILITY) 
+	    	data.addUtilityAbility(ability);
+	    
+	    data.getAbility(ability).setActive(true);
+	    data.save();
+	    
+	    PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o" + ability.getDisplayName());
 	}
-	
-	public static void activateAbility(Player p, AbstractOBSAbility ability)
+
+	public static void deactivateAbility(Player p, AbstractOBSAbility ability) 
 	{
-		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-		boolean combatAbility = ability.getAbilityType() == ObsAbilityType.COMBAT;
-		if (combatAbility) data.setActiveCombatAbility(ability);
-		data.getAbility(ability).setActive(true);
-		data.save();
-		PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o"+ability.getDisplayName());
+	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+
+	    if (ability.getAbilityType() == ObsAbilityType.COMBAT) 
+	    	data.setActiveCombatAbility(null);
+	    else if (ability.getAbilityType() == ObsAbilityType.UTILITY) 
+	    	data.removeUtilityAbility(ability);
+	    
+	    data.getAbility(ability).setActive(false);
+	    data.save();
+	    
+	    PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o" + ability.getDisplayName());
 	}
+
 	
 	public void setActiveCombatAbility(@Nullable AbstractOBSAbility ability) 
 	{
 	    String path = "stats.abilities.activecombatability";
+
 	    if (ability != null) 
-	    {
-	        config.set(path, ability.getInternalName());
-	    } 
+	    	config.set(path, ability.getInternalName());
 	    else 
+	    	config.set(path, null);
+	}
+
+	public void addUtilityAbility(AbstractOBSAbility ability) 
+	{
+	    String path = "stats.abilities.activeutilityabilities"; // plural
+	    List<String> utilities = getActiveUtilityAbilities();
+	    if (!utilities.contains(ability.getInternalName())) 
 	    {
-	        config.set(path, null);
+	        utilities.add(ability.getInternalName());
+	        config.set(path, utilities);
 	    }
 	}
+	
+	public List<String> getActiveUtilityAbilities() 
+	{
+	    String path = "stats.abilities.activeutilityabilities";
+	    return config.getStringList(path);
+	}
+
+	public void removeUtilityAbility(AbstractOBSAbility ability) 
+	{
+	    String path = "stats.abilities.activeutilityabilities";
+	    List<String> utilities = getActiveUtilityAbilities();
+
+	    if (utilities.remove(ability.getInternalName())) 
+	    	config.set(path, utilities);
+	}
+
 
 	public static void addXP(Player p, StatType sType, int value) 
 	{
