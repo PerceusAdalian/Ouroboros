@@ -12,6 +12,8 @@ import com.ouroboros.abilities.instances.combat.GeminiSlash;
 import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.abilities.instances.combat.ReapAndSew;
 import com.ouroboros.abilities.instances.perks.RejuvenateWounds;
+import com.ouroboros.abilities.instances.special.Prometheus;
+import com.ouroboros.abilities.instances.utility.Geomorph;
 
 public class AbilityRegistry 
 {
@@ -20,7 +22,8 @@ public class AbilityRegistry
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
-            ReapAndSew.class,RejuvenateWounds.class);
+            ReapAndSew.class,RejuvenateWounds.class,Geomorph.class,
+            Prometheus.class);
         
         for (Class<? extends AbstractOBSAbility> clazz : itemClasses) 
         {

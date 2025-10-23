@@ -11,6 +11,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
@@ -42,9 +44,11 @@ public class Geomorph extends AbstractOBSAbility
 	{
 		if (e instanceof PlayerInteractEvent pie)
 		{
-			if (pie.getItem().getType().equals(Material.CLAY_BALL)) return false;
-			
 			Player p = pie.getPlayer();
+			
+			ItemStack held = p.getInventory().getItem(EquipmentSlot.HAND);
+			if (!held.getType().equals(Material.CLAY_BALL)) return false;
+			
 			if (geomorphCooldown.containsKey(p.getUniqueId()))
 			{
 				PrintUtils.PrintToActionBar(p, "&f&oGeomorph Cooldown");

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -284,7 +285,7 @@ public class OBSParticles
 	
 	public static void drawGeoCastSigil(Player p)
 	{
-		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
 		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.ASH, null);
 		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.SMOKE,null);
 	}

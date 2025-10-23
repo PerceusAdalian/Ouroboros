@@ -370,7 +370,9 @@ public class ExpHandler implements Listener
 						for (ItemStack item : container.getInventory().getContents())
 							if (item != null && item.getType() != Material.AIR)
 								count ++;
+					if (count == 0) return;
 					int xp = count * 10;
+					
 					
 					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
 						EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);

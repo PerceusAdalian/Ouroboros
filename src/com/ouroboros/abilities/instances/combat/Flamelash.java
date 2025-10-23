@@ -53,8 +53,7 @@ public class Flamelash extends AbstractOBSAbility
 			
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), p.getLocation().distance(target.getLocation()), 0.1, Particle.LAVA, null);
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-				OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null), 10);
+			OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null);
 			
 			MobData.damageUnnaturally(p, target, 10, true, ElementType.INFERNO);
 			target.setFireTicks(200);
