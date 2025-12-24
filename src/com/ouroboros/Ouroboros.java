@@ -10,6 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.lol.spells.SpellCastHandler;
+import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.abilities.AbilityCastHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.ExpHandler;
@@ -23,7 +25,6 @@ import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
-import com.ouroboros.objects.instances.EolBlazeArm;
 import com.ouroboros.utils.PrintUtils;
 
 public class Ouroboros extends JavaPlugin
@@ -56,9 +57,11 @@ public class Ouroboros extends JavaPlugin
 		GuiHandler.registerEvent(instance);
 		ExpHandler.register(instance);
 		
+		SpellCastHandler.register(instance);
+		SpellRegistry.init();
+		
 		AbilityCastHandler.register(instance);
 		AbilityRegistry.abilityInit();		
-		EolBlazeArm.registerHeldEvent(instance);
 		
 		ShopItemContainer.init();
 
@@ -67,6 +70,8 @@ public class Ouroboros extends JavaPlugin
 		
 		MobManager.respawnAll();
 		
+		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
+		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());
 		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
 	}
 	

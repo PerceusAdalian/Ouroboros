@@ -24,6 +24,8 @@ import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.lol.spells.instances.Spell;
+import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.ObsDisplayMain;
@@ -152,23 +154,32 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("menu")) 
 		{
-			if (Ouroboros.debug) 
-			{
-				PrintUtils.OBSConsoleDebug("&bPlayer&f: " + sender.getName().toString() + "&f opened the OBS Main Menu.");
-			}
+			if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&bPlayer&f: " + sender.getName().toString() + "&f opened the OBS Main Menu.");
 			GuiHandler.open(p, new ObsMainMenu(p));
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			return true;
 		}
 		
-		if (args[0].equals("generate") && ObjectRegistry.itemRegistry.containsKey(args[1])) 
+		
+		if (args[0].equals("generate")) 
 		{
-			if (affirmOP(p)) return true;
+			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]))
+			{
+				if (affirmOP(p)) return true;
+				Spell spell = SpellRegistry.spellRegistry.get(args[2]);
+				ItemStack stack = spell.getAsItemStack(false);
+				p.getInventory().addItem(stack);
+				return true;
+			}
 			
-			AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[1]);
-			ItemStack stack = obj.toItemStack();
-			p.getInventory().addItem(stack);
-			return true;
+			if (args[1].equals("object") && ObjectRegistry.itemRegistry.containsKey(args[2]))
+			{				
+				if (affirmOP(p)) return true;
+				AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[2]);
+				ItemStack stack = obj.toItemStack();
+				p.getInventory().addItem(stack);
+				return true;
+			}
 		}
 		
 		if (args[0].equals("money")) 
@@ -477,7 +488,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "debug" -> List.of();
 					case "menu" -> List.of();
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
-					case "generate" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
+					case "generate" -> List.of("object","spell");
 					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
 					case "welcomekit" -> List.of();
 					default -> List.of();
@@ -487,6 +498,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
+					case "object" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
+					case "spell" -> new ArrayList<>(SpellRegistry.spellRegistry.keySet());
 					case "set" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "doLevelUpSound" -> List.of("true", "false");

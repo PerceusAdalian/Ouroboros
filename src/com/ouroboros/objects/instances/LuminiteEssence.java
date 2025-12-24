@@ -20,7 +20,7 @@ public class LuminiteEssence extends AbstractObsObject
 
 	public LuminiteEssence() 
 	{
-		super("Luminite Essence", "money_random", Material.RESIN_CLUMP, true, false, 
+		super("Luminite Essence", "money_random", Material.RESIN_CLUMP, true, true, 
 				"&r&fAn unstable conglomerate of &e&l&oLuminite&r&f.",
 				"&r&fIt is an incandescent resin with variable waveform.. Just looking at it confuses you.",
 				"&r&f&lRight-Click&r&f to harness into &l1-10000&r&e₪&f.",

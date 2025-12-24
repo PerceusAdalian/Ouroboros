@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -57,7 +57,7 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 			}
 			else 
 			{
-				if (ability.getAbilityType().equals(ObsAbilityType.COMBAT)) 
+				if (ability.getAbilityType().equals(AbilityType.COMBAT)) 
 				{
 				    if (data.getActiveCombatAbility() != null) 
 				    {
@@ -85,7 +85,7 @@ public class AbilityConfirmationPage extends AbstractOBSGui
 				    PlayerData.activateAbility(p, ability);
 				    GuiHandler.changeMenu(p, new AbilityMainPage(p));
 				}
-				else if (ability.getAbilityType().equals(ObsAbilityType.UTILITY))
+				else if (ability.getAbilityType().equals(AbilityType.UTILITY))
 				{
 					//Full List -- Ability Change Required
 					if (!data.getActiveUtilityAbilities().contains(ability.getInternalName()) && data.getActiveUtilityAbilities().size() == 3)

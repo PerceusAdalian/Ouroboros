@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import com.ouroboros.utils.AbilityObjectCategory;
 import com.ouroboros.utils.PrintUtils;
 
-public enum AbilityCategory 
+public enum AbilityMaterialClass 
 {
 	SWORDS,
 	AXES,
@@ -34,7 +34,7 @@ public enum AbilityCategory
 		return PrintUtils.ColorParser("&r&b&o"+key+"&r&f");
 	}
 	
-	public static Set<Material> get(AbilityCategory ac) 
+	public static Set<Material> get(AbilityMaterialClass ac) 
 	{
 		return switch(ac)
 		{

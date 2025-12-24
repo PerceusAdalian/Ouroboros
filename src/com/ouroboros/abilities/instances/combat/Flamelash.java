@@ -17,10 +17,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -32,7 +32,7 @@ public class Flamelash extends AbstractOBSAbility
 
 	public Flamelash() 
 	{
-		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, ObsAbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, AbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityMaterialClass.SWORDS,
 				"&r&fSlash upwards to calcinate target mob dealing ",
 				"&r&f&l5&r&c♥ &f&lSlash&r&f damage and apply &cBurn&f.",
 				"&r&f&lRange: &b7 meters",

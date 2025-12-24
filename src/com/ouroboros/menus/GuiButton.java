@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import org.bukkit.Material;
@@ -14,9 +15,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.lol.spells.instances.Spell;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.instances.abilities.AbilityConfirmationPage;
+import com.ouroboros.menus.instances.magic.CollectWandData;
+import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 
 public class GuiButton 
@@ -100,6 +104,49 @@ public class GuiButton
 	    	        p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 	    	    }
 	        });
+	}
+    
+    public static Map<UUID, Spell> spellActivateConfirm = new HashMap<>();
+    
+    public static void placeSpellButton(Player player, Spell spell, int slot, AbstractOBSGui gui)
+	{
+    	ItemStack spellIcon = spell.getAsItemStack(true);
+		
+		boolean spellRegistered = PlayerData.getPlayer(player.getUniqueId()).getSpell(spell).isRegistered();
+		if (spellRegistered)
+		{	        	
+			GuiButton.button(spellIcon.getType())
+			.setName(spellIcon.getItemMeta().getDisplayName())
+			.setLore(spellIcon.getItemMeta().getLore())
+			.place(gui, slot, e -> 
+			{
+				Player p = (Player) e.getWhoClicked();
+				EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
+				spellActivateConfirm.put(player.getUniqueId(), spell);
+				GuiHandler.changeMenu(p, new CollectWandData(p));
+			});
+		}
+		else
+		{
+			// Create obfuscated lore as a List<String>
+            List<String> obfuscatedLore = new ArrayList<>();
+            for (String line : spellIcon.getItemMeta().getLore())
+            {
+                // Strip existing color codes and make obfuscated
+                String plainText = line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "");
+                obfuscatedLore.add(PrintUtils.ColorParser("&7&k" + plainText));
+            }
+            
+            GuiButton.button(Material.PAPER)
+            .setName(PrintUtils.ColorParser("&7&k"+spellIcon.getItemMeta().getDisplayName()))
+            .setLore(obfuscatedLore)
+            .place(gui, slot, e -> 
+            {
+                Player p = (Player) e.getWhoClicked();
+                EntityEffects.playSound(p, Sound.BLOCK_CHEST_LOCKED, SoundCategory.MASTER);
+                e.setCancelled(true);
+            });
+		}
 	}
     
 }

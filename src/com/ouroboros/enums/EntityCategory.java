@@ -15,7 +15,6 @@ public enum EntityCategory
 	FLYING,
 	INFERNAL,
 	ETHEREAL,
-	OCCULTIC,
 	CALAMITY,
 	CELESTIO_MOBS,
 	MORTIO_MOBS,
@@ -23,6 +22,7 @@ public enum EntityCategory
 	GLACIO_MOBS,
 	AERO_MOBS,
 	GEO_MOBS,
+	HERESIO_MOBS,
 	COSMO_MOBS;
 	
 	public String getKey()
@@ -64,7 +64,6 @@ public enum EntityCategory
 			case FLYING -> EntityCategories.flying;
 			case INFERNAL -> EntityCategories.infernal;
 			case ETHEREAL -> EntityCategories.ethereal;
-			case OCCULTIC -> EntityCategories.occultic;
 			case CALAMITY -> EntityCategories.calamity;
 			case CELESTIO_MOBS -> EntityCategories.celestio_mobs;
 			case MORTIO_MOBS -> EntityCategories.mortio_mobs;
@@ -73,6 +72,7 @@ public enum EntityCategory
 			case AERO_MOBS -> EntityCategories.aero_mobs;
 			case GEO_MOBS -> EntityCategories.geo_mobs;
 			case COSMO_MOBS -> EntityCategories.cosmo_mobs;
+			case HERESIO_MOBS -> EntityCategories.heresio_mobs;
 		};
 	}
 }

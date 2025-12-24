@@ -77,7 +77,8 @@ public abstract class AbstractObsObject
 	{
 		return this;
 	}
-	public static String getInternalNameAsID(String internalName) 
+	
+	public String getInternalNameAsID() 
 	{
 		int internalNameID = 0;
 		for (char ch : internalName.toCharArray()) 
@@ -108,7 +109,7 @@ public abstract class AbstractObsObject
 			lore.add(PrintUtils.ColorParser("&r&f" + line) + "\n");
 		}
 		lore.add("\n");
-		lore.add(PrintUtils.ColorParser("&r&7&oOBS Object ID: O_" + getInternalNameAsID(internalName)));			
+		lore.add(PrintUtils.ColorParser("&r&7&oOBS Object ID: O_" + getInternalNameAsID()));			
 		
 		meta.setLore(lore);
 		meta.getPersistentDataContainer().set(obsObject, PersistentDataType.STRING, internalName.toString());

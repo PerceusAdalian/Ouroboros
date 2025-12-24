@@ -6,9 +6,9 @@ import com.ouroboros.abilities.instances.AbstractOBSAbility;
 
 public class AbilityHandler 
 {
-	
     private final AbstractOBSAbility ability;
     private final YamlConfiguration config;
+   
     public AbilityHandler(AbstractOBSAbility ability, YamlConfiguration config) 
     {
         this.ability = ability;

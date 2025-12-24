@@ -55,9 +55,7 @@ public class AbilityCastHandler implements Listener
         for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive())
-            {
-                ability.cast(e);
-            }
+            	ability.cast(e);
         }
     }
 
@@ -69,9 +67,7 @@ public class AbilityCastHandler implements Listener
         for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values())
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive()) 
-            {
-                ability.cast(e);
-            }
+            	ability.cast(e);
         }
     }
 }

@@ -15,10 +15,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
@@ -29,8 +29,8 @@ public class ImbueFire extends AbstractOBSAbility
 
 	public ImbueFire() 
 	{
-		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, ObsAbilityType.COMBAT,
-				ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.ANY,
+		super("Imbue Fire", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, AbilityType.COMBAT,
+				ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, AbilityMaterialClass.ANY,
 				"&r&fGrants self the &c&oImbued&r&f effect.","",
 				"&r&c&oImbued&r&f: Surrounds you in &c&lInferno&r&f energy.",
 				"&r&fAll attacks deal &c&lInferno&r&f damage in addition to the normal damage.",

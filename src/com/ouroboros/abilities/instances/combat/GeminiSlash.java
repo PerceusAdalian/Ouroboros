@@ -12,10 +12,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -27,7 +27,7 @@ public class GeminiSlash extends AbstractOBSAbility
 
 	public GeminiSlash() 
 	{
-		super("Gemini Slash", "gemini_slash_ability", Material.ECHO_SHARD, StatType.MELEE, 10, 5, ObsAbilityType.COMBAT, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, AbilityCategory.SWORDS,
+		super("Gemini Slash", "gemini_slash_ability", Material.ECHO_SHARD, StatType.MELEE, 10, 5, AbilityType.COMBAT, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, AbilityMaterialClass.SWORDS,
 				"&r&fDash towards target mob and attack instantly, dealing",
 				"&r&f&l5&r&c♥ &r&f&lCelestio&r&f damage and apply &eExposed&f.",
 				"&r&f&lRange&r&f: &b5 meters &r&7| &r&f&lDuration&r&f: &b15 seconds",

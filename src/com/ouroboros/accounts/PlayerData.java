@@ -14,11 +14,13 @@ import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.SpellHandler;
+import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.ObsDisplayMain;
 import com.ouroboros.utils.EntityEffects;
@@ -29,9 +31,10 @@ import com.ouroboros.utils.PrintUtils;
 public class PlayerData 
 {
 	protected final UUID uuid;
-	private final File file;
+	private File file;
 	private final YamlConfiguration config;
 	public static final int baseXP = 225, fundsIntegerMax = 99999999;
+	public static final int maxLuminite = 9999;
 	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -105,6 +108,8 @@ public class PlayerData
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
 	    	
+	    	setLuminite(0);
+	    	
 	    	setKitClaimed(false);
 	    }
 	    return;
@@ -149,9 +154,9 @@ public class PlayerData
 	{
 	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 
-	    if (ability.getAbilityType() == ObsAbilityType.COMBAT) 
+	    if (ability.getAbilityType() == AbilityType.COMBAT) 
 	    	data.setActiveCombatAbility(ability);
-	    else if (ability.getAbilityType() == ObsAbilityType.UTILITY) 
+	    else if (ability.getAbilityType() == AbilityType.UTILITY) 
 	    	data.addUtilityAbility(ability);
 	    
 	    data.getAbility(ability).setActive(true);
@@ -164,9 +169,9 @@ public class PlayerData
 	{
 	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 
-	    if (ability.getAbilityType() == ObsAbilityType.COMBAT) 
+	    if (ability.getAbilityType() == AbilityType.COMBAT) 
 	    	data.setActiveCombatAbility(null);
-	    else if (ability.getAbilityType() == ObsAbilityType.UTILITY) 
+	    else if (ability.getAbilityType() == AbilityType.UTILITY) 
 	    	data.removeUtilityAbility(ability);
 	    
 	    data.getAbility(ability).setActive(false);
@@ -292,7 +297,8 @@ public class PlayerData
 		}
 	}
 	
-	public static void resetAccount(UUID uuid) 
+	@Deprecated
+	public static void resetAccount_Old(UUID uuid) 
 	{
 		PlayerData data = PlayerData.getPlayer(uuid);
 		for (StatType type : StatType.values()) 
@@ -303,9 +309,16 @@ public class PlayerData
 		data.setAccountLevel(0);
 		data.setAbilityPoints(0);
 		data.setPrestigePoints(0);
+		data.setLuminite(0);
 		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
 			data.getAbility(a).setRegistered(false).setActive(false);
 		data.setActiveCombatAbility(null);
+	}
+	
+	public static void resetAccount(UUID uuid) 
+	{
+		PlayerData.getPlayer(uuid).file = null;
+		PlayerData.getPlayer(uuid).setDefaults();
 	}
 	
 	public void initializeAbilities() 
@@ -356,6 +369,11 @@ public class PlayerData
 	public AbilityHandler getAbility(AbstractOBSAbility ability) 
 	{
 		return new AbilityHandler(ability, config);
+	}
+	
+	public SpellHandler getSpell(Spell spell)
+	{
+		return new SpellHandler(spell, config);
 	}
 	
 	public int getStatLevel(StatType sType)
@@ -430,6 +448,33 @@ public class PlayerData
 		ObsDisplayMain.updateHud(p);
 	}
 
+	public int getLuminite()
+	{
+		return config.getInt("luminite");
+	}
+	
+	public void setLuminite(int value)
+	{
+		config.set("luminite", value);
+	}
+	
+	public static void addLuminite(Player p, int value)
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		data.setLuminite(data.getLuminite()+value);
+		if (data.getLuminite() > maxLuminite) data.setLuminite(maxLuminite);
+		data.save();
+		ObsDisplayMain.updateHud(p);
+	}
+	
+	public static void subtractLuminite(Player p, int value)
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		data.setLuminite(data.getLuminite()-value);
+		if (data.getLuminite() < 0) data.setLuminite(0);
+		data.save();
+		ObsDisplayMain.updateHud(p);
+	}
 	
 	public void save() 
 	{

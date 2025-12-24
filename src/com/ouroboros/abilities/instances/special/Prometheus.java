@@ -17,10 +17,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -33,8 +33,8 @@ public class Prometheus extends AbstractOBSAbility
 
 	public Prometheus() 
 	{
-		super("Prometheus' Wrath", "prometheus_special", Material.BLAZE_POWDER, StatType.MAGIC, 20, 10, ObsAbilityType.SPECIALABILITY, ElementType.INFERNO, CastConditions.SHIFT_RIGHT_CLICK_BLOCK,
-				AbilityCategory.SWORDS, "&r&fPlunge your sword firmly into the earth causing a &cHeat Wave&r&f",
+		super("Prometheus' Wrath", "prometheus_special", Material.BLAZE_POWDER, StatType.MAGIC, 20, 10, AbilityType.SPECIALABILITY, ElementType.INFERNO, CastConditions.SHIFT_RIGHT_CLICK_BLOCK,
+				AbilityMaterialClass.SWORDS, "&r&fPlunge your sword firmly into the earth causing a &cHeat Wave&r&f",
 				"&r&fthat releases a devastating explosion of ash and mantle around you.","",
 				"&r&f&n&cHeat Wave&f Damage: &l20&r&c♥ &c&lInferno &r&7| &eExplosion &fDamage: &d&oVariable &r&e&lBlast",
 				"&r&fAll affected are applied &cBurn&r&f &7&o(Range: 25m / Burn Duration: 20s / CD: 3 minutes)&r&f");

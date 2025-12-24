@@ -20,6 +20,8 @@ public enum ElementType
 	CRUSH("&r&f&o&lCrush&r&f"),
 	SEVER("&r&f&o&lSever&r&f"),
 	IMPALE("&r&f&o&lImpale&r&f"),
+	//Almighty/Pure Elemental Damage Type
+	HERESIO("&r&2&lHeresio&r&f"),
 	//Special Almighty Explosive Damage Type
 	BLAST("&r&c&o&lBlast&r&f"),
 	//Elemental Damage Types

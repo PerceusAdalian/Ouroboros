@@ -1,6 +1,6 @@
 package com.ouroboros.enums;
 
-public enum ObsAbilityType 
+public enum AbilityType 
 {
 	PERK("&r&f&oPerk"),
 	COMBAT("&r&cCombat"),
@@ -9,7 +9,7 @@ public enum ObsAbilityType
 	
 	private final String abilityType; 
 	
-	ObsAbilityType(String string) 
+	AbilityType(String string) 
 	{
 		this.abilityType = string;
 	}

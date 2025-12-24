@@ -17,13 +17,14 @@ public class ObsDisplayMain
     public static void createHud(Player p) 
     {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective nexusHud = board.registerNewObjective("obs_hud", Criteria.DUMMY, 
+        Objective hud = board.registerNewObjective("obs_hud", Criteria.DUMMY, 
         		PrintUtils.ColorParser("&7|    &bΩBS &fHud    &7|"));
-        		nexusHud.setDisplaySlot(DisplaySlot.SIDEBAR);
+        		hud.setDisplaySlot(DisplaySlot.SIDEBAR);
         
-        nexusHud.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
-        nexusHud.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
-        nexusHud.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
+        hud.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
+        hud.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
+        hud.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
+        hud.getScore(PrintUtils.ColorParser("&r&7⋖&b۞&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getLuminite());
        
         p.setScoreboard(board);
     }
@@ -35,6 +36,7 @@ public class ObsDisplayMain
    	 	obj.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
    	 	obj.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
    	 	obj.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
+        obj.getScore(PrintUtils.ColorParser("&r&7⋖&b۞&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getLuminite());
    	 	
    	 	if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oUpdateHud&r&f -- &aOK&7 (Player: "+p.getName()+")");
     }

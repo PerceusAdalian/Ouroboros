@@ -11,7 +11,9 @@ import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.abilities.AbilityMainPage;
+import com.ouroboros.menus.instances.magic.MagicMainPage;
 import com.ouroboros.menus.instances.store.ObsShopGui;
+import com.ouroboros.utils.EntityEffects;
 
 public class ObsMainMenu extends AbstractOBSGui
 {
@@ -24,21 +26,31 @@ public class ObsMainMenu extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.button(Material.BUNDLE).setName("&e&lShop").setLore("&r&fClick to view the OBS Store").place(this, 12, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			e.setCancelled(true);
-			p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_TRADE, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new ObsShopGui(p));
-		});
-		GuiButton.button(Material.NETHER_STAR).setName("&c&lAbilities").setLore("&r&fClick to view available abilities").place(this, 13, e->
+		GuiButton.button(Material.NETHER_STAR).setName("&c&lAbilities").setLore("&r&fClick to view available abilities").place(this, 11, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new AbilityMainPage(p));
 		});
-		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&lCodex").setLore("&r&fClick to view the official in-game codex").place(this, 14, e->
+
+		GuiButton.button(Material.STICK).setName("&d&lMagic").setLore("&r&fClick to view:", "   &f&l- &r&fAvailable &dSpells", "   &f&l- &r&fCraft &bWands", "   &f&l- &e&lUpgrade &r&dSpells &f& &bWands").place(this, 12, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			e.setCancelled(true);
+			EntityEffects.playSound(p, Sound.BLOCK_DRIED_GHAST_AMBIENT_WATER, SoundCategory.MASTER);
+			GuiHandler.changeMenu(p, new MagicMainPage(p));
+		});
+		
+		GuiButton.button(Material.BUNDLE).setName("&e&lShop").setLore("&r&fClick to view the OBS Store").place(this, 14, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			e.setCancelled(true);
+			p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_TRADE, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new ObsShopGui(p));
+		});
+		
+		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&lCodex").setLore("&r&fClick to view the official in-game codex").place(this, 15, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);

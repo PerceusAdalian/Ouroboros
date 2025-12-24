@@ -7,11 +7,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import com.lol.enums.SpellType;
+import com.lol.enums.SpellementType;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.ObsAbilityType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 
@@ -119,12 +121,12 @@ public class PrintUtils
 		return new String(chars);
 	}
 	
-	public static String assignAbilityType(ObsAbilityType type, ObsAbilityType type2) 
+	public static String assignAbilityType(AbilityType type1, AbilityType type2) 
 	{
-		return ColorParser("&r&f&lAbility Type&r&f: {"+ type.getAbilityType() + "&r&f | " + type2.getAbilityType() + "&r&f}");
+		return ColorParser("&r&f&lAbility Type&r&f: {"+ type1.getAbilityType() + "&r&f | " + type2.getAbilityType() + "&r&f}");
 	}
 	
-	public static String assignAbilityType(ObsAbilityType type) 
+	public static String assignAbilityType(AbilityType type) 
 	{
 		return ColorParser("&r&f&lAbility Type&r&f: {"+type.getAbilityType()+"&r&f}");
 	}
@@ -134,16 +136,65 @@ public class PrintUtils
 		return ColorParser("&r&f&lCast Condition&r&f: {"+condition.getKey()+"&r&f}");
 	}
 	
-	public static String assignAbilityCategory(AbilityCategory category)
+	public static String assignAbilityCategory(AbilityMaterialClass category)
 	{
-		boolean isAnyCategory = category.equals(AbilityCategory.ANY) ? true : false;
+		boolean isAnyCategory = category.equals(AbilityMaterialClass.ANY) ? true : false;
 		String printStr = isAnyCategory ? "&r&f&lCast Category&r&f: &b&oAny&r&f" : "&r&f&lCast Category: "+category.getKey()+" only.";
 		return ColorParser(printStr);
 	}
 	
-	public static String assignElementType(ElementType type) 
+	public static String assignElementType(SpellementType type) 
 	{
 		return ColorParser("&r&f&lElement Type&r&f: {"+type.getType()+"&r&f}");
+	}
+	
+	public static String assignElementType(ElementType type) 
+	{
+		return ColorParser("&r&f&lDamage Type&r&f: {"+type.getType()+"&r&f}");
+	}
+	
+	public static char getElementTypeColor(SpellementType spellementType)
+	{
+		char ch = switch(spellementType)
+		{
+			case INFERNO -> ch = 'c';
+			case AERO -> ch = 'd';
+			case CELESTIO -> ch = 'e';
+			case COSMO -> ch = '3';
+			case GEO -> ch = '6';
+			case GLACIO -> ch = 'b';
+			case HERESIO -> ch = '2';
+			case MORTIO -> ch = '4';
+			default -> ch = '7';
+		};
+		return ch;
+	}
+	
+	public static String assignAuthor(SpellementType spellementType)
+	{
+		String author = switch(spellementType)
+		{
+			case INFERNO -> author = ColorParser("&c&lAighil&r&f, the Gentle");
+			case AERO -> author = ColorParser("&d&lSeth&r&f, the Looming Storm");
+			case CELESTIO -> author = ColorParser("&e&lLumina&r&f, High Priestess");
+			case COSMO -> author = ColorParser("&3&koo &r&3&lE&ko&r&3&lrr &r&3&ko &r&3&lor&r&3&ko");
+			case GEO -> author = ColorParser("&6&lHaephestus&r&f, Emanator of &6&lNidus");
+			case GLACIO -> author = ColorParser("&b&lBjorn&r&f, Ice Giant");
+			case HERESIO -> author = ColorParser("&2&lSnape&r&f, the 'Mortal Alchemist'");
+			case MORTIO -> author = ColorParser("&4&lGeneral Falric&r&f, Death's Righthand Man");
+			default -> author = "&7&oUknown";
+		};
+		return author;
+	}
+	
+	public static String assignSpellType(SpellType type)
+	{
+		return ColorParser("&r&f&lSpell Type&r&f: {"+type.getSpellType()+"&r&f}");
+	}
+	
+	public static String assignSpellType(SpellType type1, SpellType type2)
+	{
+		return ColorParser("&r&f&lSpell Type&r&f: {"+ type1.getSpellType() + "&r&f | " + type2.getSpellType() + "&r&f}");
 	}
 	
 	public static String getFancyEntityName(EntityType eType)

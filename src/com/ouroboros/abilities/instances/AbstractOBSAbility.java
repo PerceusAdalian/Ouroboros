@@ -17,10 +17,10 @@ import org.bukkit.persistence.PersistentDataType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.PrintUtils;
 
@@ -32,18 +32,18 @@ public abstract class AbstractOBSAbility
 	private final String internalName;
 	private final Material icon;
 	private final String[] description;
-	private final ObsAbilityType aType;
+	private final AbilityType aType;
 	private final StatType statRequirement;
 	private final ElementType eType;
 	private final CastConditions condition;
-	private final AbilityCategory abilityCategory;
+	private final AbilityMaterialClass abilityCategory;
 	private final int levelRequirement;
 	private final int APCOST;
 	
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
-			ObsAbilityType aType, ElementType eType, CastConditions condition, AbilityCategory abilityCategory, String...description) 
+			AbilityType aType, ElementType eType, CastConditions condition, AbilityMaterialClass abilityCategory, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -56,6 +56,7 @@ public abstract class AbstractOBSAbility
 		this.condition = condition;
 		this.abilityCategory = abilityCategory;
 		this.description = description;
+		
 		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
 		
@@ -142,7 +143,7 @@ public abstract class AbstractOBSAbility
 		return OBSABILITY;
 	}
 	
-	public ObsAbilityType getAbilityType() 
+	public AbilityType getAbilityType() 
 	{
 		return aType;
 	}
@@ -156,7 +157,7 @@ public abstract class AbstractOBSAbility
 	{
 		return condition;
 	}
-	public AbilityCategory getAbilityCategory() 
+	public AbilityMaterialClass getAbilityCategory() 
 	{
 		return abilityCategory;
 	}

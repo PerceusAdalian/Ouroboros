@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -31,7 +31,7 @@ public class AbilityChangePage extends AbstractOBSGui
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
 		AbstractOBSAbility ability = AbilityConfirmationPage.abilityChangeMap.get(player.getUniqueId());
 		
-		if (ability.getAbilityType().equals(ObsAbilityType.COMBAT)) 
+		if (ability.getAbilityType().equals(AbilityType.COMBAT)) 
 		{
 			
 			GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
@@ -55,7 +55,7 @@ public class AbilityChangePage extends AbstractOBSGui
 	
 		}
 		
-		if (ability.getAbilityType().equals(ObsAbilityType.UTILITY))
+		if (ability.getAbilityType().equals(AbilityType.UTILITY))
 		{
 			
 			for (int i = 0; i < 3; ++i)

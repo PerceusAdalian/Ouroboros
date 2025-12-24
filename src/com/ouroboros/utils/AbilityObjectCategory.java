@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 
 public class AbilityObjectCategory 
 {
@@ -34,10 +34,10 @@ public class AbilityObjectCategory
 	public static final Material mace = Material.MACE;
 	public static final Material brush = Material.BRUSH;
 
-	public static boolean canAccept(Player player, AbilityCategory category)
+	public static boolean canAccept(Player player, AbilityMaterialClass category)
 	{
 		ItemStack held = player.getInventory().getItem(EquipmentSlot.HAND);
-		return AbilityCategory.get(category).contains(held.getType()) ? true : false;
+		return AbilityMaterialClass.get(category).contains(held.getType()) ? true : false;
 	}
 	
 }

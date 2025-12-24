@@ -17,10 +17,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -32,8 +32,8 @@ public class Geomorph extends AbstractOBSAbility
 
 	public Geomorph() 
 	{
-		super("Geomorph", "geomorph", Material.ARMS_UP_POTTERY_SHERD, StatType.TRAVEL, 5, 2, ObsAbilityType.UTILITY, ElementType.GEO, CastConditions.RIGHT_CLICK_BLOCK,
-				AbilityCategory.ANY, "Bolter your defenses by using clay as an insulator.",
+		super("Geomorph", "geomorph", Material.ARMS_UP_POTTERY_SHERD, StatType.TRAVEL, 5, 2, AbilityType.UTILITY, ElementType.GEO, CastConditions.RIGHT_CLICK_BLOCK,
+				AbilityMaterialClass.ANY, "Bolter your defenses by using clay as an insulator.",
 				"&r&fGrants &e&oWard &r&b&lI&r&7 to self (30s/CD: 1 minute)");
 	}
 

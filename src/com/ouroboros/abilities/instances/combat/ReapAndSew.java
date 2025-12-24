@@ -20,10 +20,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
-import com.ouroboros.enums.AbilityCategory;
+import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.ObsAbilityType;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -36,8 +36,8 @@ public class ReapAndSew extends AbstractOBSAbility
 
     public ReapAndSew() // Check for functionality
     {
-        super("Reap and Sew", "reap_and_sew", Material.BLACK_DYE, StatType.MELEE, 20, 10, ObsAbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,
-                AbilityCategory.SCYTHES, 
+        super("Reap and Sew", "reap_and_sew", Material.BLACK_DYE, StatType.MELEE, 20, 10, AbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,
+                AbilityMaterialClass.SCYTHES, 
                 "&r&b&oAbility&r&f: &d&l&oSew&r&f", 
                 "&r&fUsage: &d&oRight-Click&r&f target mob to inject them with",
                 "&4&lMortio&r&f energy, inflicting &e&oDoom &r&b&lIII &7&o(10m/20s)&r&f",

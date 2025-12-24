@@ -11,10 +11,17 @@ public class ItemCollector
 	{
 		if (Ouroboros.debug == false) 
 		{
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			{
-				e.getItem().setAmount(e.getItem().getAmount() - 1);
-			}, 1);			
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
+				e.getItem().setAmount(e.getItem().getAmount() - 1), 1);			
+		}
+	}
+	
+	public static void removeAll(PlayerInteractEvent e)
+	{
+		if (!e.getPlayer().isOp() && Ouroboros.debug != true)
+		{
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
+				e.getItem().setAmount(0), 1);
 		}
 	}
 }

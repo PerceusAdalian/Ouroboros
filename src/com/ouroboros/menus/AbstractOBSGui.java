@@ -49,6 +49,11 @@ public abstract class AbstractOBSGui
 		return inv;
 	}
 	
+	public Set<Integer> getWhitelistedSlots()
+	{
+		return whitelistedSlots;
+	}
+	
 	public void handleClick(InventoryClickEvent e) 
 	{
 	    Consumer<InventoryClickEvent> action = clickActions.get(e.getRawSlot());

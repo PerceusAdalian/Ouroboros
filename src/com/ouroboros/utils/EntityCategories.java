@@ -56,9 +56,6 @@ public class EntityCategories
 	public static final Set<EntityType> ethereal = EnumSet.of(EntityType.ALLAY,EntityType.BREEZE,EntityType.ENDER_DRAGON,EntityType.ENDERMAN,EntityType.ENDERMITE,EntityType.WITCH,
 			EntityType.EVOKER,EntityType.VINDICATOR,EntityType.VEX,EntityType.SHULKER,EntityType.PHANTOM,EntityType.WARDEN);
 	
-	public static final Set<EntityType> occultic = EnumSet.of(EntityType.EVOKER,EntityType.ILLUSIONER,EntityType.PILLAGER,EntityType.RAVAGER,EntityType.VEX,EntityType.WITCH,
-			EntityType.WITHER,EntityType.WITHER_SKELETON,EntityType.VINDICATOR);
-	
 	public static final Set<EntityType> calamity = EnumSet.of(EntityType.ALLAY,EntityType.ELDER_GUARDIAN,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.WITHER);
 	
 	public static final Set<EntityType> celestio_mobs = EnumSet.of(EntityType.ALLAY,EntityType.ARMADILLO,EntityType.AXOLOTL,EntityType.BAT,EntityType.BEE,EntityType.CAMEL,
@@ -88,11 +85,14 @@ public class EntityCategories
 	public static final Set<EntityType> cosmo_mobs = EnumSet.of(EntityType.ENDERMITE,EntityType.ENDERMAN,EntityType.SHULKER,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.PHANTOM,
 			EntityType.VEX,EntityType.ILLUSIONER,EntityType.VINDICATOR,EntityType.ALLAY);
 	
+	public static final Set<EntityType> heresio_mobs = EnumSet.of(EntityType.EVOKER,EntityType.ILLUSIONER,EntityType.PILLAGER,EntityType.RAVAGER,EntityType.VEX,EntityType.WITCH,
+			EntityType.WITHER,EntityType.WITHER_SKELETON,EntityType.VINDICATOR);
+	
 	/**
 	 * Method no longer requires use, but substituted by "any".
 	 */
 	@Deprecated
-	public static final Set<Set<EntityType>> categories = Set.of(any, living, undead, aquatic, flying, infernal, ethereal, occultic, calamity, celestio_mobs,
+	public static final Set<Set<EntityType>> categories = Set.of(any, living, undead, aquatic, flying, infernal, ethereal, heresio_mobs, calamity, celestio_mobs,
 			mortio_mobs, inferno_mobs, glacio_mobs, aero_mobs, geo_mobs, cosmo_mobs);
 	
 	public static boolean canAccept(Entity entity, EntityCategory category)
