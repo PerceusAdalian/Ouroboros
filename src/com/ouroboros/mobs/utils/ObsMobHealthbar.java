@@ -41,27 +41,24 @@ public class ObsMobHealthbar
 		double progress = (baseHP <= 0) ? 0.0 : Math.min(1.0, Math.max(0.0, currentHP / baseHP));
 		
 		bar.setProgress(progress);
-		bar.setVisible(bool);
+		setVisible(entity, bool);
 		
 		entity.getPersistentDataContainer().set(HPBARTITLE, PersistentDataType.STRING, hpBarTitle);
 		entity.getPersistentDataContainer().set(HPBARPROGRESS, PersistentDataType.DOUBLE, progress);
 		
 		for (Player p : entity.getWorld().getPlayers()) 
-		{
-	        if (p.getLocation().distanceSquared(entity.getLocation()) <= 1600) 
-	        {
-	            bar.addPlayer(p);
-	        }
-	    }
+			addPlayer(p);
 		
 		bossBars.put(entity.getUniqueId(), bar);
-		if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oInitializeHPBar&r&f -- &aOK&f || &7Mob: "+
+		if (Ouroboros.debug) 
+			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oInitializeHPBar&r&f -- &aOK&f || &7Mob: "+
 				(entity.getCustomName()!=null?entity.getCustomName():PrintUtils.getFancyEntityName(entity.getType())));
 	}
 	
 	public static void updateHPBar(Entity entity, Boolean bool)
 	{
 		String hpBarTitle;
+		
 		BossBar bar = bossBars.get(entity.getUniqueId());
 		if (bar == null) return;
 	
@@ -78,7 +75,7 @@ public class ObsMobHealthbar
 		bar.setColor(getBarColor(currentHP, baseHP));
 		bar.setProgress(progress);
 		bar.setTitle(hpBarTitle);
-		bar.setVisible(bool);
+		setVisible(entity, bool);
 		entity.getPersistentDataContainer().set(HPBARPROGRESS, PersistentDataType.DOUBLE, progress);
 		if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oUpdateHPBar&r&f -- &aOK&f || &7Mob: "+
 				(entity.getCustomName()!=null?entity.getCustomName():PrintUtils.getFancyEntityName(entity.getType())));
@@ -86,10 +83,10 @@ public class ObsMobHealthbar
 	
 	}
 	
-	public static void hideBossBar(Entity entity)
+	public static void setVisible(Entity entity, boolean bool)
 	{
 		BossBar bar = bossBars.get(entity.getUniqueId());
-		if (bar != null) bar.setVisible(false);
+		if (bar != null) bar.setVisible(bool);
 	}
 	
 	public static void addPlayer(Player p)
