@@ -121,7 +121,7 @@ public class MobDamageEvent implements Listener
 						Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 						{
 							hpBarMap.remove(target.getUniqueId());
-							ObsMobHealthbar.hideBossBar(target);
+							ObsMobHealthbar.setVisible(target, false);
 						}, 150);
 					}
 				}

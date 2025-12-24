@@ -35,9 +35,8 @@ public class TearOfLumina extends AbstractObsObject
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
 			EntityEffects.playSound(p, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_WATER, SoundCategory.MASTER);
-			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
 			PlayerData.addLuminite(p, e.getItem().getAmount());
-			PrintUtils.PrintToActionBar(p, "&r&b+&f&l"+e.getItem().getAmount()+"&r&b۞&f Added");
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&b۞&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

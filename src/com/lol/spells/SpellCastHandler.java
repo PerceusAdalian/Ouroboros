@@ -71,7 +71,9 @@ public class SpellCastHandler implements Listener
 				}
 			}
 		}
-		
+
+        if (!Wand.isWand(held)) return;
+        
 		Wand wand = new Wand(held);
 		
 		if (!wand.hasSpell(wand.getSpellIndex())) return;
@@ -88,18 +90,7 @@ public class SpellCastHandler implements Listener
 			return;
 		}
 		
-		if (wand.getCurrentMana() > 0 && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
-		{
-			wand.getSpell(wand.getSpellIndex()).Cast(e);
-			wand.subtractMana(wand.getSpell(wand.getSpellIndex()).getManacost());
-			cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
-				cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
-			e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());
-			
-			return;
-		} 
-		else if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
+		if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
 		{
 			if (wand.getNextSpell() == null) return;
 			int spellIndex = wand.getSpellIndex();
@@ -110,6 +101,17 @@ public class SpellCastHandler implements Listener
 			PrintUtils.Print(p, "&b&lSpell Cycled&r&f: &7"+currentSpell+" ["+spellIndex+"] &e&l-> &b&l"+wand.getSpell(wand.getSpellIndex()).getName() + " &r&7["+nextSpellIndex+"]&r&f");
 			return;
 		}
+		else if (wand.getCurrentMana() > 0 && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
+		{
+			wand.getSpell(wand.getSpellIndex()).Cast(e);
+			wand.subtractMana(wand.getSpell(wand.getSpellIndex()).getManacost());
+			cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+				cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
+			e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());
+			
+			return;
+		} 
 		
 		return;
 	}

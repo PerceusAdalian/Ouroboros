@@ -31,18 +31,18 @@ public class WandMainPage extends AbstractOBSGui
 			GuiHandler.changeMenu(p, new CraftableWandsView(p));
 		});
 		
-		GuiButton.button(Material.STICK).setName("&e&lUpgrade &r&fExisting Wand").setLore("Click to upgrade an existing wand").place(this, 12, e->
+		GuiButton.button(Material.STICK).setName("&e&lUpgrade &r&fExisting Wand").setLore("Click to upgrade an existing wand").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			
+			e.setCancelled(true);
 		});
 		
-		GuiButton.button(Material.NETHER_STAR).setName("&d&lRecharge &r&fExisting Wand").setLore("Click to recharge an existing wand").place(this, 12, e->
+		GuiButton.button(Material.NETHER_STAR).setName("&d&lRecharge &r&fExisting Wand").setLore("Click to recharge an existing wand").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			
+			e.setCancelled(true);
 		});
 		
 		//Exits

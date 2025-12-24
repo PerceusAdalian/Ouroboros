@@ -18,7 +18,7 @@ public class ItemCollector
 	
 	public static void removeAll(PlayerInteractEvent e)
 	{
-		if (!e.getPlayer().isOp() && Ouroboros.debug != true)
+		if (Ouroboros.debug == false)
 		{
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
 				e.getItem().setAmount(0), 1);

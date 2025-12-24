@@ -20,7 +20,7 @@ public class ObsMainMenu extends AbstractOBSGui
 
 	public ObsMainMenu(Player player) 
 	{
-		super(player, "Ouroboros Main Menu", 27, Set.of(10, 13,14,16));
+		super(player, "Ouroboros Main Menu", 27, Set.of(10,11,12,14,15,16));
 	}
 
 	@Override
@@ -34,7 +34,8 @@ public class ObsMainMenu extends AbstractOBSGui
 			GuiHandler.changeMenu(p, new AbilityMainPage(p));
 		});
 
-		GuiButton.button(Material.STICK).setName("&d&lMagic").setLore("&r&fClick to view:", "   &f&l- &r&fAvailable &dSpells", "   &f&l- &r&fCraft &bWands", "   &f&l- &e&lUpgrade &r&dSpells &f& &bWands").place(this, 12, e->
+		GuiButton.button(Material.STICK).setName("&d&lMagic").setLore("&r&fClick to:", "   &f&l- &r&fView, Upgrade, and Set Available &dSpells", "   &f&l- &r&fCraft, Upgrade, and Recharge &bWands")
+		.place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);

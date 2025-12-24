@@ -42,7 +42,7 @@ public class CraftWandConfirmation extends AbstractOBSGui
 				OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 				EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
 				PrintUtils.OBSFormatDebug(p, stack.getItemMeta().getDisplayName()+ " Crafted Successfully!");
-				p.getWorld().dropItemNaturally(p.getLocation(), stack);
+				p.getInventory().addItem(stack);
 				GuiHandler.close(p);
 			}
 			PrintUtils.OBSFormatError(p, "Insufficient Luminite!");

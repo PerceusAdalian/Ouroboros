@@ -70,13 +70,13 @@ public abstract class Spell
 		config.set("internal_name", internalName);
 		config.set("icon_material", icon.toString());
 		if (sType2 == null) 
-			config.set("spell_type", sType1);
+			config.set("spell_type", sType1.toString());
 		else
 		{
-			config.set("spell_type_1", sType1);
-			config.set("spell_type_2", sType2);
+			config.set("spell_type_1", sType1.toString());
+			config.set("spell_type_2", sType2.toString());
 		}
-		config.set("element_type", eType.getType());
+		config.set("element_type", eType.name());
 		config.set("description", spellDescription);
 		config.set("manacost", manacost);
 		config.set("cooldown", cooldown);
@@ -126,7 +126,7 @@ public abstract class Spell
 	
 	public SpellementType getElementType() 
 	{
-		return eType;
+		return SpellementType.fromString(config.getString("element_type"));
 	}
 
 	public CastConditions getCastCondition() 

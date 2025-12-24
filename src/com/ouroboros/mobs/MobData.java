@@ -359,7 +359,7 @@ public class MobData
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					MobDamageEvent.hpBarMap.remove(target.getUniqueId());
-					ObsMobHealthbar.hideBossBar(target);
+					ObsMobHealthbar.setVisible(target, false);
 				}, 150);
 			}
 			

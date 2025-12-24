@@ -8,15 +8,15 @@ public enum SpellType
 	UTILITY("&r&b&oUtility&r&f"),
 	ULTIMATE("&r&e&lUltimate&r&f");
 
-	private final String abilityType; 
+	private final String spellType; 
 	
 	SpellType(String string) 
 	{
-		this.abilityType = string;
+		this.spellType = string;
 	}
 
 	public String getSpellType() 
 	{
-		return this.abilityType;
+		return spellType;
 	}
 }

@@ -27,4 +27,16 @@ public enum SpellementType
 	{
 		return name;
 	}
+	
+	public static SpellementType fromString(String name)
+	{
+		try
+		{
+			return SpellementType.valueOf(name.toUpperCase());
+		}
+		catch (IllegalArgumentException e)
+		{
+			return null;
+		}
+	}
 }

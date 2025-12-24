@@ -1,6 +1,8 @@
 package com.ouroboros.menus.instances.magic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -10,6 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lol.wand.Wand;
 import com.lol.wand.instances.BasicWand;
@@ -22,7 +25,7 @@ public class CraftableWandsView extends AbstractOBSGui
 
 	public CraftableWandsView(Player player) 
 	{
-		super(player, "Craftable Wands", 27, Set.of(10,16));
+		super(player, "Craftable Wands", 27, Set.of(13,10,16));
 	}
 
 	public static Map<UUID, Wand> wandConfirmationMap = new HashMap<>();
@@ -32,7 +35,9 @@ public class CraftableWandsView extends AbstractOBSGui
 	{
 		Wand wand = new BasicWand();
 		ItemStack stack = wand.getAsItemStack();
-		GuiButton.button(stack.getType()).setName("&7[&ei&7] &f&lWand Preview&r&f: "+stack.getItemMeta().getDisplayName()).setLore(stack.getItemMeta().getLore()).place(this, 13, e->
+		ItemMeta meta = stack.getItemMeta();
+		List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+		GuiButton.button(stack.getType()).setName("&7[&ei&7] &f&lWand Preview&r&f: "+stack.getItemMeta().getDisplayName()).setLore(lore).place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);

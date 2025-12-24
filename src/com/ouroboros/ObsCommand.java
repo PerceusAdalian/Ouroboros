@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
@@ -26,17 +27,21 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
+import com.lol.wand.Wand;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.ObsDisplayMain;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
+import com.ouroboros.menus.instances.magic.CollectWandData;
+import com.ouroboros.menus.instances.magic.SpellBookPage;
 import com.ouroboros.mobs.utils.InventoryUtils;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
 public class ObsCommand implements CommandExecutor, TabCompleter
@@ -133,6 +138,28 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			data.save();
 			
 			return true;
+		}
+		
+		if (args[0].equals("recoverwand"))
+		{
+			if (!CollectWandData.wandCollector.containsKey(p.getUniqueId()))
+			{
+				PrintUtils.OBSFormatError(p, "You don't currently have a wand in need of recovery.");
+				return true;
+			}
+			Wand wand = CollectWandData.wandCollector.get(p.getUniqueId());
+			ItemStack stack = wand.getAsItemStack();
+			p.getInventory().addItem(stack);
+			PrintUtils.Print(p, "You wand was regenerated successfully. Check your inventory.");
+			return true;
+		}
+		
+		if (args[0].equals("spellbook"))
+		{
+			GuiHandler.open(p, new SpellBookPage(p));
+			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
+			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
 		}
 		
 		if (args[0].equals("debug"))
