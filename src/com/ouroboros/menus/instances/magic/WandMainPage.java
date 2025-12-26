@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.menus.instances.ObsMainMenu;
 
 public class WandMainPage extends AbstractOBSGui
 {
@@ -24,7 +23,7 @@ public class WandMainPage extends AbstractOBSGui
 	protected void build() 
 	{
 		
-		GuiButton.button(Material.NETHER_STAR).setName("&f&lCraft &r&fNew Wand").setLore("Click to craft a new wand").place(this, 12, e->
+		GuiButton.button(Material.CRAFTER).setName("&f&lCraft &r&fNew Wand").setLore("Click to craft a new wand").place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
@@ -35,22 +34,24 @@ public class WandMainPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			e.setCancelled(true);
+			CollectWandData.pageController.put(p.getUniqueId(), "upgrade");
+			GuiHandler.changeMenu(p, new CollectWandData(p));
 		});
 		
 		GuiButton.button(Material.NETHER_STAR).setName("&d&lRecharge &r&fExisting Wand").setLore("Click to recharge an existing wand").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			e.setCancelled(true);
+			CollectWandData.pageController.put(p.getUniqueId(), "recharge");
+			GuiHandler.changeMenu(p, new CollectWandData(p));
 		});
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 10, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Magic Main Page").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new ObsMainMenu(p));
+			GuiHandler.changeMenu(p, new MagicMainPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->

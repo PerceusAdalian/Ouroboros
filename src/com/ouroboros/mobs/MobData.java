@@ -282,7 +282,7 @@ public class MobData
 	{
 		setHp(setMaxHp ? getHp(true) : (getHp(false)+value), false);
 		Entity entity = Bukkit.getEntity(uuid);
-		ObsMobHealthbar.updateHPBar(entity, false);
+		ObsMobHealthbar.updateHPBar(entity);
 		if (healArmor)
 			healArmor(value, setMaxArmor);
 		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
@@ -294,7 +294,7 @@ public class MobData
 			setBreak(false);
 		setArmor(setMax ? getArmor(true) : (getArmor(false) + (int) value), false);
 		Entity entity = Bukkit.getEntity(uuid);
-		ObsMobHealthbar.updateHPBar(entity, false);
+		ObsMobHealthbar.updateHPBar(entity);
 		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
 	}
 	
@@ -349,8 +349,16 @@ public class MobData
 
 			//Update their HP bar
 			BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
-			if (bar == null) ObsMobHealthbar.initializeHPBar(target, true);
-			else ObsMobHealthbar.updateHPBar(target, true);
+			if (bar == null) 
+			{
+				ObsMobHealthbar.initializeHPBar(target);
+				ObsMobHealthbar.showBarToPlayer(target, player);
+			}
+			else 
+			{
+				ObsMobHealthbar.updateHPBar(target);
+				ObsMobHealthbar.showBarToPlayer(target, player);
+			}
 			
 			//And mark for removal later
 			if (!MobDamageEvent.hpBarMap.containsKey(target.getUniqueId())) 
@@ -492,7 +500,7 @@ public class MobData
 		int level = data.getLevel();
 		entity.setCustomName(PrintUtils.ColorParser("&e{&f&lLvl&r&f: &l" + level + "&r&e} &f" + PrintUtils.getFancyEntityName(data.getEntityType())));
 		entity.setCustomNameVisible(true);
-		ObsMobHealthbar.initializeHPBar(entity, false);
+		ObsMobHealthbar.initializeHPBar(entity);
 	}
 	
 	public void deleteFile()

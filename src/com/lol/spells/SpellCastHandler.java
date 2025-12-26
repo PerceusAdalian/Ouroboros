@@ -49,27 +49,32 @@ public class SpellCastHandler implements Listener
 		
         if (!Wand.isWand(held) && held.getItemMeta().getPersistentDataContainer().has(Spell.LOLSPELLBOOK)) 
 		{
-			for (Spell spell : SpellRegistry.spellRegistry.values())
-			{
-				PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-				ItemStack item = e.getItem();
-				if (item != null && item.hasItemMeta())
-				{
-					ItemMeta meta = item.getItemMeta();
-					String spellID = meta.getPersistentDataContainer().get(Spell.LOLSPELLBOOK, PersistentDataType.STRING);
-					
-					if (spellID != null && spellID.equals(spell.getInternalName()) && !data.getSpell(spell).isRegistered())
-					{
-						e.setCancelled(true);
-		        		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, null);
-		        		OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 10, 0.5, 0.5, Particle.ENCHANT, null);
-		        		PrintUtils.Print(p, "&b&lSpell Registered&r&f: "+spell.getName()+"&r&f. Check your &d&o/spellbook&r&f!");
-		        		data.getSpell(spell).setRegistered(true);
-		        		data.save();
-		        		return;
-					}
-				}
-			}
+        	if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
+        	{        		
+        		for (Spell spell : SpellRegistry.spellRegistry.values())
+        		{
+        			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        			ItemStack item = e.getItem();
+        			if (item != null && item.hasItemMeta())
+        			{
+        				ItemMeta meta = item.getItemMeta();
+        				String spellID = meta.getPersistentDataContainer().get(Spell.LOLSPELLBOOK, PersistentDataType.STRING);
+        				
+        				if (spellID != null && spellID.equals(spell.getInternalName()) && !data.getSpell(spell).isRegistered())
+        				{
+        					e.setCancelled(true);
+        					EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, null);
+        					OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 10, 0.5, 0.5, Particle.ENCHANT, null);
+        					PrintUtils.OBSFormatDebug(p, "&b&lSpell Registered&r&f: "+spell.getName()+"&r&f. Check your &d&o/obs spellbook&r&f!");
+        					data.getSpell(spell).setRegistered(true);
+        					data.save();
+        					return;
+        				}
+        			}
+        		}
+        	}
+        	
+        	return;
 		}
 
         if (!Wand.isWand(held)) return;

@@ -28,6 +28,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
+import com.lol.wand.instances.BasicWand;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.ObsDisplayMain;
@@ -40,6 +41,7 @@ import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
+import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -112,10 +114,19 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			AbstractObsObject luminiteCoreObj = new LuminiteCore();
 			ItemStack luminiteCoreStack = luminiteCoreObj.toItemStack();
 
+			AbstractObsObject luminiteTear = new TearOfLumina();
+			ItemStack luminiteTearStack = luminiteTear.toItemStack();
+			luminiteTearStack.setAmount(10);
+			
+			Wand basicWand = new BasicWand();
+			ItemStack wandStack = basicWand.getAsItemStack();
+			
 			ItemStack bag = new ItemStack(Material.BUNDLE, 1);
 			BundleMeta bagMeta = (BundleMeta) bag.getItemMeta();
 			bagMeta.addItem(luminiteCoreStack);
 			bagMeta.addItem(voucherStack);
+			bagMeta.addItem(luminiteTearStack);
+			bagMeta.addItem(wandStack);
 			bagMeta.setDisplayName(PrintUtils.ColorParser("&bOurboros&f Welcome Kit"));
 			bag.setItemMeta(bagMeta);
 			
@@ -134,7 +145,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				p.getWorld().dropItem(p.getLocation(), bag);
 			}
 			
-			data.setKitClaimed(true);
+			if (!p.isOp()) data.setKitClaimed(true);
 			data.save();
 			
 			return true;
@@ -150,7 +161,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			Wand wand = CollectWandData.wandCollector.get(p.getUniqueId());
 			ItemStack stack = wand.getAsItemStack();
 			p.getInventory().addItem(stack);
-			PrintUtils.Print(p, "You wand was regenerated successfully. Check your inventory.");
+			PrintUtils.OBSFormatDebug(p, "You wand was regenerated successfully. Check your inventory.");
 			return true;
 		}
 		
@@ -160,6 +171,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
+			return true;
 		}
 		
 		if (args[0].equals("debug"))
@@ -507,11 +519,13 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats","generate","money","version","welcomekit");
+			case 1 -> List.of("debug","menu","stats","generate","money","version","welcomekit", "spellbook", "recoverwand");
 			case 2 -> 
 			{
 				yield switch(args[0])
 				{
+					case "spellbook" -> List.of();
+					case "recoverwand" -> List.of();
 					case "debug" -> List.of();
 					case "menu" -> List.of();
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");

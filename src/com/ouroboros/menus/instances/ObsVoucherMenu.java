@@ -32,7 +32,8 @@ public class ObsVoucherMenu extends AbstractOBSGui
 		GuiButton.button(Material.OAK_SIGN).setName("&7{&e&li&r&7}").setLore(
 				"&r&f&lUsage&r&f: &r&bΩBS &eStat Vouchers&r&f are one-time use items that let you pick a stat, ",
 				"&r&fgiving enough &e&lXP&r&f to &b&olevel-up&r&f &lFive&r &7(5)&f times.",
-				"&r&f&nYou’ll be asked to confirm before consumption&r&f. &c&oVouchers are bound to you and cannot be traded&r&f.","",
+				"&r&f&nYou’ll be asked to confirm before consumption&r&f. ",
+				"&c&oVouchers are bound to you and cannot be traded&r&f.","",
 				"&r&f&lNote&r&f: Backing out or closing the menu won’t consume the item.")
 		.place(this, 4, e->
         {

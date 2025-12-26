@@ -8,7 +8,7 @@ public class GrandmasterWand extends Wand
 
 	public GrandmasterWand() 
 	{
-		super("Grandmaster's Staff", Rarity.FIVE, 7, 1000);
+		super("Grandmaster's Staff", Rarity.FIVE, 5, 1500);
 	}
 	
 }

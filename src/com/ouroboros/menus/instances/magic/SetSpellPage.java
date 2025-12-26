@@ -21,7 +21,7 @@ public class SetSpellPage extends AbstractOBSGui
 
 	public SetSpellPage(Player player) 
 	{
-		super(player, "Select Slot", 54, Set.of(11,12,13,14,15,21,22,23,24,25,37,43));
+		super(player, "Select Slot", 54, Set.of(11,12,13,14,15,20,21,22,23,24,37,43));
 	}
 	
 	@Override
@@ -33,8 +33,10 @@ public class SetSpellPage extends AbstractOBSGui
 		renderWandSlots(player, wand, spell, this);
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back")
-		.setLore("Click to return to your Spellbook.", "Doing so will return your wand.").place(this, 10, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE)
+		.setName("<- &e&lGo Back")
+		.setLore("&r&fClick to return to your Spellbook.", "&r&fDoing so will return your wand.")
+		.place(this, 37, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
@@ -43,10 +45,14 @@ public class SetSpellPage extends AbstractOBSGui
 			p.getInventory().addItem(returnedWand);
 			CollectWandData.wandCollector.remove(p.getUniqueId());
             GuiButton.spellActivateConfirm.remove(p.getUniqueId());
+            CollectWandData.pageController.remove(p.getUniqueId());
 			GuiHandler.changeMenu(p, new SpellBookPage(p));
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to exit this page. Doing so returns your wand.").place(this, 16, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE)
+		.setName("&c&lExit Menu")
+		.setLore("&r&fClick to exit the menu.", "&r&fDoing so returns your wand.")
+		.place(this, 43, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
@@ -55,6 +61,7 @@ public class SetSpellPage extends AbstractOBSGui
 			p.getInventory().addItem(returnedWand);
 			CollectWandData.wandCollector.remove(p.getUniqueId());
             GuiButton.spellActivateConfirm.remove(p.getUniqueId());
+            CollectWandData.pageController.remove(p.getUniqueId());
 			GuiHandler.close(p);
 		});
 		paint();
@@ -63,8 +70,7 @@ public class SetSpellPage extends AbstractOBSGui
 	public void renderWandSlots(Player player, Wand wand, Spell spell, AbstractOBSGui gui)
 	{
 	    // Define the whitelisted GUI slots (up to 10 slots)
-	    int[] validSlots = {11, 12, 13, 14, 15, 21, 22, 23, 24, 25};
-	    
+	    int[] validSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24};
 	    int spellSlots = wand.getCurrentMaxSpellSlots();
 	    
 	    // Render slots based on wand capacity
@@ -82,54 +88,56 @@ public class SetSpellPage extends AbstractOBSGui
 	            {
 	                // Empty slot - allow assignment
 	                char spellColor = PrintUtils.getElementTypeColor(spell.getElementType());
-	                GuiButton.button(Material.GRAY_STAINED_GLASS_PANE)
-	                    .setName("Empty Slot #" + i)
-	                    .setLore("This slot is empty. Click to assign &" + spellColor + spell.getName() + "&f to this slot")
-	                    .place(gui, guiSlot, e ->
-	                    {
-	                        Player p = (Player) e.getWhoClicked();
-	                        EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
-	                        wand.setSpell(spell, selectedSlot);
-	                        ItemStack stack = wand.getAsItemStack();
-	                        p.getInventory().addItem(stack);
-	                        CollectWandData.wandCollector.remove(p.getUniqueId());
-	                        GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-	                        GuiHandler.close(p);
-	                    });
+	                GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
+                    .setName("&r&fEmpty Slot #" + i)
+                    .setLore("&r&fThis slot is empty. Click to assign &" + spellColor + spell.getName() + "&f to this slot")
+                    .place(gui, guiSlot, e ->
+                    {
+                        Player p = (Player) e.getWhoClicked();
+                        EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
+                        wand.setSpell(spell, selectedSlot);
+                        ItemStack stack = wand.getAsItemStack();
+                        p.getInventory().addItem(stack);
+                        CollectWandData.wandCollector.remove(p.getUniqueId());
+                        GuiButton.spellActivateConfirm.remove(p.getUniqueId());
+                        CollectWandData.pageController.remove(p.getUniqueId());
+                        GuiHandler.close(p);
+                    });
 	            }
 	            else
 	            {
 	                // Occupied slot - allow replacement
 	                char spell1 = PrintUtils.getElementTypeColor(wandSpell.getElementType());
 	                char spell2 = PrintUtils.getElementTypeColor(spell.getElementType());
-	                GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
-	                    .setName("Full Slot #" + i + " [&"+spell1 + wandSpell.getName() + "&f]")
-	                    .setLore("&fThis slot is in use. Click to replace &" + spell1 + wandSpell.getName() + " &fwith &" + spell2 + spell.getName() + "&f?")
-	                    .place(gui, guiSlot, e ->
-	                    {
-	                        Player p = (Player) e.getWhoClicked();
-	                        EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
-	                        wand.setSpell(spell, selectedSlot);
-	                        ItemStack stack = wand.getAsItemStack();
-	                        p.getInventory().addItem(stack);
-	                        CollectWandData.wandCollector.remove(p.getUniqueId());
-	                        GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-	                        GuiHandler.close(p);
-	                    });
+	                GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
+	                .setName("&r&fFull Slot #" + i + " [&"+spell1 + wandSpell.getName() + "&f]")
+	                .setLore("&r&fThis slot is in use. Click to replace &" + spell1 + wandSpell.getName() + " &fwith &" + spell2 + spell.getName() + "&f?")
+	                .place(gui, guiSlot, e ->
+	                {
+	                    Player p = (Player) e.getWhoClicked();
+	                    EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
+	                    wand.setSpell(spell, selectedSlot);
+	                    ItemStack stack = wand.getAsItemStack();
+	                    p.getInventory().addItem(stack);
+	                    CollectWandData.wandCollector.remove(p.getUniqueId());
+	                    GuiButton.spellActivateConfirm.remove(p.getUniqueId());
+                        CollectWandData.pageController.remove(p.getUniqueId());
+	                    GuiHandler.close(p);
+	                });
 	            }
 	        }
 	        else
 	        {
 	            // This slot is locked (beyond wand's current capacity)
 	            GuiButton.button(Material.BARRIER)
-	                .setName("&c&lLocked Slot")
-	                .setLore("This slot isn't currently unlocked via your tier of wand.", "Upgrade it to unlock more slots.")
-	                .place(gui, guiSlot, e ->
-	                {
-	                    Player p = (Player) e.getWhoClicked();
-	                    EntityEffects.playSound(p, Sound.BLOCK_CHEST_LOCKED, SoundCategory.AMBIENT);
-	                    e.setCancelled(true);
-	                });
+                .setName("&c&lLocked Slot")
+                .setLore("This slot isn't currently unlocked via your tier of wand.", "Upgrade it to unlock more slots.")
+                .place(gui, guiSlot, e ->
+                {
+                    Player p = (Player) e.getWhoClicked();
+                    EntityEffects.playSound(p, Sound.BLOCK_CHEST_LOCKED, SoundCategory.AMBIENT);
+                    e.setCancelled(true);
+                });
 	        }
 	    }
 	}

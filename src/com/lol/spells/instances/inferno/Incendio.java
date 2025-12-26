@@ -20,8 +20,8 @@ public class Incendio extends Spell
 
 	public Incendio() 
 	{
-		super("Incendio", "incendio", Material.FIRE_CHARGE, SpellType.OFFENSIVE, null, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, 
-				"Summon concentrated &c&lInferno&r&f energy expelling it forward.");
+		super("Incendio", "incendio", Material.FIRE_CHARGE, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, 
+				"&r&fSummon concentrated &c&lInferno&r&f energy expelling it forward.");
 	}
 
 	@Override

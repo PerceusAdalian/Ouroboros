@@ -109,7 +109,7 @@ public class PlayerData
 	    	setPrestigePoints(0);
 	    	
 	    	setLuminite(0);
-	    	
+	    	setMagicProficiency(1);
 	    	setKitClaimed(false);
 	    }
 	    return;
@@ -474,6 +474,16 @@ public class PlayerData
 		if (data.getLuminite() < 0) data.setLuminite(0);
 		data.save();
 		ObsDisplayMain.updateHud(p);
+	}
+	
+	public void setMagicProficiency(int value)
+	{
+		config.set("magic_proficiency", value);
+	}
+	
+	public int getMagicProficiency()
+	{
+		return config.getInt("magic_proficiency");
 	}
 	
 	public void save() 

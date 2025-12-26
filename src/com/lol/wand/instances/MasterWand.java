@@ -8,7 +8,7 @@ public class MasterWand extends Wand
 
 	public MasterWand() 
 	{
-		super("Master's Scepter", Rarity.FOUR, 5, 700);
+		super("Master Wand", Rarity.FOUR, 5, 1000);
 	}
 
 }

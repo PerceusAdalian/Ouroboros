@@ -3,7 +3,6 @@ package com.lol.spells.instances;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -21,7 +20,6 @@ import com.lol.enums.SpellementType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
 public abstract class Spell 
@@ -32,8 +30,7 @@ public abstract class Spell
 	private String name;
 	private String internalName;
 	private Material icon;
-	private SpellType sType1;
-	private SpellType sType2;
+	private SpellType sType;
 	private SpellementType eType;
 	private CastConditions castCondition;
 	private int manacost;
@@ -41,12 +38,12 @@ public abstract class Spell
 	private Rarity spellTier;
 	private String[] spellDescription;
 	
-	public Spell(String name, String internalName, Material icon, SpellType sType1, @Nullable SpellType sType2, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, String...spellDescription)
+	public Spell(String name, String internalName, Material icon, SpellType sType, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, String...spellDescription)
 	{
 		this.name = name;
 		this.internalName = internalName;
 		this.icon = icon;
-		this.sType1 = sType1;
+		this.sType = sType;
 		this.eType = eType;
 		this.castCondition = castCondition;
 		this.spellTier = spellTier;
@@ -69,13 +66,7 @@ public abstract class Spell
 		config.set("spell_name", name);
 		config.set("internal_name", internalName);
 		config.set("icon_material", icon.toString());
-		if (sType2 == null) 
-			config.set("spell_type", sType1.toString());
-		else
-		{
-			config.set("spell_type_1", sType1.toString());
-			config.set("spell_type_2", sType2.toString());
-		}
+		config.set("spell_type", sType.toString());
 		config.set("element_type", eType.name());
 		config.set("description", spellDescription);
 		config.set("manacost", manacost);
@@ -128,6 +119,11 @@ public abstract class Spell
 	{
 		return SpellementType.fromString(config.getString("element_type"));
 	}
+	
+	public SpellType getSpellType()
+	{
+		return SpellType.fromString(config.getString("spell_type"));
+	}
 
 	public CastConditions getCastCondition() 
 	{
@@ -163,49 +159,82 @@ public abstract class Spell
 	{
 		ItemStack stack = new ItemStack(toIcon?icon:Material.WRITTEN_BOOK, 1);
 		ItemMeta meta = stack.getItemMeta();
+		List<String> lore = new ArrayList<>();
 		
 		meta.setDisplayName(PrintUtils.ColorParser(toIcon?"&r&f"+name:"&b&lOld Spellbook&r&f: "+name));
-		List<String> lore = new ArrayList<>();
+
 		lore.add(PrintUtils.assignRarity(spellTier));
 		lore.add("");
 		lore.add(PrintUtils.assignElementType(eType));		
 		
 		if (toIcon)
-		{			
-			if (sType2 == null) lore.add(PrintUtils.assignSpellType(sType1)); 
-			else lore.add(PrintUtils.assignSpellType(sType1, sType2));
-			lore.add(PrintUtils.assignCastCondition(castCondition));
-			lore.add("");		
-			lore.add(PrintUtils.ColorParser("&r&f&oDescription: \n"));
-			for (String line : lore) lore.add(PrintUtils.ColorParser(line));
-			lore.add("");
-			lore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+manacost+" &7| &r&f&lCooldown&r&f: "+cooldown));
-			meta.getPersistentDataContainer().set(LOLSPELL, PersistentDataType.STRING, internalName.toString());
+		{       
+			lore.add(PrintUtils.assignSpellType(sType));
+		    lore.add(PrintUtils.assignCastCondition(castCondition));
+		    lore.add("");        
+		    lore.add(PrintUtils.ColorParser("&r&f&oDescription: \n"));
+		    
+		    List<String> parsedDescriptionLines = new ArrayList<>();
+		    for (String line : spellDescription) 
+		    {
+		        parsedDescriptionLines.add(PrintUtils.ColorParser(line));
+		    }
+		    lore.addAll(parsedDescriptionLines);
+		    
+		    lore.add("");
+		    lore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+manacost+" &7| &r&f&lCooldown&r&f: "+cooldown));
+		    meta.getPersistentDataContainer().set(LOLSPELL, PersistentDataType.STRING, internalName.toString());
 		}
 		else
 		{
-			lore.add("");
-			lore.add("&f&nUsage&r&f: &d&oShift_Right-Click&r&f to register this spell to your account.");
-			lore.add("");
-			lore.add(PrintUtils.ColorParser("&7&oLegends of Lumina: ID_"+getInternalNameAsID()));			
-			BookMeta bookMeta = (BookMeta) stack.getItemMeta();
-			
-			bookMeta.setAuthor(PrintUtils.assignAuthor(getElementType()));
-			bookMeta.setGeneration(Generation.TATTERED);
-			
-			StringBuilder sb = new StringBuilder();
-			Arrays.asList(spellDescription).forEach(line ->
-			{
-				sb.append(line.replace("&f", "&0") + '\n');
-			});
-			bookMeta.addPage(PrintUtils.ColorParser(sb.toString()));
-			meta.getPersistentDataContainer().set(LOLSPELLBOOK, PersistentDataType.STRING, internalName.toString());
-			stack.setItemMeta(bookMeta);
+		    lore.add("");
+		    lore.add(PrintUtils.ColorParser("&f&nUsage&r&f: &d&oShift_Right-Click&r&f to register this spell to your account."));
+		    lore.add("");
+		    lore.add(PrintUtils.ColorParser("&7&oLegends of Lumina: ID_"+getInternalNameAsID()));
+		    
+		    BookMeta bookMeta = (BookMeta) meta;
+		    bookMeta.setAuthor(PrintUtils.assignAuthor(getElementType()));
+		    bookMeta.setGeneration(Generation.TATTERED);
+		    bookMeta.setTitle(PrintUtils.ColorParser("Legends of Lumina: "+name));
+		    
+		    // PAGE 1: Title Page
+		    StringBuilder page1 = new StringBuilder();
+		    page1.append("§l§nLegends of Lumina§r\n\n");
+		    page1.append("§0Spell: §"+PrintUtils.getElementTypeColor(eType)+"§l").append(name).append("\n\n");
+		    page1.append("§8§o").append(PrintUtils.assignRarity(spellTier, true)).append("§r");
+		    bookMeta.addPage(page1.toString());
+		    
+		    // PAGE 2: Description
+		    StringBuilder page2 = new StringBuilder();
+		    page2.append("§l§nDescription§r\n\n");
+		    for (String line : spellDescription) 
+		    {
+		        page2.append("§0").append(line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "")).append("\n");
+		    }
+		    bookMeta.addPage(page2.toString());
+		    
+		    // PAGE 3: Stats
+		    StringBuilder page3 = new StringBuilder();
+		    page3.append("§l§nSpell Details§r\n\n");
+		    String elementType = PrintUtils.assignElementType(eType).replace("&", "§").replace("§f", "§0");
+		    page3.append(elementType).append("\n\n");
+		    page3.append(PrintUtils.assignSpellType(sType).replace("&", "§").replace("§f", "§0")).append("\n");		    
+		    page3.append(PrintUtils.assignCastCondition(castCondition).replace("&", "§").replace("§f", "§0")).append("\n\n");
+		    page3.append("§9§lMana Cost§0: ").append(manacost).append("\n");
+		    page3.append("§0§lCooldown§0: ").append(cooldown).append("s");
+		    
+		    bookMeta.addPage(page3.toString());
+		    bookMeta.getPersistentDataContainer().set(LOLSPELLBOOK, PersistentDataType.STRING, internalName.toString());
+		    bookMeta.setLore(lore);
+		    
+		    stack.setItemMeta(bookMeta);
+		    
+		    return stack;
 		}
-		
+
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
-		
+
 		return stack;
 	}
 }

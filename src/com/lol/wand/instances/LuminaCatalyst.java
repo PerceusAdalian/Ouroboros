@@ -8,7 +8,7 @@ public class LuminaCatalyst extends Wand
 
 	public LuminaCatalyst() 
 	{
-		super("ΣOL: Lumina's Catalyst", Rarity.SEVEN, 10, 2000);
+		super("&eΣOL&f: &eLumina's Scepter", Rarity.SIX, 8, 2000);
 	}
 
 }

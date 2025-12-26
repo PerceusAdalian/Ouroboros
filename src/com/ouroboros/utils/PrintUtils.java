@@ -230,4 +230,42 @@ public class PrintUtils
 		
 		return ColorParser("&r&f&nRarity&r&f: &"+color+("✦".repeat(rarity.getRarity())));
 	}
+	
+	public static String rarityToString(Rarity rarity)
+	{
+		char color = switch (rarity) 
+		{
+			case ONE -> color = '7';
+			case TWO -> color = '6';
+			case THREE -> color = 'b';
+			case FOUR -> color = 'd';
+			case FIVE -> color = 'e';
+			case SIX -> color = 'c';
+			case SEVEN -> color = '3';
+			case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + rarity);
+			default -> throw new IllegalArgumentException("Unexpected value: " + rarity);	
+		};
+		
+		return ColorParser("&"+color+("✦".repeat(rarity.getRarity())));
+	}
+	
+	public static String assignRarity(Rarity rarity, boolean forBook)
+	{
+	    char color = switch (rarity) 
+	    {
+	        case ONE -> '7';
+	        case TWO -> '6';
+	        case THREE -> 'b';
+	        case FOUR -> 'd';
+	        case FIVE -> 'e';
+	        case SIX -> 'c';
+	        case SEVEN -> '3';
+	        case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + rarity);
+	        default -> throw new IllegalArgumentException("Unexpected value: " + rarity);    
+	    };
+	    
+	    String prefix = forBook ? "§" : "&";
+	    String textColor = forBook ? "0" : "f";
+	    return prefix + "r" + prefix + textColor + prefix + "nRarity" + prefix + "r" + prefix + textColor + ": " + prefix + color + ("✦".repeat(rarity.getRarity()));
+	}
 }

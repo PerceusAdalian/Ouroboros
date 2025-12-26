@@ -111,8 +111,16 @@ public class MobDamageEvent implements Listener
 					
 					//Update their HP bar
 					BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
-					if (bar == null) ObsMobHealthbar.initializeHPBar(target, true);
-					else ObsMobHealthbar.updateHPBar(target, true);
+					if (bar == null) 
+					{
+						ObsMobHealthbar.initializeHPBar(target);
+						ObsMobHealthbar.showBarToPlayer(target, p);
+					}
+					else 
+					{
+						ObsMobHealthbar.showBarToPlayer(target, p);
+						ObsMobHealthbar.updateHPBar(target);
+					}
 					
 					//And mark for removal later
 					if (!hpBarMap.containsKey(target.getUniqueId())) 
@@ -121,7 +129,7 @@ public class MobDamageEvent implements Listener
 						Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 						{
 							hpBarMap.remove(target.getUniqueId());
-							ObsMobHealthbar.setVisible(target, false);
+							ObsMobHealthbar.hideBarFromPlayer(target, p);
 						}, 150);
 					}
 				}

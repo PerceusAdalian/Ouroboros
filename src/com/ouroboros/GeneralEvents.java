@@ -11,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.hud.ObsDisplayMain;
-import com.ouroboros.mobs.utils.ObsMobHealthbar;
 import com.ouroboros.utils.PrintUtils;
 
 public class GeneralEvents implements Listener
@@ -33,7 +32,7 @@ public class GeneralEvents implements Listener
         		if (!p.hasPlayedBefore()) 
         		{
         			PrintUtils.OBSFormatPrint(p, "Welcome to our server, "+p.getName()+"!");
-        			PrintUtils.OBSFormatPrint(p, "Type &b&o/obs kit&r&f to get first-timer goodies!");
+        			PrintUtils.OBSFormatPrint(p, "Type &b&o/obs welcomkit&r&f to get first-timer goodies!");
         			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnJoin&r&f -- &aOK&7 || &o"+p.getName()+" joined for the first time.");
         		}
         		else 
@@ -42,21 +41,19 @@ public class GeneralEvents implements Listener
         			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
         			if (data != null && !data.hasKitClaimed())
         			{
-        				PrintUtils.OBSFormatPrint(p, "You have an unclaimed &b&okit&r&f! Type &b&o/kit&r&f");
+        				PrintUtils.OBSFormatPrint(p, "You have an unclaimed &b&okit&r&f! Type &b&o/obs welcomekit&r&f to claim!");
         			}
         			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnJoin&r&f -- &aOK&7 || &o"+p.getName()+" joined the server.");
         		}
         		
         		PlayerData.loadPlayer(p.getUniqueId());
         		ObsDisplayMain.createHud(p);
-        		ObsMobHealthbar.addPlayer(e.getPlayer());
         	}
         	
         	@EventHandler
         	public void onQuit(PlayerQuitEvent e) 
         	{
         		Player p = e.getPlayer();
-        		ObsMobHealthbar.removePlayer(p);
         		PlayerData.unloadPlayer(p.getUniqueId());
         		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
         	}

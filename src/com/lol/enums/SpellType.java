@@ -19,4 +19,16 @@ public enum SpellType
 	{
 		return spellType;
 	}
+	
+	public static SpellType fromString(String name)
+	{
+		try
+		{
+			return SpellType.valueOf(name.toUpperCase());
+		}
+		catch (IllegalArgumentException e)
+		{
+			return null;
+		}
+	}
 }

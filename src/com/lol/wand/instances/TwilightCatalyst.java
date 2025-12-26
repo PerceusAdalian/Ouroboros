@@ -8,7 +8,7 @@ public class TwilightCatalyst extends Wand
 
 	public TwilightCatalyst() 
 	{
-		super("Twilight Catalyst", Rarity.SIX, 8, 1500);
+		super("Twilight Catalyst", Rarity.SEVEN, 10, 3000);
 	}
 
 	

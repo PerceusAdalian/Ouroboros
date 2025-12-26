@@ -56,15 +56,15 @@ public abstract class AbstractOBSGui
 	
 	public void handleClick(InventoryClickEvent e) 
 	{
+	    // Allow all clicks in the player's own inventory
+	    if (e.getClickedInventory() != null && e.getClickedInventory() != inv) return;
+	    
+	    // For clicks in the GUI
 	    Consumer<InventoryClickEvent> action = clickActions.get(e.getRawSlot());
 	    if (action != null) 
-	    {
-	        action.accept(e);
-	    } 
+	    	action.accept(e);
 	    else if(!whitelistedSlots.contains(e.getRawSlot())) 
-	    {
-	        e.setCancelled(true);
-	    }
+	    	e.setCancelled(true);
 	}
 	
 	public void handleClose(InventoryCloseEvent e) 
@@ -78,7 +78,7 @@ public abstract class AbstractOBSGui
 		{
 			if (!whitelistedSlots.contains(i) && inv.getItem(i) == null) 
 			{
-				ItemStack stack = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+				ItemStack stack = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
 				ItemMeta meta = stack.getItemMeta();
 				meta.setDisplayName(" ");
 				stack.setItemMeta(meta);

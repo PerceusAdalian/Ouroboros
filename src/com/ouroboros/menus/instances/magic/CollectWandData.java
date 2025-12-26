@@ -23,16 +23,22 @@ public class CollectWandData extends AbstractOBSGui
 
 	public CollectWandData(Player player) 
 	{
-		super(player, "Wand Collection", 27, Set.of(10,16));
+		super(player, "Wand Collection", 27, Set.of(10,13,16));
 	}
 
 	public static Map<UUID, Wand> wandCollector = new HashMap<>();
-	
+	public static Map<UUID, String> pageController = new HashMap<>();
 	@Override
 	protected void build() 
 	{
 		
-		GuiButton.button(Material.AIR).place(this, 13, e->
+		GuiButton.button(Material.GRAY_STAINED_GLASS_PANE)
+		.setName("Place wand here")
+		.setLore("Click on this panel with your wand.", 
+				"If it's valid, you'll automatically advance to the next page.",
+				"&c&lWARNING&r&f: If you quit during wand collection, data will be lost.",
+				"Recover wands by executing &d&o/recoverwand&r&f.")
+		.place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			ItemStack stack = p.getItemOnCursor();
@@ -40,39 +46,41 @@ public class CollectWandData extends AbstractOBSGui
 			{
 				wandCollector.put(p.getUniqueId(), new Wand(stack));
 				p.setItemOnCursor(null);
-				GuiHandler.changeMenu(p, new SetSpellPage(p));
+				if (pageController.get(p.getUniqueId()).equals("spellselect"))
+					GuiHandler.changeMenu(p, new SetSpellPage(p));
+				else if (pageController.get(p.getUniqueId()).equals("upgrade"))
+					GuiHandler.changeMenu(p, new WandUpgradePage(p));
+				else if (pageController.get(p.getUniqueId()).equals("recharge"))
+					GuiHandler.changeMenu(p, new WandRechargePage(p));
+				return;
 			}
 			PrintUtils.OBSFormatError(p, "Invalid Object Detected... Cancelling operation, please try again.");
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
 			GuiHandler.close(p);
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&7{&e&li&r&7}").setLore("Place a wand in the empty slot highlighted.","If it's a valid wand, you'll automatically be brough to the next page.",
-				"&c&lWARNING&r&f: If you quit during wand collection, data will be lost. Recover wands by executing &d&o/recoverwand&r&f.")
+		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 4, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&7{&e&li&r&7}").setLore("Place a wand in the empty slot highlighted.","If it's a valid wand, you'll automatically be brough to the next page.",
-				"&c&lWARNING&r&f: If you quit during wand collection, data will be lost. Recover wands by executing &d&o/recoverwand&r&f.")
+		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&7{&e&li&r&7}").setLore("Place a wand in the empty slot highlighted.","If it's a valid wand, you'll automatically be brough to the next page.",
-				"&c&lWARNING&r&f: If you quit during wand collection, data will be lost. Recover wands by executing &d&o/recoverwand&r&f.")
+		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&7{&e&li&r&7}").setLore("Place a wand in the empty slot highlighted.","If it's a valid wand, you'll automatically be brough to the next page.",
-				"&c&lWARNING&r&f: If you quit during wand collection, data will be lost. Recover wands by executing &d&o/recoverwand&r&f.")
+		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 22, e->
 		{
 			Player p = (Player) e.getWhoClicked();

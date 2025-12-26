@@ -123,6 +123,7 @@ public class GuiButton
 				Player p = (Player) e.getWhoClicked();
 				EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 				spellActivateConfirm.put(player.getUniqueId(), spell);
+				CollectWandData.pageController.put(p.getUniqueId(), "spellselect");
 				GuiHandler.changeMenu(p, new CollectWandData(p));
 			});
 		}
@@ -136,9 +137,9 @@ public class GuiButton
                 String plainText = line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "");
                 obfuscatedLore.add(PrintUtils.ColorParser("&7&k" + plainText));
             }
-            
+            String obfuscatedName = "&cLocked Spell&f: &"+PrintUtils.getElementTypeColor(spell.getElementType())+"&k"+spellIcon.getItemMeta().getDisplayName();
             GuiButton.button(Material.PAPER)
-            .setName(PrintUtils.ColorParser("&7&k"+spellIcon.getItemMeta().getDisplayName()))
+            .setName(obfuscatedName)
             .setLore(obfuscatedLore)
             .place(gui, slot, e -> 
             {
