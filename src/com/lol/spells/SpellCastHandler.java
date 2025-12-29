@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +25,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -83,41 +85,55 @@ public class SpellCastHandler implements Listener
 		
 		if (!wand.hasSpell(wand.getSpellIndex())) return;
 				
-		if (cooldownPlayers.containsKey(p.getUniqueId()) && cooldownPlayers.containsValue(wand.getSpell(wand.getSpellIndex())))
-		{
-			PrintUtils.PrintToActionBar(p, "&cSpell on Cooldown!");
-			return;
-		}	
-		
-		if (wand.getCurrentMana() == 0)
-		{
-			PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
-			return;
-		}
-		
 		if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
 		{
 			if (wand.getNextSpell() == null) return;
-			int spellIndex = wand.getSpellIndex();
-			String currentSpell = wand.getSpell(wand.getSpellIndex()).getName();
 			wand.rotateSpells();
-			int nextSpellIndex = wand.getSpellIndex();
 			p.getInventory().setItemInMainHand(wand.getAsItemStack());
-			PrintUtils.Print(p, "&b&lSpell Cycled&r&f: &7"+currentSpell+" ["+spellIndex+"] &e&l-> &b&l"+wand.getSpell(wand.getSpellIndex()).getName() + " &r&7["+nextSpellIndex+"]&r&f");
+			PrintUtils.PrintToActionBar(p, "&b&lEquipped Spell&r&f: "+wand.getSpell(wand.getSpellIndex()).getName());
 			return;
 		}
 		else if (wand.getCurrentMana() > 0 && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
 		{
-			wand.getSpell(wand.getSpellIndex()).Cast(e);
-			wand.subtractMana(wand.getSpell(wand.getSpellIndex()).getManacost());
-			cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
-				cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
-			e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());
+
+			if (cooldownPlayers.containsKey(p.getUniqueId()) && cooldownPlayers.containsValue(wand.getSpell(wand.getSpellIndex())))
+			{
+				PrintUtils.PrintToActionBar(p, "&cSpell on Cooldown!");
+				return;
+			}	
 			
-			return;
+			if (wand.getCurrentMana() < wand.getSpell(wand.getSpellIndex()).getManacost())
+			{
+				PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
+				return;
+			}
+			
+			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+			// You can only cast spells when your Magic Proficiency is equal to or higher than the wand's tier.
+			// Likewise, you can technically equip spells of higher tier on your wand, but you can't cast them either if the wand's level is less than the spell rarity.
+			
+			if (wand.getRarity().getRarity() < wand.getSpell(wand.getSpellIndex()).getRarity().getRarity() ||
+					data.getMagicProficiency() < wand.getRarity().getRarity())
+			{
+				PrintUtils.PrintToActionBar(p, "&cFizzle!");
+				return;
+			}
+			
+			if (wand.getSpell(wand.getSpellIndex()).Cast(e))
+			{
+				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification()) 
+					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+wand.getSpell(wand.getSpellIndex()).getManacost()+" &b&o"+PrintUtils.printStatType(StatType.MAGIC));
+				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+					EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
+				PlayerData.addXP(p, StatType.MAGIC, wand.getSpell(wand.getSpellIndex()).getManacost());
+				
+				wand.subtractMana(wand.getSpell(wand.getSpellIndex()).getManacost());
+				cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+				cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
+				e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());
+			}
 		} 
-		
 		return;
 	}
 }

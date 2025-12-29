@@ -52,14 +52,14 @@ public class RayCastUtils
 	 * @param radius to check for mobs
 	 * @param action to accept for each entity (LivingEntity by default)
 	 */
-	public static void getNearbyEntities(Player source, int radius, Consumer<LivingEntity> action) 
+	public static boolean getNearbyEntities(Player source, int radius, Consumer<LivingEntity> action) 
 	{
 	    List<Entity> nearbyEntities = source.getNearbyEntities(radius, radius, radius);
 	    
 	    if (nearbyEntities.isEmpty()) 
 	    {
 	        PrintUtils.OBSFormatError(source, "No targets found.");
-	        return;
+	        return false;
 	    }
 
 	    for (Entity target : nearbyEntities) 
@@ -69,6 +69,7 @@ public class RayCastUtils
 	            action.accept(livingTarget);
 	        }
 	    }
+	    return true;
 	}
 	
 	/**
@@ -76,13 +77,13 @@ public class RayCastUtils
 	 * @param radius to check for mobs
 	 * @param action to accept for each entity (LivingEntity by default)
 	 */
-	public static void getNearbyEntities(Entity source, int radius, Consumer<LivingEntity> action) 
+	public static boolean getNearbyEntities(Entity source, int radius, Consumer<LivingEntity> action) 
 	{
 		List<Entity> nearbyEntities = source.getNearbyEntities(radius, radius, radius);
 		
 		if (nearbyEntities.isEmpty()) 
 	    {
-	        return;
+	        return false;
 	    }
 
 	    for (Entity target : nearbyEntities) 
@@ -93,5 +94,6 @@ public class RayCastUtils
 	            action.accept(livingTarget);
 	        }
 	    }
+	    return true;
 	}
 }

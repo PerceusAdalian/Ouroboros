@@ -25,7 +25,6 @@ public class LuminiteEssence extends AbstractObsObject
 				"&r&fIt is an incandescent resin with variable waveform.. Just looking at it confuses you.",
 				"&r&f&lRight-Click&r&f to harness into &l1-10000&r&e₪&f.",
 				"\n","&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -36,13 +35,18 @@ public class LuminiteEssence extends AbstractObsObject
 		{
 			Random rand = new Random();
 			int money = rand.nextInt(10000 - 1 + 1) + 1; // Weird range calc, idk, thanks AI Overview.. :)
-			
+			int sum = 0;
+			for (int i = 0; i <= e.getItem().getAmount(); i++)
+			{
+				sum += money;
+			}
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
 			p.playSound(p.getLocation(), Sound.ITEM_HONEYCOMB_WAX_ON, SoundCategory.MASTER, 1, 1);
-			PlayerData.addMoney(p, money);
-			PrintUtils.PrintToActionBar(p, "&r&b+&f&l"+money+"&r&e₪&f Added");
-			ItemCollector.remove(e);
+			
+			PlayerData.addMoney(p, sum);
+			PrintUtils.PrintToActionBar(p, "&r&b+&f&l"+sum+"&r&e₪&f Added");
+			ItemCollector.removeAll(e);
 			return true;
 		}
 		return false;

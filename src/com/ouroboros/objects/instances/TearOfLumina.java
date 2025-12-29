@@ -20,10 +20,10 @@ public class TearOfLumina extends AbstractObsObject
 
 	public TearOfLumina() 
 	{
-		super("Lesser Tear of Lumina", "tear_of_lumina_1", Material.GHAST_TEAR, true, true, 
-				"A remembrance of &e&oPriestess Lumina&r&f, her tears etched into the fabric reality.",
+		super("Tear of Lumina", "tear_of_lumina", Material.GHAST_TEAR, true, true, 
+				"&r&fAn echo of &e&oPriestess Lumina&r&f, granting fleeting magic.",
 				"&r&f&l&nUsage&r&f: &d&oRight-Click&r&f to add all on hand to your &b&oLuminite Reservoire&r&f.",
-				"Can also be used for Alchemy.");
+				"&r&fCan also be used for Alchemy.");
 	}
 
 	@Override

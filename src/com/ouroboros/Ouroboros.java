@@ -25,6 +25,7 @@ import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
+import com.ouroboros.objects.TrainingWandRecipe;
 import com.ouroboros.utils.PrintUtils;
 
 public class Ouroboros extends JavaPlugin
@@ -65,6 +66,9 @@ public class Ouroboros extends JavaPlugin
 		
 		ShopItemContainer.init();
 
+		TrainingWandRecipe.init();
+		TrainingWandRecipe.register();
+		
 		ObjectRegistry.itemInit();
 		ObsObjectCastHandler.register(instance);
 		

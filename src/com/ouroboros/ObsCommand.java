@@ -28,7 +28,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
-import com.lol.wand.instances.BasicWand;
+import com.lol.wand.instances.Wand_1;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.ObsDisplayMain;
@@ -118,7 +118,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			ItemStack luminiteTearStack = luminiteTear.toItemStack();
 			luminiteTearStack.setAmount(10);
 			
-			Wand basicWand = new BasicWand();
+			Wand basicWand = new Wand_1();
 			ItemStack wandStack = basicWand.getAsItemStack();
 			
 			ItemStack bag = new ItemStack(Material.BUNDLE, 1);

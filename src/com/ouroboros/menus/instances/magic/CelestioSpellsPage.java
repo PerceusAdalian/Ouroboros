@@ -7,26 +7,23 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.lol.spells.instances.inferno.Bombarda;
-import com.lol.spells.instances.inferno.Incendio;
+import com.lol.spells.instances.celestio.Revelio;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.EntityEffects;
 
-public class InfernoSpellsPage extends AbstractOBSGui
+public class CelestioSpellsPage extends AbstractOBSGui
 {
 
-	public InfernoSpellsPage(Player player) 
+	public CelestioSpellsPage(Player player) 
 	{
-		super(player, "Inferno Spells", 54, Set.of(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,38,39,40,41,42,37,43));
-	}
+		super(player, "Celestio Spells", 54, Set.of(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,38,39,40,41,42,37,43));	}
 
 	@Override
 	protected void build() 
 	{
-		GuiButton.placeSpellButton(player, new Incendio(), 10, this);
-		GuiButton.placeSpellButton(player, new Bombarda(), 11, this);
+		GuiButton.placeSpellButton(player, new Revelio(), 10, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
@@ -43,9 +40,7 @@ public class InfernoSpellsPage extends AbstractOBSGui
 			GuiHandler.close(p);
 		});
 		
-		paint();
+		paint();	
 	}
-	
-	
-	
+
 }

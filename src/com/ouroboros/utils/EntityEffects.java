@@ -117,7 +117,7 @@ public class EntityEffects {
 		{
 			if (r.nextDouble() >= 0.1399)
 				return;
-			setBurn(target, 300);
+			addBurn(target, 300);
 		}
 
 	}
@@ -132,7 +132,7 @@ public class EntityEffects {
 		target.setFreezeTicks(Math.min(target.getMaxFreezeTicks(), target.getFreezeTicks() + seconds * 20));
 	}
 
-	public static void setBurn(LivingEntity target, int seconds) 
+	public static void addBurn(LivingEntity target, int seconds) 
 	{
 		add(target, PotionEffectType.HUNGER, seconds*20, 2, true);
 		target.setFireTicks(seconds * 20);
@@ -200,6 +200,16 @@ public class EntityEffects {
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasStatic.remove(target.getUniqueId()), seconds*20);
 	}
 
+	public static void addCharged(LivingEntity target, int seconds, int intensity)
+	{
+		OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+		{
+			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.DRAGON_BREATH, null);
+			add(target, PotionEffectType.SPEED, 40, intensity, true);
+			add(target, PotionEffectType.HASTE, 40, intensity, true);
+		}, 20, seconds*20);
+	}
+	
 	private static Map<Entity, Boolean> duplicateEffectCheck = new HashMap<>();
 
 	public static void addSuffocate(LivingEntity target, int seconds) 

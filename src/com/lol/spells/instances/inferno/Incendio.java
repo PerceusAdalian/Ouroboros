@@ -14,6 +14,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.OBSParticles;
 
 public class Incendio extends Spell
 {
@@ -28,9 +29,10 @@ public class Incendio extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
+		OBSParticles.drawInfernoCastSigil(p);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Fireball fireball = (Fireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.FIREBALL);
-		fireball.setYield(2);
+		fireball.setYield(1);
 		fireball.setIsIncendiary(true); 
 		return true;
 	}

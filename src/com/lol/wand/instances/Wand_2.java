@@ -3,12 +3,12 @@ package com.lol.wand.instances;
 import com.lol.wand.Wand;
 import com.ouroboros.enums.Rarity;
 
-public class BasicWand extends Wand
+public class Wand_2 extends Wand
 {
 
-	public BasicWand() 
+	public Wand_2() 
 	{
-		super("Magic Wand", Rarity.ONE, 1, 100);
+		super("Magic Wand", Rarity.TWO, 2, 200);
 	}
-	
+
 }

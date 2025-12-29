@@ -276,11 +276,11 @@ public class OBSParticles
 		drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.ASH, null);
 	}
 
-	public static void drawMortioCastSigil(Player p)
+	public static void drawGlacioCastSigil(Player p)
 	{
-		drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.ASH, null);
-		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
-		drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.CRIMSON_SPORE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, Material.SNOW.createBlockData());
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.SNOWFLAKE, null);
+		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.CLOUD,null);
 	}
 	
 	public static void drawGeoCastSigil(Player p)
@@ -288,5 +288,39 @@ public class OBSParticles
 		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
 		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.ASH, null);
 		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.SMOKE,null);
+	}	
+	
+	public static void drawAeroCastSigil(Player p)
+	{
+		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.SWEEP_ATTACK, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.CRIT, null);
+		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.END_ROD,null);
+	}
+	
+	public static void drawCelestioCastSigil(Player p)
+	{
+		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
+		OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
+	}
+
+	public static void drawMortioCastSigil(Player p)
+	{
+		drawDisc(p.getLocation(), p.getWidth()+1, 1, 8, 0.25, Particle.ASH, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.5, 2, 9, 0.45, Particle.CRIMSON_SPORE, null);
+	}
+	
+	public static void drawCosmoCastSigil(Player p)
+	{
+		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.END_ROD, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.PORTAL, null);
+		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.WITCH,null);
+	}
+	
+	public static void drawHeresioCastSigil(Player p)
+	{
+		drawDisc(p.getLocation(), p.getWidth()+1, 2, 8, 0.25, Particle.CRIMSON_SPORE, null);
+		drawDisc(p.getLocation(), p.getWidth()+1.25, 2, 6, 0.5, Particle.TRIAL_OMEN, null);
+		drawDisc(p.getLocation(), p.getWidth()+2,1,6,0.1,Particle.WITCH,null);
 	}
 }

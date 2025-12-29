@@ -139,6 +139,11 @@ public abstract class Spell
 	{
 		return config.getDouble("cooldown");
 	}
+	
+	public Rarity getRarity()
+	{
+		return spellTier;
+	}
 
 	public List<String> getLore() 
 	{
@@ -222,7 +227,6 @@ public abstract class Spell
 		    page3.append(PrintUtils.assignCastCondition(castCondition).replace("&", "§").replace("§f", "§0")).append("\n\n");
 		    page3.append("§9§lMana Cost§0: ").append(manacost).append("\n");
 		    page3.append("§0§lCooldown§0: ").append(cooldown).append("s");
-		    
 		    bookMeta.addPage(page3.toString());
 		    bookMeta.getPersistentDataContainer().set(LOLSPELLBOOK, PersistentDataType.STRING, internalName.toString());
 		    bookMeta.setLore(lore);

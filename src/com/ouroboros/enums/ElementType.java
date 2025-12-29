@@ -29,7 +29,7 @@ public enum ElementType
 	INFERNO("&r&c&lInferno&r&f"),
 	GEO("&r&6&lGeo&r&f"),
 	AERO("&r&d&lAero&r&f"),
-	CELESTIO("&r&f&lCelestio&r&f"),
+	CELESTIO("&r&e&lCelestio&r&f"),
 	MORTIO("&r&4&lMortio&r&f"),
 	COSMO("&r&3&lCosmo&r&f");
 	

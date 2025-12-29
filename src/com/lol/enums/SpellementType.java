@@ -2,7 +2,7 @@ package com.lol.enums;
 
 public enum SpellementType 
 {
-	CELESTIO("&r&f&lCelestio&r&f"),
+	CELESTIO("&r&e&lCelestio&r&f"),
 	MORTIO("&r&4&lMortio&r&f"),
 	INFERNO("&r&c&lInferno&r&f"),
 	GLACIO("&r&b&lGlacio&r&f"),

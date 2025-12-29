@@ -38,7 +38,7 @@ public class MagicMainPage extends AbstractOBSGui
 				"Select &dWand Menu&f to manage all wand-related actions.",
 				"Select &dSpell Menu&f to view, equip, or upgrade registered spells.",
 				"",
-				"Your &b&oLuminite Tears &r&7(&r&b۞&7)&f are shown on your &d&oHUD&r&f.",
+				"Your &b&oLuminite Tears &r&7(&r&b۞&7)&f are shown on your &d&oHud&r&f.",
 				"&b&oLuminite Tears &r&7(&r&b۞&7)&f are required for all magic operations.",
 				"Earn more by &ckilling mobs&f or leveling up &d&lMagic&r&f."
 ).place(this, 13, e->

@@ -34,48 +34,49 @@ public class SpellBookPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			
+			GuiHandler.changeMenu(p, new GlacioSpellsPage(p));
 		});
 
 		GuiButton.button(Material.BRICK).setName("&6&lGeo&r&e Spells").setLore("Click to navigate to all &6&lGeo&r&e Spells.").place(this, 23, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			
+			GuiHandler.changeMenu(p, new GeoSpellsPage(p));
 		});
 
 		GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero&r&e Spells").setLore("Click to navigate to all &d&lAero&r&e Spells.").place(this, 24, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			
+			GuiHandler.changeMenu(p, new AeroSpellsPage(p));
 		});
 
 		GuiButton.button(Material.NETHER_STAR).setName("&e&lCelestio&r&e Spells").setLore("Click to navigate to all &e&lCelestio&r&e Spells.").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			
+			GuiHandler.changeMenu(p, new CelestioSpellsPage(p));
 		});
 
 		GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo&r&e Spells").setLore("Click to navigate to all &3&lCosmo&r&e Spells.").place(this, 22, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			
+			GuiHandler.changeMenu(p, new CosmoSpellsPage(p));
 		});
 
 		GuiButton.button(Material.WITHER_ROSE).setName("&4&lMortio&r&e Spells").setLore("Click to navigate to all &4&lMortio&r&e Spells.").place(this, 31, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			
+			GuiHandler.changeMenu(p, new MortioSpellsPage(p));
 		});
 		
 		GuiButton.button(Material.ENDER_EYE).setName("&2&lHeresio&r&e Spells").setLore("Click to navigate to all &2&lHeresio&r&e spells.").place(this, 40, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
+			GuiHandler.changeMenu(p, new HeresioSpellsPage(p));
 		});
 		
 		//Exits

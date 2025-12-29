@@ -1,5 +1,7 @@
 package com.ouroboros.menus.instances;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -7,6 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -34,12 +37,30 @@ public class ObsMainMenu extends AbstractOBSGui
 			GuiHandler.changeMenu(p, new AbilityMainPage(p));
 		});
 
-		GuiButton.button(Material.STICK).setName("&d&lMagic").setLore("&r&fClick to:", "   &f&l- &r&fView, Upgrade, and Set Available &dSpells", "   &f&l- &r&fCraft, Upgrade, and Recharge &bWands")
+		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
+		boolean hasGnosis = data.getMagicProficiency() >= 1;
+		List<String> lore = new ArrayList<>();
+		lore.add("&r&fClick to:");
+		lore.add("   &f&l- &r&fView, Upgrade, and Set Available &dSpells");
+		lore.add("   &f&l- &r&fCraft, Upgrade, and Recharge &bWands");
+		
+		List<String> altLore = new ArrayList<>();
+		altLore.add("&r&fThis section requires &d&oMagic Gnosis&r&e&l 1");
+		
+		GuiButton.button(hasGnosis ? Material.STICK : Material.BARRIER)
+		.setName(hasGnosis ? "&d&lMagic" : "&c&lSection Locked&r&f: &d&lMagic")
+		.setLore(hasGnosis ? lore : altLore)
 		.place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			e.setCancelled(true);
+			if (!hasGnosis)
+			{
+				EntityEffects.playSound(p, Sound.BLOCK_CHEST_LOCKED, SoundCategory.MASTER);
+				e.setCancelled(true);
+				return;
+			}
 			EntityEffects.playSound(p, Sound.BLOCK_DRIED_GHAST_AMBIENT_WATER, SoundCategory.MASTER);
+			e.setCancelled(true);
 			GuiHandler.changeMenu(p, new MagicMainPage(p));
 		});
 		

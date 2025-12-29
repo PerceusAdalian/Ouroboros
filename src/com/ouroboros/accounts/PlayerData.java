@@ -109,7 +109,7 @@ public class PlayerData
 	    	setPrestigePoints(0);
 	    	
 	    	setLuminite(0);
-	    	setMagicProficiency(1);
+	    	setMagicProficiency(0);
 	    	setKitClaimed(false);
 	    }
 	    return;

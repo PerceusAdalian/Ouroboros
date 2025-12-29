@@ -31,9 +31,9 @@ public class Wand
     private boolean deserialized = false;
 
     public static final NamespacedKey wandKey = new NamespacedKey(Ouroboros.instance, "magicwand");
-    public static final NamespacedKey maxWandManaKey = new NamespacedKey(Ouroboros.instance, "maxWandMana");
-    public static final NamespacedKey currentWandManaKey = new NamespacedKey(Ouroboros.instance, "currentWandMana");
-    public static final NamespacedKey currentMaxSpellSlotsKey = new NamespacedKey(Ouroboros.instance, "currentMaxSpellSlots");
+    public NamespacedKey maxWandManaKey = new NamespacedKey(Ouroboros.instance, "maxWandMana");
+    public NamespacedKey currentWandManaKey = new NamespacedKey(Ouroboros.instance, "currentWandMana");
+    public NamespacedKey currentMaxSpellSlotsKey = new NamespacedKey(Ouroboros.instance, "currentMaxSpellSlots");
     public static final NamespacedKey absoluteMaxSpellSlotsKey = new NamespacedKey(Ouroboros.instance, "absoluteMaxSpellSlots");
     public static final NamespacedKey rarityKey = new NamespacedKey(Ouroboros.instance, "wandRarity"); // ADD THIS
     
@@ -46,6 +46,7 @@ public class Wand
         this.currentMana = maxMana;
         this.spellSlots = new Spell[maxSlots];
         this.slotKeys = new NamespacedKey[maxSlots];
+        this.deserialized = true;
         
         // Initialize slot keys
         for (int i = 0; i < maxSlots; i++)
@@ -98,6 +99,11 @@ public class Wand
 		PersistentDataContainer pdc = meta.getPersistentDataContainer();
 		
 		return pdc.has(wandKey, PersistentDataType.INTEGER);
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	public boolean hasSpell(int slot)
@@ -169,20 +175,32 @@ public class Wand
 	
 	public int getCurrentMaxSpellSlots()
 	{
-		
-		return getAsItemStack().getItemMeta().getPersistentDataContainer().get(currentMaxSpellSlotsKey, PersistentDataType.INTEGER);
+	    return maxSpellSlots;
 	}
 	
 	public void setNewMaxSpellSlots(int value)
 	{
-		ItemStack stack = getAsItemStack();
-		ItemMeta meta = stack.getItemMeta();
-		PersistentDataContainer pdc = meta.getPersistentDataContainer();
-		
-		if (value > pdc.get(absoluteMaxSpellSlotsKey, PersistentDataType.INTEGER)) return;
-		pdc.set(currentMaxSpellSlotsKey, PersistentDataType.INTEGER, value);
-		stack.setItemMeta(meta);
-		setMaxMana();
+	    this.maxSpellSlots = value;
+	    
+	    // Resize the arrays if needed
+	    if (value > spellSlots.length)
+	    {
+	        Spell[] newSpellSlots = new Spell[value];
+	        NamespacedKey[] newSlotKeys = new NamespacedKey[value];
+	        
+	        // Copy existing spells
+	        System.arraycopy(spellSlots, 0, newSpellSlots, 0, spellSlots.length);
+	        System.arraycopy(slotKeys, 0, newSlotKeys, 0, slotKeys.length);
+	        
+	        // Initialize new slot keys
+	        for (int i = slotKeys.length; i < value; i++)
+	        {
+	            newSlotKeys[i] = new NamespacedKey(Ouroboros.instance, "slot_" + i);
+	        }
+	        
+	        this.spellSlots = newSpellSlots;
+	        this.slotKeys = newSlotKeys;
+	    }
 	}
 	
 	public int getAbsoluteMaxSpellSlots()
@@ -260,7 +278,7 @@ public class Wand
 	    ItemMeta meta = stack.getItemMeta();
 	    PersistentDataContainer pdc = meta.getPersistentDataContainer();
 	    
-	    meta.setDisplayName(name);
+	    meta.setDisplayName(PrintUtils.ColorParser(name));
 	    meta.setEnchantmentGlintOverride(true);
 	    
 	    pdc.set(wandKey, PersistentDataType.INTEGER, spellIndex);
@@ -321,12 +339,13 @@ public class Wand
 	        existingLore.add(PrintUtils.ColorParser("&r&fOther Details:"));
 	        existingLore.add(PrintUtils.assignElementType(currentSpell.getElementType()));
 	        existingLore.add(PrintUtils.assignSpellType(currentSpell.getSpellType()));
+	        existingLore.add(PrintUtils.assignCastCondition(currentSpell.getCastCondition()));
 	        existingLore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+currentSpell.getManacost()+" &7| &r&f&lCooldown&r&f: "+currentSpell.getCooldown()));
 	    }
 	    
 	    existingLore.add("");
 	    existingLore.add(PrintUtils.ColorParser("&r&9Mana Capacity&f: ") + currentMana + PrintUtils.ColorParser("&r&f/") + maxMana);
-	    
+	    existingLore.add(PrintUtils.ColorParser("&r&d&oLeft-Click&r&f to cycle spells"));
 	    // Finally, set the combined lore at the end
 	    meta.setLore(existingLore);
 	    stack.setItemMeta(meta);

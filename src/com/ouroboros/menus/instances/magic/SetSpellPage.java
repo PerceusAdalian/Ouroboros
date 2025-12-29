@@ -89,7 +89,7 @@ public class SetSpellPage extends AbstractOBSGui
 	                // Empty slot - allow assignment
 	                char spellColor = PrintUtils.getElementTypeColor(spell.getElementType());
 	                GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
-                    .setName("&r&fEmpty Slot #" + i)
+                    .setName("&r&fEmpty Slot #"+(i+1))
                     .setLore("&r&fThis slot is empty. Click to assign &" + spellColor + spell.getName() + "&f to this slot")
                     .place(gui, guiSlot, e ->
                     {
@@ -110,7 +110,7 @@ public class SetSpellPage extends AbstractOBSGui
 	                char spell1 = PrintUtils.getElementTypeColor(wandSpell.getElementType());
 	                char spell2 = PrintUtils.getElementTypeColor(spell.getElementType());
 	                GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
-	                .setName("&r&fFull Slot #" + i + " [&"+spell1 + wandSpell.getName() + "&f]")
+	                .setName("&r&fFull Slot #" + (i+1) + " [&"+spell1 + wandSpell.getName() + "&f]")
 	                .setLore("&r&fThis slot is in use. Click to replace &" + spell1 + wandSpell.getName() + " &fwith &" + spell2 + spell.getName() + "&f?")
 	                .place(gui, guiSlot, e ->
 	                {

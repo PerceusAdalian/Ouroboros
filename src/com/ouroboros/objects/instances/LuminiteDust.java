@@ -35,9 +35,9 @@ public class LuminiteDust extends AbstractObsObject
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			PlayerData.addMoney(p, 100);
-			PrintUtils.PrintToActionBar(p, "&r&b+&f&l100&r&e₪&f Added");
-			ItemCollector.remove(e);
+			PlayerData.addMoney(p, e.getItem().getAmount()*100);
+			PrintUtils.PrintToActionBar(p, "&r&b+&f&l"+e.getItem().getAmount()*100+"&r&e₪&f Added");
+			ItemCollector.removeAll(e);
 			return true;
 		}
 		return false;
