@@ -28,7 +28,9 @@ public class Diffindo extends Spell
 		super("Diffindo", "diffindo", Material.WIND_CHARGE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 150, 5, 
 				"&r&fConcentrate &d&lAero&r&f energy and expell it forward at a target",
 				"&r&fdealing 20&c♥&f of &e&lSever&r&f damage. Applies &dCharge &bI &fto self &7(10s)",
-				"&r&f&lRange&r&f: 30 &b&ometers&r&f");
+				"&r&f&lRange&r&f: 30 &b&ometers&r&f","",
+				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
+				"&r&7as '&d&oSlicing Tempest&r&7&o', however, colloquially known as '&r&d&oDiffindo&r&7&o'.");
 	}
 
 	@Override

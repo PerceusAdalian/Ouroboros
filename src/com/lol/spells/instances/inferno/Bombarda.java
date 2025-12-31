@@ -30,7 +30,9 @@ public class Bombarda extends Spell
 				"&r&fcausing a concentrated explosion of ether about your target,",
 				"&r&finflicting &e&lBlast&r&f damage and causing &cBurn &7(20s).",
 				"&r&f&lRange&r&f: 25 &b&ometers &r&7| &f&lYield&r&f: 3","",
-				"&r&cBurn&f: DOT effect constantly dealing &c&lInferno&r&f damage.");
+				"&r&cBurn&f: DOT effect constantly dealing &c&lInferno&r&f damage.","",
+				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
+				"&r&7as '&c&oCinder Plume&r&7&o', however, colloquially known as '&r&c&oBombarda&r&7&o'.");
 		
 	}
 

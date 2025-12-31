@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.lol.spells.SpellCastHandler;
 import com.lol.spells.instances.SpellRegistry;
+import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.ouroboros.abilities.AbilityCastHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.ExpHandler;
@@ -71,6 +72,8 @@ public class Ouroboros extends JavaPlugin
 		
 		ObjectRegistry.itemInit();
 		ObsObjectCastHandler.register(instance);
+		
+		ArrestoMomentum.registerSpellHelper(instance);
 		
 		MobManager.respawnAll();
 		

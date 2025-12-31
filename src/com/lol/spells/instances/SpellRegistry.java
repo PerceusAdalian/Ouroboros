@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.celestio.Revelio;
+import com.lol.spells.instances.cosmo.ArrestoMomentum;
+import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Incendio;
@@ -23,20 +26,27 @@ public class SpellRegistry
         		Incendio.class,
         		Bombarda.class,
         		
+        		
         		//Glacio
         		Glacius.class,
         		
+        		
         		//Aero
         		Diffindo.class,
+        		Levioso.class,
+        		
         		
         		//Geo
+        		Expelliarmus.class,
         		
         		//Celestio
-        		Revelio.class
+        		Revelio.class,
         		
         		//Mortio
         		
+        		
         		//Cosmo
+        		ArrestoMomentum.class
         		
         		//Heresio
         		
