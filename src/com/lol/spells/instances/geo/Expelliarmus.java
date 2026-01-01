@@ -1,13 +1,12 @@
 package com.lol.spells.instances.geo;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 import com.lol.enums.SpellType;
@@ -37,23 +36,32 @@ public class Expelliarmus extends Spell
 		Player p = (Player) e.getPlayer();
 		Entity target = RayCastUtils.getNearestEntity(p, 15);
 
-		if (target instanceof Mob mob) 
+		if (!(target instanceof LivingEntity living)) return false;
+
+		EntityEquipment equipment = living.getEquipment();
+		if (equipment == null) return false;
+
+		ItemStack heldItem = equipment.getItemInMainHand();
+		if (heldItem.getType() == Material.AIR) 
 		{
-			if (mob.getItemInUse() == null || mob.getItemInUse().getType() == Material.AIR || mob.getEquipment() == null) return false;
-			ItemStack mobItem = mob.getItemInUse().clone();
-			mob.getItemInUse().setType(Material.AIR);
-			Bukkit.getWorld(target.getWorld().getUID()).dropItem(target.getLocation(), mobItem).setPickupDelay(100);
-			OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 4, 0.5, 25, 8, 0.5, Particle.SMOKE, null);
-			return true;
+		    heldItem = equipment.getItemInOffHand();
+		    if (heldItem.getType() == Material.AIR) return false;
 		}
-		
+
 		OBSParticles.drawGeoCastSigil(p);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 2, 0.5, Particle.SMOKE, null);
-		EntityEffects.addSanded((LivingEntity) target, 20);
-		
-		
-		return false;
+		EntityEffects.addSanded(living, 20);
+
+		ItemStack droppedItem = heldItem.clone();
+		if (heldItem.equals(equipment.getItemInMainHand())) 
+			equipment.setItemInMainHand(new ItemStack(Material.AIR));
+		else equipment.setItemInOffHand(new ItemStack(Material.AIR));
+
+		target.getWorld().dropItem(target.getLocation(), droppedItem).setPickupDelay(100);
+		OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 4, 0.5, 25, 8, 0.5, Particle.SMOKE, null);
+
+		return true;
 	}
 
 }

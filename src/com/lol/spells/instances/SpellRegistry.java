@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Levioso;
+import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.lol.spells.instances.geo.Expelliarmus;
@@ -41,7 +42,7 @@ public class SpellRegistry
         		
         		//Celestio
         		Revelio.class,
-        		
+        		Protego.class,
         		//Mortio
         		
         		
