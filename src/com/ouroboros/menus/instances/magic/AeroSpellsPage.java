@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.Levioso;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -25,6 +26,7 @@ public class AeroSpellsPage extends AbstractOBSGui
 	protected void build() 
 	{
 		GuiButton.placeSpellButton(player, new Diffindo(), 10, this);
+		GuiButton.placeSpellButton(player, new Levioso(), 11, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
