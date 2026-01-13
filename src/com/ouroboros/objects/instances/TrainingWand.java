@@ -6,8 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.craftbukkit.entity.CraftArrow;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -55,15 +55,13 @@ public class TrainingWand extends AbstractObsObject
 		}
 		
 		EntityEffects.playSound(p, Sound.ENTITY_ARROW_SHOOT, SoundCategory.AMBIENT);
-		CraftArrow arrow = p.launchProjectile(CraftArrow.class);
+		Arrow arrow = p.launchProjectile(Arrow.class);
 		arrow.setDamage(2);
 		arrow.setGravity(false);
-		arrow.setInvisible(true);
 		arrow.setGlowing(true);
 		arrow.setColor(Color.WHITE);
 		arrow.setCritical(false);
 		arrow.setPickupStatus(PickupStatus.DISALLOWED);
-		arrow.setKnockbackStrength(1);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->arrow.remove(), 20);
 		
 		return true;

@@ -16,9 +16,9 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrewingStand;
+import org.bukkit.block.Chest;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.Ageable;
-import org.bukkit.craftbukkit.block.CraftChest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -358,7 +358,7 @@ public class ExpHandler implements Listener
 				if (!PlayerActions.rightClickBlock(e)) return;
 				if (block == null || block.getType() == Material.AIR) return;
 				if (!(block.getState() instanceof Container container)) return;
-				if (!(container instanceof CraftChest)) return;
+				if (!(container instanceof Chest)) return;
 				
 				PersistentDataContainer pdc = container.getPersistentDataContainer();
 				if (pdc.has(checkChestID, PersistentDataType.BYTE)) return;

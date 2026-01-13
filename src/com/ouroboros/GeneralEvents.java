@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.hud.ObsDisplayMain;
+import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.utils.PrintUtils;
 
 public class GeneralEvents implements Listener
@@ -47,7 +47,7 @@ public class GeneralEvents implements Listener
         		}
         		
         		PlayerData.loadPlayer(p.getUniqueId());
-        		ObsDisplayMain.createHud(p);
+        		PlayerHud.createHud(p);
         	}
         	
         	@EventHandler

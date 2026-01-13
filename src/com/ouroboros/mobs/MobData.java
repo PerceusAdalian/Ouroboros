@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.annotation.Nonnull;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -319,13 +317,12 @@ public class MobData
 		}
 	}
 	
+	@SuppressWarnings("null")
 	public static void damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor, @Nullable ElementType element)
 	{
-		@Nonnull
 		MobData data = MobData.getMob(target.getUniqueId());
 		
-		boolean nullData = data == null;
-		if (nullData)
+		if (data == null)
 		{
 			((Damageable) target).damage(value);
 		}

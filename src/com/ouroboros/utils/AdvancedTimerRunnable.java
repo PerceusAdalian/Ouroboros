@@ -6,9 +6,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ouroboros.Ouroboros;
 
-public class AdvancedTimerRunnable
+public class AdvancedTimerRunnable 
 {
-
 	private BukkitRunnable timerRunnable; // Timer that can be reset
     private final Runnable targetTask;    // Code to run
     private final long ticks;             // Ticks to wait to run after

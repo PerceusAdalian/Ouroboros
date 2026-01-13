@@ -22,7 +22,7 @@ import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.hud.ObsDisplayMain;
+import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
@@ -31,7 +31,7 @@ import com.ouroboros.utils.PrintUtils;
 public class PlayerData 
 {
 	protected final UUID uuid;
-	private File file;
+	protected File file;
 	private final YamlConfiguration config;
 	public static final int baseXP = 225, fundsIntegerMax = 99999999;
 	public static final int maxLuminite = 9999;
@@ -51,6 +51,15 @@ public class PlayerData
 		}
 	}
 	
+	public File getFile() 
+	{
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 	public static PlayerData getPlayer(UUID uuid) 
 	{
 	    return dataMap.get(uuid); 
@@ -315,12 +324,6 @@ public class PlayerData
 		data.setActiveCombatAbility(null);
 	}
 	
-	public static void resetAccount(UUID uuid) 
-	{
-		PlayerData.getPlayer(uuid).file = null;
-		PlayerData.getPlayer(uuid).setDefaults();
-	}
-	
 	public void initializeAbilities() 
 	{
 		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
@@ -427,7 +430,7 @@ public class PlayerData
 		data.setFunds(false, currentMoney);
 		data.setFunds(true, currentDebt);
 		data.save();
-		ObsDisplayMain.updateHud(p);
+		PlayerHud.updateHud(p);
 	}
 
 	
@@ -445,7 +448,7 @@ public class PlayerData
 		data.setFunds(false, currentMoney);
 		data.setFunds(true, currentDebt);
 		data.save();
-		ObsDisplayMain.updateHud(p);
+		PlayerHud.updateHud(p);
 	}
 
 	public int getLuminite()
@@ -464,7 +467,7 @@ public class PlayerData
 		data.setLuminite(data.getLuminite()+value);
 		if (data.getLuminite() > maxLuminite) data.setLuminite(maxLuminite);
 		data.save();
-		ObsDisplayMain.updateHud(p);
+		PlayerHud.updateHud(p);
 	}
 	
 	public static void subtractLuminite(Player p, int value)
@@ -473,7 +476,7 @@ public class PlayerData
 		data.setLuminite(data.getLuminite()-value);
 		if (data.getLuminite() < 0) data.setLuminite(0);
 		data.save();
-		ObsDisplayMain.updateHud(p);
+		PlayerHud.updateHud(p);
 	}
 	
 	public void setMagicProficiency(int value)

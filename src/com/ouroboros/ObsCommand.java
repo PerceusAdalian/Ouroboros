@@ -31,7 +31,7 @@ import com.lol.wand.Wand;
 import com.lol.wand.instances.Wand_1;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.hud.ObsDisplayMain;
+import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.menus.instances.magic.CollectWandData;
@@ -284,7 +284,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				data.setFunds(true, 0);
 				data.setFunds(false, PlayerData.fundsIntegerMax);
 				data.save();
-				ObsDisplayMain.updateHud(target);
+				PlayerHud.updateHud(target);
 				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added max &r&e₪ &r&7&oto: &r&f&l"+target.getName()+"&r&7&o's account.");
 				return true;
 			}
@@ -297,7 +297,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				data.setFunds(true, PlayerData.fundsIntegerMax);
 				data.setFunds(false, 0);
 				data.save();
-				ObsDisplayMain.updateHud(target);
+				PlayerHud.updateHud(target);
 				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added max &r&cЖ &r&7&oto: &r&f&l"+target.getName()+"&r&7&o's account.");
 				return true;
 			}
@@ -310,7 +310,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				data.setFunds(false, 0);
 				data.setFunds(true, 0);
 				data.save();
-				ObsDisplayMain.updateHud(target);
+				PlayerHud.updateHud(target);
 				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully reset { &r&e₪ &r&7&o& &r&cЖ &r&7&o} from: &r&f&l"+target.getName()+"&r&7&o's account.");
 				return true;
 			}
@@ -416,8 +416,10 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		            return true;
 		        }
 		    
-		        PlayerData.resetAccount(target.getUniqueId());
+		        PlayerData.getPlayer(target.getUniqueId()).getFile().delete();
+		        PlayerData.getPlayer(target.getUniqueId()).setDefaults();
 		        PlayerData.getPlayer(target.getUniqueId()).save();
+		        PlayerHud.updateHud(target);
 		        PrintUtils.OBSFormatDebug(p, "Successfully Reset " + target.getName() + "'s Account");
 		        return true;
 			}

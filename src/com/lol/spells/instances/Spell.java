@@ -205,18 +205,39 @@ public abstract class Spell
 		    // PAGE 1: Title Page
 		    StringBuilder page1 = new StringBuilder();
 		    page1.append("§l§nLegends of Lumina§r\n\n");
-		    page1.append("§0Spell: §"+PrintUtils.getElementTypeColor(eType)+"§l").append(name).append("\n\n");
+		    page1.append("§0Spell: §0§l").append(name).append("\n\n");
 		    page1.append("§8§o").append(PrintUtils.assignRarity(spellTier, true)).append("§r");
 		    bookMeta.addPage(page1.toString());
 		    
-		    // PAGE 2: Description
-		    StringBuilder page2 = new StringBuilder();
-		    page2.append("§l§nDescription§r\n\n");
+		    // PAGE 2+: Description (with automatic page splitting for larger descriptions)
+		    StringBuilder currentPage = new StringBuilder();
+		    currentPage.append("§l§nDescription§r\n\n");
+		    int pageCharCount = currentPage.length();
+		    final int MAX_CHARS_PER_PAGE = 240; // Leave some buffer below the 256 limit
+
 		    for (String line : spellDescription) 
 		    {
-		        page2.append("§0").append(line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "")).append("\n");
+		        String cleanLine = "§0" + line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "") + "\n";
+		        
+		        // Check if adding this line would exceed the page limit
+		        if (pageCharCount + cleanLine.length() > MAX_CHARS_PER_PAGE) 
+		        {
+		            // Add current page and start a new one
+		            bookMeta.addPage(currentPage.toString());
+		            currentPage = new StringBuilder();
+		            currentPage.append("§0"); // Start new page with black text
+		            pageCharCount = 0;
+		        }
+		        
+		        currentPage.append(cleanLine);
+		        pageCharCount += cleanLine.length();
 		    }
-		    bookMeta.addPage(page2.toString());
+
+		    // Add the final page if it has content
+		    if (currentPage.length() > 0) 
+		    {
+		        bookMeta.addPage(currentPage.toString());
+		    }
 		    
 		    // PAGE 3: Stats
 		    StringBuilder page3 = new StringBuilder();

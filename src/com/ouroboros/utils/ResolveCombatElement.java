@@ -10,18 +10,19 @@ public class ResolveCombatElement
 	{
 		ElementType eType = switch(m)
 		{
-			case Material.WOODEN_SWORD,Material.STONE_SWORD,Material.IRON_SWORD,Material.GOLDEN_SWORD,
-			Material.DIAMOND_SWORD,Material.NETHERITE_SWORD,Material.WOODEN_HOE, Material.STONE_HOE, 
-			Material.IRON_HOE, Material.GOLDEN_HOE,Material.DIAMOND_HOE, Material.NETHERITE_HOE 		-> eType = ElementType.SLASH;
-			case Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE,
-			Material.DIAMOND_AXE, Material.NETHERITE_AXE 												-> eType = ElementType.SEVER;
-			case Material.TRIDENT, Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, 
-			Material.GOLDEN_PICKAXE,Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE 				-> eType = ElementType.PIERCE;
-			case Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, 
-			Material.GOLDEN_SHOVEL,Material.DIAMOND_SHOVEL, Material.NETHERITE_SHOVEL, 
-			Material.AIR, Material.MACE 																-> eType = ElementType.BLUNT;
+			case WOODEN_SWORD,STONE_SWORD,IRON_SWORD,GOLDEN_SWORD, COPPER_HOE, 
+			COPPER_SWORD,DIAMOND_SWORD,NETHERITE_SWORD,WOODEN_HOE, STONE_HOE, 
+			IRON_HOE, GOLDEN_HOE,DIAMOND_HOE, NETHERITE_HOE 						-> eType = ElementType.SLASH;
+			case WOODEN_AXE, STONE_AXE, IRON_AXE, GOLDEN_AXE, COPPER_AXE,
+			DIAMOND_AXE, NETHERITE_AXE 												-> eType = ElementType.SEVER;
+			case TRIDENT, WOODEN_PICKAXE, STONE_PICKAXE, IRON_PICKAXE, 
+			GOLDEN_PICKAXE,DIAMOND_PICKAXE, NETHERITE_PICKAXE, COPPER_PICKAXE,
+			WOODEN_SPEAR,COPPER_SPEAR,IRON_SPEAR,GOLDEN_SPEAR,
+			DIAMOND_SPEAR, NETHERITE_SPEAR											-> eType = ElementType.PIERCE;
+			case WOODEN_SHOVEL, STONE_SHOVEL, IRON_SHOVEL, COPPER_SHOVEL,
+			GOLDEN_SHOVEL,DIAMOND_SHOVEL, NETHERITE_SHOVEL, AIR, MACE 				-> eType = ElementType.BLUNT;
 			
-			default 																					-> eType = ElementType.NEUTRAL;
+			default 																-> eType = ElementType.NEUTRAL;
 		};
 		return eType;
 	}

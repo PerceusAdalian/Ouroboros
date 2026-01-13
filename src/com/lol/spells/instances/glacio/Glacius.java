@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.craftbukkit.entity.CraftArrow;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
@@ -38,7 +38,7 @@ public class Glacius extends Spell
 	{
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_DROWNED_SHOOT, SoundCategory.AMBIENT);
-		CraftArrow arrow = p.launchProjectile(CraftArrow.class);
+		Arrow arrow = p.launchProjectile(Arrow.class);
 		arrow.setGravity(false);
 		arrow.setVelocity(p.getLocation().getDirection().multiply(1.5));
 		arrow.setDamage(5);
