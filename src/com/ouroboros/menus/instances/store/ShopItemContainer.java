@@ -15,4 +15,9 @@ public class ShopItemContainer
 		itemTable.put(Material.OAK_WOOD, 10);
 		itemTable.put(Material.BREAD, 15);
 	}
+	
+	/**
+	 * Idea for how to handle expanding the player shop:
+	 *  > Use the itemTable map to pull the materials for each of the buttons in the ObsShopGui using the same concept as PlaceAbilityButton method in GuiButton.
+	 */
 }

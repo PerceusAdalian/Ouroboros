@@ -15,6 +15,7 @@ public enum CastConditions
 	SHIFT_RIGHT_CLICK_BLOCK,
 	SHIFT_LEFT_CLICK_AIR,
 	SHIFT_LEFT_CLICK_BLOCK,
+	MIXED,
 	PASSIVE
 	;
 	
@@ -45,6 +46,7 @@ public enum CastConditions
 			case SHIFT_LEFT_CLICK_BLOCK -> PlayerActions.shiftLeftClickBlock(e);
 			case SHIFT_RIGHT_CLICK_AIR -> PlayerActions.shiftRightClickAir(e);
 			case SHIFT_RIGHT_CLICK_BLOCK -> PlayerActions.shiftRightClickBlock(e);
+			case MIXED -> true;
 			case PASSIVE -> true;
 		};
 	}

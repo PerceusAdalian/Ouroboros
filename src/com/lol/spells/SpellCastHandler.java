@@ -95,22 +95,16 @@ public class SpellCastHandler implements Listener
 		}
 		else if (wand.getCurrentMana() > 0 && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
 		{
-
+			
 			if (cooldownPlayers.containsKey(p.getUniqueId()) && cooldownPlayers.containsValue(wand.getSpell(wand.getSpellIndex())))
 			{
 				PrintUtils.PrintToActionBar(p, "&cSpell on Cooldown!");
 				return;
 			}	
 			
-			if (wand.getCurrentMana() < wand.getSpell(wand.getSpellIndex()).getManacost())
-			{
-				PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
-				return;
-			}
-			
-			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 			// You can only cast spells when your Magic Proficiency is equal to or higher than the wand's tier.
 			// Likewise, you can technically equip spells of higher tier on your wand, but you can't cast them either if the wand's level is less than the spell rarity.
+			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 			
 			if (wand.getRarity().getRarity() < wand.getSpell(wand.getSpellIndex()).getRarity().getRarity() ||
 					data.getMagicProficiency() < wand.getRarity().getRarity())
@@ -134,6 +128,12 @@ public class SpellCastHandler implements Listener
 				e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());
 			}
 		} 
+		else if (wand.getCurrentMana() < wand.getSpell(wand.getSpellIndex()).getManacost() && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
+		{
+			PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
+			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
+			return;
+		}
 		return;
 	}
 }

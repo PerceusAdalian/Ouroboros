@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import com.lol.spells.SpellHandler;
 import com.lol.spells.instances.Spell;
+import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
@@ -116,6 +117,16 @@ public class PlayerData
 	    	doXpNotification(true);
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
+	    	
+	    	for (Spell spell : SpellRegistry.spellRegistry.values())
+	    	{
+	    		getSpell(spell).setRegistered(false);
+	    	}
+	    	
+	    	for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values())
+	    	{
+	    		getAbility(ability).setActive(false).setRegistered(false);
+	    	}
 	    	
 	    	setLuminite(0);
 	    	setMagicProficiency(0);
@@ -304,24 +315,6 @@ public class PlayerData
 		{
 			PlayerData.getPlayer(uuid).setStat(type, true, 0);
 		}
-	}
-	
-	@Deprecated
-	public static void resetAccount_Old(UUID uuid) 
-	{
-		PlayerData data = PlayerData.getPlayer(uuid);
-		for (StatType type : StatType.values()) 
-		{
-			data.setStat(type, false, 0);
-			data.setStat(type, true, 0);
-		}
-		data.setAccountLevel(0);
-		data.setAbilityPoints(0);
-		data.setPrestigePoints(0);
-		data.setLuminite(0);
-		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
-			data.getAbility(a).setRegistered(false).setActive(false);
-		data.setActiveCombatAbility(null);
 	}
 	
 	public void initializeAbilities() 

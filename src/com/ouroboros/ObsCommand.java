@@ -415,7 +415,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		            PrintUtils.OBSFormatError(p, "Player not found.");
 		            return true;
 		        }
-		    
+		        
 		        PlayerData.getPlayer(target.getUniqueId()).getFile().delete();
 		        PlayerData.getPlayer(target.getUniqueId()).setDefaults();
 		        PlayerData.getPlayer(target.getUniqueId()).save();

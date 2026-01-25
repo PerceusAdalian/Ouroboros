@@ -53,7 +53,7 @@ public class WandRechargePage extends AbstractOBSGui
 			}
 			
 			PrintUtils.OBSFormatPrint(p, "Wand Recharged!");
-			EntityEffects.playSound(p, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
+			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.AMBIENT);
 			PlayerData.subtractLuminite(p, rechargeCost);
 			wand.setMaxMana();
 			ItemStack returnedWand = wand.getAsItemStack();

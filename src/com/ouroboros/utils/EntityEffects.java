@@ -252,11 +252,9 @@ public class EntityEffects {
 			if (EntityCategories.undead.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType()))
 				data.kill();
 
-			else if (!EntityCategories.undead.contains(target.getType())
-					&& !EntityCategories.calamity.contains(target.getType())
-						&& !data.isBreak()) 
+			else if (!EntityCategories.undead.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType())) 
 			{
-				data.setBreak();
+				if (!data.isBreak()) data.setBreak();
 				add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
 			}
 		}
@@ -341,7 +339,7 @@ public class EntityEffects {
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> isVoidedRegistry.remove(target.getUniqueId()), seconds * 20);
 		OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
 		{
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.END_ROD,null);
+			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.SCULK_SOUL,null);
 		}, 20, seconds * 20);
 	}
 }

@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.celestio.AssertOrder;
+import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -28,7 +29,7 @@ public class CelestioSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new Revelio(), 10, this);
 		GuiButton.placeSpellButton(player, new AssertOrder(), 11, this);
 		GuiButton.placeSpellButton(player, new Protego(), 12, this);
-		
+		GuiButton.placeSpellButton(player, new Lumos(), 13, this);
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
 		{

@@ -3,6 +3,7 @@ package com.ouroboros.mobs.events;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -32,7 +33,7 @@ public class MobGenerateEvent implements Listener
 				}
 				
 				Entity entity = e.getEntity();
-				if (!(entity instanceof LivingEntity)) return;
+				if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) return;
 				
 				MobData.loadMobData(entity);
 				MobData data = MobData.getMob(entity.getUniqueId());
