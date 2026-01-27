@@ -25,7 +25,7 @@ public class Diffindo extends Spell
 
 	public Diffindo() 
 	{
-		super("Diffindo", "diffindo", Material.WIND_CHARGE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 150, 5, 
+		super("Diffindo", "diffindo", Material.WIND_CHARGE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 150, 5, false,
 				"&r&fConcentrate &d&lAero&r&f energy and expell it forward at a target",
 				"&r&fdealing 20&c♥&f of &e&lSever&r&f damage. Applies &dCharge &bI &fto self &7(10s)",
 				"&r&f&lRange&r&f: 30 &b&ometers&r&f","",

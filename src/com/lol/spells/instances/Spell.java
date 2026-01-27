@@ -36,9 +36,11 @@ public abstract class Spell
 	private int manacost;
 	private double cooldown;
 	private Rarity spellTier;
+	private boolean pvpCompatible;
 	private String[] spellDescription;
 	
-	public Spell(String name, String internalName, Material icon, SpellType sType, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, String...spellDescription)
+	public Spell(String name, String internalName, Material icon, SpellType sType, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, 
+			boolean pvpCompatible, String...spellDescription)
 	{
 		this.name = name;
 		this.internalName = internalName;
@@ -50,6 +52,7 @@ public abstract class Spell
 		this.manacost = manacost;
 		this.cooldown = cooldown;
 		this.spellDescription = spellDescription;
+		this.pvpCompatible = pvpCompatible;
 		
 		this.file = new File(getDataFolder(), "spells/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
@@ -71,6 +74,7 @@ public abstract class Spell
 		config.set("description", spellDescription);
 		config.set("manacost", manacost);
 		config.set("cooldown", cooldown);
+		config.set("pvpCompatible", pvpCompatible);
 	}
 	
 	public void save()
@@ -145,6 +149,10 @@ public abstract class Spell
 		return spellTier;
 	}
 
+	public boolean isPvpCombatible() {
+		return pvpCompatible;
+	}
+
 	public List<String> getLore() 
 	{
 		List<String> lore = new ArrayList<>();
@@ -174,6 +182,7 @@ public abstract class Spell
 		
 		if (toIcon)
 		{       
+			if (pvpCompatible) PrintUtils.assignPVPCompatible();
 			lore.add(PrintUtils.assignSpellType(sType));
 		    lore.add(PrintUtils.assignCastCondition(castCondition));
 		    lore.add("");        

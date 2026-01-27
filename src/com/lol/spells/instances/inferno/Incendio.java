@@ -21,7 +21,7 @@ public class Incendio extends Spell
 
 	public Incendio() 
 	{
-		super("Incendio", "incendio", Material.FIRE_CHARGE, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, 
+		super("Incendio", "incendio", Material.FIRE_CHARGE, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, false, 
 				"&r&fSummon concentrated &c&lInferno&r&f energy expelling it forward.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&c&oFireball&r&7&o', however, colloquially known as '&r&c&oIncendio&r&7&o'.");

@@ -35,6 +35,7 @@ public class PlayerData
 	protected File file;
 	private final YamlConfiguration config;
 	public static final int baseXP = 225, fundsIntegerMax = 99999999;
+	public static final int MAXMAGIC = 7;
 	public static final int maxLuminite = 9999;
 	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();

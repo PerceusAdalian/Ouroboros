@@ -29,7 +29,6 @@ public class SpellRegistry
         		Incendio.class,
         		Bombarda.class,
         		
-        		
         		//Glacio
         		Glacius.class,
         		

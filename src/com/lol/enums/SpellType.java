@@ -6,6 +6,9 @@ public enum SpellType
 	DEFENSIVE("&r&6&lDefensive&r&f"),
 	SUPPORT("&r&a&oSupport&r&f"),
 	UTILITY("&r&b&oUtility&r&f"),
+	CONTROL("&r&d&oControl&r&f"),
+	CURSE("&4&lCurse&r&f"),
+	HEX("&2&lHex&r&f"),
 	ULTIMATE("&r&e&lUltimate&r&f");
 
 	private final String spellType; 

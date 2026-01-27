@@ -29,6 +29,8 @@ import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
 import com.lol.wand.instances.Wand_1;
+import com.ouroboros.abilities.AbilityRegistry;
+import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
@@ -36,6 +38,7 @@ import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.menus.instances.magic.SpellBookPage;
+import com.ouroboros.menus.instances.magic.WandMainPage;
 import com.ouroboros.mobs.utils.InventoryUtils;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
@@ -171,6 +174,111 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
+			return true;
+		}
+		
+		if (args[0].equals("wand"))
+		{
+			GuiHandler.open(p, new WandMainPage(p));
+			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
+			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
+			return true;
+		}
+		
+		if (args[0].equals("register"))
+		{
+			if (!p.isOp()) 
+			{
+				PrintUtils.OBSFormatError(p, "Access Denied.");
+				return false;
+			}
+			
+			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]) && args.length == 5)
+			{
+				Spell spell = SpellRegistry.spellRegistry.get(args[2]);
+				Player target = Bukkit.getPlayer(args[3]);
+				if (target == null) return false;
+				boolean toggle = Boolean.parseBoolean(args[4]);
+				PlayerData.getPlayer(target.getUniqueId()).getSpell(spell).setRegistered(toggle);
+				PlayerData.getPlayer(target.getUniqueId()).save();
+				String registered = toggle ? " registered for " : " removed from ";
+				PrintUtils.OBSFormatDebug(p, "Spell: "+spell.getName()+registered+": "+target.getName());
+				PrintUtils.OBSFormatPrint(p, "The spell: "+spell.getName()+" \nhas been"+registered+"your account. \nPlease contact the system admin if you think this was done in error.");
+				return true;
+			}
+			
+			if (args[1].equals("ability") && AbilityRegistry.abilityRegistry.containsKey(args[2]) && args.length == 5)
+			{
+				AbstractOBSAbility ability = AbilityRegistry.abilityRegistry.get(args[2]);
+				Player target = Bukkit.getPlayer(args[3]);
+				if (target == null) return false;
+				boolean toggle = Boolean.parseBoolean(args[4]);
+				PlayerData.getPlayer(target.getUniqueId()).getAbility(ability).setRegistered(toggle).setActive(false);
+				PlayerData.getPlayer(target.getUniqueId()).save();
+				String registered = toggle ? " registered for " : " removed from ";
+				PrintUtils.OBSFormatDebug(p, "Ability: "+ability.getDisplayName()+registered+": "+target.getName());
+				PrintUtils.OBSFormatPrint(p, "The ability: "+ability.getDisplayName()+" \nhas been"+registered+"your account. \nPlease contact the system admin if you think this was done in error.");
+				return true;
+			}
+		}
+		
+		if (args[0].equals("registerAllMagic"))
+		{
+			if (!p.isOp()) 
+			{
+				PrintUtils.OBSFormatError(p, "Access Denied.");
+				return false;
+			}
+			Player target = Bukkit.getPlayer(args[1]);
+			if (target == null) return false;
+			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+			data.setMagicProficiency(PlayerData.MAXMAGIC);
+			for (Spell spell : SpellRegistry.spellRegistry.values())
+			{
+				data.getSpell(spell).setRegistered(true);
+			}
+			data.save();
+			PrintUtils.OBSFormatDebug(p, "All magic registered for: "+target.getName());
+			PrintUtils.OBSFormatPrint(target, "All magic has been registered for your account. \nYour Gnosis has been elevated to 7 (max).");
+			return true;
+		}
+		
+		if (args[0].equals("registerAllAbilities"))
+		{
+			if (!p.isOp()) 
+			{
+				PrintUtils.OBSFormatError(p, "Access Denied.");
+				return false;
+			}
+			Player target = Bukkit.getPlayer(args[1]);
+			if (target == null) return false;
+			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+			for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values())
+			{
+				data.getAbility(ability).setRegistered(true);
+			}
+			data.save();
+			PrintUtils.OBSFormatDebug(p, "All abilities registered for: "+target.getName());
+			PrintUtils.OBSFormatPrint(target, "All abilities have been registered for your account.");
+			return true;
+		}
+		
+		if (args[0].equals("setLuminite"))
+		{
+			if (!p.isOp())
+			{
+				PrintUtils.OBSFormatError(p, "Access Denied.");
+				return false;
+			}
+			Player target = Bukkit.getPlayer(args[1]);
+			if (target == null) return false;
+			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+			data.setLuminite(PlayerData.maxLuminite);
+			data.save();
+			PlayerHud.updateHud(target);
+			PrintUtils.OBSFormatDebug(p, "Maximum Luminite granted for: "+target.getName());
+			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Luminite. \nIf you believe this was done in error, contact the server admin.");
 			return true;
 		}
 		
@@ -521,15 +629,21 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats","generate","money","version","welcomekit", "spellbook", "recoverwand");
+			case 1 -> List.of("debug","menu","stats","generate","money","version","welcomekit", "spellbook", "recoverwand", "wand","register",
+					"registerAllAbilities","registerAllMagic","setLuminite");
 			case 2 -> 
 			{
 				yield switch(args[0])
 				{
+					case "registerAllAbilities" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					case "registerAllMagic" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					case "setLuminite" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "spellbook" -> List.of();
 					case "recoverwand" -> List.of();
+					case "wand" -> List.of();
 					case "debug" -> List.of();
 					case "menu" -> List.of();
+					case "register" -> List.of("spell","ability");
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
 					case "generate" -> List.of("object","spell");
 					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
@@ -541,6 +655,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
+					case "ability" -> new ArrayList<>(AbilityRegistry.abilityRegistry.keySet());
 					case "object" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
 					case "spell" -> new ArrayList<>(SpellRegistry.spellRegistry.keySet());
 					case "set" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
@@ -557,6 +672,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
+					case "ability" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					case "spell" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "set" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
 					case "addXp" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
 					case "add","subtract" -> List.of("value <= 99999999");
@@ -569,6 +686,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "addXp" -> List.of("<value>");
 					case "set" -> List.of("true","false");
+					case "spell" -> List.of("true", "false");
+					case "ability" -> List.of("true", "false");
 					default -> List.of();
 				};
 			}

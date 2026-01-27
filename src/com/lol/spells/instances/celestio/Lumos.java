@@ -36,20 +36,18 @@ public class Lumos extends Spell
 
 	public Lumos() 
 	{
-		super("Lumos", "lumos", Material.SUNFLOWER, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.ONE, 5, 1, 
+		super("Lumos", "lumos", Material.SUNFLOWER, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.ONE, 5, 1, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&fSummon a &e&lCelestio&r&f sprite to illuminate surroundings &7(60s)",
 				"&r&fRecast to trigger &b&oEchoic Dissonance&r&f, exploding the sprite",
-				"&r&fand applying &eExpose&f within &b&o10m&r&7 (15s)",
-				"&r&f&lSecondary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
+				"&r&fand applying &eExpose&f within &b&o10m&r&7 (15s)","",
+				"&r&b&lSecondary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
 				"&r&fCast a whisp of light at target block &7(30s)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&e&oIlluminate&r&7&o', however, colloquially known as '&r&e&oLumos&r&7&o'.");
 	}
 
 	private HashMap<UUID, LumosTask> activeLumos = new HashMap<>();
-	
-	//Disallow the player to left-click on crystal.
 	
 	@Override
 	public boolean Cast(PlayerInteractEvent e) 

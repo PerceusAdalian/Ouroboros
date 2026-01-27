@@ -25,7 +25,7 @@ public class Glacius extends Spell
 	public Glacius() 
 	{
 		
-		super("Glacius", "glacius", Material.TIPPED_ARROW, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1.5, 
+		super("Glacius", "glacius", Material.TIPPED_ARROW, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1.5, false,
 				"&r&fSummon and arrow laced with &b&lGlacio&r&f energy firing it forward.",
 				"&r&fProjectile applies &bFrosted I &7(10s)",
 				"&bFrosted&f Effect: &d&oSlows&r&f and &d&oWeakens&r&f those afflicted.","",

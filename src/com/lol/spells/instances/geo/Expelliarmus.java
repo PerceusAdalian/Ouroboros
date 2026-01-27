@@ -23,7 +23,7 @@ public class Expelliarmus extends Spell
 
 	public Expelliarmus() 
 	{
-		super("Expelliarmus", "expelliarmus", Material.LEAD, SpellType.UTILITY, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 45, 10, 
+		super("Expelliarmus", "expelliarmus", Material.LEAD, SpellType.CONTROL, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 45, 10, true,
 				"&r&fWhip your target within &b&o15 meters&r&f with a clump of hot sand and ash",
 				"&r&fin their eyes causing them to drop their on-hand item. Inflicts &6Sanded&7 (20s)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",

@@ -197,6 +197,11 @@ public class PrintUtils
 		return ColorParser("&r&f&lSpell Type&r&f: {"+ type1.getSpellType() + "&r&f | " + type2.getSpellType() + "&r&f}");
 	}
 	
+	public static String assignPVPCompatible()
+	{
+		return ColorParser("&r&7{ &c⚔&l PVP &r&c⚔ &7}");
+	}
+	
 	public static String getFancyEntityName(EntityType eType)
 	{
 		String inherentName = eType.toString().toLowerCase();

@@ -332,11 +332,11 @@ public class Wand
 	    {
 	        Spell currentSpell = spellSlots[spellIndex];
 	        existingLore.add(PrintUtils.ColorParser("&b&lEquipped Spell&r&f: "+currentSpell.getName()));
-	        existingLore.add(PrintUtils.ColorParser("&fDescription&r&f:"));
-	        existingLore.add("");
+	        existingLore.add(PrintUtils.ColorParser("&f&nDescription&r&f:"));
 	        existingLore.addAll(currentSpell.getLore()); // Add all spell lore lines
 	        existingLore.add("");
 	        existingLore.add(PrintUtils.ColorParser("&r&fOther Details:"));
+	        if (currentSpell.isPvpCombatible()) existingLore.add(PrintUtils.assignPVPCompatible());
 	        existingLore.add(PrintUtils.assignElementType(currentSpell.getElementType()));
 	        existingLore.add(PrintUtils.assignSpellType(currentSpell.getSpellType()));
 	        existingLore.add(PrintUtils.assignCastCondition(currentSpell.getCastCondition()));
