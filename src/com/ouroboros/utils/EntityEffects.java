@@ -262,9 +262,11 @@ public class EntityEffects {
 
 	public static Map<UUID, Boolean> hasDoom = new HashMap<>();
 	/**
-	 * @Description Mortio Signature Effect: Doom regenerates mortio-based mobs (undead, etc.) and marks celestio-based mobs (non-boss).  
-											 Marked mobs take 1.25x mortio damage, and reapplying Doom instantly kills them.
-											 Otherwise, Doom inflicts wither equal to its magnitude. Mortio mobs are healed instead.
+	 * @Description Mortio Signature Effect: 
+	 * Doom applies a DOT effect equal to it's magnitude. 
+	 * Afflicted take 1.25x Mortio damage, and reapplying instantly kills them (NONPVP).
+	 * Mortio-based mobs are otherwise unaffected, and healed instead.
+	 
 	 * @param target    (LivingEntity)
 	 * @param magnitude The stacks of doom that equate to the level of Wither (i.e.
 	 *                  0 = Wither 1)
@@ -272,52 +274,41 @@ public class EntityEffects {
 	 */
 	public static void addDoom(LivingEntity target, int magnitude, int seconds) 
 	{
-		MobData data = MobData.getMob(target.getUniqueId());
-		if (data != null) 
-		{
-			if (EntityCategories.mortio_mobs.contains(target.getType())) 
-			{
-				add(target, PotionEffectType.HUNGER, seconds * 20, 0, true);
-				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
-				{
-					data.heal(1, false, true, false);
-				}, 20, seconds * 20);
-				hasDoom.put(target.getUniqueId(), true);
-				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
-				{
-					if (!target.hasPotionEffect(PotionEffectType.HUNGER) || target.isDead())
-					{
-						r.cancel();
-						return;
-					}
-					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5,Particle.SCULK_SOUL, null);
-				}, 20, seconds * 20);
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> hasDoom.remove(target.getUniqueId()), seconds * 20);
-			} 
-			else if (EntityCategories.celestio_mobs.contains(target.getType()) && 
-						!EntityCategories.calamity.contains(target.getType()) &&
-							!hasDoom.containsKey(target.getUniqueId())) 
-			{
-				hasDoom.put(target.getUniqueId(), true);
-				add(target, PotionEffectType.WITHER, seconds * 20, magnitude, true);
-				OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
-				{
-					if (!target.hasPotionEffect(PotionEffectType.WITHER) || target.isDead())
-					{
-						r.cancel();
-						return;
-					}
-					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5,Particle.SCULK_SOUL, null);
-				}, 20, seconds * 20);
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance,() -> hasDoom.remove(target.getUniqueId()), seconds * 20);
-			} 
-			else if (hasDoom.containsKey(target.getUniqueId()) && !EntityCategories.mortio_mobs.contains(target.getType())) 
-			{
-				hasDoom.remove(target.getUniqueId());
-				data.kill();
-			} 
-		} 
-		else add(target, PotionEffectType.WITHER, seconds * 20, magnitude, false); // Not an OBS mob (legacy case) OR Is not a Mortio/Celestio mob.
+	    MobData data = MobData.getMob(target.getUniqueId());
+	    if (data == null) 
+	    {
+	        add(target, PotionEffectType.WITHER, seconds * 20, magnitude, false);
+	        return;
+	    }
+	    
+	    boolean isMortio = EntityCategories.mortio_mobs.contains(target.getType());
+	    UUID uuid = target.getUniqueId();
+	    
+	    if (hasDoom.containsKey(uuid)) 
+	    {
+	        hasDoom.remove(uuid);
+	        if (!isMortio) data.kill();
+	        return;
+	    }
+	    
+	    hasDoom.put(uuid, true);
+	    PotionEffectType effectType = isMortio ? PotionEffectType.HUNGER : PotionEffectType.WITHER;
+	    int effectMagnitude = isMortio ? 0 : magnitude;
+	    add(target, effectType, seconds * 20, effectMagnitude, true);
+	    
+	    int duration = seconds * 20;
+	    OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
+	    {
+	        if (!target.hasPotionEffect(effectType) || target.isDead()) 
+	        {
+	            r.cancel();
+	            return;
+	        }
+	        if (isMortio) data.heal(1, false, true, false);
+	        OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SCULK_SOUL, null);
+	    }, 20, duration);
+	    
+	    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> hasDoom.remove(uuid), duration);
 	}
 
 	/**
@@ -342,4 +333,13 @@ public class EntityEffects {
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.SCULK_SOUL,null);
 		}, 20, seconds * 20);
 	}
+	
+	public static void addWard(LivingEntity target, int magnitude, int seconds)
+	{
+		add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
+		add(target, PotionEffectType.FIRE_RESISTANCE, seconds * 20, 0, false);
+		add(target, PotionEffectType.RESISTANCE, seconds * 20, magnitude, false);
+		
+	}
+	
 }

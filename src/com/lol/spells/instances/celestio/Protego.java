@@ -6,7 +6,6 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffectType;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
@@ -36,10 +35,7 @@ public class Protego extends Spell
 		OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 7, 0.5, 0.5, Particle.ENCHANT, null);
 		
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		EntityEffects.add(p, PotionEffectType.ABSORPTION, 300, 2);
-		EntityEffects.add(p, PotionEffectType.FIRE_RESISTANCE, 300, 0);
-		EntityEffects.add(p, PotionEffectType.RESISTANCE, 300, 2);
-		
+		EntityEffects.addWard(p, 2, 300);
 		return true;
 	}
 

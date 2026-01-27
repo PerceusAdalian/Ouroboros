@@ -17,6 +17,7 @@ import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Incendio;
+import com.lol.spells.instances.mortio.Haunt;
 
 public class SpellRegistry 
 {
@@ -47,7 +48,7 @@ public class SpellRegistry
         		AssertOrder.class,
         		Lumos.class,
         		//Mortio
-        		
+        		Haunt.class,
         		
         		//Cosmo
         		ArrestoMomentum.class

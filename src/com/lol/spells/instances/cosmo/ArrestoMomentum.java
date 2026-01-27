@@ -83,13 +83,13 @@ public class ArrestoMomentum extends Spell implements Listener
 		        pTarget.setVelocity(new Vector(0,0,0));
 		        pTarget.teleport(frozenLoc);
 		        OBSParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 4, Particle.END_ROD, null);
-		    }, 1, 100);
+		    }, 1, 60);
 		    
 		    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
 		    {
 		        pTarget.setGravity(true);
 		        frozenPlayers.remove(pTarget.getUniqueId());
-		    }, 100L);
+		    }, 60L);
 		    return true;
 		}
 		return false;
