@@ -39,7 +39,6 @@ public class Levioso extends Spell
 		Entity target = RayCastUtils.getNearestEntity(p, 20);
 		if (target instanceof LivingEntity) 
 		{
-			OBSParticles.drawAeroCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.VIBRATION, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
@@ -52,7 +51,6 @@ public class Levioso extends Spell
 		}
 		else if(target == null)
 		{
-			OBSParticles.drawAeroCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
 			EntityEffects.add(p, PotionEffectType.LEVITATION, 200, 0, true);

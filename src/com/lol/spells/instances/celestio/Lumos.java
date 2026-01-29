@@ -93,7 +93,6 @@ public class Lumos extends Spell
 	        stand.setInvulnerable(true);
 	        stand.addPassenger(crystal);
 	        
-	        OBSParticles.drawCelestioCastSigil(p);
 	        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 	        
 	        activeLumos.put(p.getUniqueId(), new LumosTask(stand, crystal, startLumosTask(p, stand)));
@@ -106,7 +105,6 @@ public class Lumos extends Spell
 			Block block = e.getClickedBlock().getRelative(e.getBlockFace());
 			if (!block.getType().isAir()) return false;
 
-	        OBSParticles.drawCelestioCastSigil(p);
 	        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			
 	        block.setType(Material.LIGHT);

@@ -47,7 +47,6 @@ public class ArrestoMomentum extends Spell implements Listener
 		Entity target = RayCastUtils.getNearestEntity(p, 20);
 		if (!(target instanceof LivingEntity) || target == null) return false;
 		
-		OBSParticles.drawCosmoCastSigil(p);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);
 		OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 2, 10, 0.5, Particle.GLOW_SQUID_INK, null);
 		OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 8, 1, 0.5, Particle.ENCHANT, null);

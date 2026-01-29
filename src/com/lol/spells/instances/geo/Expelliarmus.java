@@ -48,7 +48,6 @@ public class Expelliarmus extends Spell
 		    if (heldItem.getType() == Material.AIR) return false;
 		}
 
-		OBSParticles.drawGeoCastSigil(p);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 2, 0.5, Particle.SMOKE, null);
 		EntityEffects.addSanded(living, 20);

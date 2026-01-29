@@ -3,6 +3,7 @@ package com.ouroboros.utils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -342,4 +343,39 @@ public class EntityEffects {
 		
 	}
 	
+	/**
+	 * @Description Heresio Signature Effect: Wildcard applies a random debuff on the target.
+	 */
+	public static class WildcardData 
+	{
+	    public final PotionEffectType effect;
+	    public final int magnitude;
+	    
+	    public WildcardData(PotionEffectType effect, int magnitude) 
+	    {
+	        this.effect = effect;
+	        this.magnitude = magnitude;
+	    }
+	}
+	
+	public static Map<UUID, WildcardData> isHexed = new HashMap<>();
+	
+	public static void addWildcard(LivingEntity target, int magnitude, int seconds)
+	{
+		PotionEffectType debuff = debuffs.iterator().next();
+		target.addPotionEffect(new PotionEffect(debuff, seconds * 20, magnitude, true, true, true));
+		isHexed.put(target.getUniqueId(), new WildcardData(debuff, magnitude));
+	}
+	
+	public static void addWildcard(LivingEntity target, int magnitude)
+	{
+		PotionEffectType debuff = debuffs.iterator().next();
+		target.addPotionEffect(new PotionEffect(debuff, PotionEffect.INFINITE_DURATION, magnitude, true, true, true));
+		isHexed.put(target.getUniqueId(), new WildcardData(debuff, magnitude));
+	}
+	
+	public static final Set<PotionEffectType> debuffs = Set.of(PotionEffectType.BLINDNESS, PotionEffectType.DARKNESS, PotionEffectType.HUNGER,
+			PotionEffectType.INFESTED, PotionEffectType.NAUSEA, PotionEffectType.OOZING, PotionEffectType.POISON, PotionEffectType.RAID_OMEN,
+			PotionEffectType.SLOWNESS, PotionEffectType.MINING_FATIGUE, PotionEffectType.TRIAL_OMEN, PotionEffectType.UNLUCK, 
+			PotionEffectType.WEAKNESS, PotionEffectType.WITHER, PotionEffectType.WEAVING);
 }

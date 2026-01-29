@@ -33,7 +33,6 @@ public class Revelio extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		OBSParticles.drawCelestioCastSigil(p);
 		if (!RayCastUtils.getNearbyEntities(p, 30, (target)->
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);

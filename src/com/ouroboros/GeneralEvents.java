@@ -6,16 +6,27 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.hud.PlayerHud;
+import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.EntityEffects.WildcardData;
+import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 
 public class GeneralEvents implements Listener
@@ -57,11 +68,55 @@ public class GeneralEvents implements Listener
         		PlayerHud.createHud(p);
         	}
         	
-        	
         	@EventHandler
         	public void onDeath(PlayerDeathEvent e)
         	{
         		playerDeathRegistry.put(e.getEntity().getUniqueId(), System.currentTimeMillis());
+        	}
+        	
+        	@EventHandler
+        	public void itemUseEvent(PlayerInteractEvent e)
+        	{
+        		Player p = e.getPlayer();
+        		
+        		if (PlayerActions.rightClickAir(e) && p.getEquipment().getItemInMainHand().getType().equals(Material.MILK_BUCKET))
+        		{
+        			if (EntityEffects.isHexed.containsKey(p.getUniqueId()))
+        			{
+        				e.setCancelled(true);
+        				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
+						OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.SCULK_SOUL, null);
+						OBSParticles.drawHeresioCastSigil(p);
+						PrintUtils.PrintToActionBar(p, "&2&oThe Hex Worsens..");
+						EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
+						
+        				WildcardData data = EntityEffects.isHexed.get(p.getUniqueId());
+						p.removePotionEffect(data.effect);
+						EntityEffects.add(p, data.effect, PotionEffect.INFINITE_DURATION, data.magnitude == 9 ? 9 : data.magnitude+1, true);
+						EntityEffects.isHexed.put(p.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude+1));
+						return;
+        			}
+        		}
+        	}
+        	
+        	@EventHandler
+        	public void playerRespawn(PlayerRespawnEvent e)
+        	{
+        		Player p = e.getPlayer();
+        		if (EntityEffects.isHexed.containsKey(p.getUniqueId()))
+        		{
+        			PrintUtils.PrintToActionBar(p, "&2&oThe Hex Came Back!");
+        			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+        			{        				
+        				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
+        				OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.SCULK_SOUL, null);
+        				OBSParticles.drawHeresioCastSigil(p);
+        				EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
+        				
+        				WildcardData data = EntityEffects.isHexed.get(p.getUniqueId());
+        				p.addPotionEffect(new PotionEffect(data.effect, PotionEffect.INFINITE_DURATION, data.magnitude, true, true, true));
+        			}, 20);
+        		}
         	}
         	
         	@EventHandler

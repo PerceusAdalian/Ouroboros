@@ -81,7 +81,7 @@ public class Ouroboros extends JavaPlugin
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());
-		PrintUtils.OBSConsolePrint("&fOuroboros -- &aOK");
+		PrintUtils.OBSConsolePrint("&fΩuroboros -- &aOK");
 	}
 	
 	@Override
@@ -102,7 +102,7 @@ public class Ouroboros extends JavaPlugin
 				le.remove();
 			}
 		}
-		PrintUtils.OBSConsolePrint("&fOuroboros -- &b&oDisabling..");
+		PrintUtils.OBSConsolePrint("&fΩuroboros -- &b&oDisabling..");
 	}
 }
 

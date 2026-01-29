@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
@@ -121,6 +122,7 @@ public class SpellCastHandler implements Listener
 					EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
 				PlayerData.addXP(p, StatType.MAGIC, wand.getSpell(wand.getSpellIndex()).getManacost());
 				
+				playCastSigil(p, wand.getSpell(wand.getSpellIndex()).getElementType());
 				wand.subtractMana(wand.getSpell(wand.getSpellIndex()).getManacost());
 				cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
@@ -135,5 +137,21 @@ public class SpellCastHandler implements Listener
 			return;
 		}
 		return;
+	}
+	
+	private static void playCastSigil(Player player, SpellementType sType)
+	{
+		switch (sType)
+		{
+		case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
+		case AERO -> OBSParticles.drawAeroCastSigil(player);
+		case COSMO -> OBSParticles.drawCosmoCastSigil(player);
+		case GEO -> OBSParticles.drawGeoCastSigil(player);
+		case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
+		case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
+		case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
+		case MORTIO -> OBSParticles.drawMortioCastSigil(player);
+		default -> throw new IllegalArgumentException("Unexpected value: " + sType);
+		}
 	}
 }

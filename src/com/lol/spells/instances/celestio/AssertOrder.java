@@ -49,9 +49,7 @@ public class AssertOrder extends Spell
 	{
 		Player p = (Player) e.getPlayer();
 		
-		OBSParticles.drawCelestioCastSigil(p);
 		EntityEffects.playSound(p, Sound.ENTITY_WARDEN_SONIC_CHARGE, SoundCategory.AMBIENT);
-		
 		playersDamageMap.put(p.getUniqueId(), 0.0d);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
@@ -62,8 +60,7 @@ public class AssertOrder extends Spell
 		    
 		    if (currentHealth >= maxHealth) return;
 		    
-		    EntityEffects.playSound(p, Sound.BLOCK_BELL_RESONATE, SoundCategory.AMBIENT);
-		    OBSParticles.drawCelestioCastSigil(p);
+		    EntityEffects.playSound(p, Sound.BLOCK_BELL_USE, SoundCategory.AMBIENT);
 		    
 		    double overHealth = storedHealth - currentHealth;
 		    if (overHealth > 0.0) 

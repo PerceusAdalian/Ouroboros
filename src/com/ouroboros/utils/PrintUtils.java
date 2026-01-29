@@ -218,6 +218,30 @@ public class PrintUtils
 		return inherentName;
 	}
 	
+	public static String formatEnumName(String internalName) 
+	{
+
+		if (internalName.contains(".")) 
+		{
+			internalName = internalName.substring(internalName.lastIndexOf(".") + 1);
+		} 
+		else if (internalName.contains(":")) 
+		{
+			internalName = internalName.substring(internalName.lastIndexOf(":") + 1);
+		}
+		
+		String[] words = internalName.split("_");
+		StringBuilder result = new StringBuilder();
+		
+		for (String word : words) 
+		{
+			if (result.length() > 0) result.append(" ");
+			result.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1).toLowerCase());
+		}
+		
+		return result.toString();
+	}
+	
 	public static String assignRarity(Rarity rarity)
 	{
 		char color = switch (rarity) 
