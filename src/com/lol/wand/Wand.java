@@ -126,6 +126,11 @@ public class Wand
 		return spellIndex;
 	}
 	
+	public void setSpellIndex(int slot)
+	{
+		spellIndex = slot;
+	}
+	
 	public void removeSpell(int slot)
 	{
 		spellSlots[slot] = null;
@@ -234,6 +239,26 @@ public class Wand
 		return null;
 	}
 	
+	public int getNextSpellSlot()
+	{
+		int nextSlot = spellIndex;
+		int count = 0;
+		while (count < getCurrentMaxSpellSlots())
+		{
+			nextSlot++;
+			count++;
+			
+			if (nextSlot > getCurrentMaxSpellSlots() - 1) nextSlot = 0;
+			
+			Spell spell = spellSlots[nextSlot];
+			
+			if (spell == null) continue;
+			
+			return nextSlot;
+		}
+		return 0;
+	}
+	
 	public void rotateSpells()
 	{
 		int nextSlot = spellIndex;
@@ -331,7 +356,8 @@ public class Wand
 	    if (spellSlots[spellIndex] != null) 
 	    {
 	        Spell currentSpell = spellSlots[spellIndex];
-	        existingLore.add(PrintUtils.ColorParser("&b&lEquipped Spell&r&f: "+currentSpell.getName()));
+	        existingLore.add(PrintUtils.ColorParser("&b&lEquipped Spell&r&f: "+currentSpell.getName()+
+	        		"&r&7 {"+PrintUtils.rarityToString(currentSpell.getRarity())+"&r&7}"));
 	        existingLore.add(PrintUtils.ColorParser("&f&nDescription&r&f:"));
 	        existingLore.addAll(currentSpell.getLore()); // Add all spell lore lines
 	        existingLore.add("");
@@ -345,7 +371,7 @@ public class Wand
 	    
 	    existingLore.add("");
 	    existingLore.add(PrintUtils.ColorParser("&r&9Mana Capacity&f: ") + currentMana + PrintUtils.ColorParser("&r&f/") + maxMana);
-	    existingLore.add(PrintUtils.ColorParser("&r&d&oLeft-Click&r&f to cycle spells"));
+	    existingLore.add(PrintUtils.ColorParser("&r&d&oLeft-Click&r&f to cycle spells &7| &d&oShift_Left-Click&r&f to remove spells"));
 	    // Finally, set the combined lore at the end
 	    meta.setLore(existingLore);
 	    stack.setItemMeta(meta);

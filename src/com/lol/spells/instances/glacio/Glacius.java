@@ -26,7 +26,7 @@ public class Glacius extends Spell
 	{
 		
 		super("Glacius", "glacius", Material.TIPPED_ARROW, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1.5, false,
-				"&r&fSummon and arrow laced with &b&lGlacio&r&f energy firing it forward.",
+				"&r&fSummon an arrow laced in frost firing it forward.",
 				"&r&fProjectile applies &bFrosted I &7(10s)",
 				"&bFrosted&f Effect: &d&oSlows&r&f and &d&oWeakens&r&f those afflicted.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",

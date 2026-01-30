@@ -58,7 +58,6 @@ public class RayCastUtils
 	    
 	    if (nearbyEntities.isEmpty()) 
 	    {
-	        PrintUtils.OBSFormatError(source, "No targets found.");
 	        return false;
 	    }
 

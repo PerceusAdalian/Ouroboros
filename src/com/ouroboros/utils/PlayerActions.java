@@ -44,4 +44,9 @@ public class PlayerActions
 	{
 		return e.getPlayer().isSneaking() && e.getAction().equals(Action.LEFT_CLICK_BLOCK);
 	}
+	
+	public static boolean anyAction(PlayerInteractEvent e)
+	{
+		return e.getAction() != null && e.getAction() != Action.PHYSICAL;
+	}
 }

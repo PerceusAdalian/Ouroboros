@@ -173,6 +173,14 @@ public class AffinityRegistry
             EnumSet.noneOf(ElementType.class)
         ));
 
+        // Zombie Nautilus
+        AFFINITIES.put(EntityType.ZOMBIE_NAUTILUS, new MobAffinity(
+            EnumSet.of(ElementType.BLUNT),
+            EnumSet.of(ElementType.PIERCE, ElementType.CELESTIO),
+            EnumSet.of(ElementType.MORTIO)
+        ));
+        
+        
         // Drowned
         AFFINITIES.put(EntityType.DROWNED, new MobAffinity(
             EnumSet.of(ElementType.INFERNO), 
@@ -287,9 +295,9 @@ public class AffinityRegistry
 
         // Llama
         AFFINITIES.put(EntityType.LLAMA, new MobAffinity(
-			EnumSet.of(ElementType.GEO),
-			EnumSet.noneOf(ElementType.class),
-			EnumSet.noneOf(ElementType.class)
+			EnumSet.of(ElementType.BLUNT),
+			EnumSet.of(ElementType.PIERCE),
+			EnumSet.of(ElementType.GEO)
                 
         ));
 
@@ -309,9 +317,9 @@ public class AffinityRegistry
 
         // Mule
         AFFINITIES.put(EntityType.MULE, new MobAffinity(
-            EnumSet.noneOf(ElementType.class),
-            EnumSet.noneOf(ElementType.class),
-            EnumSet.noneOf(ElementType.class)
+            EnumSet.of(ElementType.BLUNT),
+            EnumSet.of(ElementType.PIERCE),
+            EnumSet.of(ElementType.GEO)
         ));
 
     	// Ocelot
@@ -327,6 +335,12 @@ public class AffinityRegistry
             EnumSet.of(ElementType.COSMO),
             EnumSet.of(ElementType.CELESTIO)
         ));
+        
+        //Nautilus
+        AFFINITIES.put(EntityType.NAUTILUS, new MobAffinity(
+        		EnumSet.of(ElementType.BLUNT),
+        		EnumSet.of(ElementType.PIERCE, ElementType.GLACIO, ElementType.CRUSH),
+        		EnumSet.of(ElementType.AERO, ElementType.BLAST)));
         
         // Polar Bear
         AFFINITIES.put(EntityType.POLAR_BEAR, new MobAffinity(

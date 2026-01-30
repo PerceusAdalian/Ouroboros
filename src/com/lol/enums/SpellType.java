@@ -7,7 +7,8 @@ public enum SpellType
 	SUPPORT("&r&a&oSupport&r&f"),
 	UTILITY("&r&b&oUtility&r&f"),
 	CONTROL("&r&d&oControl&r&f"),
-	CURSE("&4&lCurse&r&f"),
+	BUFF("&r&6&oBuff&r&f"),
+	CURSE("&r&4&oCurse&r&f"),
 	HEX("&2&lHex&r&f"),
 	ULTIMATE("&r&e&lUltimate&r&f");
 

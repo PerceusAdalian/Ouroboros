@@ -27,6 +27,8 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -85,16 +87,24 @@ public class SpellCastHandler implements Listener
 		Wand wand = new Wand(held);
 		
 		if (!wand.hasSpell(wand.getSpellIndex())) return;
-				
+		
+		if (CastConditions.isValidAction(e, CastConditions.SHIFT_LEFT_CLICK_AIR))
+		{
+			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
+			CollectWandData.pageController.put(p.getUniqueId(), "removespell");
+			GuiHandler.open(p, new CollectWandData(p));
+			return;
+		}
 		if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
 		{
 			if (wand.getNextSpell() == null) return;
 			wand.rotateSpells();
 			p.getInventory().setItemInMainHand(wand.getAsItemStack());
 			PrintUtils.PrintToActionBar(p, "&b&lEquipped Spell&r&f: "+wand.getSpell(wand.getSpellIndex()).getName());
+			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NAUTILUS, SoundCategory.AMBIENT);
 			return;
 		}
-		else if (wand.getCurrentMana() > 0 && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
+		else if (wand.getCurrentMana() >= wand.getSpell(wand.getSpellIndex()).getManacost() && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
 		{
 			
 			if (cooldownPlayers.containsKey(p.getUniqueId()) && cooldownPlayers.containsValue(wand.getSpell(wand.getSpellIndex())))

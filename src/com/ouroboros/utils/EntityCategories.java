@@ -27,7 +27,7 @@ public class EntityCategories
 			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.VEX,EntityType.VILLAGER,EntityType.VINDICATOR,
 			EntityType.WANDERING_TRADER,EntityType.WARDEN,EntityType.WITCH,EntityType.WITHER,EntityType.WITHER_SKELETON,
 			EntityType.WOLF,EntityType.ZOGLIN,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,EntityType.ZOMBIE_VILLAGER,
-			EntityType.ZOMBIFIED_PIGLIN);
+			EntityType.ZOMBIFIED_PIGLIN, EntityType.NAUTILUS, EntityType.ZOMBIE_NAUTILUS);
 	
 	public static final Set<EntityType> living = EnumSet.of(
 			EntityType.ALLAY,EntityType.ARMADILLO,EntityType.AXOLOTL,EntityType.BAT,EntityType.BEE,
@@ -37,15 +37,15 @@ public class EntityCategories
 			EntityType.MULE,EntityType.OCELOT,EntityType.PANDA,EntityType.PARROT,EntityType.PIG,EntityType.PILLAGER,EntityType.POLAR_BEAR,EntityType.PUFFERFISH,
 			EntityType.RABBIT,EntityType.RAVAGER,EntityType.SALMON,EntityType.SHEEP,EntityType.SILVERFISH,EntityType.SLIME,EntityType.SNIFFER,EntityType.SPIDER,EntityType.SQUID,
 			EntityType.TADPOLE,EntityType.TRADER_LLAMA,EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.VILLAGER,EntityType.VINDICATOR,EntityType.WANDERING_TRADER,EntityType.WITCH,
-			EntityType.WOLF);
+			EntityType.WOLF, EntityType.NAUTILUS);
 	
 	public static final Set<EntityType> undead = EnumSet.of(EntityType.DROWNED,EntityType.GHAST,EntityType.GIANT,EntityType.HAPPY_GHAST,EntityType.PHANTOM,EntityType.SKELETON,
 			EntityType.SKELETON_HORSE,EntityType.STRAY,EntityType.VEX,EntityType.WITHER,EntityType.WITHER_SKELETON,EntityType.ZOGLIN,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,
-			EntityType.ZOMBIE_VILLAGER,EntityType.ZOMBIFIED_PIGLIN,EntityType.HUSK);
+			EntityType.ZOMBIE_VILLAGER,EntityType.ZOMBIFIED_PIGLIN,EntityType.HUSK, EntityType.ZOMBIE_NAUTILUS);
 
 	public static final Set<EntityType> aquatic = EnumSet.of(EntityType.BOGGED,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN,EntityType.DROWNED,
 			EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.FROG,
-			EntityType.TROPICAL_FISH,EntityType.TURTLE);
+			EntityType.TROPICAL_FISH,EntityType.TURTLE, EntityType.NAUTILUS, EntityType.ZOMBIE_NAUTILUS);
 	
 	public static final Set<EntityType> flying = EnumSet.of(EntityType.ALLAY,EntityType.BAT,EntityType.BEE,EntityType.BLAZE,EntityType.BREEZE,EntityType.CHICKEN,
 			EntityType.ENDER_DRAGON,EntityType.GHAST,EntityType.HAPPY_GHAST,EntityType.PARROT,EntityType.PHANTOM,EntityType.VEX,EntityType.WITHER);
@@ -66,13 +66,13 @@ public class EntityCategories
 	
 	public static final Set<EntityType> mortio_mobs = EnumSet.of(EntityType.DROWNED,EntityType.CREEPER,EntityType.GHAST,EntityType.GIANT,EntityType.SKELETON,
 			EntityType.SKELETON_HORSE,EntityType.STRAY,EntityType.VEX,EntityType.WITHER,EntityType.WITHER_SKELETON,EntityType.ZOGLIN,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,
-			EntityType.ZOMBIE_VILLAGER,EntityType.ZOMBIFIED_PIGLIN,EntityType.HUSK,EntityType.BAT);
+			EntityType.ZOMBIE_VILLAGER,EntityType.ZOMBIFIED_PIGLIN,EntityType.HUSK,EntityType.BAT,EntityType.ZOMBIE_NAUTILUS);
 	
 	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.MAGMA_CUBE,EntityType.PIGLIN,EntityType.ZOGLIN,EntityType.HOGLIN,EntityType.STRIDER);
 	
 	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.BOGGED,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN,EntityType.DROWNED,
 			EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.FROG,
-			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.STRAY,EntityType.POLAR_BEAR,EntityType.FOX,EntityType.PANDA);
+			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.STRAY,EntityType.POLAR_BEAR,EntityType.FOX,EntityType.PANDA, EntityType.NAUTILUS);
 	
 	public static final Set<EntityType> aero_mobs = EnumSet.of(EntityType.BAT,EntityType.BEE,EntityType.BREEZE,EntityType.CHICKEN,
 			EntityType.GHAST,EntityType.HAPPY_GHAST,EntityType.PARROT,EntityType.VEX);

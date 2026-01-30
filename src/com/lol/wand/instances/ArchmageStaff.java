@@ -8,7 +8,7 @@ public class ArchmageStaff extends Wand
 
 	public ArchmageStaff() 
 	{
-		super("Archmage's Staff", Rarity.FIVE, 5, 1500);
+		super("&b&oArchmage's Staff&r&f", Rarity.FIVE, 5, 1500);
 	}
 	
 }

@@ -47,11 +47,13 @@ public class CollectWandData extends AbstractOBSGui
 				wandCollector.put(p.getUniqueId(), new Wand(stack));
 				p.setItemOnCursor(null);
 				if (pageController.get(p.getUniqueId()).equals("spellselect"))
-					GuiHandler.changeMenu(p, new SetSpellPage(p));
+					GuiHandler.changeMenu(p, new WandViewPage(p));
 				else if (pageController.get(p.getUniqueId()).equals("upgrade"))
 					GuiHandler.changeMenu(p, new WandUpgradePage(p));
 				else if (pageController.get(p.getUniqueId()).equals("recharge"))
 					GuiHandler.changeMenu(p, new WandRechargePage(p));
+				else if (pageController.get(p.getUniqueId()).equals("removespell"))
+					GuiHandler.changeMenu(p, new WandViewPage(p));
 				return;
 			}
 			PrintUtils.OBSFormatError(p, "Invalid Object Detected... Cancelling operation, please try again.");

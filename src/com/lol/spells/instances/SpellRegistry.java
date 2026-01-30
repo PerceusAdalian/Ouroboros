@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Levioso;
+import com.lol.spells.instances.aero.Smite;
+import com.lol.spells.instances.aero.Thunderbolt;
+import com.lol.spells.instances.aero.Thunderstorm;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
@@ -40,7 +44,10 @@ public class SpellRegistry
         		//Aero
         		Diffindo.class,
         		Levioso.class,
-        		
+        		Smite.class,
+        		Thunderbolt.class,
+        		Charge.class,
+        		Thunderstorm.class,
         		
         		//Geo
         		Expelliarmus.class,
