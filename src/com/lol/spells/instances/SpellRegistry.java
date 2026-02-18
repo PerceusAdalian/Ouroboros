@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Thunderbolt;
@@ -48,6 +49,7 @@ public class SpellRegistry
         		Thunderbolt.class,
         		Charge.class,
         		Thunderstorm.class,
+        		GalvanicNeedle.class,
         		
         		//Geo
         		Expelliarmus.class,

@@ -15,6 +15,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Trident;
+import org.bukkit.entity.WindCharge;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -75,6 +76,8 @@ public class MobDamageEvent implements Listener
 						element = ElementType.ARCANO;
 					else if (dmgEvent.getDamager() instanceof Fireball fb && fb.getShooter() instanceof Player)
 						element = ElementType.INFERNO;
+					else if (dmgEvent.getDamager() instanceof WindCharge wc && wc.getShooter() instanceof Player)
+						element = ElementType.AERO;
 					else 
 					{
 						ItemStack held = p.getPlayer().getInventory().getItem(EquipmentSlot.HAND);

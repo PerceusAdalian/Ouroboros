@@ -89,83 +89,61 @@ public class WandViewPage extends AbstractOBSGui
 	            if (wandSpell == null)
 	            {
 	                // Empty slot - allow assignment
-	            	
-	            	if (isRemoving)
-	            	{
-	            		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
-	            		.setName("&r&fEmpty Slot #"+(i+1))
-	            		.setLore("&r&fThis slot is empty.")
-	            		.place(gui, guiSlot, e ->
-	            		{
-	            			Player p = (Player) e.getWhoClicked();
-	            			e.setCancelled(true);
+	            	char spellColor = PrintUtils.getElementTypeColor(spell.getElementType());
+            		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
+            		.setName("&r&fEmpty Slot #"+(i+1))
+            		.setLore(!isRemoving ? "&r&fThis slot is empty. Click to assign &" + spellColor + spell.getName() + "&f to this slot" : "&r&fThis slot is empty.")
+            		.place(gui, guiSlot, e ->
+            		{
+            			Player p = (Player) e.getWhoClicked();
+            			if (!isRemoving)
+            			{
+            				EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
+            				wand.setSpell(spell, selectedSlot);
+            				ItemStack stack = wand.getAsItemStack();
+            				p.getInventory().addItem(stack);	            				
+            			}
+            			else
+            			{
+            				e.setCancelled(true);
 	            			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.AMBIENT);
-	            		});
-	            	}
-	            	else
-	            	{	            		
-	            		char spellColor = PrintUtils.getElementTypeColor(spell.getElementType());
-	            		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
-	            		.setName("&r&fEmpty Slot #"+(i+1))
-	            		.setLore("&r&fThis slot is empty. Click to assign &" + spellColor + spell.getName() + "&f to this slot")
-	            		.place(gui, guiSlot, e ->
-	            		{
-	            			Player p = (Player) e.getWhoClicked();
-	            			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
-	            			wand.setSpell(spell, selectedSlot);
-	            			ItemStack stack = wand.getAsItemStack();
-	            			p.getInventory().addItem(stack);
-	            			CollectWandData.wandCollector.remove(p.getUniqueId());
-	            			GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-	            			CollectWandData.pageController.remove(p.getUniqueId());
-	            			GuiHandler.close(p);
-	            		});
-	            	}
+            			}
+            			CollectWandData.wandCollector.remove(p.getUniqueId());
+            			GuiButton.spellActivateConfirm.remove(p.getUniqueId());
+            			CollectWandData.pageController.remove(p.getUniqueId());
+            			GuiHandler.close(p);
+            		});
 	            }
 	            else
 	            {
-	            	if (isRemoving)
-	            	{
-	            		// Occupied slot - allow removal
-	            		char spellColor = PrintUtils.getElementTypeColor(wandSpell.getElementType());
-	            		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
-	            		.setName("&r&fFull Slot #" + (i+1) + " [&"+spellColor + wandSpell.getName() + "&f]")
-	            		.setLore("&r&fThis slot is in use. Click to remove it?")
-	            		.place(gui, guiSlot, e ->
-	            		{
-	            			Player p = (Player) e.getWhoClicked();
-	            			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
-	            			wand.removeSpell(selectedSlot);
-	            			wand.setSpellIndex(wand.getNextSpellSlot());
-	            			ItemStack stack = wand.getAsItemStack();
-	            			p.getInventory().addItem(stack);
-	            			CollectWandData.wandCollector.remove(p.getUniqueId());
-	            			GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-	            			CollectWandData.pageController.remove(p.getUniqueId());
-	            			GuiHandler.close(p);
-	            		});
-	            	}
-	            	else
-	            	{	            		
-	            		// Occupied slot - allow replacement
-	            		char spell1 = PrintUtils.getElementTypeColor(wandSpell.getElementType());
-	            		char spell2 = PrintUtils.getElementTypeColor(spell.getElementType());
-	            		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
-	            		.setName("&r&fFull Slot #" + (i+1) + " [&"+spell1 + wandSpell.getName() + "&f]")
-	            		.setLore("&r&fThis slot is in use. Click to replace &" + spell1 + wandSpell.getName() + " &fwith &" + spell2 + spell.getName() + "&f?")
-	            		.place(gui, guiSlot, e ->
-	            		{
-	            			Player p = (Player) e.getWhoClicked();
-	            			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
-	            			wand.setSpell(spell, selectedSlot);
-	            			ItemStack stack = wand.getAsItemStack();
-	            			p.getInventory().addItem(stack);
-	            			CollectWandData.wandCollector.remove(p.getUniqueId());
-	            			GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-	            			CollectWandData.pageController.remove(p.getUniqueId());
-	            			GuiHandler.close(p);
-	            		});
-	            	}
+	            	char spellColor = PrintUtils.getElementTypeColor(wandSpell.getElementType());
+	            	String slotName = "&r&fFull Slot #" + (i+1) + " [&" + spellColor + wandSpell.getName() + "&f]";
+	            	String lore = isRemoving 
+	            	    ? "&r&fThis slot is in use. Click to remove it?"
+	            	    : "&r&fThis slot is in use. Click to replace &" + spellColor + wandSpell.getName() + 
+	            	      " &fwith &" + PrintUtils.getElementTypeColor(spell.getElementType()) + spell.getName() + "&f?";
+
+	            	GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
+            	    .setName(slotName)
+            	    .setLore(lore)
+            	    .place(gui, guiSlot, e -> 
+            	    {
+            	        Player p = (Player) e.getWhoClicked();
+            	        EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
+            	        
+            	        if (isRemoving) {
+            	            wand.removeSpell(selectedSlot);
+            	            wand.setSpellIndex(wand.getNextSpellSlot());
+            	        } else {
+            	            wand.setSpell(spell, selectedSlot);
+            	        }
+            	        
+            	        p.getInventory().addItem(wand.getAsItemStack());
+            	        CollectWandData.wandCollector.remove(p.getUniqueId());
+            	        GuiButton.spellActivateConfirm.remove(p.getUniqueId());
+            	        CollectWandData.pageController.remove(p.getUniqueId());
+            	        GuiHandler.close(p);
+            	    });
 	            }
 	        }
 	        else
