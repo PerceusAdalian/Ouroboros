@@ -29,14 +29,14 @@ public class Haunt extends Spell
 
 	public Haunt() 
 	{
-		super("Haunt", "haunt", Material.WITHER_ROSE, SpellType.ULTIMATE, SpellementType.MORTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.FIVE, 250, 180, true,
+		super("Haunt", "haunt", Material.WITHER_ROSE, SpellType.ULTIMATE, SpellementType.MORTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.FIVE, 200, 180, true,
 				"&r&fReturn to last death location and apply &e&oWard&r&b III &7(15s)",
 				"&r&c&lPVP&r&f: Summon yourself to your oppressor and inflict &4Doom&r &bIII &7(20s)",
 				"&r&fAs an additional cost, return at &b&o75% &r&cHP&f. Must be cast within &b&o30s&r&f of death.",
 				"&r&fIf the summoning fails, the normal effect takes place.","",
-				"&r&4Doom &eEffect&f: Doom applies a DOT effect equal to it's magnitude.",
-				"&r&fAfflicted take &b&o1.25x &r&4&lMortio&r&f damage, and reapplying instantly kills them &7(&cNONPVP&r&7)",
-				"&r&4&lMortio&r&f-based mobs are otherwise unaffected, and healed instead.");
+				"&r&4Doom &eEffect&f: Doom applies a &dDOT&f effect equal to it's &b&omagnitude&r&f.",
+				"&r&fAfflicted take &b&o1.25x &r&4&lMortio&r&f damage, and reapplying instantly kills them &7(NONPVP)",
+				"&r&4&lMortio&r&f-based mobs are otherwise unaffected, and &a&ohealed&r&f instead.");
 		
 	}
 

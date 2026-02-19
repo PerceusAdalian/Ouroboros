@@ -41,7 +41,7 @@ public class Lumos extends Spell
 				"&r&fSummon a &e&lCelestio&r&f sprite to illuminate surroundings &7(60s)",
 				"&r&fRecast to trigger &b&oEchoic Dissonance&r&f, exploding the sprite",
 				"&r&fand applying &eExpose&f within &b&o10m&r&7 (15s)","",
-				"&r&b&lSecondary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
+				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
 				"&r&fCast a whisp of light at target block &7(30s)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&e&oIlluminate&r&7&o', however, colloquially known as '&r&e&oLumos&r&7&o'.");

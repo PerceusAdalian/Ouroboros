@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Trident;
 import org.bukkit.entity.WindCharge;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -78,6 +79,8 @@ public class MobDamageEvent implements Listener
 						element = ElementType.INFERNO;
 					else if (dmgEvent.getDamager() instanceof WindCharge wc && wc.getShooter() instanceof Player)
 						element = ElementType.AERO;
+					else if (dmgEvent.getDamager() instanceof WitherSkull ws && ws.getShooter() instanceof Player)
+						element = ElementType.MORTIO;
 					else 
 					{
 						ItemStack held = p.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
@@ -93,7 +96,7 @@ public class MobDamageEvent implements Listener
 						dmg *= 1.1;
 						target.setFireTicks(100);
 					}
-
+					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else 

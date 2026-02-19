@@ -267,6 +267,7 @@ public class MobData
 		
 		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
 		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
+		if (EntityEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;

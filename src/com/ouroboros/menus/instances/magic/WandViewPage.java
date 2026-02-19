@@ -89,10 +89,14 @@ public class WandViewPage extends AbstractOBSGui
 	            if (wandSpell == null)
 	            {
 	                // Empty slot - allow assignment
-	            	char spellColor = PrintUtils.getElementTypeColor(spell.getElementType());
+	            	String lore = isRemoving
+	            	        ? "&r&fThis slot is empty."
+	            	        : "&r&fThis slot is empty. Click to assign &" + 
+	            	          PrintUtils.getElementTypeColor(spell.getElementType()) + spell.getName() + "&f to this slot";
+	            	
             		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
             		.setName("&r&fEmpty Slot #"+(i+1))
-            		.setLore(!isRemoving ? "&r&fThis slot is empty. Click to assign &" + spellColor + spell.getName() + "&f to this slot" : "&r&fThis slot is empty.")
+            		.setLore(lore)
             		.place(gui, guiSlot, e ->
             		{
             			Player p = (Player) e.getWhoClicked();
@@ -117,12 +121,12 @@ public class WandViewPage extends AbstractOBSGui
 	            else
 	            {
 	            	char spellColor = PrintUtils.getElementTypeColor(wandSpell.getElementType());
-	            	String slotName = "&r&fFull Slot #" + (i+1) + " [&" + spellColor + wandSpell.getName() + "&f]";
-	            	String lore = isRemoving 
-	            	    ? "&r&fThis slot is in use. Click to remove it?"
-	            	    : "&r&fThis slot is in use. Click to replace &" + spellColor + wandSpell.getName() + 
-	            	      " &fwith &" + PrintUtils.getElementTypeColor(spell.getElementType()) + spell.getName() + "&f?";
-
+	                String slotName = "&r&fFull Slot #" + (i+1) + " [&" + spellColor + wandSpell.getName() + "&f]";
+	                String lore = isRemoving
+	                    ? "&r&fThis slot is in use. Click to remove it?"
+	                    : "&r&fThis slot is in use. Click to replace &" + spellColor + wandSpell.getName() +
+	                      " &fwith &" + PrintUtils.getElementTypeColor(spell.getElementType()) + spell.getName() + "&f?";
+	                
 	            	GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE)
             	    .setName(slotName)
             	    .setLore(lore)

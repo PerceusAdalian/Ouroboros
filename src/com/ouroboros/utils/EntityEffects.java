@@ -1,6 +1,7 @@
 package com.ouroboros.utils;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -58,6 +59,15 @@ public class EntityEffects {
 	public static void add(LivingEntity entity, PotionEffectType effectType, int duration, int intensity, boolean setAmbient) 
 	{
 		entity.addPotionEffect(new PotionEffect(effectType, duration, intensity, setAmbient));
+	}
+	
+	public static void heal(Player p, double value) 
+	{
+	    if (p == null || !p.isOnline() || value <= 0) return;
+	
+	    double maxHealth = p.getAttribute(Attribute.MAX_HEALTH).getValue();
+	    
+	    p.setHealth(Math.min(p.getHealth() + value, maxHealth));
 	}
 
 	public static void playSound(Player source, Location loc, Sound sound, SoundCategory soundCategory, float magnitude, float magnitude2) 
@@ -278,6 +288,69 @@ public class EntityEffects {
 		}
 	}
 
+	public static Set<UUID> hasDread = new HashSet<>();
+	/*
+	 * "&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
+					"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",
+					"&r&fsubsequent applications will cause &4Doom&f after a second application."
+	 */
+	public static void addDread(LivingEntity target, int seconds)
+	{
+		if (hasDread.contains(target.getUniqueId())) 
+		{
+			hasDread.remove(target.getUniqueId());
+			addDoom(target, 0, seconds * 20);
+			return;
+		}
+		
+		hasDread.add(target.getUniqueId());
+		add(target, PotionEffectType.HUNGER, seconds * 20, 0, false);
+		add(target, PotionEffectType.BLINDNESS, seconds * 20, 0, false);
+	}
+	public static Set<UUID> isCursed = new HashSet<>();
+	/**
+	 * @param target
+	 * @param magnitude
+	 * @param seconds
+	 */
+	/*
+	 * "&r&4Curse &eEffect&f: Applies a debilitation that &b&oslows&r&f, &b&oweakens&r&f,",
+				"&r&fand &b&ofatigues&r&f those afflicted. Curses are &e&ocurable&r&f and cannot stack.",
+				"&r&fThose afflicted by a curse also receive 20% more &4&lMortio&r&f damage."
+	 */
+	public static boolean addCurse(LivingEntity target, int magnitude, int seconds)
+	{
+		if (isCursed.contains(target.getUniqueId())) return false;
+		isCursed.add(target.getUniqueId());
+		
+		if (target instanceof Player p)
+		{
+			PrintUtils.PrintToActionBar(p, "&c&oYou've been cursed!");
+			EntityEffects.playSound(p, Sound.ENTITY_WITHER_SPAWN, SoundCategory.AMBIENT);
+			OBSParticles.drawMortioCastSigil(p);
+		}
+		
+		add(target, PotionEffectType.WEAKNESS, seconds * 20, magnitude, false);
+		add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, magnitude, false);
+		add(target, PotionEffectType.SLOWNESS, seconds * 20, magnitude, false);
+		
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{
+			if (!isCursed.contains(target.getUniqueId())) return;
+			
+			if (target instanceof Player p)
+			{
+				PrintUtils.PrintToActionBar(p, "&e&oThe curse subsides..");
+				EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT);
+			}
+			
+			isCursed.remove(target.getUniqueId());
+		}, seconds * 20);
+		
+		return true;
+	}
+	
+	
 	public static Map<UUID, Boolean> hasDoom = new HashMap<>();
 	/**
 	 * @Description Mortio Signature Effect: 
@@ -289,6 +362,11 @@ public class EntityEffects {
 	 * @param magnitude The stacks of doom that equate to the level of Wither (i.e.
 	 *                  0 = Wither 1)
 	 * @param seconds
+	 */
+	/*
+	 * "&r&4Doom &eEffect&f: Doom applies a &dDOT&f effect equal to it's &b&omagnitude&r&f.",
+				"&r&fAfflicted take &b&o1.25x &r&4&lMortio&r&f damage, and reapplying instantly kills them &7(NONPVP)",
+				"&r&4&lMortio&r&f-based mobs are otherwise unaffected, and &a&ohealed&r&f instead."
 	 */
 	public static void addDoom(LivingEntity target, int magnitude, int seconds) 
 	{

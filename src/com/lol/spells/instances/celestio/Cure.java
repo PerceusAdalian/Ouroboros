@@ -58,6 +58,15 @@ public class Cure extends Spell
 	{
 		EntityEffects.playSound(caster, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		
+		if (EntityEffects.isCursed.contains(target.getUniqueId()))
+		{
+			EntityEffects.isCursed.remove(target.getUniqueId());
+			PrintUtils.PrintToActionBar(target, "&e&oThe curse subsides..");
+			EntityEffects.playSound(target, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT);
+		}
+		if (EntityEffects.hasDread.contains(target.getUniqueId())) EntityEffects.hasDread.remove(target.getUniqueId());
+		if (EntityEffects.hasDoom.containsKey(target.getUniqueId())) EntityEffects.hasDoom.remove(target.getUniqueId());
+		
 		for (PotionEffect effect : target.getActivePotionEffects())
 		{
 			if (EntityEffects.debuffs.contains(effect.getType()))
@@ -82,6 +91,7 @@ public class Cure extends Spell
 					}, 15);
 					continue;
 				}
+				
 				target.removePotionEffect(effect.getType());
 			}
 		}

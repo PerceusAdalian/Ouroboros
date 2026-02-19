@@ -40,7 +40,7 @@ public class Glacius extends Spell
 		EntityEffects.playSound(p, Sound.ENTITY_DROWNED_SHOOT, SoundCategory.AMBIENT);
 		Arrow arrow = p.launchProjectile(Arrow.class);
 		arrow.setGravity(false);
-		arrow.setVelocity(p.getLocation().getDirection().multiply(1.5));
+		arrow.setVelocity(p.getLocation().getDirection().multiply(2));
 		arrow.setDamage(5);
 		arrow.setPierceLevel(2);
 		arrow.setCritical(false);

@@ -24,7 +24,7 @@ public class PlayerHud
         hud.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
         hud.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
         hud.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
-        hud.getScore(PrintUtils.ColorParser("&r&7⋖&b۞&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getLuminite());
+        hud.getScore(PrintUtils.ColorParser("&r&7⋞&b۞&r&7⋟&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getLuminite());
        
         p.setScoreboard(board);
     }
@@ -36,7 +36,7 @@ public class PlayerHud
    	 	obj.getScore(PrintUtils.ColorParser("&r&f&lUser&r&f: " + p.getDisplayName()));
    	 	obj.getScore(PrintUtils.ColorParser("&r&7⋖&e₪&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(false));
    	 	obj.getScore(PrintUtils.ColorParser("&r&7⋖&cЖ&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getFunds(true));
-        obj.getScore(PrintUtils.ColorParser("&r&7⋖&b۞&r&7⋗&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getLuminite());
+        obj.getScore(PrintUtils.ColorParser("&r&7⋞&b۞&r&7⋟&r&f")).setScore(PlayerData.getPlayer(p.getUniqueId()).getLuminite());
    	 	
    	 	if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oUpdateHud&r&f -- &aOK&7 (Player: "+p.getName()+")");
     }

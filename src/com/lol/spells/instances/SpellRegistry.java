@@ -26,6 +26,9 @@ import com.lol.spells.instances.heresio.Hex;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.mortio.Haunt;
+import com.lol.spells.instances.mortio.Reap;
+import com.lol.spells.instances.mortio.Sew;
+import com.lol.spells.instances.mortio.SkullOfSithis;
 
 public class SpellRegistry 
 {
@@ -64,6 +67,9 @@ public class SpellRegistry
         		
         		//Mortio
         		Haunt.class,
+        		Sew.class,
+        		Reap.class,
+        		SkullOfSithis.class,
         		
         		//Cosmo
         		ArrestoMomentum.class,

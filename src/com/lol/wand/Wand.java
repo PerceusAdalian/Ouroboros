@@ -114,6 +114,7 @@ public class Wand
 	public void setSpell(Spell spell, int slot)
 	{
 		spellSlots[slot] = spell;
+		spellIndex = slot;
 	}
 	
 	public Spell getSpell(int slot)
@@ -366,7 +367,7 @@ public class Wand
 	        existingLore.add(PrintUtils.assignElementType(currentSpell.getElementType()));
 	        existingLore.add(PrintUtils.assignSpellType(currentSpell.getSpellType()));
 	        existingLore.add(PrintUtils.assignCastCondition(currentSpell.getCastCondition()));
-	        existingLore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+currentSpell.getManacost()+" &7| &r&f&lCooldown&r&f: "+currentSpell.getCooldown()));
+	        existingLore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+currentSpell.getManacost()+" &7| &r&f&lCooldown&r&f: "+currentSpell.getCooldown()+" second(s)"));
 	    }
 	    
 	    existingLore.add("");

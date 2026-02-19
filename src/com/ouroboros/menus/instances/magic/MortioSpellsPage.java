@@ -8,6 +8,9 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.mortio.Haunt;
+import com.lol.spells.instances.mortio.Reap;
+import com.lol.spells.instances.mortio.Sew;
+import com.lol.spells.instances.mortio.SkullOfSithis;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -23,7 +26,18 @@ public class MortioSpellsPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.placeSpellButton(player, new Haunt(), 10, this);
+		// 1
+		GuiButton.placeSpellButton(player, new Sew(), 10, this);
+		
+		// 2
+		GuiButton.placeSpellButton(player, new Reap(), 11, this);
+		// 3
+		
+		// 4
+		GuiButton.placeSpellButton(player, new SkullOfSithis(), 12, this);
+		
+		// 5
+		GuiButton.placeSpellButton(player, new Haunt(), 13, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
