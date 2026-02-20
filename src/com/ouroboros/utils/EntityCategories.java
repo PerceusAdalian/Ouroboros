@@ -1,6 +1,7 @@
 package com.ouroboros.utils;
 
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.entity.Entity;
@@ -63,87 +64,51 @@ public class EntityCategories
 		return EntityCategory.get(category).contains(entity.getType()) ? true : false;
 	}
 	
-	public static boolean parseUniversalWeakness(Entity entity, ElementType eType)
+	private static final Map<EntityCategory, Set<ElementType>> WEAKNESSES = Map.of(
+	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.MORTIO, ElementType.COSMO, ElementType.HERESIO, ElementType.SLASH),
+	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.CELESTIO, ElementType.COSMO, ElementType.HERESIO, ElementType.PIERCE),
+	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.GLACIO, ElementType.GEO),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.AERO, ElementType.BLUNT),
+	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.AERO, ElementType.INFERNO, ElementType.CORROSIVE),
+	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.GEO, ElementType.GLACIO, ElementType.COMBUST),
+	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.HERESIO, ElementType.ARCANO),
+	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.COSMO, ElementType.ARCANO));
+
+	private static final Map<EntityCategory, Set<ElementType>> RESISTANCES = Map.of(
+	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.INFERNO, ElementType.SLASH),
+	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.PIERCE),
+	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.AERO, ElementType.PUNCTURE, ElementType.PIERCE),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GEO),
+	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.CELESTIO, ElementType.BLUNT),
+	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.MORTIO, ElementType.PIERCE, ElementType.PUNCTURE));
+
+	private static final Map<EntityCategory, Set<ElementType>> IMMUNITIES = Map.of(
+	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.CELESTIO),
+	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.MORTIO),
+	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.INFERNO, ElementType.COMBUST, ElementType.BLAST),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GLACIO),
+	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.AERO),
+	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.INFERNO, ElementType.GLACIO, ElementType.AERO, ElementType.GEO),
+	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.CELESTIO, ElementType.MORTIO));
+
+	private static boolean matchesCategory(Entity entity, Map<EntityCategory, Set<ElementType>> table, ElementType eType) 
 	{
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.MORTIO)) return true;  // Darkness overcomes Light
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.COSMO)) return true;   // Reality can distort order
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.HERESIO)) return true; // Knowledge shapes Order
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.SLASH)) return true;
-		
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.CELESTIO)) return true;  // Light overcomes Darkness
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.COSMO)) return true;     // Reality can distort desire
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.HERESIO)) return true;   // Knowledge trumps Dispair
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.PIERCE)) return true;
-		
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.GLACIO)) return true;   // Water quenches Fire
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.GEO)) return true;      // Sand can put out a Fire
-		
-		if (canAccept(entity, EntityCategory.GLACIO_MOBS) && eType.equals(ElementType.INFERNO)) return true;   // Fire melts Ice
-		if (canAccept(entity, EntityCategory.GLACIO_MOBS) && eType.equals(ElementType.AERO)) return true;      // Strong winds can displace Water
-		if (canAccept(entity, EntityCategory.GLACIO_MOBS) && eType.equals(ElementType.BLUNT)) return true;     // A Hammar smashes Ice
-		
-		if (canAccept(entity, EntityCategory.GEO_MOBS) && eType.equals(ElementType.AERO)) return true;         // String winds cause Erosion
-		if (canAccept(entity, EntityCategory.GEO_MOBS) && eType.equals(ElementType.INFERNO)) return true;      // High Temperature can cause Geological changes (Metamorphism)
-		if (canAccept(entity, EntityCategory.GEO_MOBS) && eType.equals(ElementType.CORROSIVE)) return true;
-		
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.GEO)) return true;         // Sand is an Insulator of Electricity
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.GLACIO)) return true;      // Low Temperatures can cause stifled Airflow
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.COMBUST)) return true;
-		
-		if (canAccept(entity, EntityCategory.COSMO_MOBS) && eType.equals(ElementType.HERESIO)) return true;    // Knowledge distorts Reality
-		if (canAccept(entity, EntityCategory.COSMO_MOBS) && eType.equals(ElementType.ARCANO)) return true;
-		
-		if (canAccept(entity, EntityCategory.HERESIO_MOBS) && eType.equals(ElementType.COSMO)) return true;    // Reality invents Knowledge
-		if (canAccept(entity, EntityCategory.HERESIO_MOBS) && eType.equals(ElementType.ARCANO)) return true;
-		
-		return false;
+	    return table.entrySet().stream().anyMatch(e -> canAccept(entity, e.getKey()) && e.getValue().contains(eType));
 	}
-	
-	public static boolean parseUniversalResistance(Entity entity, ElementType eType)
+
+	public static boolean parseUniversalWeakness(Entity entity, ElementType eType) 
 	{
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.INFERNO)) return true; // You cannot Burn Light
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.SLASH)) return true;
-		
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.INFERNO)) return true;   // You cannot Burn Darkness
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.PIERCE)) return true;
-		
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.AERO)) return true; 	   // Oxygen fans the flames of Fire
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.PUNCTURE)) return true;
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.PIERCE)) return true;
-		
-		if (canAccept(entity, EntityCategory.GLACIO_MOBS) && eType.equals(ElementType.GEO)) return true;       // A Rock can't hurt Water, it simply sinks, or floats
-		if (canAccept(entity, EntityCategory.GEO_MOBS) && eType.equals(ElementType.CELESTIO)) return true;     // Light doesn't (usually) pass through Solid Matter
-		if (canAccept(entity, EntityCategory.GEO_MOBS) && eType.equals(ElementType.BLUNT)) return true;
-		
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.MORTIO)) return true;      // Wind cannot be held by Despair
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.PIERCE)) return true;
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.PUNCTURE)) return true;
-		
-		return false;
+	    return matchesCategory(entity, WEAKNESSES, eType);
 	}
-	
-	public static boolean parseUniversalImmunity(Entity entity, ElementType eType)
+
+	public static boolean parseUniversalResistance(Entity entity, ElementType eType) 
 	{
-		if (canAccept(entity, EntityCategory.CELESTIO_MOBS) && eType.equals(ElementType.CELESTIO)) return true; 
-		if (canAccept(entity, EntityCategory.MORTIO_MOBS) && eType.equals(ElementType.MORTIO)) return true;   
-		
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.INFERNO)) return true; 	   
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.COMBUST)) return true; 	   
-		if (canAccept(entity, EntityCategory.INFERNO_MOBS) && eType.equals(ElementType.BLAST)) return true; 	   
-		
-		if (canAccept(entity, EntityCategory.GLACIO_MOBS) && eType.equals(ElementType.GLACIO)) return true;       
-		
-		if (canAccept(entity, EntityCategory.AERO_MOBS) && eType.equals(ElementType.AERO)) return true;     
-		
-		if (canAccept(entity, EntityCategory.COSMO_MOBS) && eType.equals(ElementType.INFERNO)) return true;    // Reality is immune to the Elements
-		if (canAccept(entity, EntityCategory.COSMO_MOBS) && eType.equals(ElementType.GLACIO)) return true;     // Reality is immune to the Elements    
-		if (canAccept(entity, EntityCategory.COSMO_MOBS) && eType.equals(ElementType.AERO)) return true;       // Reality is immune to the Elements   
-		if (canAccept(entity, EntityCategory.COSMO_MOBS) && eType.equals(ElementType.GEO)) return true;        // Reality is immune to the Elements  
-		
-		if (canAccept(entity, EntityCategory.HERESIO_MOBS) && eType.equals(ElementType.CELESTIO)) return true; // Higher Knowledge is keen to Religious Obligation
-		if (canAccept(entity, EntityCategory.HERESIO_MOBS) && eType.equals(ElementType.MORTIO)) return true;   // Higher Knowledge overcomes Mental Struggles and aware of Life Impermanence
-		
-		return false;
+	    return matchesCategory(entity, RESISTANCES, eType);
+	}
+
+	public static boolean parseUniversalImmunity(Entity entity, ElementType eType) 
+	{
+	    return matchesCategory(entity, IMMUNITIES, eType);
 	}
 	
 	public static ElementType parseElementType(EntityType entityType)
