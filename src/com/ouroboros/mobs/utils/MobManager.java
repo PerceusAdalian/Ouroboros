@@ -56,7 +56,7 @@ public class MobManager
 			EntityType type = data.getEntityType();
 			Entity e = w.spawnEntity(loc, type);
 
-			MobData.setMobVisuals(e, data);
+			MobNameplate.build((LivingEntity) e);
 			
 			var att = ((Attributable) e).getAttribute(Attribute.MAX_HEALTH);
 			att.setBaseValue(1023.9);
@@ -126,24 +126,4 @@ public class MobManager
 		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &o&bDespawnAll&r&f -- &aOK&f &7(OnDisable)");
 	}
 	
-	@Deprecated
-	public static void registerLegacyMobs()
-	{
-		for (World w : Bukkit.getWorlds())
-		{
-			for (Entity e : w.getEntities())
-			{
-				if (!(e instanceof LivingEntity) || e instanceof Player) continue;
-				if (e.getPersistentDataContainer().has(MOB_DATA_KEY, PersistentDataType.STRING)) continue;
-				
-				Location loc = e.getLocation();
-				EntityType eType = e.getType();				
-				Entity newEntity = w.spawnEntity(loc, eType);
-				e.remove();
-				MobData mobData = MobData.loadMobData(newEntity);
-				mobData.initialize(newEntity);
-				MobData.setMobVisuals(newEntity, mobData);
-			}
-		}
-	}
 }

@@ -9,12 +9,6 @@ import com.ouroboros.utils.EntityCategories;
 public enum EntityCategory 
 {
 	ANY,
-	LIVING,
-	UNDEAD,
-	AQUATIC,
-	FLYING,
-	INFERNAL,
-	ETHEREAL,
 	CALAMITY,
 	CELESTIO_MOBS,
 	MORTIO_MOBS,
@@ -58,12 +52,6 @@ public enum EntityCategory
 		return switch (category)
 		{
 			case ANY -> EntityCategories.any;
-			case LIVING -> EntityCategories.living;
-			case UNDEAD -> EntityCategories.undead;
-			case AQUATIC -> EntityCategories.aquatic;
-			case FLYING -> EntityCategories.flying;
-			case INFERNAL -> EntityCategories.infernal;
-			case ETHEREAL -> EntityCategories.ethereal;
 			case CALAMITY -> EntityCategories.calamity;
 			case CELESTIO_MOBS -> EntityCategories.celestio_mobs;
 			case MORTIO_MOBS -> EntityCategories.mortio_mobs;

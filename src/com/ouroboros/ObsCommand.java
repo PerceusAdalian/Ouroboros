@@ -39,13 +39,13 @@ import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.menus.instances.magic.SpellBookPage;
 import com.ouroboros.menus.instances.magic.WandMainPage;
-import com.ouroboros.mobs.utils.InventoryUtils;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 

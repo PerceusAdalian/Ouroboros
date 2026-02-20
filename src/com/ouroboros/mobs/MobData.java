@@ -10,11 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Server;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
@@ -26,12 +23,10 @@ import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.mobs.events.MobDamageEvent;
-import com.ouroboros.mobs.utils.AffinityRegistry;
 import com.ouroboros.mobs.utils.LevelTable;
-import com.ouroboros.mobs.utils.MobAffinity;
 import com.ouroboros.mobs.utils.MobManager;
-import com.ouroboros.mobs.utils.ObsMobHealthbar;
+import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
@@ -254,16 +249,16 @@ public class MobData
 	public void damage(double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(uuid);
+		Entity entity = Bukkit.getEntity(uuid);
 		
 		if (element == null) element = ElementType.NEUTRAL;
 		
-		MobAffinity affinity = AffinityRegistry.getAffinity(getEntityType());
 		if (!EntityEffects.isVoidedRegistry.containsKey(uuid))
 		{
-			if (affinity.immuneTo(element)) value = 0;
-			else if (affinity.resists(element)) value *= 0.5;
+			if (EntityCategories.parseUniversalImmunity(entity, element)) value = 0;
+			else if (EntityCategories.parseUniversalResistance(entity, element)) value *= 0.5;
 		}
-		else if (affinity.weakTo(element)) value *= 1.5;
+		else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
 		
 		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
 		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
@@ -281,7 +276,7 @@ public class MobData
 	{
 		setHp(setMaxHp ? getHp(true) : (getHp(false)+value), false);
 		Entity entity = Bukkit.getEntity(uuid);
-		ObsMobHealthbar.updateHPBar(entity);
+		MobNameplate.update((LivingEntity) entity);
 		if (healArmor)
 			healArmor(value, setMaxArmor);
 		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
@@ -293,7 +288,7 @@ public class MobData
 			setBreak(false);
 		setArmor(setMax ? getArmor(true) : (getArmor(false) + (int) value), false);
 		Entity entity = Bukkit.getEntity(uuid);
-		ObsMobHealthbar.updateHPBar(entity);
+		MobNameplate.update((LivingEntity) entity);
 		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
 	}
 	
@@ -331,49 +326,17 @@ public class MobData
 		{
 			if (element == null) element = ElementType.NEUTRAL;
 			
-			MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
-			if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
-			{
-				if (affinity.immuneTo(element)) 
-					EntityEffects.playSound(player, Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER);
-				else if (affinity.resists(element)) 
-					EntityEffects.playSound(player, Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER);
-			}
-			else if (affinity.weakTo(element)) 
-				EntityEffects.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER);
-			
 			data.damage(value, damageArmor, element);
 			data.save();
 
 			//Update their HP bar
-			BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
-			if (bar == null) 
-			{
-				ObsMobHealthbar.initializeHPBar(target);
-				ObsMobHealthbar.showBarToPlayer(target, player);
-			}
-			else 
-			{
-				ObsMobHealthbar.updateHPBar(target);
-				ObsMobHealthbar.showBarToPlayer(target, player);
-			}
-			
-			//And mark for removal later
-			if (!MobDamageEvent.hpBarMap.containsKey(target.getUniqueId())) 
-			{							
-				MobDamageEvent.hpBarMap.put(target.getUniqueId(), true);
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-				{
-					MobDamageEvent.hpBarMap.remove(target.getUniqueId());
-					ObsMobHealthbar.setVisible(target, false);
-				}, 150);
-			}
+			MobNameplate.update((LivingEntity) target);
 			
 			if (data.isDead())
 			{
 				LivingEntity le = (LivingEntity) target;
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
-				ObsMobHealthbar.removeBossBar(target);
+				MobNameplate.remove(le);
 				data.deleteFile();
 			}
 		}
@@ -388,19 +351,17 @@ public class MobData
 		
 		if (Ouroboros.debug) 
 		{
-			MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());
-			
 			String name = target.getCustomName();
 			PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
 					(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+
 					"\n                          &7&f- Damage Dealt: &c"+
 					value+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
 					(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
-					data.getArmor(false)+"&7/&f"+data.getArmor(true))+
+					data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
 					"\n                          &b&o> DamageType&r&f: "+element.getKey()+
-					"\n                          &b&o- Weakness Damage&r&f: "+(affinity.getWeaknesses().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
-					"\n                          &b&o- Resistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
-					"\n                          &b&o- Immunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END"));
+					"\n                          &b&o- Weakness Damage&r&f: "+(EntityCategories.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+					"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+					"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 		}
 	}
 	
@@ -410,7 +371,7 @@ public class MobData
 		Entity entity = Bukkit.getEntity(uuid);
 		LivingEntity le = (LivingEntity) entity;
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
-		ObsMobHealthbar.removeBossBar(entity);
+		MobNameplate.remove(le);
 		deleteFile();
 	}
 	
@@ -491,14 +452,6 @@ public class MobData
 			return null;
 		}
 		return uuid;
-	}
-	
-	public static void setMobVisuals(Entity entity, MobData data) 
-	{
-		int level = data.getLevel();
-		entity.setCustomName(PrintUtils.ColorParser("&e{&f&lLvl&r&f: &l" + level + "&r&e} &f" + PrintUtils.getFancyEntityName(data.getEntityType())));
-		entity.setCustomNameVisible(true);
-		ObsMobHealthbar.initializeHPBar(entity);
 	}
 	
 	public void deleteFile()

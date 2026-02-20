@@ -1,13 +1,7 @@
 package com.ouroboros.mobs.events;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
@@ -32,18 +26,15 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.AffinityRegistry;
-import com.ouroboros.mobs.utils.MobAffinity;
 import com.ouroboros.mobs.utils.MobManager;
-import com.ouroboros.mobs.utils.ObsMobHealthbar;
+import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
 
 public class MobDamageEvent implements Listener
 {
-	public static HashMap<UUID, Boolean> hpBarMap = new HashMap<>();
-	
 	public static void register(JavaPlugin plugin)
 	{
 		/**
@@ -62,7 +53,6 @@ public class MobDamageEvent implements Listener
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
-				MobAffinity affinity = AffinityRegistry.getAffinity(target.getType());				
 				ElementType element = ElementType.NEUTRAL;
 				double dmg;
 				
@@ -102,42 +92,20 @@ public class MobDamageEvent implements Listener
 					else 
 						data.damage(dmg, true, element);
 					
-					if (!EntityEffects.isVoidedRegistry.containsKey(target.getUniqueId()))
-					{
-						if (affinity.immuneTo(element)) 
-							EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, SoundCategory.MASTER);
-						else if (affinity.resists(element)) 
-							EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER);							
-					}
-					else if (affinity.weakTo(element)) 
-						EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER);
-					
 					//Apply relevent effects based on the combat element used.
-					EntityEffects.checkFromCombat((LivingEntity)target, element);
+					EntityEffects.checkFromCombat((LivingEntity) target, element);
 					
 					//Update their HP bar
-					BossBar bar = ObsMobHealthbar.bossBars.get(target.getUniqueId());
-					if (bar == null) 
+					if (target.getCustomName() == null) 
 					{
-						ObsMobHealthbar.initializeHPBar(target);
-						ObsMobHealthbar.showBarToPlayer(target, p);
+						MobNameplate.build((LivingEntity) target);
+						MobNameplate.update((LivingEntity) target);
 					}
 					else 
 					{
-						ObsMobHealthbar.showBarToPlayer(target, p);
-						ObsMobHealthbar.updateHPBar(target);
+						MobNameplate.update((LivingEntity) target);
 					}
 					
-					//And mark for removal later
-					if (!hpBarMap.containsKey(target.getUniqueId())) 
-					{							
-						hpBarMap.put(target.getUniqueId(), true);
-						Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-						{
-							hpBarMap.remove(target.getUniqueId());
-							ObsMobHealthbar.hideBarFromPlayer(target, p);
-						}, 150);
-					}
 				}
 				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
 				{
@@ -178,6 +146,8 @@ public class MobDamageEvent implements Listener
 					else
 						data.damage(dmg, true, element);
 					
+					MobNameplate.update((LivingEntity) target);
+					
 					if (Ouroboros.debug) 
 					{
 						String name = target.getCustomName();
@@ -195,8 +165,7 @@ public class MobDamageEvent implements Listener
 				{
 					LivingEntity le = (LivingEntity) target;
 					Bukkit.getScheduler().runTaskLater(plugin, () -> le.setHealth(0), 5L);
-
-					ObsMobHealthbar.removeBossBar(target);
+					MobNameplate.remove(le);
 					data.deleteFile();
 					return;
 				}
@@ -211,9 +180,9 @@ public class MobDamageEvent implements Listener
 							(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
 							data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
 							"\n                          &b&o> DamageType&r&f: "+element.getKey()+
-							"\n                          &b&o- Weakness Damage&r&f: "+(affinity.getWeaknesses().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
-							"\n                          &b&o- Resistance Damage&r&f: "+(affinity.getResistances().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+
-							"\n                          &b&o- Immunity Damage&r&f: "+(affinity.getImmunities().contains(element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
+							"\n                          &b&o- Weakness Damage&r&f: "+(EntityCategories.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+							"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+							"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 				}
 			}
 		}, plugin);

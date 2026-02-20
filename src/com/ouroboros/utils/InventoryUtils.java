@@ -1,4 +1,4 @@
-package com.ouroboros.mobs.utils;
+package com.ouroboros.utils;
 
 import java.util.HashSet;
 import java.util.Set;

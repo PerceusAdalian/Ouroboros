@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.PrintUtils;
 
 public class MobGenerateEvent implements Listener
@@ -40,7 +41,7 @@ public class MobGenerateEvent implements Listener
 				if (data == null) return;
 				
 				data.initialize(entity);
-				MobData.setMobVisuals(entity, data);
+				MobNameplate.build((LivingEntity) entity);
 				
 				var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
 				att.setBaseValue(1023.9);

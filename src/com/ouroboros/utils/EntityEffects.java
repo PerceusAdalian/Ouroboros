@@ -277,10 +277,10 @@ public class EntityEffects {
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data != null) 
 		{
-			if (EntityCategories.undead.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType()))
+			if (EntityCategories.mortio_mobs.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType()))
 				data.kill();
 
-			else if (!EntityCategories.undead.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType())) 
+			else if (!EntityCategories.mortio_mobs.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType())) 
 			{
 				if (!data.isBreak()) data.setBreak();
 				add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);

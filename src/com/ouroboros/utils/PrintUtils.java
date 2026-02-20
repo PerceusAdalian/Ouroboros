@@ -170,6 +170,23 @@ public class PrintUtils
 		return ch;
 	}
 	
+	public static char getElementTypeColor(ElementType elementType)
+	{
+		char ch = switch(elementType)
+		{
+			case INFERNO -> ch = 'c';
+			case AERO -> ch = 'd';
+			case CELESTIO -> ch = 'e';
+			case COSMO -> ch = '3';
+			case GEO -> ch = '6';
+			case GLACIO -> ch = 'b';
+			case HERESIO -> ch = '2';
+			case MORTIO -> ch = '4';
+			default -> ch = '7';
+		};
+		return ch;
+	}
+	
 	public static String assignAuthor(SpellementType spellementType)
 	{
 		String author = switch(spellementType)
