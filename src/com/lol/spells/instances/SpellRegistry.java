@@ -16,6 +16,7 @@ import com.lol.spells.instances.aero.Thunderstorm;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
+import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
@@ -25,9 +26,11 @@ import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.heresio.Hex;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Incendio;
+import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
+import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.SkullOfSithis;
 
 public class SpellRegistry 
@@ -37,13 +40,29 @@ public class SpellRegistry
     {
         List<Class<? extends Spell>> itemClasses = Arrays.asList(
         		
+        		//Celestio
+        		Revelio.class,
+        		Protego.class,
+        		AssertOrder.class,
+        		Lumos.class,
+        		Diagnosis.class,
+        		Cure.class,
+        		Expell.class,
+        		
+        		//Mortio
+        		Haunt.class,
+        		Sew.class,
+        		Reap.class,
+        		SkullOfSithis.class,
+        		Siphon.class,
+        		Demonform.class,
+        		
         		//Inferno
         		Incendio.class,
         		Bombarda.class,
         		
         		//Glacio
         		Glacius.class,
-        		
         		
         		//Aero
         		Diffindo.class,
@@ -56,20 +75,6 @@ public class SpellRegistry
         		
         		//Geo
         		Expelliarmus.class,
-        		
-        		//Celestio
-        		Revelio.class,
-        		Protego.class,
-        		AssertOrder.class,
-        		Lumos.class,
-        		Diagnosis.class,
-        		Cure.class,
-        		
-        		//Mortio
-        		Haunt.class,
-        		Sew.class,
-        		Reap.class,
-        		SkullOfSithis.class,
         		
         		//Cosmo
         		ArrestoMomentum.class,

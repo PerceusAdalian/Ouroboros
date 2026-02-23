@@ -13,6 +13,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -125,6 +127,29 @@ public class GeneralEvents implements Listener
         		Player p = e.getPlayer();
         		PlayerData.unloadPlayer(p.getUniqueId());
         		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
+        	}
+        	
+        	@EventHandler
+        	public void onFallDamage(EntityDamageEvent e)
+        	{
+        		if (e.getCause().equals(DamageCause.FALL) && e.getEntity() instanceof Player p)
+        		{
+        			double initialFallDamage = e.getFinalDamage();
+        			double mitigatedFallDamage = 0;
+        			
+        			if (EntityEffects.nightShifted.containsKey(p.getUniqueId()))
+        			{
+        				double finalFallDamage = initialFallDamage * (0.1 * EntityEffects.nightShifted.get(p.getUniqueId()));
+        				e.setDamage(finalFallDamage);
+        				mitigatedFallDamage += initialFallDamage - finalFallDamage;
+        			}
+        			
+        			if (Ouroboros.debug)
+        			{
+        				PrintUtils.OBSConsoleDebug("Entity Damage Event: Fall Damage -- "+p.getName()+ ": took "+initialFallDamage+" fall damage."
+        						+"\nPlayer was Night-Shifted: "+EntityEffects.nightShifted.containsKey(p.getUniqueId()) + " | Mitigated "+mitigatedFallDamage+" damage.");
+        			}
+        		}
         	}
         	
         }, plugin);

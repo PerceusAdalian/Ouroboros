@@ -22,6 +22,8 @@ public class Protego extends Spell
 	{
 		super("Protego", "protego", Material.NETHER_STAR, SpellType.DEFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 15, true,
 				"&r&fGrants &eWard &bIII to self &7(15s)&r&f.","",
+				"&r&eWard Effect&r&f: grants &b&oAbsorption&r&f, &b&oFire Resistance&r&f,",
+				"and &b&oResistance&r&f equal to the magnitude of &eWard&f.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&e&oBarrier&r&7&o', however, colloquially known as '&r&e&oProtego&r&7&o'.");
 	}

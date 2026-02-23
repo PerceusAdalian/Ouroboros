@@ -25,8 +25,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.utils.MobNameplate;
 
-public class EntityEffects {
+public class EntityEffects 
+{
 	/**
 	 * @param player
 	 * @param effectType
@@ -272,6 +274,10 @@ public class EntityEffects {
 	 *              as it's also not a boss.
 	 *              Finally, Exposed also adds the "Glowing" effect.
 	 */
+	/*
+		"&r&e&oExposed &r&fEffect: Reveals an entity's location and &6&oBreaks &r&fthem.",
+		"&r&fIf those affected are &4&lMortio &r&faffiliated, they instantly die."
+	 */
 	public static void addExposed(LivingEntity target, int seconds) 
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
@@ -282,7 +288,11 @@ public class EntityEffects {
 
 			else if (!EntityCategories.mortio_mobs.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType())) 
 			{
-				if (!data.isBreak()) data.setBreak();
+				if (!data.isBreak()) 
+				{
+					data.setBreak();
+					MobNameplate.update(target);
+				}
 				add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
 			}
 		}
@@ -292,7 +302,8 @@ public class EntityEffects {
 	/*
 	 * "&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 					"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",
-					"&r&fsubsequent applications will cause &4Doom&f after a second application."
+					"&r&fsubsequent applications will cause &4Doom&f after a second application.",
+					"&r&fIf it's nighttime, Night-Shift's &b&omagnitude&r&f is doubled."
 	 */
 	public static void addDread(LivingEntity target, int seconds)
 	{
@@ -307,6 +318,50 @@ public class EntityEffects {
 		add(target, PotionEffectType.HUNGER, seconds * 20, 0, false);
 		add(target, PotionEffectType.BLINDNESS, seconds * 20, 0, false);
 	}
+	
+	public static Map<UUID, Integer> nightShifted = new HashMap<>();
+	/*
+	  "&r&4Night-Shift &eEffect&f: Increased &b&oSpeed&r&f and &b&oStrength&r&f",
+		"&r&fper level of &4Night-Shift&f, plus &b&oNight Vision&r&f.",
+		"&r&fReduces &b&oFall Damage &r&fby &b&o10% &r&fper level."
+	 */
+	/**
+	 * @param target
+	 * @param magnitude values of >=1 accepted.
+	 * @param seconds
+	 */
+	public static void addNightShift(Player target, int magnitude, int seconds)
+	{
+		if (nightShifted.containsKey(target.getUniqueId())) return;
+		
+		nightShifted.put(target.getUniqueId(), magnitude);
+		
+		OBStandardTimer.runWithCancel(Ouroboros.instance, (e)->
+		{
+			if (!((Player) target).isOnline()) e.cancel();
+			
+			long time = target.getWorld().getTime();
+			boolean isNight = time >= 13000 && time <= 23000;
+			int amp = isNight ? (magnitude * 2) - 1 : magnitude - 1;
+
+			add(target, PotionEffectType.SPEED, 40, amp, false);
+			add(target, PotionEffectType.STRENGTH, 40, amp, false);
+			add(target, PotionEffectType.NIGHT_VISION, 300, 0, false);
+
+			nightShifted.put(target.getUniqueId(), amp);
+		}, 20, seconds * 20);
+		
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
+		{
+			if (target.isOnline()) 
+			{	
+				PrintUtils.PrintToActionBar(target, "&4&oNight-Shift ends..");
+				EntityEffects.playSound(target, Sound.BLOCK_CHAIN_BREAK, SoundCategory.AMBIENT);
+			}
+			nightShifted.remove(target.getUniqueId());
+		}, seconds * 20);
+	}
+	
 	public static Set<UUID> isCursed = new HashSet<>();
 	/**
 	 * @param target
@@ -430,6 +485,13 @@ public class EntityEffects {
 		}, 20, seconds * 20);
 	}
 	
+	/**
+	 * @param target
+	 * @param magnitude
+	 * @param seconds
+	 * @Description Ward Effect: grants Absorption, Fire Resistance, and Resistance&r&f equal to the magnitude of Ward.
+	 * 
+	 */
 	public static void addWard(LivingEntity target, int magnitude, int seconds)
 	{
 		add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
+import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
@@ -28,12 +29,22 @@ public class CelestioSpellsPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.placeSpellButton(player, new Lumos(), 10, this);
+		// 1
+		GuiButton.placeSpellButton(player, new Diagnosis(), 10, this);
 		GuiButton.placeSpellButton(player, new Protego(), 11, this);
-		GuiButton.placeSpellButton(player, new Diagnosis(), 12, this);
-		GuiButton.placeSpellButton(player, new Cure(), 13, this);
+		GuiButton.placeSpellButton(player, new Expell(), 12, this);
+		
+		// 2
+		
+		// 3
+		GuiButton.placeSpellButton(player, new Lumos(), 13, this);
 		GuiButton.placeSpellButton(player, new Revelio(), 14, this);
-		GuiButton.placeSpellButton(player, new AssertOrder(), 15, this);
+		GuiButton.placeSpellButton(player, new Cure(), 15, this);
+		
+		// 4
+		GuiButton.placeSpellButton(player, new AssertOrder(), 16, this);
+		
+		// 5
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->

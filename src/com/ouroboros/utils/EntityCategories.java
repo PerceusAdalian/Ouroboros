@@ -65,31 +65,40 @@ public class EntityCategories
 	}
 	
 	private static final Map<EntityCategory, Set<ElementType>> WEAKNESSES = Map.of(
-	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.MORTIO, ElementType.COSMO, ElementType.HERESIO, ElementType.SLASH),
-	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.CELESTIO, ElementType.COSMO, ElementType.HERESIO, ElementType.PIERCE),
+	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.MORTIO, ElementType.COSMO, ElementType.HERESIO),
+	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.CELESTIO, ElementType.COSMO, ElementType.HERESIO),
+	    
 	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.GLACIO, ElementType.GEO),
-	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.AERO, ElementType.BLUNT),
-	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.AERO, ElementType.INFERNO, ElementType.CORROSIVE),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.AERO, ElementType.BLUNT, ElementType.CORROSIVE),
 	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.GEO, ElementType.GLACIO, ElementType.COMBUST),
-	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.HERESIO, ElementType.ARCANO),
+	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.SEVER, ElementType.CRUSH, ElementType.IMPALE, ElementType.BLAST),
+	    
+	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.COSMO, ElementType.HERESIO, ElementType.ARCANO),
 	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.COSMO, ElementType.ARCANO));
 
 	private static final Map<EntityCategory, Set<ElementType>> RESISTANCES = Map.of(
 	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.INFERNO, ElementType.SLASH),
-	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.PIERCE),
-	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.AERO, ElementType.PUNCTURE, ElementType.PIERCE),
-	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GEO),
-	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.CELESTIO, ElementType.BLUNT),
-	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.MORTIO, ElementType.PIERCE, ElementType.PUNCTURE));
+	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.CORROSIVE),
+	    
+	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.AERO, ElementType.PIERCE, ElementType.PUNCTURE),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GEO, ElementType.SLASH, ElementType.PIERCE, ElementType.PUNCTURE, ElementType.COMBUST),
+	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.MORTIO, ElementType.PIERCE, ElementType.PUNCTURE),
+	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.SLASH, ElementType.BLUNT, ElementType.PUNCTURE, ElementType.PIERCE),
+	    
+	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.BLUNT, ElementType.SLASH, ElementType.PUNCTURE, ElementType.PIERCE, ElementType.CORROSIVE, ElementType.COMBUST),
+	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.BLUNT, ElementType.SLASH, ElementType.PUNCTURE, ElementType.PIERCE, ElementType.CORROSIVE, ElementType.COMBUST));
 
 	private static final Map<EntityCategory, Set<ElementType>> IMMUNITIES = Map.of(
 	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.CELESTIO),
 	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.MORTIO),
+	    
 	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.INFERNO, ElementType.COMBUST, ElementType.BLAST),
 	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GLACIO),
 	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.AERO),
+	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.CORROSIVE, ElementType.COMBUST),
+	    
 	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.INFERNO, ElementType.GLACIO, ElementType.AERO, ElementType.GEO),
-	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.CELESTIO, ElementType.MORTIO));
+	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.CELESTIO, ElementType.MORTIO, ElementType.HERESIO));
 
 	private static boolean matchesCategory(Entity entity, Map<EntityCategory, Set<ElementType>> table, ElementType eType) 
 	{

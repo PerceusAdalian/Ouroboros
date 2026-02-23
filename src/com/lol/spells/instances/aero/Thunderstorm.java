@@ -28,10 +28,10 @@ public class Thunderstorm extends Spell
 	{
 		super("Thunderstorm", "thunderstorm", Material.AMETHYST_CLUSTER, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.MIXED, Rarity.FIVE, 250, 5, true,
 				"&ePrimary&f "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
-				"&r&fSummon an &dAOE&f storm &7(20m)&f inflicting &dShock &7(20s / &cPVP&7: &c3s&r&7)",
+				"&r&fSummon an &dAOE&f storm &7(20m)&f inflicting &dShock &7(20s / &cPVP&7: &c3s&r&7)","",
 				"&eSecondary&f "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&fStrike your target &7(40m)&f with lightning, inflicting &dStatic &7(20s / &cPVP&7: &c10s&r&7)",
-				"&r&fwhich then spreads to nearby enemies &7(25m)&f applying &dShock &7(20s / &cPVP&7: &c3s&r&7).","",
+				"&r&fwhich then spreads to nearby enemies &7(25m)&f applying &dShock &7(20s / &cPVP&7: &c3s&r&7)","",
 				"&r&dStatic &eEffect&f: causes mobs to emit shockwaves in a 10m radius.",
 				"&r&fAffected mobs receive &b&o1.25x &r&d&lAero&r&f damage.",
 				"&d&lAero&r&f-based mobs are &e&oimmune&r&f, and &a&ohealed&r&f instead.","",

@@ -76,7 +76,7 @@ public class MobNameplate
         double max = data.getHp(true);
         double ratio = (max <= 0) ? 0 : Math.min(1.0, current / max);
 
-        String bar = buildHPBarString(ratio, 15);
+        String bar = buildHPBarString(ratio, 10);
 
         return "&c❤&r&f: " + bar;
     }

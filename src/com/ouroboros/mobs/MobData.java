@@ -314,7 +314,7 @@ public class MobData
 	}
 	
 	@SuppressWarnings("null")
-	public static void damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor, @Nullable ElementType element)
+	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		
@@ -363,6 +363,8 @@ public class MobData
 					"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
 					"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 		}
+		
+		return value;
 	}
 	
 	public void kill()

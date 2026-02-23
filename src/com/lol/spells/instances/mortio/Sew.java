@@ -25,7 +25,7 @@ public class Sew extends Spell
 	public Sew() 
 	{
 		super("Sew", "sew", Material.CLOSED_EYEBLOSSOM, SpellType.CURSE, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, true,
-				"&r&fInflict &4Curse&r&f &bI&r&f to target within &b&o7 meters &r&7(1min | &cPVP&7: &c3min&7)",
+				"&r&fInflict &4Curse&r&f &bI&r&f to target within &b&o7 meters &r&7(1min | &cPVP&7: &c3min&7)","",
 				"&r&4Curse &eEffect&f: Applies a debilitation that &b&oslows&r&f, &b&oweakens&r&f,",
 				"&r&fand &b&ofatigues&r&f those afflicted. Curses are &e&ocurable&r&f and do not stack.",
 				"&r&fThose afflicted by a &4&ocurse&r&f also receive &b&o20%&r&f more &4&lMortio&r&f damage.");
