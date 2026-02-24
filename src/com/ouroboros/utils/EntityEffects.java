@@ -362,6 +362,13 @@ public class EntityEffects
 		}, seconds * 20);
 	}
 	
+	public static void addShroud(Player target, int magnitude, int seconds)
+	{
+		add(target, PotionEffectType.SPEED, 20 * seconds, magnitude);
+		add(target, PotionEffectType.JUMP_BOOST, 20 * seconds, magnitude);
+		add(target, PotionEffectType.INVISIBILITY, 20 * seconds, magnitude);
+	}
+	
 	public static Set<UUID> isCursed = new HashSet<>();
 	/**
 	 * @param target

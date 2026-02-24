@@ -11,6 +11,7 @@ import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
+import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.SkullOfSithis;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -34,15 +35,15 @@ public class MortioSpellsPage extends AbstractOBSGui
 		
 		// 2
 		GuiButton.placeSpellButton(player, new Reap(), 12, this);
-		
+		GuiButton.placeSpellButton(player, new Shroud(), 13, this);
 		// 3
-		GuiButton.placeSpellButton(player, new Demonform(), 13, this);
+		GuiButton.placeSpellButton(player, new Demonform(), 14, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new SkullOfSithis(), 14, this);
+		GuiButton.placeSpellButton(player, new SkullOfSithis(), 15, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Haunt(), 15, this);
+		GuiButton.placeSpellButton(player, new Haunt(), 16, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->

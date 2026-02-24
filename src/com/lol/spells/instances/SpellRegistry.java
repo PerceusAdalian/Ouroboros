@@ -8,7 +8,9 @@ import java.util.Map;
 
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
+import com.lol.spells.instances.aero.Gust;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Thunderbolt;
@@ -30,6 +32,7 @@ import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
+import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.SkullOfSithis;
 
@@ -56,6 +59,7 @@ public class SpellRegistry
         		SkullOfSithis.class,
         		Siphon.class,
         		Demonform.class,
+        		Shroud.class,
         		
         		//Inferno
         		Incendio.class,
@@ -72,6 +76,8 @@ public class SpellRegistry
         		Charge.class,
         		Thunderstorm.class,
         		GalvanicNeedle.class,
+        		Gust.class,
+        		Galeforce.class,
         		
         		//Geo
         		Expelliarmus.class,

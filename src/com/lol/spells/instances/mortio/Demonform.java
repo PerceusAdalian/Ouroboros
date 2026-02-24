@@ -18,7 +18,7 @@ public class Demonform extends Spell
 
 	public Demonform() 
 	{
-		super("Demonform", "demonform", Material.ENDER_EYE, SpellType.BUFF, SpellementType.MORTIO, CastConditions.MIXED, Rarity.THREE, 100, 30, false,
+		super("Demonform", "demonform", Material.ENDER_EYE, SpellType.BUFF, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 30, false,
 				"&r&fAssume a bestial shadow form and gain &4Night-Shift &bI &7(30s)", "",
 				"&r&4Night-Shift &eEffect&f: Grants increased &b&oSpeed&r&f and &b&oStrength&r&f",
 				"&r&fper level of &4Night-Shift&f, plus &b&oNight Vision&r&f. Also reduces &b&oFall Damage",

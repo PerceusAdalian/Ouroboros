@@ -9,7 +9,9 @@ import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
+import com.lol.spells.instances.aero.Gust;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Thunderbolt;
@@ -31,17 +33,19 @@ public class AeroSpellsPage extends AbstractOBSGui
 	protected void build() 
 	{
 		// One Rarity
-		GuiButton.placeSpellButton(player, new Charge(), 10, this);
+		GuiButton.placeSpellButton(player, new Gust(), 10, this);
 		GuiButton.placeSpellButton(player, new Smite(), 11, this);
-		GuiButton.placeSpellButton(player, new Levioso(), 12, this);
+		GuiButton.placeSpellButton(player, new Charge(), 12, this);
+		GuiButton.placeSpellButton(player, new Levioso(), 13, this);
 		// Two Rarity
-		GuiButton.placeSpellButton(player, new Thunderbolt(), 13, this);
+		GuiButton.placeSpellButton(player, new Galeforce(), 13, this);
+		GuiButton.placeSpellButton(player, new Thunderbolt(), 14, this);
 		// Three Rarity
 		// Four Rarity
-		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 14, this);
+		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 15, this);
 		// Five Rarity
-		GuiButton.placeSpellButton(player, new Diffindo(), 15, this);
-		GuiButton.placeSpellButton(player, new Thunderstorm(), 16, this);
+		GuiButton.placeSpellButton(player, new Diffindo(), 16, this);
+		GuiButton.placeSpellButton(player, new Thunderstorm(), 19, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->

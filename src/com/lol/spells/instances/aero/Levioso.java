@@ -27,7 +27,7 @@ public class Levioso extends Spell
 	public Levioso() 
 	{
 		super("Levioso", "levioso", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 3, true,
-				"&r&fApplies &3&oLevitate &r&bI&r&f to either target (&b&o20 meters&r&f) or to self &7(10s)","",
+				"&r&fApplies &3&oLevitate &r&bI&r&f to either target &7(20m)&f or to self &7(8s | &cPVP&f: &c5s&7)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&d&oLight Weighted&r&7&o', however, colloquially known as '&r&d&oLevioso&r&7&o'.");
 	}
@@ -37,23 +37,24 @@ public class Levioso extends Spell
 	{
 		Player p = (Player) e.getPlayer();
 		Entity target = RayCastUtils.getNearestEntity(p, 20);
+		
 		if (target instanceof LivingEntity) 
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.VIBRATION, null);
+			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.CRIT, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{				
 				EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
-				EntityEffects.add((LivingEntity) target, PotionEffectType.LEVITATION, 200, 0, true);
+				EntityEffects.add((LivingEntity) target, PotionEffectType.LEVITATION, target instanceof Player ? 100 : 160, 0, true);
 			}, 10);
 			return true;
 		}
 		else if(target == null)
 		{
-			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
-			EntityEffects.add(p, PotionEffectType.LEVITATION, 200, 0, true);
+			EntityEffects.add(p, PotionEffectType.LEVITATION, 160, 0, true);
 			return true;
 		}
 		return false;
