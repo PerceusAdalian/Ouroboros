@@ -504,7 +504,27 @@ public class EntityEffects
 		add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
 		add(target, PotionEffectType.FIRE_RESISTANCE, seconds * 20, 0, false);
 		add(target, PotionEffectType.RESISTANCE, seconds * 20, magnitude, false);
+	}
+	
+	public static Map<UUID, DivineFavorData> divineFavorRegistry = new HashMap<>();
+	public static void addDivineFavor(Player target, int magnitude, int seconds)
+	{
+		add(target, PotionEffectType.RESISTANCE, seconds * 20, magnitude, false);
+		add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
 		
+		divineFavorRegistry.put(target.getUniqueId(), new DivineFavorData(magnitude, seconds));
+	}
+	
+	public static class DivineFavorData
+	{
+		public int magnitude;
+		public int seconds;
+		
+		public DivineFavorData(int magnitude, int seconds)
+		{
+			this.magnitude = magnitude;
+			this.seconds = seconds;
+		}
 	}
 	
 	/**

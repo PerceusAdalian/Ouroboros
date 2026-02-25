@@ -20,6 +20,7 @@ import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
 import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Lumos;
+import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
@@ -51,6 +52,7 @@ public class SpellRegistry
         		Diagnosis.class,
         		Cure.class,
         		Expell.class,
+        		Pneuma.class,
         		
         		//Mortio
         		Haunt.class,

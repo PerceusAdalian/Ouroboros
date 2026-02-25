@@ -12,6 +12,7 @@ import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
 import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Lumos;
+import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -45,6 +46,9 @@ public class CelestioSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new AssertOrder(), 16, this);
 		
 		// 5
+		
+		// 6
+		GuiButton.placeSpellButton(player, new Pneuma(), 19, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
