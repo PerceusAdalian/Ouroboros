@@ -44,8 +44,8 @@ public class MobDeathEvent implements Listener
 			    Random r = new Random();
 			    final int maxDrops = 2;
 			    int currentDrops = 0;
-			    final double dropChance = 0.1599d;
-			    final double spellDropChance = 0.0999d;
+			    final double dropChance = 0.075d;
+			    final double spellDropChance = 0.05d;
 			    
 			    if (r.nextDouble() < 0.4499d)
 			    {

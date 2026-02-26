@@ -11,8 +11,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.ouroboros.Ouroboros;
-
 public class GuiHandler implements Listener
 {
 	private static final Map<Player, AbstractOBSGui> openGuis = new HashMap<>();
@@ -42,7 +40,8 @@ public class GuiHandler implements Listener
     public static void changeMenu(Player player, AbstractOBSGui gui) 
     {
     	close(player);
-    	Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->open(player, gui), 1);
+    	open(player, gui);
+//    	Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->open(player, gui), 1);
     }
     
     public static void registerEvent(JavaPlugin plugin) 

@@ -43,10 +43,8 @@ public class WandViewPage extends AbstractOBSGui
 			Wand storedWand = CollectWandData.wandCollector.get(p.getUniqueId());
 			ItemStack returnedWand = storedWand.getAsItemStack();
 			p.getInventory().addItem(returnedWand);
-			CollectWandData.wandCollector.remove(p.getUniqueId());
-            GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-            CollectWandData.pageController.remove(p.getUniqueId());
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			handleCleanup(p);
+			GuiHandler.open(p, new SpellBookPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE)
@@ -59,10 +57,7 @@ public class WandViewPage extends AbstractOBSGui
 			Wand storedWand = CollectWandData.wandCollector.get(p.getUniqueId());
 			ItemStack returnedWand = storedWand.getAsItemStack();
 			p.getInventory().addItem(returnedWand);
-			CollectWandData.wandCollector.remove(p.getUniqueId());
-            GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-            CollectWandData.pageController.remove(p.getUniqueId());
-			GuiHandler.close(p);
+			handleCleanup(p);
 		});
 		paint();
 	}
@@ -105,17 +100,15 @@ public class WandViewPage extends AbstractOBSGui
             				EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
             				wand.setSpell(spell, selectedSlot);
             				ItemStack stack = wand.getAsItemStack();
-            				p.getInventory().addItem(stack);	            				
+            				p.getInventory().addItem(stack);
+            				handleCleanup(p);
+            				GuiHandler.open(p, new SpellBookPage(p));
             			}
             			else
             			{
             				e.setCancelled(true);
 	            			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.AMBIENT);
             			}
-            			CollectWandData.wandCollector.remove(p.getUniqueId());
-            			GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-            			CollectWandData.pageController.remove(p.getUniqueId());
-            			GuiHandler.close(p);
             		});
 	            }
 	            else
@@ -135,18 +128,20 @@ public class WandViewPage extends AbstractOBSGui
             	        Player p = (Player) e.getWhoClicked();
             	        EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
             	        
-            	        if (isRemoving) {
+            	        if (isRemoving) 
+            	        {
             	            wand.removeSpell(selectedSlot);
             	            wand.setSpellIndex(wand.getNextSpellSlot());
-            	        } else {
+            	            handleCleanup(p);
+            	            reload(p, wand);
+            	        } 
+            	        else 
+            	        {
             	            wand.setSpell(spell, selectedSlot);
+            	            p.getInventory().addItem(wand.getAsItemStack());
+            	            handleCleanup(p);
+            	            GuiHandler.open(p, new SpellBookPage(p));
             	        }
-            	        
-            	        p.getInventory().addItem(wand.getAsItemStack());
-            	        CollectWandData.wandCollector.remove(p.getUniqueId());
-            	        GuiButton.spellActivateConfirm.remove(p.getUniqueId());
-            	        CollectWandData.pageController.remove(p.getUniqueId());
-            	        GuiHandler.close(p);
             	    });
 	            }
 	        }
@@ -164,6 +159,21 @@ public class WandViewPage extends AbstractOBSGui
                 });
 	        }
 	    }
+	}
+	
+	private static void handleCleanup(Player player)
+	{
+		CollectWandData.wandCollector.remove(player.getUniqueId());
+        GuiButton.spellActivateConfirm.remove(player.getUniqueId());
+        CollectWandData.pageController.remove(player.getUniqueId());
+        GuiHandler.close(player);
+	}
+	
+	private static void reload(Player player, Wand wand)
+	{
+		CollectWandData.pageController.put(player.getUniqueId(), "removespell");
+		CollectWandData.wandCollector.put(player.getUniqueId(), wand);
+		GuiHandler.open(player, new WandViewPage(player));
 	}
 
 }

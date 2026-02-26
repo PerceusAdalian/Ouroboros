@@ -24,6 +24,7 @@ import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
+import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.heresio.Hex;
@@ -86,6 +87,7 @@ public class SpellRegistry
         		
         		//Cosmo
         		ArrestoMomentum.class,
+        		Gate.class,
         		
         		//Heresio
         		Hex.class

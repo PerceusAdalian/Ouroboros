@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class Chance 
 {
-	public static boolean of(double value)
+	public static boolean of(double percentValue)
 	{
 		Random random = new Random();
-		return random.nextDouble() < Math.max(0, Math.min(value, 100)) / 100;
+		return random.nextDouble() < Math.max(0, Math.min(percentValue, 100)) / 100;
 	}
 }

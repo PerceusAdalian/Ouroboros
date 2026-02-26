@@ -68,6 +68,19 @@ public class MobManager
 		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &o&bRespawnAll&r&f -- &aOK&f &7(OnEnable)");
 	}
 
+	public static void clearLegacyMobs()
+	{
+		for (World w : Bukkit.getWorlds())
+		{
+			for (Entity e : w.getEntities())
+			{
+				if (!(e instanceof LivingEntity) || e instanceof Player) continue;
+				if (MobData.getMob(e.getUniqueId()) != null) MobData.getMob(e.getUniqueId()).kill();
+				else e.remove();
+			}
+		}
+	}
+	
 	public static void despawnAll() 
 	{
 		File file = new File(Ouroboros.instance.getDataFolder(), "mobs/serialized.yml");

@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
+import com.lol.spells.instances.cosmo.Gate;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -23,7 +24,18 @@ public class CosmoSpellsPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
+		
+		// 1
+		
+		// 2
 		GuiButton.placeSpellButton(player, new ArrestoMomentum(), 10, this);
+		
+		// 3
+		
+		// 4
+		
+		// 5
+		GuiButton.placeSpellButton(player, new Gate(), 11, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->

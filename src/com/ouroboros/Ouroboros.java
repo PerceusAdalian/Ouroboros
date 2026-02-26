@@ -26,6 +26,7 @@ import com.ouroboros.mobs.events.MobDamageEvent;
 import com.ouroboros.mobs.events.MobDeathEvent;
 import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
+import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
 import com.ouroboros.objects.TrainingWandRecipe;
@@ -79,7 +80,9 @@ public class Ouroboros extends JavaPlugin
 		AssertOrder.registerSpellHelper(instance);
 		Pneuma.registerSpellHelper(instance);
 		
+		MobManager.clearLegacyMobs();
 		MobManager.respawnAll();
+		MobNameplate.registerTaskHandler(instance);
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());

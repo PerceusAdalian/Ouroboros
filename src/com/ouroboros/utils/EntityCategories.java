@@ -42,7 +42,8 @@ public class EntityCategories
 			EntityType.SKELETON_HORSE,EntityType.STRAY,EntityType.WITHER,EntityType.WITHER_SKELETON,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,
 			EntityType.ZOMBIE_VILLAGER,EntityType.ZOMBIFIED_PIGLIN,EntityType.VEX,EntityType.HUSK,EntityType.ZOMBIE_NAUTILUS);
 	
-	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.GHAST,EntityType.MAGMA_CUBE,EntityType.PIGLIN,EntityType.ZOGLIN,EntityType.HOGLIN,EntityType.STRIDER);
+	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.GHAST,EntityType.MAGMA_CUBE,EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,
+			EntityType.ZOGLIN,EntityType.HOGLIN,EntityType.STRIDER);
 	
 	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.AXOLOTL,EntityType.PUFFERFISH,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN,
 			EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.FROG,
@@ -128,8 +129,9 @@ public class EntityCategories
 	    if (aero_mobs.contains(entityType))     return ElementType.AERO;
 	    if (geo_mobs.contains(entityType))      return ElementType.GEO;
 	    if (glacio_mobs.contains(entityType))   return ElementType.GLACIO;
+	    if (cosmo_mobs.contains(entityType)) return ElementType.COSMO;
 	    if (heresio_mobs.contains(entityType))  return ElementType.HERESIO;
-
+	    
 	    return ElementType.NONE;
 	}
 }

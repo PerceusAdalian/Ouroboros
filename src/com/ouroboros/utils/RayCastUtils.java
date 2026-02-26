@@ -100,6 +100,34 @@ public class RayCastUtils
 	    return true;
 	}
 	
+    public static boolean isEntityInFOV(Player player, Entity mob, double foxDegrees)
+    {
+    	Vector lookDirection = player.getLocation().getDirection().normalize();
+    	
+    	Location eyeLoc = player.getEyeLocation();
+    	Location mobCenter = mob.getLocation().add(0, mob.getHeight() / 2, 0);
+    	Vector mobHitbox = mobCenter.toVector().subtract(eyeLoc.toVector()).normalize();
+    	
+    	double dot = lookDirection.dot(mobHitbox);
+    	double FovToRad = Math.toRadians(foxDegrees / 2);
+    	
+    	return dot >= Math.cos(FovToRad);
+    }
+    
+    public static boolean isMobVisible(Player player, LivingEntity mob, double maxDistance, double fovInDegrees)
+    {
+    	if (player.getLocation().distanceSquared(mob.getLocation()) > maxDistance * maxDistance)
+	    	return false;
+    	
+    	if(!isEntityInFOV(player, mob, fovInDegrees))
+    		return false;
+    	
+    	if (!player.hasLineOfSight(mob))
+    		return false;
+    	
+    	return true;
+    }
+	
 	public static boolean createHitBox(Player p, double width, double height, double length, Consumer<Entity> consumer)
 	{
 		Location origin = p.getEyeLocation();

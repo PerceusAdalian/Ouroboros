@@ -246,6 +246,11 @@ public class MobData
 		config.set(path, value);
 	}
 	
+	/**
+	 * @param value
+	 * @param damageArmor
+	 * @param element
+	 */
 	public void damage(double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(uuid);
@@ -268,8 +273,7 @@ public class MobData
 		double newHP = currentHP - value;
 		data.setHp(newHP, false);
 
-		if (damageArmor)
-			damageArmor(value);
+		if (damageArmor) damageArmor(value);
 	}
 	
 	public void heal(double value, boolean setMaxHp, boolean healArmor, boolean setMaxArmor)

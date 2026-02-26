@@ -1,11 +1,16 @@
 package com.ouroboros.mobs.utils;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.PrintUtils;
-
-import org.bukkit.entity.LivingEntity;
+import com.ouroboros.utils.RayCastUtils;
 
 /**
  * @Documented newest itteration for mob health and identity display. Disregard ObsMobHealthbar.java
@@ -20,7 +25,7 @@ public class MobNameplate
         if (data == null) return;
 
         mob.setCustomNameVisible(true);
-        mob.setCustomName(initializeNameplate(mob, data));
+        mob.setCustomName(initialize(mob, data));
 
         if (Ouroboros.debug)
             PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oSpawnNameplate&r&f -- &aOK&f || &7Mob: "
@@ -32,7 +37,7 @@ public class MobNameplate
         MobData data = MobData.getMob(mob.getUniqueId());
         if (data == null) return;
 
-        mob.setCustomName(initializeNameplate(mob, data));
+        mob.setCustomName(initialize(mob, data));
 
         if (Ouroboros.debug)
             PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oUpdateNameplate&r&f -- &aOK&f || &7Mob: "
@@ -44,9 +49,19 @@ public class MobNameplate
         mob.setCustomName(null);
         mob.setCustomNameVisible(false);
     }
+    
+    public static void hide(LivingEntity mob)
+    {
+    	mob.setCustomNameVisible(false);
+    }
+    
+    public static void show(LivingEntity mob)
+    {
+    	mob.setCustomNameVisible(true);
+    }
 
     // Nameplate builder
-    private static String initializeNameplate(LivingEntity mob, MobData data)
+    private static String initialize(LivingEntity mob, MobData data)
     {
         return PrintUtils.ColorParser(
         		buildIdentitySegment(mob, data) + " &7| &f{" + 
@@ -57,15 +72,15 @@ public class MobNameplate
     // Segments
     private static String buildIdentitySegment(LivingEntity mob, MobData data)
     {
-        String affinityTag = "&r&f⊰&" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + "۞&r&f⊱ ";
-        String levelTag = " &eLv&f: &r&b&l" + data.getLevel();
-//        int level = data.getLevel();
-//        String entityRarityIcon = level >= 100 ? "&2♔"
-//    							: level >= 80 ? "&c♕"
-//    							: level >= 60 ? "&e⚜"
-//    							: level >= 40 ? "&d✯"
-//    							: level >= 20 ? "&b♢"
-//    							: "&7●";
+        int level = data.getLevel();
+        String levelTag = " &eLv&f: &r&b&l" + level;
+        String entityTierIcon = level >= 100 ? "۞"
+							  : level >= 80  ? "❂"
+							  : level >= 60  ? "⚜"
+							  : level >= 40  ? "✯"
+							  : level >= 20  ? "♢"
+							  : "●";
+		String affinityTag = "&r&f⊰&" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + entityTierIcon + "&r&f⊱ ";
     							
         return affinityTag + PrintUtils.getFancyEntityName(mob.getType()) + levelTag;
     }
@@ -111,6 +126,27 @@ public class MobNameplate
     	int empty = segments - filled;
     	
     	return "&e" + "|".repeat(filled) + "&6" + "|".repeat(empty);
+    }
+    
+    public static void registerTaskHandler(Plugin plugin)
+    {
+    	Bukkit.getScheduler().runTaskTimer(plugin, ()->
+    	{
+    		for (World w : Bukkit.getWorlds())
+    		{
+    			for (LivingEntity mob : w.getLivingEntities())
+    			{
+    				if (mob instanceof Player) continue;
+    				if (mob.getCustomName() == null) continue;
+    				
+    				for (Player p : w.getPlayers())
+    				{
+    					if (MobData.getMob(mob.getUniqueId()) == null) continue;
+    					mob.setCustomNameVisible(RayCastUtils.isMobVisible(p, mob, 35, 90));
+    				}
+    			}
+    		}
+    	}, 0L, 5L);
     }
 
 }

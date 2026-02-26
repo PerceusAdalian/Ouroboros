@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -22,6 +23,7 @@ import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.AbilityType;
+import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.utils.EntityEffects;
@@ -111,6 +113,10 @@ public class PlayerData
 	    	setStat(StatType.MELEE, false, 0);
 	    	setStat(StatType.RANGED, false, 0);
 	    	setStat(StatType.MAGIC, false, 0);
+	    	
+	    	setGate(GateCodes.OVERWORLD, Bukkit.getWorld("world").getSpawnLocation());
+	    	setGate(GateCodes.NETHER, Bukkit.getWorld("world_nether").getSpawnLocation());
+	    	setGate(GateCodes.END, Bukkit.getWorld("world_the_end").getSpawnLocation());
 	    	
 	    	setActiveCombatAbility(null);
 	    	
@@ -481,6 +487,28 @@ public class PlayerData
 	public int getMagicProficiency()
 	{
 		return config.getInt("magic_proficiency");
+	}
+	
+	public void setGate(GateCodes code, Location loc)
+	{
+		String pathMod = switch(code)
+		{
+			case OVERWORLD -> pathMod = "_overworld";
+			case NETHER -> pathMod = "_nether";
+			case END -> pathMod = "_end";
+		};
+		config.set("gate"+pathMod, loc);
+	}
+	
+	public Location getGate(GateCodes code)
+	{
+		String pathMod = switch(code)
+		{
+			case OVERWORLD -> pathMod = "_overworld";
+			case NETHER -> pathMod = "_nether";
+			case END -> pathMod = "_end";
+		};
+		return (Location) config.get("gate"+pathMod);
 	}
 	
 	public void save() 
