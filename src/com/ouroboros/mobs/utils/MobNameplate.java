@@ -36,7 +36,7 @@ public class MobNameplate
     {
         MobData data = MobData.getMob(mob.getUniqueId());
         if (data == null) return;
-
+        
         mob.setCustomName(initialize(mob, data));
 
         if (Ouroboros.debug)

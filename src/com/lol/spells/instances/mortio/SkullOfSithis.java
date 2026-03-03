@@ -45,7 +45,7 @@ public class SkullOfSithis extends Spell
 		Player p = e.getPlayer();
 		if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
 		{
-			Entity target = RayCastUtils.getNearestEntity(p, 10);
+			Entity target = RayCastUtils.getEntity(p, 10);
 			if (target == null || !(target instanceof LivingEntity le)) return false;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_CAST_SPELL, SoundCategory.AMBIENT);

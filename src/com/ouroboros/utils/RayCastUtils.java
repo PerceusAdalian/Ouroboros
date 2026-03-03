@@ -17,12 +17,23 @@ import org.bukkit.util.Vector;
 
 public class RayCastUtils 
 {
-	public static Entity getNearestEntity(Player p, int range)
+	public static Entity getEntity(Player p, int range)
 	{
 	    RayTraceResult result = p.getLocation().getWorld().rayTraceEntities(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(2)),p.getEyeLocation().getDirection(),range);
 	    
 	    if(result == null || result.getHitEntity() == null) return null;
 	    return result.getHitEntity();
+	}
+	
+	public static boolean getEntity(Player p, int range, Consumer<Entity> consumer)
+	{
+	    RayTraceResult result = p.getLocation().getWorld().rayTraceEntities(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(2)),p.getEyeLocation().getDirection(),range);
+	    
+	    if(result == null || result.getHitEntity() == null || !(result instanceof Entity)) return false;
+	    	
+	    consumer.accept((Entity) result);
+	    
+	    return true;
 	}
 	
 	public static List<Block> getNearbyBlocks(Location origin, int radius) 

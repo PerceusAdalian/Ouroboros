@@ -3,7 +3,6 @@ package com.ouroboros.utils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -55,12 +54,12 @@ public class EntityEffects
 	 * @param entity
 	 * @param effectType
 	 * @param duration
-	 * @param intensity
+	 * @param magnitude
 	 * @param setAmbient
 	 */
-	public static void add(LivingEntity entity, PotionEffectType effectType, int duration, int intensity, boolean setAmbient) 
+	public static void add(LivingEntity entity, PotionEffectType effectType, int duration, int magnitude, boolean setAmbient) 
 	{
-		entity.addPotionEffect(new PotionEffect(effectType, duration, intensity, setAmbient));
+		entity.addPotionEffect(new PotionEffect(effectType, duration, magnitude, setAmbient));
 	}
 	
 	public static void heal(Player p, double value) 
@@ -85,31 +84,34 @@ public class EntityEffects
 	public static void checkFromCombat(LivingEntity target, ElementType element) 
 	{
 
-		Random r = new Random();
-
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data == null) return;
 
 		// Puncture and Pierce remove an extra 20% of the mob's AR as long as they
 		// aren't broken.
-		if ((element == ElementType.PUNCTURE || element == ElementType.PIERCE) && (!data.isBreak()))
+		if ((element == ElementType.PUNCTURE || element == ElementType.PIERCE) && !data.isBreak())
 			data.damageArmor(data.getArmor(false) * 0.2d);
+		
 		// Slash damage will deal an additional 50% of the mob's overall health so long
 		// as they won't die and are broken.
-		if (element == ElementType.SLASH && data.isBreak() && !data.isDead())
+		if (element == ElementType.SLASH && data.isBreak())
 			data.damage(data.getHp(false) * 0.5, false, ElementType.NEUTRAL);
+		
 		// Blunt damage temporarily slows mobs that aren't yet broken, making it easy to
 		// stack stun procs.
 		if (element == ElementType.BLUNT && !data.isBreak())
 			EntityEffects.add(target, PotionEffectType.SLOWNESS, 200, 0, true);
+		
 		// Impale will force a BREAK so long as they aren't already broken. This is one
 		// of three PURE DAMAGE types.
 		if (element == ElementType.IMPALE && !data.isBreak())
 			data.setBreak();
+		
 		// Sever will remove the remainder of the mob's HP after damage calculations so
 		// long as they're broken and not already defeated; the second PURE DAMAGE type.
-		if (element == ElementType.SEVER && data.isBreak() && !data.isDead())
+		if (element == ElementType.SEVER && data.isBreak())
 			data.damage(data.getHp(false), false, ElementType.NEUTRAL);
+		
 		// Crush will indefinitely stun a mob, regardless if they recover from the
 		// applied break status; the third and final PURE DAMAGE type.
 		if (element == ElementType.CRUSH) 
@@ -117,27 +119,61 @@ public class EntityEffects
 			EntityEffects.add(target, PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 99, true);
 			data.setBreak();
 		}
+		
 		// Corrosive will erode target's armor by 30% of its current value.
 		if (element == ElementType.CORROSIVE && !data.isBreak())
 			data.damageArmor(data.getArmor(false) * 0.3d);
+		
 		if (element == ElementType.GLACIO) 
 		{
-			if (r.nextDouble() >= 0.2155)
+			if (Chance.of(20))
 				return;
 			addChill(target, 300);
 		}
+		
 		if (element == ElementType.INFERNO) 
 		{
-			if (r.nextDouble() >= 0.1399)
+			if (Chance.of(10))
 				return;
 			addBurn(target, 300);
 		}
-
 	}
 
+	public static Set<UUID> hasEtherOverload = new HashSet<>();
+	public static void addEtherOverload(LivingEntity target, int seconds)
+	{
+		if (hasEtherOverload.contains(target.getUniqueId())) return;
+		OBStandardTimer.runWithCancel(Ouroboros.instance, e->
+		{
+			if (target.isDead()) return;
+			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
+		}, 20, seconds*20);
+		hasEtherOverload.add(target.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasEtherOverload.remove(target.getUniqueId()), seconds * 20);
+	}
+	
+	public static Set<UUID> hasEtherDisruption = new HashSet<>();
+	public static void addEtherDisruption(Player target, int seconds)
+	{
+		if (hasEtherDisruption.contains(target.getUniqueId())) return;
+		OBStandardTimer.runWithCancel(Ouroboros.instance, e->
+		{
+			if (target.isDead()) return;
+			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
+			OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 4, 0.1, Particle.BUBBLE_COLUMN_UP, null);
+		}, 20, seconds*20);
+		hasEtherDisruption.add(target.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasEtherDisruption.remove(target.getUniqueId()), seconds * 20);
+	}
+	
+	public static void addChroma(LivingEntity target, int seconds)
+	{
+		// TODO
+	}
+	
 	/**
-	 * @param target Entity target
-	 * @param ticks  How many ticks the mob should be frozen and slowed for
+	 * @param target 
+	 * @param seconds
 	 */
 	public static void addChill(LivingEntity target, int seconds) 
 	{
@@ -147,10 +183,27 @@ public class EntityEffects
 
 	public static void addBurn(LivingEntity target, int seconds) 
 	{
-		add(target, PotionEffectType.HUNGER, seconds*20, 2, true);
 		target.setFireTicks(seconds * 20);
 	}
-
+	
+	public static Set<UUID> hasCharred = new HashSet<>();
+	/**
+	 * @Effect Causes those affected to have Hunger, Fatigue, and Slowness, while taking 15% more Inferno Damage.
+	 * 			30% chance to cause burn for 10 seconds.
+	 * @param target
+	 * @param magnitude
+	 * @param seconds
+	 */
+	public static void addCharred(LivingEntity target, int magnitude, int seconds)
+	{
+		target.setFireTicks(seconds * 20);
+		add(target, PotionEffectType.HUNGER, seconds*20, 0, false);
+		add(target, PotionEffectType.MINING_FATIGUE, seconds*20, 0, false);
+		add(target, PotionEffectType.SLOWNESS, seconds*20, 0, false);
+		hasCharred.add(target.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasCharred.remove(target.getUniqueId()), seconds*20);
+	}
+	
 	public static void addSanded(LivingEntity target, int seconds)
 	{
 		if (EntityCategories.geo_mobs.contains(target.getType()))
@@ -544,6 +597,11 @@ public class EntityEffects
 	
 	public static Map<UUID, WildcardData> isHexed = new HashMap<>();
 	
+	/**
+	 * @param target
+	 * @param magnitude
+	 * @param seconds
+	 */
 	public static void addWildcard(LivingEntity target, int magnitude, int seconds)
 	{
 		PotionEffectType debuff = debuffs.iterator().next();
@@ -551,6 +609,11 @@ public class EntityEffects
 		isHexed.put(target.getUniqueId(), new WildcardData(debuff, magnitude));
 	}
 	
+	/**
+	 * @param target
+	 * @param magnitude
+	 * @Documented assumed duration is Infinite
+	 */
 	public static void addWildcard(LivingEntity target, int magnitude)
 	{
 		PotionEffectType debuff = debuffs.iterator().next();

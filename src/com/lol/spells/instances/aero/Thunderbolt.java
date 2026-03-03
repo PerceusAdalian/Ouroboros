@@ -36,7 +36,7 @@ public class Thunderbolt extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 30);
+		Entity target = RayCastUtils.getEntity(p, 30);
 		if (!(target instanceof LivingEntity) || target == null) return false;
 
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);

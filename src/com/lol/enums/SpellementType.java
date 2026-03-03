@@ -9,7 +9,8 @@ public enum SpellementType
 	AERO("&r&d&lAero&r&f"),
 	GEO("&r&6&lGeo&r&f"),
 	COSMO("&r&3&lCosmo&r&f"),
-	HERESIO("&r&2&lHeresio&r&f");
+	HERESIO("&r&2&lHeresio&r&f"),
+	ARCANO("&r&b&oArcano&r&f");
 	
 	private String name;
 	

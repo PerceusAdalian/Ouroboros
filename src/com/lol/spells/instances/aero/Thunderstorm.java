@@ -46,7 +46,7 @@ public class Thunderstorm extends Spell
 		
 		if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
 		{
-			Entity target = RayCastUtils.getNearestEntity(p, 40);
+			Entity target = RayCastUtils.getEntity(p, 40);
 			if (target == null || !(target instanceof LivingEntity)) return false;
 
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);

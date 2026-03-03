@@ -1,5 +1,7 @@
 package com.ouroboros.enums;
 
+import java.util.Set;
+
 public enum ElementType
 {
 	NONE(null),
@@ -20,18 +22,18 @@ public enum ElementType
 	CRUSH("&r&f&o&lCrush&r&f"),
 	SEVER("&r&f&o&lSever&r&f"),
 	IMPALE("&r&f&o&lImpale&r&f"),
-	//Almighty/Pure Elemental Damage Type
-	HERESIO("&r&2&lHeresio&r&f"),
+	//Almighty Elemental Damage Type
 	//Special Almighty Explosive Damage Type
 	BLAST("&r&c&o&lBlast&r&f"),
 	//Elemental Damage Types
-	GLACIO("&r&b&lGlacio&r&f"),
-	INFERNO("&r&c&lInferno&r&f"),
-	GEO("&r&6&lGeo&r&f"),
-	AERO("&r&d&lAero&r&f"),
 	CELESTIO("&r&e&lCelestio&r&f"),
 	MORTIO("&r&4&lMortio&r&f"),
-	COSMO("&r&3&lCosmo&r&f");
+	INFERNO("&r&c&lInferno&r&f"),
+	GLACIO("&r&b&lGlacio&r&f"),
+	AERO("&r&d&lAero&r&f"),
+	GEO("&r&6&lGeo&r&f"),
+	COSMO("&r&3&lCosmo&r&f"),
+	HERESIO("&r&2&lHeresio&r&f");
 	
 	private final String element;	
 	
@@ -49,4 +51,8 @@ public enum ElementType
 	{
 		return element;
 	}
+	
+	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO);
+	public static Set<ElementType> almighty = Set.of(CRUSH, SEVER, IMPALE, BLAST);
+	public static Set<ElementType> natural = Set.of(BLUNT, PIERCE, SLASH, COMBUST, PUNCTURE, CORROSIVE);
 }

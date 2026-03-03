@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import com.eol.enums.MateriaComponent;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.ouroboros.accounts.PlayerData;
@@ -165,6 +166,7 @@ public class PrintUtils
 			case GLACIO -> ch = 'b';
 			case HERESIO -> ch = '2';
 			case MORTIO -> ch = '4';
+			case ARCANO -> ch = 'f';
 			default -> ch = '7';
 		};
 		return ch;
@@ -182,6 +184,7 @@ public class PrintUtils
 			case GLACIO -> ch = 'b';
 			case HERESIO -> ch = '2';
 			case MORTIO -> ch = '4';
+			case ARCANO -> ch = 'f';
 			default -> ch = '7';
 		};
 		return ch;
@@ -212,6 +215,11 @@ public class PrintUtils
 	public static String assignSpellType(SpellType type1, SpellType type2)
 	{
 		return ColorParser("&r&f&lSpell Type&r&f: {"+ type1.getSpellType() + "&r&f | " + type2.getSpellType() + "&r&f}");
+	}
+	
+	public static String assignComponentType(MateriaComponent componentType)
+	{
+		return ColorParser("&r&f&lComponent Type&r&f: {"+componentType.getAsFancyName()+"&r&f}");
 	}
 	
 	public static String assignPVPCompatible()
@@ -270,11 +278,16 @@ public class PrintUtils
 			case FIVE -> color = 'e';
 			case SIX -> color = 'c';
 			case SEVEN -> color = '3';
-			case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + rarity);
-			default -> throw new IllegalArgumentException("Unexpected value: " + rarity);	
+			case NONE -> color = '7';
+			default -> color = '7';
 		};
 		
 		return ColorParser("&r&f&nRarity&r&f: &"+color+("✦".repeat(rarity.getRarity())));
+	}
+	
+	public static String assignObfuscatedRarity(Rarity rarity)
+	{
+		return ColorParser("&r&f&nRarity&r&f: &k&7"+("✦".repeat(5)));
 	}
 	
 	public static String rarityToString(Rarity rarity)

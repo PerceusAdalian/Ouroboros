@@ -44,7 +44,7 @@ public class ArrestoMomentum extends Spell implements Listener
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 20);
+		Entity target = RayCastUtils.getEntity(p, 20);
 		if (!(target instanceof LivingEntity) || target == null) return false;
 		
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);

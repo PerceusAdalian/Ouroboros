@@ -36,7 +36,7 @@ public class Levioso extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 20);
+		Entity target = RayCastUtils.getEntity(p, 20);
 		
 		if (target instanceof LivingEntity) 
 		{

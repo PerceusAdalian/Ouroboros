@@ -24,10 +24,19 @@ public class GlacioSpellsPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
+		// 1
+		
+		// 2
 		GuiButton.placeSpellButton(player, new Glacius(), 10, this);
 		
+		// 3
+		
+		// 4
+		
+		// 5
+		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);

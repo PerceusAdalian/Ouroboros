@@ -19,6 +19,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
@@ -137,6 +138,25 @@ public class MobManager
         }
 		
 		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &o&bDespawnAll&r&f -- &aOK&f &7(OnDisable)");
+	}
+	
+	public static void convertLegacyMobsTask(Plugin plugin)
+	{
+		Bukkit.getScheduler().runTaskTimer(plugin, ()->
+    	{
+    		for (World w : Bukkit.getWorlds())
+    		{
+    			for (LivingEntity mob : w.getLivingEntities())
+    			{
+    				if (mob instanceof Player) continue;
+    				for (Player p : w.getPlayers())
+    				{
+    					if (MobData.getMob(mob.getUniqueId()) == null && p.getLocation().distance(mob.getLocation()) > 20) 
+    						MobData.convertLegacyMob(mob);
+    				}    				
+    			}
+    		}
+    	}, 0L, 5L);
 	}
 	
 }

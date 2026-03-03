@@ -1,10 +1,9 @@
-package com.lol.spells;
+package com.ouroboros.utils;
 
 import org.bukkit.entity.EntityType;
 
 import com.lol.enums.SpellementType;
 import com.ouroboros.enums.EntityCategory;
-import com.ouroboros.utils.EntityCategories;
 
 public class EntityCategoryToSpellement 
 {
@@ -41,6 +40,7 @@ public class EntityCategoryToSpellement
 	        case GEO -> mobCategory == EntityCategory.GEO_MOBS;
 	        case COSMO -> mobCategory == EntityCategory.COSMO_MOBS;
 	        case HERESIO -> mobCategory == EntityCategory.HERESIO_MOBS;
+	        case ARCANO -> mobCategory == EntityCategory.ARCANO_MOBS;
 	    };
 	}
 }

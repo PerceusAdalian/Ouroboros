@@ -96,10 +96,7 @@ public abstract class AbstractObsObject
 		ItemMeta meta = stack.getItemMeta();
 		List<String> lore = new ArrayList<>();
 			
-		if (this.isEnchanted() == true) 
-		{
-			meta.setEnchantmentGlintOverride(true);
-		}
+		if (isEnchanted) meta.setEnchantmentGlintOverride(true);
 		
 		lore.add("\n");
 		
@@ -109,7 +106,7 @@ public abstract class AbstractObsObject
 			lore.add(PrintUtils.ColorParser("&r&f" + line) + "\n");
 		}
 		lore.add("\n");
-		lore.add(PrintUtils.ColorParser("&r&7&oOBS Object ID: O_" + getInternalNameAsID()));			
+		lore.add(PrintUtils.ColorParser("&r&7&oOBS Object ID: Ω_" + getInternalNameAsID()));			
 		
 		meta.setLore(lore);
 		meta.getPersistentDataContainer().set(obsObject, PersistentDataType.STRING, internalName.toString());

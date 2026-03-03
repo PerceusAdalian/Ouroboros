@@ -35,7 +35,7 @@ public class Diagnosis extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 20);
+		Entity target = RayCastUtils.getEntity(p, 20);
 		
 		if (target == null)
 		{

@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Damageable;
@@ -40,7 +41,7 @@ public class MobData
 
 	private static final Map<UUID, MobData> dataMap = new HashMap<>();
 
-	public MobData(Entity entity) 
+	public MobData(LivingEntity entity) 
 	{
 		this.uuid = entity.getUniqueId();
 		this.file = new File(getDataFolder(), "mobs/data/"+uuid.toString()+".yml");
@@ -65,7 +66,7 @@ public class MobData
 		return dataMap.get(uuid);
 	}
 	
-	public void initialize(Entity entity)
+	public void initialize(LivingEntity entity)
 	{
 		if (!file.exists())
 		{
@@ -87,6 +88,24 @@ public class MobData
 			setLocation(entity.getLocation());
 			entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
 			save();			
+		}
+		return;
+	}
+	
+	public static void convertLegacyMob(LivingEntity entity)
+	{
+		MobData data = MobData.getMob(entity.getUniqueId());
+		if (data == null)
+		{
+			MobData.loadMobData(entity);
+			data = new MobData(entity);
+			data.initialize(entity);
+			data.save();
+			MobNameplate.build(entity);
+			
+			var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
+			att.setBaseValue(1023.9);
+			((Damageable) entity).setHealth(att.getBaseValue());
 		}
 		return;
 	}
@@ -268,6 +287,8 @@ public class MobData
 		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
 		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
 		if (EntityEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
+		if (EntityEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.25;
+		if (EntityEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;
@@ -435,7 +456,7 @@ public class MobData
 		return this;
 	}
 
-	public static MobData loadMobData(Entity entity) 
+	public static MobData loadMobData(LivingEntity entity) 
 	{
 		UUID uuid = entity.getUniqueId();
 		if (!dataMap.containsKey(uuid)) dataMap.put(uuid, new MobData(entity));

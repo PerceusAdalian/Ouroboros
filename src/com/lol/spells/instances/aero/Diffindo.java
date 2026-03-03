@@ -36,7 +36,7 @@ public class Diffindo extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 30);
+		Entity target = RayCastUtils.getEntity(p, 30);
 		if (!(target instanceof LivingEntity) || target == null) return false;
 		EntityEffects.addCharged(p, 0, 10);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);

@@ -34,7 +34,7 @@ public class Expelliarmus extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 15);
+		Entity target = RayCastUtils.getEntity(p, 15);
 
 		if (!(target instanceof LivingEntity living)) return false;
 

@@ -15,7 +15,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.lol.spells.SpellHandler;
+import com.lol.spells.SpellDataHandler;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
@@ -374,9 +374,9 @@ public class PlayerData
 		return new AbilityHandler(ability, config);
 	}
 	
-	public SpellHandler getSpell(Spell spell)
+	public SpellDataHandler getSpell(Spell spell)
 	{
-		return new SpellHandler(spell, config);
+		return new SpellDataHandler(spell, config);
 	}
 	
 	public int getStatLevel(StatType sType)

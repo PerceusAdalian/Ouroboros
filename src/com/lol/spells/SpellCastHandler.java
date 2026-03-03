@@ -124,6 +124,12 @@ public class SpellCastHandler implements Listener
 				return;
 			}
 			
+			if (EntityEffects.hasEtherDisruption.contains(p.getUniqueId()))
+			{
+				PrintUtils.PrintToActionBar(p, "&cFizzle: Ether Disrupted!");
+				return;
+			}
+			
 			if (wand.getSpell(wand.getSpellIndex()).Cast(e))
 			{
 				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification()) 
@@ -153,15 +159,15 @@ public class SpellCastHandler implements Listener
 	{
 		switch (sType)
 		{
-		case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
-		case AERO -> OBSParticles.drawAeroCastSigil(player);
-		case COSMO -> OBSParticles.drawCosmoCastSigil(player);
-		case GEO -> OBSParticles.drawGeoCastSigil(player);
-		case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
-		case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
-		case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
-		case MORTIO -> OBSParticles.drawMortioCastSigil(player);
-		default -> throw new IllegalArgumentException("Unexpected value: " + sType);
+			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
+			case AERO -> OBSParticles.drawAeroCastSigil(player);
+			case COSMO -> OBSParticles.drawCosmoCastSigil(player);
+			case GEO -> OBSParticles.drawGeoCastSigil(player);
+			case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
+			case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
+			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
+			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
+			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
 		}
 	}
 }

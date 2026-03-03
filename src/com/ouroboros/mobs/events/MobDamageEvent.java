@@ -28,6 +28,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
@@ -87,6 +88,9 @@ public class MobDamageEvent implements Listener
 						target.setFireTicks(100);
 					}
 					
+					if (element == ElementType.INFERNO && EntityEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(30))
+						EntityEffects.addBurn((LivingEntity) target, 10);
+					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else 
@@ -94,17 +98,6 @@ public class MobDamageEvent implements Listener
 					
 					//Apply relevent effects based on the combat element used.
 					EntityEffects.checkFromCombat((LivingEntity) target, element);
-					
-					//Update their HP bar
-					if (target.getCustomName() == null) 
-					{
-						MobNameplate.build((LivingEntity) target);
-						MobNameplate.update((LivingEntity) target);
-					}
-					else 
-					{
-						MobNameplate.update((LivingEntity) target);
-					}
 					
 				}
 				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
@@ -146,8 +139,6 @@ public class MobDamageEvent implements Listener
 					else
 						data.damage(dmg, true, element);
 					
-					MobNameplate.update((LivingEntity) target);
-					
 					if (Ouroboros.debug) 
 					{
 						String name = target.getCustomName();
@@ -157,6 +148,17 @@ public class MobDamageEvent implements Listener
 								(data.isBreak()?" &7|| &6Break&f: &cTRUE&f":(" &7|| &6Break&f: &aFALSE&7 || &6AR&f: "+
 								data.getArmor(false)+"&7/&f"+data.getArmor(true))+" || &o&7END"));
 					}
+				}
+				
+				//Update their HP bar
+				if (target.getCustomName() == null) 
+				{
+					MobNameplate.build((LivingEntity) target);
+					MobNameplate.update((LivingEntity) target);
+				}
+				else 
+				{
+					MobNameplate.update((LivingEntity) target);
 				}
 				
 				data.save(); //Save the mob's data profile

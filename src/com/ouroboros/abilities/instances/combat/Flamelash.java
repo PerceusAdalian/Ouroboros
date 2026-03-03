@@ -48,7 +48,7 @@ public class Flamelash extends AbstractOBSAbility
 		{
 			Player p = pie.getPlayer();
 			if (cooldownTimer.contains(p.getUniqueId())) return false;
-			Entity target = RayCastUtils.getNearestEntity(p, 7);
+			Entity target = RayCastUtils.getEntity(p, 7);
 			if (target == null || !(target instanceof LivingEntity)) return false;
 			
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), p.getLocation().distance(target.getLocation()), 0.1, Particle.LAVA, null);

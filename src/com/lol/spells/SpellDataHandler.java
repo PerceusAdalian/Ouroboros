@@ -4,12 +4,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.lol.spells.instances.Spell;
 
-public class SpellHandler 
+public class SpellDataHandler 
 {
 	private final Spell spell;
 	private final YamlConfiguration config;
 	
-	public SpellHandler(Spell spell, YamlConfiguration config)
+	public SpellDataHandler(Spell spell, YamlConfiguration config)
 	{
 		this.spell = spell;
 		this.config = config;
@@ -27,6 +27,7 @@ public class SpellHandler
 			case CELESTIO -> pathAlpha = "celestio.";
 			case COSMO -> pathAlpha = "cosmo.";
 			case HERESIO -> pathAlpha = "heresio.";
+			case ARCANO -> pathAlpha = "arcano.";
 		};
 		return "spells."+pathAlpha+spell.getInternalName()+s;
 	}
@@ -36,7 +37,7 @@ public class SpellHandler
 		return config.getBoolean(path(".registered"), false);
 	}
 	
-	public SpellHandler setRegistered(boolean value)
+	public SpellDataHandler setRegistered(boolean value)
 	{
 		config.set(path(".registered"), value);
 		return this;

@@ -40,7 +40,7 @@ public class Bombarda extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 25);
+		Entity target = RayCastUtils.getEntity(p, 25);
 		if (!(target instanceof LivingEntity) || target == null) return false;
 		OBSParticles.drawInfernoCastSigil(p);
 		OBSParticles.drawAngledArcLine(p.getLocation(), target.getLocation(), 0.5, 3, 90, 30, Particle.FLAME, null);

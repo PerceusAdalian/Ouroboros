@@ -57,7 +57,7 @@ public class ReapAndSew extends AbstractOBSAbility
         {
             int seconds = 20;
             Player p = pie.getPlayer();
-            Entity target = RayCastUtils.getNearestEntity(p, 10);
+            Entity target = RayCastUtils.getEntity(p, 10);
             if (target == null || !(target instanceof LivingEntity) || target instanceof Player) return false;
 
             if (!remainingSeconds.containsKey(target.getUniqueId()))

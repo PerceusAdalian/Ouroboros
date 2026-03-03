@@ -25,6 +25,9 @@ import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.eol.enums.MateriaState;
+import com.eol.materia.MateriaRegistry;
+import com.eol.materia.instances.Materia;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
@@ -324,6 +327,15 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				if (affirmOP(p)) return true;
 				AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[2]);
 				ItemStack stack = obj.toItemStack();
+				p.getInventory().addItem(stack);
+				return true;
+			}
+			
+			if (args[1].equals("materia") && MateriaRegistry.materiaRegistry.containsKey(args[2]))
+			{
+				if (affirmOP(p)) return true;
+				Materia materia = MateriaRegistry.materiaRegistry.get(args[2]);
+				ItemStack stack = materia.getAsItemStack(MateriaState.CATALYST);
 				p.getInventory().addItem(stack);
 				return true;
 			}

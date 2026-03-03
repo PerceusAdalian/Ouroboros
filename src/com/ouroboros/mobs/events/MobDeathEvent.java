@@ -12,7 +12,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.lol.spells.EntityCategoryToSpellement;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
@@ -21,6 +20,7 @@ import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.TearOfLumina;
+import com.ouroboros.utils.EntityCategoryToSpellement;
 import com.ouroboros.utils.PrintUtils;
 
 public class MobDeathEvent implements Listener

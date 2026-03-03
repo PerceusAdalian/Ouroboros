@@ -31,7 +31,7 @@ public class Gust extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 7);
+		Entity target = RayCastUtils.getEntity(p, 7);
 		if (target == null || !(target instanceof LivingEntity)) return false;
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);

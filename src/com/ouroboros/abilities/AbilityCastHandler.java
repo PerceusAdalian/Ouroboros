@@ -34,13 +34,14 @@ public class AbilityCastHandler implements Listener
         if (e.getHand() == null) return;
         if (e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
         if (held == null || held.getType() == Material.AIR) return;
-
+        
         for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive()) 
             {
             	if (!CastConditions.isValidAction(e, ability.getCastCondition())) return;
             	if (!AbilityObjectCategory.canAccept(p, ability.getAbilityCategory())) return;
+            	
             	e.setCancelled(false);
                 ability.cast(e);
             }

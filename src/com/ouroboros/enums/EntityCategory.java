@@ -10,6 +10,7 @@ public enum EntityCategory
 {
 	ANY,
 	CALAMITY,
+	ARCANO_MOBS,
 	CELESTIO_MOBS,
 	MORTIO_MOBS,
 	INFERNO_MOBS,
@@ -61,6 +62,7 @@ public enum EntityCategory
 			case GEO_MOBS -> EntityCategories.geo_mobs;
 			case COSMO_MOBS -> EntityCategories.cosmo_mobs;
 			case HERESIO_MOBS -> EntityCategories.heresio_mobs;
+			case ARCANO_MOBS -> EntityCategories.arcano_mobs;
 		};
 	}
 }

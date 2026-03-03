@@ -43,7 +43,7 @@ public class Reap extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 12);
+		Entity target = RayCastUtils.getEntity(p, 12);
 		
 		if (target == null || !(target instanceof LivingEntity)) return false;
 		boolean isCursed = EntityEffects.isCursed.contains(target.getUniqueId());

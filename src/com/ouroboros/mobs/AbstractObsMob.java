@@ -6,6 +6,7 @@ import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.ouroboros.Ouroboros;
@@ -101,7 +102,7 @@ public abstract class AbstractObsMob
 	public Entity generate(Location loc) 
 	{
 		Entity obsMob = loc.getWorld().spawnEntity(loc, getEntityType());
-		MobData mobData = new MobData(obsMob);
+		MobData mobData = new MobData((LivingEntity) obsMob);
 		
 		mobData.setName(getName());
 		mobData.setEntityType(getEntityType());

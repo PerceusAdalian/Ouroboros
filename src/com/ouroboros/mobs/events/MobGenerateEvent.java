@@ -36,11 +36,11 @@ public class MobGenerateEvent implements Listener
 				Entity entity = e.getEntity();
 				if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) return;
 				
-				MobData.loadMobData(entity);
+				MobData.loadMobData((LivingEntity) entity);
 				MobData data = MobData.getMob(entity.getUniqueId());
 				if (data == null) return;
 				
-				data.initialize(entity);
+				data.initialize((LivingEntity) entity);
 				MobNameplate.build((LivingEntity) entity);
 				
 				var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);

@@ -41,7 +41,7 @@ public class GeminiSlash extends AbstractOBSAbility
 		{		
 			Player p = pie.getPlayer();
 			//Get a valid target
-			Entity target = RayCastUtils.getNearestEntity(p, 5);
+			Entity target = RayCastUtils.getEntity(p, 5);
 			if (target == null || !(target instanceof LivingEntity le)) return false;
 			
 			//Initalize vectors

@@ -33,7 +33,7 @@ public class Expell extends Spell
 	public boolean Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getNearestEntity(p, 25);
+		Entity target = RayCastUtils.getEntity(p, 25);
 		if (target == null || !(target instanceof LivingEntity le)) return false;
 		
 		OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.5, Particle.WAX_ON, null);

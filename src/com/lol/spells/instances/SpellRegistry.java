@@ -15,6 +15,8 @@ import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
+import com.lol.spells.instances.arcano.ArcaneBolt;
+import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
@@ -90,7 +92,12 @@ public class SpellRegistry
         		Gate.class,
         		
         		//Heresio
-        		Hex.class
+        		Hex.class,
+        		
+        		//Arcano
+        		Mute.class,
+        		ArcaneBolt.class
+        		
             );
         
         for (Class<? extends Spell> clazz : itemClasses) 
