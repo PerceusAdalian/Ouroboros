@@ -29,9 +29,9 @@ public class RayCastUtils
 	{
 	    RayTraceResult result = p.getLocation().getWorld().rayTraceEntities(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(2)),p.getEyeLocation().getDirection(),range);
 	    
-	    if(result == null || result.getHitEntity() == null || !(result instanceof Entity)) return false;
+	    if(result == null || result.getHitEntity() == null) return false;
 	    	
-	    consumer.accept((Entity) result);
+	    consumer.accept(result.getHitEntity());
 	    
 	    return true;
 	}

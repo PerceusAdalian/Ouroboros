@@ -4,7 +4,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eol.materia.MateriaCastHandler;
-import com.eol.materia.MateriaRegistry;
+import com.eol.materia.instances.Materia;
+import com.eol.materia.instances.components.Bases;
+import com.eol.materia.instances.components.Bindings;
+import com.eol.materia.instances.components.Catalysts;
+import com.eol.materia.instances.components.ElementCores;
 import com.lol.spells.SpellCastHandler;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.spells.instances.celestio.AssertOrder;
@@ -45,7 +49,7 @@ public class Ouroboros extends JavaPlugin
 		debug = false;
 		enabled = true;
 	
-		this.getCommand("obs").setExecutor(new ObsCommand());;
+		this.getCommand("obs").setExecutor(new ObsAdminCommand());;
 		
 		PlayerData.initializeDataFolder();
 		MobData.initializeDataFolder();	
@@ -81,11 +85,14 @@ public class Ouroboros extends JavaPlugin
 		MobManager.convertLegacyMobsTask(instance);
 		
 		MateriaCastHandler.register(instance);
-		MateriaRegistry.init();
+		Catalysts.load();
+		Bases.load();
+		Bindings.load();
+		ElementCores.load();
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());
-		PrintUtils.OBSConsolePrint("&fLoaded Materia -- &e&l"+MateriaRegistry.materiaRegistry.size());
+		PrintUtils.OBSConsolePrint("&fLoaded Materia -- &e&l"+Materia.materia_registry.size());
 		PrintUtils.OBSConsolePrint("&fΩuroboros -- &aOK");
 	}
 	

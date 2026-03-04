@@ -25,8 +25,8 @@ import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
-import com.eol.materia.MateriaRegistry;
 import com.eol.materia.instances.Materia;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
@@ -52,7 +52,7 @@ import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
-public class ObsCommand implements CommandExecutor, TabCompleter
+public class ObsAdminCommand implements CommandExecutor, TabCompleter
 {
 	
 	@Override
@@ -331,13 +331,37 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			
-			if (args[1].equals("materia") && MateriaRegistry.materiaRegistry.containsKey(args[2]))
+			if (args[1].equals("materia"))
 			{
-				if (affirmOP(p)) return true;
-				Materia materia = MateriaRegistry.materiaRegistry.get(args[2]);
-				ItemStack stack = materia.getAsItemStack(MateriaState.CATALYST);
-				p.getInventory().addItem(stack);
-				return true;
+				if (args[2].equals("catalyst"))
+				{
+					if (Materia.materia_registry.containsKey(args[3]) && args.length == 4)
+					{
+						if (affirmOP(p)) return true;
+						Materia catalyst = Materia.materia_registry.get(args[3]);
+						ItemStack stack = catalyst.getAsItemStack(MateriaState.CATALYST);
+						p.getInventory().addItem(stack);
+						return true;
+					}
+				}
+				
+				if (args[2].equals("component"))
+				{					
+					if (Materia.materia_registry.containsKey(args[3]) && args.length == 5)
+					{
+						if (affirmOP(p)) return true;
+						Materia materia = Materia.materia_registry.get(args[3]);
+						MateriaState state = MateriaState.fromString(args[4]);
+						if (state == null || state.equals(MateriaState.CATALYST))
+						{
+							PrintUtils.OBSFormatError(p, "Invalid input MateriaState: "+args[4]);
+							return true;
+						}
+						ItemStack stack = materia.getAsItemStack(state);
+						p.getInventory().addItem(stack);
+						return true;
+					}
+				}
 			}
 		}
 		
@@ -657,7 +681,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "menu" -> List.of();
 					case "register" -> List.of("spell","ability");
 					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
-					case "generate" -> List.of("object","spell");
+					case "generate" -> List.of("object","spell","materia");
 					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
 					case "welcomekit" -> List.of();
 					default -> List.of();
@@ -670,6 +694,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "ability" -> new ArrayList<>(AbilityRegistry.abilityRegistry.keySet());
 					case "object" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
 					case "spell" -> new ArrayList<>(SpellRegistry.spellRegistry.keySet());
+					case "materia" -> List.of("catalyst", "component");
 					case "set" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "doLevelUpSound" -> List.of("true", "false");
@@ -686,6 +711,15 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "ability" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 					case "spell" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					case "materia" -> switch(args[2])
+					{
+						case "catalyst" -> Materia.materia_registry.values().stream()
+						.filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
+						.map(Materia::getInternalName)
+						.collect(Collectors.toCollection(ArrayList::new));
+						case "component" -> List.of("normal", "unrefined");
+						default -> List.of();
+					};
 					case "set" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
 					case "addXp" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
 					case "add","subtract" -> List.of("value <= 99999999");
@@ -696,6 +730,22 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
+					case "materia" -> switch(args[2]) 
+					{
+		            	case "component" -> switch(args[3]) 
+			            {
+			                case "normal" -> Materia.materia_registry.values().stream()
+			                    .filter(m -> m.getMateriaComponent() != MateriaComponent.CATALYST)
+			                    .map(Materia::getInternalName)
+			                    .collect(Collectors.toCollection(ArrayList::new));
+			                case "unrefined" -> Materia.materia_registry.values().stream()
+			                    .filter(m -> m.getMateriaComponent() != MateriaComponent.CATALYST)
+			                    .map(Materia::getInternalName)
+			                    .collect(Collectors.toCollection(ArrayList::new));
+			                default -> List.of();
+			            };
+			            default -> List.of();
+					};
 					case "addXp" -> List.of("<value>");
 					case "set" -> List.of("true","false");
 					case "spell" -> List.of("true", "false");

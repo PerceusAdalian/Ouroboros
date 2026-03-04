@@ -1,9 +1,10 @@
 package com.eol.materia.instances;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,7 +18,7 @@ import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
-public abstract class Materia 
+public class Materia 
 {
 	public static final NamespacedKey materiaKey = new NamespacedKey(Ouroboros.instance, "materia_key");
 	public static final NamespacedKey materiaStateKey = new NamespacedKey(Ouroboros.instance, "materia_state");
@@ -32,7 +33,16 @@ public abstract class Materia
 	private Rarity rarity;
 	private boolean shouldDrop;
 	
-	public Materia(String name, String internalName, MateriaType materiaType, MateriaState materiaState, MateriaComponent materiaComponent, 
+	/**
+	 * @param name
+	 * @param internalName
+	 * @param materiaType
+	 * @param materiaComponent
+	 * @param rarity
+	 * @param shouldDrop
+	 * @param description
+	 */
+	public Materia(String name, String internalName, MateriaType materiaType, MateriaComponent materiaComponent, 
 			Rarity rarity, boolean shouldDrop, @Nullable String...description)
 	{
 		this.name = name;
@@ -56,12 +66,8 @@ public abstract class Materia
 	
 	public String getInternalNameAsID() 
 	{
-		int internalNameID = 0;
-		for (char ch : internalName.toCharArray()) 
-		{
-			internalNameID += (int) ch;
-		}
-		return Integer.toHexString(internalNameID).toUpperCase();
+	    int hash = internalName.hashCode() & 0xFFFFFF; // keep it short
+	    return Integer.toHexString(hash).toUpperCase();
 	}
 	
 	public List<String> getLore() 
@@ -78,89 +84,96 @@ public abstract class Materia
 	{
 		return rarity;
 	}
+	
+	public MateriaComponent getMateriaComponent() 
+	{
+		return materiaComponent;
+	}
 
 	public boolean shouldDrop() 
 	{
 		return shouldDrop;
 	}
-	
-	public ItemStack getAsItemStack(MateriaState state)
+
+	public ItemStack getAsItemStack()
 	{
-		Material material = switch (materiaType)
-		{
-			case CATALYST -> material = Material.NETHER_STAR;
-			
-			case WOOD -> material = Material.OAK_BUTTON;
-			case STONE -> material = Material.STONE_BUTTON;
-			case IRON -> material = Material.IRON_NUGGET;
-			case COPPER -> material = Material.COPPER_NUGGET;
-			case DIAMOND -> material = Material.DIAMOND;
-			case GOLD -> material = Material.GOLD_NUGGET;
-			case NETHERITE -> material = Material.NETHERITE_SCRAP;
-			
-			case STRING -> material = Material.STRING;
-			case LEATHER -> material = Material.LEATHER;
-			
-			case CELESTIO -> material = Material.GHAST_TEAR;
-			case MORTIO -> material = Material.BONE;
-			case INFERNO -> material = Material.BLAZE_POWDER;
-			case GLACIO -> material = Material.PRISMARINE_CRYSTALS;
-			case GEO -> material = Material.BRICK;
-			case AERO -> material = Material.AMETHYST_SHARD;
-			case COSMO -> material = Material.ECHO_SHARD;
-			case HERESIO -> material = Material.ENDER_EYE;
-		};
-		
-		ItemStack stack = new ItemStack(material, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(PrintUtils.ColorParser(name));
-		if (state.equals(MateriaState.NORMAL)) meta.setEnchantmentGlintOverride(true);
-		
-		List<String> lore = new ArrayList<>();
-		if (state.equals(MateriaState.UNREFINED))
-			lore.add(PrintUtils.assignObfuscatedRarity(rarity));
-		else lore.add(PrintUtils.assignRarity(rarity)+"\n");
-		lore.add("\n");
-		lore.add(PrintUtils.ColorParser("&r&f&nUsage&r&f:"));
-		if (state.equals(MateriaState.CATALYST)) 
-		{
-			lore.add(PrintUtils.ColorParser("&r&fAn &e&oecho&r&f of infinite possibilities&r&f."));
-			lore.add("");
-			lore.add(PrintUtils.ColorParser("&d&oRight-Click&r&f to initialize &bProtocol&f: &eΣ&f.C.H.O."));
-		}
-		else if (state.equals(MateriaState.UNREFINED)) 
-		{
-			lore.add(PrintUtils.ColorParser("&r&fAn object with &3&ounstable waveform&r&f."));
-			lore.add("");
-			lore.add(PrintUtils.ColorParser("&b&oRefinement&r&f is required to use in &bProtocol&f: &eΣ&f.C.H.O."));
-		}
-		else if (state.equals(MateriaState.NORMAL)) 
-		{
-			lore.add(PrintUtils.ColorParser("&r&fA simple harmonic object."));
-			lore.add("");
-			lore.add(PrintUtils.ColorParser("Can be used as a valid material in &bProtocol&f: &eΣ&f.C.H.O."));
-		}
-		
-		if (description != null)
-		{
-			lore.add("\n");
-			for (String line : description)
-			{
-				lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
-			}			
-		}
-		lore.add("\n");
-		lore.add(PrintUtils.ColorParser("&r&7&oΣ.C.H.O. Materia ID: Σ_" + getInternalNameAsID()));			
-		
-		meta.setLore(lore);
-		meta.getPersistentDataContainer().set(materiaKey, PersistentDataType.STRING, internalName);
-		meta.getPersistentDataContainer().set(componentKey, PersistentDataType.STRING, materiaComponent.getMateriaComponentType());
-		meta.getPersistentDataContainer().set(materiaTypeKey, PersistentDataType.STRING, materiaType.getKey());
-		meta.getPersistentDataContainer().set(materiaStateKey, PersistentDataType.STRING, state.getKey());
-		meta.setUnbreakable(true);
-		
-		stack.setItemMeta(meta);
-		
-		return stack;
+		return getAsItemStack(MateriaState.NORMAL);
+	}
+	
+	public ItemStack getAsItemStack(MateriaState state) 
+	{
+	    ItemStack stack = new ItemStack(materiaType.getMaterial(), 1);
+	    ItemMeta meta = stack.getItemMeta();
+
+	    meta.setDisplayName(PrintUtils.ColorParser(name));
+	    meta.setEnchantmentGlintOverride(state == MateriaState.NORMAL);
+	    meta.setLore(buildLore(state));
+	    meta.setUnbreakable(true);
+	    applyPersistentData(meta, state);
+	    stack.setItemMeta(meta);
+
+	    return stack;
+	}
+	
+	private List<String> buildLore(MateriaState state) 
+	{
+	    List<String> lore = new ArrayList<>();
+	    
+	    lore.add(state == MateriaState.UNREFINED
+	        ? PrintUtils.assignObfuscatedRarity(rarity)
+	        : PrintUtils.assignRarity(rarity));
+	    lore.add("");
+	    lore.add(PrintUtils.ColorParser("&r&f&nUsage&r&f:"));
+	    lore.addAll(getStateLore(state));
+	    
+	    if (description != null) 
+	    {
+	        lore.add("");
+	        for (String line : description) 
+	        {
+	        	lore.add(PrintUtils.ColorParser("&r&f" + line));
+	        }
+	    }
+	    
+	    lore.add("");
+	    lore.add(PrintUtils.ColorParser("&r&7&oΣ.C.H.O. Materia ID: Σ_" + getInternalNameAsID()));
+	    return lore;
+	}
+	
+	private List<String> getStateLore(MateriaState state) 
+	{
+	    return switch (state) 
+	    {
+	      case CATALYST -> List.of(
+	            PrintUtils.ColorParser("&r&fAn &e&oecho&r&f of infinite possibilities&r&f."),"",
+	            PrintUtils.ColorParser("&d&oRight-Click&r&f to initialize &bProtocol&f: &eΣ&f.C.H.O."));
+	      case UNREFINED -> List.of(
+	            PrintUtils.ColorParser("&r&fAn object with &3&ounstable waveform&r&f."),"",
+	            PrintUtils.ColorParser("&b&oRefinement&r&f is required to use in &bProtocol&f: &eΣ&f.C.H.O."));
+	      case NORMAL -> List.of(
+	            PrintUtils.ColorParser("&r&fA simple harmonic object."),"",
+	            PrintUtils.ColorParser("Can be used as a valid component in &bProtocol&f: &eΣ&f.C.H.O."));
+	    };
+	}
+	
+	private void applyPersistentData(ItemMeta meta, MateriaState state) 
+	{
+	    var pdc = meta.getPersistentDataContainer();
+	    pdc.set(materiaKey,     PersistentDataType.STRING, internalName);
+	    pdc.set(componentKey,   PersistentDataType.STRING, materiaComponent.getKey());
+	    pdc.set(materiaTypeKey, PersistentDataType.STRING, materiaType.getKey());
+	    pdc.set(materiaStateKey,PersistentDataType.STRING, state.getKey());
+	}
+	
+	public static final Map<String, Materia> materia_registry = new HashMap<>();
+	
+	public static void register(Materia materia)
+	{
+		materia_registry.put(materia.getInternalName(), materia);
+	}
+	
+	public static Materia get(String internalName)
+	{
+		return materia_registry.get(internalName);
 	}
 }

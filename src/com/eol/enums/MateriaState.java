@@ -22,4 +22,16 @@ public enum MateriaState
 	{
 		return this.name();
 	}
+	
+	public static MateriaState fromString(String name)
+	{
+		try
+		{
+			return MateriaState.valueOf(name.toUpperCase());
+		}
+		catch (IllegalArgumentException e)
+		{
+			return null;
+		}
+	}
 }

@@ -1,6 +1,8 @@
 package com.ouroboros.utils;
 
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -219,7 +221,7 @@ public class PrintUtils
 	
 	public static String assignComponentType(MateriaComponent componentType)
 	{
-		return ColorParser("&r&f&lComponent Type&r&f: {"+componentType.getAsFancyName()+"&r&f}");
+		return ColorParser("&r&f&lComponent Type&r&f: {&"+componentType.getColorCode()+toTitleCase(componentType.getKey())+"&r&f}");
 	}
 	
 	public static String assignPVPCompatible()
@@ -326,5 +328,12 @@ public class PrintUtils
 	    String prefix = forBook ? "§" : "&";
 	    String textColor = forBook ? "0" : "f";
 	    return prefix + "r" + prefix + textColor + prefix + "nRarity" + prefix + "r" + prefix + textColor + ": " + prefix + color + ("✦".repeat(rarity.getRarity()));
+	}
+	
+	public static String toTitleCase(String input)
+	{
+		return Arrays.stream(input.split("_"))
+					 .map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase())
+					 .collect(Collectors.joining(" "));
 	}
 }

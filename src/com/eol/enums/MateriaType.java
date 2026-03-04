@@ -1,62 +1,52 @@
 package com.eol.enums;
 
+import org.bukkit.Material;
+
 public enum MateriaType 
 {
-	WOOD("wooden"),
-	IRON("iron"),
-	STONE("stone"),
-	COPPER("copper"),
-	GOLD("golden"),
-	DIAMOND("diamond"),
-	NETHERITE("netherite"),
-	
-	STRING("string"),
-	LEATHER("leather"),
-	
-	CATALYST("catalyst"),
-	
-	CELESTIO("celestio"),
-	MORTIO("mortio"),
-	INFERNO("inferno"),
-	GLACIO("glacio"),
-	GEO("geo"),
-	AERO("aero"),
-	COSMO("cosmo"),
-	HERESIO("heresio"),
-	;
-	
+	WOOD("wooden",         Material.OAK_BUTTON),
+	STONE("stone",         Material.STONE_BUTTON),
+	IRON("iron",           Material.IRON_NUGGET),
+	COPPER("copper",       Material.COPPER_NUGGET),
+	GOLD("golden",         Material.GOLD_NUGGET),
+	DIAMOND("diamond",     Material.DIAMOND),
+	NETHERITE("netherite", Material.NETHERITE_SCRAP),
+
+	STRING("string",       Material.STRING),
+	LEATHER("leather",     Material.LEATHER),
+
+	CATALYST("catalyst",   Material.NETHER_STAR),
+
+	CELESTIO("celestio",   Material.GHAST_TEAR),
+	MORTIO("mortio",       Material.BONE),
+	INFERNO("inferno",     Material.BLAZE_POWDER),
+	GLACIO("glacio",       Material.PRISMARINE_CRYSTALS),
+	GEO("geo",             Material.BRICK),
+	AERO("aero",           Material.AMETHYST_SHARD),
+	COSMO("cosmo",         Material.ECHO_SHARD),
+	HERESIO("heresio",     Material.ENDER_EYE);
+
 	private final String materiaCategory;
-	
-	MateriaType(String materiaCategory)
+	private final Material material;
+
+	MateriaType(String materiaCategory, Material material)
 	{
 		this.materiaCategory = materiaCategory;
+		this.material = material;
 	}
-	
-	public String getMateriaComponentType()
+
+	public String getMateriaCategory()
 	{
 		return materiaCategory;
 	}
-	
+
+	public Material getMaterial()
+	{
+		return material;
+	}
+
 	public String getKey()
 	{
 		return this.name();
-	}
-	
-	public String getAsFancyName()
-	{
-		
-		
-		String name = getKey().toString().toLowerCase();
-		String[] splitName = name.split("_");
-		name = "";
-		for (String s : splitName)
-		{
-			char[] chars = s.toCharArray();
-			chars[0] = Character.toUpperCase(chars[0]);
-			name += new String(chars);
-			name += " ";
-		}
-		name = name.substring(0, name.length() - 1);
-		return name;
 	}
 }

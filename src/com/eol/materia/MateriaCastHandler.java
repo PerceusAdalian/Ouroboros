@@ -36,17 +36,25 @@ public class MateriaCastHandler implements Listener
 		
         PersistentDataContainer pdc = held.getItemMeta().getPersistentDataContainer();
         
-        if (pdc.has(Materia.materiaKey) && pdc.get(Materia.componentKey, PersistentDataType.STRING).equals(MateriaComponent.CATALYST.getKey())) 
+        boolean validInteractMethod = CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR)
+    			|| CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_BLOCK)
+    			|| CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR)
+    			|| CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_BLOCK);
+        
+        if (pdc.has(Materia.materiaKey) && pdc.has(Materia.componentKey)) 
         {
-        	if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR)
-        			|| CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_BLOCK)
-        			|| CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR)
-        			|| CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_BLOCK))
-        	{
-        		PrintUtils.PrintToActionBar(p, "Interact Event Logged");
-        		return;
-        	}
-        	return;
+            String component = pdc.get(Materia.componentKey, PersistentDataType.STRING);
+            if (component == null || !component.equals(MateriaComponent.CATALYST.getKey())) 
+            {
+            	PrintUtils.OBSFormatDebug(p, "Action Logged: "+e.getAction(), "isValid: "+validInteractMethod);
+            	PrintUtils.OBSFormatDebug(p, (component == null) ? "NULL" : "Component Isn't Null..");
+            	return;
+            }
+            
+            if (validInteractMethod)
+            {
+                PrintUtils.Print(p, "Interact Event Logged");
+            }
         }
         
 	}
