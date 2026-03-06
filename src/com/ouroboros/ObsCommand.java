@@ -17,7 +17,6 @@ import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -52,7 +51,7 @@ import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 
-public class ObsAdminCommand implements CommandExecutor, TabCompleter
+public class ObsCommand implements CommandExecutor, TabCompleter
 {
 	
 	@Override
@@ -75,29 +74,15 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		{
 			if (affirmOP(p)) return true;
 			
-			if (sender instanceof ConsoleCommandSender)
-			{
-				PrintUtils.OBSConsolePrint("----------------------------",
-						"                 &b&lOBS",
-						" &f&l- &r&fSystem Time: "+LocalTime.now(),
-						" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",
-						" &f&l- &r&dAPI Version&r&f: "+Bukkit.getVersion().toString(),
-						" &f&l- &r&fPlugins Loaded: &e&l" + Bukkit.getPluginManager().getPlugins().length,
-						"----------------------------");
-				return true;
-			}
-			else if (sender instanceof Player player && affirmOP(player)) 
-			{				
-				PrintUtils.Print(player, "----------------------------",
-						"                 &b&lOBS",
-						" &f&l- &r&fSystem Time: "+LocalTime.now(),
-						" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",
-						" &f&l- &r&dAPI Version&r&f: "+Bukkit.getVersion().toString(),
-						" &f&l- &r&fPlugins Loaded: &e&l" + Bukkit.getPluginManager().getPlugins().length,
-						"----------------------------");
-				return true;
-			}
-			return false;
+			// Player is confirmed OP at this point; print directly.
+			PrintUtils.Print(p, "----------------------------",
+					"                 &b&lOBS",
+					" &f&l- &r&fSystem Time: "+LocalTime.now(),
+					" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",
+					" &f&l- &r&dAPI Version&r&f: "+Bukkit.getVersion().toString(),
+					" &f&l- &r&fPlugins Loaded: &e&l" + Bukkit.getPluginManager().getPlugins().length,
+					"----------------------------");
+			return true;
 		}
 		
 		if (args[0].equals("welcomekit"))
@@ -191,11 +176,7 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("register"))
 		{
-			if (!p.isOp()) 
-			{
-				PrintUtils.OBSFormatError(p, "Access Denied.");
-				return false;
-			}
+			if (affirmOP(p)) return true;
 			
 			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]) && args.length == 5)
 			{
@@ -228,11 +209,8 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("registerAllMagic"))
 		{
-			if (!p.isOp()) 
-			{
-				PrintUtils.OBSFormatError(p, "Access Denied.");
-				return false;
-			}
+			if (affirmOP(p)) return true;
+			
 			Player target = Bukkit.getPlayer(args[1]);
 			if (target == null) return false;
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
@@ -249,11 +227,8 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("registerAllAbilities"))
 		{
-			if (!p.isOp()) 
-			{
-				PrintUtils.OBSFormatError(p, "Access Denied.");
-				return false;
-			}
+			if (affirmOP(p)) return true;
+			
 			Player target = Bukkit.getPlayer(args[1]);
 			if (target == null) return false;
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
@@ -269,11 +244,8 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("setLuminite"))
 		{
-			if (!p.isOp())
-			{
-				PrintUtils.OBSFormatError(p, "Access Denied.");
-				return false;
-			}
+			if (affirmOP(p)) return true;
+			
 			Player target = Bukkit.getPlayer(args[1]);
 			if (target == null) return false;
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
@@ -313,9 +285,10 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("generate")) 
 		{
+			if (affirmOP(p)) return true;
+			
 			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]))
 			{
-				if (affirmOP(p)) return true;
 				Spell spell = SpellRegistry.spellRegistry.get(args[2]);
 				ItemStack stack = spell.getAsItemStack(false);
 				p.getInventory().addItem(stack);
@@ -324,7 +297,6 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("object") && ObjectRegistry.itemRegistry.containsKey(args[2]))
 			{				
-				if (affirmOP(p)) return true;
 				AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[2]);
 				ItemStack stack = obj.toItemStack();
 				p.getInventory().addItem(stack);
@@ -337,7 +309,6 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 				{
 					if (Materia.materia_registry.containsKey(args[3]) && args.length == 4)
 					{
-						if (affirmOP(p)) return true;
 						Materia catalyst = Materia.materia_registry.get(args[3]);
 						ItemStack stack = catalyst.getAsItemStack(MateriaState.CATALYST);
 						p.getInventory().addItem(stack);
@@ -349,7 +320,6 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 				{					
 					if (Materia.materia_registry.containsKey(args[3]) && args.length == 5)
 					{
-						if (affirmOP(p)) return true;
 						Materia materia = Materia.materia_registry.get(args[3]);
 						MateriaState state = MateriaState.fromString(args[4]);
 						if (state == null || state.equals(MateriaState.CATALYST))
@@ -368,6 +338,12 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 		if (args[0].equals("money")) 
 		{
 			if (affirmOP(p)) return true;
+			
+			if (args.length < 3)
+			{
+				PrintUtils.OBSFormatError(p, "&7Usage: /obs money <sub-command> <player> [value]");
+				return true;
+			}
 			
 			Player target = Bukkit.getPlayer(args[2]);
 			if (target == null) return false;
@@ -662,28 +638,42 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] args) 
 	{
+		boolean isOp = (sender instanceof Player player) && player.isOp();
+		
 		return switch(args.length) 
 		{
 			case 0 -> List.of("obs");
-			case 1 -> List.of("debug","menu","stats","generate","money","version","welcomekit", "spellbook", "recoverwand", "wand","register",
-					"registerAllAbilities","registerAllMagic","setLuminite");
+			case 1 ->
+			{
+				// All players see general-use commands.
+				List<String> cmds = new ArrayList<>(List.of("menu", "stats", "welcomekit", "spellbook", "recoverwand", "wand"));
+				
+				// OP-only commands are hidden from regular players.
+				if (isOp) cmds.addAll(List.of("debug", "version", "generate", "money", "register","registerAllAbilities", "registerAllMagic", "setLuminite"));
+				yield cmds;
+			}
 			case 2 -> 
 			{
 				yield switch(args[0])
 				{
-					case "registerAllAbilities" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "registerAllMagic" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "setLuminite" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "spellbook" -> List.of();
-					case "recoverwand" -> List.of();
-					case "wand" -> List.of();
-					case "debug" -> List.of();
-					case "menu" -> List.of();
-					case "register" -> List.of("spell","ability");
-					case "stats" -> List.of("set","reset","doLevelUpSound","doXpNotifs","addXp");
-					case "generate" -> List.of("object","spell","materia");
-					case "money" -> List.of("add","subtract","setMaxMoney","setMaxDebt","resetMoney");
-					case "welcomekit" -> List.of();
+					// OP-only root commands.
+					case "registerAllAbilities", "registerAllMagic", "setLuminite" ->
+						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					case "register" ->
+						isOp ? List.of("spell", "ability") : List.of();
+					case "generate" ->
+						isOp ? List.of("object", "spell", "materia") : List.of();
+					case "money" ->
+						isOp ? List.of("add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney") : List.of();
+					// Stats sub-commands: some are OP-only.
+					case "stats" ->
+					{
+						List<String> statSubs = new ArrayList<>(List.of("doLevelUpSound", "doXpNotifs"));
+						if (isOp) statSubs.addAll(List.of("set", "reset", "addXp"));
+						yield statSubs;
+					}
+					// General-use commands with no further completions.
+					case "spellbook", "recoverwand", "wand", "debug", "menu", "welcomekit" -> List.of();
 					default -> List.of();
 				};
 			}
@@ -691,38 +681,39 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
-					case "ability" -> new ArrayList<>(AbilityRegistry.abilityRegistry.keySet());
-					case "object" -> new ArrayList<>(ObjectRegistry.itemRegistry.keySet());
-					case "spell" -> new ArrayList<>(SpellRegistry.spellRegistry.keySet());
-					case "materia" -> List.of("catalyst", "component");
-					case "set" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "reset" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "doLevelUpSound" -> List.of("true", "false");
-					case "doXpNotifs" -> List.of("true", "false");
-					case "addXp" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "add","subtract","setMaxMoney","setMaxDebt","resetMoney" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+					// OP-only sub-command completions.
+					case "ability" -> isOp ? new ArrayList<>(AbilityRegistry.abilityRegistry.keySet()) : List.of();
+					case "object" -> isOp ? new ArrayList<>(ObjectRegistry.itemRegistry.keySet()) : List.of();
+					case "spell" -> isOp ? new ArrayList<>(SpellRegistry.spellRegistry.keySet()) : List.of();
+					case "materia" -> isOp ? List.of("catalyst", "component") : List.of();
+					case "set", "reset", "addXp" ->
+						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					case "add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney" ->
+						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					// General-use sub-command completions.
+					case "doLevelUpSound", "doXpNotifs" -> List.of("true", "false");
 					default -> List.of();	
 				};
-				
 			}
 			case 4 ->
 			{
 				yield switch(args[1]) 
 				{
-					case "ability" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "spell" -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-					case "materia" -> switch(args[2])
+					case "ability", "spell" ->
+						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					case "materia" -> isOp ? switch(args[2])
 					{
 						case "catalyst" -> Materia.materia_registry.values().stream()
-						.filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
-						.map(Materia::getInternalName)
-						.collect(Collectors.toCollection(ArrayList::new));
+							.filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
+							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new));
 						case "component" -> List.of("normal", "unrefined");
 						default -> List.of();
-					};
-					case "set" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
-					case "addXp" -> Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList());
-					case "add","subtract" -> List.of("value <= 99999999");
+					} : List.of();
+					case "set", "addXp" ->
+						isOp ? Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList()) : List.of();
+					case "add", "subtract" ->
+						isOp ? List.of("value <= 99999999") : List.of();
 					default -> List.of();
 				};
 			}
@@ -730,26 +721,21 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
-					case "materia" -> switch(args[2]) 
+					case "materia" -> isOp ? switch(args[2]) 
 					{
-		            	case "component" -> switch(args[3]) 
-			            {
-			                case "normal" -> Materia.materia_registry.values().stream()
-			                    .filter(m -> m.getMateriaComponent() != MateriaComponent.CATALYST)
-			                    .map(Materia::getInternalName)
-			                    .collect(Collectors.toCollection(ArrayList::new));
-			                case "unrefined" -> Materia.materia_registry.values().stream()
-			                    .filter(m -> m.getMateriaComponent() != MateriaComponent.CATALYST)
-			                    .map(Materia::getInternalName)
-			                    .collect(Collectors.toCollection(ArrayList::new));
-			                default -> List.of();
-			            };
-			            default -> List.of();
-					};
-					case "addXp" -> List.of("<value>");
-					case "set" -> List.of("true","false");
-					case "spell" -> List.of("true", "false");
-					case "ability" -> List.of("true", "false");
+	            		case "component" -> switch(args[3]) 
+		            	{
+		                	case "normal", "unrefined" -> Materia.materia_registry.values().stream()
+		                    	.filter(m -> m.getMateriaComponent() != MateriaComponent.CATALYST)
+		                    	.map(Materia::getInternalName)
+		                    	.collect(Collectors.toCollection(ArrayList::new));
+		                	default -> List.of();
+		            	};
+		            	default -> List.of();
+					} : List.of();
+					case "addXp" -> isOp ? List.of("<value>") : List.of();
+					case "set" -> isOp ? List.of("true", "false") : List.of();
+					case "spell", "ability" -> isOp ? List.of("true", "false") : List.of();
 					default -> List.of();
 				};
 			}
@@ -757,7 +743,7 @@ public class ObsAdminCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
-					case "set" -> List.of("<value>");
+					case "set" -> isOp ? List.of("<value>") : List.of();
 					default -> List.of();
 				};
 			}
