@@ -14,10 +14,13 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BundleMeta;
@@ -27,6 +30,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.materia.instances.Materia;
+import com.lol.enums.SpellType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
@@ -38,9 +42,11 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
+import com.ouroboros.menus.instances.magic.AdminSpellsPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.menus.instances.magic.SpellBookPage;
 import com.ouroboros.menus.instances.magic.WandMainPage;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.LuminiteCore;
@@ -70,20 +76,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			return false;
 		}
 		
-		if (args[0].equals("version")) 
-		{
-			if (affirmOP(p)) return true;
-			
-			// Player is confirmed OP at this point; print directly.
-			PrintUtils.Print(p, "----------------------------",
-					"                 &b&lOBS",
-					" &f&l- &r&fSystem Time: "+LocalTime.now(),
-					" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",
-					" &f&l- &r&dAPI Version&r&f: "+Bukkit.getVersion().toString(),
-					" &f&l- &r&fPlugins Loaded: &e&l" + Bukkit.getPluginManager().getPlugins().length,
-					"----------------------------");
-			return true;
-		}
+		//--------------------------------- GENERAL COMMANDS ---------------------------------//
 		
 		if (args[0].equals("welcomekit"))
 		{
@@ -156,6 +149,14 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			return true;
 		}
 		
+		if (args[0].equals("menu")) 
+		{
+			if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&bPlayer&f: " + sender.getName().toString() + "&f opened the OBS Main Menu.");
+			GuiHandler.open(p, new ObsMainMenu(p));
+			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
+			return true;
+		}
+		
 		if (args[0].equals("spellbook"))
 		{
 			GuiHandler.open(p, new SpellBookPage(p));
@@ -172,6 +173,69 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
 			return true;
+		}
+		
+		//--------------------------------- OP ONLY COMMANDS ---------------------------------//
+		
+		if (args[0].equals("version")) 
+		{
+			if (affirmOP(p)) return true;
+			
+			// Player is confirmed OP at this point; print directly.
+			PrintUtils.Print(p, "----------------------------",
+					"                 &b&lOBS",
+					" &f&l- &r&fSystem Time: "+LocalTime.now(),
+					" &f&l- &r&a&lSystem Version&r&f: &7{&c&lALPHA&f&7}",
+					" &f&l- &r&dAPI Version&r&f: "+Bukkit.getVersion().toString(),
+					" &f&l- &r&fPlugins Loaded: &e&l" + Bukkit.getPluginManager().getPlugins().length,
+					"----------------------------");
+			return true;
+		}
+		
+		if (args[0].equals("adminspells"))
+		{
+			if (affirmOP(p)) return true;
+			SpellRegistry.spellRegistry.values().stream()
+		    .filter(spell -> spell.getSpellType() == SpellType.DEBUG)
+		    .forEach(spell -> 
+		    {
+		        PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		        if (data != null) data.getSpell(spell).setRegistered(true);
+		    });
+			
+			GuiHandler.open(p, new AdminSpellsPage(p));
+			return true;
+		}
+		
+		if (args[0].equals("clearmobs"))
+		{
+			if (affirmOP(p)) return true;
+			if (Ouroboros.debug == false) return true;
+			for (World w : Bukkit.getWorlds())
+			{
+				for (Player player : w.getPlayers())
+				{
+					PrintUtils.OBSFormatDebug(player, "&c&lAttention&r&f: The server is about to reset it's current mob state."
+							+ " If you have any important mobs you wish to keep, &c&nplease capture them&r&f."
+							+ " We apologize for any inconveniences caused by this."
+							+ " The server will wipe &c&lALL&r&f currently existing mobs in &b&oone (1) minute&r&f."
+							+ " Please note &d&oessential mobs will be respawned&r&f as necessary. Thank you for your cooperation.");
+				}
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{					
+					for (Entity e : w.getEntities())
+					{
+						if (!(e instanceof LivingEntity) || e instanceof Player) continue;
+						MobData data = MobData.getMob(e.getUniqueId());
+						if (data != null) data.kill();
+						else e.remove();
+					}
+					for (Player player : w.getPlayers())
+					{
+						PrintUtils.OBSFormatDebug(player, "&c&lAttention&r&f: Process complete. All mobs have been eliminated.");
+					}
+				}, 1200);
+			}
 		}
 		
 		if (args[0].equals("register"))
@@ -273,15 +337,6 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			PrintUtils.OBSConsoleDebug("&7Console logging has been turned &c&lOFF");
 			return true;
 		}
-		
-		if (args[0].equals("menu")) 
-		{
-			if (Ouroboros.debug) PrintUtils.OBSConsoleDebug("&bPlayer&f: " + sender.getName().toString() + "&f opened the OBS Main Menu.");
-			GuiHandler.open(p, new ObsMainMenu(p));
-			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			return true;
-		}
-		
 		
 		if (args[0].equals("generate")) 
 		{
@@ -436,6 +491,11 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			}
 		}
 		
+		//--------------------------------- OBS STATS COMMANDS ---------------------------------//
+		
+		/**
+		 * @Note: All sub commands of main command 'stats' requires OP. Players should always be able to view their stats in-game.
+		 */
 		if (args[0].equals("stats")) 
 		{
 			if (args.length == 1) 
@@ -649,7 +709,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				List<String> cmds = new ArrayList<>(List.of("menu", "stats", "welcomekit", "spellbook", "recoverwand", "wand"));
 				
 				// OP-only commands are hidden from regular players.
-				if (isOp) cmds.addAll(List.of("debug", "version", "generate", "money", "register","registerAllAbilities", "registerAllMagic", "setLuminite"));
+				if (isOp) cmds.addAll(List.of("debug", "version", "generate", "money", "register","registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite"));
 				yield cmds;
 			}
 			case 2 -> 

@@ -41,6 +41,7 @@ public class EntityCategoryToSpellement
 	        case COSMO -> mobCategory == EntityCategory.COSMO_MOBS;
 	        case HERESIO -> mobCategory == EntityCategory.HERESIO_MOBS;
 	        case ARCANO -> mobCategory == EntityCategory.ARCANO_MOBS;
+	        case NULL -> mobCategory == EntityCategory.NONE;
 	    };
 	}
 }

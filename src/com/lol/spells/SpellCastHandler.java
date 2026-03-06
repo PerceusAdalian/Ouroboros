@@ -159,6 +159,7 @@ public class SpellCastHandler implements Listener
 	{
 		switch (sType)
 		{
+			case NULL -> OBSParticles.drawAdminCastSigil(player);
 			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
 			case AERO -> OBSParticles.drawAeroCastSigil(player);
 			case COSMO -> OBSParticles.drawCosmoCastSigil(player);

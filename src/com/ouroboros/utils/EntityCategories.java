@@ -12,6 +12,8 @@ import com.ouroboros.enums.EntityCategory;
 
 public class EntityCategories 
 {
+	public static final Set<EntityType> none = EnumSet.of(EntityType.PLAYER);
+	
 	public static final Set<EntityType>	any = EnumSet.of(
 			EntityType.ALLAY,EntityType.ARMADILLO,EntityType.AXOLOTL,EntityType.BAT,EntityType.BEE,
 			EntityType.BLAZE,EntityType.BOGGED,EntityType.BREEZE,EntityType.CAMEL,EntityType.CAT,EntityType.CAVE_SPIDER,
@@ -131,6 +133,7 @@ public class EntityCategories
 	    if (cosmo_mobs.contains(entityType)) return ElementType.COSMO;
 	    if (heresio_mobs.contains(entityType))  return ElementType.HERESIO;
 	    if (arcano_mobs.contains(entityType)) return ElementType.ARCANO;
+	    if (none.contains(entityType)) return ElementType.NONE;
 	    return ElementType.NONE;
 	}
 }

@@ -10,7 +10,10 @@ public enum SpellementType
 	GEO("&r&6&lGeo&r&f"),
 	COSMO("&r&3&lCosmo&r&f"),
 	HERESIO("&r&2&lHeresio&r&f"),
-	ARCANO("&r&b&oArcano&r&f");
+	ARCANO("&r&b&oArcano&r&f"),
+	
+	//Administrator SpellementType
+	NULL("&f&lNone&r&f");
 	
 	private String name;
 	

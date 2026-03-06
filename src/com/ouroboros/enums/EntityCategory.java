@@ -8,6 +8,7 @@ import com.ouroboros.utils.EntityCategories;
 
 public enum EntityCategory 
 {
+	NONE,
 	ANY,
 	CALAMITY,
 	ARCANO_MOBS,
@@ -52,6 +53,7 @@ public enum EntityCategory
 	{
 		return switch (category)
 		{
+			case NONE -> EntityCategories.none;
 			case ANY -> EntityCategories.any;
 			case CALAMITY -> EntityCategories.calamity;
 			case CELESTIO_MOBS -> EntityCategories.celestio_mobs;

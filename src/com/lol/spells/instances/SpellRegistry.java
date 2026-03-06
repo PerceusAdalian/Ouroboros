@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.lol.spells.instances.admin.RemoveEntity;
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
@@ -98,7 +99,10 @@ public class SpellRegistry
         		//Arcano
         		Mute.class,
         		ArcaneBolt.class,
-        		Surveil.class
+        		Surveil.class,
+        		
+        		//Admin Spells
+        		RemoveEntity.class
         		
             );
         

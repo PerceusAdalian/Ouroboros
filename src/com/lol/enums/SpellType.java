@@ -10,7 +10,10 @@ public enum SpellType
 	BUFF("&r&6&oBuff&r&f"),
 	CURSE("&r&4&oCurse&r&f"),
 	HEX("&2&lHex&r&f"),
-	ULTIMATE("&r&e&lUltimate&r&f");
+	ULTIMATE("&r&e&lUltimate&r&f"),
+	
+	//For administrator operations only. Use wisely.
+	DEBUG("&b&lDebug&r&f");
 
 	private final String spellType; 
 	

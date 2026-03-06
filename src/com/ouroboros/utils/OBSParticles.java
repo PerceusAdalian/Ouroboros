@@ -331,4 +331,10 @@ public class OBSParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.GLOW_SQUID_INK, null);
 	}
 	
+	public static void drawAdminCastSigil(LivingEntity entity)
+	{
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIT, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.TRIAL_OMEN, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.CRIMSON_SPORE, null);
+	}	
 }
