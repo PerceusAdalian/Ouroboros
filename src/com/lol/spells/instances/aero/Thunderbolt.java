@@ -33,11 +33,11 @@ public class Thunderbolt extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 30);
-		if (!(target instanceof LivingEntity) || target == null) return false;
+		if (!(target instanceof LivingEntity) || target == null) return -1;
 
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
@@ -45,7 +45,7 @@ public class Thunderbolt extends Spell
 			target.getWorld().strikeLightning(target.getLocation()), 15);
 		EntityEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 10 : 20);
 		
-		return true;
+		return this.getManacost();
 	}
 
 }

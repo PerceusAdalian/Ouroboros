@@ -30,7 +30,7 @@ public class Hex extends Spell
 
 	public Hex() 
 	{
-		super("Hex", "hex", Material.ENDER_EYE, SpellType.HEX, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 200, 5, true,
+		super("Hex", "hex", Material.ENDER_EYE, SpellType.HEX, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 500, 5, true,
 				"&r&2&lHex&r&f target entity &7(&b&o20m&r&7)&f with the &2Wildcard&r&f debuff.",
 				"&r&fThe effects of Hex can Backfire, are &b&opermanent&r&f and &c&ocannot be removed&r&f.",
 				"&r&fAny attemps made to &e&oCure&r&f the affliction without a &e&oDiagnosis&r&f",
@@ -42,16 +42,16 @@ public class Hex extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 20);
 		
-		if (!(target instanceof LivingEntity)) return false;
+		if (!(target instanceof LivingEntity)) return -1;
 		if (EntityEffects.isHexed.containsKey(target.getUniqueId()))
 		{
 			PrintUtils.PrintToActionBar(p, "&f&oTarget is already hexed!");
-			return false;
+			return -1;
 		}
 		
 		boolean isPlayer = target instanceof Player;
@@ -73,7 +73,7 @@ public class Hex extends Spell
 			}
 		}, 15);
 		
-		return false;
+		return this.getManacost();
 	}
 
 	private static void spellEffect(LivingEntity entity, Player caster)

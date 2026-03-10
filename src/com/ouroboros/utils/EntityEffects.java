@@ -15,11 +15,13 @@ import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
@@ -123,20 +125,6 @@ public class EntityEffects
 		// Corrosive will erode target's armor by 30% of its current value.
 		if (element == ElementType.CORROSIVE && !data.isBreak())
 			data.damageArmor(data.getArmor(false) * 0.3d);
-		
-		if (element == ElementType.GLACIO) 
-		{
-			if (Chance.of(20))
-				return;
-			addChill(target, 300);
-		}
-		
-		if (element == ElementType.INFERNO) 
-		{
-			if (Chance.of(10))
-				return;
-			addBurn(target, 300);
-		}
 	}
 
 	public static Set<UUID> hasEtherOverload = new HashSet<>();
@@ -171,14 +159,70 @@ public class EntityEffects
 		// TODO
 	}
 	
+	public static Set<UUID> hasHumility = new HashSet<>();
+	public static void addHumility(LivingEntity target, int seconds)
+	{
+		if (EntityCategories.celestio_mobs.contains(target.getType())) return;
+		if (hasHumility.contains(target.getUniqueId())) return;
+		hasHumility.add(target.getUniqueId());
+		OBSParticles.drawCelestioCastSigil(target);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasHumility.remove(target.getUniqueId()), seconds * 20);
+	}
+	
+	private static Map<UUID, BukkitTask> chillTimers = new HashMap<>();
+	public static Map<UUID, Integer> hasChill = new HashMap<>();
+	/*
+	 * Chill Effect: those affected are inflicted with a Glacio DOT effect. Reapplying Chill increases the magnitude, keeping initial duration.
+	 */
 	/**
-	 * @param target 
+	 * 
+	 * @param target
+	 * @param magnitude
 	 * @param seconds
 	 */
-	public static void addChill(LivingEntity target, int seconds) 
+	public static void addChill(LivingEntity target, int magnitude, int seconds) 
 	{
-		add(target, PotionEffectType.SLOWNESS, seconds*20, 2, true);
-		target.setFreezeTicks(Math.min(target.getMaxFreezeTicks(), target.getFreezeTicks() + seconds * 20));
+	    UUID id = target.getUniqueId();
+	    int newMagnitude = hasChill.getOrDefault(id, 0) + magnitude;
+	    if (newMagnitude > 20) newMagnitude = 20;
+	    int ticks = seconds * 20;
+
+	    // Cancel existing expiry task if re-applying
+	    BukkitTask existing = chillTimers.get(id);
+	    if (existing != null) existing.cancel();
+
+	    // Apply or re-apply effects
+	    target.removePotionEffect(PotionEffectType.SLOWNESS);
+	    add(target, PotionEffectType.SLOWNESS, ticks, newMagnitude, true);
+	    target.setFreezeTicks(Math.min(target.getMaxFreezeTicks(), target.getFreezeTicks() + ticks));
+	    hasChill.put(id, newMagnitude);
+
+	    // Schedule cleanup
+	    BukkitTask task = Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+	    {
+	        chillTimers.remove(id);
+	        hasChill.remove(id);
+	    }, ticks);
+
+	    chillTimers.put(id, task);
+	}
+	
+	public static Set<UUID> hasFrozen = new HashSet<>();
+	public static void addFrozen(LivingEntity target)
+	{
+		if (hasChill.containsKey(target.getUniqueId()))
+		{
+			int magnitude = hasChill.get(target.getUniqueId());
+			hasChill.remove(target.getUniqueId());
+			chillTimers.get(target.getUniqueId()).cancel();
+			add(target, PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 99, true);
+			add(target, PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, magnitude, true);
+			if (!(target instanceof Player))
+			{
+				((Mob) target).setTarget(null);
+				target.setAI(false);
+			}
+		}
 	}
 
 	public static void addBurn(LivingEntity target, int seconds) 

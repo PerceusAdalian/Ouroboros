@@ -26,12 +26,12 @@ public class Demonform extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		EntityEffects.addNightShift(p, 1, 30);
-		return true;
+		return this.getManacost();
 	}
 
 }

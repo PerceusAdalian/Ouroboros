@@ -31,16 +31,16 @@ public class ArcaneBolt extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
-		if (target == null || !(target instanceof LivingEntity)) return false;
+		if (target == null || !(target instanceof LivingEntity)) return -1;
 		MobData.damageUnnaturally(p, target, 4, true, ElementType.ARCANO);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		EntityEffects.addEtherOverload((LivingEntity) target, 20);
-		return true;
+		return this.getManacost();
 	}
 
 }

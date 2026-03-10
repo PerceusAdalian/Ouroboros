@@ -46,7 +46,7 @@ public class Gate extends Spell
 	public static Set<UUID> cooldown = new HashSet<>();
 	
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		
@@ -56,20 +56,20 @@ public class Gate extends Spell
 			if (cooldown.contains(p.getUniqueId()))
 			{
 				PrintUtils.PrintToActionBar(p, "&7&o'&r&3&oQuantum Leap&r&7&o' is on cooldown..");
-				return false;
+				return -1;
 			}
 			
 			if (wand.getCurrentMana() < 200)
 			{
 				PrintUtils.PrintToActionBar(p, "&7&oInsufficient Mana for '&3&oQuantum Leap&r&7&o'");
-				return false;
+				return -1;
 			}
 			
 			EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.AMBIENT);
 			CollectWandData.wandCollector.put(p.getUniqueId(), wand);
 			ItemCollector.remove(e);
 			GuiHandler.open(p, new GateMenu(p));
-			return false;
+			return -1;
 		}
 		
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
@@ -83,7 +83,7 @@ public class Gate extends Spell
 			if (code == null) 
 			{
 				PrintUtils.OBSFormatError(p, "This world isn't recognized. Please try again..");
-				return false;
+				return -1;
 			}
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
@@ -91,10 +91,10 @@ public class Gate extends Spell
 			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 			data.setGate(code, p.getLocation());
 			PrintUtils.PrintToActionBar(p, "&7&oAnchor location set!");
-			return true;
+			return this.getManacost();
 		}
 		
-		return false;
+		return -1;
 	}
 
 }

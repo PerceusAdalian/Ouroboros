@@ -33,7 +33,7 @@ public class GalvanicNeedle extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		
@@ -64,7 +64,7 @@ public class GalvanicNeedle extends Spell
 			}
 		}, 40); 
 			    
-		return true;
+		return this.getManacost();
 	}
 
 }

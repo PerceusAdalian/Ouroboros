@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
@@ -32,6 +33,7 @@ public class GlacioSpellsPage extends AbstractOBSGui
 		// 3
 		
 		// 4
+		GuiButton.placeSpellButton(player, new GlacialFlood(), 11, this);
 		
 		// 5
 		

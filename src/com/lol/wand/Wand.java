@@ -151,7 +151,7 @@ public class Wand
 	public void addMana(int value)
 	{
 		currentMana += value;
-		if (currentMana > maxMana || currentMana < 0) currentMana = maxMana;
+		if (currentMana > maxMana) currentMana = maxMana;
 	}
 	
 	public int getMaxMana()

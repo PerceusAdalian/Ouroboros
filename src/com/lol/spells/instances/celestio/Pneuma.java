@@ -46,7 +46,7 @@ public class Pneuma extends Spell
 				"&r&fGrants &eDivine Favor &bX&f and &b&oRegenerate&r &bIII&f to self &7(60s)",
 				"&r&fSubsequently, all negative status effects, including &2Curses&f, are &e&oCured&r&f.","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
-				"&r&e&oPneuma&r&f: &e&lEchoic Liberation&r&f --",
+				"&r&e&oPneuma&r&f: &e&lPhoton Beam&r&f --",
 				"&r&fExpel a concentrated photon beam up to &b&o30 meters&r&f, applying &eExposed&f and dealing",
 				"&r&e&lCelestio&r&f damage. Damage scales with &eDivine Favor&f stacks, with a max output of 100&c♥&f.","",
 				"&r&e&oDivine Favor &r&eEffect&r&f: Grants &b&oAbsorption&f &r&fand &b&oResistance&f scaled to its magnitude. ",
@@ -57,7 +57,7 @@ public class Pneuma extends Spell
 	private static Set<UUID> cooldown = new HashSet<>();
 	
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		
@@ -65,15 +65,15 @@ public class Pneuma extends Spell
 		{
 			if (cooldown.contains(p.getUniqueId())) 
 			{
-				PrintUtils.PrintToActionBar(p, "&7&oEchoic Liberation on Cooldown..");
-				return false;
+				PrintUtils.PrintToActionBar(p, "&7&o'&e&oPhoton Beam&7&o'on Cooldown..");
+				return -1;
 			}
 			
 			Wand wand = new Wand(e.getItem());
 			if (wand.getCurrentMana() < 300)
 			{
-				PrintUtils.PrintToActionBar(p, "&7&oNot Enough Mana for Echoic Liberation");
-				return false;
+				PrintUtils.PrintToActionBar(p, "&7&oNot Enough Mana for '&e&oPhoton Beam&7&o'");
+				return -1;
 			}
 			
 			EntityEffects.playSound(p, Sound.ENTITY_WARDEN_SONIC_CHARGE, SoundCategory.AMBIENT);
@@ -104,8 +104,6 @@ public class Pneuma extends Spell
 				p.removePotionEffect(PotionEffectType.RESISTANCE);
 			}, 15);
 			
-			wand.subtractMana(200);
-			p.getInventory().setItemInMainHand(wand.getAsItemStack());
 			if (Ouroboros.debug == false)
 			{
 				cooldown.add(p.getUniqueId());
@@ -115,7 +113,7 @@ public class Pneuma extends Spell
 				}, 3600);				
 			}
 			
-			return true;
+			return 300;
 		}
 		
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
@@ -130,10 +128,10 @@ public class Pneuma extends Spell
 				PrintUtils.OBSFormatPrint(p, "Your &2Curse&f has been removed.");
 			}
 			Cure.cureHelper(p, p);
-			return true;
+			return 100;
 		}
 		
-		return false;
+		return -1;
 	}
 	
 	public static void registerSpellHelper(JavaPlugin plugin)

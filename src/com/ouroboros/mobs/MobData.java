@@ -289,6 +289,7 @@ public class MobData
 		if (EntityEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
 		if (EntityEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.25;
 		if (EntityEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
+		if (EntityEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;

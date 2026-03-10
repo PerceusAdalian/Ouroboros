@@ -32,11 +32,11 @@ public class Sew extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 7);
-		if (target == null || !(target instanceof LivingEntity)) return false;
+		if (target == null || !(target instanceof LivingEntity)) return -1;
 		
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.SMOKE, null);
@@ -44,9 +44,9 @@ public class Sew extends Spell
 		if(!EntityEffects.addCurse((LivingEntity) target, 0, target instanceof Player ? 14 : 20))
 		{
 			PrintUtils.PrintToActionBar(p, "&cTarget already cursed!");
-			return false;
+			return -1;
 		}
-		return true;			
+		return this.getManacost();			
 	}
 
 }

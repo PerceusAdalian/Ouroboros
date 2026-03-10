@@ -32,7 +32,7 @@ public class Cure extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 20);
@@ -40,7 +40,7 @@ public class Cure extends Spell
 		if (target == null)
 		{
 			cureHelper(p, p);
-			return true;
+			return this.getManacost();
 		}
 		
 		if (target instanceof Player)
@@ -48,10 +48,10 @@ public class Cure extends Spell
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.WAX_ON, null);
 			cureHelper((Player) target, p);
-			return true;
+			return this.getManacost();
 		}
 		
-		return false;
+		return -1;
 	}
 
 	public static void cureHelper(Player target, Player caster)

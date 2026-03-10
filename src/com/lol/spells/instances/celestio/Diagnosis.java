@@ -32,7 +32,7 @@ public class Diagnosis extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 20);
@@ -40,6 +40,7 @@ public class Diagnosis extends Spell
 		if (target == null)
 		{
 			spellEffect(p, p);
+			return this.getManacost();
 		}
 		
 		if (target instanceof Player)
@@ -47,9 +48,10 @@ public class Diagnosis extends Spell
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 15, 0.75, 0.5, Particle.ENCHANT, null);
 			spellEffect((Player) target, p);
+			return this.getManacost();
 		}
 		
-		return false;
+		return -1;
 	}
 
 	private static void spellEffect(Player target, Player caster)

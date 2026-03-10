@@ -43,18 +43,20 @@ public class GateMenu extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_DIAMOND, SoundCategory.AMBIENT);
 			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-			
 			Location overworldLoc = data.getGate(GateCodes.OVERWORLD);
-			if (data == null || overworldLoc == null) overworldLoc = Bukkit.getWorld("world").getSpawnLocation();
-			p.teleport(overworldLoc);
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			{
-				PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in a &a&ofamiliar world&r&7&o..");
-				OBSParticles.drawCosmoCastSigil(p);
-				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
-			}, 25);
-
-			cleanup(p, wand);
+			
+			if (data != null && overworldLoc != null) 
+			{		
+				p.teleport(overworldLoc);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in a &a&ofamiliar world&r&7&o..");
+					OBSParticles.drawCosmoCastSigil(p);
+					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
+				}, 25);
+				
+				cleanup(p, wand);
+			}
 		});
 		
 		GuiButton.button(Material.NETHERRACK)
@@ -65,19 +67,21 @@ public class GateMenu extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NETHERITE, SoundCategory.AMBIENT);
 			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+			Location netherLoc = data.getGate(GateCodes.NETHER);
 			
-			Location overworldLoc = data.getGate(GateCodes.NETHER);
-			if (data == null || overworldLoc == null) overworldLoc = Bukkit.getWorld("world_nether").getSpawnLocation();
-			p.teleport(overworldLoc);
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			{
-				PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in &c&oHell&r&7&o..");
-				OBSParticles.drawCosmoCastSigil(p);
-				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
-				EntityEffects.playSound(p, Sound.AMBIENT_NETHER_WASTES_ADDITIONS, SoundCategory.AMBIENT);
-			}, 25);
-
-			cleanup(p, wand);
+			if (data != null && netherLoc != null) 
+			{				
+				p.teleport(netherLoc);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in &c&oHell&r&7&o..");
+					OBSParticles.drawCosmoCastSigil(p);
+					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
+					EntityEffects.playSound(p, Sound.AMBIENT_NETHER_WASTES_ADDITIONS, SoundCategory.AMBIENT);
+				}, 25);
+				
+				cleanup(p, wand);
+			}
 		});
 		
 		GuiButton.button(Material.END_STONE)
@@ -88,19 +92,21 @@ public class GateMenu extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NETHERITE, SoundCategory.AMBIENT);
 			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+			Location endLoc = data.getGate(GateCodes.END);
 
-			Location overworldLoc = data.getGate(GateCodes.END);
-			if (data == null || overworldLoc == null) overworldLoc = Bukkit.getWorld("world_the_end").getSpawnLocation();
-			p.teleport(overworldLoc);
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			{
-				PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in a &3&oforeign dimension&r&f..");
-				OBSParticles.drawCosmoCastSigil(p);
-				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
-				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_AMBIENT, SoundCategory.AMBIENT);
-			}, 25);
-
-			cleanup(p, wand);
+			if (data != null && endLoc != null)
+			{				
+				p.teleport(endLoc);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in a &3&oforeign dimension&r&f..");
+					OBSParticles.drawCosmoCastSigil(p);
+					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
+					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_AMBIENT, SoundCategory.AMBIENT);
+				}, 25);
+				
+				cleanup(p, wand);
+			}
 		});
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to close this menu. Doing so will return your wand.").place(this, 10, e->
 		{

@@ -33,15 +33,15 @@ public class Siphon extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 20);
 		
-		if (target == null || !(target instanceof LivingEntity)) return false;
+		if (target == null || !(target instanceof LivingEntity)) return -1;
 		
 		MobData data = MobData.getMob(target.getUniqueId());
-		if (data == null) return false;
+		if (data == null) return -1;
 		
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(target.getLocation(), p.getLocation(), 0.3, 0.4, Particle.CRIMSON_SPORE, null);
@@ -63,7 +63,7 @@ public class Siphon extends Spell
 			EntityEffects.heal(p, target instanceof Player ? damage * 0.3d : damage * 0.5d);			
 		}, 15);
 		
-		return true;
+		return this.getManacost();
 	}
 
 }

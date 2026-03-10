@@ -40,13 +40,13 @@ public class SkullOfSithis extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
 		{
 			Entity target = RayCastUtils.getEntity(p, 10);
-			if (target == null || !(target instanceof LivingEntity le)) return false;
+			if (target == null || !(target instanceof LivingEntity le)) return -1;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_CAST_SPELL, SoundCategory.AMBIENT);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.SMOKE, null);
@@ -55,7 +55,7 @@ public class SkullOfSithis extends Spell
 			
 			EntityEffects.addDread(le, 30);
 			MobData.damageUnnaturally(p, target, 10, true, ElementType.MORTIO);
-			return true;
+			return this.getManacost();
 		}
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
 		{
@@ -66,9 +66,9 @@ public class SkullOfSithis extends Spell
 			skull.setCharged(true);
 			skull.setGravity(false);
 			skull.setInvulnerable(true);
-			return true;
+			return this.getManacost();
 		}
-		return false;
+		return -1;
 	}
 
 }

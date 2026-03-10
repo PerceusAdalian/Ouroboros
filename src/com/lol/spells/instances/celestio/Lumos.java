@@ -52,7 +52,7 @@ public class Lumos extends Spell
 	private HashMap<UUID, LumosTask> activeLumos = new HashMap<>();
 	
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
@@ -78,7 +78,7 @@ public class Lumos extends Spell
 
 			    cancelLumos(p.getUniqueId());
 			    
-			    return true;
+			    return this.getManacost();
 			}
 			
 			ArmorStand stand = (ArmorStand) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ARMOR_STAND);
@@ -99,13 +99,13 @@ public class Lumos extends Spell
 	        
 	        activeLumos.put(p.getUniqueId(), new LumosTask(stand, crystal, startLumosTask(p, stand)));
 	        
-	        return true;
+	        return this.getManacost();
 		}
 		
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_BLOCK))
 		{
 			Block block = e.getClickedBlock().getRelative(e.getBlockFace());
-			if (!block.getType().isAir()) return false;
+			if (!block.getType().isAir()) return -1;
 
 	        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			
@@ -122,10 +122,10 @@ public class Lumos extends Spell
 				OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
 			}, 600);
 			
-			return true;
+			return this.getManacost();
 		}
 			
-		return false;
+		return -1;
 	}
 	
 	private BukkitTask startLumosTask(Player p, ArmorStand stand)

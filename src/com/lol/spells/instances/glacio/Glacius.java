@@ -34,7 +34,7 @@ public class Glacius extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_DROWNED_SHOOT, SoundCategory.AMBIENT);
@@ -48,7 +48,7 @@ public class Glacius extends Spell
 		arrow.addCustomEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 0), true);
 		arrow.setPickupStatus(PickupStatus.DISALLOWED);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->arrow.remove(), 40);
-		return true;
+		return this.getManacost();
 	}
 
 }

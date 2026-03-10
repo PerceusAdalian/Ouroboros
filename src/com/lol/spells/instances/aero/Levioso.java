@@ -33,7 +33,7 @@ public class Levioso extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 20);
@@ -48,16 +48,16 @@ public class Levioso extends Spell
 				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
 				EntityEffects.add((LivingEntity) target, PotionEffectType.LEVITATION, target instanceof Player ? 100 : 160, 0, true);
 			}, 10);
-			return true;
+			return this.getManacost();
 		}
 		else if(target == null)
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
 			EntityEffects.add(p, PotionEffectType.LEVITATION, 160, 0, true);
-			return true;
+			return this.getManacost();
 		}
-		return false;
+		return -1;
 	}
 
 }

@@ -41,11 +41,11 @@ public class ArrestoMomentum extends Spell implements Listener
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 20);
-		if (!(target instanceof LivingEntity) || target == null) return false;
+		if (!(target instanceof LivingEntity) || target == null) return -1;
 		
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);
 		OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 2, 10, 0.5, Particle.GLOW_SQUID_INK, null);
@@ -89,9 +89,9 @@ public class ArrestoMomentum extends Spell implements Listener
 		        pTarget.setGravity(true);
 		        frozenPlayers.remove(pTarget.getUniqueId());
 		    }, 60L);
-		    return true;
+		    return this.getManacost();
 		}
-		return false;
+		return -1;
 	}
 	
 	// In your main class or listener class

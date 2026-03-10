@@ -30,7 +30,7 @@ public class Revelio extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		if (!RayCastUtils.getNearbyEntities(p, 30, (target)->
@@ -38,8 +38,8 @@ public class Revelio extends Spell
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.CLOUD, null);
 			EntityEffects.addExposed(target, 20);	
-		})) return false;
-		return true;
+		})) return -1;
+		return this.getManacost();
 	}
 
 }

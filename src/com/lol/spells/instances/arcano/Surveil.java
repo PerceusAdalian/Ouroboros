@@ -33,7 +33,7 @@ public class Surveil extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		if (!RayCastUtils.getEntity(p, 30, target->
@@ -62,8 +62,8 @@ public class Surveil extends Spell
 									"&b&l+&r&7-------------&f{&bΩ&f}&7-------------&b&l+");
 				return;
 			}
-		})) return false;
-		return true;
+		})) return -1;
+		return this.getManacost();
 	}
 
 }

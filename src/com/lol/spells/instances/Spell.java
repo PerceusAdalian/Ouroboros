@@ -163,7 +163,7 @@ public abstract class Spell
 		return lore;
 	}
 	
-	public abstract boolean Cast(PlayerInteractEvent e);
+	public abstract int Cast(PlayerInteractEvent e);
 	
 	public static final NamespacedKey LOLSPELL = new NamespacedKey(Ouroboros.instance, "lolspell");
 	public static final NamespacedKey LOLSPELLBOOK = new NamespacedKey(Ouroboros.instance, "lolspellbook");

@@ -29,18 +29,20 @@ public class Shroud extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 6, 0.5, Particle.DUST_PLUME, null);
 		EntityEffects.addShroud(p, 1, 45);
-		if (!RayCastUtils.getNearbyEntities(p, 30, r ->
+		
+		RayCastUtils.getNearbyEntities(p, 30, r ->
 		{
 			if (r == null || !(r instanceof Mob)) return;
 			if (((Mob) r).getTarget().equals(p)) ((Mob)r).setTarget(null);
-		})) return true;
-		return true;
+		});
+		
+		return this.getManacost();
 	}
 
 }

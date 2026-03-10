@@ -30,11 +30,11 @@ public class Expell extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
-		if (target == null || !(target instanceof LivingEntity le)) return false;
+		if (target == null || !(target instanceof LivingEntity le)) return -1;
 		
 		OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.5, Particle.WAX_ON, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
@@ -44,7 +44,7 @@ public class Expell extends Spell
 			OBSParticles.drawCylinder(le.getLocation(), le.getWidth(), (int) le.getHeight(), 8, 0.5, 0.5, Particle.CLOUD, null);
 		}, 15);
 		
-		return true;
+		return this.getManacost();
 	}
 
 }

@@ -40,14 +40,14 @@ public class Thunderstorm extends Spell
 
 	boolean nullEntities = false;
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		
 		if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
 		{
 			Entity target = RayCastUtils.getEntity(p, 40);
-			if (target == null || !(target instanceof LivingEntity)) return false;
+			if (target == null || !(target instanceof LivingEntity)) return -1;
 
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
@@ -68,7 +68,7 @@ public class Thunderstorm extends Spell
 					EntityEffects.addShock(C, C instanceof Player ? 3 : 20);						
 				}, 30);
 			});
-			return true;
+			return this.getManacost();
 		}
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
 		{
@@ -82,12 +82,12 @@ public class Thunderstorm extends Spell
 			})) 
 			{
 				PrintUtils.PrintToActionBar(p, "Fizzle!");
-				return false;
+				return -1;
 			}
-			return true;
+			return this.getManacost();
 		}
 		
-		return false;
+		return -1;
 	}
 
 }

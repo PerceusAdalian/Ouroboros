@@ -41,7 +41,7 @@ public class Haunt extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Player target = getRecentPlayerKiller(p);
@@ -75,7 +75,7 @@ public class Haunt extends Spell
 				p.setHealth(p.getHealth() * .75);
 				return;
 			}, 60);
-			return true;
+			return this.getManacost();
 		}
 		OBSParticles.drawMortioCastSigil(p);
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
@@ -92,7 +92,7 @@ public class Haunt extends Spell
 		
 		}, 20);
 		
-		return true;
+		return this.getManacost();
 	}
 	
 	public Player getRecentPlayerKiller(Player victim) 

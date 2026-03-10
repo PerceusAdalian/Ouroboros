@@ -37,11 +37,11 @@ public class Bombarda extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
-		if (!(target instanceof LivingEntity) || target == null) return false;
+		if (!(target instanceof LivingEntity) || target == null) return -1;
 		OBSParticles.drawInfernoCastSigil(p);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.LAVA, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
@@ -52,7 +52,7 @@ public class Bombarda extends Spell
 			OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
 		}, 15);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->target.getWorld().createExplosion(target.getLocation(), 3, false, false), 20);
-		return true;
+		return this.getManacost();
 	}
 
 }

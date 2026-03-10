@@ -28,15 +28,15 @@ public class Gust extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 7);
-		if (target == null || !(target instanceof LivingEntity)) return false;
+		if (target == null || !(target instanceof LivingEntity)) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);
 		target.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).multiply(1.25));
-		return true;
+		return this.getManacost();
 	}
 	
 

@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.celestio.Ascension;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
@@ -46,9 +47,10 @@ public class CelestioSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new AssertOrder(), 16, this);
 		
 		// 5
+		GuiButton.placeSpellButton(player, new Ascension(), 19, this);
 		
 		// 6
-		GuiButton.placeSpellButton(player, new Pneuma(), 19, this);
+		GuiButton.placeSpellButton(player, new Pneuma(), 20, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

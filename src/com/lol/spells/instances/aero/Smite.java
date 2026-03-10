@@ -30,16 +30,16 @@ public class Smite extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
-		if (!(target instanceof LivingEntity) || target == null) return false;
+		if (!(target instanceof LivingEntity) || target == null) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			target.getWorld().strikeLightning(target.getLocation()), 15);
-		return true;
+		return this.getManacost();
 	}
 
 }

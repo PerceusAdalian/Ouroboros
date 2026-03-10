@@ -45,7 +45,7 @@ public class AssertOrder extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
 		
@@ -74,7 +74,7 @@ public class AssertOrder extends Spell
 		    }
 		}, 300);
 		
-		return true;
+		return this.getManacost();
 	}
 
 	private static Map<UUID, Double> playersDamageMap = new HashMap<>();

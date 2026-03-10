@@ -28,7 +28,7 @@ public class Incendio extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		OBSParticles.drawInfernoCastSigil(p);
@@ -36,7 +36,7 @@ public class Incendio extends Spell
 		Fireball fireball = (Fireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.FIREBALL);
 		fireball.setYield(1);
 		fireball.setIsIncendiary(true); 
-		return true;
+		return this.getManacost();
 	}
 
 }

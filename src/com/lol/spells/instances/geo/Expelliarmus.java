@@ -31,21 +31,21 @@ public class Expelliarmus extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 15);
 
-		if (!(target instanceof LivingEntity living)) return false;
+		if (!(target instanceof LivingEntity living)) return -1;
 
 		EntityEquipment equipment = living.getEquipment();
-		if (equipment == null) return false;
+		if (equipment == null) return -1;
 
 		ItemStack heldItem = equipment.getItemInMainHand();
 		if (heldItem.getType() == Material.AIR) 
 		{
 		    heldItem = equipment.getItemInOffHand();
-		    if (heldItem.getType() == Material.AIR) return false;
+		    if (heldItem.getType() == Material.AIR) return -1;
 		}
 
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
@@ -60,7 +60,7 @@ public class Expelliarmus extends Spell
 		target.getWorld().dropItem(target.getLocation(), droppedItem).setPickupDelay(100);
 		OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 4, 0.5, 25, 8, 0.5, Particle.SMOKE, null);
 
-		return true;
+		return this.getManacost();
 	}
 
 }

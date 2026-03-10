@@ -33,16 +33,16 @@ public class Diffindo extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 30);
-		if (!(target instanceof LivingEntity) || target == null) return false;
+		if (!(target instanceof LivingEntity) || target == null) return -1;
 		EntityEffects.addCharged(p, 0, 10);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);
 		EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.AMBIENT);
 		MobData.damageUnnaturally(p, target, 20, true, ElementType.SEVER);
-		return true;
+		return this.getManacost();
 	}
 	
 }

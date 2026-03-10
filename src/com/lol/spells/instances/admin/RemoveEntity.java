@@ -32,10 +32,10 @@ public class RemoveEntity extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		if (ObsCommand.affirmOP(p)) return true;
+		if (ObsCommand.affirmOP(p)) return -1;
 		
 		if (!RayCastUtils.getEntity(p, 50, target ->
 		{
@@ -52,8 +52,8 @@ public class RemoveEntity extends Spell
 				if (data != null) data.kill();
 				else target.remove();
 			}, 15);
-		})) return false;
-		return true;
+		})) return -1;
+		return 0;
 	}
 	
 }

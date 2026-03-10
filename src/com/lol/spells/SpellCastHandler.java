@@ -1,7 +1,9 @@
 package com.lol.spells;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -41,6 +43,7 @@ public class SpellCastHandler implements Listener
 	}
 	
 	private static Map<UUID, Spell> cooldownPlayers = new HashMap<>();
+	public static Set<UUID> lockedCycling = new HashSet<>();
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e)
@@ -85,11 +88,13 @@ public class SpellCastHandler implements Listener
         if (!Wand.isWand(held)) return;
         
 		Wand wand = new Wand(held);
+		int manaCost = (int) wand.getSpell(wand.getSpellIndex()).Cast(e);
 		
 		if (!wand.hasSpell(wand.getSpellIndex())) return;
 		
 		if (CastConditions.isValidAction(e, CastConditions.SHIFT_LEFT_CLICK_AIR))
 		{
+			if (lockedCycling.contains(p.getUniqueId())) return;
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 			CollectWandData.pageController.put(p.getUniqueId(), "removespell");
 			GuiHandler.open(p, new CollectWandData(p));
@@ -97,6 +102,7 @@ public class SpellCastHandler implements Listener
 		}
 		if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
 		{
+			if (lockedCycling.contains(p.getUniqueId())) return;
 			if (wand.getNextSpell() == null) return;
 			wand.rotateSpells();
 			p.getInventory().setItemInMainHand(wand.getAsItemStack());
@@ -104,7 +110,7 @@ public class SpellCastHandler implements Listener
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NAUTILUS, SoundCategory.AMBIENT);
 			return;
 		}
-		else if (wand.getCurrentMana() >= wand.getSpell(wand.getSpellIndex()).getManacost() && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
+		else if ((wand.getCurrentMana() >= manaCost && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition())))
 		{
 			
 			if (cooldownPlayers.containsKey(p.getUniqueId()) && cooldownPlayers.containsValue(wand.getSpell(wand.getSpellIndex())))
@@ -130,7 +136,7 @@ public class SpellCastHandler implements Listener
 				return;
 			}
 			
-			if (wand.getSpell(wand.getSpellIndex()).Cast(e))
+			if (manaCost >= 0)
 			{
 				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification()) 
 					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+wand.getSpell(wand.getSpellIndex()).getManacost()+" &b&o"+PrintUtils.printStatType(StatType.MAGIC));
@@ -139,14 +145,19 @@ public class SpellCastHandler implements Listener
 				PlayerData.addXP(p, StatType.MAGIC, wand.getSpell(wand.getSpellIndex()).getManacost());
 				
 				playCastSigil(p, wand.getSpell(wand.getSpellIndex()).getElementType());
-				wand.subtractMana(wand.getSpell(wand.getSpellIndex()).getManacost());
+				
 				cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
-				cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
-				e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());
+					cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
+				
+				final int finalCost = manaCost;
+				wand.subtractMana(finalCost);
+				e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());					
+
+				return;
 			}
 		} 
-		else if (wand.getCurrentMana() < wand.getSpell(wand.getSpellIndex()).getManacost() && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
+		else if (wand.getCurrentMana() < manaCost && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
 		{
 			PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);

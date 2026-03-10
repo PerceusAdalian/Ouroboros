@@ -27,7 +27,7 @@ public class Mute extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		
@@ -40,8 +40,8 @@ public class Mute extends Spell
 				EntityEffects.addEtherDisruption((Player) target, 20);
 			if (target instanceof LivingEntity && !(target instanceof Player))
 				EntityEffects.addEtherOverload((LivingEntity) target, 60);
-		})) return true;
-		return false;
+		})) return this.getManacost();
+		return -1;
 	}
 
 }

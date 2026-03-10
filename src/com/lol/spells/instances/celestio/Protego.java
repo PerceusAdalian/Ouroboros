@@ -29,14 +29,14 @@ public class Protego extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = (Player) e.getPlayer();
 		
 		OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 7, 0.5, 0.5, Particle.ENCHANT, null);
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		EntityEffects.addWard(p, 2, 15);
-		return true;
+		return this.getManacost();
 	}
 
 }

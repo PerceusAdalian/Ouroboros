@@ -40,12 +40,12 @@ public class Reap extends Spell
 	}
 
 	@Override
-	public boolean Cast(PlayerInteractEvent e) 
+	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 12);
 		
-		if (target == null || !(target instanceof LivingEntity)) return false;
+		if (target == null || !(target instanceof LivingEntity)) return -1;
 		boolean isCursed = EntityEffects.isCursed.contains(target.getUniqueId());
 		
 		if (isCursed)EntityEffects.playSound(p, Sound.ENTITY_WITHER_SHOOT, SoundCategory.AMBIENT);
@@ -77,11 +77,11 @@ public class Reap extends Spell
 			EntityEffects.heal(p, target instanceof Player ? (6 * .75) : 3);
 			EntityEffects.addDoom((LivingEntity) target, target instanceof Player ? 2 : 0, 30);
 			
-			return true;
+			return this.getManacost();
 		}
 		
 		MobData.damageUnnaturally(p, target, 3, true, ElementType.SEVER);
-		return true;
+		return this.getManacost();
 	}
 
 }
