@@ -1,7 +1,9 @@
 package com.lol.wand;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,12 +15,15 @@ import org.bukkit.persistence.PersistentDataType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
 public class Wand 
 {
 	private String name;
+	private String internalName;
     private int currentMana;
     private int maxMana;
     private static final int INTERNAL_MAX_WAND_MANA = 5000;
@@ -26,21 +31,26 @@ public class Wand
     private static final int INTERNAL_MAX_SPELL_SLOTS = 10;
     private int spellIndex = 0;
     private Rarity rarity;
+    private ElementType eType;
     private Spell[] spellSlots;
     private NamespacedKey[] slotKeys;
     private boolean deserialized = false;
 
     public static final NamespacedKey wandKey = new NamespacedKey(Ouroboros.instance, "magicwand");
+    public static final NamespacedKey internalNameOfWandKey = new NamespacedKey(Ouroboros.instance, "internalName");
+    public static final NamespacedKey absoluteMaxSpellSlotsKey = new NamespacedKey(Ouroboros.instance, "absoluteMaxSpellSlots");
+    public static final NamespacedKey rarityKey = new NamespacedKey(Ouroboros.instance, "wandRarity"); // ADD THIS
+    public static final NamespacedKey elementKey = new NamespacedKey(Ouroboros.instance, "wandElement");
     public NamespacedKey maxWandManaKey = new NamespacedKey(Ouroboros.instance, "maxWandMana");
     public NamespacedKey currentWandManaKey = new NamespacedKey(Ouroboros.instance, "currentWandMana");
     public NamespacedKey currentMaxSpellSlotsKey = new NamespacedKey(Ouroboros.instance, "currentMaxSpellSlots");
-    public static final NamespacedKey absoluteMaxSpellSlotsKey = new NamespacedKey(Ouroboros.instance, "absoluteMaxSpellSlots");
-    public static final NamespacedKey rarityKey = new NamespacedKey(Ouroboros.instance, "wandRarity"); // ADD THIS
     
-    public Wand(String name, Rarity rarity, int maxSlots, int maxMana)
+    public Wand(String name, String internalName, Rarity rarity, @Nullable ElementType eType, int maxSlots, int maxMana)
     {
-        this.name = name;
+    	this.name = name;
+        this.internalName = internalName;
         this.rarity = rarity;
+        this.eType = eType;
         this.maxSpellSlots = maxSlots;
         this.maxMana = maxMana;
         this.currentMana = maxMana;
@@ -64,9 +74,12 @@ public class Wand
         
         spellIndex = pdc.get(wandKey, PersistentDataType.INTEGER);
         name = meta.getDisplayName();
+        String element = pdc.get(elementKey, PersistentDataType.STRING);
+        internalName = pdc.getOrDefault(internalNameOfWandKey, PersistentDataType.STRING, "unknown");
+        eType = element != null ? ElementType.fromString(element) : null;
+        maxSpellSlots = pdc.getOrDefault(currentMaxSpellSlotsKey, PersistentDataType.INTEGER, 1);
         currentMana = pdc.getOrDefault(currentWandManaKey, PersistentDataType.INTEGER, 100);
         maxMana = pdc.getOrDefault(maxWandManaKey, PersistentDataType.INTEGER, 100);
-        maxSpellSlots = pdc.getOrDefault(currentMaxSpellSlotsKey, PersistentDataType.INTEGER, 1);
         
         String rarityName = pdc.get(rarityKey, PersistentDataType.STRING);
         this.rarity = rarityName != null ? Rarity.valueOf(rarityName) : Rarity.ONE;
@@ -104,6 +117,11 @@ public class Wand
 	public String getName()
 	{
 		return name;
+	}
+	
+	public String getInternalName()
+	{
+		return internalName;
 	}
 	
 	public boolean hasSpell(int slot)
@@ -177,6 +195,11 @@ public class Wand
 	public Rarity getRarity()
 	{
 		return rarity;
+	}
+	
+	public ElementType getElementType()
+	{
+		return eType;
 	}
 	
 	public int getCurrentMaxSpellSlots()
@@ -298,6 +321,18 @@ public class Wand
 	    return Math.max(1, cost); // Minimum 1 luminite for any recharge
 	}
 	
+	public static final Map<String, Wand> wand_registry = new HashMap<>();
+	
+	public static void register(Wand wand)
+	{
+		wand_registry.put(wand.getInternalName(), wand);
+	}
+	
+	public static Wand get(String internalName)
+	{
+		return wand_registry.get(internalName);
+	}
+	
 	public ItemStack getAsItemStack()
 	{
 	    ItemStack stack = new ItemStack(Material.STICK, 1);
@@ -308,12 +343,13 @@ public class Wand
 	    meta.setEnchantmentGlintOverride(true);
 	    
 	    pdc.set(wandKey, PersistentDataType.INTEGER, spellIndex);
+	    pdc.set(internalNameOfWandKey, PersistentDataType.STRING, internalName.toString());
 	    pdc.set(currentWandManaKey, PersistentDataType.INTEGER, currentMana);
 	    pdc.set(maxWandManaKey, PersistentDataType.INTEGER, maxMana);
 	    pdc.set(currentMaxSpellSlotsKey, PersistentDataType.INTEGER, maxSpellSlots);
 	    pdc.set(absoluteMaxSpellSlotsKey, PersistentDataType.INTEGER, INTERNAL_MAX_SPELL_SLOTS);
-	    pdc.set(rarityKey, PersistentDataType.STRING, rarity.name()); // Don't forget to save rarity!
-	    
+	    pdc.set(rarityKey, PersistentDataType.STRING, rarity.name());
+	    if (eType != null) pdc.set(elementKey, PersistentDataType.STRING, eType.getKey());
 	    
 	    if (!deserialized) 
 	    {
@@ -324,7 +360,7 @@ public class Wand
 	    // Build the wand's main lore
 	    List<String> existingLore = new ArrayList<>();
 	    existingLore.add("");
-	    existingLore.add(PrintUtils.assignRarity(rarity));
+	    existingLore.add(PrintUtils.assignRarity(rarity) + (eType != null ? PrintUtils.ColorParser(" &r&7| &r&eAffinity&f: "+eType.getType()) : ""));
 	    existingLore.add("");
 	    
 	    // Build spell slot icons with proper null checks
@@ -342,7 +378,7 @@ public class Wand
 	            spellSlotIcons += "&" + color + "●"; // Color coded full circle for filled slot
 	        }
 	    }
-	    existingLore.add(PrintUtils.ColorParser("&r&e&lSpell Slots&r&f: " + spellSlotIcons));
+	    existingLore.add(PrintUtils.ColorParser("&r&e&lSpell Slots&r&f: &7⋞" + spellSlotIcons+"&r&7⋟"));
 	    existingLore.add("");
 	    
 	    // Save spell data to NBT
@@ -359,10 +395,10 @@ public class Wand
 	        Spell currentSpell = spellSlots[spellIndex];
 	        existingLore.add(PrintUtils.ColorParser("&b&lEquipped Spell&r&f: "+currentSpell.getName()+
 	        		"&r&7 {"+PrintUtils.rarityToString(currentSpell.getRarity())+"&r&7}"));
-	        existingLore.add(PrintUtils.ColorParser("&f&nDescription&r&f:"));
+	        existingLore.add(PrintUtils.ColorParser("&f- &oDescription&r&f:"));
 	        existingLore.addAll(currentSpell.getLore()); // Add all spell lore lines
 	        existingLore.add("");
-	        existingLore.add(PrintUtils.ColorParser("&r&fOther Details:"));
+	        existingLore.add(PrintUtils.ColorParser("&r&f- Other Details:"));
 	        if (currentSpell.isPvpCombatible()) existingLore.add(PrintUtils.assignPVPCompatible());
 	        existingLore.add(PrintUtils.assignElementType(currentSpell.getElementType()));
 	        existingLore.add(PrintUtils.assignSpellType(currentSpell.getSpellType()));
@@ -371,7 +407,7 @@ public class Wand
 	    }
 	    
 	    existingLore.add("");
-	    existingLore.add(PrintUtils.ColorParser("&r&9Mana Capacity&f: ") + currentMana + PrintUtils.ColorParser("&r&f/") + maxMana);
+	    existingLore.add(PrintUtils.ColorParser("&r&9Mana Capacity&f: " + currentMana + "&r&f/" + maxMana));
 	    existingLore.add(PrintUtils.ColorParser("&r&d&oLeft-Click&r&f to cycle spells &7| &d&oShift_Left-Click&r&f to remove spells"));
 	    // Finally, set the combined lore at the end
 	    meta.setLore(existingLore);

@@ -11,7 +11,7 @@ public class Catalysts
 	{
 		//-------------------------------BASIC CATALYSTS-------------------------------//
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&7 I",
+				"&e&lCreation Catalyst",
 				"catalyst_1",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
@@ -21,7 +21,7 @@ public class Catalysts
 				"&r&7&oThere's a memory engram of a fallen warrior embedded within:",
 				"&r&7&o\"War is coming. Be on your guard...\""));
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&6 II",
+				"&e&lCreation Catalyst",
 				"catalyst_2",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
@@ -32,7 +32,7 @@ public class Catalysts
 				"&r&7\"&6&oThe capital is under attack?! Quick, the gates-- guards, the gates!",
 				"&r&6&oWhere is Her Majesty? What do you mean she's missing? Heavens me..&r&7&o\""));
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&b III",
+				"&e&lCreation Catalyst",
 				"catalyst_3",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
@@ -43,7 +43,7 @@ public class Catalysts
 				"&r&7\"&b&oGods if I weren't so foolish, my people would be safe from them..",
 				"&r&b&oPlease Luminus, there's not much time-- you must find me!&r&7&o\""));
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&d IV",
+				"&e&lCreation Catalyst",
 				"catalyst_4",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
@@ -54,7 +54,7 @@ public class Catalysts
 				"&r&7\"&d&oWhere is she?! You- Where is Her Majesty, Lumina! 'I saw something",
 				"&r&d&odash out over there!'... Thank you, I'm coming, sister!&r&7&o\""));
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&e V",
+				"&e&lCreation Catalyst",
 				"catalyst_5",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
@@ -68,7 +68,7 @@ public class Catalysts
 				"&r&e&odivine, 'Magic' as we know it ceased. And this wasn't random, it was fated.",
 				"&r&e&oEveryone quickly realized: this was the curtain rising. On the final act.&r&7&o\""));
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&c VI",
+				"&e&lCreation Catalyst",
 				"catalyst_6",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
@@ -83,7 +83,7 @@ public class Catalysts
 				"&r&c&oconclusive evidence is obtained. Unmount and place Project Fantasia into",
 				"&r&c&ostasis pending further instruction.&r&7&o\""));
 		Materia.register(new Materia(
-				"&e&lCreation Catalyst&r&3 VII",
+				"&e&lCreation Catalyst",
 				"catalyst_7",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,

@@ -94,6 +94,12 @@ public class ArrestoMomentum extends Spell implements Listener
 		return -1;
 	}
 	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
+	
 	// In your main class or listener class
 	private static Set<UUID> frozenPlayers = new HashSet<>();
 	public static void registerSpellHelper(JavaPlugin plugin)

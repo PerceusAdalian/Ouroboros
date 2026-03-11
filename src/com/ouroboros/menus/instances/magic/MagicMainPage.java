@@ -41,7 +41,7 @@ public class MagicMainPage extends AbstractOBSGui
 				"Your &b&oLuminite Tears &r&7(&r&b۞&7)&f are shown on your &d&oHud&r&f.",
 				"&b&oLuminite Tears &r&7(&r&b۞&7)&f are required for all magic operations.",
 				"Earn more by &ckilling mobs&f or leveling up &d&lMagic&r&f."
-).place(this, 13, e->
+		).place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);

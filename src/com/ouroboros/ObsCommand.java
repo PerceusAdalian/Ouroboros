@@ -34,7 +34,6 @@ import com.lol.enums.SpellType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.wand.Wand;
-import com.lol.wand.instances.Wand_1;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
@@ -102,15 +101,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			ItemStack luminiteTearStack = luminiteTear.toItemStack();
 			luminiteTearStack.setAmount(10);
 			
-			Wand basicWand = new Wand_1();
-			ItemStack wandStack = basicWand.getAsItemStack();
-			
 			ItemStack bag = new ItemStack(Material.BUNDLE, 1);
 			BundleMeta bagMeta = (BundleMeta) bag.getItemMeta();
 			bagMeta.addItem(luminiteCoreStack);
 			bagMeta.addItem(voucherStack);
 			bagMeta.addItem(luminiteTearStack);
-			bagMeta.addItem(wandStack);
+			bagMeta.addItem(Wand.get("wand_1").getAsItemStack());
 			bagMeta.setDisplayName(PrintUtils.ColorParser("&bOurboros&f Welcome Kit"));
 			bag.setItemMeta(bagMeta);
 			
@@ -350,6 +346,14 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			
+			if (args[1].equals("wand") && Wand.wand_registry.containsKey(args[2]))
+			{
+				Wand wand = Wand.wand_registry.get(args[2]);
+				ItemStack stack = wand.getAsItemStack();
+				p.getInventory().addItem(stack);
+				return true;
+			}
+			
 			if (args[1].equals("object") && ObjectRegistry.itemRegistry.containsKey(args[2]))
 			{				
 				AbstractObsObject obj = ObjectRegistry.itemRegistry.get(args[2]);
@@ -373,15 +377,16 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				
 				if (args[2].equals("component"))
 				{					
-					if (Materia.materia_registry.containsKey(args[3]) && args.length == 5)
+					if (Materia.materia_registry.containsKey(args[4]) && args.length == 5)
 					{
-						Materia materia = Materia.materia_registry.get(args[3]);
-						MateriaState state = MateriaState.fromString(args[4]);
+						MateriaState state = MateriaState.fromString(args[3]);
 						if (state == null || state.equals(MateriaState.CATALYST))
 						{
-							PrintUtils.OBSFormatError(p, "Invalid input MateriaState: "+args[4]);
+							PrintUtils.OBSFormatError(p, "Invalid input MateriaState: "+args[3]);
 							return true;
 						}
+
+						Materia materia = Materia.materia_registry.get(args[4]);
 						ItemStack stack = materia.getAsItemStack(state);
 						p.getInventory().addItem(stack);
 						return true;
@@ -722,7 +727,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "register" ->
 						isOp ? List.of("spell", "ability") : List.of();
 					case "generate" ->
-						isOp ? List.of("object", "spell", "materia") : List.of();
+						isOp ? List.of("object", "spell", "materia", "wand") : List.of();
 					case "money" ->
 						isOp ? List.of("add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney") : List.of();
 					// Stats sub-commands: some are OP-only.
@@ -745,6 +750,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "ability" -> isOp ? new ArrayList<>(AbilityRegistry.abilityRegistry.keySet()) : List.of();
 					case "object" -> isOp ? new ArrayList<>(ObjectRegistry.itemRegistry.keySet()) : List.of();
 					case "spell" -> isOp ? new ArrayList<>(SpellRegistry.spellRegistry.keySet()) : List.of();
+					case "wand" -> isOp ? new ArrayList<>(Wand.wand_registry.keySet()) : List.of();
 					case "materia" -> isOp ? List.of("catalyst", "component") : List.of();
 					case "set", "reset", "addXp" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();

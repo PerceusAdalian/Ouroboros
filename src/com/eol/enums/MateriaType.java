@@ -35,7 +35,7 @@ public enum MateriaType
 		this.material = material;
 	}
 
-	public String getMateriaCategory()
+	public String getName()
 	{
 		return materiaCategory;
 	}
@@ -48,5 +48,17 @@ public enum MateriaType
 	public String getKey()
 	{
 		return this.name();
+	}
+	
+	public static MateriaType fromString(String name)
+	{
+		try 
+		{
+			return MateriaType.valueOf(name.toUpperCase());
+		}
+		catch (IllegalArgumentException e) 
+		{
+			return null;
+		}
 	}
 }

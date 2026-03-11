@@ -42,5 +42,11 @@ public class ArcaneBolt extends Spell
 		EntityEffects.addEtherOverload((LivingEntity) target, 20);
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 }

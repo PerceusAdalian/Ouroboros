@@ -33,5 +33,11 @@ public class Charge extends Spell
 		OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 6, Particle.ELECTRIC_SPARK, null);
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 }

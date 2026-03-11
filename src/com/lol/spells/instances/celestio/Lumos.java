@@ -128,6 +128,12 @@ public class Lumos extends Spell
 		return -1;
 	}
 	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
+	
 	private BukkitTask startLumosTask(Player p, ArmorStand stand)
 	{
 		return new BukkitRunnable() 

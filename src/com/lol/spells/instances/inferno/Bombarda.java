@@ -54,5 +54,11 @@ public class Bombarda extends Spell
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->target.getWorld().createExplosion(target.getLocation(), 3, false, false), 20);
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 }

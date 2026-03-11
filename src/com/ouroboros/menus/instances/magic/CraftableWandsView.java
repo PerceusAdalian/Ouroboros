@@ -16,13 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lol.wand.Wand;
-import com.lol.wand.instances.Wand_3;
-import com.lol.wand.instances.Wand_2;
-import com.lol.wand.instances.Wand_1;
-import com.lol.wand.instances.ArchmageStaff;
-import com.lol.wand.instances.LuminaCatalyst;
-import com.lol.wand.instances.Wand_4;
-import com.lol.wand.instances.TwilightCatalyst;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
@@ -45,14 +38,14 @@ public class CraftableWandsView extends AbstractOBSGui
 	protected void build() 
 	{
 		
-		placeWandButton(player, new Wand_1(), 11, this);
-		placeWandButton(player, new Wand_2(), 12, this);
-		placeWandButton(player, new Wand_3(), 13, this);
-		placeWandButton(player, new Wand_4(), 14, this);
-		placeWandButton(player, new ArchmageStaff(), 15, this);
+		placeWandButton(player, Wand.get("wand_1"), 11, this);
+		placeWandButton(player, Wand.get("wand_2"), 12, this);
+		placeWandButton(player, Wand.get("wand_3"), 13, this);
+		placeWandButton(player, Wand.get("wand_4"), 14, this);
+		placeWandButton(player, Wand.get("wand_5"), 15, this);
 		
-		placeWandButton(player, new LuminaCatalyst(), 30, this);
-		placeWandButton(player, new TwilightCatalyst(), 32, this);
+		placeWandButton(player, Wand.get("luminas_wand"), 30, this);
+		placeWandButton(player, Wand.get("twilight_catalyst"), 32, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Wand Main Page'").place(this, 37, e->

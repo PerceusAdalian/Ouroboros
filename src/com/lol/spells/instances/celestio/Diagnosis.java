@@ -53,6 +53,12 @@ public class Diagnosis extends Spell
 		
 		return -1;
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 	private static void spellEffect(Player target, Player caster)
 	{

@@ -76,6 +76,12 @@ public class AssertOrder extends Spell
 		
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 	private static Map<UUID, Double> playersDamageMap = new HashMap<>();
 	public static void registerSpellHelper(JavaPlugin plugin)

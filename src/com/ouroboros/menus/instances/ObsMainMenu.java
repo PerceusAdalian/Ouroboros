@@ -14,6 +14,7 @@ import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.abilities.AbilityMainPage;
+import com.ouroboros.menus.instances.crafting.CraftingMainPage;
 import com.ouroboros.menus.instances.magic.MagicMainPage;
 import com.ouroboros.menus.instances.store.ObsShopGui;
 import com.ouroboros.utils.EntityEffects;
@@ -23,7 +24,7 @@ public class ObsMainMenu extends AbstractOBSGui
 
 	public ObsMainMenu(Player player) 
 	{
-		super(player, "Ouroboros Main Menu", 27, Set.of(10,11,12,14,15,16));
+		super(player, "Ouroboros Main Menu", 27, Set.of(10,11,12,13,14,15,16));
 	}
 
 	@Override
@@ -64,6 +65,14 @@ public class ObsMainMenu extends AbstractOBSGui
 			GuiHandler.changeMenu(p, new MagicMainPage(p));
 		});
 		
+		GuiButton.button(Material.CRAFTING_TABLE).setName("&a&lCrafting").setLore("&r&fClick to view the Crafting Menus").place(this, 13, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			e.setCancelled(true);
+			p.playSound(p.getLocation(), Sound.BLOCK_CRAFTER_CRAFT, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new CraftingMainPage(p));
+		});
+		
 		GuiButton.button(Material.BUNDLE).setName("&e&lShop").setLore("&r&fClick to view the OBS Store").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
@@ -79,6 +88,7 @@ public class ObsMainMenu extends AbstractOBSGui
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new CodexMainPage(p));
 		});
+		
 		//Exits
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 10, e->
 		{

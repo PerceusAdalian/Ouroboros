@@ -269,7 +269,50 @@ public class PrintUtils
 		return result.toString();
 	}
 	
+	public static String rarityToString(Rarity rarity)
+	{
+		char color = getRarityColor(rarity);
+		return ColorParser("&"+color+("✦".repeat(rarity.getRarity())));
+	}
+	
 	public static String assignRarity(Rarity rarity)
+	{
+		char color = getRarityColor(rarity);
+		return ColorParser("&r&f&lRarity&r&f: &"+color+("✦".repeat(rarity.getRarity())));
+	}
+	
+	public static String assignRarity(Rarity rarity, boolean forBook)
+	{
+	    char color = getRarityColor(rarity);
+	    String prefix = forBook ? "§" : "&";
+	    String textColor = forBook ? "0" : "f";
+	    return prefix + "r" + prefix + textColor + prefix + "nRarity" + prefix + "r" + prefix + textColor + ": " + prefix + color + ("✦".repeat(rarity.getRarity()));
+	}
+	
+	public static String assignObfuscatedRarity()
+	{
+		return ColorParser("&r&f&lRarity&r&f: &7&oUnrefined");
+	}
+	
+	public static String getRarityAsNumeralValue(Rarity rarity)
+	{
+		String numeral = switch (rarity)
+		{
+			case NONE -> "0";
+			case ONE -> "I";
+			case TWO -> "II";
+			case THREE -> "III";
+			case FOUR -> "IV";
+			case FIVE -> "V";
+			case SIX -> "VI";
+			case SEVEN -> "VII";
+			default -> "I";
+		};
+				
+		return "&" + getRarityColor(rarity) + numeral;
+	}
+	
+	public static char getRarityColor(Rarity rarity)
 	{
 		char color = switch (rarity) 
 		{
@@ -284,50 +327,7 @@ public class PrintUtils
 			default -> color = '7';
 		};
 		
-		return ColorParser("&r&f&nRarity&r&f: &"+color+("✦".repeat(rarity.getRarity())));
-	}
-	
-	public static String assignObfuscatedRarity(Rarity rarity)
-	{
-		return ColorParser("&r&f&nRarity&r&f: &k&7"+("✦".repeat(5)));
-	}
-	
-	public static String rarityToString(Rarity rarity)
-	{
-		char color = switch (rarity) 
-		{
-			case ONE -> color = '7';
-			case TWO -> color = '6';
-			case THREE -> color = 'b';
-			case FOUR -> color = 'd';
-			case FIVE -> color = 'e';
-			case SIX -> color = 'c';
-			case SEVEN -> color = '3';
-			case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + rarity);
-			default -> throw new IllegalArgumentException("Unexpected value: " + rarity);	
-		};
-		
-		return ColorParser("&"+color+("✦".repeat(rarity.getRarity())));
-	}
-	
-	public static String assignRarity(Rarity rarity, boolean forBook)
-	{
-	    char color = switch (rarity) 
-	    {
-	        case ONE -> '7';
-	        case TWO -> '6';
-	        case THREE -> 'b';
-	        case FOUR -> 'd';
-	        case FIVE -> 'e';
-	        case SIX -> 'c';
-	        case SEVEN -> '3';
-	        case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + rarity);
-	        default -> throw new IllegalArgumentException("Unexpected value: " + rarity);    
-	    };
-	    
-	    String prefix = forBook ? "§" : "&";
-	    String textColor = forBook ? "0" : "f";
-	    return prefix + "r" + prefix + textColor + prefix + "nRarity" + prefix + "r" + prefix + textColor + ": " + prefix + color + ("✦".repeat(rarity.getRarity()));
+		return color;
 	}
 	
 	public static String toTitleCase(String input)

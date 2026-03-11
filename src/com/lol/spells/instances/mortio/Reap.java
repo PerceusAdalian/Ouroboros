@@ -83,5 +83,10 @@ public class Reap extends Spell
 		MobData.damageUnnaturally(p, target, 3, true, ElementType.SEVER);
 		return this.getManacost();
 	}
-
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 }

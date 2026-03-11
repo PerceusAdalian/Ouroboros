@@ -43,4 +43,9 @@ public class Galeforce extends Spell
 		return this.getManacost();
 	}
 
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 }

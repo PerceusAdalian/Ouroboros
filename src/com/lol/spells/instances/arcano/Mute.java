@@ -21,9 +21,10 @@ public class Mute extends Spell
 	public Mute() 
 	{
 		super("Mute", "mute", Material.MUSIC_DISC_WAIT, SpellType.CONTROL, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 50, 20, true,
-				"&r&fApply &b&oEther Disruption&r&f to target &cPlayer&f, or &b&oEther Overload&r&f otherwise &7(&cPVP&f: &c20s&7 | 60s)","",
+				"&r&fApply &b&oEther Disruption&r&f to target &cPlayer&f,",
+				"&r&for &b&oEther Overload&r&f otherwise &7(&cPVP&f: &c20s&7 | 60s)","",
 				"&r&bEther Disruption &eEffect&f: affected &c&oPlayer&r&f(s) can't cast &e&oSpells&r&f.",
-				"&r&bEther Overload &eEffect&f: those affected take an additional &b&o50% &r&e&oelemental &r&fdamage.");
+				"&r&bEther Overload &eEffect&f: affected take an additional &b&o50% &r&e&oelemental &r&fdamage.");
 	}
 
 	@Override
@@ -42,6 +43,12 @@ public class Mute extends Spell
 				EntityEffects.addEtherOverload((LivingEntity) target, 60);
 		})) return this.getManacost();
 		return -1;
+	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
 	}
 
 }

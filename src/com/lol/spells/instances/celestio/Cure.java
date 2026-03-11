@@ -53,6 +53,12 @@ public class Cure extends Spell
 		
 		return -1;
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 	public static void cureHelper(Player target, Player caster)
 	{

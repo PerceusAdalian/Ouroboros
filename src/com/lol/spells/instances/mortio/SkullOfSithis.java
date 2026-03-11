@@ -70,5 +70,11 @@ public class SkullOfSithis extends Spell
 		}
 		return -1;
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 }

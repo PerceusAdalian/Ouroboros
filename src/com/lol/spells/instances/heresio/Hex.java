@@ -75,6 +75,12 @@ public class Hex extends Spell
 		
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 	private static void spellEffect(LivingEntity entity, Player caster)
 	{

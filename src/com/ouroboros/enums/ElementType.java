@@ -2,6 +2,8 @@ package com.ouroboros.enums;
 
 import java.util.Set;
 
+import com.lol.enums.SpellementType;
+
 public enum ElementType
 {
 	NONE(null),
@@ -50,6 +52,37 @@ public enum ElementType
 	public String getType() 
 	{
 		return element;
+	}
+	
+	public static ElementType fromString(String name)
+	{
+		try
+		{
+			return ElementType.valueOf(name.toUpperCase());
+		}
+		catch (IllegalArgumentException e)
+		{
+			return null;
+		}
+	}
+	
+	public static ElementType getFromSpellement(SpellementType sType)
+	{
+		ElementType eType = switch(sType)
+		{
+			case AERO -> ElementType.AERO;
+			case ARCANO -> ElementType.ARCANO;
+			case CELESTIO -> ElementType.CELESTIO;
+			case COSMO -> ElementType.COSMO;
+			case GEO -> ElementType.GEO;
+			case GLACIO -> ElementType.GLACIO;
+			case HERESIO -> ElementType.HERESIO;
+			case INFERNO -> ElementType.INFERNO;
+			case MORTIO -> ElementType.MORTIO;
+			case NULL -> ElementType.NONE;
+		};
+		
+		return eType;
 	}
 	
 	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO);

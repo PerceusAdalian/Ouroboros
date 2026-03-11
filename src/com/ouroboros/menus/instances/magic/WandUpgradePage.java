@@ -9,12 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.lol.wand.Wand;
-import com.lol.wand.instances.Wand_3;
-import com.lol.wand.instances.Wand_2;
-import com.lol.wand.instances.ArchmageStaff;
-import com.lol.wand.instances.LuminaCatalyst;
-import com.lol.wand.instances.Wand_4;
-import com.lol.wand.instances.TwilightCatalyst;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -39,12 +33,12 @@ public class WandUpgradePage extends AbstractOBSGui
 		Rarity rarity = currentWand.getRarity();
 		Wand upgradeTo = switch(rarity.getRarity())
 		{
-			case 1 -> upgradeTo = new Wand_2();
-			case 2 -> upgradeTo = new Wand_3();
-			case 3 -> upgradeTo = new Wand_4();
-			case 4 -> upgradeTo = new ArchmageStaff();
-			case 5 -> upgradeTo = new LuminaCatalyst();
-			case 6 -> upgradeTo = new TwilightCatalyst();
+			case 1 -> upgradeTo = Wand.get("wand_2");
+			case 2 -> upgradeTo = Wand.get("wand_3");
+			case 3 -> upgradeTo = Wand.get("wand_4");
+			case 4 -> upgradeTo = Wand.get("wand_5");
+			case 5 -> upgradeTo = Wand.get("luminas_wand");
+			case 6 -> upgradeTo = Wand.get("twilight_catalyst");
 			default -> throw new IllegalArgumentException("Unexpected value: " + rarity.getRarity());
 		};
 		

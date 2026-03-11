@@ -38,5 +38,11 @@ public class Incendio extends Spell
 		fireball.setIsIncendiary(true); 
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 }

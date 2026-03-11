@@ -14,6 +14,7 @@ import com.lol.spells.instances.SpellRegistry;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
+import com.lol.wand.WandRegistry;
 import com.ouroboros.abilities.AbilityCastHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.ExpHandler;
@@ -63,6 +64,8 @@ public class Ouroboros extends JavaPlugin
 		
 		SpellCastHandler.register(instance);
 		SpellRegistry.init();
+		
+		WandRegistry.load();
 		
 		AbilityCastHandler.register(instance);
 		AbilityRegistry.abilityInit();		

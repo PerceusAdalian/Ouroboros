@@ -65,5 +65,10 @@ public class Surveil extends Spell
 		})) return -1;
 		return this.getManacost();
 	}
-
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 }

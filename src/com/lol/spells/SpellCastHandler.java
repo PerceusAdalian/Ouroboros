@@ -28,6 +28,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
@@ -42,7 +43,7 @@ public class SpellCastHandler implements Listener
 		Bukkit.getPluginManager().registerEvents(new SpellCastHandler(), plugin);
 	}
 	
-	private static Map<UUID, Spell> cooldownPlayers = new HashMap<>();
+	private static Map<UUID, Set<Spell>> cooldownPlayers = new HashMap<>();
 	public static Set<UUID> lockedCycling = new HashSet<>();
 	
 	@EventHandler
@@ -87,83 +88,94 @@ public class SpellCastHandler implements Listener
 
         if (!Wand.isWand(held)) return;
         
-		Wand wand = new Wand(held);
-		int manaCost = (int) wand.getSpell(wand.getSpellIndex()).Cast(e);
-		
-		if (!wand.hasSpell(wand.getSpellIndex())) return;
-		
-		if (CastConditions.isValidAction(e, CastConditions.SHIFT_LEFT_CLICK_AIR))
-		{
-			if (lockedCycling.contains(p.getUniqueId())) return;
-			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
-			CollectWandData.pageController.put(p.getUniqueId(), "removespell");
-			GuiHandler.open(p, new CollectWandData(p));
-			return;
-		}
-		if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
-		{
-			if (lockedCycling.contains(p.getUniqueId())) return;
-			if (wand.getNextSpell() == null) return;
-			wand.rotateSpells();
-			p.getInventory().setItemInMainHand(wand.getAsItemStack());
-			PrintUtils.PrintToActionBar(p, "&b&lEquipped Spell&r&f: "+wand.getSpell(wand.getSpellIndex()).getName());
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NAUTILUS, SoundCategory.AMBIENT);
-			return;
-		}
-		else if ((wand.getCurrentMana() >= manaCost && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition())))
-		{
-			
-			if (cooldownPlayers.containsKey(p.getUniqueId()) && cooldownPlayers.containsValue(wand.getSpell(wand.getSpellIndex())))
-			{
-				PrintUtils.PrintToActionBar(p, "&cSpell on Cooldown!");
-				return;
-			}	
-			
-			// You can only cast spells when your Magic Proficiency is equal to or higher than the wand's tier.
-			// Likewise, you can technically equip spells of higher tier on your wand, but you can't cast them either if the wand's level is less than the spell rarity.
-			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-			
-			if (wand.getRarity().getRarity() < wand.getSpell(wand.getSpellIndex()).getRarity().getRarity() ||
-					data.getMagicProficiency() < wand.getRarity().getRarity())
-			{
-				PrintUtils.PrintToActionBar(p, "&cFizzle!");
-				return;
-			}
-			
-			if (EntityEffects.hasEtherDisruption.contains(p.getUniqueId()))
-			{
-				PrintUtils.PrintToActionBar(p, "&cFizzle: Ether Disrupted!");
-				return;
-			}
-			
-			if (manaCost >= 0)
-			{
-				if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification()) 
-					PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+wand.getSpell(wand.getSpellIndex()).getManacost()+" &b&o"+PrintUtils.printStatType(StatType.MAGIC));
-				if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
-					EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
-				PlayerData.addXP(p, StatType.MAGIC, wand.getSpell(wand.getSpellIndex()).getManacost());
-				
-				playCastSigil(p, wand.getSpell(wand.getSpellIndex()).getElementType());
-				
-				cooldownPlayers.put(p.getUniqueId(), wand.getSpell(wand.getSpellIndex()));
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
-					cooldownPlayers.remove(p.getUniqueId(), wand.getSpell(wand.getSpellIndex())), (long) (wand.getSpell(wand.getSpellIndex()).getCooldown()*20));
-				
-				final int finalCost = manaCost;
-				wand.subtractMana(finalCost);
-				e.getPlayer().getInventory().setItemInMainHand(wand.getAsItemStack());					
+        Wand wand = new Wand(held);
+        if (!wand.hasSpell(wand.getSpellIndex())) return;
 
-				return;
-			}
-		} 
-		else if (wand.getCurrentMana() < manaCost && CastConditions.isValidAction(e, wand.getSpell(wand.getSpellIndex()).getCastCondition()))
-		{
-			PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
-			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
-			return;
-		}
-		return;
+        Spell currentSpell = wand.getSpell(wand.getSpellIndex());
+
+        // Handle cycling — no cast involved at all
+        if (CastConditions.isValidAction(e, CastConditions.SHIFT_LEFT_CLICK_AIR))
+        {
+            if (lockedCycling.contains(p.getUniqueId())) return;
+            EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
+            CollectWandData.pageController.put(p.getUniqueId(), "removespell");
+            GuiHandler.open(p, new CollectWandData(p));
+            return;
+        }
+        if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
+        {
+            if (lockedCycling.contains(p.getUniqueId())) return;
+            if (wand.getNextSpell() == null) return;
+            wand.rotateSpells();
+            p.getInventory().setItemInMainHand(wand.getAsItemStack());
+            PrintUtils.PrintToActionBar(p, "&b&lEquipped Spell&r&f: " + wand.getSpell(wand.getSpellIndex()).getName());
+            EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NAUTILUS, SoundCategory.AMBIENT);
+            return;
+        }
+
+        if (!CastConditions.isValidAction(e, currentSpell.getCastCondition())) return; // Only valid cast conditions allowed.
+
+        Set<Spell> onCooldown = cooldownPlayers.get(p.getUniqueId());
+        if (onCooldown != null && onCooldown.contains(currentSpell))
+        {
+            PrintUtils.PrintToActionBar(p, "&cSpell on Cooldown!");
+            return;
+        }
+
+        PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        if (wand.getRarity().getRarity() < currentSpell.getRarity().getRarity() ||
+                data.getMagicProficiency() < wand.getRarity().getRarity())
+        {
+            PrintUtils.PrintToActionBar(p, "&cFizzle!");
+            return;
+        }
+
+        if (EntityEffects.hasEtherDisruption.contains(p.getUniqueId()))
+        {
+            PrintUtils.PrintToActionBar(p, "&cFizzle: Ether Disrupted!");
+            return;
+        }
+
+        int manaCost = currentSpell.getTotalManaCost();
+        if (wand.getCurrentMana() < manaCost)
+        {
+            PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
+            EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
+            return;
+        }
+
+        // All checks passed — now actually cast
+        int actualCost = currentSpell.Cast(e);
+
+        if (wand.getElementType() != null)
+        {
+            ElementType spellementType = ElementType.getFromSpellement(currentSpell.getElementType());
+            if (spellementType == wand.getElementType()) actualCost -= actualCost * .2;
+        }
+        
+        boolean overloaded = false;
+        long cooldown = (long) (overloaded ? Math.max(1200, currentSpell.getCooldown()*3*20) : (currentSpell.getCooldown() * 20));
+        if (actualCost > wand.getCurrentMana())
+        {
+        	PrintUtils.PrintToActionBar(p, "&b&oEther Overload&r&f! &eSpell &f&lCD &r&f-> &b&o"+(int)cooldown/20+" seconds");
+        	EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
+        	wand.subtractMana(wand.getCurrentMana());
+        }
+        else wand.subtractMana(actualCost);
+        
+        if (data.doXpNotification()) PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + currentSpell.getManacost() + " &b&o" + PrintUtils.printStatType(StatType.MAGIC));
+        if (data.doLevelUpSound()) EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
+        PlayerData.addXP(p, StatType.MAGIC, currentSpell.getManacost());
+        playCastSigil(p, currentSpell.getElementType());
+
+        cooldownPlayers.computeIfAbsent(p.getUniqueId(), k -> new HashSet<>()).add(currentSpell);
+        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+        {
+            Set<Spell> cd = cooldownPlayers.get(p.getUniqueId());
+            if (cd != null) cd.remove(currentSpell);
+        }, cooldown);
+
+        p.getInventory().setItemInMainHand(wand.getAsItemStack());
 	}
 	
 	private static void playCastSigil(Player player, SpellementType sType)

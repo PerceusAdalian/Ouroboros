@@ -36,12 +36,18 @@ public class Shroud extends Spell
 		OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 6, 0.5, Particle.DUST_PLUME, null);
 		EntityEffects.addShroud(p, 1, 45);
 		
-		RayCastUtils.getNearbyEntities(p, 30, r ->
+		if (!RayCastUtils.getNearbyEntities(p, 30, r ->
 		{
 			if (r == null || !(r instanceof Mob)) return;
 			if (((Mob) r).getTarget().equals(p)) ((Mob)r).setTarget(null);
-		});
+		})) return -1;
 		
+		return this.getManacost();
+	}
+
+	@Override
+	public int getTotalManaCost() 
+	{
 		return this.getManacost();
 	}
 

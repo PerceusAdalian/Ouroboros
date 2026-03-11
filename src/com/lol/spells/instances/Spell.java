@@ -39,6 +39,9 @@ public abstract class Spell
 	private boolean pvpCompatible;
 	private String[] spellDescription;
 	
+	public static final NamespacedKey LOLSPELL = new NamespacedKey(Ouroboros.instance, "lolspell");
+	public static final NamespacedKey LOLSPELLBOOK = new NamespacedKey(Ouroboros.instance, "lolspellbook");
+	
 	public Spell(String name, String internalName, Material icon, SpellType sType, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, 
 			boolean pvpCompatible, String...spellDescription)
 	{
@@ -164,9 +167,7 @@ public abstract class Spell
 	}
 	
 	public abstract int Cast(PlayerInteractEvent e);
-	
-	public static final NamespacedKey LOLSPELL = new NamespacedKey(Ouroboros.instance, "lolspell");
-	public static final NamespacedKey LOLSPELLBOOK = new NamespacedKey(Ouroboros.instance, "lolspellbook");
+	public abstract int getTotalManaCost();
 	
 	public ItemStack getAsItemStack(boolean toIcon)
 	{
@@ -271,4 +272,6 @@ public abstract class Spell
 
 		return stack;
 	}
+	
+	
 }

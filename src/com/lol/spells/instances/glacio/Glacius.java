@@ -50,5 +50,11 @@ public class Glacius extends Spell
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->arrow.remove(), 40);
 		return this.getManacost();
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 
 }

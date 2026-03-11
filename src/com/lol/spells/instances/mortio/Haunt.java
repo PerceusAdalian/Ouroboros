@@ -95,6 +95,12 @@ public class Haunt extends Spell
 		return this.getManacost();
 	}
 	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
+	
 	public Player getRecentPlayerKiller(Player victim) 
 	{
 	    // Check if death was recent (e.g., within last 10 seconds)

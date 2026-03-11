@@ -134,6 +134,12 @@ public class Pneuma extends Spell
 		return -1;
 	}
 	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
+	
 	public static void registerSpellHelper(JavaPlugin plugin)
 	{
 		Bukkit.getPluginManager().registerEvents(new Listener() 

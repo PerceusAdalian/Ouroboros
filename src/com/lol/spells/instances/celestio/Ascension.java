@@ -97,6 +97,12 @@ public class Ascension extends Spell
 
 	    return -1;
 	}
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return 50;
+	}
 
 	private boolean castAspectOfTheSeraphim(Player p)
 	{

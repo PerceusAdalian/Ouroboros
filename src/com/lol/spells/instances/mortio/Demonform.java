@@ -33,5 +33,10 @@ public class Demonform extends Spell
 		EntityEffects.addNightShift(p, 1, 30);
 		return this.getManacost();
 	}
-
+	
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 }

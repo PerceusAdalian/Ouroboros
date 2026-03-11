@@ -55,5 +55,11 @@ public class RemoveEntity extends Spell
 		})) return -1;
 		return 0;
 	}
+
+	@Override
+	public int getTotalManaCost() 
+	{
+		return this.getManacost();
+	}
 	
 }
