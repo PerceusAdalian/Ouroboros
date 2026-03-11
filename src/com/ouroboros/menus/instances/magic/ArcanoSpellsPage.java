@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.arcano.ArcaneBolt;
+import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.Surveil;
 import com.ouroboros.menus.AbstractOBSGui;
@@ -33,11 +34,11 @@ public class ArcanoSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new Surveil(), 11, this);
 		
 		// 3
-		
+		GuiButton.placeSpellButton(player, new Freecast(), 12, this);
 		// 4
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Mute(), 12, this);
+		GuiButton.placeSpellButton(player, new Mute(), 13, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

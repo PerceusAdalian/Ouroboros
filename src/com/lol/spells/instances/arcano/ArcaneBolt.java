@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,12 +33,16 @@ public class ArcaneBolt extends Spell
 	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getEntity(p, 25);
-		if (target == null || !(target instanceof LivingEntity)) return -1;
-		MobData.damageUnnaturally(p, target, 4, true, ElementType.ARCANO);
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
-		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		EntityEffects.addEtherOverload((LivingEntity) target, 20);
+		
+		if (!RayCastUtils.getEntity(p, 25, target->
+		{
+			if (target == null || !(target instanceof LivingEntity)) return;
+			MobData.damageUnnaturally(p, target, 4, true, ElementType.ARCANO);
+			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+			EntityEffects.addEtherOverload((LivingEntity) target, 20);			
+		})) return -1;
+		
 		return this.getManacost();
 	}
 	

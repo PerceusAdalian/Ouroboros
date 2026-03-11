@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
+import com.lol.spells.instances.arcano.Freecast;
 import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
@@ -45,6 +46,7 @@ public class SpellCastHandler implements Listener
 	
 	private static Map<UUID, Set<Spell>> cooldownPlayers = new HashMap<>();
 	public static Set<UUID> lockedCycling = new HashSet<>();
+	public static Set<UUID> recentlyOverloaded = new HashSet<>();
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e)
@@ -137,6 +139,12 @@ public class SpellCastHandler implements Listener
         }
 
         int manaCost = currentSpell.getTotalManaCost();
+        boolean usingFreecast = Freecast.hasFreecast.contains(p.getUniqueId()) && !(currentSpell instanceof Freecast);
+        if (usingFreecast)
+        {
+            manaCost = 0;
+            Freecast.hasFreecast.remove(p.getUniqueId());
+        }
         if (wand.getCurrentMana() < manaCost)
         {
             PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
@@ -144,20 +152,43 @@ public class SpellCastHandler implements Listener
             return;
         }
 
-        // All checks passed — now actually cast
         int actualCost = currentSpell.Cast(e);
+        if (actualCost < 0) return;
+        if (usingFreecast) actualCost = 0;
 
+        // All checks passed — now actually cast
+        
         if (wand.getElementType() != null)
         {
             ElementType spellementType = ElementType.getFromSpellement(currentSpell.getElementType());
             if (spellementType == wand.getElementType()) actualCost -= actualCost * .2;
+            if (actualCost < 0) actualCost = 0;
         }
         
-        boolean overloaded = false;
-        long cooldown = (long) (overloaded ? Math.max(1200, currentSpell.getCooldown()*3*20) : (currentSpell.getCooldown() * 20));
+        boolean overloaded = actualCost > wand.getCurrentMana();
+        long cooldown = (long)(overloaded ? Math.max(1200, currentSpell.getCooldown() * 3 * 20) : (currentSpell.getCooldown() * 20));
+        /**
+         * Final check for how much mana the player actually spent casting a spell.
+         * New: if the player overloads, add them to a registry in which case, if they overload again (casts 2 free spells
+         * within the time frame of 2 x cooldown (either base within 2 minutes, or the base cooldown x 3 seconds),
+         * they'll gain EtherDisruption, in which case, they can't cast spells for 5 minutes.
+         * This ensures fairness, while allowing for some interesting combat, and forgiveness.
+         */
         if (actualCost > wand.getCurrentMana())
         {
-        	PrintUtils.PrintToActionBar(p, "&b&oEther Overload&r&f! &eSpell &f&lCD &r&f-> &b&o"+(int)cooldown/20+" seconds");
+        	if (recentlyOverloaded.contains(p.getUniqueId()))
+        	{
+        		EntityEffects.hasEtherDisruption.add(p.getUniqueId());
+        		recentlyOverloaded.remove(p.getUniqueId());
+        		PrintUtils.PrintToActionBar(p, "&b&oOverload&r&f! Ether Disruption added for 5 minutes..");
+        		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> EntityEffects.hasEtherDisruption.remove(p.getUniqueId()), 6000);
+        	}
+        	else 
+        	{
+        		PrintUtils.PrintToActionBar(p, "&b&oEther Overload&r&f! &eSpell &f&lCD &r&f-> &b&o"+(int)cooldown/20+" seconds");
+        		recentlyOverloaded.add(p.getUniqueId());
+        		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->recentlyOverloaded.remove(p.getUniqueId()), cooldown * 2);
+        	}
         	EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
         	wand.subtractMana(wand.getCurrentMana());
         }

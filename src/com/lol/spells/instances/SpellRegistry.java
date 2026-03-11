@@ -17,6 +17,7 @@ import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
 import com.lol.spells.instances.arcano.ArcaneBolt;
+import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.Surveil;
 import com.lol.spells.instances.celestio.Ascension;
@@ -104,6 +105,7 @@ public class SpellRegistry
         		Mute.class,
         		ArcaneBolt.class,
         		Surveil.class,
+        		Freecast.class,
         		
         		//Admin Spells
         		RemoveEntity.class
