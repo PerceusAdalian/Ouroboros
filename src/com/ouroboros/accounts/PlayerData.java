@@ -23,6 +23,7 @@ import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.AbilityType;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
@@ -39,6 +40,7 @@ public class PlayerData
 	public static final int baseXP = 225, fundsIntegerMax = 99999999;
 	public static final int MAXMAGIC = 7;
 	public static final int maxLuminite = 9999;
+	public static final int maxEssence = 9999;
 	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -117,6 +119,12 @@ public class PlayerData
 	    	setGate(GateCodes.OVERWORLD, Bukkit.getWorld("world").getSpawnLocation());
 	    	setGate(GateCodes.NETHER, Bukkit.getWorld("world_nether").getSpawnLocation());
 	    	setGate(GateCodes.END, Bukkit.getWorld("world_the_end").getSpawnLocation());
+	    	
+	    	for (ElementType eType : ElementType.values())
+	    	{
+	    		if (!ElementType.elemental.contains(eType)) continue;
+	    		setEssence(eType, 0);
+	    	}
 	    	
 	    	setActiveCombatAbility(null);
 	    	
@@ -243,7 +251,6 @@ public class PlayerData
 	    if (utilities.remove(ability.getInternalName())) 
 	    	config.set(path, utilities);
 	}
-
 
 	public static void addXP(Player p, StatType sType, int value) 
 	{
@@ -477,6 +484,56 @@ public class PlayerData
 		if (data.getLuminite() < 0) data.setLuminite(0);
 		data.save();
 		PlayerHud.updateHud(p);
+	}
+	
+	public int getEssence(ElementType elementType)
+	{
+		if (!ElementType.elemental.contains(elementType)) 
+		{
+			PrintUtils.OBSConsoleError("Unexpected ElementType: " + elementType.getType());
+			return 0;
+		}
+		
+		String pathAlpha = "."+elementType.getKey().toLowerCase();
+		return config.getInt("essence"+pathAlpha);
+	}
+	
+	public void setEssence(ElementType elementType, int value)
+	{
+		if (!ElementType.elemental.contains(elementType)) 
+		{
+			PrintUtils.OBSConsoleError("Unexpected ElementType: " + elementType.getType());
+			return;
+		}
+		
+		String pathAlpha = "."+elementType.getKey().toLowerCase();
+		config.set("essence"+pathAlpha, value);
+	}
+	
+	public static void addEssence(Player p, ElementType elementType, int value)
+	{
+		if (!ElementType.elemental.contains(elementType)) 
+		{
+			PrintUtils.OBSConsoleError("Unexpected ElementType: " + elementType.getType());
+			return;
+		}
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		data.setEssence(elementType, data.getEssence(elementType)+value);
+		if (data.getEssence(elementType) > maxEssence) data.setEssence(elementType, maxEssence);
+		data.save();
+	}
+	
+	public static void subtractEssence(Player p, ElementType elementType, int value)
+	{
+		if (!ElementType.elemental.contains(elementType)) 
+		{
+			PrintUtils.OBSConsoleError("Unexpected ElementType: " + elementType.getType());
+			return;
+		}
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		data.setEssence(elementType, data.getEssence(elementType)-value);
+		if (data.getEssence(elementType) < 0) data.setEssence(elementType, 0);
+		data.save();
 	}
 	
 	public void setMagicProficiency(int value)

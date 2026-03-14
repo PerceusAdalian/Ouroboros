@@ -34,8 +34,9 @@ public class CodexElementsPage extends AbstractOBSGui
         "&r&d&lAero&r&f: The &dAir&f or &dElectricity&f element. &b&oSignature Effect&r&f: &d&o&nStatic&f",
         "&r&f&lCelestio&r&f: The &eLight&f or &eLife&f element. &b&oSignature Effect&r&f: &e&o&nExposed&f",
         "&r&4&lMortio&r&f: The &4Dark&f or &4Death&f element. &b&oSignature Effect&r&f: &4&o&nDoom&f",
-        "&r&3&lCosmo&r&f: The &3Space&f or &3Cosmic&f element. &b&oSignature Effect&r&f: &3&o&nVoided&f","",
-        "&r&2&lHeresio&r&f: The &2Twilight&f or &2Black Magic&f element. &b&oSignature Effect&r&f: &2&oPenance&f","",
+        "&r&3&lCosmo&r&f: The &3Space&f or &3Cosmic&f element. &b&oSignature Effect&r&f: &3&o&nVoided&f",
+        "&r&2&lHeresio&r&f: The &2Twilight&f or &2Black Magic&f element. &b&oSignature Effect&r&f: &2&oPenance&f",
+        "&r&b&oArcano&r&f: The neutral magic type. &b&oSignature Effect&r&f: &b&o&nChroma&f","",
         "&r&fBelow are further details on each category. &e- The Curator").place(this, 3, e->
         {
 	        Player p = (Player) e.getWhoClicked();
@@ -244,7 +245,8 @@ public class CodexElementsPage extends AbstractOBSGui
                 "&r&fand typically involve area-of-effect or status-based damage with occasional pure-damage.","",
                 "&r&aToxin: &r&fPoisons &7(e.g. &eAbilities&f/Spiders&7)&f: Permanently poison's applicant.",
                 "&r&cCombust&r&f: Explosions &7(e.g. &dTNT&7)",
-                "&r&eBlast&r&f: &7{&ePure Dmg Type&7} &fExplosions &7(e.g. &eAbilities&7)")
+                "&r&eBlast&r&f: &7{&ePure Dmg Type&7} &fExplosions &7(e.g. &eAbilities&7)",
+                "&r&b&oArcano&r&f: Neutral &bMagic&f sources. Some spells utilize this \"element\".")
         .place(this, 38, e->
         {
         	Player p = (Player) e.getWhoClicked();

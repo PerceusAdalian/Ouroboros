@@ -1,7 +1,6 @@
 package com.ouroboros.mobs.events;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -16,10 +15,21 @@ import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.EntityCategory;
+import com.ouroboros.enums.Rarity;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
+import com.ouroboros.objects.instances.AeroEssence;
+import com.ouroboros.objects.instances.CelestioEssence;
+import com.ouroboros.objects.instances.CosmoEssence;
+import com.ouroboros.objects.instances.GeoEssence;
+import com.ouroboros.objects.instances.GlacioEssence;
+import com.ouroboros.objects.instances.HeresioEssence;
+import com.ouroboros.objects.instances.InfernoEssence;
+import com.ouroboros.objects.instances.MortioEssence;
 import com.ouroboros.objects.instances.TearOfLumina;
+import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.EntityCategoryToSpellement;
 import com.ouroboros.utils.PrintUtils;
 
@@ -37,17 +47,16 @@ public class MobDeathEvent implements Listener
 			{
 			    LivingEntity le = e.getEntity();
 			    if (!le.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY)) return;
-			    
 			    le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(1);
 			    
 			    // Handle drop table
-			    Random r = new Random();
-			    final int maxDrops = 2;
+			    final int maxDrops = 3;
+			    final int maxSpellDrops = 1;
+			    final int maxEssenceDrops = 4;
 			    int currentDrops = 0;
-			    final double dropChance = 0.075d;
-			    final double spellDropChance = 0.05d;
+			    int currentSpellDrops = 0;
 			    
-			    if (r.nextDouble() < 0.4499d)
+			    if (Chance.of(50))
 			    {
 			        ItemStack tearStack = new TearOfLumina().toItemStack();
 			        e.getDrops().add(tearStack);
@@ -58,7 +67,7 @@ public class MobDeathEvent implements Listener
 			    {
 			        if (!item.canDrop()) continue;
 			        if (currentDrops >= maxDrops) break;
-			        if (r.nextDouble() >= dropChance) continue;
+			        if (!Chance.of(65)) continue;
 			        if (objectDropsRegistry.getOrDefault(item, false)) continue;
 			        
 			        e.getDrops().add(item.toItemStack());
@@ -66,21 +75,44 @@ public class MobDeathEvent implements Listener
 			        currentDrops++;
 			    }
 			    
-			    // Spell drops
+			    // Spell & Essence drops
 			    EntityCategory mobCategory = EntityCategoryToSpellement.getMobCategory(e.getEntityType());
+			    MobData data = MobData.getMob(le.getUniqueId());
 			    if (mobCategory != null) // Moved null check outside loop
 			    {
 			        for (Spell spell : SpellRegistry.spellRegistry.values())
 			        {
-			            if (currentDrops >= maxDrops) break;
-			            if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
-			            if (r.nextDouble() >= spellDropChance) continue;
+			        	if (currentSpellDrops >= maxSpellDrops) break;
+			        	if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
+			        	if (!Chance.of(50)) continue;
+			            if (spell.getRarity().getRarity() > (data == null ? 0 : Rarity.getRarityForMobLevel(data.getLevel()))) continue;
 			            if (spellDropsRegistry.getOrDefault(spell, false)) continue;
 			            
 			            e.getDrops().add(spell.getAsItemStack(false));
 			            spellDropsRegistry.put(spell, true);
-			            currentDrops++;
+			            currentSpellDrops++;
 			        }
+			        
+			        for (int i = 0; i <= maxEssenceDrops; i++) 
+			        {
+			            if (Chance.of(6.5)) 
+			            {
+			                AbstractObsObject essence = switch (mobCategory) 
+			                {
+			                    case CELESTIO_MOBS -> new CelestioEssence();
+			                    case MORTIO_MOBS   -> new MortioEssence();
+			                    case INFERNO_MOBS  -> new InfernoEssence();
+			                    case GLACIO_MOBS   -> new GlacioEssence();
+			                    case AERO_MOBS     -> new AeroEssence();
+			                    case GEO_MOBS      -> new GeoEssence();
+			                    case COSMO_MOBS    -> new CosmoEssence();
+			                    case HERESIO_MOBS  -> new HeresioEssence();
+			                    default            -> null;
+			                };
+			                if (essence != null) e.getDrops().add(essence.toItemStack());
+			            }
+			        }
+			        
 			    }
 			    
 			    // Clear recently dropped maps after 30 seconds
@@ -94,6 +126,8 @@ public class MobDeathEvent implements Listener
 			        String mobName = le.getCustomName() != null ? le.getCustomName() : le.getType().name();
 			        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 Mob: " + mobName + " || &c&oDied Successfully");
 			    }
+			    
+			    if(data != null) data.deleteFile();
 			}
 		},plugin);
 	}

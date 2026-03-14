@@ -45,25 +45,13 @@ public abstract class AbstractObsObject
 	{
 		return internalName;
 	}
-	public void setInternalName(String internalName) 
-	{
-		this.internalName = internalName;
-	}
 	public String[] getItemDescription() 
 	{
 		return itemDescription;
 	}
-	public void setItemDescription(String[] itemDescription) 
-	{
-		this.itemDescription = itemDescription;
-	}
 	public Material getMaterial() 
 	{
 		return material;
-	}
-	public void setMaterial(Material material) 
-	{
-		this.material = material;
 	}
 	public boolean isEnchanted() 
 	{
@@ -77,7 +65,6 @@ public abstract class AbstractObsObject
 	{
 		return this;
 	}
-	
 	public String getInternalNameAsID() 
 	{
 		int internalNameID = 0;

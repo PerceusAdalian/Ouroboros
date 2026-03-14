@@ -59,6 +59,11 @@ public class Ouroboros extends JavaPlugin
 		MobDeathEvent.register(instance);
 		MobDamageEvent.register(instance);
 		
+		MobManager.clearLegacyMobs();
+		MobManager.respawnAll();
+		MobNameplate.registerTaskHandler(instance);
+		MobManager.convertLegacyMobsTask(instance);
+		
 		GuiHandler.registerEvent(instance);
 		ExpHandler.register(instance);
 		
@@ -81,11 +86,6 @@ public class Ouroboros extends JavaPlugin
 		ArrestoMomentum.registerSpellHelper(instance);
 		AssertOrder.registerSpellHelper(instance);
 		Pneuma.registerSpellHelper(instance);
-		
-		MobManager.clearLegacyMobs();
-		MobManager.respawnAll();
-		MobNameplate.registerTaskHandler(instance);
-		MobManager.convertLegacyMobsTask(instance);
 		
 		MateriaCastHandler.register(instance);
 		Catalysts.load();

@@ -124,7 +124,6 @@ public class Materia
 
 		meta.setDisplayName(PrintUtils.ColorParser(name + " " + PrintUtils.getRarityAsNumeralValue(rarity)));
 		meta.setEnchantmentGlintOverride(state == MateriaState.NORMAL);
-		meta.setUnbreakable(true);
 		meta.setLore(buildLore(state));
 		applyPersistentData(meta, state);
 		stack.setItemMeta(meta);
@@ -190,7 +189,6 @@ public class Materia
 
 		meta.setDisplayName(PrintUtils.ColorParser("&r&fUnrefined " + type.getName().substring(0).toUpperCase()));
 		meta.setEnchantmentGlintOverride(false);
-		meta.setUnbreakable(true);
 		meta.setLore(List.of(
 				PrintUtils.assignObfuscatedRarity(),
 				"",

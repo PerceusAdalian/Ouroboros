@@ -4,6 +4,9 @@ import java.util.Random;
 
 public class Chance 
 {
+	/**
+	 * @param percentValue
+	 */
 	public static boolean of(double percentValue)
 	{
 		Random random = new Random();

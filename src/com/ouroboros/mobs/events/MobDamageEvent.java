@@ -168,7 +168,6 @@ public class MobDamageEvent implements Listener
 					LivingEntity le = (LivingEntity) target;
 					Bukkit.getScheduler().runTaskLater(plugin, () -> le.setHealth(0), 5L);
 					MobNameplate.remove(le);
-					data.deleteFile();
 					return;
 				}
 				
