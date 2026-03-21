@@ -2,8 +2,9 @@ package com.eol.enums;
 
 public enum MateriaState 
 {
-	NORMAL("&b&oRefined&r&f"),
-	UNREFINED("&f&oUnrefined&r&f"),
+	NORMAL("&bRefined&r&f"),
+	UNREFINED("&fUnrefined&r&f"),
+	ELEMENT_CORE("&d&oElement Core&r&f"),
 	CATALYST("&e&lCatalyst&r&f");
 	
 	private final String materiaType;

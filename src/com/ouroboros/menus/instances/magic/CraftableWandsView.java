@@ -107,7 +107,7 @@ public class CraftableWandsView extends AbstractOBSGui
 				EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
 				PrintUtils.OBSFormatDebug(p, wand.getName()+ " Crafted Successfully!");
 				p.getInventory().addItem(stack);
-				GuiHandler.close(p);
+				GuiHandler.changeMenu(p, new WandMainPage(p));
 				return;
 			}
 			PrintUtils.OBSFormatError(p, "Insufficient Luminite!");

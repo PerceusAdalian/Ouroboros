@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -20,8 +21,9 @@ public class CosmoEssence extends AbstractObsObject
 
 	public CosmoEssence() 
 	{
-		super("&3&lCosmo&r&f Essence", "cosmo_essence", Material.ECHO_SHARD, true, false, 
-				"&r&fA simple, refracted essence of &3Space and Time&f.","",
+		super("&3&lCosmo&r&f Essence", "cosmo_essence", Material.DRAGON_BREATH, true, false, 
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fAn impossible asbtraction of &3Space and Time&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &3&lCosmo&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");

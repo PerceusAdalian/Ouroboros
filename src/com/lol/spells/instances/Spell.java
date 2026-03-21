@@ -211,6 +211,7 @@ public abstract class Spell
 		    bookMeta.setAuthor(PrintUtils.assignAuthor(getElementType()));
 		    bookMeta.setGeneration(Generation.TATTERED);
 		    bookMeta.setTitle(PrintUtils.ColorParser("Legends of Lumina: "+name));
+		    bookMeta.setEnchantmentGlintOverride(false);
 		    
 		    // PAGE 1: Title Page
 		    StringBuilder page1 = new StringBuilder();

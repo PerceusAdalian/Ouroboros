@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -21,7 +22,8 @@ public class InfernoEssence extends AbstractObsObject
 	public InfernoEssence() 
 	{
 		super("&c&lInferno&r&f Essence", "inferno_essence", Material.BLAZE_POWDER, true, false, 
-				"&r&fA simple, refracted essence of &cFire&f. Embers occasionally spark off.","",
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fA simple wisp of &cFire&f essence.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &c&lInferno&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");

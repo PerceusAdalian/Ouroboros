@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -21,7 +22,8 @@ public class CelestioEssence extends AbstractObsObject
 	public CelestioEssence() 
 	{
 		super("&e&lCelestio&r&f Essence", "celestio_essence", Material.QUARTZ, true, false, 
-				"&r&fA simple, refracted essence of &eLight&f. Calming hymns echo within.","",
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fA refracted crystal of &eLight&f with calming hymns echo within.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &e&lCelestio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");

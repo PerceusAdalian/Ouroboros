@@ -1,5 +1,7 @@
 package com.eol.enums;
 
+import com.ouroboros.utils.PrintUtils;
+
 public enum MateriaComponent 
 {
 	CATALYST("catalyst", 'e'),
@@ -29,5 +31,10 @@ public enum MateriaComponent
 	public char getColorCode()
 	{
 		return color;
+	}
+
+	public String getLabel()
+	{
+		return PrintUtils.ColorParser("&"+color+PrintUtils.formatEnumName(materiaComponent));
 	}
 }

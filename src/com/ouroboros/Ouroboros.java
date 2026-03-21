@@ -92,6 +92,7 @@ public class Ouroboros extends JavaPlugin
 		Bases.load();
 		Bindings.load();
 		ElementCores.load();
+		Materia.convertItemsTask(instance);
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());
@@ -115,8 +116,9 @@ public class Ouroboros extends JavaPlugin
 /* Ωuroboros // Echoes of Lumina // Legends of Luminus
  * Concept: Σ.C.H.O. (Engram Conversion to Harmonic Object) Protocol
  * Project Notes:
-  * + WHAT TO DO NEXT:
- * - Make items drop in rarity respective to the mob's level.
+ * + WHAT TO DO NEXT:
+ * - Materia has been rewritten, so hook up refinement, and core crafting in main menu.
+ * 
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.

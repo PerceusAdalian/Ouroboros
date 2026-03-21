@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -21,7 +22,8 @@ public class HeresioEssence  extends AbstractObsObject
 	public HeresioEssence() 
 	{
 		super("&2&lHeresio&r&f Essence", "heresio_essence", Material.ENDER_EYE, true, false, 
-				"&r&fA simple, refracted essence of &2Knowledge&f.. &f&oThis feels &2&owrong&r&f&o..","",
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fAn eye of pure, unyielding &2Knowledge&f glares at you expectantly..","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &2&lHeresio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");

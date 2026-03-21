@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -21,7 +22,8 @@ public class AeroEssence extends AbstractObsObject
 	public AeroEssence() 
 	{
 		super("&d&lAero&r&f Essence", "aero_essence", Material.WIND_CHARGE, true, false, 
-				"&r&fA simple, refracted essence of &dAir&f. You can barely grasp it.","",
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fA simple, refracted essence of &dAir&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &d&lAero&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");

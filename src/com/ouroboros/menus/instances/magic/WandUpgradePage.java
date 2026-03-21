@@ -1,5 +1,7 @@
 package com.ouroboros.menus.instances.magic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -39,6 +41,7 @@ public class WandUpgradePage extends AbstractOBSGui
 			case 4 -> upgradeTo = Wand.get("wand_5");
 			case 5 -> upgradeTo = Wand.get("luminas_wand");
 			case 6 -> upgradeTo = Wand.get("twilight_catalyst");
+			case 7 -> upgradeTo = Wand.get("twilight_catalyst");
 			default -> throw new IllegalArgumentException("Unexpected value: " + rarity.getRarity());
 		};
 		
@@ -46,12 +49,18 @@ public class WandUpgradePage extends AbstractOBSGui
 		int manaCostFactor = (int) Math.pow(currentWand.getMaxMana() / currentWand.getAbsoluteMaxMana(), 2);
 		int luminiteCostManaUpgrade = (int) Math.ceil(baseCost + (100 - baseCost) * manaCostFactor);
 		
+		List<String> loreAltMana = new ArrayList<>();
+		loreAltMana.add("&r&fYou can't upgrade mana capacity further!");
+		
+		List<String> loreMana = new ArrayList<>();
+		loreMana.add("&r&fClick to increase your current wand's mana capacity by 100 points.");
+		loreMana.add("&r&fPlease note that your wand cannot exceed a reserve of &n5000 &9Mana&r&f.");
+		loreMana.add("&r&fYour wand's current mana capacity: &9"+currentWand.getMaxMana()+"&7/ 5000");
+		loreMana.add("&e&lLuminite Cost&r&f: "+luminiteCostManaUpgrade+"&b۞&7/"+PlayerData.getPlayer(player.getUniqueId()).getLuminite()+"۞");
+		
 		GuiButton.button(currentWand.getMaxMana() == currentWand.getAbsoluteMaxMana() ? Material.BARRIER : Material.LAPIS_LAZULI)
 		.setName(currentWand.getMaxMana() == currentWand.getAbsoluteMaxMana() ? "&cUnable to Upgrade Mana" : "&eIncrease &9&lMana Capacity")
-		.setLore(currentWand.getMaxMana() == currentWand.getAbsoluteMaxMana() ? null : "&r&fClick to increase your current wand's mana capacity by 100 points.",
-				 "&r&fPlease note that your wand cannot exceed a reserve of &n5000 &9Mana&r&f.",
-				 "&r&fYour wand's current mana capacity: &9"+currentWand.getMaxMana()+"&7/ 5000",
-				 "&e&lLuminite Cost&r&f: "+luminiteCostManaUpgrade+"&b۞&7/"+PlayerData.getPlayer(player.getUniqueId()).getLuminite()+"۞")
+		.setLore(currentWand.getMaxMana() == currentWand.getAbsoluteMaxMana() ? loreAltMana : loreMana)
 		.place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
@@ -89,15 +98,21 @@ public class WandUpgradePage extends AbstractOBSGui
 			return;
 		});
 		
+		List<String> loreTier = new ArrayList<>();
+		loreTier.add("&r&fClick to advance your wand to the next rarity and casting tier.");
+		loreTier.add("&r&fThis process is &cirreversible&f: all spells are removed,");
+		loreTier.add("&r&fand spell slots and mana reset to the new tier’s default.");
+		loreTier.add("&r&fUpon &eResonance Liberation&f, new spells become available.");
+		loreTier.add("&r&fUnlocking a tier for the first time grants access to");
+		loreTier.add("&r&f&eEchoic Recollection&f, allowing you to choose a new spell of that rarity.");
+		loreTier.add("&e&lLuminite Cost&r&f: 100&b۞&7/"+currentLuminite+"۞");
+		
+		List<String> loreTierAlt = new ArrayList<>();
+		loreTierAlt.add("&r&fYou can't improve wand tier past seven!");
+		
 		GuiButton.button(currentWand.getRarity() == Rarity.SEVEN ? Material.BARRIER : Material.END_CRYSTAL)
 		.setName(currentWand.getRarity() == Rarity.SEVEN ? "&cUnable to Upgrade Wand Tier" : "&ePerform Echoic Liberation")
-		.setLore(currentWand.getRarity() == Rarity.SEVEN ? null : "&r&fClick to advance your wand to the next rarity and casting tier.",
-				"&r&fThis process is &cirreversible&f: all spells are removed,",
-				"&r&fand spell slots and mana reset to the new tier’s default.",
-				"&r&fUpon &eResonance Liberation&f, new spells become available.",
-				"&r&fUnlocking a tier for the first time grants access to",
-				"&r&f&eEchoic Recollection&f, allowing you to choose a new spell of that rarity.",
-				"&e&lLuminite Cost&r&f: 100&b۞&7/"+currentLuminite+"۞")
+		.setLore(currentWand.getRarity() == Rarity.SEVEN ? loreTierAlt : loreTier)
 		.place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
@@ -142,18 +157,20 @@ public class WandUpgradePage extends AbstractOBSGui
 		});
 		
 		boolean fullSlots = currentWand.getCurrentMaxSpellSlots() == currentWand.getAbsoluteMaxSpellSlots();
-		/**
-		 * TODO: make this work.. it doesn't.. also, try and figure out a means to get the wand to render its lore properly when you craft it and while empty..
-		 * 		-- Create a means to remove spells from a wand
-		 *  	-- Fix the cooldown to accept spell swapping even while a spell has the wand on cooldown..
-		 */
+		
+		List<String> loreSlots = new ArrayList<>();
+		loreSlots.add("&r&fClick to upgrade your current maximum spell slots for this wand.");
+		loreSlots.add("&r&fPlease note this action removes all spells equipped,");
+		loreSlots.add("&r&fand cannot be undone. All wands may have a max of 10 slots.");
+		loreSlots.add("&r&fYour wand's current max spell slots: &b&l"+currentWand.getCurrentMaxSpellSlots()+"&7/10");
+		loreSlots.add("&e&lLuminite Cost&r&f: 25&b۞&7/"+currentLuminite+"۞");
+		
+		List<String> loreSlotsAlt = new ArrayList<>();
+		loreSlotsAlt.add("You can't increase your slots on this wand any further!");
+		
 		GuiButton.button(fullSlots ? Material.BARRIER : Material.HEART_OF_THE_SEA)
 		.setName(fullSlots ? "&cUnable to Upgrade Spell Slots" : "&eIncrease &b&lSpell Slot&r&f Capacity")
-		.setLore(fullSlots ? null : "&r&fClick to upgrade your current maximum spell slots for this wand.",
-				"&r&fPlease note this action removes all spells equipped,",
-				"&r&fand cannot be undone. All wands may have a max of 10 slots.",
-				"&r&fYour wand's current max spell slots: &b&l"+currentWand.getCurrentMaxSpellSlots()+"&7/10",
-				"&e&lLuminite Cost&r&f: 25&b۞&7/"+currentLuminite+"۞")
+		.setLore(fullSlots ? loreSlotsAlt : loreSlots)
 		.place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
@@ -177,7 +194,7 @@ public class WandUpgradePage extends AbstractOBSGui
 			int currentSpellSlots = currentWand.getCurrentMaxSpellSlots();
 			currentWand.setNewMaxSpellSlots(currentSpellSlots + 1);
 			PrintUtils.OBSFormatPrint(p, "Upgrade Success! Spell Slots have been upgraded: &7"+currentSpellSlots+" &e&l->&r&b&l "+currentWand.getCurrentMaxSpellSlots()+"&r&f!");
-		    EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
+		    EntityEffects.playSound(p, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER);
 		    p.getInventory().addItem(currentWand.getAsItemStack());
 		    CollectWandData.wandCollector.remove(p.getUniqueId());
 		    CollectWandData.pageController.remove(p.getUniqueId());

@@ -44,12 +44,7 @@ public class MateriaCastHandler implements Listener
         if (pdc.has(Materia.materiaKey) && pdc.has(Materia.componentKey)) 
         {
             String component = pdc.get(Materia.componentKey, PersistentDataType.STRING);
-            if (component == null || !component.equals(MateriaComponent.CATALYST.getKey())) 
-            {
-            	PrintUtils.OBSFormatDebug(p, "Action Logged: "+e.getAction(), "isValid: "+validInteractMethod);
-            	PrintUtils.OBSFormatDebug(p, (component == null) ? "NULL" : "Component Isn't Null..");
-            	return;
-            }
+            if (component == null || !component.equals(MateriaComponent.CATALYST.getKey())) return;
             
             if (validInteractMethod)
             {

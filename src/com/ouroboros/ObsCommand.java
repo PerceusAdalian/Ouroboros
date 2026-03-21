@@ -29,6 +29,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
+import com.eol.enums.MateriaType;
 import com.eol.materia.instances.Materia;
 import com.lol.enums.SpellType;
 import com.lol.spells.instances.Spell;
@@ -364,6 +365,27 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("materia"))
 			{
+				// component sub-command: /obs generate materia component <refined|unrefined> <type/name>
+				if (args[2].equals("component"))
+				{
+					if (args.length == 5 && args[3].equals("unrefined") && MateriaType.fromString(args[4]) != null)
+					{
+						MateriaType type = MateriaType.fromString(args[4]);
+						ItemStack stack = Materia.generateUnrefinedMateria(type);
+						p.getInventory().addItem(stack);
+						return true;
+					}
+
+					if (args.length == 5 && args[3].equals("refined") && Materia.materia_registry.containsKey(args[4]))
+					{
+						Materia materia = Materia.materia_registry.get(args[4]);
+						ItemStack stack = materia.getAsItemStack();
+						p.getInventory().addItem(stack);
+						return true;
+					}
+				}
+
+				// catalyst: /obs generate materia catalyst <materiaName>
 				if (args[2].equals("catalyst"))
 				{
 					if (Materia.materia_registry.containsKey(args[3]) && args.length == 4)
@@ -374,20 +396,14 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						return true;
 					}
 				}
-				
-				if (args[2].equals("component"))
-				{					
-					if (Materia.materia_registry.containsKey(args[4]) && args.length == 5)
-					{
-						MateriaState state = MateriaState.fromString(args[3]);
-						if (state == null || state.equals(MateriaState.CATALYST))
-						{
-							PrintUtils.OBSFormatError(p, "Invalid input MateriaState: "+args[3]);
-							return true;
-						}
 
-						Materia materia = Materia.materia_registry.get(args[4]);
-						ItemStack stack = materia.getAsItemStack(state);
+				// element_core: /obs generate materia element_core <core_name>
+				if (args[2].equals("element_core"))
+				{
+					if (args.length == 4 && Materia.materia_registry.containsKey(args[3]))
+					{
+						Materia materia = Materia.materia_registry.get(args[3]);
+						ItemStack stack = materia.getAsItemStack(MateriaState.ELEMENT_CORE);
 						p.getInventory().addItem(stack);
 						return true;
 					}
@@ -751,7 +767,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "object" -> isOp ? new ArrayList<>(ObjectRegistry.itemRegistry.keySet()) : List.of();
 					case "spell" -> isOp ? new ArrayList<>(SpellRegistry.spellRegistry.keySet()) : List.of();
 					case "wand" -> isOp ? new ArrayList<>(Wand.wand_registry.keySet()) : List.of();
-					case "materia" -> isOp ? List.of("catalyst", "component") : List.of();
+					case "materia" -> isOp ? List.of("catalyst", "element_core", "component") : List.of();
 					case "set", "reset", "addXp" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
 					case "add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney" ->
@@ -773,7 +789,11 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 							.filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
 							.map(Materia::getInternalName)
 							.collect(Collectors.toCollection(ArrayList::new));
-						case "component" -> List.of("normal", "unrefined");
+						case "component" -> List.of("refined", "unrefined");
+						case "element_core" -> Materia.materia_registry.values().stream()
+						.filter(m -> m.getMateriaComponent() == MateriaComponent.ELEMENT_CORE)
+						.map(Materia::getInternalName)
+						.collect(Collectors.toCollection(ArrayList::new));
 						default -> List.of();
 					} : List.of();
 					case "set", "addXp" ->
@@ -789,15 +809,20 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "materia" -> isOp ? switch(args[2]) 
 					{
-	            		case "component" -> switch(args[3]) 
-		            	{
-		                	case "normal", "unrefined" -> Materia.materia_registry.values().stream()
-		                    	.filter(m -> m.getMateriaComponent() != MateriaComponent.CATALYST)
-		                    	.map(Materia::getInternalName)
-		                    	.collect(Collectors.toCollection(ArrayList::new));
-		                	default -> List.of();
-		            	};
-		            	default -> List.of();
+						case "component" -> switch(args[3]) 
+						{
+							case "unrefined" -> MateriaType.getAllKeys();
+							case "refined" -> Materia.materia_registry.values().stream()
+								.filter(m -> m.getMateriaComponent() == MateriaComponent.BASE || m.getMateriaComponent() == MateriaComponent.BINDING)
+								.map(Materia::getInternalName)
+								.collect(Collectors.toCollection(ArrayList::new));
+							default -> List.of();
+						};
+						case "element_core" -> isOp ? Materia.materia_registry.values().stream()
+							.filter(m -> m.getMateriaComponent() == MateriaComponent.ELEMENT_CORE)
+							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
+						default -> List.of();
 					} : List.of();
 					case "addXp" -> isOp ? List.of("<value>") : List.of();
 					case "set" -> isOp ? List.of("true", "false") : List.of();

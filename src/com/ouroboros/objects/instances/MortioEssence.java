@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -21,7 +22,8 @@ public class MortioEssence extends AbstractObsObject
 	public MortioEssence() 
 	{
 		super("&4&lMortio&r&f Essence", "mortio_essence", Material.BONE, true, false, 
-				"&r&fA simple, refracted essence of &4Darkness&f. Ominous whispers hum softly.","",
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fA beguiling manifestation of &4Darkness&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &4&lMortio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");

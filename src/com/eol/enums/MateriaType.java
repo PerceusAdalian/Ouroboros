@@ -1,30 +1,37 @@
 package com.eol.enums;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.bukkit.Material;
+
+import com.ouroboros.utils.PrintUtils;
 
 public enum MateriaType 
 {
-	WOOD("wooden",         Material.OAK_BUTTON),
-	STONE("stone",         Material.STONE_BUTTON),
-	IRON("iron",           Material.IRON_NUGGET),
-	COPPER("copper",       Material.COPPER_NUGGET),
-	GOLD("golden",         Material.GOLD_NUGGET),
+	WOOD("wooden_chunk",         Material.OAK_BUTTON),
+	STONE("stone_chunk",         Material.STONE_BUTTON),
+	IRON("iron_slag",           Material.IRON_NUGGET),
+	COPPER("copper_nugget",       Material.COPPER_NUGGET),
+	GOLD("gold_nugget",         Material.GOLD_NUGGET),
 	DIAMOND("diamond",     Material.DIAMOND),
-	NETHERITE("netherite", Material.NETHERITE_SCRAP),
+	NETHERITE("netherite_scrap", Material.NETHERITE_SCRAP),
 
 	STRING("string",       Material.STRING),
+	PELT("pelt",           Material.RABBIT_HIDE),
 	LEATHER("leather",     Material.LEATHER),
 
 	CATALYST("catalyst",   Material.NETHER_STAR),
 
-	CELESTIO("celestio",   Material.GHAST_TEAR),
-	MORTIO("mortio",       Material.BONE),
-	INFERNO("inferno",     Material.BLAZE_POWDER),
-	GLACIO("glacio",       Material.PRISMARINE_CRYSTALS),
-	GEO("geo",             Material.BRICK),
+	CELESTIO("celestio",   Material.END_CRYSTAL),
+	MORTIO("mortio",       Material.WITHER_SKELETON_SKULL),
+	INFERNO("inferno",     Material.BLAZE_ROD),
+	GLACIO("glacio",       Material.NAUTILUS_SHELL),
+	GEO("geo",             Material.RESIN_CLUMP),
 	AERO("aero",           Material.AMETHYST_SHARD),
 	COSMO("cosmo",         Material.ECHO_SHARD),
-	HERESIO("heresio",     Material.ENDER_EYE);
+	HERESIO("heresio",     Material.TOTEM_OF_UNDYING);
 
 	private final String materiaCategory;
 	private final Material material;
@@ -60,5 +67,28 @@ public enum MateriaType
 		{
 			return null;
 		}
+	}
+
+	public static MateriaType fromMaterial(Material material)
+	{
+	    for (MateriaType type : values())
+	    {
+	        if (type.getMaterial() == material)
+	            return type;
+	    }
+	    return null;
+	}
+	
+	public static List<String> getAllKeys()
+	{
+		return Arrays.stream(MateriaType.values())
+				.filter(m -> m != CATALYST && m != CELESTIO && m != MORTIO && m != INFERNO && m != GLACIO && m != GEO && m != AERO && m != COSMO && m != HERESIO)
+				.map(MateriaType::getKey)
+				.collect(Collectors.toList());
+	}
+
+	public String getLabel()
+	{
+		return PrintUtils.formatEnumName(getName());
 	}
 }

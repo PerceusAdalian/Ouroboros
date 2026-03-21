@@ -10,6 +10,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import com.eol.enums.MateriaComponent;
+import com.eol.enums.MateriaState;
+import com.eol.enums.MateriaType;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.ouroboros.accounts.PlayerData;
@@ -219,11 +221,6 @@ public class PrintUtils
 		return ColorParser("&r&f&lSpell Type&r&f: {"+ type1.getSpellType() + "&r&f | " + type2.getSpellType() + "&r&f}");
 	}
 	
-	public static String assignComponentType(MateriaComponent componentType)
-	{
-		return ColorParser("&r&f&lComponent Type&r&f: {&"+componentType.getColorCode()+toTitleCase(componentType.getKey())+"&r&f}");
-	}
-	
 	public static String assignPVPCompatible()
 	{
 		return ColorParser("&r&7{ &c⚔&l PVP &r&c⚔ &7}");
@@ -245,19 +242,19 @@ public class PrintUtils
 		return inherentName;
 	}
 	
-	public static String formatEnumName(String internalName) 
+	public static String formatEnumName(String string) 
 	{
 
-		if (internalName.contains(".")) 
+		if (string.contains(".")) 
 		{
-			internalName = internalName.substring(internalName.lastIndexOf(".") + 1);
+			string = string.substring(string.lastIndexOf(".") + 1);
 		} 
-		else if (internalName.contains(":")) 
+		else if (string.contains(":")) 
 		{
-			internalName = internalName.substring(internalName.lastIndexOf(":") + 1);
+			string = string.substring(string.lastIndexOf(":") + 1);
 		}
 		
-		String[] words = internalName.split("_");
+		String[] words = string.split("_");
 		StringBuilder result = new StringBuilder();
 		
 		for (String word : words) 
@@ -292,6 +289,21 @@ public class PrintUtils
 	public static String assignObfuscatedRarity()
 	{
 		return ColorParser("&r&f&lRarity&r&f: &7&oUnrefined");
+	}
+	
+	public static String assignMateriaType(MateriaType type)
+	{
+		return ColorParser("&r&bType&f: &7{&r&f"+formatEnumName(type.getKey())+"&r&7}");
+	}
+	
+	public static String assignMateriaState(MateriaState state)
+	{
+		return ColorParser("&r&bState&f: &7{&r&f"+state.getState()+"&r&7}");
+	}
+	
+	public static String assignMateriaComponent(MateriaComponent component)
+	{
+		return ColorParser("&r&bComponent&f: &7{&r&f"+component.getLabel()+"&r&7}");
 	}
 	
 	public static String getRarityAsNumeralValue(Rarity rarity)

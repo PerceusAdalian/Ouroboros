@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
@@ -21,7 +22,8 @@ public class GlacioEssence extends AbstractObsObject
 	public GlacioEssence() 
 	{
 		super("&b&lGlacio&r&f Essence", "glacio_essence", Material.PRISMARINE_CRYSTALS, true, false, 
-				"&r&fA simple, refracted essence of &bWater&f. It's cool to the touch.","",
+				PrintUtils.assignRarity(Rarity.ONE),"",
+				"&r&fA simple, crystalized essence of &bWater&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
 				"&r&fCharge your &b&lGlacio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
