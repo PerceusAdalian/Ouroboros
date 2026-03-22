@@ -535,9 +535,10 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						"             &f&lWoodcutting&r&7: &a" + data.getStat(StatType.WOODCUTTING, true) +
 						"    &f&lMining&r&7: &a" + data.getStat(StatType.MINING, true) +
 						"    &f&lFishing&r&7: &a" + data.getStat(StatType.FISHING, true),
-						"        &f&lFarming&r&7: &a" + data.getStat(StatType.FARMING, true) +
-						"    &f&lEnchanting&r&7: &a" + data.getStat(StatType.ENCHANTING, true)+
-						"    &f&lDiscovery&r&7: &a" + data.getStat(StatType.DISCOVERY, true),
+						"                 &f&lFarming&r&7: &a" + data.getStat(StatType.FARMING, true) +
+						"    &f&lEnchanting&r&7: &a" + data.getStat(StatType.ENCHANTING, true),
+						"               &f&lDiscovery&r&7: &a" + data.getStat(StatType.DISCOVERY, true) + 
+						"   &f&lRefinement&r&7: &a"+data.getStat(StatType.REFINEMENT, true),
 						"",
 						"                             &7Combat Levels:",
 						"                 &f&lMelee&r&7: &c" + data.getStat(StatType.MELEE, true) +
@@ -558,6 +559,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						"   &f&lFarming&r&7: &b" + data.getStat(StatType.FARMING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.FARMING),
 						"   &f&lEnchanting&r&7: &b" + data.getStat(StatType.ENCHANTING, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.ENCHANTING),
 						"   &f&lDiscovery&r&7: &b" + data.getStat(StatType.DISCOVERY, false) + " &7/" + PrintUtils.printNextLevelXP(uuid, StatType.DISCOVERY),
+						"   &f&lRefinement&r&7: &b" + data.getStat(StatType.REFINEMENT, false) + " &7/" + PrintUtils.printNextLevelXP(uuid, StatType.REFINEMENT),
 						"",
 						"   &7Combat XP:",
 						"   &f&lMelee&r&7: &d" + data.getStat(StatType.MELEE, false) + " &7/ " + PrintUtils.printNextLevelXP(uuid, StatType.MELEE),

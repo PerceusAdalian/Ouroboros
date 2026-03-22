@@ -48,7 +48,9 @@ import com.lol.spells.instances.mortio.SkullOfSithis;
 public class SpellRegistry 
 {
 	public static final Map<String, Spell> spellRegistry = new HashMap<>();
-    public static void init() 
+    
+	@SuppressWarnings("null")
+	public static void init() 
     {
         List<Class<? extends Spell>> itemClasses = Arrays.asList(
         		

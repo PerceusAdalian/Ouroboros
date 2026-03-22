@@ -23,6 +23,12 @@ public class ProtocolEchoMainPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
+		GuiButton.button(Material.BREWING_STAND).setName("&e&lProtocol &aα &r&f- &b&oRefinement").setLore("Click to &b&orefine&r&f raw materials into valid &bMateria").place(this, 14, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new RefinementPage(p));
+		});
 		
 		GuiButton.button(Material.WRITABLE_BOOK).setName("&e&lEssence&r&f Reservoirs").setLore("Click to view your current &e&lEssence&r&f Reservoirs.").place(this, 15, e->
 		{

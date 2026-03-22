@@ -16,6 +16,9 @@ public enum StatType
 	RANGED,
 	MAGIC,
 	
+	//Echo Related
+	REFINEMENT,
+	
 	//Stat points
 	PRESTIGUEPOINTS,
 	ABILITYPOINTS,

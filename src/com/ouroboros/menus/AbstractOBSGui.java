@@ -67,7 +67,7 @@ public abstract class AbstractOBSGui
 	    	e.setCancelled(true);
 	}
 	
-	public void handleClose(InventoryCloseEvent e) 
+	public void close(InventoryCloseEvent e) 
 	{
 		return;
 	}

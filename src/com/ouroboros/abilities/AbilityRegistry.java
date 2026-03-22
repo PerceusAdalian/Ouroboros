@@ -18,7 +18,9 @@ import com.ouroboros.abilities.instances.utility.Geomorph;
 public class AbilityRegistry 
 {
 	public static final Map<String, AbstractOBSAbility> abilityRegistry = new HashMap<>();
-    public static void abilityInit() 
+    
+	@SuppressWarnings("null")
+	public static void abilityInit() 
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 

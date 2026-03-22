@@ -2,6 +2,7 @@ package com.ouroboros.menus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,27 +14,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class GuiHandler implements Listener
 {
-	private static final Map<Player, AbstractOBSGui> openGuis = new HashMap<>();
+	private static final Map<UUID, AbstractOBSGui> openGuis = new HashMap<>();
 
     public static void open(Player player, AbstractOBSGui gui) 
     {
-        openGuis.put(player, gui);
+        openGuis.put(player.getUniqueId(), gui);
         gui.open();
     }
     
     public static void reload(Player player) 
     {
-    	openGuis.get(player).open();
+    	openGuis.get(player.getUniqueId()).open();
     }
 
     public static AbstractOBSGui getOpenGui(Player player) 
     {
-        return openGuis.get(player);
+        return openGuis.get(player.getUniqueId());
     }
 
     public static void close(Player player) 
     {
-        openGuis.remove(player);
+        openGuis.remove(player.getUniqueId());
         player.closeInventory();
     }
 
@@ -52,7 +53,7 @@ public class GuiHandler implements Listener
             public void onClick(InventoryClickEvent e) 
             {
                 if (!(e.getWhoClicked() instanceof Player p)) return;
-                AbstractOBSGui gui = openGuis.get(p);
+                AbstractOBSGui gui = openGuis.get(p.getUniqueId());
                 if (gui == null || !e.getView().getTitle().equals(gui.getGuiTitle())) return;
 
                 gui.handleClick(e);
@@ -61,8 +62,8 @@ public class GuiHandler implements Listener
             @EventHandler
             public void onClose(InventoryCloseEvent e) 
             {
-            	AbstractOBSGui gui = openGuis.remove((Player) e.getPlayer());
-                if (gui != null) gui.handleClose(e);
+            	AbstractOBSGui gui = openGuis.remove(e.getPlayer().getUniqueId());
+                if (gui != null) gui.close(e);
             }
         }, plugin);
     }

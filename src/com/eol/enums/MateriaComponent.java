@@ -28,6 +28,18 @@ public enum MateriaComponent
 		return this.name();
 	}
 	
+	public static MateriaComponent fromString(String name)
+	{
+		try 
+		{
+			return MateriaComponent.valueOf(name.toUpperCase());
+		}
+		catch (IllegalArgumentException e) 
+		{
+			return null;
+		}
+	}
+	
 	public char getColorCode()
 	{
 		return color;

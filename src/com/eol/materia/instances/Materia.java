@@ -227,20 +227,17 @@ public class Materia
 		return MateriaState.fromString(pdc.get(materiaStateKey, PersistentDataType.STRING)) == MateriaState.UNREFINED;
 	}
     
-	/**
-	 * Randomly selects a registered Materia of the given type and rarity.
-	 * Pass the ItemStack's materiaTypeKey value and your rolled Rarity.
-	 * Returns null if no candidates exist (i.e. type/rarity combo not yet registered).
-	 */
-	public static Materia refine(MateriaType type, MateriaComponent component, Rarity rarity)
+	public static Materia refine(MateriaType type, @Nullable MateriaComponent component, Rarity rarity)
 	{
-		List<Materia> candidates = materia_registry.values().stream()
-				.filter(m -> m.materiaType == type && m.materiaComponent == component && m.rarity == rarity)
-				.collect(Collectors.toList());
+	    List<Materia> candidates = materia_registry.values().stream()
+	            .filter(m -> m.materiaType == type
+	                    && (component == null || m.materiaComponent == component)
+	                    && m.rarity == rarity)
+	            .collect(Collectors.toList());
 
-		if (candidates.isEmpty()) return null;
+	    if (candidates.isEmpty()) return null;
 
-		return candidates.get(ThreadLocalRandom.current().nextInt(candidates.size()));
+	    return candidates.get(ThreadLocalRandom.current().nextInt(candidates.size()));
 	}
 
 	/* Converts relevant items from MateriaType respective to each item in inventory to the unrefined counterpart */
@@ -250,7 +247,8 @@ public class Materia
 		{
 		    for (Player player : Bukkit.getOnlinePlayers())
 		    {
-		        ItemStack[] contents = player.getInventory().getContents();
+		        @SuppressWarnings("null")
+				ItemStack[] contents = player.getInventory().getContents();
 		        boolean changed = false;
 
 		        for (int i = 0; i < contents.length; i++)

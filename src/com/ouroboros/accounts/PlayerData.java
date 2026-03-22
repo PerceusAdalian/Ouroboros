@@ -41,6 +41,7 @@ public class PlayerData
 	public static final int MAXMAGIC = 7;
 	public static final int maxLuminite = 9999;
 	public static final int maxEssence = 9999;
+	public static final int maxScrap = 999999;
 	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -82,8 +83,17 @@ public class PlayerData
 	    {
 	    	setAccountLevel(0);
 	    	initializeAbilities();
+	    	
+	    	//Currencies
 	    	setFunds(true, 0);
 	    	setFunds(false, 0);
+	    	setLuminite(0);
+	    	for (ElementType eType : ElementType.values())
+	    	{
+	    		if (!ElementType.elemental.contains(eType)) continue;
+	    		setEssence(eType, 0);
+	    	}
+	    	
 	        // General Levels
 	    	setStat(StatType.CRAFTING, true, 0);
 	    	setStat(StatType.ALCHEMY, true, 0);
@@ -94,6 +104,7 @@ public class PlayerData
 	    	setStat(StatType.FISHING, true, 0);
 	    	setStat(StatType.FARMING, true, 0);
 	    	setStat(StatType.DISCOVERY, true, 0);
+	    	setStat(StatType.REFINEMENT, true, 0);
 	    	
 	        // Combat Levels
 	    	setStat(StatType.MELEE, true, 0);
@@ -110,6 +121,7 @@ public class PlayerData
 	    	setStat(StatType.FISHING, false, 0);
 	    	setStat(StatType.FARMING, false, 0);
 	    	setStat(StatType.DISCOVERY, false, 0);
+	    	setStat(StatType.REFINEMENT, false, 0);
 	    	
 	        // Combat Stat Experience
 	    	setStat(StatType.MELEE, false, 0);
@@ -119,12 +131,6 @@ public class PlayerData
 	    	setGate(GateCodes.OVERWORLD, Bukkit.getWorld("world").getSpawnLocation());
 	    	setGate(GateCodes.NETHER, Bukkit.getWorld("world_nether").getSpawnLocation());
 	    	setGate(GateCodes.END, Bukkit.getWorld("world_the_end").getSpawnLocation());
-	    	
-	    	for (ElementType eType : ElementType.values())
-	    	{
-	    		if (!ElementType.elemental.contains(eType)) continue;
-	    		setEssence(eType, 0);
-	    	}
 	    	
 	    	setActiveCombatAbility(null);
 	    	
@@ -143,7 +149,6 @@ public class PlayerData
 	    		getAbility(ability).setActive(false).setRegistered(false);
 	    	}
 	    	
-	    	setLuminite(0);
 	    	setMagicProficiency(0);
 	    	setKitClaimed(false);
 	    }
@@ -534,6 +539,34 @@ public class PlayerData
 		data.setEssence(elementType, data.getEssence(elementType)-value);
 		if (data.getEssence(elementType) < 0) data.setEssence(elementType, 0);
 		data.save();
+	}
+	
+	public int getScrap()
+	{
+		return config.getInt("scrap");
+	}
+	
+	public void setScrap(int value)
+	{
+		config.set("scrap", value);
+	}
+	
+	public static void addScrap(Player p, int value)
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		data.setScrap(data.getScrap()+value);
+		if (data.getScrap() > maxScrap) data.setScrap(maxScrap);
+		data.save();
+		PlayerHud.updateHud(p);
+	}
+	
+	public static void subtractScrap(Player p, int value)
+	{
+		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+		data.setScrap(data.getScrap()-value);
+		if (data.getScrap() < 0) data.setScrap(0);
+		data.save();
+		PlayerHud.updateHud(p);
 	}
 	
 	public void setMagicProficiency(int value)

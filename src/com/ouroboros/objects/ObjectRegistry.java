@@ -21,6 +21,7 @@ import com.ouroboros.objects.instances.LuminiteShard;
 import com.ouroboros.objects.instances.MortioEssence;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.RemembranceOfHope;
+import com.ouroboros.objects.instances.ScrapMateria;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.objects.instances.TrainingWand;
 
@@ -28,7 +29,8 @@ public class ObjectRegistry
 {
 	public static final Map<String, AbstractObsObject> itemRegistry = new HashMap<>();
 
-    public static void itemInit() 
+    @SuppressWarnings("null")
+	public static void itemInit() 
     {
         List<Class<? extends AbstractObsObject>> itemClasses = Arrays.asList(
             //Money Items:
@@ -52,7 +54,9 @@ public class ObjectRegistry
         	AeroEssence.class,
         	GeoEssence.class,
         	CosmoEssence.class,
-        	HeresioEssence.class);
+        	HeresioEssence.class,
+        	
+        	ScrapMateria.class);
         
         for (Class<? extends AbstractObsObject> clazz : itemClasses) 
         {

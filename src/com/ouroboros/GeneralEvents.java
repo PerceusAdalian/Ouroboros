@@ -16,15 +16,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
+import com.ouroboros.menus.instances.protocolecho.RefinementPage;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.EntityEffects.WildcardData;
 import com.ouroboros.utils.OBSParticles;
@@ -150,6 +154,29 @@ public class GeneralEvents implements Listener
         						+"\nPlayer was Night-Shifted: "+EntityEffects.nightShifted.containsKey(p.getUniqueId()) + " | Mitigated "+mitigatedFallDamage+" damage.");
         			}
         		}
+        	}
+        	
+        	@EventHandler
+        	public void refinementCloseout(InventoryCloseEvent e)
+        	{
+        	    if (!e.getView().getTitle().equals("Protocol α - Refinement Results")) return;
+        	    Player p = (Player) e.getPlayer();
+        	    
+        	    Map<ItemStack, Integer> results = RefinementPage.refineryResult.get(p.getUniqueId());
+        	    int xp = RefinementPage.refineryXp.get(p.getUniqueId());
+        	    if (results != null && !results.isEmpty())
+        	    {
+        	    	results.forEach((item, amount) ->
+        	        {
+        	            ItemStack toDrop = item.clone();
+        	            toDrop.setAmount(amount);
+        	            p.getWorld().dropItemNaturally(p.getLocation(), toDrop);
+        	        });
+        	    	PlayerData.addXP(p, StatType.REFINEMENT, xp);
+        	        RefinementPage.refineryResult.remove(p.getUniqueId());
+        	        RefinementPage.refineryXp.remove(p.getUniqueId());
+        	        PrintUtils.Print(p, "&eYour uncollected results were dropped at your feet.");
+        	    }
         	}
         	
         }, plugin);
