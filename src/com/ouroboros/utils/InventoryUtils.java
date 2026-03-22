@@ -1,6 +1,7 @@
 package com.ouroboros.utils;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -26,5 +27,11 @@ public class InventoryUtils
 		}
 		
 		return openSlots;
+	}
+	
+	public static void add(Player p, ItemStack stack)
+	{
+		Map<Integer, ItemStack> leftover = p.getInventory().addItem(stack);
+		leftover.values().forEach(drop -> p.getWorld().dropItemNaturally(p.getLocation(), drop));
 	}
 }

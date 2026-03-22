@@ -21,7 +21,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.SpellRegistry;
 import com.lol.spells.instances.arcano.Freecast;
@@ -197,7 +196,7 @@ public class SpellCastHandler implements Listener
         if (data.doXpNotification()) PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + currentSpell.getManacost() + " &b&o" + PrintUtils.printStatType(StatType.MAGIC));
         if (data.doLevelUpSound()) EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
         PlayerData.addXP(p, StatType.MAGIC, currentSpell.getManacost());
-        playCastSigil(p, currentSpell.getElementType());
+        OBSParticles.playCastSigil(p, currentSpell.getElementType());
 
         cooldownPlayers.computeIfAbsent(p.getUniqueId(), k -> new HashSet<>()).add(currentSpell);
         Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
@@ -209,20 +208,4 @@ public class SpellCastHandler implements Listener
         p.getInventory().setItemInMainHand(wand.getAsItemStack());
 	}
 	
-	private static void playCastSigil(Player player, SpellementType sType)
-	{
-		switch (sType)
-		{
-			case NULL -> OBSParticles.drawAdminCastSigil(player);
-			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
-			case AERO -> OBSParticles.drawAeroCastSigil(player);
-			case COSMO -> OBSParticles.drawCosmoCastSigil(player);
-			case GEO -> OBSParticles.drawGeoCastSigil(player);
-			case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
-			case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
-			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
-			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
-			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
-		}
-	}
 }

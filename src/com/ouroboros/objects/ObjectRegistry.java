@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.ouroboros.objects.instances.AeroEssence;
 import com.ouroboros.objects.instances.CelestioEssence;
@@ -72,5 +74,12 @@ public class ObjectRegistry
                 e.printStackTrace();
             }
         }
+    }
+    
+    public static Set<AbstractObsObject> getMoneyItems()
+    {
+        return itemRegistry.values().stream()
+            .filter(obj -> obj.getInternalName().startsWith("money_"))
+            .collect(Collectors.toSet());
     }
 }

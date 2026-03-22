@@ -23,7 +23,7 @@ public class ProtocolEchoMainPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.button(Material.BREWING_STAND).setName("&e&lProtocol &aα &r&f- &b&oRefinement").setLore("Click to &b&orefine&r&f raw materials into valid &bMateria").place(this, 14, e->
+		GuiButton.button(Material.BREWING_STAND).setName("&e&lProtocol &aα &r&f- &b&oRefinement").setLore("Click to &b&orefine&r&f raw materials into valid &bMateria").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
@@ -35,6 +35,13 @@ public class ProtocolEchoMainPage extends AbstractOBSGui
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new EssenceReservoirsPage(p));
+		});
+		
+		GuiButton.button(Material.LECTERN).setName("&e&lCore&r&f Crafting").setLore("Click to refine &e&lEssence&r&f into respective &e&lCores&r&f.").place(this, 14, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new CoreCraftingPage(p));
 		});
 		
 		

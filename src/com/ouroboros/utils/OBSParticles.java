@@ -8,7 +8,11 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import com.lol.enums.SpellementType;
+import com.ouroboros.enums.ElementType;
 
 public class OBSParticles 
 {
@@ -337,4 +341,38 @@ public class OBSParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.TRIAL_OMEN, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.CRIMSON_SPORE, null);
 	}	
+	
+	public static void playCastSigil(Player player, SpellementType sType)
+	{
+		switch (sType)
+		{
+			case NULL -> OBSParticles.drawAdminCastSigil(player);
+			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
+			case AERO -> OBSParticles.drawAeroCastSigil(player);
+			case COSMO -> OBSParticles.drawCosmoCastSigil(player);
+			case GEO -> OBSParticles.drawGeoCastSigil(player);
+			case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
+			case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
+			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
+			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
+			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
+		}
+	}
+	
+	public static void playCastSigil(Player player, ElementType eType)
+	{
+		switch (eType)
+		{
+			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
+			case AERO -> OBSParticles.drawAeroCastSigil(player);
+			case COSMO -> OBSParticles.drawCosmoCastSigil(player);
+			case GEO -> OBSParticles.drawGeoCastSigil(player);
+			case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
+			case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
+			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
+			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
+			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
+			default -> throw new IllegalArgumentException("Unexpected value: " + eType);
+		}
+	}
 }

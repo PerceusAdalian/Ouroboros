@@ -88,9 +88,7 @@ public class RefinementPage extends AbstractOBSGui
 		    {
 		        MateriaType materiaType = MateriaType.fromString(meta.get(Materia.materiaTypeKey, PersistentDataType.STRING));
 		        
-		        // Leather rolls a 50/50 for base vs binding component
-//		        if (materiaType.equals(MateriaType.LEATHER)) componentType = ;
-
+		        // Leather rolls a 70/30 for base vs binding component
 		        for (int i = 0; i < stack.getAmount(); i++)
 		        {
 		            RefinementResult result = rollRefinement(refinementLevel, false);

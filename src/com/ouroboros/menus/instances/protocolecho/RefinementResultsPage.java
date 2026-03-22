@@ -1,5 +1,7 @@
 package com.ouroboros.menus.instances.protocolecho;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.InventoryUtils;
 
 public class RefinementResultsPage extends AbstractOBSGui
 {
@@ -28,6 +31,9 @@ public class RefinementResultsPage extends AbstractOBSGui
 		this.xp = xp;
 	}
 
+	private static final List<Integer> RESULT_SLOTS = List.of(
+		    10, 11, 12, 13, 14, 15);
+	
 	@Override
 	protected void build() 
 	{
@@ -36,20 +42,23 @@ public class RefinementResultsPage extends AbstractOBSGui
 			GuiHandler.changeMenu(player, new RefinementPage(player));
 		}
 		
-		int slot = 10;
+		int slotIndex = 0;
 		for (Map.Entry<ItemStack, Integer> entry : results.entrySet())
 		{
+			if (slotIndex >= RESULT_SLOTS.size()) break;
+			int slot = RESULT_SLOTS.get(slotIndex++);
+			
 			ItemStack item = entry.getKey().clone();
 			item.setAmount(entry.getValue());
 			
 			GuiButton.button(item.getType())
 			.setName(item.getItemMeta().getDisplayName())
 			.setLore(item.getItemMeta().getLore())
-			.place(this, slot++, e->
+			.place(this, slot, e->
 			{
 				e.setCancelled(true);
 				Player p = (Player) e.getWhoClicked();
-				p.getInventory().addItem(item);
+				InventoryUtils.add(p, item);
 				results.remove(entry.getKey());
 				
 				PlayerData data = PlayerData.getPlayer(p.getUniqueId());
@@ -64,8 +73,15 @@ public class RefinementResultsPage extends AbstractOBSGui
 			});
 		}
 		
-		GuiButton.button(Material.CHEST).setName("&a&lCollect All&r&f 📥").setLore("&r&fClick to collect all.",
-				"&r&fPlease ensure enough room is in your inventory before claiming.")
+		List<String> lore = new ArrayList<>();
+		lore.add("&r&fClick to collect all:");
+		for (ItemStack stack : results.keySet())
+		{
+			lore.add(stack.getItemMeta().getDisplayName() + " &r&fx&b&l"+ stack.getAmount());
+		}
+		lore.add("&r&fPlease ensure enough room is available before claiming.");
+		
+		GuiButton.button(Material.CHEST).setName("&a&lCollect All&r&f 📥").setLore(lore)
 		.place(this, 16, e->
 		{
 			e.setCancelled(true);
@@ -73,8 +89,8 @@ public class RefinementResultsPage extends AbstractOBSGui
 			results.forEach((item, amount) ->
 			{
 				ItemStack result = item.clone();
-				result.setAmount(amount);
-				p.getInventory().addItem(result);
+				result.setAmount(amount); 
+				InventoryUtils.add(p, result);
 			});
 			results.clear();
 			
