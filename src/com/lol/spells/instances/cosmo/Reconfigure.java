@@ -5,8 +5,6 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.MenuType;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
@@ -14,8 +12,6 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
-
-import net.kyori.adventure.text.Component;
 
 public class Reconfigure extends Spell
 {
@@ -26,12 +22,12 @@ public class Reconfigure extends Spell
 				"&r&fOpen a crafting simulation to reconfigure held items.");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		InventoryView craftingGrid = MenuType.CRAFTING.builder().title(Component.text("Reconfigure")).build(p);
-		p.openInventory(craftingGrid);
+		p.openWorkbench(null, true);
 		EntityEffects.playSound(p, Sound.BLOCK_CRAFTER_CRAFT, SoundCategory.AMBIENT);
 		return 5;
 	}
