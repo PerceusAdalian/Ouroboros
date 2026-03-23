@@ -50,7 +50,8 @@ public class ReapAndSew extends AbstractOBSAbility
 
     private static Map<UUID, Integer> remainingSeconds = new HashMap<>();
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public boolean cast(Event e) 
     {
         if (e instanceof PlayerInteractEvent pie)

@@ -22,7 +22,7 @@ public class ResolveCombatElement
 			case WOODEN_SHOVEL, STONE_SHOVEL, IRON_SHOVEL, COPPER_SHOVEL,
 			GOLDEN_SHOVEL,DIAMOND_SHOVEL, NETHERITE_SHOVEL, AIR, MACE 				-> eType = ElementType.BLUNT;
 			
-			default 																-> eType = ElementType.NEUTRAL;
+			default 																-> eType = ElementType.PURE;
 		};
 		return eType;
 	}

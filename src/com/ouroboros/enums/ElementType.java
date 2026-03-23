@@ -8,7 +8,7 @@ public enum ElementType
 {
 	NONE(null),
 	//Neutral Damage Type
-	NEUTRAL("&r&fNeutral&r&f"),
+	PURE("&r&f&lPure&r&f"),
 	//Normal Melee Damage Types
 	BLUNT("&r&fBlunt&r&f"), 
 	PIERCE("&r&fPierce&r&f"),

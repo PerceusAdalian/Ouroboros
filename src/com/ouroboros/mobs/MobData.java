@@ -275,14 +275,14 @@ public class MobData
 		MobData data = MobData.getMob(uuid);
 		Entity entity = Bukkit.getEntity(uuid);
 		
-		if (element == null) element = ElementType.NEUTRAL;
+		if (element == null) element = ElementType.PURE;
 		
 		if (!EntityEffects.isVoidedRegistry.containsKey(uuid))
 		{
 			if (EntityCategories.parseUniversalImmunity(entity, element)) value = 0;
 			else if (EntityCategories.parseUniversalResistance(entity, element)) value *= 0.5;
+			else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
 		}
-		else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
 		
 		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
 		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
@@ -335,7 +335,7 @@ public class MobData
 			{
 				setArmor(getArmor(true), false);
 				return;
-			}, 600);
+			}, 300);
 		}
 	}
 	
@@ -350,7 +350,7 @@ public class MobData
 		}
 		else 
 		{
-			if (element == null) element = ElementType.NEUTRAL;
+			if (element == null) element = ElementType.PURE;
 			
 			data.damage(value, damageArmor, element);
 			data.save();
@@ -395,7 +395,7 @@ public class MobData
 	
 	public void kill()
 	{
-		damage(getHp(false), false, ElementType.NEUTRAL);
+		damage(getHp(false), false, ElementType.PURE);
 		Entity entity = Bukkit.getEntity(uuid);
 		LivingEntity le = (LivingEntity) entity;
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
@@ -408,7 +408,7 @@ public class MobData
 		MobData data = MobData.getMob(uuid);
 		double baseHP = data.getHp(true);
 		double damage = ((percent/100.0)*baseHP)+value;
-		damage(damage, false, null);
+		damage(damage, false, ElementType.PURE);
 	}
 	
 	public boolean isBreak() 

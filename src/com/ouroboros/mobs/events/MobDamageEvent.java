@@ -54,7 +54,7 @@ public class MobDamageEvent implements Listener
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
-				ElementType element = ElementType.NEUTRAL;
+				ElementType element = ElementType.PURE;
 				double dmg;
 				
 				//In the event the damage source is as shown below, execute this block

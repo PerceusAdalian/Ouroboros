@@ -97,7 +97,7 @@ public class EntityEffects
 		// Slash damage will deal an additional 50% of the mob's overall health so long
 		// as they won't die and are broken.
 		if (element == ElementType.SLASH && data.isBreak())
-			data.damage(data.getHp(false) * 0.5, false, ElementType.NEUTRAL);
+			data.damage(data.getHp(false) * 0.5, false, ElementType.PURE);
 		
 		// Blunt damage temporarily slows mobs that aren't yet broken, making it easy to
 		// stack stun procs.
@@ -112,7 +112,7 @@ public class EntityEffects
 		// Sever will remove the remainder of the mob's HP after damage calculations so
 		// long as they're broken and not already defeated; the second PURE DAMAGE type.
 		if (element == ElementType.SEVER && data.isBreak())
-			data.damage(data.getHp(false), false, ElementType.NEUTRAL);
+			data.damage(data.getHp(false), false, ElementType.PURE);
 		
 		// Crush will indefinitely stun a mob, regardless if they recover from the
 		// applied break status; the third and final PURE DAMAGE type.
@@ -567,9 +567,8 @@ public class EntityEffects
 	}
 
 	/**
-	 * @Description Cosmo Signature Effect: Voided will remove any mob's immunities
-	 *              and resistances, and make all damage neutral within the set
-	 *              duration.
+	 * @Description Cosmo Signature Effect: Voided strips the afflicted entity of all",
+				"Resistances and Immunities for the duration."
 	 * @param target The target to set as voided.
 	 * @param ticks  The duration to add the entity target into the isVoided
 	 *               registry.
@@ -578,10 +577,11 @@ public class EntityEffects
 
 	public static void addVoided(LivingEntity target, int seconds) 
 	{
-		if (isVoidedRegistry.containsKey(target.getUniqueId()))
-			return;
+		if (isVoidedRegistry.containsKey(target.getUniqueId()))return;
 		isVoidedRegistry.put(target.getUniqueId(), true);
-		add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
+		
+		OBSParticles.drawCosmoCastSigil(target);
+		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> isVoidedRegistry.remove(target.getUniqueId()), seconds * 20);
 		OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
 		{

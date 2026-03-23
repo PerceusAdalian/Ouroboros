@@ -7,8 +7,12 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.cosmo.Antimatter;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
+import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
+import com.lol.spells.instances.cosmo.Nullify;
+import com.lol.spells.instances.cosmo.Reconfigure;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -26,16 +30,19 @@ public class CosmoSpellsPage extends AbstractOBSGui
 	{
 		
 		// 1
+		GuiButton.placeSpellButton(player, new Reconfigure(), 10, this);
+		GuiButton.placeSpellButton(player, new Nullify(), 11, this);
 		
 		// 2
-		GuiButton.placeSpellButton(player, new ArrestoMomentum(), 10, this);
+		GuiButton.placeSpellButton(player, new Antimatter(), 12, this);
+		GuiButton.placeSpellButton(player, new ArrestoMomentum(), 13, this);
 		
 		// 3
-		
+		GuiButton.placeSpellButton(player, new ElementalConfinement(), 14, this);
 		// 4
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Gate(), 11, this);
+		GuiButton.placeSpellButton(player, new Gate(), 15, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

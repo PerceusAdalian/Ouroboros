@@ -1,0 +1,75 @@
+package com.lol.spells.instances.cosmo;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Damageable;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import com.lol.enums.SpellType;
+import com.lol.enums.SpellementType;
+import com.lol.spells.instances.Spell;
+import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.Rarity;
+import com.ouroboros.mobs.MobData;
+import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.RayCastUtils;
+
+public class Antimatter extends Spell
+{
+
+	public Antimatter()
+	{
+		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true,
+				"&r&fDecay target's life dealing &3&lCosmo&r&f damage equal to &b&o3 + 25%&r&aHP &7(20m)&f",
+				"&r&fWhile not in &cPVP&f, apply &3Voided&f to target &7(20s)","",
+				"&r&3Voided &eEffect&f: Voided strips the afflicted entity of all",
+				"&r&f&b&oResistances&r&f and &b&oImmunities&r&f for the duration.");
+	}
+
+	@Override
+	public int Cast(PlayerInteractEvent e)
+	{
+		Player p = e.getPlayer();
+		if (!RayCastUtils.getEntity(p, 20, target ->
+		{
+			if (!(target instanceof LivingEntity)) return;
+			MobData data = MobData.getMob(target.getUniqueId());
+			EntityEffects.playSound(p, Sound.BLOCK_SCULK_CHARGE, SoundCategory.AMBIENT);
+			OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), (int) target.getHeight() + 1, 5, 0.4, 0.1, Particle.SCULK_SOUL, null);
+			OBSParticles.drawCosmoCastSigil((LivingEntity) target);
+			
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+			{
+				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+				OBSParticles.drawSpiralVortex(target.getLocation(), 60, target.getHeight()-2, 0.1, Particle.SCULK_SOUL, null);
+				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 4, 10, 0.5, Particle.WARPED_SPORE, null);
+				if (target instanceof Player)
+				{
+					((Damageable) target).damage(((Damageable)target).getHealth()*0.25);
+				}
+				else if (data != null)
+				{
+					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, ElementType.COSMO);
+					EntityEffects.addVoided(p, 20);
+				}
+			}, 15);
+			
+		})) return -1;
+		return this.getManacost();
+	}
+
+	@Override
+	public int getTotalManaCost()
+	{
+		return this.getManacost();
+	}
+
+}
