@@ -247,8 +247,7 @@ public class Materia
 		{
 		    for (Player player : Bukkit.getOnlinePlayers())
 		    {
-		        @SuppressWarnings("null")
-				ItemStack[] contents = player.getInventory().getContents();
+		        ItemStack[] contents = player.getInventory().getContents();
 		        boolean changed = false;
 
 		        for (int i = 0; i < contents.length; i++)
@@ -269,7 +268,7 @@ public class Materia
 
 		        if (changed) player.getInventory().setContents(contents);
 		    }
-		}, 0L, 5L);
+		}, 0L, 20L);
 	}
 	
 }

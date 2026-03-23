@@ -58,7 +58,7 @@ public class Antimatter extends Spell
 				else if (data != null)
 				{
 					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, ElementType.COSMO);
-					EntityEffects.addVoided(p, 20);
+					EntityEffects.addVoided((LivingEntity) target, 20);
 				}
 			}, 15);
 			

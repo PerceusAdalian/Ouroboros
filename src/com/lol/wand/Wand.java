@@ -12,8 +12,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
-import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;

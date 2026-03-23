@@ -10,7 +10,7 @@ import com.eol.materia.instances.components.Bindings;
 import com.eol.materia.instances.components.Catalysts;
 import com.eol.materia.instances.components.ElementCores;
 import com.lol.spells.SpellCastHandler;
-import com.lol.spells.instances.SpellRegistry;
+import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
@@ -117,8 +117,7 @@ public class Ouroboros extends JavaPlugin
  * Concept: Σ.C.H.O. (Engram Conversion to Harmonic Object) Protocol
  * Project Notes:
  * + WHAT TO DO NEXT:
- * - Materia has been rewritten, so hook up refinement, and core crafting in main menu.
- * 
+ * High Priority: Fix force breaking
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.

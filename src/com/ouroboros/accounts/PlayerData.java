@@ -16,8 +16,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.SpellDataHandler;
+import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
-import com.lol.spells.instances.SpellRegistry;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;

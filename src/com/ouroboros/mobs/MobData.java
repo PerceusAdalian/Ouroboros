@@ -331,15 +331,16 @@ public class MobData
 			Entity entity = Bukkit.getEntity(uuid);
 			OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
 			setArmor(0, false);
+			MobNameplate.update((LivingEntity) entity);
 			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
 			{
 				setArmor(getArmor(true), false);
-				return;
+				setBreak(false);
+				MobNameplate.update((LivingEntity) entity);
 			}, 300);
 		}
 	}
 	
-	@SuppressWarnings("null")
 	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
@@ -429,8 +430,7 @@ public class MobData
 	 */
 	public void setBreak()
 	{
-		MobData data = MobData.getMob(uuid);
-		data.damageArmor(data.getArmor(false));
+		damageArmor(getArmor(true));
 	}
 	
 	public boolean isDead()

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -47,7 +48,7 @@ public class Nullify extends Spell
 				OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), (int) target.getHeight()+1, 0.5, 45, 6, 0.1, Particle.SCULK_SOUL, null);
 				OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), (int) target.getHeight(), 5, 0.5, 0.1, Particle.ENCHANT, null);
 				EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_CLOSE_SHUTTER, SoundCategory.AMBIENT);
-				EntityEffects.addVoided(p, 30); 
+				EntityEffects.addVoided((LivingEntity) target, 30); 
 				MobData.getMob(target.getUniqueId()).setBreak();
 			}, 15);
 			

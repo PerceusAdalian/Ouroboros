@@ -22,7 +22,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.lol.spells.instances.Spell;
-import com.lol.spells.instances.SpellRegistry;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
