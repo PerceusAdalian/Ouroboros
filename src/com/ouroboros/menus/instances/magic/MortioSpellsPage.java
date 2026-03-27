@@ -13,7 +13,7 @@ import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
-import com.lol.spells.instances.mortio.SkullOfSithis;
+import com.lol.spells.instances.mortio.AspectOfSithis;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -40,7 +40,7 @@ public class MortioSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new Demonform(), 14, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new SkullOfSithis(), 15, this);
+		GuiButton.placeSpellButton(player, new AspectOfSithis(), 15, this);
 		
 		// 5
 		GuiButton.placeSpellButton(player, new Haunt(), 16, this);

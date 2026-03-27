@@ -1,6 +1,8 @@
 package com.ouroboros.utils;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,24 +40,25 @@ public class EntityCategories
 	public static final Set<EntityType> arcano_mobs = EnumSet.of(EntityType.WITCH, EntityType.VEX, EntityType.ILLUSIONER, 
 			EntityType.EVOKER, EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN);
 	
-	public static final Set<EntityType> celestio_mobs = EnumSet.of(EntityType.ALLAY,EntityType.CAT,EntityType.COW,EntityType.FROG,EntityType.GLOW_SQUID,
-			EntityType.MOOSHROOM,EntityType.MULE,EntityType.PANDA,EntityType.PIG,EntityType.RABBIT,EntityType.SHEEP,EntityType.TRADER_LLAMA,EntityType.VILLAGER,EntityType.WOLF);
+	public static final Set<EntityType> celestio_mobs = EnumSet.of(EntityType.ALLAY,EntityType.CAT,EntityType.COW,EntityType.GLOW_SQUID,
+			EntityType.MOOSHROOM,EntityType.MULE,EntityType.PANDA,EntityType.FOX,EntityType.RABBIT,EntityType.SHEEP,
+			EntityType.TRADER_LLAMA,EntityType.VILLAGER,EntityType.WOLF);
 	
 	public static final Set<EntityType> mortio_mobs = EnumSet.of(EntityType.DROWNED,EntityType.WITHER_SKELETON,EntityType.GIANT,EntityType.SKELETON,
 			EntityType.SKELETON_HORSE,EntityType.STRAY,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,EntityType.ZOMBIFIED_PIGLIN,EntityType.HUSK,EntityType.ZOMBIE_NAUTILUS);
 	
-	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.GHAST,EntityType.MAGMA_CUBE,EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,
-			EntityType.ZOGLIN,EntityType.HOGLIN,EntityType.STRIDER);
+	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.GHAST,EntityType.MAGMA_CUBE,
+			EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,EntityType.ZOGLIN,EntityType.HOGLIN,EntityType.STRIDER);
 	
-	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.AXOLOTL,EntityType.FOX,EntityType.PUFFERFISH,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN
-			,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.FROG,
+	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.AXOLOTL,EntityType.PUFFERFISH,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN
+			,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.BOGGED,
 			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.POLAR_BEAR, EntityType.NAUTILUS);
 	
 	public static final Set<EntityType> aero_mobs = EnumSet.of(EntityType.BAT,EntityType.BEE,EntityType.BREEZE,EntityType.CHICKEN,EntityType.HAPPY_GHAST,EntityType.PARROT);
 	
 	public static final Set<EntityType> geo_mobs = EnumSet.of(EntityType.ARMADILLO,EntityType.DONKEY,EntityType.IRON_GOLEM,
-			EntityType.BOGGED,EntityType.CAMEL,EntityType.CAVE_SPIDER,EntityType.SPIDER,EntityType.GOAT,EntityType.HORSE,
-			EntityType.LLAMA,EntityType.OCELOT,EntityType.SLIME,EntityType.SNIFFER,EntityType.SILVERFISH);
+			EntityType.CAMEL,EntityType.CAVE_SPIDER,EntityType.SPIDER,EntityType.GOAT,EntityType.PIG,EntityType.HORSE,
+			EntityType.LLAMA,EntityType.OCELOT,EntityType.SLIME,EntityType.SNIFFER,EntityType.SILVERFISH,EntityType.FROG);
 	
 	public static final Set<EntityType> cosmo_mobs = EnumSet.of(EntityType.ENDERMITE,EntityType.ENDERMAN,EntityType.SHULKER,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.PHANTOM);
 	
@@ -71,9 +74,9 @@ public class EntityCategories
 	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.CELESTIO, ElementType.COSMO, ElementType.HERESIO),
 	    
 	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.GLACIO, ElementType.GEO),
-	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.AERO, ElementType.BLUNT, ElementType.CORROSIVE),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.BLUNT, ElementType.CORROSIVE, ElementType.COMBUST),
 	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.GEO, ElementType.GLACIO, ElementType.COMBUST),
-	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.SEVER, ElementType.CRUSH, ElementType.IMPALE, ElementType.BLAST),
+	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.AERO, ElementType.CRUSH, ElementType.BLAST),
 	    
 	    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.COSMO, ElementType.HERESIO, ElementType.ARCANO),
 	    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.COSMO, ElementType.ARCANO));
@@ -83,7 +86,7 @@ public class EntityCategories
 	    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.CORROSIVE),
 	    
 	    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.AERO, ElementType.PIERCE, ElementType.PUNCTURE),
-	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GEO, ElementType.SLASH, ElementType.PIERCE, ElementType.PUNCTURE, ElementType.COMBUST),
+	    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.GEO, ElementType.SLASH, ElementType.PIERCE, ElementType.PUNCTURE),
 	    EntityCategory.AERO_MOBS,      EnumSet.of(ElementType.MORTIO, ElementType.PIERCE, ElementType.PUNCTURE),
 	    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.SLASH, ElementType.BLUNT, ElementType.PUNCTURE, ElementType.PIERCE),
 	    
@@ -135,5 +138,15 @@ public class EntityCategories
 	    if (arcano_mobs.contains(entityType)) return ElementType.ARCANO;
 	    if (none.contains(entityType)) return ElementType.NONE;
 	    return ElementType.NONE;
+	}
+	
+	public static List<String> asList() 
+	{
+		List<String> entityNames = new ArrayList<>();
+		for (EntityType type : EntityType.values())
+		{
+		  entityNames.add(type.name());
+		}
+		return entityNames;	
 	}
 }

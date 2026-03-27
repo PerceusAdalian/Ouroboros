@@ -1,6 +1,8 @@
 package com.ouroboros.enums;
 
+import java.util.EnumSet;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.lol.enums.SpellementType;
 
@@ -70,19 +72,28 @@ public enum ElementType
 	{
 		ElementType eType = switch(sType)
 		{
-			case AERO -> ElementType.AERO;
-			case ARCANO -> ElementType.ARCANO;
-			case CELESTIO -> ElementType.CELESTIO;
-			case COSMO -> ElementType.COSMO;
-			case GEO -> ElementType.GEO;
-			case GLACIO -> ElementType.GLACIO;
-			case HERESIO -> ElementType.HERESIO;
-			case INFERNO -> ElementType.INFERNO;
-			case MORTIO -> ElementType.MORTIO;
-			case NULL -> ElementType.NONE;
+			case AERO 		-> ElementType.AERO;
+			case ARCANO 	-> ElementType.ARCANO;
+			case CELESTIO 	-> ElementType.CELESTIO;
+			case COSMO 		-> ElementType.COSMO;
+			case GEO 		-> ElementType.GEO;
+			case GLACIO 	-> ElementType.GLACIO;
+			case HERESIO 	-> ElementType.HERESIO;
+			case INFERNO 	-> ElementType.INFERNO;
+			case MORTIO 	-> ElementType.MORTIO;
+			case NULL 		-> ElementType.NONE;
 		};
 		
 		return eType;
+	}
+	
+	public static final EnumSet<ElementType> mobElements = EnumSet.of(
+		    CELESTIO, MORTIO, INFERNO, GLACIO, AERO, GEO, COSMO, HERESIO, ARCANO);
+	
+	public static ElementType random()
+	{
+	    ElementType[] types = ElementType.mobElements.toArray(new ElementType[0]);
+	    return types[ThreadLocalRandom.current().nextInt(types.length)];
 	}
 	
 	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO);

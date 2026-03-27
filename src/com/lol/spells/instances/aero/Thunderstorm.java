@@ -28,9 +28,11 @@ public class Thunderstorm extends Spell
 	{
 		super("Thunderstorm", "thunderstorm", Material.AMETHYST_CLUSTER, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.MIXED, Rarity.FIVE, 250, 5, true,
 				"&ePrimary&f "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
+				"&r&dThunderstorm&f: &d&oElectric Expanse&r&f --",
 				"&r&fSummon an &dAOE&f storm &7(20m)&f inflicting &dShock &7(20s / &cPVP&7: &c3s&r&7)","",
 				"&eSecondary&f "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
-				"&r&fStrike your target &7(40m)&f with lightning, inflicting &dStatic &7(20s / &cPVP&7: &c10s&r&7)",
+				"&r&dThunderstorm&f: &d&oLightning Rod&r&f --",
+				"&r&fStrike your target &7(40m)&f with lightning, inflicting &dStatic &7(10s / &cPVP&7: &c5s&r&7)",
 				"&r&fwhich then spreads to nearby enemies &7(25m)&f applying &dShock &7(20s / &cPVP&7: &c3s&r&7)","",
 				"&r&dStatic &eEffect&f: causes mobs to emit shockwaves in a 10m radius.",
 				"&r&fAffected mobs receive &b&o1.25x &r&d&lAero&r&f damage.",
@@ -55,7 +57,7 @@ public class Thunderstorm extends Spell
 			{
 				target.getWorld().strikeLightning(target.getLocation());
 				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
-				EntityEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 10 : 20);
+				EntityEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 5 : 10);
 			}, 15);
 			RayCastUtils.getNearbyEntities(target, 25, (C)->
 			{

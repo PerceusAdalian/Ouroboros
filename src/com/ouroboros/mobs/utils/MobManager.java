@@ -57,7 +57,7 @@ public class MobManager
 			EntityType type = data.getEntityType();
 			Entity e = w.spawnEntity(loc, type);
 
-			MobNameplate.build((LivingEntity) e);
+			MobNameplate.build((LivingEntity) e, true);
 			
 			var att = ((Attributable) e).getAttribute(Attribute.MAX_HEALTH);
 			att.setBaseValue(1023.9);

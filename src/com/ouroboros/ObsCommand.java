@@ -20,6 +20,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -47,11 +48,13 @@ import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.menus.instances.magic.SpellBookPage;
 import com.ouroboros.menus.instances.magic.WandMainPage;
 import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.MobSummoner;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.TearOfLumina;
+import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.OBSParticles;
@@ -318,6 +321,19 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			return true;
 		}
 		
+		if (args[0].equals("setScrap"))
+		{
+			if (affirmOP(p)) return true;
+			
+			Player target = Bukkit.getPlayer(args[1]);
+			if (target == null) return false;
+			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+			data.setScrap(PlayerData.maxScrap);
+			data.save();
+			PrintUtils.OBSFormatDebug(p, "Maximum Scrap granted for: "+target.getName());
+			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Scrap. \nIf you believe this was done in error, contact the server admin.");
+			return true;
+		}
 		if (args[0].equals("debug"))
 		{
 			if (affirmOP(p)) return true;
@@ -361,6 +377,45 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				ItemStack stack = obj.toItemStack();
 				p.getInventory().addItem(stack);
 				return true;
+			}
+			
+			if (args[1].equals("mob"))
+			{
+				EntityType type;
+			    try
+			    {
+			        type = EntityType.valueOf(args[2].toUpperCase());
+			    }
+			    catch (IllegalArgumentException e)
+			    {
+			        return false;
+			    }
+			    
+			    int level;
+			    try
+			    {
+			    	level = Integer.valueOf(Integer.parseInt(args[3]));
+			    }
+			    catch (IllegalArgumentException e) 
+			    {
+			    	return false;
+			    }
+			    
+			    if (level < 0 || level > 100)
+			    {
+			    	PrintUtils.OBSFormatError(p, "Invalid Level Input: Was expecting 0 < value < 100.");
+			    	return true;
+			    }
+			    
+			    String customName = args[4];
+			    if (customName == null)
+			    {
+			    	PrintUtils.OBSFormatError(p, "Invalid Custom Name: Cannot be null.");
+			    	return true;
+			    }
+			    
+			    MobSummoner.build(p.getLocation(), type, level, customName);
+			    return true;
 			}
 			
 			if (args[1].equals("materia"))
@@ -732,7 +787,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				List<String> cmds = new ArrayList<>(List.of("menu", "stats", "welcomekit", "spellbook", "recoverwand", "wand"));
 				
 				// OP-only commands are hidden from regular players.
-				if (isOp) cmds.addAll(List.of("debug", "version", "generate", "money", "register","registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite"));
+				if (isOp) cmds.addAll(List.of("debug", "version", "generate", "money", "register","registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite", "setScrap"));
 				yield cmds;
 			}
 			case 2 -> 
@@ -740,12 +795,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				yield switch(args[0])
 				{
 					// OP-only root commands.
-					case "registerAllAbilities", "registerAllMagic", "setLuminite" ->
+					case "registerAllAbilities", "registerAllMagic", "setLuminite", "setScrap" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
 					case "register" ->
 						isOp ? List.of("spell", "ability") : List.of();
 					case "generate" ->
-						isOp ? List.of("object", "spell", "materia", "wand") : List.of();
+						isOp ? List.of("object", "spell", "materia", "wand", "mob") : List.of();
 					case "money" ->
 						isOp ? List.of("add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney") : List.of();
 					// Stats sub-commands: some are OP-only.
@@ -770,6 +825,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "spell" -> isOp ? new ArrayList<>(SpellRegistry.spellRegistry.keySet()) : List.of();
 					case "wand" -> isOp ? new ArrayList<>(Wand.wand_registry.keySet()) : List.of();
 					case "materia" -> isOp ? List.of("catalyst", "element_core", "component") : List.of();
+					case "mob" -> isOp ? EntityCategories.asList() : List.of();
 					case "set", "reset", "addXp" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
 					case "add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney" ->
@@ -785,6 +841,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				{
 					case "ability", "spell" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					case "mob" -> isOp ? List.of("<LEVEL: 1-100>") : List.of();
 					case "materia" -> isOp ? switch(args[2])
 					{
 						case "catalyst" -> Materia.materia_registry.values().stream()
@@ -826,6 +883,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 						default -> List.of();
 					} : List.of();
+					case "mob" -> isOp ? List.of("<custom name>") : List.of();
 					case "addXp" -> isOp ? List.of("<value>") : List.of();
 					case "set" -> isOp ? List.of("true", "false") : List.of();
 					case "spell", "ability" -> isOp ? List.of("true", "false") : List.of();

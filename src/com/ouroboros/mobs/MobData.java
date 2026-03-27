@@ -92,6 +92,30 @@ public class MobData
 		return;
 	}
 	
+	public void initializeSummoned(LivingEntity entity, int level, String customName)
+	{
+	    if (!file.exists())
+	    {
+	        double baseHp = entity.getAttribute(Attribute.MAX_HEALTH).getValue();
+	        double hp = baseHp * ((level * 0.15d) + 1.0);
+	        int armor = (int) (hp * 0.3);
+
+	        setUUID(uuid);
+	        setName(customName);          // stored directly, nameplate reads this back
+	        setEntityType(entity.getType());
+	        setLevel(level);
+	        setHp(Math.ceil(hp), true);
+	        setHp(Math.ceil(hp), false);
+	        setArmor(armor, true);
+	        setArmor(armor, false);
+	        setBreak(false);
+	        setLocation(entity.getLocation());
+	        entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
+	        entity.getPersistentDataContainer().set(MobNameplate.customMob, PersistentDataType.STRING, customName);
+	        save();
+	    }
+	}
+	
 	public static void convertLegacyMob(LivingEntity entity)
 	{
 		MobData data = MobData.getMob(entity.getUniqueId());
@@ -101,7 +125,7 @@ public class MobData
 			data = new MobData(entity);
 			data.initialize(entity);
 			data.save();
-			MobNameplate.build(entity);
+			MobNameplate.build(entity, true);
 			
 			var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
 			att.setBaseValue(1023.9);
@@ -236,9 +260,10 @@ public class MobData
 		return config.getString("mob.name");
 	}
 	
-	public void setName(String str) 
+	public String setName(String str) 
 	{
 		config.set("mob.name", str);
+		return config.getString("mob.name");
 	}
 	
 	public double getHp(Boolean getBase) 
@@ -287,7 +312,7 @@ public class MobData
 		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
 		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
 		if (EntityEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
-		if (EntityEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.25;
+		if (EntityEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.15;
 		if (EntityEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
 		if (EntityEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
 		
@@ -352,8 +377,13 @@ public class MobData
 		else 
 		{
 			if (element == null) element = ElementType.PURE;
+			EntityEffects.checkFromCombat((LivingEntity) target, element); // apply effects first
+
+			if (data.isBreak())
+			    data.breakDamage(value, 10);
+			else
+			    data.damage(value, damageArmor, element);
 			
-			data.damage(value, damageArmor, element);
 			data.save();
 
 			//Update their HP bar
@@ -404,6 +434,7 @@ public class MobData
 		deleteFile();
 	}
 	
+	
 	public void breakDamage(double value, double percent)
 	{
 		MobData data = MobData.getMob(uuid);
@@ -430,7 +461,17 @@ public class MobData
 	 */
 	public void setBreak()
 	{
-		damageArmor(getArmor(true));
+	    setArmor(0, false);
+	    setBreak(true);
+	    Entity entity = Bukkit.getEntity(uuid);
+	    OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
+	    MobNameplate.update((LivingEntity) entity);
+	    Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, () ->
+	    {
+	        setArmor(getArmor(true), false);
+	        setBreak(false);
+	        MobNameplate.update((LivingEntity) entity);
+	    }, 300);
 	}
 	
 	public boolean isDead()

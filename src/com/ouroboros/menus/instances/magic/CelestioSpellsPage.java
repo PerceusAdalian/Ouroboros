@@ -16,6 +16,8 @@ import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
+import com.lol.spells.instances.celestio.Satiate;
+import com.lol.spells.instances.celestio.SolarExpanse;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -37,20 +39,22 @@ public class CelestioSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new Expell(), 12, this);
 		
 		// 2
+		GuiButton.placeSpellButton(player, new Satiate(), 13, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Lumos(), 13, this);
-		GuiButton.placeSpellButton(player, new Revelio(), 14, this);
-		GuiButton.placeSpellButton(player, new Cure(), 15, this);
+		GuiButton.placeSpellButton(player, new Lumos(), 14, this);
+		GuiButton.placeSpellButton(player, new Revelio(), 15, this);
+		GuiButton.placeSpellButton(player, new Cure(), 16, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new AssertOrder(), 16, this);
+		GuiButton.placeSpellButton(player, new AssertOrder(), 19, this);
+		GuiButton.placeSpellButton(player, new SolarExpanse(), 20, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Ascension(), 19, this);
+		GuiButton.placeSpellButton(player, new Ascension(), 21, this);
 		
 		// 6
-		GuiButton.placeSpellButton(player, new Pneuma(), 20, this);
+		GuiButton.placeSpellButton(player, new Pneuma(), 22, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

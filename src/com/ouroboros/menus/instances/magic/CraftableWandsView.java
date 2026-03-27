@@ -29,7 +29,7 @@ public class CraftableWandsView extends AbstractOBSGui
 
 	public CraftableWandsView(Player player) 
 	{
-		super(player, "Craftable Wands", 54, Set.of(11,12,13,14,15,30,32,37,43));
+		super(player, "Craftable Wands", 54, Set.of(37,43));
 	}
 
 	public static Map<UUID, Wand> wandConfirmationMap = new HashMap<>();
@@ -44,7 +44,13 @@ public class CraftableWandsView extends AbstractOBSGui
 		placeWandButton(player, Wand.get("wand_4"), 14, this);
 		placeWandButton(player, Wand.get("wand_5"), 15, this);
 		
-		placeWandButton(player, Wand.get("luminas_wand"), 30, this);
+		placeWandButton(player, Wand.get("luminas_wand"), 20, this);
+		placeWandButton(player, Wand.get("sithis_armament"), 21, this);
+		placeWandButton(player, Wand.get("agni_staff"), 22, this);
+		placeWandButton(player, Wand.get("bjorn_artifact"), 23, this);
+		placeWandButton(player, Wand.get("nidus_cane"), 24, this);
+		placeWandButton(player, Wand.get("seth_caduceus"), 30, this);
+		placeWandButton(player, Wand.get("antenna_of_end"), 31, this);
 		placeWandButton(player, Wand.get("twilight_catalyst"), 32, this);
 		
 		//Exits

@@ -65,7 +65,7 @@ public class Pneuma extends Spell
 		{
 			if (cooldown.contains(p.getUniqueId())) 
 			{
-				PrintUtils.PrintToActionBar(p, "&7&o'&e&oPhoton Beam&7&o'on Cooldown..");
+				PrintUtils.PrintToActionBar(p, "&7&o'&e&oPhoton Beam&7&o' on Cooldown..");
 				return -1;
 			}
 			

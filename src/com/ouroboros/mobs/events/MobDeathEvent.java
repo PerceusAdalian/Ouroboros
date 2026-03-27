@@ -48,6 +48,8 @@ public class MobDeathEvent implements Listener
 			    if (!le.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY)) return;
 			    le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(1);
 			    MobData data = MobData.getMob(le.getUniqueId());
+			    if (data == null) return;
+			    int level = data.getLevel();
 			    
 			    // Handle drop table
 			    final int maxDrops = 3;
@@ -70,8 +72,7 @@ public class MobDeathEvent implements Listener
 			        if (!Chance.of(40)) continue;
 			        
 			        int moneyTier = Character.getNumericValue(item.getInternalName().charAt(item.getInternalName().length() - 1));
-			        if (Rarity.getRarityForMobLevel(data.getLevel()) < moneyTier) continue; 
-
+			        if (Rarity.getRarityForMobLevel(level) < moneyTier) continue; 
 			        
 			        e.getDrops().add(item.toItemStack());
 			        currentDrops++;
@@ -87,7 +88,7 @@ public class MobDeathEvent implements Listener
 			        	if (currentSpellDrops >= maxSpellDrops) break;
 			        	if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
 			        	if (!Chance.of(3)) continue;
-			            if (spell.getRarity().getRarity() > (data == null ? 0 : Rarity.getRarityForMobLevel(data.getLevel()))) continue;
+			            if (spell.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
 			            if (spellDropsRegistry.getOrDefault(spell, false)) continue;
 			            
 			            e.getDrops().add(spell.getAsItemStack(false));
@@ -101,7 +102,7 @@ public class MobDeathEvent implements Listener
 			            {
 			                AbstractObsObject essence = switch (mobCategory) 
 			                {
-			                    case CELESTIO_MOBS -> new CelestioEssence();
+			                	case CELESTIO_MOBS -> new CelestioEssence();
 			                    case MORTIO_MOBS   -> new MortioEssence();
 			                    case INFERNO_MOBS  -> new InfernoEssence();
 			                    case GLACIO_MOBS   -> new GlacioEssence();

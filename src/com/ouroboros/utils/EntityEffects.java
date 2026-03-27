@@ -85,7 +85,6 @@ public class EntityEffects
 	
 	public static void checkFromCombat(LivingEntity target, ElementType element) 
 	{
-
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data == null) return;
 
@@ -119,12 +118,15 @@ public class EntityEffects
 		if (element == ElementType.CRUSH) 
 		{
 			EntityEffects.add(target, PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 99, true);
-			data.setBreak();
+			data.setBreak(true);
+			data.setArmor(0, false);
 		}
 		
 		// Corrosive will erode target's armor by 30% of its current value.
 		if (element == ElementType.CORROSIVE && !data.isBreak())
 			data.damageArmor(data.getArmor(false) * 0.3d);
+		
+		MobNameplate.update(target);
 	}
 
 	public static Set<UUID> hasEtherOverload = new HashSet<>();
@@ -232,13 +234,12 @@ public class EntityEffects
 	
 	public static Set<UUID> hasCharred = new HashSet<>();
 	/**
-	 * @Effect Causes those affected to have Hunger, Fatigue, and Slowness, while taking 15% more Inferno Damage.
-	 * 			30% chance to cause burn for 10 seconds.
+	 * @Effect Causes those affected to have Hunger, Fatigue, and Slowness, while taking 25% more Inferno Damage.
+	 * 			20% chance to cause burn while charred.
 	 * @param target
-	 * @param magnitude
 	 * @param seconds
 	 */
-	public static void addCharred(LivingEntity target, int magnitude, int seconds)
+	public static void addCharred(LivingEntity target, int seconds)
 	{
 		target.setFireTicks(seconds * 20);
 		add(target, PotionEffectType.HUNGER, seconds*20, 0, false);
@@ -395,6 +396,11 @@ public class EntityEffects
 		}
 	}
 
+	public static void addSatiated(LivingEntity target)
+	{
+		EntityEffects.add(target, PotionEffectType.SATURATION, 60, 2, false);
+	}
+	
 	public static Set<UUID> hasDread = new HashSet<>();
 	/*
 	 * "&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",

@@ -111,6 +111,20 @@ public class RayCastUtils
 	    return true;
 	}
 	
+	public static boolean getNearbyPlayers(Location source, double radius, Consumer<LivingEntity> action)
+	{
+		Collection<Entity> nearbyPlayers = source.getWorld().getNearbyEntities(source, radius, radius, radius);
+		
+		if (nearbyPlayers.isEmpty()) return false;
+		
+		for (Entity e : nearbyPlayers)
+		{
+			if (!(e instanceof Player p)) continue;
+			action.accept(p);
+		}
+		return true;
+	}
+	
     public static boolean isEntityInFOV(Player player, Entity mob, double foxDegrees)
     {
     	Vector lookDirection = player.getLocation().getDirection().normalize();

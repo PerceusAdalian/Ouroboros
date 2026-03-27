@@ -28,7 +28,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 
 	public CoreCraftingPage(Player player) 
 	{
-		super(player, "Essence Reservoirs", 54, Set.of(13,20,21,22,23,24,31,37,40,43));
+		super(player, "Core Crafting", 54, Set.of(13,20,21,22,23,24,31,37,40,43));
 	}
 
 	@Override

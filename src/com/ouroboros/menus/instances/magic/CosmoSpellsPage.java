@@ -13,6 +13,7 @@ import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
+import com.lol.spells.instances.cosmo.VoidForm;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -39,10 +40,12 @@ public class CosmoSpellsPage extends AbstractOBSGui
 		
 		// 3
 		GuiButton.placeSpellButton(player, new ElementalConfinement(), 14, this);
+		
 		// 4
+		GuiButton.placeSpellButton(player, new VoidForm(), 15, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Gate(), 15, this);
+		GuiButton.placeSpellButton(player, new Gate(), 16, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

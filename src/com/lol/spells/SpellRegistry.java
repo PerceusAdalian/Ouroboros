@@ -15,6 +15,7 @@ import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
+import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
 import com.lol.spells.instances.arcano.ArcaneBolt;
@@ -30,31 +31,36 @@ import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
+import com.lol.spells.instances.celestio.Satiate;
+import com.lol.spells.instances.celestio.SolarExpanse;
 import com.lol.spells.instances.cosmo.Antimatter;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
+import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.heresio.Hex;
 import com.lol.spells.instances.inferno.Bombarda;
+import com.lol.spells.instances.inferno.Combustion;
+import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
+import com.lol.spells.instances.inferno.Meteor;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
-import com.lol.spells.instances.mortio.SkullOfSithis;
+import com.lol.spells.instances.mortio.AspectOfSithis;
 
 public class SpellRegistry 
 {
 	public static final Map<String, Spell> spellRegistry = new HashMap<>();
     
-	@SuppressWarnings("null")
 	public static void init() 
     {
         List<Class<? extends Spell>> itemClasses = Arrays.asList(
@@ -69,12 +75,14 @@ public class SpellRegistry
         		Expell.class,
         		Pneuma.class,
         		Ascension.class,
+        		SolarExpanse.class,
+        		Satiate.class,
         		
         		//Mortio
         		Haunt.class,
         		Sew.class,
         		Reap.class,
-        		SkullOfSithis.class,
+        		AspectOfSithis.class,
         		Siphon.class,
         		Demonform.class,
         		Shroud.class,
@@ -82,6 +90,9 @@ public class SpellRegistry
         		//Inferno
         		Incendio.class,
         		Bombarda.class,
+        		Ignite.class,
+        		Combustion.class,
+        		Meteor.class,
         		
         		//Glacio
         		Glacius.class,
@@ -97,6 +108,7 @@ public class SpellRegistry
         		GalvanicNeedle.class,
         		Gust.class,
         		Galeforce.class,
+        		Tailwind.class,
         		
         		//Geo
         		Expelliarmus.class,
@@ -108,6 +120,7 @@ public class SpellRegistry
         		ElementalConfinement.class,
         		Reconfigure.class,
         		Antimatter.class,
+        		VoidForm.class,
         		
         		//Heresio
         		Hex.class,

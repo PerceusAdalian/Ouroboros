@@ -22,17 +22,19 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
-public class SkullOfSithis extends Spell
+public class AspectOfSithis extends Spell
 {
 
-	public SkullOfSithis() 
+	public AspectOfSithis() 
 	{
-		super("Skull of Sithis", "skull_of_sithis", Material.WITHER_SKELETON_SKULL, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FOUR, 100, 1.5, false,
+		super("Aspect of Sithis", "aspect_of_sithis", Material.WITHER_SKELETON_SKULL, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FOUR, 100, 1.5, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
+				"&r&4Aspect of Sithis&f: &4&oSeething Skull&r&f --",
 				"&r&fSummon a seething demon skull and launch it foward, exploding on impact.",
 				"&r&fThe projectile may deal variable &4&lMortio&r&f damage, while the",
 				"&r&fimpact may deal variable &e&lBlast&r&f and &c&lInferno&r&f damage.","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
+				"&r&4Aspect of Sithis&f: &4&oDreadful Gaze&r&f --",
 				"&r&fGaze upon your target &7(10m)&f, dealing 10&c♥&f &4&lMortio&r&f damage and inflicting &4Dread &7(30s)","",
 				"&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 				"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",

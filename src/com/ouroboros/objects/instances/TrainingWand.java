@@ -1,5 +1,9 @@
 package com.ouroboros.objects.instances;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -19,6 +23,7 @@ import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 
 public class TrainingWand extends AbstractObsObject
@@ -41,10 +46,15 @@ public class TrainingWand extends AbstractObsObject
 				"&r&7&oUse this wand to increase &d&oMagical Prowess&r&f.");
 	}
 
+	private static Set<UUID> cooldown = new HashSet<>();
+	
 	@Override
 	public boolean cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
+		if (!PlayerActions.rightClickAir(e)) return false;
+		if (cooldown.contains(p.getUniqueId())) return false;
+		
 		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 		if (data.getMagicProficiency() == 0)
 		{
@@ -56,13 +66,18 @@ public class TrainingWand extends AbstractObsObject
 		
 		EntityEffects.playSound(p, Sound.ENTITY_ARROW_SHOOT, SoundCategory.AMBIENT);
 		Arrow arrow = p.launchProjectile(Arrow.class);
-		arrow.setDamage(2);
+		arrow.setDamage(1);
 		arrow.setGravity(false);
 		arrow.setGlowing(true);
 		arrow.setColor(Color.WHITE);
 		arrow.setCritical(false);
 		arrow.setPickupStatus(PickupStatus.DISALLOWED);
-		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->arrow.remove(), 20);
+		
+		cooldown.add(p.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->{
+			arrow.remove();
+			cooldown.remove(p.getUniqueId());
+		}, 20);
 		
 		return true;
 	}

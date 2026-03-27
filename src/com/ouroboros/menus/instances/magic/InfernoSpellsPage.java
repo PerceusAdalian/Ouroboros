@@ -8,7 +8,10 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.inferno.Bombarda;
+import com.lol.spells.instances.inferno.Combustion;
+import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
+import com.lol.spells.instances.inferno.Meteor;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -25,8 +28,20 @@ public class InfernoSpellsPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
+		// 1
 		GuiButton.placeSpellButton(player, new Incendio(), 10, this);
-		GuiButton.placeSpellButton(player, new Bombarda(), 11, this);
+		
+		// 2
+		GuiButton.placeSpellButton(player, new Combustion(), 11, this);
+		
+		// 3
+		GuiButton.placeSpellButton(player, new Ignite(), 12, this);
+		
+		// 4
+		GuiButton.placeSpellButton(player, new Bombarda(), 13, this);
+		GuiButton.placeSpellButton(player, new Meteor(), 14, this);
+		
+		// 5
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

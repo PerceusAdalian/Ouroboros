@@ -88,16 +88,19 @@ public class MobDamageEvent implements Listener
 						target.setFireTicks(100);
 					}
 					
-					if (element == ElementType.INFERNO && EntityEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(30))
-						EntityEffects.addBurn((LivingEntity) target, 10);
+					if (element == ElementType.INFERNO && EntityEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(20))
+					{
+						EntityEffects.addBurn((LivingEntity) target, 20);
+						EntityEffects.hasCharred.remove(target.getUniqueId());
+					}
+					
+					//Apply relevent effects based on the combat element used.
+					EntityEffects.checkFromCombat((LivingEntity) target, element);
 					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, 10);
 					else 
 						data.damage(dmg, true, element);
-					
-					//Apply relevent effects based on the combat element used.
-					EntityEffects.checkFromCombat((LivingEntity) target, element);
 					
 				}
 				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
@@ -153,7 +156,7 @@ public class MobDamageEvent implements Listener
 				//Update their HP bar
 				if (target.getCustomName() == null) 
 				{
-					MobNameplate.build((LivingEntity) target);
+					MobNameplate.build((LivingEntity) target, true);
 					MobNameplate.update((LivingEntity) target);
 				}
 				else 

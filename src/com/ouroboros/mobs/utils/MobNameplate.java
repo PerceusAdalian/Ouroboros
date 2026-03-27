@@ -1,9 +1,11 @@
 package com.ouroboros.mobs.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import com.ouroboros.Ouroboros;
@@ -18,18 +20,24 @@ import com.ouroboros.utils.RayCastUtils;
  */
 public class MobNameplate
 {
+	public static final NamespacedKey customMob = new NamespacedKey(Ouroboros.instance, "customMobName");
+	
 	//Nameplate handler
-    public static void build(LivingEntity mob)
+    public static void build(LivingEntity mob, boolean buildCustom)
     {
         MobData data = MobData.getMob(mob.getUniqueId());
         if (data == null) return;
 
         mob.setCustomNameVisible(true);
-        mob.setCustomName(initialize(mob, data));
+        if (mob.getPersistentDataContainer().has(customMob) && buildCustom)
+        {
+        	mob.setCustomName(initialize(mob, mob.getPersistentDataContainer().get(customMob, PersistentDataType.STRING), data));
+        }
+        else mob.setCustomName(initialize(mob, data));
 
         if (Ouroboros.debug)
             PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oSpawnNameplate&r&f -- &aOK&f || &7Mob: "
-                + PrintUtils.getFancyEntityName(mob.getType()));
+                + data.getName());
     }
 
     public static void update(LivingEntity mob)
@@ -68,23 +76,46 @@ public class MobNameplate
         		buildHPSegment(data) + "&f} &7| &f{" + 
         		buildArmorSegment(data) + "&f}");
     }
+    
+    /**
+     * @description: Initializes a custom mob nameplate with a chosen name.
+     * @param mob
+     * @param name : Chosen Name
+     * @param data
+     * @return
+     */
+    private static String initialize(LivingEntity mob, String name, MobData data)
+    {
+    	mob.getPersistentDataContainer().set(customMob, PersistentDataType.STRING, data.setName(name));
+    	data.setName(PrintUtils.ColorParser(name));
+    	return PrintUtils.ColorParser(buildIdentitySegment(mob, data.getName(), data) + " &7| &f{" + 
+        		buildHPSegment(data) + "&f} &7| &f{" + 
+        		buildArmorSegment(data) + "&f}");
+    	
+    }
 
     // Segments
     private static String buildIdentitySegment(LivingEntity mob, MobData data)
     {
-        int level = data.getLevel();
-        String levelTag = " &eLv&f: &r&b&l" + level;
-        String entityTierIcon = level >= 100 ? "۞"
-							  : level >= 80  ? "❂"
-							  : level >= 60  ? "⚜"
-							  : level >= 40  ? "✯"
-							  : level >= 20  ? "♢"
-							  : "●";
-		String affinityTag = "&r&f⊰&" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + entityTierIcon + "&r&f⊱ ";
-    							
+    	String levelTag = " &eLv&f: &r&b&l" + data.getLevel();
+        String affinityTag = buildAffinityTag(mob, data);
         return affinityTag + PrintUtils.getFancyEntityName(mob.getType()) + levelTag;
     }
-
+    
+    /**
+     * 
+     * @param mob
+     * @param name takes in an optional name segment for custom mob building.
+     * @param data
+     * @return
+     */
+    private static String buildIdentitySegment(LivingEntity mob, String name, MobData data)
+    {
+    	String levelTag = " &eLv&f: &r&b&l" + data.getLevel();
+        String affinityTag = buildAffinityTag(mob, data);
+        return affinityTag + PrintUtils.ColorParser(name) + levelTag;
+    }
+    
     private static String buildHPSegment(MobData data)
     {
         double current = data.getHp(false);
@@ -126,6 +157,19 @@ public class MobNameplate
     	int empty = segments - filled;
     	
     	return "&e" + "|".repeat(filled) + "&6" + "|".repeat(empty);
+    }
+    
+    private static String buildAffinityTag(LivingEntity mob, MobData data)
+    {
+    	int level = data.getLevel();
+        String entityTierIcon = level >= 100 ? "۞"
+							  : level >= 80  ? "❂"
+							  : level >= 60  ? "⚜"
+							  : level >= 40  ? "✯"
+							  : level >= 20  ? "♢"
+							  : "●";
+		String affinityTag = "&r&f⊰&" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + entityTierIcon + "&r&f⊱ ";
+    	return affinityTag;
     }
     
     public static void registerTaskHandler(Plugin plugin)

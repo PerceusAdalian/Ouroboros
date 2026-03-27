@@ -67,4 +67,21 @@ public enum EntityCategory
 			case ARCANO_MOBS -> EntityCategories.arcano_mobs;
 		};
 	}
+	
+	public static Set<EntityType> parseByElementType(ElementType type)
+	{
+		return switch (type)
+		{
+			case ARCANO-> EntityCategories.arcano_mobs;
+			case CELESTIO -> EntityCategories.celestio_mobs;
+			case MORTIO -> EntityCategories.mortio_mobs;
+			case INFERNO -> EntityCategories.inferno_mobs;
+			case GLACIO -> EntityCategories.glacio_mobs;
+			case AERO -> EntityCategories.aero_mobs;
+			case GEO -> EntityCategories.geo_mobs;
+			case COSMO -> EntityCategories.cosmo_mobs;
+			case HERESIO -> EntityCategories.heresio_mobs;
+			default -> EntityCategories.any;	
+		};
+	}
 }

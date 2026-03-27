@@ -102,18 +102,6 @@ public class LevelTable
 		// These have a unique difficulty identity that doesn't map cleanly to one tier.
 		// ───────────────────────────────────────────────────────────────────────────────
 
-		// DESERT — Common is the baseline; two uncommon weight bands; one elite cameo.
-		// Harsh environment = mobs trend harder than other Common biomes.
-		WeightedTable<Integer> desertTable = new WeightedTable<Integer>()
-		    .add(16,  1).add(17,  1).add(18,  1).add(19,  1)             // Fodder bleed
-		    .add(20,  5).add(21,  8).add(22, 11).add(23, 12).add(24, 12) // Common (baseline)
-		    .add(25, 11).add(26,  9).add(27,  7).add(28,  5).add(29,  3)
-		    .add(30,  2).add(31,  1)
-		    .add(40,  5).add(41,  5)               // Uncommon band 1
-		    .add(42,  4).add(43,  3)               // Uncommon band 2
-		    .add(60,  1)                           // Elite cameo
-		    .bake();
-
 		// OCEAN — Vast and unpredictable. Uncommon baseline with a real elite presence.
 		WeightedTable<Integer> oceanTable = new WeightedTable<Integer>()
 		    .add(30,  1).add(31,  1).add(32,  1)                         // Common bleed
@@ -152,16 +140,6 @@ public class LevelTable
 		    .add(40,  4).add(41,  4).add(42,  3).add(43,  2).add(44,  1) // Uncommon tail
 		    .bake();
 
-		// DARK FOREST — Sinister. Common dominant but uncommon is meaningful.
-		WeightedTable<Integer> darkForestTable = new WeightedTable<Integer>()
-		    .add(13,  1).add(14,  1).add(15,  1).add(16,  1)
-		    .add(17,  1).add(18,  1).add(19,  1)                         // Fodder bleed
-		    .add(20,  6).add(21,  9).add(22, 11).add(23, 12).add(24, 11) // Common (dominant)
-		    .add(25,  9).add(26,  7).add(27,  5).add(28,  3).add(29,  2)
-		    .add(40,  4).add(41,  3).add(42,  2)   // Uncommon (occasional)
-		    .add(60,  1)                           // Elite cameo (lurking dread)
-		    .bake();
-
 		// DEEP DARK — Ancient, oppressive. Elite floor; royal dominant; calamity looms.
 		WeightedTable<Integer> deepDarkTable = new WeightedTable<Integer>()
 		    .add(60,  4).add(61,  5).add(62,  5).add(63,  4).add(64,  3) // Elite (floor)
@@ -189,24 +167,7 @@ public class LevelTable
 		    .add(60,  3).add(61,  2).add(62,  1)   // Elite (occasional)
 		    .bake();
 
-		// BADLANDS — Scarred and hostile. Uncommon dominant; elite meaningful.
-		WeightedTable<Integer> badlandsTable = new WeightedTable<Integer>()
-		    .add(18,  1).add(19,  1)
-		    .add(20,  3).add(21,  3).add(22,  2)                         // Common bleed
-		    .add(40,  7).add(41,  9).add(42, 11).add(43, 11).add(44, 10) // Uncommon (dominant)
-		    .add(45,  8).add(46,  6).add(47,  4).add(48,  3).add(49,  2)
-		    .add(60,  4).add(61,  3).add(62,  2).add(63,  1)             // Elite presence
-		    .bake();
-
 		// FROZEN PEAKS / JAGGED PEAKS / STONY PEAKS — High altitude, brutal exposure.
-		// Uncommon dominant; elite is real; common barely clings on.
-		WeightedTable<Integer> mountainPeaksTable = new WeightedTable<Integer>()
-		    .add(18,  1).add(19,  1)
-		    .add(20,  3).add(21,  3).add(22,  2)                         // Common bleed
-		    .add(40,  7).add(41,  9).add(42, 11).add(43, 11).add(44, 10) // Uncommon (dominant)
-		    .add(45,  8).add(46,  6).add(47,  4).add(48,  3).add(49,  2)
-		    .add(60,  4).add(61,  3).add(62,  2).add(63,  1)             // Elite (occasional)
-		    .bake();
 
 		// NETHER WASTES — Standard Nether. Elite dominant; royal frequent; calamity lurks.
 		WeightedTable<Integer> netherGeneralTable = new WeightedTable<Integer>()
@@ -252,11 +213,11 @@ public class LevelTable
 		LEVEL_RANGES.put(Biome.FOREST,              						commonTable);
 		LEVEL_RANGES.put(Biome.FLOWER_FOREST,       						uncommonTable);
 		LEVEL_RANGES.put(Biome.BIRCH_FOREST,        						commonTable);
-		LEVEL_RANGES.put(Biome.OLD_GROWTH_BIRCH_FOREST, 					commonTable);
-		LEVEL_RANGES.put(Biome.DARK_FOREST,         						darkForestTable);
+		LEVEL_RANGES.put(Biome.OLD_GROWTH_BIRCH_FOREST, 					uncommonTable);
+		LEVEL_RANGES.put(Biome.DARK_FOREST,         						eliteTable);
 		LEVEL_RANGES.put(Biome.CHERRY_GROVE,        						commonTable);    // Whimsical but not safe
 		LEVEL_RANGES.put(Biome.RIVER,               						fodderTable);
-		LEVEL_RANGES.put(Biome.MUSHROOM_FIELDS,     						commonTable);    // Peaceful, slight threat at night
+		LEVEL_RANGES.put(Biome.MUSHROOM_FIELDS,     						royalTable);    // Peaceful, slight threat at night
 
 		// ── OVERWORLD : COLD / HIGHLAND ─────────────────────────────────────────────
 
@@ -269,9 +230,9 @@ public class LevelTable
 		LEVEL_RANGES.put(Biome.SNOWY_SLOPES,        						uncommonTable);
 		LEVEL_RANGES.put(Biome.FROZEN_RIVER,        						commonTable);
 		LEVEL_RANGES.put(Biome.ICE_SPIKES,          						uncommonTable);  // Harsh, rare terrain
-		LEVEL_RANGES.put(Biome.FROZEN_PEAKS,        						mountainPeaksTable);
-		LEVEL_RANGES.put(Biome.JAGGED_PEAKS,        						mountainPeaksTable);
-		LEVEL_RANGES.put(Biome.STONY_PEAKS,         						mountainPeaksTable);
+		LEVEL_RANGES.put(Biome.FROZEN_PEAKS,        						calamityTable);
+		LEVEL_RANGES.put(Biome.JAGGED_PEAKS,        						royalTable);
+		LEVEL_RANGES.put(Biome.STONY_PEAKS,         						eliteTable);
 		LEVEL_RANGES.put(Biome.WINDSWEPT_HILLS,     						uncommonTable);
 		LEVEL_RANGES.put(Biome.WINDSWEPT_GRAVELLY_HILLS, 					uncommonTable);
 		LEVEL_RANGES.put(Biome.WINDSWEPT_FOREST,    						uncommonTable);
@@ -279,20 +240,20 @@ public class LevelTable
 
 		// ── OVERWORLD : HOT / DRY ────────────────────────────────────────────────────
 
-		LEVEL_RANGES.put(Biome.DESERT,              						desertTable);
+		LEVEL_RANGES.put(Biome.DESERT,              						fodderTable);
 		LEVEL_RANGES.put(Biome.SAVANNA,             						commonTable);
 		LEVEL_RANGES.put(Biome.SAVANNA_PLATEAU,     						uncommonTable);  // Elevated = harder
-		LEVEL_RANGES.put(Biome.BADLANDS,            						badlandsTable);
-		LEVEL_RANGES.put(Biome.ERODED_BADLANDS,     						badlandsTable);
-		LEVEL_RANGES.put(Biome.WOODED_BADLANDS,     						uncommonTable);
+		LEVEL_RANGES.put(Biome.BADLANDS,            						uncommonTable);
+		LEVEL_RANGES.put(Biome.ERODED_BADLANDS,     						royalTable);
+		LEVEL_RANGES.put(Biome.WOODED_BADLANDS,     						eliteTable);
 
 		// ── OVERWORLD : WET / LUSH ───────────────────────────────────────────────────
 
 		LEVEL_RANGES.put(Biome.JUNGLE,              						jungleTable);
 		LEVEL_RANGES.put(Biome.SPARSE_JUNGLE,       						commonTable);    // Less dense = less danger
-		LEVEL_RANGES.put(Biome.BAMBOO_JUNGLE,       						jungleTable);    // Dense = full jungle rules
+		LEVEL_RANGES.put(Biome.BAMBOO_JUNGLE,       						uncommonTable);    // Dense = full jungle rules
 		LEVEL_RANGES.put(Biome.SWAMP,               						swampTable);
-		LEVEL_RANGES.put(Biome.MANGROVE_SWAMP,      						uncommonTable);  // More oppressive than swamp
+		LEVEL_RANGES.put(Biome.MANGROVE_SWAMP,      						eliteTable);  // More oppressive than swamp
 
 		// ── OVERWORLD : OCEAN ────────────────────────────────────────────────────────
 
