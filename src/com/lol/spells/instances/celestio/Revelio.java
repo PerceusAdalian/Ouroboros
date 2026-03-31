@@ -11,9 +11,11 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Revelio extends Spell
@@ -24,7 +26,7 @@ public class Revelio extends Spell
 		super("Revelio", "revelio", Material.NETHER_STAR, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.THREE, 200, 5, false,
 				"&r&fApplies &e&oExposed&r&7 (20s) &r&fto all nearby entities within 30 &b&ometers&r&f.","",
 				"&r&e&oExposed &r&fEffect: Reveals an entity's location and &6&oBreaks &r&fthem.",
-				"&r&fIf those affected are &4&lMortio &r&faffiliated, they instantly die.","",
+				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&e&oRadiance&r&7&o', however, colloquially known as '&r&e&oRevelio&r&7&o'.");
 	}

@@ -209,6 +209,20 @@ public class EntityEffects
 	    chillTimers.put(id, task);
 	}
 	
+	public static Set<UUID> hasFrosted = new HashSet<>();
+	public static void addFrosted(LivingEntity target, int magnitude, int seconds)
+	{
+		if (hasFrosted.contains(target.getUniqueId())) return;
+		hasFrosted.add(target.getUniqueId());
+		add(target, PotionEffectType.WEAKNESS, seconds * 20, magnitude, false);
+		add(target, PotionEffectType.SLOWNESS, seconds * 20, magnitude, false);
+		OBStandardTimer.runWithCancel(Ouroboros.instance, e ->
+		{
+			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SNOWFLAKE, null);
+		}, 20, seconds * 20);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasFrosted.remove(target.getUniqueId()), seconds * 20);
+	}
+	
 	public static Set<UUID> hasFrozen = new HashSet<>();
 	public static void addFrozen(LivingEntity target)
 	{

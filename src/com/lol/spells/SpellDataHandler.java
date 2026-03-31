@@ -28,7 +28,9 @@ public class SpellDataHandler
 			case COSMO -> pathAlpha = "cosmo.";
 			case HERESIO -> pathAlpha = "heresio.";
 			case ARCANO -> pathAlpha = "arcano.";
+			case ASTRAL -> pathAlpha = "astral.";
 			case NULL -> pathAlpha = "nulltype.";
+			
 		};
 		return "spells."+pathAlpha+spell.getInternalName()+s;
 	}

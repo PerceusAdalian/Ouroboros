@@ -18,6 +18,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -32,7 +33,7 @@ public class Reap extends Spell
 	{
 		super("Reap", "reap", Material.OPEN_EYEBLOSSOM, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true,
 				"&r&fSlash your target within &b&o12 meters&r&f dealing 3&c♥&f &e&lSever&r&f damage.",
-				"&r&fIf that target is &4Cursed&f, remove it, and deal 6&c♥&f &4&lMortio&r&f damage instead:",
+				"&r&fIf that target is &4Cursed&f, remove it, and deal 6&c♥&f "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage instead:",
 				"&r&aRestore &b&o50%&r&f of the damage to self, and inflict &4Doom &r&bI &7(30s | &cPVP&7: &c75%&7, &cDoom II&7)","",
 				"&r&4Doom &eEffect&f: Doom applies a &dDOT&f effect equal to it's &b&omagnitude&r&f.",
 				"&r&fAfflicted take &b&o1.25x &r&4&lMortio&r&f damage, and reapplying instantly kills them &7(NONPVP)",

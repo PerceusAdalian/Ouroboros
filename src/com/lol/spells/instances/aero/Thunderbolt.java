@@ -15,9 +15,11 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Thunderbolt extends Spell
@@ -29,7 +31,7 @@ public class Thunderbolt extends Spell
 				"&r&fStrike your target with &d&lAero&r&f energy &7(30m)&f inflicting &dStatic &7(10s / &r&cPVP&7:&r&c 5s&r&7)","",
 				"&r&dStatic &eEffect&f: causes mobs to emit shockwaves in a 10m radius.",
 				"&r&fAffected mobs receive &b&o1.25x &r&d&lAero&r&f damage.",
-				"&d&lAero&r&f-based mobs are &e&oimmune&r&f, and &a&ohealed&r&f instead.");
+				PrintUtils.color(ObsColors.AERO)+"&lAero&r&f-based mobs are &e&oimmune&r&f, and &a&ohealed&r&f instead.");
 	}
 
 	@Override

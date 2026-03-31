@@ -20,6 +20,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -39,7 +40,7 @@ public class SolarExpanse extends Spell
 				"&eSecondary&f "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&eSolar Expanse&f: &e&oGuilded Lance&r&f --",
 				"&r&fSend a piercing photon lance at target applying &e&oExpose&7 (30m | 20s)",
-				"&r&fIf the target is &6&oBroken&r&f, deal &e&lCelestio&r&f damage equal to &b&o45%&r&f current &aHP&c♥&f.","",
+				"&r&fIf the target is &6&oBroken&r&f, deal "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage equal to &b&o45%&r&f current &aHP&c♥&f.","",
 				"&r&bEchoic Dissonance&r&f: &e&oSecondary Cast&r&f sets CD to &b&o10 seconds&f and costs an extra &b100 &9&lMana&r&f.");
 	}
 

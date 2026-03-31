@@ -44,7 +44,7 @@ public class Ignite extends Spell
 		
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_BLOCK))
 		{
-		    EntityEffects.playSound(p, Sound.ITEM_FLINTANDSTEEL_USE, SoundCategory.AMBIENT);
+			EntityEffects.playSound(p, Sound.ITEM_FLINTANDSTEEL_USE, SoundCategory.AMBIENT);
 		    Block block = e.getClickedBlock().getRelative(BlockFace.UP);
 
 		    if (block == null || block.getType() != Material.AIR) return -1;

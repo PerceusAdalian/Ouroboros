@@ -16,10 +16,12 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Siphon extends Spell
@@ -29,7 +31,8 @@ public class Siphon extends Spell
 	{
 		super("Siphon Life", "siphon", Material.RED_DYE, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, true,
 				"&r&4&oDrain &r&b&o20%&r&7* &fof your target's current max HP within &b&o20 meters&r&f.",
-				"&r&f&a&oRestore &r&b&o50%&r&7** &r&fof the damage dealt to self &7(&cPVP&f: &c15%&7*&f, &c30%&7**)");
+				"&r&f&a&oRestore &r&b&o50%&r&7** &r&fof the damage dealt to self &7(&cPVP&f: &c15%&7*&f, &c30%&7**)",
+				"&r&fDamage dealt is considered "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage.");
 	}
 
 	@Override

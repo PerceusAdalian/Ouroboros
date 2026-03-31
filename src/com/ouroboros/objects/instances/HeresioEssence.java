@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
@@ -21,11 +22,11 @@ public class HeresioEssence  extends AbstractObsObject
 
 	public HeresioEssence() 
 	{
-		super("&2&lHeresio&r&f Essence", "heresio_essence", Material.ENDER_EYE, true, false, 
+		super(PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f Essence", "heresio_essence", Material.ENDER_EYE, true, false, 
 				PrintUtils.assignRarity(Rarity.ONE),"",
-				"&r&fAn eye of pure, unyielding &2Knowledge&f glares at you expectantly..","",
+				"&r&fAn eye of pure, unyielding "+PrintUtils.color(ObsColors.HERESIO)+"Knowledge&f glares at you expectantly..","",
 				"&r&fUsage: &d&oRight-Click&r&f",
-				"&r&fCharge your &2&lHeresio&r&f reservoir by consuming all on-hand.","",
+				"&r&fCharge your "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
 	}
 
@@ -39,7 +40,7 @@ public class HeresioEssence  extends AbstractObsObject
 			OBSParticles.drawHeresioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.HERESIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r&2⚛&f Added");
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.HERESIO)+"⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

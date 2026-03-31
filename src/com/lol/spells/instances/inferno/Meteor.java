@@ -20,10 +20,12 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.BiomeUtils;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Meteor extends Spell
@@ -32,9 +34,9 @@ public class Meteor extends Spell
 	public Meteor()
 	{
 		super("Meteor", "meteor", Material.FIRE_CHARGE, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 100, 5, false,
-				"&r&fSummon a meteor at target &d&oBlock&r&f or &d&oMob&r&7 (30m)",
+				"&r&fSummon a meteor at target &d&oBlock&r&7 (50m) &for &d&oMob&r&7 (30m)",
 				"&r&fMeteor's yeild = 4 &r&f&l± &r&e2 bonus&r&f in &d&ohot&r&f/&d&ocold climates&r&f,",
-				"&r&fand deals variable &c&lInferno&r&f and &e&lBlast&r&f damage.");
+				"&r&fand deals variable "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f and &e&lBlast&r&f damage.");
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class Meteor extends Spell
 	        return 100;
 	    }
 
-	    Block bTarget = RayCastUtils.rayTraceBlock(p, 30);
+	    Block bTarget = RayCastUtils.rayTraceBlock(p, 50);
 	    if (bTarget == null || bTarget.getType() == Material.AIR) return -1;
 
 	    playSpellEffects(p, bTarget.getLocation());

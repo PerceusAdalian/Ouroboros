@@ -25,7 +25,6 @@ public class ObsShopGui extends AbstractOBSGui
 		super(player, "Nexus Shop", 54, Set.of(21,22,23,37,43));
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	protected void build() 
 	{

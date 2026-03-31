@@ -168,7 +168,7 @@ public class MobNameplate
 							  : level >= 40  ? "✯"
 							  : level >= 20  ? "♢"
 							  : "●";
-		String affinityTag = "&r&f⊰&" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + entityTierIcon + "&r&f⊱ ";
+		String affinityTag = "&r&f⊰" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + entityTierIcon + "&r&f⊱ ";
     	return affinityTag;
     }
     

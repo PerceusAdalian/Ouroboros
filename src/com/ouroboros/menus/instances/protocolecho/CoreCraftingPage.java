@@ -14,6 +14,7 @@ import com.eol.enums.MateriaState;
 import com.eol.materia.instances.Materia;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
@@ -36,7 +37,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 	{
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
 		
-		GuiButton.button(Material.BLAZE_ROD).setName("&r&fCraft &c&lInferno&r&e Core").setLore(setCoreLore(data, ElementType.INFERNO)).place(this, 20, e->
+		GuiButton.button(Material.BLAZE_ROD).setName("&r&fCraft "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&e Core").setLore(setCoreLore(data, ElementType.INFERNO)).place(this, 20, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -44,7 +45,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 
-		GuiButton.button(Material.NAUTILUS_SHELL).setName("&r&fCraft &b&lGlacio&r&e Core").setLore(setCoreLore(data, ElementType.GLACIO)).place(this, 21, e->
+		GuiButton.button(Material.NAUTILUS_SHELL).setName("&r&fCraft "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e Core").setLore(setCoreLore(data, ElementType.GLACIO)).place(this, 21, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -52,7 +53,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 
-		GuiButton.button(Material.RESIN_CLUMP).setName("&r&fCraft &6&lGeo&r&e Core").setLore(setCoreLore(data, ElementType.GEO)).place(this, 23, e->
+		GuiButton.button(Material.RESIN_CLUMP).setName("&r&fCraft "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e Core").setLore(setCoreLore(data, ElementType.GEO)).place(this, 23, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -60,7 +61,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 
-		GuiButton.button(Material.AMETHYST_SHARD).setName("&r&fCraft &d&lAero&r&e Essence").setLore(setCoreLore(data, ElementType.AERO)).place(this, 24, e->
+		GuiButton.button(Material.AMETHYST_SHARD).setName("&r&fCraft "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&e Essence").setLore(setCoreLore(data, ElementType.AERO)).place(this, 24, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -68,7 +69,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 
-		GuiButton.button(Material.END_CRYSTAL).setName("&r&fCraft &e&lCelestio&r&e Essence").setLore(setCoreLore(data, ElementType.CELESTIO)).place(this, 13, e->
+		GuiButton.button(Material.END_CRYSTAL).setName("&r&fCraft "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e Essence").setLore(setCoreLore(data, ElementType.CELESTIO)).place(this, 13, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -76,7 +77,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 
-		GuiButton.button(Material.ECHO_SHARD).setName("&r&fCraft &3&lCosmo&r&e Essence").setLore(setCoreLore(data, ElementType.COSMO)).place(this, 22, e->
+		GuiButton.button(Material.ECHO_SHARD).setName("&r&fCraft "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e Essence").setLore(setCoreLore(data, ElementType.COSMO)).place(this, 22, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -84,7 +85,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 
-		GuiButton.button(Material.WITHER_SKELETON_SKULL).setName("&r&fCraft &4&lMortio&r&e Essence").setLore(setCoreLore(data, ElementType.MORTIO)).place(this, 31, e->
+		GuiButton.button(Material.WITHER_SKELETON_SKULL).setName("&r&fCraft "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e Essence").setLore(setCoreLore(data, ElementType.MORTIO)).place(this, 31, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -92,7 +93,7 @@ public class CoreCraftingPage extends AbstractOBSGui
 			build();
 		});
 		
-		GuiButton.button(Material.TOTEM_OF_UNDYING).setName("&r&fCraft &2&lHeresio&r&e Essence").setLore(setCoreLore(data, ElementType.HERESIO)).place(this, 40, e->
+		GuiButton.button(Material.TOTEM_OF_UNDYING).setName("&r&fCraft "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e Essence").setLore(setCoreLore(data, ElementType.HERESIO)).place(this, 40, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -121,9 +122,9 @@ public class CoreCraftingPage extends AbstractOBSGui
 	private static List<String> setCoreLore(PlayerData data, ElementType eType)
 	{
 		List<String> lore = new ArrayList<>();
-		lore.add("&r&fClick to craft. Craft cost: 100 "+eType.getType()+" &eessence&f, and 25 &bScrap&f.");
+		lore.add("&r&fClick to craft. Craft cost: 100 "+PrintUtils.getElementTypeColor(eType)+"&l"+eType.getType()+" &eessence&f, and 25 &bScrap&f.");
 		lore.add("");
-		lore.add("Current "+eType.getType()+" essence: &a"+data.getEssence(eType)+"&7/100");
+		lore.add("Current "+PrintUtils.getElementTypeColor(eType)+"&l"+eType.getType()+" essence: &a"+data.getEssence(eType)+"&7/100");
 		lore.add("Current &bScrap&f: &6"+data.getScrap()+"&7/25");
 		return lore;
 	}

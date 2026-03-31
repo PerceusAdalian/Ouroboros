@@ -22,6 +22,7 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.store.ShopItemContainer;
 import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.Outbreak;
 import com.ouroboros.mobs.events.MobDamageEvent;
 import com.ouroboros.mobs.events.MobDeathEvent;
 import com.ouroboros.mobs.events.MobGenerateEvent;
@@ -93,6 +94,8 @@ public class Ouroboros extends JavaPlugin
 		Bindings.load();
 		ElementCores.load();
 		Materia.convertItemsTask(instance);
+		
+		Outbreak.registerRandomOutbreakTask(instance);
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());

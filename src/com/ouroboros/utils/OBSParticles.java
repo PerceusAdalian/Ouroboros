@@ -13,6 +13,7 @@ import org.bukkit.util.Vector;
 
 import com.lol.enums.SpellementType;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.utils.TimeUtils.Timeframe;
 
 public class OBSParticles 
 {
@@ -335,6 +336,13 @@ public class OBSParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.GLOW_SQUID_INK, null);
 	}
 	
+	public static void drawAstralCastSigil(LivingEntity entity, boolean isDay)
+	{
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, isDay ? Particle.LAVA : Particle.BUBBLE_COLUMN_UP, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1, isDay ? Particle.LARGE_SMOKE : Particle.GLOW_SQUID_INK, null);	
+	}
+	
 	public static void drawAdminCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIT, null);
@@ -344,6 +352,8 @@ public class OBSParticles
 	
 	public static void playCastSigil(Player player, SpellementType sType)
 	{
+		boolean isDay = TimeUtils.checkTime(player.getWorld(), Timeframe.DAY);
+		
 		switch (sType)
 		{
 			case NULL -> OBSParticles.drawAdminCastSigil(player);
@@ -356,6 +366,7 @@ public class OBSParticles
 			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
 			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
 			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
+			case ASTRAL -> OBSParticles.drawAstralCastSigil(player, isDay);
 		}
 	}
 	

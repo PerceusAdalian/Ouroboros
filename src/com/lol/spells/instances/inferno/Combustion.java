@@ -16,10 +16,12 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Combustion extends Spell
@@ -28,7 +30,7 @@ public class Combustion extends Spell
 	public Combustion()
 	{
 		super("Combustion", "combustion", Material.BLAZE_POWDER, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1, false,
-				"&r&fExpell a heated blast at target dealing &cCombust&f damage",
+				"&r&fExpell a heated blast at target dealing "+PrintUtils.color(ObsColors.COMBUST)+"Combust&f damage",
 				"&r&fequal to their &6AR&r&7(&6⛨&7)&f inflicting &cCharred &7(10m, 20s)","",
 				"&r&cCharred &eEffect&f: Causes those affected to experience &b&oHunger&f,",
 				"&b&oFatigue&r&f, and &b&oSlowness&r&f while taking &b&o15%&r&f more &c&lInferno&r&f damage.",
@@ -53,6 +55,7 @@ public class Combustion extends Spell
 				OBSParticles.drawInfernoCastSigil(le);
 				OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 6, Particle.FLAME, null);
 				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, false, ElementType.COMBUST);
+				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
 				EntityEffects.addCharred(le, 20);
 			}, 15);
 			return 20;

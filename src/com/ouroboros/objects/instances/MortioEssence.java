@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
@@ -21,11 +22,11 @@ public class MortioEssence extends AbstractObsObject
 
 	public MortioEssence() 
 	{
-		super("&4&lMortio&r&f Essence", "mortio_essence", Material.BONE, true, false, 
+		super(PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f Essence", "mortio_essence", Material.BONE, true, false, 
 				PrintUtils.assignRarity(Rarity.ONE),"",
-				"&r&fA beguiling manifestation of &4Darkness&f.","",
+				"&r&fA beguiling manifestation of "+PrintUtils.color(ObsColors.MORTIO)+"Darkness&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
-				"&r&fCharge your &4&lMortio&r&f reservoir by consuming all on-hand.","",
+				"&r&fCharge your "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
 	}
 
@@ -39,7 +40,7 @@ public class MortioEssence extends AbstractObsObject
 			OBSParticles.drawMortioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_CREAKING_AMBIENT, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.MORTIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r&4⚛&f Added");
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.MORTIO)+"⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

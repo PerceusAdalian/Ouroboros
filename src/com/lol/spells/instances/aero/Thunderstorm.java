@@ -15,6 +15,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
@@ -35,8 +36,8 @@ public class Thunderstorm extends Spell
 				"&r&fStrike your target &7(40m)&f with lightning, inflicting &dStatic &7(10s / &cPVP&7: &c5s&r&7)",
 				"&r&fwhich then spreads to nearby enemies &7(25m)&f applying &dShock &7(20s / &cPVP&7: &c3s&r&7)","",
 				"&r&dStatic &eEffect&f: causes mobs to emit shockwaves in a 10m radius.",
-				"&r&fAffected mobs receive &b&o1.25x &r&d&lAero&r&f damage.",
-				"&d&lAero&r&f-based mobs are &e&oimmune&r&f, and &a&ohealed&r&f instead.","",
+				"&r&fAffected mobs receive &b&o1.25x &r"+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.",
+				PrintUtils.color(ObsColors.AERO)+"&lAero&r&f-based mobs are &e&oimmune&r&f, and &a&ohealed&r&f instead.","",
 				"&dShock &eEffect&f: stuns those affected and causes them to glow.");
 	}
 

@@ -12,6 +12,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -32,7 +33,7 @@ public class GlacialFlood extends Spell
 				"&r&bGlacial Flood&f: &b&oCrystalize&r&f --",
 				"&r&fEmit a blast of cold air to &bFreeze&f &bChilled&f enemies and deal &b&lGlacio",
 				"&r&fdamage equal to &o10 + (Chill stacks x 3) &r&7[Max: 70♥ | 20 meters]","",
-				"&r&bChill &eEffect&f: those affected are inflicted with a Glacio DOT effect, and &b&oSlowed&r&f.",
+				"&r&bChill &eEffect&f: those affected are inflicted with a "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio DOT effect, and &b&oSlowed&r&f.",
 				"&r&fReapplying &bChill&f increases the &b&omagnitude&r&f, while keeping initial duration.","",
 				"&r&bFrozen &eEffect&f: Those affected by &bChill&f remove their stacks, and instead,",
 				"&r&f\"Freezes\" them. They are &b&oWeakened&r&f by the amount of &bChill&f stacks they had.");

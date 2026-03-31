@@ -29,6 +29,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -44,7 +45,7 @@ public class Ascension extends Spell
 		super("Ascension", "ascension", Material.ELYTRA, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 0, 1, false,
 				"&r&e&oPrimary &r&f" + PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eAscension&r&f: &e&oJudgement&r&f --",
-				"&r&fUnleash a beam of light at a target &7(45m)&f, dealing &e&lCelestio&r&f",
+				"&r&fUnleash a beam of light at a target &7(45m)&f, dealing"+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f",
 				"&r&fdamage equal to &b&o10 + 8% &r&fof the target's maximum &aHP&f while flying.",
 				"&r&fOtherwise, damage is calculated by &b&o5 + 6%&r&f. Applies &eHumility &7(20s)&f.",
 				"&r&b&lMana Cost&r&f: &b25 &lMana&r&f.","",

@@ -13,10 +13,12 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class ArcaneBolt extends Spell
@@ -25,7 +27,7 @@ public class ArcaneBolt extends Spell
 	public ArcaneBolt() 
 	{
 		super("Arcane Bolt", "arcane_bolt", Material.ECHO_SHARD, SpellType.OFFENSIVE, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, true,
-				"&r&fDeal 4&c♥ &b&oArcano&r&f damage to target &7(25m)&f and apply &bEther Overload &7(20s)","",
+				"&r&fDeal 4&c♥ "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&f damage to target &7(25m)&f and apply &bEther Overload &7(20s)","",
 				"&r&bEther Overload &eEffect&f: those affected take an additional &b&o50% &r&e&oelemental &r&fdamage.");
 	}
 

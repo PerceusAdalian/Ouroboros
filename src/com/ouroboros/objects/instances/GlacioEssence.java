@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
@@ -21,11 +22,11 @@ public class GlacioEssence extends AbstractObsObject
 
 	public GlacioEssence() 
 	{
-		super("&b&lGlacio&r&f Essence", "glacio_essence", Material.PRISMARINE_CRYSTALS, true, false, 
+		super(PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f Essence", "glacio_essence", Material.PRISMARINE_CRYSTALS, true, false, 
 				PrintUtils.assignRarity(Rarity.ONE),"",
-				"&r&fA simple, crystalized essence of &bWater&f.","",
+				"&r&fA simple, crystalized essence of "+PrintUtils.color(ObsColors.GLACIO)+"Water&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
-				"&r&fCharge your &b&lGlacio&r&f reservoir by consuming all on-hand.","",
+				"&r&fCharge your "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
 	}
 
@@ -39,7 +40,7 @@ public class GlacioEssence extends AbstractObsObject
 			OBSParticles.drawGlacioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_CREAKING_FREEZE, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.GLACIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r&b⚛&f Added");
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.GLACIO)+"⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

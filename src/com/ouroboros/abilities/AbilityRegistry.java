@@ -19,7 +19,6 @@ public class AbilityRegistry
 {
 	public static final Map<String, AbstractOBSAbility> abilityRegistry = new HashMap<>();
     
-	@SuppressWarnings("null")
 	public static void abilityInit() 
     {
         List<Class<? extends AbstractOBSAbility>> itemClasses = Arrays.asList(

@@ -41,7 +41,6 @@ public class Flamelash extends AbstractOBSAbility
 
 	public static Set<UUID> cooldownTimer = new HashSet<>();
 	
-	@SuppressWarnings("null")
 	@Override
 	public boolean cast(Event e) 
 	{

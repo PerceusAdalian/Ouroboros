@@ -42,6 +42,7 @@ public class EntityCategoryToSpellement
 	        case HERESIO -> mobCategory == EntityCategory.HERESIO_MOBS;
 	        case ARCANO -> mobCategory == EntityCategory.ARCANO_MOBS;
 	        case NULL -> mobCategory == EntityCategory.NONE;
+	        default -> mobCategory == EntityCategory.NONE;
 	    };
 	}
 }

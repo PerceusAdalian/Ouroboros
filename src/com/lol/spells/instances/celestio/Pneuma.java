@@ -27,6 +27,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -48,7 +49,7 @@ public class Pneuma extends Spell
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&e&oPneuma&r&f: &e&lPhoton Beam&r&f --",
 				"&r&fExpel a concentrated photon beam up to &b&o30 meters&r&f, applying &eExposed&f and dealing",
-				"&r&e&lCelestio&r&f damage. Damage scales with &eDivine Favor&f stacks, with a max output of 100&c♥&f.","",
+				PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage. Damage scales with &eDivine Favor&f stacks, with a max output of 100&c♥&f.","",
 				"&r&e&oDivine Favor &r&eEffect&r&f: Grants &b&oAbsorption&f &r&fand &b&oResistance&f scaled to its magnitude. ",
 				"&r&fDivine Favor deteriorates on hit, &e&onon-stackable&r&f, but can be reapplied.","",
 				"&r&bEchoic Dissonance&r&f: &e&oSecondary Cast&r&f sets cooldown to &b&o3 minutes&f and costs an extra &b200 &9&lMana&r&f.");

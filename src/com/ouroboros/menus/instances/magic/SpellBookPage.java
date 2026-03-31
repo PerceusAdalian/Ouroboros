@@ -7,10 +7,12 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.PrintUtils;
 
 public class SpellBookPage extends AbstractOBSGui
 {
@@ -23,63 +25,72 @@ public class SpellBookPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.button(Material.FIRE_CHARGE).setName("&c&lInferno&r&e Spells").setLore("Click to navigate to all &c&lInferno&r&e Spells&f.").place(this, 20, e->
+		GuiButton.button(Material.FIRE_CHARGE).setName(PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&e Spells&f.").place(this, 20, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new InfernoSpellsPage(p));
 		});
 
-		GuiButton.button(Material.SNOWBALL).setName("&b&lGlacio&r&e Spells").setLore("Click to navigate to all &b&lGlacio&r&e Spells&f.").place(this, 21, e->
+		GuiButton.button(Material.SNOWBALL).setName(PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e Spells&f.").place(this, 21, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new GlacioSpellsPage(p));
 		});
 
-		GuiButton.button(Material.BRICK).setName("&6&lGeo&r&e Spells").setLore("Click to navigate to all &6&lGeo&r&e Spells&f.").place(this, 23, e->
+		GuiButton.button(Material.BRICK).setName(PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e Spells&f.").place(this, 23, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new GeoSpellsPage(p));
 		});
 
-		GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero&r&e Spells").setLore("Click to navigate to all &d&lAero&r&e Spells&f.").place(this, 24, e->
+		GuiButton.button(Material.WIND_CHARGE).setName(PrintUtils.color(ObsColors.AERO)+"&lAero&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&e Spells&f.").place(this, 24, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new AeroSpellsPage(p));
 		});
 
-		GuiButton.button(Material.NETHER_STAR).setName("&e&lCelestio&r&e Spells").setLore("Click to navigate to all &e&lCelestio&r&e Spells&f.").place(this, 13, e->
+		GuiButton.button(Material.NETHER_STAR).setName(PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e Spells&f.").place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new CelestioSpellsPage(p));
 		});
 
-		GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo&r&e Spells").setLore("Click to navigate to all &3&lCosmo&r&e Spells&f.").place(this, 22, e->
+		GuiButton.button(Material.ECHO_SHARD).setName(PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e Spells&f.").place(this, 22, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new CosmoSpellsPage(p));
 		});
 
-		GuiButton.button(Material.WITHER_ROSE).setName("&4&lMortio&r&e Spells").setLore("Click to navigate to all &4&lMortio&r&e Spells&f.").place(this, 31, e->
+		GuiButton.button(Material.WITHER_ROSE).setName(PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e Spells&f.").place(this, 31, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new MortioSpellsPage(p));
 		});
 		
-		GuiButton.button(Material.ENDER_EYE).setName("&2&lHeresio&r&e Spells").setLore("Click to navigate to all &2&lHeresio&r&e spells&f.").place(this, 39, e->
+		GuiButton.button(Material.ENDER_EYE).setName(PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e spells&f.").place(this, 39, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new HeresioSpellsPage(p));
 		});
 		
-		GuiButton.button(Material.END_CRYSTAL).setName("&f&b&oArcano&r&e Spells").setLore("Click to navigate to all &f&lArcano&r&e spells&f.").place(this, 41, e->
+		GuiButton.button(Material.END_CRYSTAL).setName(PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&e spells&f.").place(this, 41, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER);

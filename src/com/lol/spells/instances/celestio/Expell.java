@@ -13,9 +13,11 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Expell extends Spell
@@ -26,7 +28,7 @@ public class Expell extends Spell
 		super("Expose", "expose", Material.NETHER_STAR, SpellType.OFFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 3, false,
 				"&r&fApply &e&oExposed&r&f to target within &b&o25 meters &r&7(30s)","",
 				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",
-				"&r&fIf those affected are &4&lMortio &r&faffiliated, they instantly die.");
+				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.");
 	}
 
 	@Override

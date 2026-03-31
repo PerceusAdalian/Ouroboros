@@ -14,10 +14,12 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Galeforce extends Spell
@@ -27,7 +29,7 @@ public class Galeforce extends Spell
 	{
 		super("Galeforce", "galeforce", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1, false,
 				"&r&fBlast your target &7(7m)&f with high pressurized air,",
-				"&r&fdealing 4&c♥ &d&lAero &r&fdamage, and blowing them away.");
+				"&r&fdealing 4&c♥ "+PrintUtils.color(ObsColors.AERO)+"&lAero &r&fdamage, and blowing them away.");
 	}
 
 	@Override

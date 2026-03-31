@@ -7,11 +7,13 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.PrintUtils;
 
 public class AbilityMainPage extends AbstractOBSGui
 {
@@ -25,49 +27,56 @@ public class AbilityMainPage extends AbstractOBSGui
 	protected void build() 
 	{
 		
-		GuiButton.button(Material.FIRE_CHARGE).setName("&c&lInferno&r&e Abilities").setLore("Click to navigate to all &c&lInferno&r&e abilities.").place(this, 20, e->
+		GuiButton.button(Material.FIRE_CHARGE).setName(PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&e abilities.").place(this, 20, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new InfernoAbilitiesMenu(p));
 		});
 
-		GuiButton.button(Material.SNOWBALL).setName("&b&lGlacio&r&e Abilities").setLore("Click to navigate to all &b&lGlacio&r&e abilities.").place(this, 12, e->
+		GuiButton.button(Material.SNOWBALL).setName(PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e abilities.").place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new GlacioAbilitiesMenu(p));
 		});
 
-		GuiButton.button(Material.BRICK).setName("&6&lGeo&r&e Abilities").setLore("Click to navigate to all &6&lGeo&r&e abilities.").place(this, 21, e->
+		GuiButton.button(Material.BRICK).setName(PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e abilities.").place(this, 21, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new GeoAbilitiesMenu(p));
 		});
 
-		GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero&r&e Abilities").setLore("Click to navigate to all &d&lAero&r&e abilities.").place(this, 30, e->
+		GuiButton.button(Material.WIND_CHARGE).setName(PrintUtils.color(ObsColors.AERO)+"&lAero&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&e abilities.").place(this, 30, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new AeroAbilitiesMenu(p));
 		});
 
-		GuiButton.button(Material.NETHER_STAR).setName("&e&lCelestio&r&e Abilities").setLore("Click to navigate to all &e&lCelestio&r&e abilities.").place(this, 14, e->
+		GuiButton.button(Material.NETHER_STAR).setName(PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e abilities.").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new CelestioAbilitiesMenu(p));
 		});
 
-		GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo&r&e Abilities").setLore("Click to navigate to all &3&lCosmo&r&e abilities.").place(this, 23, e->
+		GuiButton.button(Material.ECHO_SHARD).setName(PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e abilities.").place(this, 23, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new CosmoAbilitiesMenu(p));
 		});
 
-		GuiButton.button(Material.WITHER_ROSE).setName("&4&lMortio&r&e Abilities").setLore("Click to navigate to all &4&lMortio&r&e abilities.").place(this, 32, e->
+		GuiButton.button(Material.WITHER_ROSE).setName(PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e Abilities")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e abilities.").place(this, 32, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);

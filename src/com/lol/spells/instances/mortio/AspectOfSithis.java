@@ -15,6 +15,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
@@ -31,11 +32,11 @@ public class AspectOfSithis extends Spell
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&4Aspect of Sithis&f: &4&oSeething Skull&r&f --",
 				"&r&fSummon a seething demon skull and launch it foward, exploding on impact.",
-				"&r&fThe projectile may deal variable &4&lMortio&r&f damage, while the",
-				"&r&fimpact may deal variable &e&lBlast&r&f and &c&lInferno&r&f damage.","",
+				"&r&fThe projectile may deal variable "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage, while the",
+				"&r&fimpact may deal variable &e&lBlast&r&f and "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f damage.","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&4Aspect of Sithis&f: &4&oDreadful Gaze&r&f --",
-				"&r&fGaze upon your target &7(10m)&f, dealing 10&c♥&f &4&lMortio&r&f damage and inflicting &4Dread &7(30s)","",
+				"&r&fGaze upon your target &7(10m)&f, dealing 10&c♥&f "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage and inflicting &4Dread &7(30s)","",
 				"&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 				"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",
 				"&r&fsubsequent applications will inflict &4Doom&f after a second application.");

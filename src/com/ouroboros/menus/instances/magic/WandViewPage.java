@@ -113,7 +113,7 @@ public class WandViewPage extends AbstractOBSGui
 	            }
 	            else
 	            {
-	            	char spellColor = PrintUtils.getElementTypeColor(wandSpell.getElementType());
+	            	String spellColor = PrintUtils.getElementTypeColor(wandSpell.getElementType());
 	                String slotName = "&r&fFull Slot #" + (i+1) + " [&" + spellColor + wandSpell.getName() + "&f]";
 	                String lore = isRemoving
 	                    ? "&r&fThis slot is in use. Click to remove it?"

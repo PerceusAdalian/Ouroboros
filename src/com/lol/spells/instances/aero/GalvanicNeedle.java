@@ -27,7 +27,7 @@ public class GalvanicNeedle extends Spell
 	public GalvanicNeedle() 
 	{
 		super("Galvanic Needle", "galvanic_needle", Material.AMETHYST_SHARD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 150, 2, true,
-				"&r&fFire a charged needle that deals 5&c♥&f Pierce damage,",
+				"&r&fFire a charged needle that deals 5&c♥&f Puncture damage,",
 				"&r&fand summons lightning after a short distance &7(2s | ~15m)",
 				"&r&fThose within &b&o10 meters&r&f are inflicted &dShock&r&f &7(14s | &r&cPVP&7: &c4s&7)");
 	}

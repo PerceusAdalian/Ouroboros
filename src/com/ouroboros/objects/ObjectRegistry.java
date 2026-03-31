@@ -31,8 +31,7 @@ public class ObjectRegistry
 {
 	public static final Map<String, AbstractObsObject> itemRegistry = new HashMap<>();
 
-    @SuppressWarnings("null")
-	public static void itemInit() 
+    public static void itemInit() 
     {
         List<Class<? extends AbstractObsObject>> itemClasses = Arrays.asList(
             //Money Items:

@@ -21,23 +21,23 @@ public enum ElementType
 	PUNCTURE("&r&fPuncture&r&f"),
 	CORROSIVE("&r&aCorrosive&r&f"),
 	//Magic Damage Type
-	ARCANO("&r&b&oArcano&r&f"),
+	ARCANO("Arcano&r&f"),
 	//Almighty/Pure Damage Types
 	CRUSH("&r&f&o&lCrush&r&f"),
 	SEVER("&r&f&o&lSever&r&f"),
 	IMPALE("&r&f&o&lImpale&r&f"),
 	//Almighty Elemental Damage Type
 	//Special Almighty Explosive Damage Type
-	BLAST("&r&c&o&lBlast&r&f"),
+	BLAST("&r&e&o&lBlast&r&f"),
 	//Elemental Damage Types
-	CELESTIO("&r&e&lCelestio&r&f"),
-	MORTIO("&r&4&lMortio&r&f"),
-	INFERNO("&r&c&lInferno&r&f"),
-	GLACIO("&r&b&lGlacio&r&f"),
-	AERO("&r&d&lAero&r&f"),
-	GEO("&r&6&lGeo&r&f"),
-	COSMO("&r&3&lCosmo&r&f"),
-	HERESIO("&r&2&lHeresio&r&f");
+	CELESTIO("&lCelestio&r&f"),
+	MORTIO("&lMortio&r&f"),
+	INFERNO("&lInferno&r&f"),
+	GLACIO("&lGlacio&r&f"),
+	AERO("&lAero&r&f"),
+	GEO("&lGeo&r&f"),
+	COSMO("&lCosmo&r&f"),
+	HERESIO("&lHeresio&r&f");
 	
 	private final String element;	
 	
@@ -82,6 +82,8 @@ public enum ElementType
 			case INFERNO 	-> ElementType.INFERNO;
 			case MORTIO 	-> ElementType.MORTIO;
 			case NULL 		-> ElementType.NONE;
+			default 		-> ElementType.NONE;	
+			
 		};
 		
 		return eType;

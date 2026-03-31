@@ -25,6 +25,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
@@ -44,7 +45,7 @@ public class Lumos extends Spell
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
 				"&r&fCast a whisp of light at target block &7(30s)","",
 				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",
-				"&r&fIf those affected are &4&lMortio &r&faffiliated, they instantly die.","",
+				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&e&oIlluminate&r&7&o', however, colloquially known as '&r&e&oLumos&r&7&o'.");
 	}

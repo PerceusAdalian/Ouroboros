@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.EntityEffects;
@@ -21,11 +22,11 @@ public class AeroEssence extends AbstractObsObject
 
 	public AeroEssence() 
 	{
-		super("&d&lAero&r&f Essence", "aero_essence", Material.WIND_CHARGE, true, false, 
+		super(PrintUtils.color(ObsColors.AERO)+"&lAero&r&f Essence", "aero_essence", Material.WIND_CHARGE, true, false, 
 				PrintUtils.assignRarity(Rarity.ONE),"",
-				"&r&fA simple, refracted essence of &dAir&f.","",
+				"&r&fA simple, refracted essence of "+PrintUtils.color(ObsColors.AERO)+"Air&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
-				"&r&fCharge your &d&lAero&r&f reservoir by consuming all on-hand.","",
+				"&r&fCharge your "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
 	}
 
@@ -39,7 +40,7 @@ public class AeroEssence extends AbstractObsObject
 			OBSParticles.drawAeroCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.AERO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r&d⚛&f Added");
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.AERO)+"⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

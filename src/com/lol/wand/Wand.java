@@ -360,7 +360,9 @@ public class Wand
 	    // Build the wand's main lore
 	    List<String> existingLore = new ArrayList<>();
 	    existingLore.add("");
-	    existingLore.add(PrintUtils.assignRarity(rarity) + (eType != null ? PrintUtils.ColorParser(" &r&7| &r&eAffinity&f: "+eType.getType()) : ""));
+	    existingLore.add(PrintUtils.ColorParser(
+	    	    "&r&f&lRarity&r&f: &" + PrintUtils.getRarityColor(rarity) + ("✦".repeat(rarity.getRarity())) +
+	    	    (eType != null ? " &r&7| &r&eAffinity&f: " + PrintUtils.getElementTypeColor(eType) + eType.getType() : "")));
 	    existingLore.add("");
 	    
 	    // Build spell slot icons with proper null checks
@@ -374,8 +376,8 @@ public class Wand
 	        } 
 	        else 
 	        {
-	            char color = PrintUtils.getElementTypeColor(spell.getElementType());
-	            spellSlotIcons += "&" + color + "●"; // Color coded full circle for filled slot
+	            String color = PrintUtils.getElementTypeColor(spell.getElementType());
+	            spellSlotIcons += color + "●"; // Color coded full circle for filled slot
 	        }
 	    }
 	    existingLore.add(PrintUtils.ColorParser("&r&e&lSpell Slots&r&f: &7⋞" + spellSlotIcons+"&r&7⋟"));
@@ -407,7 +409,9 @@ public class Wand
 	    }
 	    
 	    existingLore.add("");
-	    existingLore.add(PrintUtils.ColorParser("&r&9Mana Capacity&f: " + currentMana + "&r&f/" + maxMana) + (eType != null ? PrintUtils.ColorParser(" &7| "+eType.getType()+ " &r&fspells cost -20%") : ""));
+	    existingLore.add(PrintUtils.ColorParser(
+	    	    "&r&9Mana Capacity&f: " + currentMana + "&r&f/" + maxMana +
+	    	    (eType != null ? " &7| " + PrintUtils.getElementTypeColor(eType) + eType.getType() + " &r&fspells cost -20%" : "")));
 	    existingLore.add(PrintUtils.ColorParser("&r&d&oLeft-Click&r&f to cycle spells &7| &d&oShift_Left-Click&r&f to remove spells"));
 	    // Finally, set the combined lore at the end
 	    meta.setLore(existingLore);

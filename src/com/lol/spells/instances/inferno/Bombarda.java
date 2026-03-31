@@ -15,9 +15,11 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Bombarda extends Spell
@@ -30,7 +32,7 @@ public class Bombarda extends Spell
 				"&r&fcausing a concentrated explosion of ether about your target,",
 				"&r&finflicting &e&lBlast&r&f damage and causing &cBurn &7(20s).",
 				"&r&f&lRange&r&f: 25 &b&ometers &r&7| &f&lYield&r&f: 3","",
-				"&r&cBurn&f: DOT effect constantly dealing &c&lInferno&r&f damage.","",
+				"&r&cBurn&f: DOT effect constantly dealing "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f damage.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&c&oCinder Plume&r&7&o', however, colloquially known as '&r&c&oBombarda&r&7&o'.");
 		

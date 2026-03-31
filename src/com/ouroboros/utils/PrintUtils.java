@@ -2,6 +2,8 @@ package com.ouroboros.utils;
 
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -19,6 +21,7 @@ import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 
@@ -27,9 +30,37 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class PrintUtils
 {
+	public static String parseHex(String msg)
+	{
+	    Pattern hexPattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
+	    Matcher matcher = hexPattern.matcher(msg);
+	    StringBuffer buffer = new StringBuffer();
+
+	    while (matcher.find())
+	    {
+	        String hex = matcher.group(1);
+	        StringBuilder replacement = new StringBuilder("§x");
+	        for (char c : hex.toCharArray())
+	            replacement.append('§').append(c);
+	        matcher.appendReplacement(buffer, replacement.toString());
+	    }
+	    matcher.appendTail(buffer);
+	    return buffer.toString();
+	}
+
 	public static String ColorParser(String msg) 
 	{
-		return ChatColor.translateAlternateColorCodes('&', msg);
+	    return ChatColor.translateAlternateColorCodes('&', parseHex(msg));
+	}
+	
+	public static String color(ObsColors color)
+	{
+	    return "&#" + color.getColor().replace("#", "");
+	}
+	
+	public static String coloredMessage(ObsColors color, String msg)
+	{
+	    return ColorParser(color(color) + msg);
 	}
 	
 	public static void Print(String msg) 
@@ -150,48 +181,46 @@ public class PrintUtils
 	
 	public static String assignElementType(SpellementType type) 
 	{
-		return ColorParser("&r&f&lElement Type&r&f: {"+type.getType()+"&r&f}");
+		return ColorParser("&r&f&lElement Type&r&f: {&r&f"+getElementTypeColor(type)+type.getType()+"&r&f}");
 	}
 	
 	public static String assignElementType(ElementType type) 
 	{
-		return ColorParser("&r&f&lDamage Type&r&f: {"+type.getType()+"&r&f}");
+		return ColorParser("&r&f&lDamage Type&r&f: {&r&f"+getElementTypeColor(type)+type.getType()+"&r&f}");
 	}
 	
-	public static char getElementTypeColor(SpellementType spellementType)
+	public static String getElementTypeColor(SpellementType spellementType)
 	{
-		char ch = switch(spellementType)
-		{
-			case INFERNO -> ch = 'c';
-			case AERO -> ch = 'd';
-			case CELESTIO -> ch = 'e';
-			case COSMO -> ch = '3';
-			case GEO -> ch = '6';
-			case GLACIO -> ch = 'b';
-			case HERESIO -> ch = '2';
-			case MORTIO -> ch = '4';
-			case ARCANO -> ch = 'f';
-			default -> ch = '7';
-		};
-		return ch;
+	    return switch (spellementType)
+	    {
+	        case INFERNO  -> color(ObsColors.INFERNO);
+	        case AERO     -> color(ObsColors.AERO);
+	        case CELESTIO -> color(ObsColors.CELESTIO);
+	        case COSMO    -> color(ObsColors.COSMO);
+	        case GEO      -> color(ObsColors.GEO);
+	        case GLACIO   -> color(ObsColors.GLACIO);
+	        case HERESIO  -> color(ObsColors.HERESIO);
+	        case MORTIO   -> color(ObsColors.MORTIO);
+	        case ARCANO   -> color(ObsColors.ARCANO);
+	        default       -> color(ObsColors.NULL);
+	    };
 	}
 	
-	public static char getElementTypeColor(ElementType elementType)
+	public static String getElementTypeColor(ElementType elementType)
 	{
-		char ch = switch(elementType)
-		{
-			case INFERNO -> ch = 'c';
-			case AERO -> ch = 'd';
-			case CELESTIO -> ch = 'e';
-			case COSMO -> ch = '3';
-			case GEO -> ch = '6';
-			case GLACIO -> ch = 'b';
-			case HERESIO -> ch = '2';
-			case MORTIO -> ch = '4';
-			case ARCANO -> ch = 'f';
-			default -> ch = '7';
-		};
-		return ch;
+	    return switch (elementType)
+	    {
+	        case INFERNO  -> color(ObsColors.INFERNO);
+	        case AERO     -> color(ObsColors.AERO);
+	        case CELESTIO -> color(ObsColors.CELESTIO);
+	        case COSMO    -> color(ObsColors.COSMO);
+	        case GEO      -> color(ObsColors.GEO);
+	        case GLACIO   -> color(ObsColors.GLACIO);
+	        case HERESIO  -> color(ObsColors.HERESIO);
+	        case MORTIO   -> color(ObsColors.MORTIO);
+	        case ARCANO   -> color(ObsColors.ARCANO);
+	        default       -> color(ObsColors.NULL);
+	    };
 	}
 	
 	public static String assignAuthor(SpellementType spellementType)

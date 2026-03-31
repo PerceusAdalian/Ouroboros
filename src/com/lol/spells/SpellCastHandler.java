@@ -53,7 +53,11 @@ public class SpellCastHandler implements Listener
 		ItemStack held = p.getInventory().getItemInMainHand();
 		
 		if (e.getHand() == null) return;
-        if (e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
+        if (e.getHand().equals(EquipmentSlot.OFF_HAND)) 
+        {
+        	e.setCancelled(true);
+        	return;
+        }
         if (held == null || held.getType() == Material.AIR) return;
 		
         if (!Wand.isWand(held) && held.getItemMeta().getPersistentDataContainer().has(Spell.LOLSPELLBOOK)) 

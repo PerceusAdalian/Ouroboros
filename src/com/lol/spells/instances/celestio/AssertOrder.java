@@ -26,10 +26,12 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 
 public class AssertOrder extends Spell
 {
@@ -40,7 +42,7 @@ public class AssertOrder extends Spell
 				"&r&fGrants '&e&oKarma&r&f' for the caster &7(15s)&r&f.",
 				"&r&eKarma&f Effect: all incoming damage is mitigated by 50%.",
 				"&r&fDamage received is redirected to the source, multiplied by a factor of &bx1.35&f,",
-				"&r&fand is considered &e&lCelestio&r&f damage. Damage mitigated is restored by &b25%",
+				"&r&fand is considered "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage. Damage mitigated is restored by &b25%",
 				"&r&fonce the effect expires, and applies &b&oAbsorption&r&f stacks depending on excess &aHP&f.");
 	}
 

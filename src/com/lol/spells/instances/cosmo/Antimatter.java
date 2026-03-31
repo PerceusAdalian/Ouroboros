@@ -16,10 +16,12 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
 public class Antimatter extends Spell
@@ -28,7 +30,7 @@ public class Antimatter extends Spell
 	public Antimatter()
 	{
 		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true,
-				"&r&fDecay target's life dealing &3&lCosmo&r&f damage equal to &b&o3 + 25%&r&aHP &7(20m)&f",
+				"&r&fDecay target's life dealing "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f damage equal to &b&o3 + 25%&r&aHP &7(20m)&f",
 				"&r&fWhile not in &cPVP&f, apply &3Voided&f to target &7(20s)","",
 				"&r&3Voided &eEffect&f: Voided strips the afflicted entity of all",
 				"&r&f&b&oResistances&r&f and &b&oImmunities&r&f for the duration.");
