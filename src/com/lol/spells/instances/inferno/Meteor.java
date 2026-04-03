@@ -23,10 +23,10 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.BiomeUtils;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Meteor extends Spell
 {
@@ -47,14 +47,14 @@ public class Meteor extends Spell
 
 	    if (target instanceof LivingEntity)
 	    {
-	        playSpellEffects(p, target.getLocation());
+	        playSpellEffects(p, target.getLocation(), 4, true, 2, true);
 	        return 100;
 	    }
 
 	    Block bTarget = RayCastUtils.rayTraceBlock(p, 50);
 	    if (bTarget == null || bTarget.getType() == Material.AIR) return -1;
 
-	    playSpellEffects(p, bTarget.getLocation());
+	    playSpellEffects(p, bTarget.getLocation(), 4, true, 2, true);
 	    return 100;
 	}
 
@@ -64,29 +64,33 @@ public class Meteor extends Spell
 		return 100;
 	}
 	
-	private void summonMeteor(Player p, Location loc)
+	public static void summonMeteor(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary)
 	{
 	    Location spawnLoc = loc.clone().add(0, 45, 0);
 	    LargeFireball fb = (LargeFireball) loc.getWorld().spawnEntity(spawnLoc, EntityType.FIREBALL);
-
-	    boolean isHot = BiomeUtils.getTempCategory(p) == BiomeUtils.BiomeTemperatureCategory.HOT;
-	    boolean isCold = BiomeUtils.getTempCategory(p) == BiomeUtils.BiomeTemperatureCategory.COLD;
-	    int bonusYield = isHot ? 2 : isCold ? -2 : 0;
+	    
+	    int bonusYield = 0;
+	    if (temperatureBonus)
+	    {
+	    	boolean isHot = BiomeUtils.getTempCategory(p) == BiomeUtils.BiomeTemperatureCategory.HOT;
+	    	boolean isCold = BiomeUtils.getTempCategory(p) == BiomeUtils.BiomeTemperatureCategory.COLD;
+	    	bonusYield = isHot ? bonusModifier : isCold ? -bonusModifier : 0;	    	
+	    }
 
 	    fb.setShooter(p);
 	    fb.setDirection(new Vector(0, -5, 0));
-	    fb.setYield(4 + bonusYield);
-	    fb.setIsIncendiary(true);
+	    fb.setYield(baseYield + bonusYield);
+	    fb.setIsIncendiary(isIncendiary);
 	}
 	
-	private void playSpellEffects(Player p, Location loc)
+	public static void playSpellEffects(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary)
 	{
 		OBSParticles.drawLine(p.getLocation(), loc, 0.5, 0.5, Particle.LAVA, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
 			OBSParticles.drawSpiralVortex(loc, 75, 10, 0.1, Particle.LAVA, null);
-			summonMeteor(p, loc);
+			summonMeteor(p, loc, baseYield, temperatureBonus, bonusModifier, isIncendiary);
 		}, 20);
 	}
 }

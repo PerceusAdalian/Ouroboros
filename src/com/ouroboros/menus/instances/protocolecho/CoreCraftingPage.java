@@ -19,10 +19,10 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class CoreCraftingPage extends AbstractOBSGui
 {

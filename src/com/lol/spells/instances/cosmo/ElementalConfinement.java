@@ -12,7 +12,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ElementalConfinement extends Spell
 {

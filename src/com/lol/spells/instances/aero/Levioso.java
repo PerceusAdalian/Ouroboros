@@ -17,9 +17,9 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Levioso extends Spell
 {

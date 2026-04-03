@@ -21,8 +21,8 @@ import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.instances.abilities.AbilityConfirmationPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GuiButton 
 {

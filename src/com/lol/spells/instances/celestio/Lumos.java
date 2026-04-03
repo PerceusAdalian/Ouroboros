@@ -27,10 +27,11 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Lumos extends Spell
 {
@@ -73,7 +74,7 @@ public class Lumos extends Spell
 			        {
 			            OBSParticles.drawLine(explosionLoc, r.getLocation(), 1, 0, Particle.END_ROD, null);
 			            OBSParticles.drawCylinder(r.getLocation(), r.getWidth(), 3, 5, 0.5, 0.5, Particle.END_ROD, null);
-			            EntityEffects.addExposed(r, 15);
+			            CelestioEffects.addExposed(r, 15);
 			        });
 			    }, 10);
 

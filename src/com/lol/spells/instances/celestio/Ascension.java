@@ -32,10 +32,11 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Ascension extends Spell
 {
@@ -160,7 +161,7 @@ public class Ascension extends Spell
 	            OBSParticles.drawSpiralVortex(target.getLocation(), 110, 3, 0.5, Particle.CLOUD, null);
 	            OBSParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
 	            MobData.damageUnnaturally(p, target, baseDamage + damage, true, ElementType.CELESTIO);
-	            EntityEffects.addHumility((LivingEntity) target, 20);
+	            CelestioEffects.addHumility((LivingEntity) target, 20);
 	        }, 15);
 	    });
 

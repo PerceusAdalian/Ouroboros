@@ -30,9 +30,10 @@ import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class MobDamageEvent implements Listener
 {
@@ -88,10 +89,10 @@ public class MobDamageEvent implements Listener
 						target.setFireTicks(100);
 					}
 					
-					if (element == ElementType.INFERNO && EntityEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(20))
+					if (element == ElementType.INFERNO && InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(20))
 					{
-						EntityEffects.addBurn((LivingEntity) target, 20);
-						EntityEffects.hasCharred.remove(target.getUniqueId());
+						InfernoEffects.addBurn((LivingEntity) target, 20);
+						InfernoEffects.hasCharred.remove(target.getUniqueId());
 					}
 					
 					//Apply relevent effects based on the combat element used.

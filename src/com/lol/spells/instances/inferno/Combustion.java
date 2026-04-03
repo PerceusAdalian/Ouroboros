@@ -19,10 +19,11 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class Combustion extends Spell
 {
@@ -56,7 +57,7 @@ public class Combustion extends Spell
 				OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 6, Particle.FLAME, null);
 				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, false, ElementType.COMBUST);
 				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
-				EntityEffects.addCharred(le, 20);
+				InfernoEffects.addCharred(le, 20);
 			}, 15);
 			return 20;
 		}

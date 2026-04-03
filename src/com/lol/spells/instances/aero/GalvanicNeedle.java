@@ -17,9 +17,10 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.AeroEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GalvanicNeedle extends Spell
 {
@@ -55,7 +56,7 @@ public class GalvanicNeedle extends Spell
 			{   
 				OBSParticles.drawLine(arrow.getLocation(), C.getLocation(), 0.5, 0, Particle.ELECTRIC_SPARK, null);
 				OBSParticles.drawLine(arrow.getLocation(), C.getLocation(), 1, 0, Particle.CRIT, null);
-				EntityEffects.addShock(C, C instanceof Player ? 4 : 14);
+				AeroEffects.addShock(C, C instanceof Player ? 4 : 14);
 				arrow.remove();					
 			})) 
 			{

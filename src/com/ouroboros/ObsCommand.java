@@ -55,10 +55,10 @@ import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ObsCommand implements CommandExecutor, TabCompleter
 {

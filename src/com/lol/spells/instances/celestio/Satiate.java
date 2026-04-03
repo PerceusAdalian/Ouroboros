@@ -15,9 +15,10 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Satiate extends Spell
 {
@@ -37,7 +38,7 @@ public class Satiate extends Spell
 		Entity target = RayCastUtils.getEntity(p, 20);
 		if (target == null)
 		{
-			EntityEffects.addSatiated(p);
+			CelestioEffects.addSatiated(p);
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
 			return 35;
@@ -51,7 +52,7 @@ public class Satiate extends Spell
 			{
 				OBSParticles.drawCelestioCastSigil(pTarget);
 				OBSParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
-				EntityEffects.addSatiated(pTarget);				
+				CelestioEffects.addSatiated(pTarget);				
 			}, 15);
 			return 35;
 		}

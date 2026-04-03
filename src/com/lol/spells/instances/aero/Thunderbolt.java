@@ -17,10 +17,11 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.AeroEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Thunderbolt extends Spell
 {
@@ -45,7 +46,7 @@ public class Thunderbolt extends Spell
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			target.getWorld().strikeLightning(target.getLocation()), 15);
-		EntityEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 5 : 10);
+		AeroEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 5 : 10);
 		
 		return this.getManacost();
 	}

@@ -11,9 +11,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class RemembranceOfHope extends AbstractObsObject
 {

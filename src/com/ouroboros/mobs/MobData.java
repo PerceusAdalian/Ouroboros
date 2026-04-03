@@ -28,10 +28,17 @@ import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.AeroEffects;
+import com.ouroboros.utils.entityeffects.ArcanoEffects;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.CosmoEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class MobData 
 {
@@ -302,19 +309,19 @@ public class MobData
 		
 		if (element == null) element = ElementType.PURE;
 		
-		if (!EntityEffects.isVoidedRegistry.containsKey(uuid))
+		if (!CosmoEffects.isVoidedRegistry.containsKey(uuid))
 		{
 			if (EntityCategories.parseUniversalImmunity(entity, element)) value = 0;
 			else if (EntityCategories.parseUniversalResistance(entity, element)) value *= 0.5;
 			else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
 		}
 		
-		if (EntityEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
-		if (EntityEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
-		if (EntityEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
-		if (EntityEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.15;
-		if (EntityEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
-		if (EntityEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
+		if (MortioEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
+		if (AeroEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
+		if (HeresioEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
+		if (InfernoEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.15;
+		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
+		if (CelestioEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;

@@ -17,10 +17,11 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class Bombarda extends Spell
 {
@@ -49,7 +50,7 @@ public class Bombarda extends Spell
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
-			EntityEffects.addBurn((LivingEntity) target, 10);
+			InfernoEffects.addBurn((LivingEntity) target, 10);
 			OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
 			OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
 		}, 15);

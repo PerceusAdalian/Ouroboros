@@ -16,11 +16,13 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.EntityEffects.WildcardData;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
+import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
 public class Cure extends Spell
 {
@@ -64,20 +66,20 @@ public class Cure extends Spell
 	{
 		EntityEffects.playSound(caster, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		
-		if (EntityEffects.isCursed.contains(target.getUniqueId()))
+		if (HeresioEffects.isCursed.contains(target.getUniqueId()))
 		{
-			EntityEffects.isCursed.remove(target.getUniqueId());
+			HeresioEffects.isCursed.remove(target.getUniqueId());
 			PrintUtils.PrintToActionBar(target, "&e&oThe curse subsides..");
 			EntityEffects.playSound(target, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT);
 		}
-		if (EntityEffects.hasDread.contains(target.getUniqueId())) EntityEffects.hasDread.remove(target.getUniqueId());
-		if (EntityEffects.hasDoom.containsKey(target.getUniqueId())) EntityEffects.hasDoom.remove(target.getUniqueId());
+		if (MortioEffects.hasDread.contains(target.getUniqueId())) MortioEffects.hasDread.remove(target.getUniqueId());
+		if (MortioEffects.hasDoom.containsKey(target.getUniqueId())) MortioEffects.hasDoom.remove(target.getUniqueId());
 		
 		for (PotionEffect effect : target.getActivePotionEffects())
 		{
 			if (EntityEffects.debuffs.contains(effect.getType()))
 			{
-				if (EntityEffects.isHexed.get(target.getUniqueId()) != null && EntityEffects.isHexed.get(target.getUniqueId()).effect.equals(effect.getType()))
+				if (HeresioEffects.isHexed.get(target.getUniqueId()) != null && HeresioEffects.isHexed.get(target.getUniqueId()).effect.equals(effect.getType()))
 				{
 					OBSParticles.drawLine(caster.getLocation(), target.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
 					PrintUtils.OBSFormatError(caster, "Attempted to &e&oCure&r&f "+PrintUtils.formatEnumName(effect.getType().getTranslationKey())+
@@ -90,10 +92,10 @@ public class Cure extends Spell
 						PrintUtils.PrintToActionBar(target, "&2&oThe Hex Worsens..");
 						EntityEffects.playSound(target, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
 						
-						WildcardData data = EntityEffects.isHexed.get(target.getUniqueId());
+						WildcardData data = HeresioEffects.isHexed.get(target.getUniqueId());
 						target.removePotionEffect(data.effect);
 						EntityEffects.add(target, data.effect, PotionEffect.INFINITE_DURATION, data.magnitude == 9 ? 9 : data.magnitude+1, true);
-						EntityEffects.isHexed.put(target.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude+1));
+						HeresioEffects.isHexed.put(target.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude+1));
 					}, 15);
 					continue;
 				}

@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
@@ -20,7 +21,7 @@ import com.lol.spells.instances.aero.Thunderstorm;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class AeroSpellsPage extends AbstractOBSGui
 {
@@ -45,13 +46,13 @@ public class AeroSpellsPage extends AbstractOBSGui
 		GuiButton.placeSpellButton(player, new Thunderbolt(), 16, this);
 		
 		// Three Rarity
-		
+		GuiButton.placeSpellButton(player, new ChainLightning(), 19, this);
 		// Four Rarity
-		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 19, this);
+		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 20, this);
 		
 		// Five Rarity
-		GuiButton.placeSpellButton(player, new Diffindo(), 20, this);
-		GuiButton.placeSpellButton(player, new Thunderstorm(), 21, this);
+		GuiButton.placeSpellButton(player, new Diffindo(), 21, this);
+		GuiButton.placeSpellButton(player, new Thunderstorm(), 22, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

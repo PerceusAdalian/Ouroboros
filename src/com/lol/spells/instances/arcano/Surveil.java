@@ -18,10 +18,10 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Surveil extends Spell
 {

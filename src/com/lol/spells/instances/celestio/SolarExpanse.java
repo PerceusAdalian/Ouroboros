@@ -23,10 +23,11 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class SolarExpanse extends Spell
 {
@@ -80,7 +81,7 @@ public class SolarExpanse extends Spell
 				if (data.isBreak())
 					MobData.damageUnnaturally(p, le, data.getHp(false) * .45, true, ElementType.CELESTIO);
 
-				EntityEffects.addExposed(le, 20);
+				CelestioEffects.addExposed(le, 20);
 				
 				cooldown.add(p.getUniqueId());
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldown.remove(p.getUniqueId()), 200);

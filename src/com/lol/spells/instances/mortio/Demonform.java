@@ -11,7 +11,8 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class Demonform extends Spell
 {
@@ -30,7 +31,7 @@ public class Demonform extends Spell
 	{
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		EntityEffects.addNightShift(p, 1, 30);
+		MortioEffects.addNightShift(p, 1, 30);
 		return this.getManacost();
 	}
 	

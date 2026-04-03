@@ -14,9 +14,9 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Incendio extends Spell
 {

@@ -23,10 +23,10 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.OBStandardTimer;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Prometheus extends AbstractOBSAbility
 {

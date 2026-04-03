@@ -19,10 +19,11 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CosmoEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Antimatter extends Spell
 {
@@ -60,7 +61,7 @@ public class Antimatter extends Spell
 				else if (data != null)
 				{
 					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, ElementType.COSMO);
-					EntityEffects.addVoided((LivingEntity) target, 20);
+					CosmoEffects.addVoided((LivingEntity) target, 20);
 				}
 			}, 15);
 			

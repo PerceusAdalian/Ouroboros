@@ -31,9 +31,10 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.ArcanoEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class SpellCastHandler implements Listener
 {
@@ -134,7 +135,7 @@ public class SpellCastHandler implements Listener
             return;
         }
 
-        if (EntityEffects.hasEtherDisruption.contains(p.getUniqueId()))
+        if (ArcanoEffects.hasEtherDisruption.contains(p.getUniqueId()))
         {
             PrintUtils.PrintToActionBar(p, "&cFizzle: Ether Disrupted!");
             return;
@@ -180,10 +181,10 @@ public class SpellCastHandler implements Listener
         {
         	if (recentlyOverloaded.contains(p.getUniqueId()))
         	{
-        		EntityEffects.hasEtherDisruption.add(p.getUniqueId());
+        		ArcanoEffects.hasEtherDisruption.add(p.getUniqueId());
         		recentlyOverloaded.remove(p.getUniqueId());
         		PrintUtils.PrintToActionBar(p, "&b&oOverload&r&f! Ether Disruption added for 5 minutes..");
-        		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> EntityEffects.hasEtherDisruption.remove(p.getUniqueId()), 6000);
+        		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> ArcanoEffects.hasEtherDisruption.remove(p.getUniqueId()), 6000);
         	}
         	else 
         	{

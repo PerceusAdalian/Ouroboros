@@ -20,9 +20,11 @@ import com.ouroboros.GeneralEvents;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class Haunt extends Spell
 {
@@ -61,14 +63,14 @@ public class Haunt extends Spell
 					PrintUtils.PrintToActionBar(p, "The summoning fails!");
 					Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> PrintUtils.PrintToActionBar(p, "Returning to last death location.."), 20);
 					p.teleport(p.getLastDeathLocation());
-					EntityEffects.addWard(p, 2, 15);
+					CelestioEffects.addWard(p, 2, 15);
 					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 					OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null);
 					return;
 				}
 				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 				p.teleport(target);
-				EntityEffects.addDoom(target, 2, 300);
+				MortioEffects.addDoom(target, 2, 300);
 				OBSParticles.drawCylinder(target.getLocation(), target.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
 					OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null), 20);
@@ -86,7 +88,7 @@ public class Haunt extends Spell
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 			p.teleport(p.getLastDeathLocation());
-			EntityEffects.addWard(p, 2, 15);
+			CelestioEffects.addWard(p, 2, 15);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
 				OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null), 20);
 		

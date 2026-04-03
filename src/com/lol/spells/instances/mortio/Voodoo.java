@@ -20,10 +20,11 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class Voodoo extends Spell
 {
@@ -56,7 +57,7 @@ public class Voodoo extends Spell
 			{
 				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return;
 				
-				int damage = EntityEffects.jinxRegistry.containsKey(p.getUniqueId()) ? EntityEffects.jinxRegistry.get(p.getUniqueId()).magnitude : 0;
+				int damage = MortioEffects.jinxRegistry.containsKey(p.getUniqueId()) ? MortioEffects.jinxRegistry.get(p.getUniqueId()).magnitude : 0;
 				OBSParticles.drawCosLine(p.getLocation(), le.getLocation(), 0.4, Particle.CRIMSON_SPORE, null);
 				OBSParticles.drawDisc(le.getLocation(), le.getWidth(), 1, 6, 0.5, Particle.DUST_PLUME, null);
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
@@ -68,7 +69,7 @@ public class Voodoo extends Spell
 					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 3, Particle.SMOKE, null);
 					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 5, Particle.ASH, null);
 					MobData.damageUnnaturally(p, le, damage, true, ElementType.CORROSIVE);
-					EntityEffects.addDread(target, 20);
+					MortioEffects.addDread(target, 20);
 				}, 15);
 			})) return -1;
 			return 100;
@@ -100,7 +101,7 @@ public class Voodoo extends Spell
 				}, 15);
 			})) return -1;
 			
-			EntityEffects.addJinxStacks(p, targetCount.get());
+			MortioEffects.addJinxStacks(p, targetCount.get());
 			return 100;
 		}
 		

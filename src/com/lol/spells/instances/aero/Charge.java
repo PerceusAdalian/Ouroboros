@@ -12,8 +12,9 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.entityeffects.AeroEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Charge extends Spell
 {
@@ -28,7 +29,7 @@ public class Charge extends Spell
 	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		EntityEffects.addCharged(p, 2, 15);
+		AeroEffects.addCharged(p, 2, 15);
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 		OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 6, Particle.ELECTRIC_SPARK, null);
 		return this.getManacost();

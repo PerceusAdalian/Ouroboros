@@ -14,9 +14,9 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.GeoEffects;
 
 public class Expelliarmus extends Spell
 {
@@ -50,7 +50,7 @@ public class Expelliarmus extends Spell
 
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 2, 0.5, Particle.SMOKE, null);
-		EntityEffects.addSanded(living, 20);
+		GeoEffects.addSanded(living, 20);
 
 		ItemStack droppedItem = heldItem.clone();
 		if (heldItem.equals(equipment.getItemInMainHand())) 

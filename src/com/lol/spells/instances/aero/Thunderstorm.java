@@ -17,10 +17,11 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.AeroEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Thunderstorm extends Spell
 {
@@ -58,7 +59,7 @@ public class Thunderstorm extends Spell
 			{
 				target.getWorld().strikeLightning(target.getLocation());
 				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
-				EntityEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 5 : 10);
+				AeroEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 5 : 10);
 			}, 15);
 			RayCastUtils.getNearbyEntities(target, 25, (C)->
 			{
@@ -68,7 +69,7 @@ public class Thunderstorm extends Spell
 				{
 					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
 					C.getWorld().strikeLightning(C.getLocation());
-					EntityEffects.addShock(C, C instanceof Player ? 3 : 20);						
+					AeroEffects.addShock(C, C instanceof Player ? 3 : 20);						
 				}, 30);
 			});
 			return this.getManacost();
@@ -81,7 +82,7 @@ public class Thunderstorm extends Spell
 			{
 				OBSParticles.drawLine(p.getLocation(), C.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 				C.getWorld().strikeLightning(C.getLocation());
-				EntityEffects.addShock(C, C instanceof Player ? 3 : 20);
+				AeroEffects.addShock(C, C instanceof Player ? 3 : 20);
 			})) 
 			{
 				PrintUtils.PrintToActionBar(p, "Fizzle!");

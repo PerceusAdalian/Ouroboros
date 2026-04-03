@@ -8,11 +8,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ScrapMateria extends AbstractObsObject
 {

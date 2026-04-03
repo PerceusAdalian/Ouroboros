@@ -16,9 +16,10 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CosmoEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Nullify extends Spell
 {
@@ -48,7 +49,7 @@ public class Nullify extends Spell
 				OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), (int) target.getHeight()+1, 0.5, 45, 6, 0.1, Particle.SCULK_SOUL, null);
 				OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), (int) target.getHeight(), 5, 0.5, 0.1, Particle.ENCHANT, null);
 				EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_CLOSE_SHUTTER, SoundCategory.AMBIENT);
-				EntityEffects.addVoided((LivingEntity) target, 30); 
+				CosmoEffects.addVoided((LivingEntity) target, 30); 
 				MobData.getMob(target.getUniqueId()).setBreak();
 			}, 15);
 			

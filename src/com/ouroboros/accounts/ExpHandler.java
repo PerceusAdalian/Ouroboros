@@ -49,9 +49,9 @@ import org.bukkit.potion.PotionType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ExpHandler implements Listener
 { 

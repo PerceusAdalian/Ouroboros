@@ -25,7 +25,7 @@ import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.objects.instances.ScrapMateria;
 import com.ouroboros.utils.Chance;
-import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class RefinementPage extends AbstractOBSGui
 {

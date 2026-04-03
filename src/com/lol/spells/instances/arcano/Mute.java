@@ -11,9 +11,9 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.ArcanoEffects;
 
 public class Mute extends Spell
 {
@@ -38,9 +38,9 @@ public class Mute extends Spell
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);
 			OBSParticles.drawWisps(target.getLocation(), target.getHeight(), target.getWidth(), 4, Particle.WARPED_SPORE, null);
 			if (target instanceof Player)
-				EntityEffects.addEtherDisruption((Player) target, 20);
+				ArcanoEffects.addEtherDisruption((Player) target, 20);
 			if (target instanceof LivingEntity && !(target instanceof Player))
-				EntityEffects.addEtherOverload((LivingEntity) target, 60);
+				ArcanoEffects.addEtherOverload((LivingEntity) target, 60);
 		})) return this.getManacost();
 		return -1;
 	}

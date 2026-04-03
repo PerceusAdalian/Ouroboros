@@ -13,9 +13,10 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class Shroud extends Spell
 {
@@ -34,7 +35,7 @@ public class Shroud extends Spell
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 6, 0.5, Particle.DUST_PLUME, null);
-		EntityEffects.addShroud(p, 1, 45);
+		MortioEffects.addShroud(p, 1, 45);
 		
 		if (!RayCastUtils.getNearbyEntities(p, 30, r ->
 		{

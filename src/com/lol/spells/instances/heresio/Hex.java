@@ -18,12 +18,13 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Chance;
-import com.ouroboros.utils.EntityEffects;
-import com.ouroboros.utils.EntityEffects.WildcardData;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.OBStandardTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
 public class Hex extends Spell
 {
@@ -48,7 +49,7 @@ public class Hex extends Spell
 		Entity target = RayCastUtils.getEntity(p, 20);
 		
 		if (!(target instanceof LivingEntity)) return -1;
-		if (EntityEffects.isHexed.containsKey(target.getUniqueId()))
+		if (HeresioEffects.isHexed.containsKey(target.getUniqueId()))
 		{
 			PrintUtils.PrintToActionBar(p, "&f&oTarget is already hexed!");
 			return -1;
@@ -87,7 +88,7 @@ public class Hex extends Spell
 		OBSParticles.drawAngledCircle(entity.getEyeLocation(), 2, 8, 45, -0.1, Particle.WARPED_SPORE, null);
 		OBSParticles.drawCylinder(entity.getLocation(), entity.getWidth(), (int)(entity.getHeight()+1), 15, 0.5, 0.5, Particle.ENCHANT, null);
 		EntityEffects.playSound(caster, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		EntityEffects.addWildcard(entity, 0);
+		HeresioEffects.addWildcard(entity, 0);
 		
 		if (entity instanceof Player p) 
 		{
@@ -99,7 +100,7 @@ public class Hex extends Spell
 	private static void playBackfire(Player player)
 	{
 		PrintUtils.PrintToActionBar(player, "&cThe Spell Backfired!");
-		if (EntityEffects.isHexed.containsKey(player.getUniqueId())) 
+		if (HeresioEffects.isHexed.containsKey(player.getUniqueId())) 
 		{
 			PrintUtils.PrintToActionBar(player, "&c..But you've already been hexed!");
 			return;
@@ -117,7 +118,7 @@ public class Hex extends Spell
 		{
 			if (Chance.of(14.5)) 
 			{
-				WildcardData data = EntityEffects.isHexed.get(player.getUniqueId());
+				WildcardData data = HeresioEffects.isHexed.get(player.getUniqueId());
 				if (data == null || !player.isOnline()) return;
 				
 				OBSParticles.drawHeresioCastSigil(player);
@@ -125,7 +126,7 @@ public class Hex extends Spell
 				
 				player.removePotionEffect(data.effect);
 				EntityEffects.add(player, data.effect, PotionEffect.INFINITE_DURATION, data.magnitude == 9 ? 9 : data.magnitude + 1, true);
-				EntityEffects.isHexed.put(player.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude + 1));
+				HeresioEffects.isHexed.put(player.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude + 1));
 				return;
 			}
 			

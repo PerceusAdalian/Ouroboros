@@ -20,10 +20,10 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsVoucherMenu;
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ObsStatVoucher extends AbstractObsObject
 {

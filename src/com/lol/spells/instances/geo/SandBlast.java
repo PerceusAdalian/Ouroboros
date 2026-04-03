@@ -14,10 +14,10 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.GeoEffects;
 
 public class SandBlast extends Spell
 {
@@ -44,7 +44,7 @@ public class SandBlast extends Spell
 			OBSParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.6, Particle.DUST, null);
 			
 			MobData.damageUnnaturally(p, le, 4, true, ElementType.GEO);
-			EntityEffects.addSanded(le, 20);
+			GeoEffects.addSanded(le, 20);
 			
 		})) return -1;
 		

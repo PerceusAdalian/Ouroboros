@@ -30,11 +30,13 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
-import com.ouroboros.utils.EntityEffects.DivineFavorData;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.helpers.DivineFavorData;
 
 public class Pneuma extends Spell
 {
@@ -89,7 +91,7 @@ public class Pneuma extends Spell
 				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 6,   -.5, Particle.SONIC_BOOM,null);
 				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 0.5, -.5, Particle.END_ROD,   null);
 				
-				DivineFavorData data = EntityEffects.divineFavorRegistry.get(p.getUniqueId());
+				DivineFavorData data = CelestioEffects.divineFavorRegistry.get(p.getUniqueId());
 				int divineFavorStacks = data != null ? data.magnitude : 0;
 				
 				if (!RayCastUtils.createHitBox(p, 6, 5, 30, entity -> 
@@ -97,10 +99,10 @@ public class Pneuma extends Spell
 					if (!(entity instanceof LivingEntity)) return;
 					
 					MobData.damageUnnaturally(p, (LivingEntity) entity, (10 * divineFavorStacks) + 10, true, ElementType.CELESTIO);
-					EntityEffects.addExposed((LivingEntity) entity, 30);
+					CelestioEffects.addExposed((LivingEntity) entity, 30);
 				})) return;
 				
-				EntityEffects.divineFavorRegistry.remove(p.getUniqueId());
+				CelestioEffects.divineFavorRegistry.remove(p.getUniqueId());
 				p.removePotionEffect(PotionEffectType.ABSORPTION);
 				p.removePotionEffect(PotionEffectType.RESISTANCE);
 			}, 15);
@@ -121,11 +123,11 @@ public class Pneuma extends Spell
 		{
 			PrintUtils.PrintToActionBar(p, "&e&oPneuma: Charged");
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.AMBIENT);
-			EntityEffects.addDivineFavor(p, 9, 60);
+			CelestioEffects.addDivineFavor(p, 9, 60);
 			EntityEffects.add(p, PotionEffectType.REGENERATION, 1200, 2);
-			if (EntityEffects.isCursed.contains(p.getUniqueId())) 
+			if (HeresioEffects.isCursed.contains(p.getUniqueId())) 
 			{
-				EntityEffects.isCursed.remove(p.getUniqueId());
+				HeresioEffects.isCursed.remove(p.getUniqueId());
 				PrintUtils.OBSFormatPrint(p, "Your &2Curse&f has been removed.");
 			}
 			Cure.cureHelper(p, p);
@@ -150,9 +152,9 @@ public class Pneuma extends Spell
 			{
 				if (event.getEntity() instanceof Player p)
 				{
-					if (EntityEffects.divineFavorRegistry.containsKey(p.getUniqueId()))
+					if (CelestioEffects.divineFavorRegistry.containsKey(p.getUniqueId()))
 					{
-						DivineFavorData data = EntityEffects.divineFavorRegistry.get(p.getUniqueId());
+						DivineFavorData data = CelestioEffects.divineFavorRegistry.get(p.getUniqueId());
 						
 						int magnitude = data.magnitude;
 						int seconds = data.seconds;
@@ -164,13 +166,13 @@ public class Pneuma extends Spell
 						{
 							EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.AMBIENT);
 							PrintUtils.PrintToActionBar(p, "&7&oDivine Favor dissipates..");
-							EntityEffects.divineFavorRegistry.remove(p.getUniqueId());
+							CelestioEffects.divineFavorRegistry.remove(p.getUniqueId());
 							return;
 						}
 						else magnitude = data.magnitude - 1;
 						
 						PrintUtils.PrintToActionBar(p, "&7&oDivine Favor weakens to "+(int)(magnitude+1)+"..");
-						EntityEffects.addDivineFavor(p, magnitude, seconds);
+						CelestioEffects.addDivineFavor(p, magnitude, seconds);
 					}
 				}
 			}

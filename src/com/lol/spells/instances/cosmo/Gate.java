@@ -21,9 +21,9 @@ import com.ouroboros.enums.Rarity;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.GateMenu;
 import com.ouroboros.menus.instances.magic.CollectWandData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.ItemCollector;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Gate extends Spell
 {

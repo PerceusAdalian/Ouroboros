@@ -29,11 +29,13 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
-import com.ouroboros.utils.EntityEffects;
-import com.ouroboros.utils.EntityEffects.WildcardData;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
+import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
 public class GeneralEvents implements Listener
 {
@@ -87,7 +89,7 @@ public class GeneralEvents implements Listener
         		
         		if (PlayerActions.rightClickAir(e) && p.getEquipment().getItemInMainHand().getType().equals(Material.MILK_BUCKET))
         		{
-        			if (EntityEffects.isHexed.containsKey(p.getUniqueId()))
+        			if (HeresioEffects.isHexed.containsKey(p.getUniqueId()))
         			{
         				e.setCancelled(true);
         				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
@@ -96,10 +98,10 @@ public class GeneralEvents implements Listener
 						PrintUtils.PrintToActionBar(p, "&2&oThe Hex Worsens..");
 						EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
 						
-        				WildcardData data = EntityEffects.isHexed.get(p.getUniqueId());
+        				WildcardData data = HeresioEffects.isHexed.get(p.getUniqueId());
 						p.removePotionEffect(data.effect);
 						EntityEffects.add(p, data.effect, PotionEffect.INFINITE_DURATION, data.magnitude == 9 ? 9 : data.magnitude+1, true);
-						EntityEffects.isHexed.put(p.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude+1));
+						HeresioEffects.isHexed.put(p.getUniqueId(), new WildcardData(data.effect, data.magnitude == 9 ? 9 : data.magnitude+1));
 						return;
         			}
         		}
@@ -109,7 +111,7 @@ public class GeneralEvents implements Listener
         	public void playerRespawn(PlayerRespawnEvent e)
         	{
         		Player p = e.getPlayer();
-        		if (EntityEffects.isHexed.containsKey(p.getUniqueId()))
+        		if (HeresioEffects.isHexed.containsKey(p.getUniqueId()))
         		{
         			PrintUtils.PrintToActionBar(p, "&2&oThe Hex Came Back!");
         			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
@@ -119,7 +121,7 @@ public class GeneralEvents implements Listener
         				OBSParticles.drawHeresioCastSigil(p);
         				EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
         				
-        				WildcardData data = EntityEffects.isHexed.get(p.getUniqueId());
+        				WildcardData data = HeresioEffects.isHexed.get(p.getUniqueId());
         				p.addPotionEffect(new PotionEffect(data.effect, PotionEffect.INFINITE_DURATION, data.magnitude, true, true, true));
         			}, 20);
         		}
@@ -141,9 +143,9 @@ public class GeneralEvents implements Listener
         			double initialFallDamage = e.getFinalDamage();
         			double mitigatedFallDamage = 0;
         			
-        			if (EntityEffects.nightShifted.containsKey(p.getUniqueId()))
+        			if (MortioEffects.nightShifted.containsKey(p.getUniqueId()))
         			{
-        				double finalFallDamage = initialFallDamage * (0.1 * EntityEffects.nightShifted.get(p.getUniqueId()));
+        				double finalFallDamage = initialFallDamage * (0.1 * MortioEffects.nightShifted.get(p.getUniqueId()));
         				e.setDamage(finalFallDamage);
         				mitigatedFallDamage += initialFallDamage - finalFallDamage;
         			}
@@ -151,7 +153,7 @@ public class GeneralEvents implements Listener
         			if (Ouroboros.debug)
         			{
         				PrintUtils.OBSConsoleDebug("Entity Damage Event: Fall Damage -- "+p.getName()+ ": took "+initialFallDamage+" fall damage."
-        						+"\nPlayer was Night-Shifted: "+EntityEffects.nightShifted.containsKey(p.getUniqueId()) + " | Mitigated "+mitigatedFallDamage+" damage.");
+        						+"\nPlayer was Night-Shifted: "+MortioEffects.nightShifted.containsKey(p.getUniqueId()) + " | Mitigated "+mitigatedFallDamage+" damage.");
         			}
         		}
         	}

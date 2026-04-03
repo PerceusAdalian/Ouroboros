@@ -12,7 +12,7 @@ import com.lol.spells.instances.glacio.Glacius;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GlacioSpellsPage extends AbstractOBSGui
 {

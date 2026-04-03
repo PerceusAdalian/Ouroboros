@@ -23,9 +23,9 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Flamelash extends AbstractOBSAbility
 {

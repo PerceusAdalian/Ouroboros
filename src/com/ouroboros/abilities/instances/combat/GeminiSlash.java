@@ -13,14 +13,15 @@ import org.bukkit.util.Vector;
 
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GeminiSlash extends AbstractOBSAbility
 {
@@ -52,7 +53,7 @@ public class GeminiSlash extends AbstractOBSAbility
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER);
 			MobData.damageUnnaturally(p, target, 10, true, ElementType.CELESTIO);
-			EntityEffects.addExposed(le, 300);
+			CelestioEffects.addExposed(le, 300);
 
 			return true;			
 		}

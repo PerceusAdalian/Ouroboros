@@ -15,10 +15,11 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.GlacioEffects;
 
 public class GlacialFlood extends Spell
 {
@@ -54,12 +55,12 @@ public class GlacialFlood extends Spell
 			{
 				OBSParticles.drawGlacioCastSigil(target);
 				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.SNOWFLAKE, null);
-				if (EntityEffects.hasChill.containsKey(target.getUniqueId()))
+				if (GlacioEffects.chillEffects.containsKey(target.getUniqueId()))
 				{
-					int damage = EntityEffects.hasChill.get(target.getUniqueId());
+					int damage = GlacioEffects.chillEffects.get(target.getUniqueId()).magnitude;
 					MobData.damageUnnaturally(p, target, damage*3, true, ElementType.GLACIO);
 				}
-				EntityEffects.addFrozen(target);
+				GlacioEffects.addFrozen(target);
 				MobData.damageUnnaturally(p, target, 10, true, ElementType.GLACIO);
 			})) return -1;
 			
@@ -75,7 +76,7 @@ public class GlacialFlood extends Spell
 			{
 				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.DRIPPING_WATER, null);
 				OBSParticles.drawGlacioCastSigil(target);
-				EntityEffects.addChill(target, 5, 30);
+				GlacioEffects.addChill(p, target, 5, 30);
 			}))	return -1;
 			
 			return this.getManacost();

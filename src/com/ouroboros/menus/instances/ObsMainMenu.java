@@ -17,7 +17,7 @@ import com.ouroboros.menus.instances.abilities.AbilityMainPage;
 import com.ouroboros.menus.instances.magic.MagicMainPage;
 import com.ouroboros.menus.instances.protocolecho.ProtocolEchoMainPage;
 import com.ouroboros.menus.instances.store.ObsShopGui;
-import com.ouroboros.utils.EntityEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ObsMainMenu extends AbstractOBSGui
 {

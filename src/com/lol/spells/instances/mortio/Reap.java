@@ -21,10 +21,12 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class Reap extends Spell
 {
@@ -47,7 +49,7 @@ public class Reap extends Spell
 		Entity target = RayCastUtils.getEntity(p, 12);
 		
 		if (target == null || !(target instanceof LivingEntity)) return -1;
-		boolean isCursed = EntityEffects.isCursed.contains(target.getUniqueId());
+		boolean isCursed = HeresioEffects.isCursed.contains(target.getUniqueId());
 		
 		if (isCursed)EntityEffects.playSound(p, Sound.ENTITY_WITHER_SHOOT, SoundCategory.AMBIENT);
 		else EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
@@ -73,10 +75,10 @@ public class Reap extends Spell
 				if (eType.equals(PotionEffectType.SLOWNESS)) ((LivingEntity) target).removePotionEffect(PotionEffectType.SLOWNESS);
 			}
 			
-			EntityEffects.isCursed.remove(target.getUniqueId());
+			HeresioEffects.isCursed.remove(target.getUniqueId());
 			MobData.damageUnnaturally(p, target, 6, true, ElementType.MORTIO);
 			EntityEffects.heal(p, target instanceof Player ? (6 * .75) : 3);
-			EntityEffects.addDoom((LivingEntity) target, target instanceof Player ? 2 : 0, 30);
+			MortioEffects.addDoom((LivingEntity) target, target instanceof Player ? 2 : 0, 30);
 			
 			return this.getManacost();
 		}

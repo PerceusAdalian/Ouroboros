@@ -21,10 +21,10 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class TrainingWand extends AbstractObsObject
 {

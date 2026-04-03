@@ -172,6 +172,37 @@ public class RayCastUtils
         return true;
     }
     
+    /**
+     * @param p - Player to collect
+     * @param range - 
+     * @param limitCollect - Sets a limit for the final returned list to have for further niche operations
+     * @param consumer -
+     * @return
+     */
+    public static List<Entity> getEntitiesInFov(Player p, double range, int limitCollect)
+    {
+    	List<Entity> nearby = p.getNearbyEntities(range, range, range);
+    	List<Entity> finalList = new ArrayList<>();
+    	int count = 0;
+    	
+    	if (nearby.isEmpty()) return null;
+    	
+    	for (Entity entity : nearby)
+    	{
+    		if (!(entity instanceof LivingEntity mob)) continue;
+            if (entity.equals(p)) continue;
+            if (!isMobVisible(p, mob, range, 90)) continue;
+
+            if (count < limitCollect)
+            {
+                finalList.add(entity);
+                count++;
+            }
+    	}
+    	
+    	return !finalList.isEmpty() ? finalList : null;
+    }
+    
     public static boolean getEntitiesInFov(Player p, int range, int degreeRange, Consumer<Entity> consumer)
     {
         List<Entity> nearby = p.getNearbyEntities(range, range, range);

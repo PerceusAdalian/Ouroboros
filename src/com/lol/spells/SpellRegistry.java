@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.admin.RemoveEntity;
+import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
@@ -112,6 +113,7 @@ public class SpellRegistry
         		Gust.class,
         		Galeforce.class,
         		Tailwind.class,
+        		ChainLightning.class,
         		
         		//Geo
         		Expelliarmus.class,

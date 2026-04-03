@@ -21,15 +21,16 @@ import org.bukkit.potion.PotionEffectType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
+import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.OBStandardTimer;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class ReapAndSew extends AbstractOBSAbility
 {
@@ -64,7 +65,7 @@ public class ReapAndSew extends AbstractOBSAbility
             {
                 OBSParticles.drawMortioCastSigil(p);
                 OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
-                EntityEffects.addDoom((LivingEntity) target, 2, 20);
+                MortioEffects.addDoom((LivingEntity) target, 2, 20);
                 remainingSeconds.put(target.getUniqueId(), seconds);
                 OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
                 {
@@ -79,7 +80,7 @@ public class ReapAndSew extends AbstractOBSAbility
                 return true;
             }
             
-            else if (EntityEffects.hasDoom.containsKey(target.getUniqueId()))
+            else if (MortioEffects.hasDoom.containsKey(target.getUniqueId()))
             {
                 OBSParticles.drawMortioCastSigil(p);
                 OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
@@ -105,7 +106,7 @@ public class ReapAndSew extends AbstractOBSAbility
                     p.setHealth(Math.min(p.getHealth() + (dmg / 2.0), maxHealth));
                 }, 20);
                 remainingSeconds.remove(target.getUniqueId());
-                EntityEffects.hasDoom.remove(target.getUniqueId());
+                MortioEffects.hasDoom.remove(target.getUniqueId());
                 if (((LivingEntity) target).hasPotionEffect(PotionEffectType.WITHER))
                     ((LivingEntity) target).removePotionEffect(PotionEffectType.WITHER);
                 return true;   

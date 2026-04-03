@@ -14,10 +14,10 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.GlacioEffects;
 
 public class Glacius extends Spell
 {
@@ -43,7 +43,7 @@ public class Glacius extends Spell
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.2, 0.5, Particle.SNOWFLAKE, null);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.7, 0.5, Particle.CRIT, null);
 			MobData.damageUnnaturally(p, target, 5, true, ElementType.GLACIO);
-			EntityEffects.addFrosted((LivingEntity) target, 0, 10);
+			GlacioEffects.addFrosted((LivingEntity) target, 0, 10);
 		})) return -1;
 		return this.getManacost();
 	}

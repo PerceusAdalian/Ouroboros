@@ -18,10 +18,11 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class Ignite extends Spell
 {
@@ -65,7 +66,7 @@ public class Ignite extends Spell
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.FLAME, null);
-			EntityEffects.addBurn((LivingEntity) target, target instanceof Player ? 10 : 20);
+			InfernoEffects.addBurn((LivingEntity) target, target instanceof Player ? 10 : 20);
 			return 25;
 		}
 		

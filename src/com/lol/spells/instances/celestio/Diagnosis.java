@@ -16,11 +16,13 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
-import com.ouroboros.utils.EntityEffects.WildcardData;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
+import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
 public class Diagnosis extends Spell
 {
@@ -83,27 +85,27 @@ public class Diagnosis extends Spell
 			PrintUtils.OBSFormatDebug(caster, "Scan Complete. " + target.getName() + "'s Results: " + effects);
 		}, 20);
 		
-		if (EntityEffects.hasDread.contains(target.getUniqueId()))
+		if (MortioEffects.hasDread.contains(target.getUniqueId()))
 		{
 			PrintUtils.OBSFormatDebug(caster, "&r&fWarning: Target is affected by &4Dread&f. Priority Level: &6Medium");
 		}
-		if(EntityEffects.isCursed.contains(target.getUniqueId()))
+		if(HeresioEffects.isCursed.contains(target.getUniqueId()))
 		{
 			PrintUtils.OBSFormatDebug(caster, "&r&fWarning: Target is affected by a &4Curse&f. Priority Level: &aLow");
 		}
-		if(EntityEffects.hasDoom.containsKey(target.getUniqueId()))
+		if(MortioEffects.hasDoom.containsKey(target.getUniqueId()))
 		{
 			PrintUtils.OBSFormatDebug(caster, "&r&fWarning: Target is affected by &4Doom&f. Priority Level: &cHigh");
 		}
-		if (EntityEffects.isHexed.containsKey(target.getUniqueId()))
+		if (HeresioEffects.isHexed.containsKey(target.getUniqueId()))
 		{
-			WildcardData data = EntityEffects.isHexed.get(target.getUniqueId());
+			WildcardData data = HeresioEffects.isHexed.get(target.getUniqueId());
 			String effectName = PrintUtils.formatEnumName(data.effect.getTranslationKey());
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				PrintUtils.OBSFormatError(caster, "&cWARNING&f: A &2&lHex&r&f was found: &n"+effectName+"&r&f. Priority Level: &c&lHighest&r&f "+target.getName()+" can be &e&ocured&r&f safely now.");
-				EntityEffects.isHexed.remove(target.getUniqueId());
+				HeresioEffects.isHexed.remove(target.getUniqueId());
 				OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 15, .75, .5, Particle.ENCHANT, null);
 				OBSParticles.drawCelestioCastSigil(target);
 				EntityEffects.playSound(target, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);

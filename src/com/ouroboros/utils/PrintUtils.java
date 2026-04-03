@@ -433,4 +433,9 @@ public class PrintUtils
 					 .map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase())
 					 .collect(Collectors.joining(" "));
 	}
+	
+	public static String assignAstralVariant(String name, boolean asDaybound)
+	{
+		return color(ObsColors.ASTRAL) + "&l" + name + (asDaybound ? " &r&e&oDaybound&r&f:":" &r&9&oNightbound&r&f:");
+	}
 }

@@ -16,9 +16,10 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.AeroEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Diffindo extends Spell
 {
@@ -38,7 +39,7 @@ public class Diffindo extends Spell
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 30);
 		if (!(target instanceof LivingEntity) || target == null) return -1;
-		EntityEffects.addCharged(p, 0, 10);
+		AeroEffects.addCharged(p, 0, 10);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);
 		EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.AMBIENT);
 		MobData.damageUnnaturally(p, target, 45, true, ElementType.SEVER);

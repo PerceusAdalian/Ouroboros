@@ -15,10 +15,11 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.EntityEffects;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.HeresioEffects;
 
 public class Sew extends Spell
 {
@@ -42,7 +43,7 @@ public class Sew extends Spell
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.SMOKE, null);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.6, Particle.ASH, null);
-		if(!EntityEffects.addCurse((LivingEntity) target, 0, target instanceof Player ? 14 : 20))
+		if(!HeresioEffects.addCurse((LivingEntity) target, 0, target instanceof Player ? 14 : 20))
 		{
 			PrintUtils.PrintToActionBar(p, "&cTarget already cursed!");
 			return -1;
