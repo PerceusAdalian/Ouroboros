@@ -3,9 +3,11 @@ package com.ouroboros.utils;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Particle.DustOptions;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -338,7 +340,7 @@ public class OBSParticles
 	
 	public static void drawAstralCastSigil(LivingEntity entity, boolean isDay)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, isDay ? new DustOptions(Color.RED, 1.0f) : null);
 		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, isDay ? Particle.LAVA : Particle.BUBBLE_COLUMN_UP, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1, isDay ? Particle.LARGE_SMOKE : Particle.GLOW_SQUID_INK, null);	
 	}

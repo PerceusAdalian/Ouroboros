@@ -11,6 +11,7 @@ import com.eol.materia.instances.components.Catalysts;
 import com.eol.materia.instances.components.ElementCores;
 import com.lol.spells.SpellCastHandler;
 import com.lol.spells.SpellRegistry;
+import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
@@ -87,6 +88,7 @@ public class Ouroboros extends JavaPlugin
 		ArrestoMomentum.registerSpellHelper(instance);
 		AssertOrder.registerSpellHelper(instance);
 		Pneuma.registerSpellHelper(instance);
+		Tailwind.registerSpellHelper(instance);
 		
 		MateriaCastHandler.register(instance);
 		Catalysts.load();

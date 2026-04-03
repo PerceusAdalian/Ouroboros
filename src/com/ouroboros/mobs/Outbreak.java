@@ -16,6 +16,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.EntityCategory;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.OutbreakManager;
+import com.ouroboros.utils.PrintUtils;
 
 
 public class Outbreak
@@ -44,7 +45,7 @@ public class Outbreak
             int level = LevelTable.getLevel(biome);
             entries.add(new OutbreakEntry(type, level, null)); // null = no custom name, uses default
         }
-        return new Outbreak("Swarm", entries); // unknown name until revealed
+        return new Outbreak(PrintUtils.getElementTypeColor(element)+element.getType()+" Swarm", entries); // unknown name until revealed
     }
     
     public static void registerRandomOutbreakTask(Plugin plugin)
@@ -53,7 +54,7 @@ public class Outbreak
         {
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                if (ThreadLocalRandom.current().nextDouble() > 0.02) continue;
+                if (ThreadLocalRandom.current().nextDouble() > 0.01) continue;
 
                 Location center = pickOutbreakCenter(p, 32, 64);
                 if (center == null) continue;

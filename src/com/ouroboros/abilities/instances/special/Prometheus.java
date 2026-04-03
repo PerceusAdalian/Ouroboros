@@ -72,7 +72,7 @@ public class Prometheus extends AbstractOBSAbility
 				{					
 					OBSParticles.drawSinLine(p.getLocation(), target.getLocation(), 2, Particle.LAVA, null);
 					OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 5, target.getHeight()%2, 2, 5, 0.5, Particle.FLAME, null);
-					MobData.damageUnnaturally(p, target, 20, true, ElementType.INFERNO);
+					MobData.damageUnnaturally(p, target, 20, true, true, ElementType.INFERNO);
 				});
 			}, 75);
 			

@@ -68,7 +68,7 @@ public class Voodoo extends Spell
 					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 8, Particle.POOF, null);
 					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 3, Particle.SMOKE, null);
 					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 5, Particle.ASH, null);
-					MobData.damageUnnaturally(p, le, damage, true, ElementType.CORROSIVE);
+					MobData.damageUnnaturally(p, le, damage, true, true, ElementType.CORROSIVE);
 					MortioEffects.addDread(target, 20);
 				}, 15);
 			})) return -1;
@@ -97,7 +97,7 @@ public class Voodoo extends Spell
 					OBSParticles.drawMortioCastSigil(le);
 					OBSParticles.drawCosLine(le.getLocation(), p.getLocation(), 0.6, Particle.CRIMSON_SPORE, null);
 					OBSParticles.drawCosLine(le.getLocation(), p.getLocation(), 0.6, Particle.SMOKE, null);
-					MobData.damageUnnaturally(p, le, (data.getHp(false) * 0.2) + 10, true, ElementType.MORTIO);
+					MobData.damageUnnaturally(p, le, (data.getHp(false) * 0.2) + 10, true, true, ElementType.MORTIO);
 				}, 15);
 			})) return -1;
 			

@@ -58,7 +58,7 @@ public class AspectOfSithis extends Spell
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.3, 0.6, Particle.CRIMSON_SPORE, null);
 			
 			MortioEffects.addDread(le, 30);
-			MobData.damageUnnaturally(p, target, 10, true, ElementType.MORTIO);
+			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.MORTIO);
 			return this.getManacost();
 		}
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))

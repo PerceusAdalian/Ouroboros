@@ -42,7 +42,7 @@ public class Diffindo extends Spell
 		AeroEffects.addCharged(p, 0, 10);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);
 		EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.AMBIENT);
-		MobData.damageUnnaturally(p, target, 45, true, ElementType.SEVER);
+		MobData.damageUnnaturally(p, target, 45, true, true, ElementType.SEVER);
 		return this.getManacost();
 	}
 	

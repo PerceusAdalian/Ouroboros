@@ -60,7 +60,7 @@ public class MagicMainPage extends ObsGui
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER, 1, 1);
+			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new ObsMainMenu(p));
 		});
 		

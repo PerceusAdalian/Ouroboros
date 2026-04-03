@@ -37,20 +37,16 @@ public class GlacioEffects
 	public static void addChill(Player p, LivingEntity target, int magnitude, int seconds) 
 	{
 	    UUID id = target.getUniqueId();
-	    ChillEffectData existing = chillEffects.get(id);
+	    ChillEffectData existingEffect = chillEffects.get(id);
 
 	    // Stack magnitude, preserve original expiry time if re-applying
-	    int newMagnitude = Math.min(20, (existing != null ? existing.magnitude : 0) + magnitude);
-	    long expiresAt = existing != null
-	        ? existing.expiresAt               // keep original end time
-	        : System.currentTimeMillis() + (seconds * 1000L);
+	    int newMagnitude = Math.min(20, (existingEffect != null ? existingEffect.magnitude : 0) + magnitude == 0 ? 1 : magnitude);
+	    long expiresAt = existingEffect != null ? existingEffect.expiresAt : System.currentTimeMillis() + (seconds * 1000L);
 
-	    long remainingTicks = existing != null
-	        ? existing.getRemainingTicks()
-	        : seconds * 20L;
+	    long remainingTicks = existingEffect != null ? existingEffect.getRemainingTicks() : seconds * 20L;
 
 	    // Cancel both old tasks cleanly
-	    if (existing != null) existing.cancel();
+	    if (existingEffect != null) existingEffect.cancel();
 
 	    // Slowness — re-apply with remaining duration so it matches DOT expiry
 	    target.removePotionEffect(PotionEffectType.SLOWNESS);
@@ -58,16 +54,28 @@ public class GlacioEffects
 
 	    // DOT every second for remaining duration
 	    final int finalMagnitude = newMagnitude;
-	    BukkitTask dotTask = Bukkit.getScheduler().runTaskTimer(Ouroboros.instance, () -> 
-	    	MobData.damageUnnaturally(p, target, finalMagnitude, true, ElementType.GLACIO), 20L, 20L);
-
+	    BukkitTask[] dotTask = new BukkitTask[1]; // forward reference trick
+	    dotTask[0] = Bukkit.getScheduler().runTaskTimer(Ouroboros.instance, () -> 
+	    {
+	        if (target == null || target.isDead() || !target.isValid()) 
+	        {
+	            chillEffects.remove(id);
+	            dotTask[0].cancel();
+	            return;
+	        }
+	        OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.SNOWFLAKE, null);
+	        MobData.damageUnnaturally(p, target, finalMagnitude == 0 ? 1 : finalMagnitude, false, true, ElementType.GLACIO);
+	    }, 20L, 20L);
+	    
 	    // Expiry cleanup
 	    BukkitTask expiryTask = Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
 	    {
 	        chillEffects.remove(id);
+	        dotTask[0].cancel();
+	        target.removePotionEffect(PotionEffectType.SLOWNESS);
 	    }, remainingTicks);
 
-	    chillEffects.put(id, new ChillEffectData(newMagnitude, expiresAt, dotTask, expiryTask));
+	    chillEffects.put(id, new ChillEffectData(newMagnitude, expiresAt, expiryTask));
 	}
 	
 	public static Set<UUID> hasFrosted = new HashSet<>();

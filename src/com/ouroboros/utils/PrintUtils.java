@@ -205,6 +205,7 @@ public class PrintUtils
 	        case HERESIO  -> color(ObsColors.HERESIO);
 	        case MORTIO   -> color(ObsColors.MORTIO);
 	        case ARCANO   -> color(ObsColors.ARCANO);
+	        case ASTRAL   -> color(ObsColors.ASTRAL);
 	        default       -> color(ObsColors.NULL);
 	    };
 	}
@@ -436,6 +437,6 @@ public class PrintUtils
 	
 	public static String assignAstralVariant(String name, boolean asDaybound)
 	{
-		return color(ObsColors.ASTRAL) + "&l" + name + (asDaybound ? " &r&e&oDaybound&r&f:":" &r&9&oNightbound&r&f:");
+		return color(ObsColors.ASTRAL) + "&l" + name + (asDaybound ? " &r&eDaybound&r&f:":" &r&9Nightbound&r&f:");
 	}
 }

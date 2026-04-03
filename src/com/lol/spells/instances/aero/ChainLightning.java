@@ -62,7 +62,7 @@ public class ChainLightning extends Spell
 	        OBSParticles.drawLine(from, to, 0.7, 0.4, Particle.DUST, new DustOptions(Color.PURPLE, 1f));
 	        OBSParticles.drawAeroCastSigil(le);
 	        
-	        MobData.damageUnnaturally(p, le, i == 0 ? 15 : 10, true, ElementType.AERO);
+	        MobData.damageUnnaturally(p, le, i == 0 ? 15 : 10, true, true, ElementType.AERO);
 	        AeroEffects.addShock(le, 10);
 	        
 	        if (i == mobs.size() - 1) le.getWorld().strikeLightningEffect(le.getLocation());

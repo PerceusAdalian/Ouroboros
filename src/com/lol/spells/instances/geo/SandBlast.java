@@ -26,7 +26,7 @@ public class SandBlast extends Spell
 	{
 		super("Sand Blast", "sand_blast", Material.GLOWSTONE_DUST, SpellType.OFFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 2, false,
 				"&r&fSend a handful of sand infront of you as a &d&oConal&r&f AOE dealing",
-				"&r&f4&c♥&f "+PrintUtils.color(ObsColors.GEO)+"&lGeo damage and inflict &6Sanded&7 (10m, 20s)","",
+				"&r&f4&c♥&f "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage and inflict &6Sanded&7 (10m, 20s)","",
 				"&6Sanded &eEffect&f: Afflicted are &b&oBlinded&r&f and &b&oSlowed&r&f.");
 	}
 
@@ -41,9 +41,8 @@ public class SandBlast extends Spell
 			
 			OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.5, Particle.BLOCK_CRUMBLE, Material.SAND.createBlockData());
 			OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.ASH, null);
-			OBSParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.6, Particle.DUST, null);
 			
-			MobData.damageUnnaturally(p, le, 4, true, ElementType.GEO);
+			MobData.damageUnnaturally(p, le, 4, false, true, ElementType.GEO);
 			GeoEffects.addSanded(le, 20);
 			
 		})) return -1;

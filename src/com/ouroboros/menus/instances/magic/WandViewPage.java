@@ -45,7 +45,7 @@ public class WandViewPage extends ObsGui
 			ItemStack returnedWand = storedWand.getAsItemStack();
 			p.getInventory().addItem(returnedWand);
 			handleCleanup(p);
-			determinePageCallback(p, spell);
+			if (spell != null) determinePageCallback(p, spell);
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE)

@@ -19,7 +19,7 @@ public class ElementalSpellBookPage extends ObsGui
 
 	public ElementalSpellBookPage(Player player) 
 	{
-		super(player, "Spellbook", 54, Set.of(13,20,21,22,23,24,31,37,40,43));
+		super(player, "Elemental Spellbook", 54, Set.of(13,20,21,22,23,24,31,37,40,43));
 	}
 
 	@Override

@@ -25,18 +25,18 @@ public class SpellBookMainPage extends ObsGui
 		GuiButton.button(Material.BOOK).setName("&e&lElemental &r&eSpells").setLore("Click to view all primary school &r&espells&f.").place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
+			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
-		GuiButton.button(Material.BOOK).setName("&b&lSpecial &r&eSpells").setLore("Click to view all secondary school  &espells&f.").place(this, 14, e->
+		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&lSpecial &r&eSpells").setLore("Click to view all secondary school &espells&f.").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new SpecialSpellBookPage(p));
 		});
 		
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 10, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Magic Main Page").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_INSERT_ENCHANTED, SoundCategory.MASTER, 1, 1);

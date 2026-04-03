@@ -395,7 +395,7 @@ public class Wand
 	    if (spellSlots[spellIndex] != null) 
 	    {
 	        Spell currentSpell = spellSlots[spellIndex];
-	        existingLore.add(PrintUtils.ColorParser("&b&lEquipped Spell&r&f: "+currentSpell.getName()+
+	        existingLore.add(PrintUtils.ColorParser("&b&lEquipped Spell&r&f: "+PrintUtils.getElementTypeColor(currentSpell.getElementType())+"&l"+currentSpell.getName()+
 	        		"&r&7 {"+PrintUtils.rarityToString(currentSpell.getRarity())+"&r&7}"));
 	        existingLore.add(PrintUtils.ColorParser("&f- &oDescription&r&f:"));
 	        existingLore.addAll(currentSpell.getLore()); // Add all spell lore lines

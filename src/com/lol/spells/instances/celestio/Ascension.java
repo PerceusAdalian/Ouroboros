@@ -160,7 +160,7 @@ public class Ascension extends Spell
 	            EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
 	            OBSParticles.drawSpiralVortex(target.getLocation(), 110, 3, 0.5, Particle.CLOUD, null);
 	            OBSParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
-	            MobData.damageUnnaturally(p, target, baseDamage + damage, true, ElementType.CELESTIO);
+	            MobData.damageUnnaturally(p, target, baseDamage + damage, true, true, ElementType.CELESTIO);
 	            CelestioEffects.addHumility((LivingEntity) target, 20);
 	        }, 15);
 	    });

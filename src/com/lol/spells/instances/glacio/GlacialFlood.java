@@ -58,10 +58,10 @@ public class GlacialFlood extends Spell
 				if (GlacioEffects.chillEffects.containsKey(target.getUniqueId()))
 				{
 					int damage = GlacioEffects.chillEffects.get(target.getUniqueId()).magnitude;
-					MobData.damageUnnaturally(p, target, damage*3, true, ElementType.GLACIO);
+					MobData.damageUnnaturally(p, target, damage*3, false, true, ElementType.GLACIO);
 				}
 				GlacioEffects.addFrozen(target);
-				MobData.damageUnnaturally(p, target, 10, true, ElementType.GLACIO);
+				MobData.damageUnnaturally(p, target, 10, false, true, ElementType.GLACIO);
 			})) return -1;
 			
 			return this.getManacost();

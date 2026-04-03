@@ -107,7 +107,7 @@ public class AssertOrder extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER);
 				
 				e.setDamage(finalDamage * 0.5d); // Half incoming damage
-				MobData.damageUnnaturally(p, le, finalDamage * 1.35d, true, ElementType.CELESTIO); // Redirect it to the source entity
+				MobData.damageUnnaturally(p, le, finalDamage * 1.35d, true, true, ElementType.CELESTIO); // Redirect it to the source entity
 				playersDamageMap.put(p.getUniqueId(), storedDamage + (finalDamage * 0.5d)); // Adds the damage for later healing
 			}
 		}, plugin);

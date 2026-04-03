@@ -11,7 +11,6 @@ import com.ouroboros.enums.ObsColors;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -20,7 +19,7 @@ public class SpecialSpellBookPage extends ObsGui
 
 	public SpecialSpellBookPage(Player player)
 	{
-		super(player, "Alternative Magic", 27, Set.of());
+		super(player, "Alternative Magic Spellbook", 27, Set.of());
 	}
 
 	@Override
@@ -42,11 +41,11 @@ public class SpecialSpellBookPage extends ObsGui
 			GuiHandler.changeMenu(p, new AstralSpellsPage(p)); 
 		});
 		
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 10, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Spellbook Main Page").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new ObsMainMenu(p));
+			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new SpellBookMainPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->

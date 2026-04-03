@@ -76,14 +76,14 @@ public class Reap extends Spell
 			}
 			
 			HeresioEffects.isCursed.remove(target.getUniqueId());
-			MobData.damageUnnaturally(p, target, 6, true, ElementType.MORTIO);
+			MobData.damageUnnaturally(p, target, 6, true, true, ElementType.MORTIO);
 			EntityEffects.heal(p, target instanceof Player ? (6 * .75) : 3);
 			MortioEffects.addDoom((LivingEntity) target, target instanceof Player ? 2 : 0, 30);
 			
 			return this.getManacost();
 		}
 		
-		MobData.damageUnnaturally(p, target, 3, true, ElementType.SEVER);
+		MobData.damageUnnaturally(p, target, 3, true, true, ElementType.SEVER);
 		return this.getManacost();
 	}
 	

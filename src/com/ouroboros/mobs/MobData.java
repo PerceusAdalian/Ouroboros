@@ -373,7 +373,7 @@ public class MobData
 		}
 	}
 	
-	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean damageArmor, @Nullable ElementType element)
+	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		
@@ -406,13 +406,12 @@ public class MobData
 		}
 
 		((LivingEntity) target).playHurtAnimation(0);
-		
-		if (player!=null) 
+		if (doHurtAnimation && player != null) 
 		{
 			Vector direction = target.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(0.4);
 			target.setVelocity(direction.setY(0.4));	
 		}
-		
+
 		if (Ouroboros.debug) 
 		{
 			String name = target.getCustomName();

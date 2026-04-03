@@ -55,7 +55,7 @@ public class Combustion extends Spell
 			{
 				OBSParticles.drawInfernoCastSigil(le);
 				OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 6, Particle.FLAME, null);
-				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, false, ElementType.COMBUST);
+				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, true, false, ElementType.COMBUST);
 				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
 				InfernoEffects.addCharred(le, 20);
 			}, 15);

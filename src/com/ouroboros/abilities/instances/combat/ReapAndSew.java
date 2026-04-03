@@ -94,7 +94,7 @@ public class ReapAndSew extends AbstractOBSAbility
                     EntityEffects.playSound(p, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.MASTER);
                     OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SMOKE, null);
                     OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SCULK_SOUL, null);
-                    MobData.damageUnnaturally(p, target, dmg, true, ElementType.MORTIO);
+                    MobData.damageUnnaturally(p, target, dmg, true, true, ElementType.MORTIO);
                 }, 10);
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance,()->
                 {

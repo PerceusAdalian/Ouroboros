@@ -55,7 +55,7 @@ public class Flamelash extends AbstractOBSAbility
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
 			OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null);
 			
-			MobData.damageUnnaturally(p, target, 10, true, ElementType.INFERNO);
+			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.INFERNO);
 			target.setFireTicks(200);
 			
 			cooldownTimer.add(p.getUniqueId());

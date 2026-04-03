@@ -1,11 +1,21 @@
 package com.lol.spells.instances.aero;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -29,9 +39,12 @@ public class Tailwind extends Spell
 				"&r&fGives a momentary boost of velocity towards target direction.","",
 				"&eSecondary&f "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&dTailwind&f: &d&oBoost&r&f --",
-				"&r&fProvides a temporary &b&oSpeed Boost&r&7 (20s)");
+				"&r&fProvides a temporary &b&oSpeed Boost&r&7 (20s)","",
+				"&r&e&lEchoic Resonance&r&f: &e&oPrimary Cast&r&f negates the next instance of &d&oFall Damage&r&f.");
 	}
 
+	private static Set<UUID> tailwindRegistry = new HashSet<>();
+	
 	@Override
 	public int Cast(PlayerInteractEvent e)
 	{
@@ -48,6 +61,7 @@ public class Tailwind extends Spell
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.EXPLOSION, null);
             Vector boost = p.getEyeLocation().getDirection().normalize().multiply(3);
 			p.setVelocity(p.getVelocity().add(boost));
+			if (!tailwindRegistry.contains(p.getUniqueId())) tailwindRegistry.add(p.getUniqueId());
 			return 5;
 		}
 		return -1;
@@ -57,6 +71,24 @@ public class Tailwind extends Spell
 	public int getTotalManaCost()
 	{
 		return 5;
+	}
+	
+	public static void registerSpellHelper(JavaPlugin plugin)
+	{
+		Bukkit.getPluginManager().registerEvents(new Listener() 
+		{
+			@EventHandler
+			public void onFallDamage(EntityDamageEvent e)
+			{
+				if (e.getEntity() instanceof Player p 
+						&& e.getCause() == DamageCause.FALL 
+							&& tailwindRegistry.contains(p.getUniqueId())) 
+				{
+					e.setCancelled(true);
+					tailwindRegistry.remove(p.getUniqueId());
+				}
+			}
+		}, plugin);
 	}
 
 }

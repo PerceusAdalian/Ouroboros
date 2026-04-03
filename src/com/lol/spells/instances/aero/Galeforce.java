@@ -40,7 +40,7 @@ public class Galeforce extends Spell
 		if (target == null || !(target instanceof LivingEntity)) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);
-		MobData.damageUnnaturally(p, target, 4, true, ElementType.AERO);
+		MobData.damageUnnaturally(p, target, 4, true, true, ElementType.AERO);
 		target.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).multiply(1.5));
 		return this.getManacost();
 	}

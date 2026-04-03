@@ -23,6 +23,7 @@ import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.Surveil;
+import com.lol.spells.instances.astral.Starfall;
 import com.lol.spells.instances.celestio.Ascension;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
@@ -136,6 +137,9 @@ public class SpellRegistry
         		ArcaneBolt.class,
         		Surveil.class,
         		Freecast.class,
+        		
+        		//Astral
+        		Starfall.class,
         		
         		//Admin Spells
         		RemoveEntity.class

@@ -40,7 +40,7 @@ public class ArcaneBolt extends Spell
 		if (!RayCastUtils.getEntity(p, 25, target->
 		{
 			if (target == null || !(target instanceof LivingEntity)) return;
-			MobData.damageUnnaturally(p, target, 4, true, ElementType.ARCANO);
+			MobData.damageUnnaturally(p, target, 4, true, true, ElementType.ARCANO);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ArcanoEffects.addEtherOverload((LivingEntity) target, 20);			

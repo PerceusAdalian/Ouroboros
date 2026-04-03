@@ -56,7 +56,7 @@ public class Siphon extends Spell
 		    damage = player.getHealth() * 0.15d;
 		    player.damage(damage);
 		} 
-		else damage = MobData.damageUnnaturally(p, target, data.getHp(true) * 0.2d, true, ElementType.MORTIO);
+		else damage = MobData.damageUnnaturally(p, target, data.getHp(true) * 0.2d, false, true, ElementType.MORTIO);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{

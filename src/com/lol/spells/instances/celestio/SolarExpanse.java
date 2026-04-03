@@ -79,7 +79,7 @@ public class SolarExpanse extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 				
 				if (data.isBreak())
-					MobData.damageUnnaturally(p, le, data.getHp(false) * .45, true, ElementType.CELESTIO);
+					MobData.damageUnnaturally(p, le, data.getHp(false) * .45, true, true, ElementType.CELESTIO);
 
 				CelestioEffects.addExposed(le, 20);
 				
@@ -99,7 +99,7 @@ public class SolarExpanse extends Spell
 				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 1, 0.5, Particle.CLOUD, null);
 				EntityEffects.playSound(p, Sound.ITEM_SPEAR_LUNGE_3, SoundCategory.AMBIENT);
 				
-				MobData.damageUnnaturally(p, le, 25, true, ElementType.IMPALE);
+				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.IMPALE);
 			})) return -1;
 			return this.getManacost();
 		}

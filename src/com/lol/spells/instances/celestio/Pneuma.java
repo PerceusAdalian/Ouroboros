@@ -98,7 +98,7 @@ public class Pneuma extends Spell
 				{
 					if (!(entity instanceof LivingEntity)) return;
 					
-					MobData.damageUnnaturally(p, (LivingEntity) entity, (10 * divineFavorStacks) + 10, true, ElementType.CELESTIO);
+					MobData.damageUnnaturally(p, (LivingEntity) entity, (10 * divineFavorStacks) + 10, true, true, ElementType.CELESTIO);
 					CelestioEffects.addExposed((LivingEntity) entity, 30);
 				})) return;
 				

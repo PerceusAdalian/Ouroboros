@@ -29,9 +29,9 @@ public class Starfall extends Spell
 	{
 		super("Starfall", "starfall", Material.FIREWORK_ROCKET, SpellType.OFFENSIVE, SpellementType.ASTRAL, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 20, 1, false,
 				PrintUtils.assignAstralVariant("Starfall", true) + " &r&e&oMeteor β&r&f --",
-				"&r&fCast down a &cMeteor&f at target &7(20m) dealing minor "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f damage.",
+				"&r&fCast down a &cMeteor&f at target &7(20m)&f dealing minor "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f damage.",
 				PrintUtils.assignAstralVariant("Starfall", false) + " &r&9&oCooling Mist&r&f --",
-				"&r&fApply &bChill I&f to targets in a &dConal AOE &7(20s, 15m)","",
+				"&r&fApply &bChill I&f to targets in a &dConal AOE &7(10s, 15m)","",
 				"&r&bChill &eEffect&f: inflicts a "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f &dDOT&f effect.",
 				"&r&fReapplying &bChill&f increases the magnitude, while keeping initial duration.");
 	}
@@ -56,7 +56,7 @@ public class Starfall extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 				OBSParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.4, Particle.SNOWFLAKE, null);
 				OBSParticles.drawGlacioCastSigil(le);
-				GlacioEffects.addChill(p, le, 1, 20);
+				GlacioEffects.addChill(p, le, 0, 10);
 			}));
 		}
 		return 0;
