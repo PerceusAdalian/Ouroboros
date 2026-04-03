@@ -1,6 +1,9 @@
 package com.ouroboros.utils;
 
+import java.awt.Color;
 import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -313,6 +316,59 @@ public class PrintUtils
 	    String prefix = forBook ? "§" : "&";
 	    String textColor = forBook ? "0" : "f";
 	    return prefix + "r" + prefix + textColor + prefix + "nRarity" + prefix + "r" + prefix + textColor + ": " + prefix + color + ("✦".repeat(rarity.getRarity()));
+	}
+	
+	public static String toBookSafe(String msg)
+	{
+	    Pattern hexPattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
+	    Matcher matcher = hexPattern.matcher(msg);
+	    StringBuffer buffer = new StringBuffer();
+
+	    while (matcher.find())
+	    {
+	        // Convert to nearest ChatColor
+	        Color color = Color.decode("#" + matcher.group(1));
+	        ChatColor nearest = nearestLegacyColor(color);
+	        matcher.appendReplacement(buffer, nearest.toString());
+	    }
+	    matcher.appendTail(buffer);
+	    return buffer.toString().replace("&", "§");
+	}
+
+	private static final Map<ChatColor, Color> LEGACY_COLORS = new EnumMap<>(ChatColor.class);
+	static
+	{
+	    LEGACY_COLORS.put(ChatColor.BLACK,        new java.awt.Color(0,   0,   0  ));
+	    LEGACY_COLORS.put(ChatColor.DARK_BLUE,    new java.awt.Color(0,   0,   170));
+	    LEGACY_COLORS.put(ChatColor.DARK_GREEN,   new java.awt.Color(0,   170, 0  ));
+	    LEGACY_COLORS.put(ChatColor.DARK_AQUA,    new java.awt.Color(0,   170, 170));
+	    LEGACY_COLORS.put(ChatColor.DARK_RED,     new java.awt.Color(170, 0,   0  ));
+	    LEGACY_COLORS.put(ChatColor.DARK_PURPLE,  new java.awt.Color(170, 0,   170));
+	    LEGACY_COLORS.put(ChatColor.GOLD,         new java.awt.Color(255, 170, 0  ));
+	    LEGACY_COLORS.put(ChatColor.GRAY,         new java.awt.Color(170, 170, 170));
+	    LEGACY_COLORS.put(ChatColor.DARK_GRAY,    new java.awt.Color(85,  85,  85 ));
+	    LEGACY_COLORS.put(ChatColor.BLUE,         new java.awt.Color(85,  85,  255));
+	    LEGACY_COLORS.put(ChatColor.GREEN,        new java.awt.Color(85,  255, 85 ));
+	    LEGACY_COLORS.put(ChatColor.AQUA,         new java.awt.Color(85,  255, 255));
+	    LEGACY_COLORS.put(ChatColor.RED,          new java.awt.Color(255, 85,  85 ));
+	    LEGACY_COLORS.put(ChatColor.LIGHT_PURPLE, new java.awt.Color(255, 85,  255));
+	    LEGACY_COLORS.put(ChatColor.YELLOW,       new java.awt.Color(255, 255, 85 ));
+	    LEGACY_COLORS.put(ChatColor.WHITE,        new java.awt.Color(255, 255, 255));
+	}
+
+	private static ChatColor nearestLegacyColor(java.awt.Color color)
+	{
+	    ChatColor nearest = ChatColor.WHITE;
+	    double minDist = Double.MAX_VALUE;
+	    for (Map.Entry<ChatColor, java.awt.Color> entry : LEGACY_COLORS.entrySet())
+	    {
+	        java.awt.Color c = entry.getValue();
+	        double dist = Math.pow(c.getRed()   - color.getRed(),   2)
+	                    + Math.pow(c.getGreen() - color.getGreen(), 2)
+	                    + Math.pow(c.getBlue()  - color.getBlue(),  2);
+	        if (dist < minDist) { minDist = dist; nearest = entry.getKey(); }
+	    }
+	    return nearest;
 	}
 	
 	public static String assignObfuscatedRarity()

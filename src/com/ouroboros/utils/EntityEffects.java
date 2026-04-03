@@ -11,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -265,26 +264,6 @@ public class EntityEffects
 	
 	public static void addSanded(LivingEntity target, int seconds)
 	{
-		if (EntityCategories.geo_mobs.contains(target.getType()))
-		{
-			add(target, PotionEffectType.SPEED, seconds*20, 2, true);
-			MobData data = MobData.getMob(target.getUniqueId());
-			if (data == null)
-			{
-				try
-				{
-					target.setHealth(target.getHealth()+seconds);
-				} 
-				catch (Error e)
-				{
-					target.setHealth(((Attributable) target).getAttribute(Attribute.MAX_HEALTH).getValue());
-				}
-			}
-			else
-			{
-				data.heal(seconds%10, false, true, false);
-			}
-		}
 		add(target, PotionEffectType.SLOWNESS, seconds*20, 4, false);
 		add(target, PotionEffectType.BLINDNESS, seconds*20, 4, false);
 	}
@@ -420,7 +399,6 @@ public class EntityEffects
 	 * "&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 					"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",
 					"&r&fsubsequent applications will cause &4Doom&f after a second application.",
-					"&r&fIf it's nighttime, Night-Shift's &b&omagnitude&r&f is doubled."
 	 */
 	public static void addDread(LivingEntity target, int seconds)
 	{
@@ -440,7 +418,8 @@ public class EntityEffects
 	/*
 	  "&r&4Night-Shift &eEffect&f: Increased &b&oSpeed&r&f and &b&oStrength&r&f",
 		"&r&fper level of &4Night-Shift&f, plus &b&oNight Vision&r&f.",
-		"&r&fReduces &b&oFall Damage &r&fby &b&o10% &r&fper level."
+		"&r&fReduces &b&oFall Damage &r&fby &b&o10% &r&fper level.",
+		"&r&fIf it's nighttime, Night-Shift's &b&omagnitude&r&f is doubled."
 	 */
 	/**
 	 * @param target
@@ -644,6 +623,28 @@ public class EntityEffects
 		}
 	}
 	
+	public static Map<UUID, JinxData> jinxRegistry = new HashMap<>();
+	public static void addJinxStacks(Player target, int magnitude)
+	{
+		int registerMagnitude = magnitude;
+		if (jinxRegistry.containsKey(target.getUniqueId()))
+		{
+			registerMagnitude = jinxRegistry.get(target.getUniqueId()).magnitude + magnitude;
+		}
+		
+		OBSParticles.drawMortioCastSigil(target);
+		jinxRegistry.put(target.getUniqueId(), new JinxData(registerMagnitude));
+	}
+	
+	public static class JinxData
+	{
+		public int magnitude;
+		
+		public JinxData(int magnitude)
+		{
+			this.magnitude = magnitude;
+		}
+	}
 	/**
 	 * @Description Heresio Signature Effect: Wildcard applies a random debuff on the target.
 	 */

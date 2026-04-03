@@ -1,7 +1,9 @@
 package com.lol.wand;
 
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.PrintUtils;
 
 public class WandRegistry 
 {
@@ -19,11 +21,11 @@ public class WandRegistry
 	
 		
 		// Elemental
-		Wand.register(new Wand("&r&fArmament of &4&lSithis&r&f", "sithis_armament", Rarity.FIVE, ElementType.MORTIO, 5, 1500));
-		Wand.register(new Wand("&r&fStaff of &c&lAgni&r&f", "agni_staff", Rarity.FIVE, ElementType.INFERNO, 5, 1500));
-		Wand.register(new Wand("&r&fArtifact of &b&lBjorn&r&f", "bjorn_artifact", Rarity.FIVE, ElementType.GLACIO, 5, 1500));
-		Wand.register(new Wand("&r&fCane of &6&lNidus&r&f", "nidus_cane", Rarity.FIVE, ElementType.GEO, 5, 1500));
-		Wand.register(new Wand("&d&lSeth&r&f's Caduceus&r&f", "seth_caduceus", Rarity.FIVE, ElementType.AERO, 5, 1500));
-		Wand.register(new Wand("&r&fAntenna of &3&lEnd&r&f", "antenna_of_end", Rarity.FIVE, ElementType.COSMO, 5, 1500));
+		Wand.register(new Wand("&r&fArmament of "+PrintUtils.color(ObsColors.MORTIO)+"&lSithis&r&f", "sithis_armament", Rarity.FIVE, ElementType.MORTIO, 5, 1500));
+		Wand.register(new Wand("&r&fStaff of "+PrintUtils.color(ObsColors.INFERNO)+"&lAgni&r&f", "agni_staff", Rarity.FIVE, ElementType.INFERNO, 5, 1500));
+		Wand.register(new Wand("&r&fArtifact of "+PrintUtils.color(ObsColors.GLACIO)+"&lBjorn&r&f", "bjorn_artifact", Rarity.FIVE, ElementType.GLACIO, 5, 1500));
+		Wand.register(new Wand("&r&fCane of "+PrintUtils.color(ObsColors.GEO)+"&lNidus&r&f", "nidus_cane", Rarity.FIVE, ElementType.GEO, 5, 1500));
+		Wand.register(new Wand(PrintUtils.color(ObsColors.AERO)+"&lSeth&r&f's Caduceus&r&f", "seth_caduceus", Rarity.FIVE, ElementType.AERO, 5, 1500));
+		Wand.register(new Wand("&r&fAntenna of "+PrintUtils.color(ObsColors.COSMO)+"&lEnd&r&f", "antenna_of_end", Rarity.FIVE, ElementType.COSMO, 5, 1500));
 	}
 }

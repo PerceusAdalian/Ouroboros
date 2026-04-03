@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -228,15 +229,14 @@ public abstract class Spell
 
 		    for (String line : spellDescription) 
 		    {
-		        String cleanLine = "§0" + line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "") + "\n";
+		        // Replace the current cleanLine logic with toBookSafe
+		        String cleanLine = "§0" + ChatColor.stripColor(PrintUtils.toBookSafe(line)) + "\n";
 		        
-		        // Check if adding this line would exceed the page limit
 		        if (pageCharCount + cleanLine.length() > MAX_CHARS_PER_PAGE) 
 		        {
-		            // Add current page and start a new one
 		            bookMeta.addPage(currentPage.toString());
 		            currentPage = new StringBuilder();
-		            currentPage.append("§0"); // Start new page with black text
+		            currentPage.append("§0");
 		            pageCharCount = 0;
 		        }
 		        

@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.geo.Expelliarmus;
+import com.lol.spells.instances.geo.SandBlast;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -23,8 +24,17 @@ public class GeoSpellsPage extends AbstractOBSGui
 	@Override
 	protected void build() 
 	{
+		// 1
+		GuiButton.placeSpellButton(player, new SandBlast(), 10, this);
+		// 2
 		
-		GuiButton.placeSpellButton(player, new Expelliarmus(), 10, this);
+		// 3
+		GuiButton.placeSpellButton(player, new Expelliarmus(), 11, this);
+		
+		// 4
+		
+		// 5
+		
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

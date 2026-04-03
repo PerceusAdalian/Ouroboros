@@ -7,13 +7,14 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.mortio.AspectOfSithis;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
-import com.lol.spells.instances.mortio.AspectOfSithis;
+import com.lol.spells.instances.mortio.Voodoo;
 import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -44,7 +45,7 @@ public class MortioSpellsPage extends AbstractOBSGui
 		
 		// 5
 		GuiButton.placeSpellButton(player, new Haunt(), 16, this);
-		
+		GuiButton.placeSpellButton(player, new Voodoo(), 19, this);
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
 		{

@@ -41,6 +41,7 @@ import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.geo.Expelliarmus;
+import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.heresio.Hex;
@@ -55,6 +56,7 @@ import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
+import com.lol.spells.instances.mortio.Voodoo;
 import com.lol.spells.instances.mortio.AspectOfSithis;
 
 public class SpellRegistry 
@@ -86,6 +88,7 @@ public class SpellRegistry
         		Siphon.class,
         		Demonform.class,
         		Shroud.class,
+        		Voodoo.class,
         		
         		//Inferno
         		Incendio.class,
@@ -112,6 +115,7 @@ public class SpellRegistry
         		
         		//Geo
         		Expelliarmus.class,
+        		SandBlast.class,
         		
         		//Cosmo
         		ArrestoMomentum.class,

@@ -29,7 +29,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 	{
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
 		
-		GuiButton.button(Material.FIRE_CHARGE).setName("&c&lInferno&r&e Essence")
+		GuiButton.button(Material.FIRE_CHARGE).setName(PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f essence: "+data.getEssence(ElementType.INFERNO)+"&7/ 9999").place(this, 20, e->
 		{
 			e.setCancelled(true);
@@ -37,7 +37,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 
-		GuiButton.button(Material.SNOWBALL).setName("&b&lGlacio&r&e Essence")
+		GuiButton.button(Material.SNOWBALL).setName(PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f essence: "+data.getEssence(ElementType.GLACIO)+"&7/ 9999").place(this, 21, e->
 		{
 			e.setCancelled(true);
@@ -45,7 +45,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 
-		GuiButton.button(Material.BRICK).setName("&6&lGeo&r&e Essence")
+		GuiButton.button(Material.BRICK).setName(PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f essence: "+data.getEssence(ElementType.GEO)+"&7/ 9999").place(this, 23, e->
 		{
 			e.setCancelled(true);
@@ -53,7 +53,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 
-		GuiButton.button(Material.WIND_CHARGE).setName("&d&lAero&r&e Essence")
+		GuiButton.button(Material.WIND_CHARGE).setName(PrintUtils.color(ObsColors.AERO)+"&l&lAero&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f essence: "+data.getEssence(ElementType.AERO)+"&7/ 9999").place(this, 24, e->
 		{
 			e.setCancelled(true);
@@ -61,7 +61,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 
-		GuiButton.button(Material.NETHER_STAR).setName("&e&lCelestio&r&e Essence")
+		GuiButton.button(Material.NETHER_STAR).setName(PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f essence: "+data.getEssence(ElementType.CELESTIO)+"&7/ 9999").place(this, 13, e->
 		{
 			e.setCancelled(true);
@@ -69,7 +69,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 
-		GuiButton.button(Material.ECHO_SHARD).setName("&3&lCosmo&r&e Essence")
+		GuiButton.button(Material.ECHO_SHARD).setName(PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f essence: "+data.getEssence(ElementType.COSMO)+"&7/ 9999").place(this, 22, e->
 		{
 			e.setCancelled(true);
@@ -77,7 +77,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 
-		GuiButton.button(Material.WITHER_ROSE).setName("&4&lMortio&r&e Essence")
+		GuiButton.button(Material.WITHER_ROSE).setName(PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f essence: "+data.getEssence(ElementType.MORTIO)+"&7/ 9999").place(this, 31, e->
 		{
 			e.setCancelled(true);
@@ -85,7 +85,7 @@ public class EssenceReservoirsPage extends AbstractOBSGui
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
 		});
 		
-		GuiButton.button(Material.ENDER_EYE).setName("&2&lHeresio&r&e Essence")
+		GuiButton.button(Material.ENDER_EYE).setName(PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e Essence")
 		.setLore("Current "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f essence: "+data.getEssence(ElementType.HERESIO)+"&7/ 9999").place(this, 40, e->
 		{
 			e.setCancelled(true);

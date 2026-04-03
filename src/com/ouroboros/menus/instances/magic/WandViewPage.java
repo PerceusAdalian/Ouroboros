@@ -86,8 +86,8 @@ public class WandViewPage extends AbstractOBSGui
 	                // Empty slot - allow assignment
 	            	String lore = isRemoving
 	            	        ? "&r&fThis slot is empty."
-	            	        : "&r&fThis slot is empty. Click to assign &" + 
-	            	          PrintUtils.getElementTypeColor(spell.getElementType()) + spell.getName() + "&f to this slot";
+	            	        : "&r&fThis slot is empty. Click to assign " + 
+	            	          PrintUtils.getElementTypeColor(spell.getElementType()) + spell.getName() + "&r&f to this slot";
 	            	
             		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
             		.setName("&r&fEmpty Slot #"+(i+1))
@@ -114,7 +114,7 @@ public class WandViewPage extends AbstractOBSGui
 	            else
 	            {
 	            	String spellColor = PrintUtils.getElementTypeColor(wandSpell.getElementType());
-	                String slotName = "&r&fFull Slot #" + (i+1) + " [&" + spellColor + wandSpell.getName() + "&f]";
+	                String slotName = "&r&fFull Slot #" + (i+1) + " [" + spellColor + wandSpell.getName() + "&r&f]";
 	                String lore = isRemoving
 	                    ? "&r&fThis slot is in use. Click to remove it?"
 	                    : "&r&fThis slot is in use. Click to replace &" + spellColor + wandSpell.getName() +

@@ -153,6 +153,44 @@ public class RayCastUtils
     	return true;
     }
 	
+    public static boolean getEntitiesInFov(Player p, int range, Consumer<Entity> consumer)
+    {
+        List<Entity> nearby = p.getNearbyEntities(range, range, range);
+        
+        if (nearby.isEmpty()) return false;
+        
+        for (Entity entity : nearby)
+        {
+            if (!(entity instanceof LivingEntity mob)) continue;
+            if (entity.equals(p)) continue;
+            
+            if (!isMobVisible(p, mob, range, 90)) continue;
+            
+            consumer.accept(entity);
+        }
+        
+        return true;
+    }
+    
+    public static boolean getEntitiesInFov(Player p, int range, int degreeRange, Consumer<Entity> consumer)
+    {
+        List<Entity> nearby = p.getNearbyEntities(range, range, range);
+        
+        if (nearby.isEmpty()) return false;
+        
+        for (Entity entity : nearby)
+        {
+            if (!(entity instanceof LivingEntity mob)) continue;
+            if (entity.equals(p)) continue;
+            
+            if (!isMobVisible(p, mob, range, degreeRange)) continue;
+            
+            consumer.accept(entity);
+        }
+        
+        return true;
+    }
+    
 	public static boolean createHitBox(Player p, double width, double height, double length, Consumer<Entity> consumer)
 	{
 		Location origin = p.getEyeLocation();

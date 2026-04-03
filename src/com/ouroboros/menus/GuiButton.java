@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -116,7 +117,7 @@ public class GuiButton
 		if (spellRegistered)
 		{	        	
 			GuiButton.button(spellIcon.getType())
-			.setName(spellIcon.getItemMeta().getDisplayName())
+			.setName(PrintUtils.getElementTypeColor(spell.getElementType()) + "&l" + ChatColor.stripColor(spellIcon.getItemMeta().getDisplayName()))
 			.setLore(spellIcon.getItemMeta().getLore())
 			.place(gui, slot, e -> 
 			{
@@ -137,7 +138,9 @@ public class GuiButton
                 String plainText = line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "");
                 obfuscatedLore.add(PrintUtils.ColorParser("&7&k" + plainText));
             }
-            String obfuscatedName = "&cLocked Spell&f: &"+PrintUtils.getElementTypeColor(spell.getElementType())+"&k"+spellIcon.getItemMeta().getDisplayName();
+            
+            String obfuscatedName = "&cLocked Spell&f: " + PrintUtils.getElementTypeColor(spell.getElementType()) + 
+            		"&k" +ChatColor.stripColor(spellIcon.getItemMeta().getDisplayName());
             GuiButton.button(Material.PAPER)
             .setName(obfuscatedName)
             .setLore(obfuscatedLore)
