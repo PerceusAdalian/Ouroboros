@@ -11,12 +11,12 @@ import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.Surveil;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class ArcanoSpellsPage extends AbstractOBSGui
+public class ArcanoSpellsPage extends ObsGui
 {
 
 	public ArcanoSpellsPage(Player player) 
@@ -35,6 +35,7 @@ public class ArcanoSpellsPage extends AbstractOBSGui
 		
 		// 3
 		GuiButton.placeSpellButton(player, new Freecast(), 12, this);
+		
 		// 4
 		
 		// 5
@@ -45,7 +46,7 @@ public class ArcanoSpellsPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->

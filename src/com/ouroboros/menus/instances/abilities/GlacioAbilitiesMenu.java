@@ -7,11 +7,11 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 
-public class GlacioAbilitiesMenu extends AbstractOBSGui
+public class GlacioAbilitiesMenu extends ObsGui
 {
 
 	public GlacioAbilitiesMenu(Player player) 

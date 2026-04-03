@@ -16,7 +16,7 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.InventoryUtils;
@@ -24,7 +24,7 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class CoreCraftingPage extends AbstractOBSGui
+public class CoreCraftingPage extends ObsGui
 {
 
 	public CoreCraftingPage(Player player) 

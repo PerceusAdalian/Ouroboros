@@ -10,14 +10,14 @@ import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class VoucherConfirmPage extends AbstractOBSGui
+public class VoucherConfirmPage extends ObsGui
 {
 
 	public VoucherConfirmPage(Player player) 

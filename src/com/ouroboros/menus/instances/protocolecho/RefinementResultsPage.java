@@ -13,13 +13,13 @@ import org.bukkit.inventory.ItemStack;
 
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.InventoryUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class RefinementResultsPage extends AbstractOBSGui
+public class RefinementResultsPage extends ObsGui
 {
 	private final Map<ItemStack, Integer> results;
 	private final int xp;

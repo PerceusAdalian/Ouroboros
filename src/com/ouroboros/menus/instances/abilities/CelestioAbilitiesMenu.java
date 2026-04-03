@@ -8,11 +8,11 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.combat.GeminiSlash;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 
-public class CelestioAbilitiesMenu extends AbstractOBSGui
+public class CelestioAbilitiesMenu extends ObsGui
 {
 	public CelestioAbilitiesMenu(Player player) 
 	{

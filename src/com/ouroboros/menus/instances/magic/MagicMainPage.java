@@ -7,13 +7,13 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class MagicMainPage extends AbstractOBSGui
+public class MagicMainPage extends ObsGui
 {
 
 	public MagicMainPage(Player player) 
@@ -54,7 +54,7 @@ public class MagicMainPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			GuiHandler.changeMenu(p, new SpellBookMainPage(p));
 		});
 		
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 10, e->

@@ -8,12 +8,12 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.special.Prometheus;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class SpecialAbilitiesMenu extends AbstractOBSGui
+public class SpecialAbilitiesMenu extends ObsGui
 {
 
 	public SpecialAbilitiesMenu(Player player) 

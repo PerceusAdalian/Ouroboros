@@ -8,18 +8,18 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.enums.ObsColors;
-import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class SpellBookPage extends AbstractOBSGui
+public class ElementalSpellBookPage extends ObsGui
 {
 
-	public SpellBookPage(Player player) 
+	public ElementalSpellBookPage(Player player) 
 	{
-		super(player, "Spellbook", 54, Set.of(13,20,21,22,23,24,31,37,39,41,43));
+		super(player, "Spellbook", 54, Set.of(13,20,21,22,23,24,31,37,40,43));
 	}
 
 	@Override
@@ -82,27 +82,19 @@ public class SpellBookPage extends AbstractOBSGui
 		});
 		
 		GuiButton.button(Material.ENDER_EYE).setName(PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e Spells")
-		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e spells&f.").place(this, 39, e->
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e spells&f.").place(this, 40, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new HeresioSpellsPage(p));
 		});
 		
-		GuiButton.button(Material.END_CRYSTAL).setName(PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&e Spells")
-		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&e spells&f.").place(this, 41, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new ArcanoSpellsPage(p));
-		});
-		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Magic Main Page'").place(this, 37, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Main Page'").place(this, 37, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_BOOK_PUT, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new MagicMainPage(p));
+			GuiHandler.changeMenu(p, new SpellBookMainPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->

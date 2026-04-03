@@ -8,15 +8,16 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.lol.wand.Wand;
-import com.ouroboros.menus.AbstractOBSGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class WandViewPage extends AbstractOBSGui
+public class WandViewPage extends ObsGui
 {
 
 	public WandViewPage(Player player) 
@@ -44,7 +45,7 @@ public class WandViewPage extends AbstractOBSGui
 			ItemStack returnedWand = storedWand.getAsItemStack();
 			p.getInventory().addItem(returnedWand);
 			handleCleanup(p);
-			GuiHandler.open(p, new SpellBookPage(p));
+			determinePageCallback(p, spell);
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE)
@@ -62,7 +63,7 @@ public class WandViewPage extends AbstractOBSGui
 		paint();
 	}
 	
-	public void renderWandSlots(Player player, Wand wand, Spell spell, AbstractOBSGui gui)
+	public void renderWandSlots(Player player, Wand wand, Spell spell, ObsGui gui)
 	{
 	    // Define the whitelisted GUI slots (up to 10 slots)
 	    int[] validSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24};
@@ -102,7 +103,7 @@ public class WandViewPage extends AbstractOBSGui
             				ItemStack stack = wand.getAsItemStack();
             				p.getInventory().addItem(stack);
             				handleCleanup(p);
-            				GuiHandler.open(p, new SpellBookPage(p));
+            				determinePageCallback(p, spell);
             			}
             			else
             			{
@@ -140,7 +141,7 @@ public class WandViewPage extends AbstractOBSGui
             	            wand.setSpell(spell, selectedSlot);
             	            p.getInventory().addItem(wand.getAsItemStack());
             	            handleCleanup(p);
-            	            GuiHandler.open(p, new SpellBookPage(p));
+            	            determinePageCallback(p, spell);
             	        }
             	    });
 	            }
@@ -174,6 +175,13 @@ public class WandViewPage extends AbstractOBSGui
 		CollectWandData.pageController.put(player.getUniqueId(), "removespell");
 		CollectWandData.wandCollector.put(player.getUniqueId(), wand);
 		GuiHandler.open(player, new WandViewPage(player));
+	}
+	
+	private static void determinePageCallback(Player player, Spell spell)
+	{
+		if (SpellementType.elemental.contains(spell.getElementType()))
+			GuiHandler.open(player, new ElementalSpellBookPage(player));
+		else GuiHandler.open(player, new SpecialSpellBookPage(player));
 	}
 
 }

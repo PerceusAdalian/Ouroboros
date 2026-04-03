@@ -45,7 +45,7 @@ import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.menus.instances.magic.AdminSpellsPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
-import com.ouroboros.menus.instances.magic.SpellBookPage;
+import com.ouroboros.menus.instances.magic.SpellBookMainPage;
 import com.ouroboros.menus.instances.magic.WandMainPage;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.MobSummoner;
@@ -159,7 +159,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("spellbook"))
 		{
-			GuiHandler.open(p, new SpellBookPage(p));
+			GuiHandler.open(p, new SpellBookMainPage(p));
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);

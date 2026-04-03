@@ -10,7 +10,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.abilities.AbilityMainPage;
@@ -19,7 +19,7 @@ import com.ouroboros.menus.instances.protocolecho.ProtocolEchoMainPage;
 import com.ouroboros.menus.instances.store.ObsShopGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class ObsMainMenu extends AbstractOBSGui
+public class ObsMainMenu extends ObsGui
 {
 
 	public ObsMainMenu(Player player) 

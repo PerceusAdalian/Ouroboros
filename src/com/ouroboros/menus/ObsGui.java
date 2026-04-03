@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public abstract class AbstractOBSGui 
+public abstract class ObsGui 
 {
 	protected Map<Integer, Consumer<InventoryClickEvent>> clickActions = new HashMap<>();
 
@@ -24,7 +24,7 @@ public abstract class AbstractOBSGui
 	protected final Inventory inv;
 	protected Player player;
 	
-	public AbstractOBSGui(Player player, String guiTitle, int size, Set<Integer> whitelistedSlots) 
+	public ObsGui(Player player, String guiTitle, int size, Set<Integer> whitelistedSlots) 
 	{
 		this.player = player;
         this.guiTitle = guiTitle;

@@ -11,11 +11,11 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.enums.StatType;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 
-public class ObsVoucherMenu extends AbstractOBSGui
+public class ObsVoucherMenu extends ObsGui
 {
 	//Continue implementing for 1.0 release
 	public ObsVoucherMenu(Player player) 

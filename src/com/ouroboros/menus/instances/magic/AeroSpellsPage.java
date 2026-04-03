@@ -18,12 +18,12 @@ import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class AeroSpellsPage extends AbstractOBSGui
+public class AeroSpellsPage extends ObsGui
 {
 
 	public AeroSpellsPage(Player player) 
@@ -59,7 +59,7 @@ public class AeroSpellsPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->

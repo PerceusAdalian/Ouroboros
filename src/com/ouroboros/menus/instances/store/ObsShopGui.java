@@ -10,13 +10,13 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.utils.PrintUtils;
 
-public class ObsShopGui extends AbstractOBSGui
+public class ObsShopGui extends ObsGui
 {
 	public static Map<UUID, Material> confirmBuyer = new HashMap<>();
 

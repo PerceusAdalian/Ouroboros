@@ -1,5 +1,7 @@
 package com.lol.enums;
 
+import java.util.Set;
+
 public enum SpellementType 
 {
 	CELESTIO("&lCelestio&r&f"),
@@ -44,4 +46,6 @@ public enum SpellementType
 			return null;
 		}
 	}
+	
+	public static final Set<SpellementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, AERO, GEO, COSMO, HERESIO);
 }

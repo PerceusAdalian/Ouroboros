@@ -12,13 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.lol.wand.Wand;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.utils.PrintUtils;
 
-public class CollectWandData extends AbstractOBSGui
+public class CollectWandData extends ObsGui
 {
 
 	public CollectWandData(Player player) 

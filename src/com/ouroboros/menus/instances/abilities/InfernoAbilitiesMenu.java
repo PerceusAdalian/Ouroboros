@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.combat.Flamelash;
 import com.ouroboros.abilities.instances.combat.ImbueFire;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 
-public class InfernoAbilitiesMenu extends AbstractOBSGui
+public class InfernoAbilitiesMenu extends ObsGui
 {
 
 	public InfernoAbilitiesMenu(Player player) 

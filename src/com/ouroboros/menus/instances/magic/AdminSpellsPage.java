@@ -8,12 +8,12 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.admin.RemoveEntity;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class AdminSpellsPage extends AbstractOBSGui
+public class AdminSpellsPage extends ObsGui
 {
 
 	public AdminSpellsPage(Player player) 

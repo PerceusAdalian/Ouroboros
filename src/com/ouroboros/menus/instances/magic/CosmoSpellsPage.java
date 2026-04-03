@@ -14,12 +14,12 @@ import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.VoidForm;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class CosmoSpellsPage extends AbstractOBSGui
+public class CosmoSpellsPage extends ObsGui
 {
 
 	public CosmoSpellsPage(Player player) 
@@ -52,7 +52,7 @@ public class CosmoSpellsPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->

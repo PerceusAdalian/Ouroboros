@@ -65,7 +65,7 @@ public class GuiButton
         return this;
     }
     
-    public void place(AbstractOBSGui gui, int slot, Consumer<InventoryClickEvent> action) 
+    public void place(ObsGui gui, int slot, Consumer<InventoryClickEvent> action) 
     {
     	meta.setLore(lore);
         item.setItemMeta(meta);
@@ -77,7 +77,7 @@ public class GuiButton
 	public static Map<Player, AbstractOBSAbility> abilityConfirmMap = new HashMap<>();
 	public static Map<Player, Boolean> confirmRegister = new HashMap<>();
 	
-    public static void placeAbilityButton(Player player, AbstractOBSAbility ability, int slot, AbstractOBSGui gui) 
+    public static void placeAbilityButton(Player player, AbstractOBSAbility ability, int slot, ObsGui gui) 
 	{
 	    ItemStack stack = ability.toIcon(player);
 
@@ -109,7 +109,7 @@ public class GuiButton
     
     public static Map<UUID, Spell> spellActivateConfirm = new HashMap<>();
     
-    public static void placeSpellButton(Player player, Spell spell, int slot, AbstractOBSGui gui)
+    public static void placeSpellButton(Player player, Spell spell, int slot, ObsGui gui)
 	{
     	ItemStack spellIcon = spell.getAsItemStack(true);
 		

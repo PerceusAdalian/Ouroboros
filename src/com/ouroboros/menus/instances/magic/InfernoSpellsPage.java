@@ -12,12 +12,12 @@ import com.lol.spells.instances.inferno.Combustion;
 import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class InfernoSpellsPage extends AbstractOBSGui
+public class InfernoSpellsPage extends ObsGui
 {
 
 	public InfernoSpellsPage(Player player) 
@@ -48,7 +48,7 @@ public class InfernoSpellsPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->

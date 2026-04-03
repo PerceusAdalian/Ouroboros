@@ -20,14 +20,14 @@ import com.eol.materia.instances.Materia;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.objects.instances.ScrapMateria;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class RefinementPage extends AbstractOBSGui
+public class RefinementPage extends ObsGui
 {
 
 	public RefinementPage(Player player) 

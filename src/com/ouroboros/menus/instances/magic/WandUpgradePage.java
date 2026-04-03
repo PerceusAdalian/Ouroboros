@@ -13,13 +13,13 @@ import org.bukkit.inventory.ItemStack;
 import com.lol.wand.Wand;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class WandUpgradePage extends AbstractOBSGui
+public class WandUpgradePage extends ObsGui
 {
 
 	public WandUpgradePage(Player player) 

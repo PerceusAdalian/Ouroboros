@@ -18,12 +18,12 @@ import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.celestio.Satiate;
 import com.lol.spells.instances.celestio.SolarExpanse;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class CelestioSpellsPage extends AbstractOBSGui
+public class CelestioSpellsPage extends ObsGui
 {
 
 	public CelestioSpellsPage(Player player) 
@@ -61,7 +61,7 @@ public class CelestioSpellsPage extends AbstractOBSGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new SpellBookPage(p));
+			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->

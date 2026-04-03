@@ -8,11 +8,11 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.abilities.instances.combat.ReapAndSew;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 
-public class MortioAbilitiesMenu extends AbstractOBSGui
+public class MortioAbilitiesMenu extends ObsGui
 {
 	public MortioAbilitiesMenu(Player player) 
 	{

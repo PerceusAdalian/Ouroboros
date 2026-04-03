@@ -14,7 +14,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.GateCodes;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
@@ -22,7 +22,7 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class GateMenu extends AbstractOBSGui
+public class GateMenu extends ObsGui
 {
 
 	public GateMenu(Player player) 

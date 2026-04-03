@@ -17,14 +17,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lol.wand.Wand;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.menus.AbstractOBSGui;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class CraftableWandsView extends AbstractOBSGui
+public class CraftableWandsView extends ObsGui
 {
 
 	public CraftableWandsView(Player player) 
@@ -70,7 +70,7 @@ public class CraftableWandsView extends AbstractOBSGui
 		paint();
 	}
 
-	public static void placeWandButton(Player player, Wand wand, int slot, AbstractOBSGui gui)
+	public static void placeWandButton(Player player, Wand wand, int slot, ObsGui gui)
 	{
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
 		int craftCost = wand.getRarity().getRarity() * 10;
