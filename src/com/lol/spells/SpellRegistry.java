@@ -41,11 +41,13 @@ import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
+import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
+import com.lol.spells.instances.glacio.Riptide;
 import com.lol.spells.instances.heresio.Hex;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Combustion;
@@ -102,6 +104,7 @@ public class SpellRegistry
         		//Glacio
         		Glacius.class,
         		GlacialFlood.class,
+        		Riptide.class,
         		
         		//Aero
         		Diffindo.class,
@@ -128,6 +131,7 @@ public class SpellRegistry
         		Reconfigure.class,
         		Antimatter.class,
         		VoidForm.class,
+        		Teleport.class,
         		
         		//Heresio
         		Hex.class,

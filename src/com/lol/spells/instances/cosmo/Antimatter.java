@@ -30,11 +30,10 @@ public class Antimatter extends Spell
 
 	public Antimatter()
 	{
-		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true,
-				"&r&fDecay target's life dealing "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f damage equal to &b&o3 + 25%&r&aHP &7(20m)&f",
-				"&r&fWhile not in &cPVP&f, apply &3Voided&f to target &7(20s)","",
-				"&r&3Voided &eEffect&f: Voided strips the afflicted entity of all",
-				"&r&f&b&oResistances&r&f and &b&oImmunities&r&f for the duration.");
+		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, false,
+				"&r&fDecay target's life dealing "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f damage",
+				"&r&fequal to &b&o3 + 25% &r&aHP &7(20m)&f and applies &3Voided &7(20s)","",
+				"&r&3Voided &eEffect&f: neutralizes affected entity's elemental affinity.");
 	}
 
 	@Override
@@ -45,14 +44,13 @@ public class Antimatter extends Spell
 		{
 			if (!(target instanceof LivingEntity)) return;
 			MobData data = MobData.getMob(target.getUniqueId());
-			EntityEffects.playSound(p, Sound.BLOCK_SCULK_CHARGE, SoundCategory.AMBIENT);
-			OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), (int) target.getHeight() + 1, 5, 0.4, 0.1, Particle.SCULK_SOUL, null);
-			OBSParticles.drawCosmoCastSigil((LivingEntity) target);
+			EntityEffects.playSound(p, Sound.ENTITY_SHULKER_SHOOT, SoundCategory.AMBIENT);
+			OBSParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.7, Particle.DRAGON_BREATH, 0.5f);
+			OBSParticles.drawSinLine(p.getLocation(), target.getLocation(), 1, Particle.END_ROD, null);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-				OBSParticles.drawSpiralVortex(target.getLocation(), 60, target.getHeight()-2, 0.1, Particle.SCULK_SOUL, null);
+				EntityEffects.playSound(p, Sound.BLOCK_SCULK_CATALYST_BLOOM, SoundCategory.AMBIENT);
 				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 4, 10, 0.5, Particle.WARPED_SPORE, null);
 				if (target instanceof Player)
 				{
@@ -63,7 +61,7 @@ public class Antimatter extends Spell
 					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, true, ElementType.COSMO);
 					CosmoEffects.addVoided((LivingEntity) target, 20);
 				}
-			}, 15);
+			}, 10);
 			
 		})) return -1;
 		return this.getManacost();

@@ -28,8 +28,7 @@ public class Nullify extends Spell
 	{
 		super("Nullify", "nullify", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 20, 3, false,
 				"&r&fNullify target's &7(20m)&f defenses applying &3&oVoided&r&7 (30s)&f and &6&oBreak&r&f.","",
-				"&r&3Voided &eEffect&f: Voided strips the afflicted entity of all",
-				"&r&f&b&oResistances&r&f and &b&oImmunities&r&f for the duration.");
+				"&r&3Voided &eEffect&f: neutralizes affected entity's elemental affinity.");
 	}
 
 	@Override

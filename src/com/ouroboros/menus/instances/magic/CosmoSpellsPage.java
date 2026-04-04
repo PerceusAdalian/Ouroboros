@@ -13,10 +13,11 @@ import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
+import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class CosmoSpellsPage extends ObsGui
@@ -43,9 +44,10 @@ public class CosmoSpellsPage extends ObsGui
 		
 		// 4
 		GuiButton.placeSpellButton(player, new VoidForm(), 15, this);
+		GuiButton.placeSpellButton(player, new Teleport(), 16, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Gate(), 16, this);
+		GuiButton.placeSpellButton(player, new Gate(), 19, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
@@ -58,7 +60,7 @@ public class CosmoSpellsPage extends ObsGui
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
+			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
 			GuiHandler.close(p);
 		});
 		

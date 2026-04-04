@@ -35,7 +35,7 @@ public class EntityCategories
 			EntityType.WOLF,EntityType.ZOGLIN,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,EntityType.ZOMBIE_VILLAGER,
 			EntityType.ZOMBIFIED_PIGLIN, EntityType.NAUTILUS, EntityType.ZOMBIE_NAUTILUS);
 	
-	public static final Set<EntityType> calamity = EnumSet.of(EntityType.ALLAY,EntityType.ELDER_GUARDIAN,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.WITHER);
+	public static final Set<EntityType> calamity = EnumSet.of(EntityType.ELDER_GUARDIAN,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.WITHER);
 	
 	public static final Set<EntityType> arcano_mobs = EnumSet.of(EntityType.WITCH, EntityType.VEX, EntityType.ILLUSIONER, 
 			EntityType.EVOKER, EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN);

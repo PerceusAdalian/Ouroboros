@@ -39,8 +39,8 @@ public class GlacioEssence extends AbstractObsObject
 			e.setCancelled(true);
 			OBSParticles.drawGlacioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_CREAKING_FREEZE, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.GLACIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.GLACIO)+"⚛&f Added");
+			PlayerData.addEssence(p, ElementType.GLACIO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&b⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

@@ -14,7 +14,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 
 public class AeroEffects
@@ -32,7 +32,7 @@ public class AeroEffects
 	public static void addStatic(LivingEntity target, Player caster, int seconds)
 	{
 		hasStatic.put(target.getUniqueId(), true);
-		OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+		ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		{
 			if (target.isDead() || (target instanceof Player p && !p.isOnline())) return;
 			
@@ -63,7 +63,7 @@ public class AeroEffects
 	{
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 99, true);
 		EntityEffects.add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
-		OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+		ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		{
 			if (target.isDead()) return;
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
@@ -74,7 +74,7 @@ public class AeroEffects
 	{
 		EntityEffects.add(target, PotionEffectType.SPEED, seconds * 20, magnitude, true);
 		EntityEffects.add(target, PotionEffectType.HASTE, seconds * 20, magnitude, true);
-		OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+		ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		{
 			if (target.isDead()) return;
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.DRAGON_BREATH, 1.0f);

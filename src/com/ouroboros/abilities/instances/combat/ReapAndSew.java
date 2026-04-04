@@ -27,7 +27,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.MortioEffects;
@@ -67,7 +67,7 @@ public class ReapAndSew extends AbstractOBSAbility
                 OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
                 MortioEffects.addDoom((LivingEntity) target, 2, 20);
                 remainingSeconds.put(target.getUniqueId(), seconds);
-                OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
+                ObsTimer.runWithCancel(Ouroboros.instance, (r) -> 
                 {
                     Integer secondsRemaining = remainingSeconds.get(target.getUniqueId());
                     if (secondsRemaining == null || secondsRemaining <= 0) {

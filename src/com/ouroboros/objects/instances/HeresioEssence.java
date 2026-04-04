@@ -39,8 +39,8 @@ public class HeresioEssence  extends AbstractObsObject
 			e.setCancelled(true);
 			OBSParticles.drawHeresioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.HERESIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.HERESIO)+"⚛&f Added");
+			PlayerData.addEssence(p, ElementType.HERESIO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&2⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

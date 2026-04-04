@@ -39,8 +39,8 @@ public class AeroEssence extends AbstractObsObject
 			e.setCancelled(true);
 			OBSParticles.drawAeroCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.AERO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.AERO)+"⚛&f Added");
+			PlayerData.addEssence(p, ElementType.AERO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&d⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

@@ -26,7 +26,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 
 public class ArrestoMomentum extends Spell implements Listener
@@ -58,7 +58,7 @@ public class ArrestoMomentum extends Spell implements Listener
 		    
 		    mob.setAware(false);
 		    
-		    OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+		    ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		    {
 		        mob.setVelocity(new Vector(0,0,0));
 		        mob.teleport(frozenLoc);
@@ -76,7 +76,7 @@ public class ArrestoMomentum extends Spell implements Listener
 		    
 		    frozenPlayers.add(pTarget.getUniqueId());
 		    
-		    OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+		    ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		    {
 		        pTarget.setGravity(false);
 		        pTarget.setVelocity(new Vector(0,0,0));

@@ -19,7 +19,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.entityeffects.helpers.ChillEffectData;
 
 public class GlacioEffects
@@ -85,7 +85,7 @@ public class GlacioEffects
 		hasFrosted.add(target.getUniqueId());
 		EntityEffects.add(target, PotionEffectType.WEAKNESS, seconds * 20, magnitude, false);
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, magnitude, false);
-		OBStandardTimer.runWithCancel(Ouroboros.instance, e ->
+		ObsTimer.runWithCancel(Ouroboros.instance, e ->
 		{
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SNOWFLAKE, null);
 		}, 20, seconds * 20);

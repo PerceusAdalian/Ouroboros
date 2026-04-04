@@ -9,9 +9,10 @@ import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
-import com.ouroboros.menus.ObsGui;
+import com.lol.spells.instances.glacio.Riptide;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GlacioSpellsPage extends ObsGui
@@ -26,14 +27,14 @@ public class GlacioSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// 1
-		
+		GuiButton.placeSpellButton(player, new Riptide(), 10, this);
 		// 2
-		GuiButton.placeSpellButton(player, new Glacius(), 10, this);
+		GuiButton.placeSpellButton(player, new Glacius(), 11, this);
 		
 		// 3
 		
 		// 4
-		GuiButton.placeSpellButton(player, new GlacialFlood(), 11, this);
+		GuiButton.placeSpellButton(player, new GlacialFlood(), 12, this);
 		
 		// 5
 		
@@ -48,7 +49,7 @@ public class GlacioSpellsPage extends ObsGui
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
 		{
 			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
+			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
 			GuiHandler.close(p);
 		});
 		

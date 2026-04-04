@@ -57,9 +57,10 @@ public class Tailwind extends Spell
 		}
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
 		{
+			if (p.isSwimming() || p.isInWater()) return -1;
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.EXPLOSION, null);
-            Vector boost = p.getEyeLocation().getDirection().normalize().multiply(3);
+			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
+            Vector boost = p.getEyeLocation().getDirection().normalize().multiply(3.5);
 			p.setVelocity(p.getVelocity().add(boost));
 			if (!tailwindRegistry.contains(p.getUniqueId())) tailwindRegistry.add(p.getUniqueId());
 			return 5;

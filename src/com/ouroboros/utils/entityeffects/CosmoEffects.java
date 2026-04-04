@@ -10,13 +10,12 @@ import org.bukkit.entity.LivingEntity;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 
 public class CosmoEffects
 {
 	/**
-	 * @Description Cosmo Signature Effect: Voided strips the afflicted entity of all",
-				"Resistances and Immunities for the duration."
+	 * @Description Cosmo Signature Effect: neutralizes affected entity's elemental affinity.",
 	 * @param target The target to set as voided.
 	 * @param ticks  The duration to add the entity target into the isVoided
 	 *               registry.
@@ -31,7 +30,7 @@ public class CosmoEffects
 		OBSParticles.drawCosmoCastSigil(target);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> isVoidedRegistry.remove(target.getUniqueId()), seconds * 20);
-		OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
+		ObsTimer.runWithCancel(Ouroboros.instance, (r) -> 
 		{
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.SCULK_SOUL,null);
 		}, 20, seconds * 20);

@@ -24,7 +24,7 @@ import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -57,7 +57,7 @@ public class Prometheus extends AbstractOBSAbility
 			
 			EntityEffects.playSound(p, Sound.ITEM_MACE_SMASH_GROUND, SoundCategory.AMBIENT);
 			
-			OBStandardTimer.runWithCancel(Ouroboros.instance, (r)->
+			ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 			{
 				EntityEffects.add(p, PotionEffectType.SLOWNESS, 20, 99);
 				for (Block b : blocks)

@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 
 public class ArcanoEffects
 {
@@ -19,7 +19,7 @@ public class ArcanoEffects
 	public static void addEtherOverload(LivingEntity target, int seconds)
 	{
 		if (hasEtherOverload.contains(target.getUniqueId())) return;
-		OBStandardTimer.runWithCancel(Ouroboros.instance, e->
+		ObsTimer.runWithCancel(Ouroboros.instance, e->
 		{
 			if (target.isDead()) return;
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
@@ -32,7 +32,7 @@ public class ArcanoEffects
 	public static void addEtherDisruption(Player target, int seconds)
 	{
 		if (hasEtherDisruption.contains(target.getUniqueId())) return;
-		OBStandardTimer.runWithCancel(Ouroboros.instance, e->
+		ObsTimer.runWithCancel(Ouroboros.instance, e->
 		{
 			if (target.isDead()) return;
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);

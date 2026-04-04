@@ -30,6 +30,7 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -133,6 +134,7 @@ public class GeneralEvents implements Listener
         		Player p = e.getPlayer();
         		PlayerData.unloadPlayer(p.getUniqueId());
         		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
+        		ObsTimer.cancelCountdown(p);
         	}
         	
         	@EventHandler

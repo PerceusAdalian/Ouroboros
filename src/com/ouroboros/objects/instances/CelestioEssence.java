@@ -39,8 +39,8 @@ public class CelestioEssence extends AbstractObsObject
 			e.setCancelled(true);
 			OBSParticles.drawCelestioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_ALLAY_ITEM_GIVEN, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.CELESTIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.CELESTIO)+"⚛&f Added");
+			PlayerData.addEssence(p, ElementType.CELESTIO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&e⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

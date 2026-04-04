@@ -87,7 +87,7 @@ public class MobDeathEvent implements Listener
 			        {
 			        	if (currentSpellDrops >= maxSpellDrops) break;
 			        	if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
-			        	if (!Chance.of(3)) continue;
+			        	if (!Chance.of(3.5)) continue;
 			            if (spell.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
 			            if (spellDropsRegistry.getOrDefault(spell, false)) continue;
 			            

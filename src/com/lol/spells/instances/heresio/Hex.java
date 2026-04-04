@@ -19,7 +19,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -114,7 +114,7 @@ public class Hex extends Spell
 
 	private static void playerTimer(Player player)
 	{
-		OBStandardTimer.runWithCancel(Ouroboros.instance, (C) -> 
+		ObsTimer.runWithCancel(Ouroboros.instance, (C) -> 
 		{
 			if (Chance.of(14.5)) 
 			{

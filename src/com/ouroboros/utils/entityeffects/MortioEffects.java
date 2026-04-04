@@ -18,7 +18,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.OBSParticles;
-import com.ouroboros.utils.OBStandardTimer;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.helpers.JinxData;
 
@@ -62,7 +62,7 @@ public class MortioEffects
 		
 		nightShifted.put(target.getUniqueId(), magnitude);
 		
-		OBStandardTimer.runWithCancel(Ouroboros.instance, (e)->
+		ObsTimer.runWithCancel(Ouroboros.instance, (e)->
 		{
 			if (!((Player) target).isOnline()) e.cancel();
 			
@@ -137,7 +137,7 @@ public class MortioEffects
 	    EntityEffects.add(target, effectType, seconds * 20, effectMagnitude, true);
 	    
 	    int duration = seconds * 20;
-	    OBStandardTimer.runWithCancel(Ouroboros.instance, (r) -> 
+	    ObsTimer.runWithCancel(Ouroboros.instance, (r) -> 
 	    {
 	        if (!target.hasPotionEffect(effectType) || target.isDead()) 
 	        {

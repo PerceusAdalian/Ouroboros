@@ -16,6 +16,8 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.EntityCategory;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.OutbreakManager;
+import com.ouroboros.utils.Chance;
+import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.PrintUtils;
 
 
@@ -39,9 +41,10 @@ public class Outbreak
         List<OutbreakEntry> entries = new ArrayList<>();
         for (int i = 0; i < groupSize; i++)
         {
-            EntityType type = pool.stream()
-                .skip(ThreadLocalRandom.current().nextInt(pool.size()))
-                .findFirst().orElseThrow();
+        	List<EntityType> filtered = pool.stream().filter(e -> !EntityCategories.calamity.contains(e)).toList();
+    		EntityType type = filtered.stream()
+    		    .skip(ThreadLocalRandom.current().nextInt(filtered.size()))
+    		    .findFirst().orElseThrow();
             int level = LevelTable.getLevel(biome);
             entries.add(new OutbreakEntry(type, level, null)); // null = no custom name, uses default
         }
@@ -54,7 +57,7 @@ public class Outbreak
         {
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                if (ThreadLocalRandom.current().nextDouble() > 0.01) continue;
+                if (!Chance.of(5)) continue;
 
                 Location center = pickOutbreakCenter(p, 32, 64);
                 if (center == null) continue;
@@ -64,7 +67,7 @@ public class Outbreak
                 Outbreak outbreak = Outbreak.random(biome, element, ThreadLocalRandom.current().nextInt(3, 7));
                 OutbreakManager.trigger(center, outbreak);
             }
-        }, 0L, 200L);
+        }, 0L, 600L);
     }
 
     private static Location pickOutbreakCenter(Player p, int minDist, int maxDist)

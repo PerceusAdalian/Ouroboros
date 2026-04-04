@@ -39,8 +39,8 @@ public class GeoEssence extends AbstractObsObject
 			e.setCancelled(true);
 			OBSParticles.drawGeoCastSigil(p);
 			EntityEffects.playSound(p, Sound.BLOCK_MUD_STEP, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.GEO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.GEO)+"⚛&f Added");
+			PlayerData.addEssence(p, ElementType.GEO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&6⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

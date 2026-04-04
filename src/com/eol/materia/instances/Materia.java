@@ -141,18 +141,13 @@ public class Materia
 		ItemStack stack = new ItemStack(type.getMaterial(), 1);
 		ItemMeta meta = stack.getItemMeta();
 		
-		int idNum = type.hashCode() & 0xFFFF;
-		String idStr = Integer.toHexString(idNum).toUpperCase();
-		
 		meta.setDisplayName(PrintUtils.ColorParser(type.getLabel()));
 		meta.setEnchantmentGlintOverride(false);
 		meta.setLore(List.of(
 				PrintUtils.ColorParser("&7&oUnrefined"),"",
 				PrintUtils.ColorParser("&r&fAn object with &3&ounstable waveform&r&f."),
 				PrintUtils.ColorParser("&bRefinement&r&f is required to use in &bProtocol&f: &eΣ&f.C.H.O."),"",
-				PrintUtils.assignMateriaType(type) + PrintUtils.ColorParser("&r&7 | ") + PrintUtils.assignMateriaState(MateriaState.UNREFINED),
-				PrintUtils.ColorParser("&r&7Materia ID: Σ_"+idStr)
-		));
+				PrintUtils.assignMateriaType(type) + PrintUtils.ColorParser("&r&7 | ") + PrintUtils.assignMateriaState(MateriaState.UNREFINED)));
 
 		var pdc = meta.getPersistentDataContainer();
 		pdc.set(materiaTypeKey,  PersistentDataType.STRING, type.getKey());

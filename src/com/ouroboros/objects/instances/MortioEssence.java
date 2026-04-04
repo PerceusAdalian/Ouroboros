@@ -39,8 +39,8 @@ public class MortioEssence extends AbstractObsObject
 			e.setCancelled(true);
 			OBSParticles.drawMortioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_CREAKING_AMBIENT, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.MORTIO, e.getItem().getAmount()*1);
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()*1+"&r"+PrintUtils.color(ObsColors.MORTIO)+"⚛&f Added");
+			PlayerData.addEssence(p, ElementType.MORTIO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&4⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}
