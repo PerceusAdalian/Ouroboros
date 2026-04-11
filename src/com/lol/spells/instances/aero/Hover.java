@@ -178,7 +178,6 @@ public class Hover extends Spell
 		        Hover.HoverSession session = Hover.activeSessions.get(uid);
 		        if (session == null) return;
 
-		        // Only care if Y actually changed
 		        if (e.getFrom().getY() == e.getTo().getY()) return;
 
 		        double diff = e.getTo().getY() - session.hoverY();
