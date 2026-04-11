@@ -14,6 +14,7 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
+import com.lol.spells.instances.aero.Hover;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
@@ -118,6 +119,7 @@ public class SpellRegistry
         		Galeforce.class,
         		Tailwind.class,
         		ChainLightning.class,
+        		Hover.class,
         		
         		//Geo
         		Expelliarmus.class,
