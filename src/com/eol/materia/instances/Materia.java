@@ -253,7 +253,7 @@ public class Materia
 		            if (stack.getItemMeta().getPersistentDataContainer().has(AbstractObsObject.obsObject, PersistentDataType.STRING)) continue;
 		            
 		            MateriaType type = MateriaType.fromMaterial(stack.getType());
-		            if (type == null) continue;
+		            if (type == null || MateriaType.exemptMaterials.contains(stack.getType())) continue;
 		            
 		            ItemStack unrefined = generateUnrefinedMateria(type);
 		            unrefined.setAmount(stack.getAmount());

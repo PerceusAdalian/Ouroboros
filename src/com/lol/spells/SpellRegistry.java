@@ -14,12 +14,12 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
-import com.lol.spells.instances.aero.Hover;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
+import com.lol.spells.instances.aero.Vaporize;
 import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
@@ -55,6 +55,7 @@ import com.lol.spells.instances.inferno.Combustion;
 import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
+import com.lol.spells.instances.mortio.AspectOfSithis;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
@@ -62,7 +63,6 @@ import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.Voodoo;
-import com.lol.spells.instances.mortio.AspectOfSithis;
 
 public class SpellRegistry 
 {
@@ -119,7 +119,7 @@ public class SpellRegistry
         		Galeforce.class,
         		Tailwind.class,
         		ChainLightning.class,
-        		Hover.class,
+        		Vaporize.class,
         		
         		//Geo
         		Expelliarmus.class,
