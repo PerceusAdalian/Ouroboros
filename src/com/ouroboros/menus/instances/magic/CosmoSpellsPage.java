@@ -15,6 +15,7 @@ import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
+import com.lol.spells.instances.cosmo.Warp;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
@@ -47,7 +48,8 @@ public class CosmoSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Teleport(), 16, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Gate(), 19, this);
+		GuiButton.placeSpellButton(player, new Warp(), 19, this);
+		GuiButton.placeSpellButton(player, new Gate(), 20, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

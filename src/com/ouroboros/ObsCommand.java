@@ -143,6 +143,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			Wand wand = CollectWandData.wandCollector.get(p.getUniqueId());
+			CollectWandData.wandCollector.remove(p.getUniqueId());
 			ItemStack stack = wand.getAsItemStack();
 			p.getInventory().addItem(stack);
 			PrintUtils.OBSFormatDebug(p, "You wand was regenerated successfully. Check your inventory.");

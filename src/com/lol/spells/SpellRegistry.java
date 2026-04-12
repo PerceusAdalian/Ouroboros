@@ -44,6 +44,7 @@ import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
+import com.lol.spells.instances.cosmo.Warp;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.GlacialFlood;
@@ -134,6 +135,7 @@ public class SpellRegistry
         		Antimatter.class,
         		VoidForm.class,
         		Teleport.class,
+        		Warp.class,
         		
         		//Heresio
         		Hex.class,
