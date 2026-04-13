@@ -3,14 +3,14 @@ package com.eol.enums;
 public enum ElementiumSlotType
 {
 	NO_SLOT("No Slot"),
-	MODULO("Modulo"),
-	GLACIO("Glacio"),
-	INFERNO("Inferno"),
-	GEO("Geo"),
-	AERO("Aero"),
-	CELESTIO("Celestio"),
-	MORTIO("Mortio"),
-	COSMO("Cosmo");
+	MODULO("&lModulo&r&f"),
+	GLACIO("&lGlacio&r&f"),
+	INFERNO("&lInferno&r&f"),
+	GEO("&lGeo&r&f"),
+	AERO("&lAero&r&f"),
+	CELESTIO("&lCelestio&r&f"),
+	MORTIO("&lMortio&r&f"),
+	COSMO("&lCosmo&r&f");
 
 	private final String element;	
 	

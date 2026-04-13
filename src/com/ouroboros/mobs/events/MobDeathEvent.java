@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
-import com.eol.materia.instances.Materia;
+import com.eol.materia.Materia;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;

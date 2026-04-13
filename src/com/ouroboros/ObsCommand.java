@@ -31,7 +31,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
-import com.eol.materia.instances.Materia;
+import com.eol.materia.Materia;
 import com.lol.enums.SpellType;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;

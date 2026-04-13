@@ -1,8 +1,8 @@
-package com.eol.materia.instances.components;
+package com.eol.materia.components;
 
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
-import com.eol.materia.instances.Materia;
+import com.eol.materia.Materia;
 import com.ouroboros.enums.Rarity;
 
 public class Bases 

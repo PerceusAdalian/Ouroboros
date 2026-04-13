@@ -1,4 +1,4 @@
-package com.eol.materia.instances;
+package com.eol.materia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,7 +113,7 @@ public class Materia
 	
 	public static Materia get(String internalName)
 	{
-		return materia_registry.get(internalName);
+		return materia_registry.getOrDefault(internalName, null);
 	}
 	
 	public ItemStack getAsItemStack()

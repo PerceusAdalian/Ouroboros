@@ -16,7 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
-import com.eol.materia.instances.Materia;
+import com.eol.materia.Materia;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;

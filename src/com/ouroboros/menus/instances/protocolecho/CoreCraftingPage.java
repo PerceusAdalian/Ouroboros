@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.eol.enums.MateriaState;
-import com.eol.materia.instances.Materia;
+import com.eol.materia.Materia;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;

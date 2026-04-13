@@ -3,12 +3,12 @@ package com.ouroboros;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.materia.Materia;
 import com.eol.materia.MateriaCastHandler;
-import com.eol.materia.instances.Materia;
-import com.eol.materia.instances.components.Bases;
-import com.eol.materia.instances.components.Bindings;
-import com.eol.materia.instances.components.Catalysts;
-import com.eol.materia.instances.components.ElementCores;
+import com.eol.materia.components.Bases;
+import com.eol.materia.components.Bindings;
+import com.eol.materia.components.Catalysts;
+import com.eol.materia.components.ElementCores;
 import com.lol.spells.SpellCastHandler;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.aero.Tailwind;

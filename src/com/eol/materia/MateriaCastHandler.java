@@ -13,7 +13,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eol.enums.MateriaComponent;
-import com.eol.materia.instances.Materia;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.utils.PrintUtils;
 
