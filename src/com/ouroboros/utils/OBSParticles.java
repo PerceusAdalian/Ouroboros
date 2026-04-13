@@ -2,6 +2,7 @@ package com.ouroboros.utils;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -11,6 +12,7 @@ import org.bukkit.Particle.DustOptions;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import com.lol.enums.SpellementType;
@@ -274,6 +276,36 @@ public class OBSParticles
 	        double z = location.getZ() + (rand.nextDouble() * 2 - 1) * domain;
 			w.spawnParticle(particle, new Location(w,x,y,z), 0, 0, 0, 0, data);
 		}
+	}
+	
+	/**
+	 * @param plugin (For the timer)
+	 * @param center - Center of origin to wrap
+	 * @param range - The extent of the wave effect
+	 * @param speed - How fast the wave should travel (sweet spot is 0.15, 0.25)
+	 * @param density - Particle density/amount per disc band
+	 * @param particle 
+	 * @param data - Optional
+	 */
+	public static <T> void drawWave(Plugin plugin, Location center, double range, double speed, int density, Particle particle, T data)
+	{
+	    AtomicReference<Double> radius = new AtomicReference<>(0.0);
+
+	    ObsTimer.runWithCancel(plugin, task ->
+	    {
+	        double r = radius.get();
+
+	        if (r >= range)
+	        {
+	            task.cancel();
+	            return;
+	        }
+
+	        drawDisc(center.clone(), r, 1, density, 0.1, particle, data);
+
+	        radius.set(r + speed);
+
+	    }, 1, (int)(range / speed) + 2); // cancelTicks derived from how many ticks it takes to reach range
 	}
 	
 	public static void drawInfernoCastSigil(LivingEntity entity) 

@@ -89,7 +89,7 @@ public class MobDamageEvent implements Listener
 						target.setFireTicks(100);
 					}
 					
-					if (element == ElementType.INFERNO && InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(20))
+					if (element == ElementType.INFERNO && InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(10))
 					{
 						InfernoEffects.addBurn((LivingEntity) target, 20);
 						InfernoEffects.hasCharred.remove(target.getUniqueId());

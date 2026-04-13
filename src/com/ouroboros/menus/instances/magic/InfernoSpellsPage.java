@@ -7,14 +7,15 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Combustion;
 import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class InfernoSpellsPage extends ObsGui
@@ -42,6 +43,9 @@ public class InfernoSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Meteor(), 14, this);
 		
 		// 5
+		
+		// 6
+		GuiButton.placeSpellButton(player, new AspectOfAighil(), 15, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

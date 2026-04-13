@@ -45,7 +45,7 @@ public class Starfall extends Spell
 			if(!RayCastUtils.getEntity(p, 20, target ->
 			{
 				if (target == null || !(target instanceof LivingEntity le)) return;
-				Meteor.playSpellEffects(p, le.getLocation(), 1, false, 0, true);
+				Meteor.playSpellEffects(p, le.getLocation(), 1, false, 0, true, Meteor.MeteorSize.NORMAL);
 			})) return -1;
 		}
 		else if (TimeUtils.checkTime(p.getWorld(), TimeUtils.Timeframe.NIGHT))

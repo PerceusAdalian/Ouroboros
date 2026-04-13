@@ -51,6 +51,7 @@ import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.glacio.Riptide;
 import com.lol.spells.instances.heresio.Hex;
+import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Combustion;
 import com.lol.spells.instances.inferno.Ignite;
@@ -102,6 +103,7 @@ public class SpellRegistry
         		Ignite.class,
         		Combustion.class,
         		Meteor.class,
+        		AspectOfAighil.class,
         		
         		//Glacio
         		Glacius.class,

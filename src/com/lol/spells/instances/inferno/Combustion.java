@@ -33,9 +33,8 @@ public class Combustion extends Spell
 		super("Combustion", "combustion", Material.BLAZE_POWDER, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1, false,
 				"&r&fExpell a heated blast at target dealing "+PrintUtils.color(ObsColors.COMBUST)+"Combust&f damage",
 				"&r&fequal to their &6AR&r&7(&6⛨&7)&f inflicting &cCharred &7(10m, 20s)","",
-				"&r&cCharred &eEffect&f: Causes those affected to experience &b&oHunger&f,",
-				"&b&oFatigue&r&f, and &b&oSlowness&r&f while taking &b&o15%&r&f more &c&lInferno&r&f damage.",
-				"&r&f&b&o20%&r&f chance to inflict &cBurn&f while &c&oCharred&r&f, removing the effect.");
+				"&r&cCharred &eEffect&f: Causes &b&oHunger&r&f, &b&oFatigue&r&f, and &b&oSlowness&r&f, while affected take &b&o25%&r&f",
+				"&r&fmore "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno &r&fdamage, and may cause &cBurn&f upon hit removing the effect.");
 	}
 
 	@Override
