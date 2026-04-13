@@ -26,8 +26,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.ObsTimer;

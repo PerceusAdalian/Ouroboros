@@ -9,6 +9,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -47,14 +48,14 @@ public class Meteor extends Spell
 
 	    if (target instanceof LivingEntity)
 	    {
-	        playSpellEffects(p, target.getLocation(), 4, true, 2, true);
+	        playSpellEffects(p, target.getLocation(), 4, true, 2, true, MeteorSize.LARGE);
 	        return 100;
 	    }
 
 	    Block bTarget = RayCastUtils.rayTraceBlock(p, 50);
 	    if (bTarget == null || bTarget.getType() == Material.AIR) return -1;
 
-	    playSpellEffects(p, bTarget.getLocation(), 4, true, 2, true);
+	    playSpellEffects(p, bTarget.getLocation(), 4, true, 2, true, MeteorSize.LARGE);
 	    return 100;
 	}
 
@@ -64,10 +65,13 @@ public class Meteor extends Spell
 		return 100;
 	}
 	
-	public static void summonMeteor(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary)
+	public static void summonMeteor(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary, MeteorSize meteorSize)
 	{
 	    Location spawnLoc = loc.clone().add(0, 45, 0);
-	    LargeFireball fb = (LargeFireball) loc.getWorld().spawnEntity(spawnLoc, EntityType.FIREBALL);
+	    
+	    Fireball fb = null;
+	    if (meteorSize == MeteorSize.NORMAL) fb = (Fireball) loc.getWorld().spawnEntity(spawnLoc, EntityType.FIREBALL);
+	    else if (meteorSize == MeteorSize.LARGE) fb = (LargeFireball) loc.getWorld().spawnEntity(spawnLoc, EntityType.FIREBALL);
 	    
 	    int bonusYield = 0;
 	    if (temperatureBonus)
@@ -83,14 +87,20 @@ public class Meteor extends Spell
 	    fb.setIsIncendiary(isIncendiary);
 	}
 	
-	public static void playSpellEffects(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary)
+	public static void playSpellEffects(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary, MeteorSize meteorSize)
 	{
 		OBSParticles.drawLine(p.getLocation(), loc, 0.5, 0.5, Particle.LAVA, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
 			OBSParticles.drawSpiralVortex(loc, 75, 10, 0.1, Particle.LAVA, null);
-			summonMeteor(p, loc, baseYield, temperatureBonus, bonusModifier, isIncendiary);
+			summonMeteor(p, loc, baseYield, temperatureBonus, bonusModifier, isIncendiary, MeteorSize.NORMAL);
 		}, 20);
+	}
+	
+	public enum MeteorSize
+	{
+		NORMAL,
+		LARGE
 	}
 }

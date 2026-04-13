@@ -17,19 +17,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lol.wand.Wand;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.menus.ObsGui;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class CraftableWandsView extends ObsGui
+public class WandCraftPage extends ObsGui
 {
 
-	public CraftableWandsView(Player player) 
+	public WandCraftPage(Player player) 
 	{
-		super(player, "Craftable Wands", 54, Set.of(37,43));
+		super(player, "Craftable Wands", 27, Set.of(10,12,14,16));
 	}
 
 	public static Map<UUID, Wand> wandConfirmationMap = new HashMap<>();
@@ -38,30 +39,29 @@ public class CraftableWandsView extends ObsGui
 	protected void build() 
 	{
 		
-		placeWandButton(player, Wand.get("wand_1"), 11, this);
-		placeWandButton(player, Wand.get("wand_2"), 12, this);
-		placeWandButton(player, Wand.get("wand_3"), 13, this);
-		placeWandButton(player, Wand.get("wand_4"), 14, this);
-		placeWandButton(player, Wand.get("wand_5"), 15, this);
+		GuiButton.button(Material.STICK).setName("&fMain Progression Wands").setLore("Click to view all craftable ordinary wands.").place(this, 12, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new WandCraftNormalPage(p));
+		});
 		
-		placeWandButton(player, Wand.get("luminas_wand"), 20, this);
-		placeWandButton(player, Wand.get("sithis_armament"), 21, this);
-		placeWandButton(player, Wand.get("agni_staff"), 22, this);
-		placeWandButton(player, Wand.get("bjorn_artifact"), 23, this);
-		placeWandButton(player, Wand.get("nidus_cane"), 24, this);
-		placeWandButton(player, Wand.get("seth_caduceus"), 30, this);
-		placeWandButton(player, Wand.get("antenna_of_end"), 31, this);
-		placeWandButton(player, Wand.get("twilight_catalyst"), 32, this);
-		
+		GuiButton.button(Material.STICK).setName("&e&oAlternative &r&fWands").setLore("Click to view all craftable &e&oalternative&r&f wands.").place(this, 14, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, new WandCraftAlternativePage(p));
+		});
+				
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Wand Main Page'").place(this, 37, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Wand Main Page'").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new WandMainPage(p));
 		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
+		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
@@ -89,8 +89,19 @@ public class CraftableWandsView extends ObsGui
 		}
 		lore.add("");
 		lore.add("&r&fClick to confirm craft.");
-		lore.add("&e&lCraft Cost&r&f: "+craftCost+"&b۞");
-		lore.add("&e&lYour Luminite&r&f: "+PlayerData.getPlayer(player.getUniqueId()).getLuminite());
+		if (wand.getElementType() != null)
+		{
+			ElementType eType = wand.getElementType();
+			lore.add("&e&lCraft Cost&r&f: "+craftCost+"&b۞&f, "+craftCost/2+PrintUtils.getElementTypeColor(eType)+"⚛&r&f, "+craftCost/3+"&6♻");
+			lore.add("&fYour &eLuminite&f: "+PlayerData.getPlayer(player.getUniqueId()).getLuminite());
+			lore.add("&fYour "+PrintUtils.getElementTypeColor(eType)+eType.getType()+"&r&e Essence&f: "+PrintUtils.getElementTypeColor(eType)+data.getEssence(eType));
+			lore.add("&fYour &6Scrap&f: "+data.getScrap()+"&6♻");
+		}
+		else
+		{			
+			lore.add("&e&lCraft Cost&r&f: "+craftCost+"&b۞&f");
+			lore.add("&e&lYour Luminite&r&f: "+PlayerData.getPlayer(player.getUniqueId()).getLuminite());
+		}
 		
 		List<String> loreAlt = new ArrayList<>();
 		loreAlt.add("&r&fThis wand is current locked due to lacking &d&oGnosis&r&f.");
@@ -106,7 +117,29 @@ public class CraftableWandsView extends ObsGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			if (data.getLuminite() >= craftCost)
+			if (wand.getElementType() != null)
+			{
+				if (data.getLuminite() >= craftCost && data.getScrap() >= craftCost / 3 && data.getEssence(wand.getElementType()) >= craftCost / 2)
+				{
+					PlayerData.subtractLuminite(p, craftCost);
+					PlayerData.subtractScrap(p, craftCost / 3);
+					PlayerData.subtractEssence(p, wand.getElementType(), craftCost / 2);
+					
+					OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+					EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
+					PrintUtils.OBSFormatDebug(p, wand.getName()+ " Crafted Successfully!");
+					p.getInventory().addItem(stack);
+					GuiHandler.changeMenu(p, new WandMainPage(p));
+					return;
+				}
+				else
+				{
+					PrintUtils.OBSFormatError(p, "Insufficient Materials!");
+					p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
+					GuiHandler.close(p);
+				}
+			}
+			else if (wand.getElementType() == null && data.getLuminite() >= craftCost)
 			{
 				PlayerData.subtractLuminite(p, craftCost);
 				OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);

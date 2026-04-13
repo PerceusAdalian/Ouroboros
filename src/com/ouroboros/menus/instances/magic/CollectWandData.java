@@ -28,16 +28,17 @@ public class CollectWandData extends ObsGui
 
 	public static Map<UUID, Wand> wandCollector = new HashMap<>();
 	public static Map<UUID, String> pageController = new HashMap<>();
+	
 	@Override
 	protected void build() 
 	{
 		
 		GuiButton.button(Material.GRAY_STAINED_GLASS_PANE)
 		.setName("Place wand here")
-		.setLore("Click on this panel with your wand.", 
-				"If it's valid, you'll automatically advance to the next page.",
-				"&c&lWARNING&r&f: If you quit during wand collection, data will be lost.",
-				"Recover wands by executing &d&o/recoverwand&r&f.")
+		.setLore("&r&fClick on this panel with your wand.", 
+				"&r&fIf it's valid, you'll automatically advance to the next page.",
+				"&c&lWARNING&r&f: If you quit during wand collection, data may be lost.",
+				"&r&fRecover wands by executing &d&o/recoverwand&r&f.")
 		.place(this, 13, e->
 		{
 			Player p = (Player) e.getWhoClicked();
@@ -56,7 +57,7 @@ public class CollectWandData extends ObsGui
 					GuiHandler.changeMenu(p, new WandViewPage(p));
 				return;
 			}
-			PrintUtils.OBSFormatError(p, "Invalid Object Detected... Cancelling operation, please try again.");
+			PrintUtils.OBSFormatError(p, "Invalid object submitted.. Please try again.");
 			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
 			GuiHandler.close(p);
 		});

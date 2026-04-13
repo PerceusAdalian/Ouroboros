@@ -27,7 +27,7 @@ public class WandMainPage extends ObsGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new CraftableWandsView(p));
+			GuiHandler.changeMenu(p, new WandCraftPage(p));
 		});
 		
 		GuiButton.button(Material.STICK).setName("&e&lUpgrade &r&fExisting Wand").setLore("Click to upgrade an existing wand").place(this, 13, e->

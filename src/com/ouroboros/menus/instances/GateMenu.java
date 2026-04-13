@@ -57,6 +57,10 @@ public class GateMenu extends ObsGui
 				
 				cleanup(p, wand);
 			}
+			else
+			{
+				e.setCancelled(true);
+			}
 		});
 		
 		GuiButton.button(Material.NETHERRACK)
@@ -82,6 +86,10 @@ public class GateMenu extends ObsGui
 				
 				cleanup(p, wand);
 			}
+			else
+			{
+				e.setCancelled(true);
+			}
 		});
 		
 		GuiButton.button(Material.END_STONE)
@@ -106,6 +114,10 @@ public class GateMenu extends ObsGui
 				}, 25);
 				
 				cleanup(p, wand);
+			}
+			else
+			{
+				e.setCancelled(true);
 			}
 		});
 		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("Click to close this menu. Doing so will return your wand.").place(this, 10, e->

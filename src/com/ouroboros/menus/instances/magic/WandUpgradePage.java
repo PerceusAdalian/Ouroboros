@@ -39,9 +39,9 @@ public class WandUpgradePage extends ObsGui
 			case 2 -> upgradeTo = Wand.get("wand_3");
 			case 3 -> upgradeTo = Wand.get("wand_4");
 			case 4 -> upgradeTo = Wand.get("wand_5");
-			case 5 -> upgradeTo = Wand.get("luminas_wand");
-			case 6 -> upgradeTo = Wand.get("twilight_catalyst");
-			case 7 -> upgradeTo = Wand.get("twilight_catalyst");
+			case 5 -> upgradeTo = Wand.get("wand_6");
+			case 6 -> upgradeTo = Wand.get("wand_7");
+			case 7 -> upgradeTo = Wand.get("wand_7");
 			default -> throw new IllegalArgumentException("Unexpected value: " + rarity.getRarity());
 		};
 		

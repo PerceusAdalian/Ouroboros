@@ -14,12 +14,12 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
-import com.lol.spells.instances.aero.Hover;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
+import com.lol.spells.instances.aero.Vaporize;
 import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
@@ -44,17 +44,20 @@ import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
+import com.lol.spells.instances.cosmo.Warp;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.glacio.Riptide;
 import com.lol.spells.instances.heresio.Hex;
+import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Combustion;
 import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
+import com.lol.spells.instances.mortio.AspectOfSithis;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
@@ -62,7 +65,6 @@ import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.Voodoo;
-import com.lol.spells.instances.mortio.AspectOfSithis;
 
 public class SpellRegistry 
 {
@@ -101,6 +103,7 @@ public class SpellRegistry
         		Ignite.class,
         		Combustion.class,
         		Meteor.class,
+        		AspectOfAighil.class,
         		
         		//Glacio
         		Glacius.class,
@@ -119,7 +122,7 @@ public class SpellRegistry
         		Galeforce.class,
         		Tailwind.class,
         		ChainLightning.class,
-        		Hover.class,
+        		Vaporize.class,
         		
         		//Geo
         		Expelliarmus.class,
@@ -134,6 +137,7 @@ public class SpellRegistry
         		Antimatter.class,
         		VoidForm.class,
         		Teleport.class,
+        		Warp.class,
         		
         		//Heresio
         		Hex.class,

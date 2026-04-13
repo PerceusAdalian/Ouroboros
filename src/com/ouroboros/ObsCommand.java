@@ -39,8 +39,8 @@ import com.lol.wand.Wand;
 import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.AbstractOBSAbility;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
 import com.ouroboros.menus.instances.magic.AdminSpellsPage;
@@ -143,6 +143,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			Wand wand = CollectWandData.wandCollector.get(p.getUniqueId());
+			CollectWandData.wandCollector.remove(p.getUniqueId());
 			ItemStack stack = wand.getAsItemStack();
 			p.getInventory().addItem(stack);
 			PrintUtils.OBSFormatDebug(p, "You wand was regenerated successfully. Check your inventory.");

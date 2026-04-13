@@ -32,6 +32,7 @@ public class CosmoEffects
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> isVoidedRegistry.remove(target.getUniqueId()), seconds * 20);
 		ObsTimer.runWithCancel(Ouroboros.instance, (r) -> 
 		{
+			if (target.isDead()) return;
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.SCULK_SOUL,null);
 		}, 20, seconds * 20);
 	}

@@ -34,8 +34,6 @@ public class Gate extends Spell
 				"&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&3Gate&f: &3&oSpatial Convergence Protocol&r&f --",
 				"&r&fSets your &b&oAnchor Location&r&f in the current dimension.",
-				"&r&fDefault locations are that world's spawnpoint, and locations saved are",
-				"&r&fused &n&oonly&r&f for this spell. &7&o(Multiple &b&oBed States&r&7&o are allowed.)","",
 				"&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&3Gate&f: &3&oQuantum Leap&r&f --",
 				"&r&fTeleport between saved &a&lOverworld&r&f, &c&lNether&r&f, and &3&lEnd&r&f locations.","",

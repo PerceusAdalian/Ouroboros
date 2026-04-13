@@ -100,4 +100,9 @@ public class ObsTimer
 		}
 	}
 	
+	public static boolean hasActiveCountdown(Player player)
+	{
+	    return taskHolders.containsKey(player.getUniqueId());
+	}
+	
 }

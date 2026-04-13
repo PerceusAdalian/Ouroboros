@@ -1,4 +1,4 @@
-package com.ouroboros.hud;
+package com.ouroboros.accounts;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,7 +8,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.utils.PrintUtils;
 
 public class PlayerHud

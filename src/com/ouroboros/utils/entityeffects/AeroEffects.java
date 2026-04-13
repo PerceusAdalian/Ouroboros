@@ -59,6 +59,7 @@ public class AeroEffects
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasStatic.remove(target.getUniqueId()), seconds*20);
 	}
 	
+	//"&dShock &eEffect&f: stuns those affected and causes them to glow."
 	public static void addShock(LivingEntity target, int seconds)
 	{
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 99, true);
@@ -70,6 +71,7 @@ public class AeroEffects
 		}, 10, seconds*20);
 	}
 
+	//"&dCharged &eEffect&f: Boosts &bSpeed&f and &bEfficiency&f scaled with the &bmagnitude&f."
 	public static void addCharged(LivingEntity target, int magnitude, int seconds)
 	{
 		EntityEffects.add(target, PotionEffectType.SPEED, seconds * 20, magnitude, true);

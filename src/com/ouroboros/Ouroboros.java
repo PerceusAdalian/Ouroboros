@@ -16,6 +16,7 @@ import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.lol.spells.instances.cosmo.Teleport;
+import com.lol.spells.instances.cosmo.Warp;
 import com.lol.wand.WandRegistry;
 import com.ouroboros.abilities.AbilityCastHandler;
 import com.ouroboros.abilities.AbilityRegistry;
@@ -91,6 +92,7 @@ public class Ouroboros extends JavaPlugin
 		Pneuma.registerSpellHelper(instance);
 		Tailwind.registerSpellHelper(instance);
 		Teleport.registerSpellHelper(instance);
+		Warp.registerSpellHelper(instance);
 		
 		MateriaCastHandler.register(instance);
 		Catalysts.load();

@@ -1,6 +1,7 @@
 package com.ouroboros.mobs.events;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -11,6 +12,9 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.enums.MateriaState;
+import com.eol.enums.MateriaType;
+import com.eol.materia.instances.Materia;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
@@ -55,15 +59,16 @@ public class MobDeathEvent implements Listener
 			    final int maxDrops = 3;
 			    final int maxSpellDrops = 1;
 			    final int maxEssenceDrops = 4;
+			    final int catalystDrops = 1;
 			    int currentDrops = 0;
 			    int currentSpellDrops = 0;
+			    int currentCatalystDrops = 0;
 			    
 			    if (Chance.of(75))
 			    {
 			        ItemStack tearStack = new TearOfLumina().toItemStack();
 			        e.getDrops().add(tearStack);
 			    }
-			    
 			    
 			    // Money drops
 			    for (AbstractObsObject item : ObjectRegistry.getMoneyItems()) 
@@ -116,6 +121,19 @@ public class MobDeathEvent implements Listener
 			            }
 			        }
 			        
+			    }
+			    
+			    if (Chance.of(15))
+			    {
+			    	for (Materia materia : Materia.materia_registry.values().stream().filter(m -> m.getMateriaType() == MateriaType.CATALYST).collect(Collectors.toList()))
+			    	{
+			    		if (materia.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
+			    		if (currentCatalystDrops >= catalystDrops) break;
+			    		
+			    		ItemStack catalystStack = materia.getAsItemStack(MateriaState.CATALYST);
+			    		if (catalystStack != null) e.getDrops().add(catalystStack);
+			    		currentCatalystDrops++;
+			    	}
 			    }
 			    
 			    // Clear recently dropped maps after 30 seconds

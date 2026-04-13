@@ -26,10 +26,10 @@ import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.hud.PlayerHud;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.WarpData;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class PlayerData 
@@ -129,8 +129,8 @@ public class PlayerData
 	    	setStat(StatType.MAGIC, false, 0);
 	    	
 	    	setGate(GateCodes.OVERWORLD, Bukkit.getWorld("world").getSpawnLocation());
-	    	setGate(GateCodes.NETHER, Bukkit.getWorld("world_nether").getSpawnLocation());
-	    	setGate(GateCodes.END, Bukkit.getWorld("world_the_end").getSpawnLocation());
+	    	setGate(GateCodes.NETHER, null);
+	    	setGate(GateCodes.END, null);
 	    	
 	    	setActiveCombatAbility(null);
 	    	
@@ -138,6 +138,7 @@ public class PlayerData
 	    	doXpNotification(true);
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
+	    	initializeWarpLocations();
 	    	
 	    	for (Spell spell : SpellRegistry.spellRegistry.values())
 	    	{
@@ -599,6 +600,38 @@ public class PlayerData
 			case END -> pathMod = "_end";
 		};
 		return (Location) config.get("gate"+pathMod);
+	}
+	
+	public WarpData getWarpData(int index)
+	{
+	    if (index < 1 || index > 5) return null;
+	    Location loc = config.getLocation("warp_location_" + index);
+	    if (loc == null) return null;
+	    String nickname = config.getString("warp_nickname_" + index, null);
+	    return new WarpData(index, loc, nickname);
+	}
+
+	public void setWarpData(int index, Location location, String nickname)
+	{
+	    if (index < 1 || index > 5) return;
+	    config.set("warp_location_" + index, location);
+	    config.set("warp_nickname_" + index, nickname);
+	}
+
+	public void clearWarpData(int index)
+	{
+	    if (index < 1 || index > 5) return;
+	    config.set("warp_location_" + index, null);
+	    config.set("warp_nickname_" + index, null);
+	}
+
+	public void initializeWarpLocations()
+	{
+	    for (int i = 1; i <= 5; i++)
+	    {
+	        config.set("warp_location_" + i, null);
+	        config.set("warp_nickname_" + i, "n/a");
+	    }
 	}
 	
 	public void save() 

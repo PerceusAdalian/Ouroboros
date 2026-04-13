@@ -18,9 +18,13 @@ public class InfernoEffects
 	}
 	
 	public static Set<UUID> hasCharred = new HashSet<>();
+	/*
+	 * "&r&cCharred &eEffect&f: Causes &b&oHunger&r&f, &b&oFatigue&r&f, and &b&oSlowness&r&f, while afflicted take &b&o25%&r&f more&r&f",
+				PrintUtils.color(ObsColors.INFERNO)+"&lInferno Damage&r&f, and may cause &cBurn&f upon hit removing the effect."
+	 */
 	/**
-	 * @Effect Causes those affected to have Hunger, Fatigue, and Slowness, while taking 25% more Inferno Damage.
-	 * 			20% chance to cause burn while charred.
+	 * @Effect Charred Effect: Causes Hunger, Fatigue, and Slowness, while afflicted take 25% more
+				Inferno Damage, and may cause Burn upon hit removing the effect."
 	 * @param target
 	 * @param seconds
 	 */
