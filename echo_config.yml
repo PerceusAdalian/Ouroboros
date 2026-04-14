@@ -79,7 +79,7 @@ rarity_bands:
 # Attack Rating and Durability are determined by the Binding,
 # not the material, so they are not defined here.
 # ------------------------------------------------------------
-	
+
 material_stats:
   WOODEN:
     base_attack_min: 3
@@ -89,19 +89,25 @@ material_stats:
 
   STONE:
     base_attack_min: 5
-    base_attack_max: 9
+    base_attack_max: 15
     crit_rate_base: 0.05
+    crit_modifier_ceiling: 1.25
+
+  COPPER:
+    base_attack_min: 6
+    base_attack_max: 11
+    crit_rate_base: 0.15
     crit_modifier_ceiling: 1.25
 
   IRON:
     base_attack_min: 8
-    base_attack_max: 14
+    base_attack_max: 20
     crit_rate_base: 0.15
     crit_modifier_ceiling: 1.5
 
   GOLDEN:
     base_attack_min: 6
-    base_attack_max: 20
+    base_attack_max: 25
     crit_rate_base: 0.5
     crit_modifier_ceiling: 4.0
 

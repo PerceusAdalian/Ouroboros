@@ -13,26 +13,26 @@ public enum MateriaType
 {
 	WOOD("wooden_chunk",         Material.OAK_BUTTON),
 	STONE("stone_chunk",         Material.STONE_BUTTON),
-	IRON("iron_slag",           Material.IRON_NUGGET),
-	COPPER("copper_nugget",       Material.COPPER_NUGGET),
-	GOLD("gold_nugget",         Material.GOLD_NUGGET),
-	DIAMOND("diamond",     Material.DIAMOND),
+	IRON("iron_slag",            Material.IRON_NUGGET),
+	COPPER("copper_nugget",      Material.COPPER_NUGGET),
+	GOLD("gold_nugget",          Material.GOLD_NUGGET),
+	DIAMOND("diamond",     		 Material.DIAMOND),
 	NETHERITE("netherite_scrap", Material.NETHERITE_SCRAP),
 
-	STRING("string",       Material.STRING),
-	PELT("pelt",           Material.RABBIT_HIDE),
-	LEATHER("leather",     Material.LEATHER),
+	STRING("string",       		 Material.STRING),
+	PELT("pelt",           		 Material.RABBIT_HIDE),
+	LEATHER("leather",     		 Material.LEATHER),
 
-	CATALYST("catalyst",   Material.NETHER_STAR),
+	CATALYST("catalyst",   		 Material.NETHER_STAR),
 
-	CELESTIO("celestio",   Material.END_CRYSTAL),
-	MORTIO("mortio",       Material.WITHER_SKELETON_SKULL),
-	INFERNO("inferno",     Material.BLAZE_ROD),
-	GLACIO("glacio",       Material.NAUTILUS_SHELL),
-	GEO("geo",             Material.RESIN_CLUMP),
-	AERO("aero",           Material.AMETHYST_SHARD),
-	COSMO("cosmo",         Material.ECHO_SHARD),
-	HERESIO("heresio",     Material.TOTEM_OF_UNDYING);
+	CELESTIO("celestio",   		 Material.END_CRYSTAL),
+	MORTIO("mortio",       		 Material.WITHER_SKELETON_SKULL),
+	INFERNO("inferno",     		 Material.BLAZE_ROD),
+	GLACIO("glacio",       		 Material.NAUTILUS_SHELL),
+	GEO("geo",             		 Material.RESIN_CLUMP),
+	AERO("aero",           		 Material.AMETHYST_SHARD),
+	COSMO("cosmo",         		 Material.ECHO_SHARD),
+	HERESIO("heresio",     		 Material.TOTEM_OF_UNDYING);
 
 	private final String materiaCategory;
 	private final Material material;

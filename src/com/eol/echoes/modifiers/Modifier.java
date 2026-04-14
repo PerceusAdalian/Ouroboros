@@ -3,7 +3,7 @@ package com.eol.echoes.modifiers;
 import com.eol.enums.WeaponModifierCondition;
 
 /**
- * WeaponModifier is the sealed polymorphic base for all Echo modifiers.
+ * Modifier is the sealed polymorphic base for all Echo modifiers.
  *
  * There are two concrete subtypes:
  *   - ActiveModifier:  directly mutates a combat stat (ATK, AR, CritRate, CritMod)
@@ -14,7 +14,7 @@ import com.eol.enums.WeaponModifierCondition;
  * Sealed so the compiler enforces exhaustive handling in switch expressions
  * throughout the combat pipeline.
  */
-public sealed interface WeaponModifier permits ActiveModifier, PassiveModifier
+public sealed interface Modifier permits ActiveModifier, PassiveModifier
 {
     /**
      * The condition under which this modifier applies.

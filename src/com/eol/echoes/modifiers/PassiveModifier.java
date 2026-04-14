@@ -20,7 +20,7 @@ import com.eol.enums.WeaponModifierCondition;
  *   ">Atk Rate become 2.0 in The End"       → effectKey="set_attack_rate", magnitude=2.0,  condition=END
  *   ">Increased Movement Speed (Nether)"    → effectKey="movement_speed",  magnitude=0.0,  condition=NETHER
  */
-public record PassiveModifier(WeaponModifierCondition condition, String effectKey, double magnitude) implements WeaponModifier
+public record PassiveModifier(WeaponModifierCondition condition, String effectKey, double magnitude) implements Modifier
 {
     @Override
     public boolean isActive()

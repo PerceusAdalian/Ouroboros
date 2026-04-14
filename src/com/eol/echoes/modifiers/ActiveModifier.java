@@ -19,7 +19,7 @@ import com.eol.enums.WeaponModifierCondition;
  *   "+5 Atk (PVE: The End)"    → condition=END,    combatStat=ATTACK,        magnitude=5.0,  isPercent=false
  *   "+0.5x Crit Mod"           → condition=PASSIVE,combatStat=CRIT_MODIFIER, magnitude=0.5,  isPercent=false
  */
-public record ActiveModifier(WeaponModifierCondition condition, CombatStat combatStat, double magnitude, boolean isPercent) implements WeaponModifier
+public record ActiveModifier(WeaponModifierCondition condition, CombatStat combatStat, double magnitude, boolean isPercent) implements Modifier
 {
     @Override
     public boolean isActive()
@@ -47,26 +47,26 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
     {
         return switch (condition)
         {
-            case PVE       -> "PVE";
-            case PVP       -> "PVP";
-            case PASSIVE   -> "Passive";
-            case UNDEAD    -> "PVE: Undead";
-            case LIVING    -> "PVE: Living";
-            case FLYING    -> "PVE: Flying";
-            case AQUATIC   -> "PVE: Aquatic";
-            case BUGS      -> "PVE: Bugs";
-            case RAID      -> "PVE: Raid";
-            case OVERWORLD -> "Overworld";
-            case DURING_DAY   -> "Overworld: Daytime";
-            case DURING_NIGHT -> "Overworld: Nighttime";
+            case PVE       		-> "PVE";
+            case PVP       		-> "PVP";
+            case PASSIVE  		-> "Passive";
+            case UNDEAD    		-> "PVE: Undead";
+            case LIVING    		-> "PVE: Living";
+            case FLYING    		-> "PVE: Flying";
+            case AQUATIC   		-> "PVE: Aquatic";
+            case BUGS      		-> "PVE: Bugs";
+            case RAID      		-> "PVE: Raid";
+            case OVERWORLD 		-> "Overworld";
+            case DURING_DAY   	-> "Overworld: Daytime";
+            case DURING_NIGHT	-> "Overworld: Nighttime";
             case CLEAR_WEATHER  -> "Overworld: Clear";
             case RAINY_WEATHER  -> "Overworld: Rain";
             case STORMY_WEATHER -> "Overworld: Storm";
-            case NETHER       -> "World: The Nether";
-            case END          -> "World: The End";
-            case COLDBIOMES   -> "Biome: Cold";
-            case HOTBIOMES    -> "Biome: Hot";
-            case GENERICBIOMES -> "Biome";
+            case NETHER       	-> "World: The Nether";
+            case END            -> "World: The End";
+            case COLDBIOMES   	-> "Biome: Cold";
+            case HOTBIOMES    	-> "Biome: Hot";
+            case GENERICBIOMES 	-> "Biome";
         };
     }
 }

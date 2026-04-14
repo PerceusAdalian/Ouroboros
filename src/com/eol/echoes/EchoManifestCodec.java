@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.modifiers.ActiveModifier;
 import com.eol.echoes.modifiers.PassiveModifier;
-import com.eol.echoes.modifiers.WeaponModifier;
+import com.eol.echoes.modifiers.Modifier;
 import com.eol.enums.CombatStat;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.WeaponModifierCondition;
@@ -48,7 +48,7 @@ public class EchoManifestCodec
 {
     private static final Gson GSON = new GsonBuilder().create();
  
-    public static final NamespacedKey MANIFEST_KEY = new NamespacedKey(Ouroboros.instance, "echo:manifest");
+    public static final NamespacedKey MANIFEST_KEY = new NamespacedKey(Ouroboros.instance, "echo_manifest");
  
     // -------------------------------------------------------------------------
     // Write
@@ -81,6 +81,7 @@ public class EchoManifestCodec
     public static EchoManifest read(ItemStack item)
     {
         if (item == null) return null;
+        
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
  
@@ -97,8 +98,10 @@ public class EchoManifestCodec
     public static boolean isEcho(ItemStack item)
     {
         if (item == null) return false;
+        
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return false;
+        
         return meta.getPersistentDataContainer().has(MANIFEST_KEY, PersistentDataType.STRING);
     }
  
@@ -110,45 +113,42 @@ public class EchoManifestCodec
     {
         JsonObject root = new JsonObject();
  
-        root.addProperty("echoId",   manifest.echoId());
-        root.addProperty("rarity",   manifest.rarity().toString());
-        root.addProperty("slotType", manifest.slotType().name());
+        root.addProperty("echoId",           manifest.echoId());
+        root.addProperty("rarity",           manifest.rarity().name());
+        root.addProperty("slotType",         manifest.slotType().name());
+        root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey()); // null-safe — Gson writes JSON null
  
         // Base stats
         JsonObject stats = new JsonObject();
         EchoData data = manifest.baseStats();
-        
         stats.addProperty("attack",        data.getAttack());
         stats.addProperty("attackRating",  data.getAttackRating());
         stats.addProperty("critRate",      data.getCritRate());
         stats.addProperty("critModifier",  data.getCritModifier());
+        root.add("baseStats", stats);
  
-        root.add("baseStats", 			   stats);
-
         // Modifiers
         JsonArray mods = new JsonArray();
-        for (WeaponModifier mod : manifest.modifiers())
+        for (Modifier mod : manifest.modifiers())
         {
             JsonObject m = new JsonObject();
-            if (mod instanceof ActiveModifier activeModifier)
+            if (mod instanceof ActiveModifier active)
             {
                 m.addProperty("type",       "active");
-                m.addProperty("condition",  activeModifier.condition().name());
-                m.addProperty("combatStat", activeModifier.combatStat().name());
-                m.addProperty("magnitude",  activeModifier.magnitude());
-                m.addProperty("isPercent",  activeModifier.isPercent());
+                m.addProperty("condition",  active.condition().name());
+                m.addProperty("combatStat", active.combatStat().name());
+                m.addProperty("magnitude",  active.magnitude());
+                m.addProperty("isPercent",  active.isPercent());
             }
-            else if (mod instanceof PassiveModifier passiveModifier)
+            else if (mod instanceof PassiveModifier passive)
             {
-                m.addProperty("type",       "passive");
-                m.addProperty("condition",  passiveModifier.condition().name());
-                m.addProperty("effectKey",  passiveModifier.effectKey());
-                m.addProperty("magnitude",  passiveModifier.magnitude());
+                m.addProperty("type",      "passive");
+                m.addProperty("condition", passive.condition().name());
+                m.addProperty("effectKey", passive.effectKey());
+                m.addProperty("magnitude", passive.magnitude());
             }
-            
             mods.add(m);
         }
-        
         root.add("modifiers", mods);
  
         return GSON.toJson(root);
@@ -162,9 +162,14 @@ public class EchoManifestCodec
     {
         JsonObject root = GSON.fromJson(json, JsonObject.class);
  
-        String             echoId   = root.get("echoId").getAsString();
-        Rarity             rarity   = Rarity.valueOf(root.get("rarity").getAsString());
-        ElementiumSlotType slot     = ElementiumSlotType.valueOf(root.get("slotType").getAsString());
+        String             echoId = root.get("echoId").getAsString();
+        Rarity             rarity = Rarity.valueOf(root.get("rarity").getAsString());
+        ElementiumSlotType slot   = ElementiumSlotType.valueOf(root.get("slotType").getAsString());
+ 
+        // lockedAbilityKey is nullable — check before calling getAsString()
+        JsonElement lockedEl = root.get("lockedAbilityKey");
+        String lockedAbilityKey = (lockedEl == null || lockedEl.isJsonNull())
+                ? null : lockedEl.getAsString();
  
         JsonObject statsObj = root.getAsJsonObject("baseStats");
         EchoData baseStats = new EchoData(
@@ -173,7 +178,7 @@ public class EchoManifestCodec
                 statsObj.get("critRate").getAsDouble(),
                 statsObj.get("critModifier").getAsDouble());
  
-        List<WeaponModifier> modifiers = new ArrayList<>();
+        List<Modifier> modifiers = new ArrayList<>();
         JsonArray modsArr = root.getAsJsonArray("modifiers");
         for (JsonElement el : modsArr)
         {
@@ -196,6 +201,6 @@ public class EchoManifestCodec
             }
         }
  
-        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot);
+        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot, lockedAbilityKey);
     }
 }

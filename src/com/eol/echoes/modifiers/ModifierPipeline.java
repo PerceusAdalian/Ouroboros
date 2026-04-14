@@ -1,4 +1,4 @@
-package com.eol.echoes;
+package com.eol.echoes.modifiers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,9 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.config.RarityBand;
-import com.eol.echoes.modifiers.ActiveModifier;
-import com.eol.echoes.modifiers.PassiveModifier;
-import com.eol.echoes.modifiers.WeaponModifier;
 import com.eol.enums.CombatStat;
 import com.eol.enums.EchoForm;
 import com.eol.enums.WeaponModifierCondition;
@@ -43,14 +40,14 @@ public final class ModifierPipeline
      * Rolls and returns a list of WeaponModifiers for the given rarity and weapon form.
      * The list size matches the RarityBand's modifierSlots count.
      */
-    public static List<WeaponModifier> roll(Rarity rarity, EchoForm form)
+    public static List<Modifier> roll(Rarity rarity, EchoForm form)
     {
         RarityBand band = EchoConfig.get().getRarityBand(rarity);
-        List<WeaponModifier> result = new ArrayList<>();
+        List<Modifier> result = new ArrayList<>();
 
         for (int i = 0; i < band.modifierSlots(); i++)
         {
-            WeaponModifier modifier = band.rollIsActive()
+            Modifier modifier = band.rollIsActive()
                     ? rollActive(band, form)
                     : rollPassive(band, form);
             result.add(modifier);

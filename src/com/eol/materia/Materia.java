@@ -216,18 +216,19 @@ public class Materia
 	public static boolean isUnrefined(ItemStack stack)
 	{
 		if (stack == null || stack.getType().isAir()) return false;
+		
 		ItemMeta meta = stack.getItemMeta();
 		var pdc = meta.getPersistentDataContainer();
+		
 		if (!pdc.has(materiaStateKey, PersistentDataType.STRING)) return false;
+		
 		return MateriaState.fromString(pdc.get(materiaStateKey, PersistentDataType.STRING)) == MateriaState.UNREFINED;
 	}
     
 	public static Materia refine(MateriaType type, @Nullable MateriaComponent component, Rarity rarity)
 	{
 	    List<Materia> candidates = materia_registry.values().stream()
-	            .filter(m -> m.materiaType == type
-	                    && (component == null || m.materiaComponent == component)
-	                    && m.rarity == rarity)
+	            .filter(m -> m.materiaType == type && (component == null || m.materiaComponent == component) && m.rarity == rarity)
 	            .collect(Collectors.toList());
 
 	    if (candidates.isEmpty()) return null;

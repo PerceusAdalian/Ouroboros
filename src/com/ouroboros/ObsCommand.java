@@ -28,6 +28,7 @@ import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.eol.echoes.EchoForge;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
@@ -465,6 +466,36 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					}
 				}
 			}
+			
+			if (args[1].equals("echo") && args.length == 6)
+			{
+				Materia catalyst = null;
+				Materia base = null;
+				Materia binding = null;
+				Materia element_core = null;
+				
+				if (Materia.get(args[2]) != null) catalyst = Materia.get(args[2]);
+				if (Materia.get(args[3]) != null) base = Materia.get(args[3]);
+				if (Materia.get(args[4]) != null) binding = Materia.get(args[4]);
+				if (Materia.get(args[5]) != null) element_core = Materia.get(args[5]);
+				
+				
+				if (catalyst.getMateriaComponent() != MateriaComponent.CATALYST)
+					PrintUtils.OBSFormatError(p, "Catalyst Invalid: "+catalyst == null ? "null" : catalyst.getInternalName() + ", "+catalyst.getMateriaComponent().getLabel());
+
+				if (base.getMateriaComponent() != MateriaComponent.BASE)
+					PrintUtils.OBSFormatError(p, "Base Invalid: "+base == null ? "null" : base.getInternalName() + ", "+base.getMateriaComponent().getLabel());
+
+				if (binding.getMateriaComponent() != MateriaComponent.BINDING)
+					PrintUtils.OBSFormatError(p, "Binding Invalid: "+ binding == null ? "null" : binding.getInternalName() + ", "+binding.getMateriaComponent().getLabel());
+				
+				if (element_core != null && element_core.getMateriaComponent() != MateriaComponent.ELEMENT_CORE)
+					PrintUtils.OBSFormatError(p, "Base Invalid: "+ element_core == null ? "null" : element_core.getInternalName() + ", "+element_core.getMateriaComponent().getLabel());
+				
+				ItemStack echo = EchoForge.forge(catalyst, base, binding, element_core);
+				p.getInventory().addItem(echo);
+				PrintUtils.OBSFormatDebug(p, "Echo Generated Successfully!", "Echo Generation");
+			}
 		}
 		
 		if (args[0].equals("money")) 
@@ -801,7 +832,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "register" ->
 						isOp ? List.of("spell", "ability") : List.of();
 					case "generate" ->
-						isOp ? List.of("object", "spell", "materia", "wand", "mob") : List.of();
+						isOp ? List.of("object", "spell", "materia", "wand", "mob", "echo") : List.of();
 					case "money" ->
 						isOp ? List.of("add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney") : List.of();
 					// Stats sub-commands: some are OP-only.
@@ -827,6 +858,9 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "wand" -> isOp ? new ArrayList<>(Wand.wand_registry.keySet()) : List.of();
 					case "materia" -> isOp ? List.of("catalyst", "element_core", "component") : List.of();
 					case "mob" -> isOp ? EntityCategories.asList() : List.of();
+					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
+							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					case "set", "reset", "addXp" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
 					case "add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney" ->
@@ -856,6 +890,9 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						.collect(Collectors.toCollection(ArrayList::new));
 						default -> List.of();
 					} : List.of();
+					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.BASE)
+							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					case "set", "addXp" ->
 						isOp ? Arrays.stream(StatType.values()).map(Enum::name).map(String::toUpperCase).collect(Collectors.toList()) : List.of();
 					case "add", "subtract" ->
@@ -884,6 +921,9 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 						default -> List.of();
 					} : List.of();
+					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.BINDING)
+							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					case "mob" -> isOp ? List.of("<custom name>") : List.of();
 					case "addXp" -> isOp ? List.of("<value>") : List.of();
 					case "set" -> isOp ? List.of("true", "false") : List.of();
@@ -896,6 +936,9 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				yield switch(args[1]) 
 				{
 					case "set" -> isOp ? List.of("<value>") : List.of();
+					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.ELEMENT_CORE)
+							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					default -> List.of();
 				};
 			}

@@ -59,15 +59,15 @@ public final class StatResolver
         BindingStatBlock  bindBlock  = config.getBindingStats(binding.getMateriaType());
 
         // --- Roll base stats from material range ---
-        double rolledAttack      = matRange.rollBaseAttack();
-        double rolledCritRate    = matRange.critRateBase();
-        double rolledCritMod     = matRange.rollCritModifier();
+        double rolledAttack   		 = matRange.rollBaseAttack();
+        double rolledCritRate 		 = matRange.critRateBase();
+        double rolledCritMod  		 = matRange.rollCritModifier();
 
         // --- Apply binding deltas ---
-        double finalAttack       = rolledAttack   + bindBlock.attackBonus();
-        double finalAttackRating = bindBlock.attackRating();            // AR comes entirely from binding
-        double finalCritRate     = rolledCritRate + bindBlock.critRateBonus();
-        double finalCritMod      = rolledCritMod;                       // binding doesn't touch crit mod
+        double finalAttack       	 = rolledAttack   + bindBlock.attackBonus();
+        double finalAttackRating 	 = bindBlock.attackRating();            		// AR comes entirely from binding
+        double finalCritRate     	 = rolledCritRate + bindBlock.critRateBonus();
+        double finalCritMod      	 = rolledCritMod;                       		// binding doesn't touch crit mod
 
         // Clamp crit rate to [0.0, 1.0]
         finalCritRate = Math.max(0.0, Math.min(1.0, finalCritRate));
