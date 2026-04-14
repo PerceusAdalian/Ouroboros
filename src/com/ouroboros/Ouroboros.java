@@ -3,6 +3,7 @@ package com.ouroboros;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.echoes.config.EchoConfig;
 import com.eol.materia.Materia;
 import com.eol.materia.MateriaCastHandler;
 import com.eol.materia.components.Bases;
@@ -53,7 +54,9 @@ public class Ouroboros extends JavaPlugin
 		instance = this;
 		debug = false;
 		enabled = true;
-	
+		
+		EchoConfig.load();
+		
 		this.getCommand("obs").setExecutor(new ObsCommand());;
 		
 		PlayerData.initializeDataFolder();

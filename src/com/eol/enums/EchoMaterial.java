@@ -4,6 +4,7 @@ public enum EchoMaterial
 {
 	WOODEN,
 	STONE,
+	COPPER,
 	IRON,
 	GOLDEN,
 	DIAMOND,

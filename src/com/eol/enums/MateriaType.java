@@ -93,6 +93,8 @@ public enum MateriaType
 		return PrintUtils.formatEnumName(getName());
 	}
 	
-	public static final Set<Material> exemptMaterials = Set.of(Material.NETHER_STAR, Material.ECHO_SHARD, Material.END_CRYSTAL,
-			Material.WITHER_SKELETON_SKULL, Material.TOTEM_OF_UNDYING, Material.AMETHYST_SHARD, Material.RESIN_CLUMP, Material.NAUTILUS_SHELL, Material.BLAZE_ROD);
+	public static final Set<Material> exemptMaterials = Set.of(
+			Material.NETHER_STAR, Material.ECHO_SHARD, Material.END_CRYSTAL,
+			Material.WITHER_SKELETON_SKULL, Material.TOTEM_OF_UNDYING, Material.AMETHYST_SHARD, 
+			Material.RESIN_CLUMP, Material.NAUTILUS_SHELL, Material.BLAZE_ROD);
 }

@@ -1,0 +1,152 @@
+# ============================================================
+# Echo System Configuration - INTERNAL COPY
+# ============================================================
+# This file controls all tunable parameters for procedural
+# Echo generation. Changes here take effect on server reload
+# without recompilation.
+# ============================================================
+
+# ------------------------------------------------------------
+# Rarity Bands
+# ------------------------------------------------------------
+# Each rarity tier (1-5) defines:
+#
+#   modifier_slots        - how many modifier slots the Echo rolls
+#   active_modifier_chance- probability [0.0-1.0] that a given slot
+#                           rolls an ActiveModifier vs PassiveModifier
+#   magnitude_floor       - minimum rolled magnitude for any modifier
+#                           (as a decimal: 0.10 = 10%)
+#   magnitude_ceiling     - maximum rolled magnitude for any modifier
+#
+# Rarity 1 = Common, Rarity 5 = Legendary
+# ------------------------------------------------------------
+
+rarity_bands:
+  1:
+    modifier_slots: 1
+    active_modifier_chance: 0.25
+    magnitude_floor: 0.05
+    magnitude_ceiling: 0.15
+
+  2:
+    modifier_slots: 2
+    active_modifier_chance: 0.35
+    magnitude_floor: 0.10
+    magnitude_ceiling: 0.25
+
+  3:
+    modifier_slots: 3
+    active_modifier_chance: 0.50
+    magnitude_floor: 0.15
+    magnitude_ceiling: 0.35
+
+  4:
+    modifier_slots: 4
+    active_modifier_chance: 0.60
+    magnitude_floor: 0.25
+    magnitude_ceiling: 0.50
+
+  5:
+    modifier_slots: 5
+    active_modifier_chance: 0.75
+    magnitude_floor: 0.35
+    magnitude_ceiling: 0.65
+
+  # Rarity 6 - reserved for special/unobtainable catalysts (catalyst_6)
+  6:
+    modifier_slots: 6
+    active_modifier_chance: 0.85
+    magnitude_floor: 0.50
+    magnitude_ceiling: 0.85
+
+  # Rarity 7 - calamity tier, catalyst_7; likely hand-authored EOL territory
+  7:
+    modifier_slots: 7
+    active_modifier_chance: 1.0
+    magnitude_floor: 0.65
+    magnitude_ceiling: 1.0
+
+# ------------------------------------------------------------
+# Material Stats
+# ------------------------------------------------------------
+# Each EchoMaterial tier defines the base stat ranges that
+# StatResolver rolls within when generating EchoData.
+#
+#   base_attack_min/max   - flat attack damage range
+#   crit_rate_base        - starting critical hit chance (decimal)
+#   crit_modifier_ceiling - maximum possible crit multiplier
+#
+# Attack Rating and Durability are determined by the Binding,
+# not the material, so they are not defined here.
+# ------------------------------------------------------------
+	
+material_stats:
+  WOODEN:
+    base_attack_min: 3
+    base_attack_max: 6
+    crit_rate_base: 0.025
+    crit_modifier_ceiling: 1.1 
+
+  STONE:
+    base_attack_min: 5
+    base_attack_max: 9
+    crit_rate_base: 0.05
+    crit_modifier_ceiling: 1.25
+
+  IRON:
+    base_attack_min: 8
+    base_attack_max: 14
+    crit_rate_base: 0.15
+    crit_modifier_ceiling: 1.5
+
+  GOLDEN:
+    base_attack_min: 6
+    base_attack_max: 20
+    crit_rate_base: 0.5
+    crit_modifier_ceiling: 4.0
+
+  DIAMOND:
+    base_attack_min: 20
+    base_attack_max: 35
+    crit_rate_base: 0.15
+    crit_modifier_ceiling: 2.5
+
+  NETHERITE:
+    base_attack_min: 20
+    base_attack_max: 50
+    crit_rate_base: 0.20
+    crit_modifier_ceiling: 3.0
+
+# ------------------------------------------------------------
+# Binding Stats
+# ------------------------------------------------------------
+# Each Binding type applies delta modifiers on top of the
+# material base stats. These affect Attack Rating (speed),
+# Durability, Crit Rate bonus, and minor flat Attack bonuses.
+#
+# attack_rating         - the base attack speed this binding produces
+# durability_multiplier - scalar applied to the material's base durability
+# crit_rate_bonus       - flat addition to material's crit_rate_base
+# attack_bonus          - flat addition to rolled base attack
+# ------------------------------------------------------------
+binding_stats:
+  # MateriaType.STRING - light, fast, crit-favoring
+  STRING:
+    attack_rating: 1.25
+    durability_multiplier: 0.75
+    crit_rate_bonus: 0.05
+    attack_bonus: 0
+
+  # MateriaType.PELT - balanced, slightly durable
+  PELT:
+    attack_rating: 1.0
+    durability_multiplier: 1.25
+    crit_rate_bonus: 0.0
+    attack_bonus: 1
+
+  # MateriaType.LEATHER - heavy grip, trades speed for damage and durability
+  LEATHER:
+    attack_rating: 0.85
+    durability_multiplier: 1.75
+    crit_rate_bonus: -0.03
+    attack_bonus: 4

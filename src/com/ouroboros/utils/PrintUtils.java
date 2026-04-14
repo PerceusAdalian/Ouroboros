@@ -277,7 +277,6 @@ public class PrintUtils
 	
 	public static String formatEnumName(String string) 
 	{
-
 		if (string.contains(".")) 
 		{
 			string = string.substring(string.lastIndexOf(".") + 1);

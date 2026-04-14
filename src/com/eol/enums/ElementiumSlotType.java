@@ -10,8 +10,9 @@ public enum ElementiumSlotType
 	AERO("&lAero&r&f"),
 	CELESTIO("&lCelestio&r&f"),
 	MORTIO("&lMortio&r&f"),
-	COSMO("&lCosmo&r&f");
-
+	COSMO("&lCosmo&r&f"),
+	HERESIO("&lHeresio&r&f");
+	
 	private final String element;	
 	
 	ElementiumSlotType(String element) 
