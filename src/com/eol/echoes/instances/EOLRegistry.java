@@ -104,6 +104,7 @@ public final class EOLRegistry
      * Use this when constructing special catalyst Materia items for EOLs.
      *
      * Example:
+     * 	 
      *   ItemStack catalystItem = luminus.getAsItemStack(MateriaState.CATALYST);
      *   EOLRegistry.markCatalyst(catalystItem, "luminus_broadsword");
      */
