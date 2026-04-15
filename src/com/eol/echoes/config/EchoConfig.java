@@ -11,6 +11,9 @@ import java.util.logging.Level;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.eol.echoes.records.BindingStatBlock;
+import com.eol.echoes.records.MaterialStatRange;
+import com.eol.echoes.records.RarityBand;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.MateriaType;
 import com.ouroboros.Ouroboros;

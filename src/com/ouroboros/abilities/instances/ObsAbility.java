@@ -24,7 +24,7 @@ import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.PrintUtils;
 
-public abstract class AbstractOBSAbility 
+public abstract class ObsAbility 
 {
 	private final File file;
 	private final YamlConfiguration config;
@@ -42,7 +42,7 @@ public abstract class AbstractOBSAbility
 	
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
-	public AbstractOBSAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
+	public ObsAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCOST, 
 			AbilityType aType, ElementType eType, CastConditions condition, AbilityMaterialClass abilityCategory, String...description) 
 	{
 		this.displayName = displayName;
@@ -133,7 +133,7 @@ public abstract class AbstractOBSAbility
 		return config.getInt("ap_cost");
 	}
 	
-	public AbstractOBSAbility getInstance() 
+	public ObsAbility getInstance() 
 	{
 		return this;
 	}
@@ -161,11 +161,11 @@ public abstract class AbstractOBSAbility
 	{
 		return abilityCategory;
 	}
-	public static AbstractOBSAbility fromInternalName(String string)
+	public static ObsAbility fromInternalName(String string)
 	{
 		if (AbilityRegistry.abilityRegistry.containsKey(string))
 		{
-			AbstractOBSAbility ability = AbilityRegistry.abilityRegistry.get(string);
+			ObsAbility ability = AbilityRegistry.abilityRegistry.get(string);
 			return ability;
 		}
 		return null;

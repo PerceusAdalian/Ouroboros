@@ -21,7 +21,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.AbilityHandler;
 import com.ouroboros.abilities.AbilityRegistry;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
@@ -145,7 +145,7 @@ public class PlayerData
 	    		getSpell(spell).setRegistered(false);
 	    	}
 	    	
-	    	for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values())
+	    	for (ObsAbility ability : AbilityRegistry.abilityRegistry.values())
 	    	{
 	    		getAbility(ability).setActive(false).setRegistered(false);
 	    	}
@@ -184,14 +184,14 @@ public class PlayerData
 		else return true;
 	}
 	
-	public AbstractOBSAbility getActiveCombatAbility()
+	public ObsAbility getActiveCombatAbility()
 	{
 		String internalName = config.getString("stats.abilities.activecombatability");
 		if (internalName == null) return null;
-		return AbstractOBSAbility.fromInternalName(internalName);
+		return ObsAbility.fromInternalName(internalName);
 	}
 	
-	public static void activateAbility(Player p, AbstractOBSAbility ability) 
+	public static void activateAbility(Player p, ObsAbility ability) 
 	{
 	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 
@@ -206,7 +206,7 @@ public class PlayerData
 	    PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o" + ability.getDisplayName());
 	}
 
-	public static void deactivateAbility(Player p, AbstractOBSAbility ability) 
+	public static void deactivateAbility(Player p, ObsAbility ability) 
 	{
 	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 
@@ -222,7 +222,7 @@ public class PlayerData
 	}
 
 	
-	public void setActiveCombatAbility(@Nullable AbstractOBSAbility ability) 
+	public void setActiveCombatAbility(@Nullable ObsAbility ability) 
 	{
 	    String path = "stats.abilities.activecombatability";
 
@@ -232,7 +232,7 @@ public class PlayerData
 	    	config.set(path, null);
 	}
 
-	public void addUtilityAbility(AbstractOBSAbility ability) 
+	public void addUtilityAbility(ObsAbility ability) 
 	{
 	    String path = "stats.abilities.activeutilityabilities"; // plural
 	    List<String> utilities = getActiveUtilityAbilities();
@@ -249,7 +249,7 @@ public class PlayerData
 	    return config.getStringList(path);
 	}
 
-	public void removeUtilityAbility(AbstractOBSAbility ability) 
+	public void removeUtilityAbility(ObsAbility ability) 
 	{
 	    String path = "stats.abilities.activeutilityabilities";
 	    List<String> utilities = getActiveUtilityAbilities();
@@ -339,7 +339,7 @@ public class PlayerData
 	
 	public void initializeAbilities() 
 	{
-		for (AbstractOBSAbility a : AbilityRegistry.abilityRegistry.values()) 
+		for (ObsAbility a : AbilityRegistry.abilityRegistry.values()) 
     	{
 			String registered = ".registered";
 			String active = ".active";
@@ -382,7 +382,7 @@ public class PlayerData
 		config.set("points.ability", value);
 	}
 	
-	public AbilityHandler getAbility(AbstractOBSAbility ability) 
+	public AbilityHandler getAbility(ObsAbility ability) 
 	{
 		return new AbilityHandler(ability, config);
 	}
@@ -397,10 +397,10 @@ public class PlayerData
 		return getStat(sType, true);
 	}
 	
-	public static boolean canRegister(UUID uuid, AbstractOBSAbility ability) 
+	public static boolean canRegister(UUID uuid, ObsAbility ability) 
 	{
 		PlayerData data = PlayerData.getPlayer(uuid);
-		AbstractOBSAbility pAbility = ability.getInstance();
+		ObsAbility pAbility = ability.getInstance();
 		
 		boolean statRequirement = data.getStatLevel(pAbility.getStatRequirement()) >= pAbility.getLevelRequirement();
 		boolean notRegistered = (!data.getAbility(pAbility).isRegistered());

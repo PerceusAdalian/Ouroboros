@@ -7,7 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.menus.ObsGui;
@@ -29,7 +29,7 @@ public class AbilityChangePage extends ObsGui
 	{
 		
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
-		AbstractOBSAbility ability = AbilityConfirmationPage.abilityChangeMap.get(player.getUniqueId());
+		ObsAbility ability = AbilityConfirmationPage.abilityChangeMap.get(player.getUniqueId());
 		
 		if (ability.getAbilityType().equals(AbilityType.COMBAT)) 
 		{
@@ -62,7 +62,7 @@ public class AbilityChangePage extends ObsGui
 			{
 				for (int j = 12; j < 15; ++j)
 				{					
-					AbstractOBSAbility abilities = AbstractOBSAbility.fromInternalName(data.getActiveUtilityAbilities().get(i));
+					ObsAbility abilities = ObsAbility.fromInternalName(data.getActiveUtilityAbilities().get(i));
 					
 					GuiButton.button(abilities.toIcon(player).getType())
 					.setName("Replace Ability In Slot 1")

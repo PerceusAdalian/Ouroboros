@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
@@ -32,7 +32,7 @@ import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.MortioEffects;
 
-public class ReapAndSew extends AbstractOBSAbility
+public class ReapAndSew extends ObsAbility
 {
 
     public ReapAndSew() // Check for functionality

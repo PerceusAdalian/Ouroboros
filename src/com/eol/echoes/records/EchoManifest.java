@@ -1,9 +1,9 @@
-package com.eol.echoes;
+package com.eol.echoes.records;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.eol.echoes.modifiers.Modifier;
+import com.eol.echoes.EchoData;
 import com.eol.enums.ElementiumSlotType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
@@ -16,7 +16,8 @@ import com.ouroboros.utils.Nullable;
  * For EOL (Echo of Lumina) items, the manifest is hand-authored rather than rolled,
  * but the same structure and codec are used.
  */
-public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, List<Modifier> modifiers, ElementiumSlotType slotType, @Nullable String lockedAbilityKey)
+public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, List<Modifier> modifiers, ElementiumSlotType slotType,
+		@Nullable String equippedAbilityKey, @Nullable String lockedAbilityKey)
 {
     /**
      * Compact constructor — defensively copies the modifier list so the manifest
@@ -32,7 +33,7 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
      */
     public EchoManifest(String echoId, Rarity rarity, EchoData baseStats, List<Modifier> modifiers, ElementiumSlotType slotType)
     {
-        this(echoId, rarity, baseStats, modifiers, slotType, null);
+        this(echoId, rarity, baseStats, modifiers, slotType, null, null);
     }
  
     /**
@@ -46,6 +47,11 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
     public boolean hasElementiumSlot()
     {
         return slotType != null && slotType != ElementiumSlotType.NO_SLOT;
+    }
+    
+    public boolean hasEquippedAbility()
+    {
+    	return equippedAbilityKey != null && slotType != ElementiumSlotType.NO_SLOT;
     }
  
     /**

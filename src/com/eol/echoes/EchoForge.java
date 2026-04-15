@@ -8,16 +8,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.eol.echoes.config.StatResolver;
+import com.eol.echoes.instances.AbstractEOL;
+import com.eol.echoes.instances.EOLRegistry;
 import com.eol.echoes.modifiers.ModifierPipeline;
-import com.eol.echoes.modifiers.Modifier;
+import com.eol.echoes.records.EchoManifest;
+import com.eol.echoes.records.Modifier;
 import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
-import com.eol.special_instances.AbstractEOL;
-import com.eol.special_instances.EOLRegistry;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.PrintUtils;
 

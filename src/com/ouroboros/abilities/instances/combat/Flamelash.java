@@ -16,7 +16,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
@@ -27,7 +27,7 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class Flamelash extends AbstractOBSAbility
+public class Flamelash extends ObsAbility
 {
 
 	public Flamelash() 

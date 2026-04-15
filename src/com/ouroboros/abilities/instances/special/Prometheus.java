@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
@@ -28,7 +28,7 @@ import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class Prometheus extends AbstractOBSAbility
+public class Prometheus extends ObsAbility
 {
 
 	public Prometheus() 

@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
@@ -24,7 +24,7 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class ImbueFire extends AbstractOBSAbility 
+public class ImbueFire extends ObsAbility 
 {
 
 	public ImbueFire() 

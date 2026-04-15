@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
@@ -27,7 +27,7 @@ import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class Geomorph extends AbstractOBSAbility
+public class Geomorph extends ObsAbility
 {
 
 	public Geomorph() 

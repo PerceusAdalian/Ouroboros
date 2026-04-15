@@ -4,36 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eol.echoes.config.EchoConfig;
-import com.eol.echoes.config.MaterialStatRange;
-import com.eol.echoes.modifiers.ActiveModifier;
-import com.eol.echoes.modifiers.Modifier;
+import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.EchoManifest;
+import com.eol.echoes.records.MaterialStatRange;
+import com.eol.echoes.records.Modifier;
 import com.eol.enums.EchoMaterial;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.utils.PrintUtils;
 
 /**
  * EchoLoreBuilder assembles the lore List<String> for a forged Echo ItemStack
- * from its EchoManifest, matching the display style seen in the mockups.
+ * from its EchoManifest.
+ * 
+ * Example:
+ * Rarity: «◆◆◆◆◆»
  *
- * Lore structure (mirrors the mockup screenshots):
+ * Base Stats:
+ * Attack Damage ........ 3.85
+ * Attack Rating ........ 1.25
+ * Critical Rating ...... 7%
+ * Critical Modifier .... x1.1
  *
- *   Rarity: «◆◆◆◆◆»
- *
- *   Base Stats:
- *   Attack Damage   | <value>
- *   Attack Rating   | <value>
- *   Critical Rating | <value>%
- *   Critical Modifier | x<value>
  *
  *   CRP Modifiers:
  *   <modifier lore lines>
  *
  *   Elementium Slot: <SlotType>     (omitted if NO_SLOT)
- *
+ *	 Skill: | Core Memory:
+ *   Skill/Core Memory <description>
+ *   
  *   Echo ID: Σ_<echoId>
  */
 public final class EchoLoreBuilder
 {
+	// Constructor
     private EchoLoreBuilder() {}
  
     /**
@@ -60,7 +64,7 @@ public final class EchoLoreBuilder
                 + formatStat(stats.getAttack(), false)));
  
         // Attack Rating: binding-sourced. Color relative to [0.5, 2.0] as a universal AR range.
-        lore.add(statLine("Attack Rating",
+        lore.add(statLine("Attack Rate",
                 rollQualityColor(stats.getAttackRating(), 0.5, 2.0)
                 + formatStat(stats.getAttackRating(), false)));
  
@@ -95,11 +99,19 @@ public final class EchoLoreBuilder
         // --- Locked Ability (EOL only) ---
         if (manifest.hasLockedAbility())
         {
-            AbstractOBSAbility ability = AbstractOBSAbility.fromInternalName(manifest.lockedAbilityKey());
+            ObsAbility ability = ObsAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey(); // fallback to key if not registered yet
             lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + abilityName + " &r&7(Locked)"));
             for (String line : ability.getDescription())
             	lore.add(line);
+        }
+        else
+        {
+        	ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
+        	String abilityName = ability != null ? ability.getDisplayName() : manifest.equippedAbilityKey();
+        	lore.add(PrintUtils.ColorParser("&r&fSkill: "+ PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + abilityName));
+        	for (String line : ability.getDescription())
+        		lore.add(line);
         }
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
@@ -144,7 +156,7 @@ public final class EchoLoreBuilder
  
         if (manifest.hasLockedAbility())
         {
-            AbstractOBSAbility ability = AbstractOBSAbility.fromInternalName(manifest.lockedAbilityKey());
+            ObsAbility ability = ObsAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
             lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + abilityName + " &r&7(Locked)"));
             for (String line : ability.getDescription())
@@ -159,8 +171,7 @@ public final class EchoLoreBuilder
     }
  
     /**
-     * Returns a Minecraft color code string based on where a rolled value sits
-     * within its possible range for that material tier:
+     * Returns a color based on where a rolled value sits within its possible range for that material tier:
      *
      *   Top 10%    → &b Blue   (Highest)
      *   60–90%     → &a Green  (High)
@@ -186,14 +197,24 @@ public final class EchoLoreBuilder
     // -------------------------------------------------------------------------
  
     /**
-     * Formats a stat line with pipe-aligned label/value, matching the mockup style:
-     * "Attack Damage   | 15"
+     * Pads the stat label to a proportional dot/space leader that still allows for eye-tracking along
+     * the horizontal length of the full stat label.
+     * 
+     * Example:
+     * Attack Damage ........ 3.85
+	 * Attack Rating ........ 1.25
+	 * Critical Rating ...... 7%
+	 * Critical Modifier .... x1.1
+     *
+     * This hopefully provides a more readable solution..
      */
     private static String statLine(String label, String value)
     {
-        // Pad label to 18 chars for alignment
-        String padded = String.format("%-18s", label);
-        return PrintUtils.ColorParser("&r&f" + padded + "| &6" + value);
+        
+    	int leaderLength = Math.max(1, 22 - label.length());
+        String leader = " &8" + ".".repeat(leaderLength) + " ";
+
+        return PrintUtils.ColorParser("&r&7" + label + leader + "&6" + value);
     }
  
     /**

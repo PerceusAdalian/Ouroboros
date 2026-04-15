@@ -1,4 +1,4 @@
-package com.eol.special_instances;
+package com.eol.echoes.instances;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoFormResolver;
 import com.eol.echoes.EchoLoreBuilder;
-import com.eol.echoes.EchoManifest;
 import com.eol.echoes.EchoManifestCodec;
 import com.eol.echoes.MateriaTypeResolver;
 import com.eol.echoes.config.StatResolver;
-import com.eol.echoes.modifiers.Modifier;
+import com.eol.echoes.records.EOLRecipe;
+import com.eol.echoes.records.EchoManifest;
+import com.eol.echoes.records.Modifier;
 import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
@@ -100,6 +101,7 @@ public abstract class AbstractEOL
                 stats,
                 modifiers,
                 slotType,
+                null, // EOLs will never have an "equipped ability", this is just to distinguish non-EOLs.
                 lockedAbilityKey);
 
         // Build the ItemStack

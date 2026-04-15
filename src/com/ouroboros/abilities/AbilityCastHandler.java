@@ -12,7 +12,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.utils.AbilityObjectCategory;
@@ -35,7 +35,7 @@ public class AbilityCastHandler implements Listener
         if (e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
         if (held == null || held.getType() == Material.AIR) return;
         
-        for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
+        for (ObsAbility ability : AbilityRegistry.abilityRegistry.values()) 
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive()) 
             {
@@ -53,7 +53,7 @@ public class AbilityCastHandler implements Listener
     {
         if (!(e.getEntity() instanceof Player p)) return;
 
-        for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
+        for (ObsAbility ability : AbilityRegistry.abilityRegistry.values()) 
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive())
             	ability.cast(e);
@@ -65,7 +65,7 @@ public class AbilityCastHandler implements Listener
     {
         if (!(e.getEntity() instanceof Player p)) return;
 
-        for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values())
+        for (ObsAbility ability : AbilityRegistry.abilityRegistry.values())
         {
             if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isActive()) 
             	ability.cast(e);

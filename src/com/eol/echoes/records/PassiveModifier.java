@@ -1,4 +1,4 @@
-package com.eol.echoes.modifiers;
+package com.eol.echoes.records;
 
 import com.eol.enums.WeaponModifierCondition;
 
@@ -15,10 +15,10 @@ import com.eol.enums.WeaponModifierCondition;
  * with no scalar applied (the effect handler decides its own defaults).
  *
  * Examples from the mockups:
- *   ">Arrows Apply Expose"                  → effectKey="apply_expose",    magnitude=0.0
- *   ">35% Chance to Ignore Arrow Consumption"→ effectKey="ignore_arrow",   magnitude=0.35
- *   ">Atk Rate become 2.0 in The End"       → effectKey="set_attack_rate", magnitude=2.0,  condition=END
- *   ">Increased Movement Speed (Nether)"    → effectKey="movement_speed",  magnitude=0.0,  condition=NETHER
+ *   ">Arrows Apply Expose"                    -> effectKey="apply_expose",    magnitude=0.0
+ *   ">35% Chance to Ignore Arrow Consumption" -> effectKey="ignore_arrow",   magnitude=0.35
+ *   ">Atk Rate become 2.0 in The End"         -> effectKey="set_attack_rate", magnitude=2.0,  condition=END
+ *   ">Increased Movement Speed (Nether)"      -> effectKey="movement_speed",  magnitude=0.0,  condition=NETHER
  */
 public record PassiveModifier(WeaponModifierCondition condition, String effectKey, double magnitude) implements Modifier
 {
@@ -66,26 +66,26 @@ public record PassiveModifier(WeaponModifierCondition condition, String effectKe
     {
         return switch (condition)
         {
-            case PVE       -> "PVE";
-            case PVP       -> "PVP";
-            case PASSIVE   -> "Passive";
-            case UNDEAD    -> "PVE: Undead";
-            case LIVING    -> "PVE: Living";
-            case FLYING    -> "PVE: Flying";
-            case AQUATIC   -> "PVE: Aquatic";
-            case BUGS      -> "PVE: Bugs";
-            case RAID      -> "PVE: Raid";
-            case OVERWORLD -> "Overworld";
-            case DURING_DAY   -> "Overworld: Daytime";
-            case DURING_NIGHT -> "Overworld: Nighttime";
+            case PVE       		-> "PVE";
+            case PVP       		-> "PVP";
+            case PASSIVE   		-> "Passive";
+            case UNDEAD    		-> "PVE: Undead";
+            case LIVING    		-> "PVE: Living";
+            case FLYING    		-> "PVE: Flying";
+            case AQUATIC   		-> "PVE: Aquatic";
+            case BUGS      		-> "PVE: Bugs";
+            case RAID      		-> "PVE: Raid";
+            case OVERWORLD 		-> "Overworld";
+            case DURING_DAY   	-> "Overworld: Daytime";
+            case DURING_NIGHT 	-> "Overworld: Nighttime";
             case CLEAR_WEATHER  -> "Overworld: Clear";
             case RAINY_WEATHER  -> "Overworld: Rain";
             case STORMY_WEATHER -> "Overworld: Storm";
-            case NETHER       -> "World: The Nether";
-            case END          -> "World: The End";
-            case COLDBIOMES   -> "Biome: Cold";
-            case HOTBIOMES    -> "Biome: Hot";
-            case GENERICBIOMES -> "Biome";
+            case NETHER       	-> "World: The Nether";
+            case END          	-> "World: The End";
+            case COLDBIOMES   	-> "Biome: Cold";
+            case HOTBIOMES    	-> "Biome: Hot";
+            case GENERICBIOMES 	-> "Biome";
         };
     }
 }

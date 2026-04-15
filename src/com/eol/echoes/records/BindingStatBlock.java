@@ -1,4 +1,4 @@
-package com.eol.echoes.config;
+package com.eol.echoes.records;
 
 /**
  * BindingStatBlock is an immutable snapshot of one Binding type's stat deltas,

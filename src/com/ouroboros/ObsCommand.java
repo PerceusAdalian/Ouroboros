@@ -38,7 +38,7 @@ import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.lol.wand.Wand;
 import com.ouroboros.abilities.AbilityRegistry;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.StatType;
@@ -260,7 +260,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("ability") && AbilityRegistry.abilityRegistry.containsKey(args[2]) && args.length == 5)
 			{
-				AbstractOBSAbility ability = AbilityRegistry.abilityRegistry.get(args[2]);
+				ObsAbility ability = AbilityRegistry.abilityRegistry.get(args[2]);
 				Player target = Bukkit.getPlayer(args[3]);
 				if (target == null) return false;
 				boolean toggle = Boolean.parseBoolean(args[4]);
@@ -298,7 +298,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			Player target = Bukkit.getPlayer(args[1]);
 			if (target == null) return false;
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
-			for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values())
+			for (ObsAbility ability : AbilityRegistry.abilityRegistry.values())
 			{
 				data.getAbility(ability).setRegistered(true);
 			}

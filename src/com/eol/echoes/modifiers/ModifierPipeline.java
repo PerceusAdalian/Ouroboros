@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.eol.echoes.config.EchoConfig;
-import com.eol.echoes.config.RarityBand;
+import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.Modifier;
+import com.eol.echoes.records.PassiveModifier;
+import com.eol.echoes.records.RarityBand;
 import com.eol.enums.CombatStat;
 import com.eol.enums.EchoForm;
 import com.eol.enums.WeaponModifierCondition;
@@ -66,19 +69,14 @@ public final class ModifierPipeline
         double magnitude  = band.rollMagnitude();
         boolean isPercent = rollIsPercent(stat);
         WeaponModifierCondition condition = rollCondition(true);
-        
-
-        // Flat attack magnitudes need to be scaled up from the [0.0-1.0] band range
-        // to a meaningful flat value. We scale by a factor relative to the material tier
-        // ceiling. Since we don't have material context here, we use a flat scalar of 20
-        // (roughly half of a mid-tier Netherite weapon's attack floor) as a reasonable
-        // ceiling for rolled flat bonuses. This keeps them impactful but not overwhelming.
-        if (!isPercent && stat == CombatStat.ATTACK)
-            magnitude = Math.round(magnitude * 20);
+     
+        // If a bonus should be a whole number, we round accordingly..
+        if (!isPercent && stat == CombatStat.ATTACK) magnitude = Math.round(magnitude * 2); 
+        else magnitude = Math.round(magnitude * 100.0) / 100.0;  // Otherwise, all others: clamp to 2 decimal places
 
         return new ActiveModifier(condition, stat, magnitude, isPercent);
     }
-
+    
     /**
      * Rolls which CombatStat this active modifier targets.
      * EchoForm context could be used to bias certain stats (e.g. bows prefer CritRate)
@@ -126,8 +124,11 @@ public final class ModifierPipeline
         String effectKey = rollEffectKey(form);
         double magnitude = rollPassiveMagnitude(effectKey, band);
         WeaponModifierCondition condition = rollCondition(false);
-
-        return new PassiveModifier(condition, effectKey, magnitude);
+        
+        // Passives that handle flat bonuses will always clamp to 2 decimal places.
+        double roundedMagnitude = Math.round(magnitude * 100.0) / 100.0; 
+        
+        return new PassiveModifier(condition, effectKey, roundedMagnitude);
     }
 
     /**
@@ -239,7 +240,6 @@ public final class ModifierPipeline
 
     /** Passive effects for tool forms (HOE, SHOVEL, PICKAXE). */
     private static final List<String> TOOL_PASSIVES = List.of(
-        // Tools share universal passives only for now.
-        // Extend here when tool-specific passives are designed.
+        // Future codes will be implemented, for now, tools share universal passives.
     );
 }

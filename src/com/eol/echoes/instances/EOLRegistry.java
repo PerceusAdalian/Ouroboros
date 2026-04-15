@@ -1,4 +1,4 @@
-package com.eol.special_instances;
+package com.eol.echoes.instances;
 
 import java.util.HashMap;
 import java.util.Map;

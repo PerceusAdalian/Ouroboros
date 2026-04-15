@@ -2,6 +2,8 @@ package com.eol.echoes.config;
 
 import com.eol.echoes.EchoData;
 import com.eol.echoes.MateriaTypeResolver;
+import com.eol.echoes.records.BindingStatBlock;
+import com.eol.echoes.records.MaterialStatRange;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.MateriaComponent;
 import com.eol.materia.Materia;

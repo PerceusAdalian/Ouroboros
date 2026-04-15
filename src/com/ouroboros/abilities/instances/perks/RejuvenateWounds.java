@@ -19,7 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.ElementType;
@@ -29,7 +29,7 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class RejuvenateWounds extends AbstractOBSAbility
+public class RejuvenateWounds extends ObsAbility
 {
 
 	public RejuvenateWounds() 

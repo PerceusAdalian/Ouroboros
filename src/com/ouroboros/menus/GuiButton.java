@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.lol.spells.instances.Spell;
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.instances.abilities.AbilityConfirmationPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
@@ -74,10 +74,10 @@ public class GuiButton
     }
     
 
-	public static Map<Player, AbstractOBSAbility> abilityConfirmMap = new HashMap<>();
+	public static Map<Player, ObsAbility> abilityConfirmMap = new HashMap<>();
 	public static Map<Player, Boolean> confirmRegister = new HashMap<>();
 	
-    public static void placeAbilityButton(Player player, AbstractOBSAbility ability, int slot, ObsGui gui) 
+    public static void placeAbilityButton(Player player, ObsAbility ability, int slot, ObsGui gui) 
 	{
 	    ItemStack stack = ability.toIcon(player);
 

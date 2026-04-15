@@ -1,4 +1,4 @@
-package com.eol.echoes.modifiers;
+package com.eol.echoes.records;
 
 import com.eol.enums.WeaponModifierCondition;
 

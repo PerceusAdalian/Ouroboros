@@ -11,7 +11,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.enums.AbilityMaterialClass;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
@@ -23,7 +23,7 @@ import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class GeminiSlash extends AbstractOBSAbility
+public class GeminiSlash extends ObsAbility
 {
 
 	public GeminiSlash() 

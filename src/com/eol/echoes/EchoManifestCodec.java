@@ -9,9 +9,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.eol.echoes.modifiers.ActiveModifier;
-import com.eol.echoes.modifiers.PassiveModifier;
-import com.eol.echoes.modifiers.Modifier;
+import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.EchoManifest;
+import com.eol.echoes.records.Modifier;
+import com.eol.echoes.records.PassiveModifier;
 import com.eol.enums.CombatStat;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.WeaponModifierCondition;
@@ -117,7 +118,8 @@ public class EchoManifestCodec
         root.addProperty("rarity",           manifest.rarity().name());
         root.addProperty("slotType",         manifest.slotType().name());
         root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey()); // null-safe — Gson writes JSON null
- 
+        root.addProperty("equippedAbility", manifest.equippedAbilityKey());
+        
         // Base stats
         JsonObject stats = new JsonObject();
         EchoData data = manifest.baseStats();
@@ -150,7 +152,7 @@ public class EchoManifestCodec
             mods.add(m);
         }
         root.add("modifiers", mods);
- 
+
         return GSON.toJson(root);
     }
  
@@ -171,6 +173,15 @@ public class EchoManifestCodec
         String lockedAbilityKey = (lockedEl == null || lockedEl.isJsonNull())
                 ? null : lockedEl.getAsString();
  
+        /**
+         *  If the object that's being deserialized isn't an EOL echo, 
+         *  We'll want to attempt to get an equipped ability, and if applicable, return that internal name to register.
+         */
+        
+        JsonElement equippedAbility = root.get("equippedAbility");
+        String abilityKey = (equippedAbility == null || equippedAbility.isJsonNull())
+        		? null : equippedAbility.getAsString();
+        
         JsonObject statsObj = root.getAsJsonObject("baseStats");
         EchoData baseStats = new EchoData(
                 statsObj.get("attack").getAsDouble(),
@@ -201,6 +212,6 @@ public class EchoManifestCodec
             }
         }
  
-        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot, lockedAbilityKey);
+        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot, abilityKey, lockedAbilityKey);
     }
 }

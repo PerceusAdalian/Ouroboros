@@ -2,14 +2,14 @@ package com.ouroboros.abilities;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.ouroboros.abilities.instances.AbstractOBSAbility;
+import com.ouroboros.abilities.instances.ObsAbility;
 
 public class AbilityHandler 
 {
-    private final AbstractOBSAbility ability;
+    private final ObsAbility ability;
     private final YamlConfiguration config;
    
-    public AbilityHandler(AbstractOBSAbility ability, YamlConfiguration config) 
+    public AbilityHandler(ObsAbility ability, YamlConfiguration config) 
     {
         this.ability = ability;
         this.config = config;
@@ -49,7 +49,7 @@ public class AbilityHandler
 		return this;
     }
     
-    public AbstractOBSAbility getInstance() 
+    public ObsAbility getInstance() 
     {
         return ability;
     }

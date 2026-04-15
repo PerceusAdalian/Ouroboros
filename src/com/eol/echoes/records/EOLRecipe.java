@@ -1,4 +1,4 @@
-package com.eol.special_instances;
+package com.eol.echoes.records;
 
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;

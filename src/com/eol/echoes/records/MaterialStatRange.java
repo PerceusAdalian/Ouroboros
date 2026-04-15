@@ -1,4 +1,4 @@
-package com.eol.echoes.config;
+package com.eol.echoes.records;
 
 /**
  * MaterialStatRange is an immutable snapshot of one EchoMaterial tier's

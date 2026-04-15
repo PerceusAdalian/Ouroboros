@@ -1,4 +1,4 @@
-package com.eol.echoes.config;
+package com.eol.echoes.records;
 
 /**
  * RarityBand is an immutable snapshot of one rarity tier's generation parameters,
