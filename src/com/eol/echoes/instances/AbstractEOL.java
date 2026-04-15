@@ -93,6 +93,7 @@ public abstract class AbstractEOL
         if (stats == null) return null;
 
         Rarity rarity = catalyst.getRarity();
+        EchoMaterial echoMaterial = MateriaTypeResolver.toEchoMaterial(base.getMateriaType());
 
         // Build the manifest from authored data + rolled stats
         EchoManifest manifest = new EchoManifest(
@@ -102,10 +103,11 @@ public abstract class AbstractEOL
                 modifiers,
                 slotType,
                 null, // EOLs will never have an "equipped ability", this is just to distinguish non-EOLs.
-                lockedAbilityKey);
+                lockedAbilityKey, 
+                form,
+                echoMaterial);
 
         // Build the ItemStack
-        EchoMaterial echoMaterial = MateriaTypeResolver.toEchoMaterial(base.getMateriaType());
         Material material = EchoFormResolver.toBukkitMaterial(form, echoMaterial);
         if (material == null) return null;
 

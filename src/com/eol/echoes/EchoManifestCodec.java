@@ -14,6 +14,8 @@ import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
 import com.eol.enums.CombatStat;
+import com.eol.enums.EchoForm;
+import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.WeaponModifierCondition;
 import com.google.gson.Gson;
@@ -118,8 +120,9 @@ public class EchoManifestCodec
         root.addProperty("rarity",           manifest.rarity().name());
         root.addProperty("slotType",         manifest.slotType().name());
         root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey()); // null-safe — Gson writes JSON null
-        root.addProperty("equippedAbility", manifest.equippedAbilityKey());
-        
+        root.addProperty("equippedAbility",  manifest.equippedAbilityKey());
+        root.addProperty("echoForm",     	 manifest.echoForm()     != null ? manifest.echoForm().name()     : null);
+        root.addProperty("echoMaterial", 	 manifest.echoMaterial() != null ? manifest.echoMaterial().name() : null);
         // Base stats
         JsonObject stats = new JsonObject();
         EchoData data = manifest.baseStats();
@@ -164,10 +167,18 @@ public class EchoManifestCodec
     {
         JsonObject root = GSON.fromJson(json, JsonObject.class);
  
-        String             echoId = root.get("echoId").getAsString();
-        Rarity             rarity = Rarity.valueOf(root.get("rarity").getAsString());
-        ElementiumSlotType slot   = ElementiumSlotType.valueOf(root.get("slotType").getAsString());
- 
+        String             echoId   	= root.get("echoId").getAsString();
+        Rarity             rarity   	= Rarity.valueOf(root.get("rarity").getAsString());
+        ElementiumSlotType slot     	= ElementiumSlotType.valueOf(root.get("slotType").getAsString());
+        
+        JsonElement echoFormEl = root.get("echoForm");
+        EchoForm echoForm = (echoFormEl == null || echoFormEl.isJsonNull())
+                ? null : EchoForm.valueOf(echoFormEl.getAsString());
+
+        JsonElement echoMaterialEl = root.get("echoMaterial");
+        EchoMaterial echoMaterial = (echoMaterialEl == null || echoMaterialEl.isJsonNull())
+                ? null : EchoMaterial.valueOf(echoMaterialEl.getAsString());
+        
         // lockedAbilityKey is nullable — check before calling getAsString()
         JsonElement lockedEl = root.get("lockedAbilityKey");
         String lockedAbilityKey = (lockedEl == null || lockedEl.isJsonNull())
@@ -212,6 +223,6 @@ public class EchoManifestCodec
             }
         }
  
-        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot, abilityKey, lockedAbilityKey);
+        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot, abilityKey, lockedAbilityKey, echoForm, echoMaterial);
     }
 }

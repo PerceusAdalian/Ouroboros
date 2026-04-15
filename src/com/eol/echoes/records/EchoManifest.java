@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import com.eol.echoes.EchoData;
+import com.eol.enums.EchoForm;
+import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
@@ -17,7 +19,8 @@ import com.ouroboros.utils.Nullable;
  * but the same structure and codec are used.
  */
 public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, List<Modifier> modifiers, ElementiumSlotType slotType,
-		@Nullable String equippedAbilityKey, @Nullable String lockedAbilityKey)
+		@Nullable String equippedAbilityKey, @Nullable String lockedAbilityKey,
+		@Nullable EchoForm echoForm, @Nullable EchoMaterial echoMaterial)
 {
     /**
      * Compact constructor — defensively copies the modifier list so the manifest
@@ -31,11 +34,11 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
     /**
      * Convenience constructor for procedural Echoes (no locked ability).
      */
-    public EchoManifest(String echoId, Rarity rarity, EchoData baseStats, List<Modifier> modifiers, ElementiumSlotType slotType)
+    public EchoManifest(String echoId, Rarity rarity, EchoData baseStats, List<Modifier> modifiers, ElementiumSlotType slotType, EchoForm echoForm, EchoMaterial echoMaterial)
     {
-        this(echoId, rarity, baseStats, modifiers, slotType, null, null);
+        this(echoId, rarity, baseStats, modifiers, slotType, null, null, echoForm, echoMaterial);
     }
- 
+    
     /**
      * Returns true if this Echo has a permanently locked ability (EOL only).
      */
@@ -51,7 +54,7 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
     
     public boolean hasEquippedAbility()
     {
-    	return equippedAbilityKey != null && slotType != ElementiumSlotType.NO_SLOT;
+    	return equippedAbilityKey != null && !equippedAbilityKey.isBlank();
     }
  
     /**

@@ -1,4 +1,4 @@
-package com.eol.echoes.modifiers;
+package com.eol.echoes;
 
 import java.util.ArrayList;
 import java.util.Arrays;

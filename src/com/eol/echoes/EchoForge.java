@@ -10,7 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.eol.echoes.config.StatResolver;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.instances.EOLRegistry;
-import com.eol.echoes.modifiers.ModifierPipeline;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.enums.EchoForm;
@@ -121,7 +120,7 @@ public final class EchoForge
  
         // --- Build manifest ---
         String echoId = generateEchoId(base, binding, rarity);
-        EchoManifest manifest = new EchoManifest(echoId, rarity, stats, modifiers, slotType);
+        EchoManifest manifest = new EchoManifest(echoId, rarity, stats, modifiers, slotType, form, echoMaterial);
  
         // --- Build ItemStack ---
         return buildWeaponItem(manifest, form, echoMaterial, base.getRarity());
@@ -143,8 +142,7 @@ public final class EchoForge
     // ItemStack construction
     // -------------------------------------------------------------------------
  
-    private static ItemStack buildWeaponItem(EchoManifest manifest, EchoForm form,
-                                              EchoMaterial echoMaterial, Rarity baseRarity)
+    private static ItemStack buildWeaponItem(EchoManifest manifest, EchoForm form, EchoMaterial echoMaterial, Rarity baseRarity)
     {
         // Resolve the Bukkit Material from EchoForm + EchoMaterial
         Material material = EchoFormResolver.toBukkitMaterial(form, echoMaterial);
@@ -176,6 +174,17 @@ public final class EchoForge
     // Helpers
     // -------------------------------------------------------------------------
  
+    /**
+     * Rebuilds the ItemStack for an existing manifest — used when the manifest
+     * has been mutated (e.g. ability equipped) and the item needs to reflect the change.
+     * Returns null if the manifest is missing form/material data (e.g. EOL echoes).
+     */
+    static ItemStack rebuild(EchoManifest manifest)
+    {
+        if (manifest.echoForm() == null || manifest.echoMaterial() == null) return null;
+        return buildWeaponItem(manifest, manifest.echoForm(), manifest.echoMaterial(), manifest.rarity());
+    }
+    
     /**
      * Rolls an EchoForm appropriate for the material tier.
      * All material tiers can produce any form — form is rolled uniformly.

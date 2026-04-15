@@ -1,9 +1,11 @@
 package com.eol.materia;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -90,10 +92,21 @@ public class Materia
 		return shouldDrop; 
 	}
 
+	private static final UUID MATERIA_NAMESPACE = UUID.fromString("a3f1c2d4-beef-4321-abcd-000000000001");
+
+	/**
+	 * For echoes that require seeded interactions, keeping consistent internal names persistent across restarts, etc
+	 * is the better approach than previous hash methods. Overall, this provides further stability so long as Materia's internal
+	 * names do not change, otherwise, it's future proof.
+	 * @return ID of Internal Name
+	 */
 	public String getInternalNameAsID()
 	{
-		int hash = internalName.hashCode() & 0xFFFF;
-		return Integer.toHexString(hash).toUpperCase();
+	    // UUID v3: deterministic MD5 hash of (namespace + name)
+	    // Same internalName always produces the same UUID, across all JVMs and restarts
+	    UUID id = UUID.nameUUIDFromBytes((MATERIA_NAMESPACE + internalName).getBytes(StandardCharsets.UTF_8));
+	    
+	    return id.toString().replace("-", "").substring(0, 5).toUpperCase(); // e.g. "A3F1C"
 	}
 
 	public List<String> getLore()
