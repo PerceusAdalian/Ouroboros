@@ -113,7 +113,8 @@ public class SpellCastHandler implements Listener
             if (wand.getNextSpell() == null) return;
             wand.rotateSpells();
             p.getInventory().setItemInMainHand(wand.getAsItemStack());
-            PrintUtils.PrintToActionBar(p, "&b&lEquipped Spell&r&f: " + wand.getSpell(wand.getSpellIndex()).getName());
+            Spell nextSpell = wand.getSpell(wand.getSpellIndex());
+            PrintUtils.PrintToActionBar(p, "&b&lEquipped Spell&r&f: " + PrintUtils.getElementTypeColor(nextSpell.getElementType()) + nextSpell.getName());
             EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_NAUTILUS, SoundCategory.AMBIENT);
             return;
         }

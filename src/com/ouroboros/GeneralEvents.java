@@ -34,6 +34,7 @@ import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.GeoEffects;
 import com.ouroboros.utils.entityeffects.HeresioEffects;
 import com.ouroboros.utils.entityeffects.MortioEffects;
 import com.ouroboros.utils.entityeffects.helpers.WildcardData;
@@ -138,8 +139,16 @@ public class GeneralEvents implements Listener
         	}
         	
         	@EventHandler
-        	public void onFallDamage(EntityDamageEvent e)
+        	public void entityDamage(EntityDamageEvent e)
         	{
+        		if (e.getEntity() instanceof Player p)
+        		{
+        			if (GeoEffects.guarded_registry.containsKey(p.getUniqueId()))
+					{
+        				e.setDamage(e.getFinalDamage()*0.5);
+        				GeoEffects.subGuarded(p);
+					}
+        		}
         		if (e.getCause().equals(DamageCause.FALL) && e.getEntity() instanceof Player p)
         		{
         			double initialFallDamage = e.getFinalDamage();
@@ -158,6 +167,7 @@ public class GeneralEvents implements Listener
         						+"\nPlayer was Night-Shifted: "+MortioEffects.nightShifted.containsKey(p.getUniqueId()) + " | Mitigated "+mitigatedFallDamage+" damage.");
         			}
         		}
+        		
         	}
         	
         	@EventHandler

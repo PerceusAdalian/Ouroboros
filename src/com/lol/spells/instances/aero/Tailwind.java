@@ -22,6 +22,7 @@ import org.bukkit.util.Vector;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
+import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.OBSParticles;
@@ -40,7 +41,8 @@ public class Tailwind extends Spell
 				"&eSecondary&f "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&dTailwind&f: &d&oBoost&r&f --",
 				"&r&fProvides a temporary &b&oSpeed Boost&r&7 (20s)","",
-				"&r&e&lEchoic Resonance&r&f: &e&oPrimary Cast&r&f negates the next instance of &d&oFall Damage&r&f.");
+				"&r&e&lEchoic Resonance&r&f: &e&oPrimary Cast&r&f negates the next",
+				"instance of &d&oFall Damage&r&f for &b&o10 seconds&r&f.");
 	}
 
 	private static Set<UUID> tailwindRegistry = new HashSet<>();
@@ -62,7 +64,12 @@ public class Tailwind extends Spell
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
             Vector boost = p.getEyeLocation().getDirection().normalize().multiply(3.5);
 			p.setVelocity(p.getVelocity().add(boost));
-			if (!tailwindRegistry.contains(p.getUniqueId())) tailwindRegistry.add(p.getUniqueId());
+			if (!tailwindRegistry.contains(p.getUniqueId())) 
+			{
+				tailwindRegistry.add(p.getUniqueId());
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->tailwindRegistry.remove(p.getUniqueId()), 200);
+			}
+			
 			return 5;
 		}
 		return -1;

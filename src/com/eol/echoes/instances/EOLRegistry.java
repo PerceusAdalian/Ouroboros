@@ -22,8 +22,8 @@ import com.ouroboros.Ouroboros;
  *   1. Is the catalyst marked with echo:eol_target?
  *   2. Does the target EOL exist in the registry?
  *   3. Does the provided Materia match the EOL's recipe?
- *   → All three true: EOL forge path
- *   → Any false:     procedural forge path
+ *   - All three true: EOL forge path
+ *   - Any false:     procedural forge path
  *
  * Registration happens at plugin enable via EOLRegistry.register().
  */

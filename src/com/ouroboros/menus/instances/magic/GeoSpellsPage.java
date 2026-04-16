@@ -8,10 +8,11 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.geo.Expelliarmus;
+import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.SandBlast;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GeoSpellsPage extends ObsGui
@@ -26,10 +27,12 @@ public class GeoSpellsPage extends ObsGui
 	{
 		// 1
 		GuiButton.placeSpellButton(player, new SandBlast(), 10, this);
+		GuiButton.placeSpellButton(player, new Geomorph(), 11, this);
+		
 		// 2
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Expelliarmus(), 11, this);
+		GuiButton.placeSpellButton(player, new Expelliarmus(), 12, this);
 		
 		// 4
 		

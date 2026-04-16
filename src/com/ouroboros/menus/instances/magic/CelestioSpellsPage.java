@@ -52,9 +52,9 @@ public class CelestioSpellsPage extends ObsGui
 		
 		// 5
 		GuiButton.placeSpellButton(player, new Ascension(), 21, this);
+		GuiButton.placeSpellButton(player, new Pneuma(), 22, this);
 		
 		// 6
-		GuiButton.placeSpellButton(player, new Pneuma(), 22, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

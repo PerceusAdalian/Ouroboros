@@ -1,8 +1,10 @@
 package com.ouroboros.utils;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -29,6 +31,7 @@ import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 
 import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class PrintUtils
@@ -81,13 +84,79 @@ public class PrintUtils
 		for (String line : msg) 
 			player.getPlayer().sendMessage(ColorParser(line));
 	}
+	
 	public static String setCost(int cost) 
 	{
 		return ColorParser("&r&fCost: " + cost + "&e₪&f");
 	}
-	public static void PrintToActionBar(Player player, String msg) 
+	
+	public static void PrintToActionBarLegacy(Player player, String msg) 
 	{
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ColorParser(msg)));
+	}
+	
+	public static void PrintToActionBar(Player player, String msg)
+	{
+	    String parsed = ColorParser(msg);
+	    BaseComponent[] components = buildComponents(parsed);
+	    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, components);
+	}
+
+	private static BaseComponent[] buildComponents(String msg)
+	{
+	    List<BaseComponent> components = new ArrayList<>();
+	    Pattern pattern = Pattern.compile("§x(§[0-9a-fA-F]){6}|§[0-9a-fA-Fk-orK-OR]");
+	    Matcher matcher = pattern.matcher(msg);
+
+	    int lastEnd = 0;
+	    net.md_5.bungee.api.ChatColor currentColor = net.md_5.bungee.api.ChatColor.WHITE;
+
+	    while (matcher.find())
+	    {
+	        if (matcher.start() > lastEnd)
+	        {
+	            String segment = msg.substring(lastEnd, matcher.start());
+	            if (!segment.isEmpty())
+	            {
+	                TextComponent component = new TextComponent(segment);
+	                component.setColor(currentColor);
+	                components.add(component);
+	            }
+	        }
+
+	        String code = matcher.group();
+	        if (code.startsWith("§x"))
+	        {
+	            // Extract only the 6 hex digit characters from §x§R§R§G§G§B§B
+	            StringBuilder hex = new StringBuilder("#");
+	            for (int i = 0; i < code.length() - 1; i++)
+	                if (code.charAt(i) == '§' && code.charAt(i + 1) != 'x')
+	                    hex.append(code.charAt(i + 1));
+	            currentColor = net.md_5.bungee.api.ChatColor.of(hex.toString());
+	        }
+	        else
+	        {
+	            char c = code.charAt(1);
+	            // Ignore reset and formatting codes rather than setting color to null
+	            if (Character.toString(c).matches("[0-9a-fA-F]"))
+	                currentColor = net.md_5.bungee.api.ChatColor.getByChar(c);
+	        }
+
+	        lastEnd = matcher.end();
+	    }
+
+	    if (lastEnd < msg.length())
+	    {
+	        String tail = msg.substring(lastEnd);
+	        if (!tail.isEmpty())
+	        {
+	            TextComponent component = new TextComponent(tail);
+	            component.setColor(currentColor);
+	            components.add(component);
+	        }
+	    }
+
+	    return components.toArray(new BaseComponent[0]);
 	}
 	
 	public static void OBSFormatPrint(Player player, String msg, @Nullable String callbackMsg) 
