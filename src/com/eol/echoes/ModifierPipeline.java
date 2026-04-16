@@ -71,7 +71,7 @@ public final class ModifierPipeline
         WeaponModifierCondition condition = rollCondition(true);
      
         // If a bonus should be a whole number, we round accordingly..
-        if (!isPercent && stat == CombatStat.ATTACK) magnitude = Math.round(magnitude * 2); 
+        if (!isPercent && stat == CombatStat.ATTACK) magnitude = Math.round(magnitude * 3); 
         else magnitude = Math.round(magnitude * 100.0) / 100.0;  // Otherwise, all others: clamp to 2 decimal places
 
         return new ActiveModifier(condition, stat, magnitude, isPercent);
@@ -109,9 +109,9 @@ public final class ModifierPipeline
     {
         return switch (stat)
         {
-            case CRIT_RATE, CRIT_MODIFIER -> true;
-            case ATTACK_RATING            -> false;
-            case ATTACK                   -> ThreadLocalRandom.current().nextDouble() < 0.60;
+            case CRIT_RATE 				  	  -> true;
+            case ATTACK_RATING, CRIT_MODIFIER -> false;
+            case ATTACK                   	  -> ThreadLocalRandom.current().nextDouble() < 0.60;
         };
     }
 

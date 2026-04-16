@@ -100,18 +100,22 @@ public final class EchoLoreBuilder
         if (manifest.hasLockedAbility())
         {
             ObsAbility ability = ObsAbility.fromInternalName(manifest.lockedAbilityKey());
-            String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey(); // fallback to key if not registered yet
-            lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + abilityName + " &r&7(Locked)"));
-            for (String line : ability.getDescription())
-            	lore.add(line);
+            String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
+            String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
+            lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
+            if (ability != null)
+                for (String line : ability.getDescription())
+                    lore.add(line);
         }
-        else
+        else // Normal Equipped Ability
         {
-        	ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
-        	String abilityName = ability != null ? ability.getDisplayName() : manifest.equippedAbilityKey();
-        	lore.add(PrintUtils.ColorParser("&r&fSkill: "+ PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + abilityName));
-        	for (String line : ability.getDescription())
-        		lore.add(line);
+            ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
+            String abilityName = ability != null ? ability.getDisplayName() : "None Equipped";
+            String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&7&o";
+            lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
+            if (ability != null)
+                for (String line : ability.getDescription())
+                    lore.add(line);
         }
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
@@ -154,13 +158,26 @@ public final class EchoLoreBuilder
             lore.add(PrintUtils.ColorParser("&r&f&lElementium Slot&r&f: " + manifest.slotType().getElement()));
         }
  
+        // --- Locked Ability (EOL only) ---
         if (manifest.hasLockedAbility())
         {
             ObsAbility ability = ObsAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
-            lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + abilityName + " &r&7(Locked)"));
-            for (String line : ability.getDescription())
-            	lore.add(line);
+            String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
+            lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
+            if (ability != null)
+                for (String line : ability.getDescription())
+                    lore.add(line);
+        }
+        else // Normal Equipped Ability
+        {
+            ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
+            String abilityName = ability != null ? ability.getDisplayName() : "None Equipped";
+            String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&7&o";
+            lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
+            if (ability != null)
+                for (String line : ability.getDescription())
+                    lore.add(line);
         }
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");

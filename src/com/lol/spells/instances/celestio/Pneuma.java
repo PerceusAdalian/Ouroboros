@@ -43,7 +43,7 @@ public class Pneuma extends Spell
 
 	public Pneuma() 
 	{
-		super("Pneuma", "pneuma", Material.END_CRYSTAL, SpellType.ULTIMATE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.SIX, 100, 5, false,
+		super("Pneuma", "pneuma", Material.END_CRYSTAL, SpellType.ULTIMATE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 100, 5, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&e&oPneuma&r&f: &e&lCharge&r&f --",
 				"&r&fGrants &eDivine Favor &bX&f and &b&oRegenerate&r &bIII&f to self &7(60s)",
