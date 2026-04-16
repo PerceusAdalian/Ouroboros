@@ -7,9 +7,12 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.glacio.Freeze;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
+import com.lol.spells.instances.glacio.IcyWind;
 import com.lol.spells.instances.glacio.Riptide;
+import com.lol.spells.instances.glacio.Scald;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
@@ -28,13 +31,18 @@ public class GlacioSpellsPage extends ObsGui
 	{
 		// 1
 		GuiButton.placeSpellButton(player, new Riptide(), 10, this);
+		
+		
 		// 2
 		GuiButton.placeSpellButton(player, new Glacius(), 11, this);
+		GuiButton.placeSpellButton(player, new Freeze(), 12, this);
+		GuiButton.placeSpellButton(player, new Scald(), 13, this);
 		
 		// 3
+		GuiButton.placeSpellButton(player, new IcyWind(), 14, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new GlacialFlood(), 12, this);
+		GuiButton.placeSpellButton(player, new GlacialFlood(), 15, this);
 		
 		// 5
 		

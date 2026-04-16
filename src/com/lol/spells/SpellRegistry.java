@@ -14,6 +14,7 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
+import com.lol.spells.instances.aero.HealingCurrent;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
@@ -48,9 +49,12 @@ import com.lol.spells.instances.cosmo.Warp;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.SandBlast;
+import com.lol.spells.instances.glacio.Freeze;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
+import com.lol.spells.instances.glacio.IcyWind;
 import com.lol.spells.instances.glacio.Riptide;
+import com.lol.spells.instances.glacio.Scald;
 import com.lol.spells.instances.heresio.Hex;
 import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
@@ -110,6 +114,9 @@ public class SpellRegistry
         		Glacius.class,
         		GlacialFlood.class,
         		Riptide.class,
+        		Freeze.class,
+        		IcyWind.class,
+        		Scald.class,
         		
         		//Aero
         		Diffindo.class,
@@ -124,6 +131,7 @@ public class SpellRegistry
         		Tailwind.class,
         		ChainLightning.class,
         		Vaporize.class,
+        		HealingCurrent.class,
         		
         		//Geo
         		Expelliarmus.class,

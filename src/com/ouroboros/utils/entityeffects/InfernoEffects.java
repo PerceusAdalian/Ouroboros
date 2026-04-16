@@ -5,10 +5,13 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.MobData;
+import com.ouroboros.utils.OBSParticles;
 
 public class InfernoEffects
 {
@@ -36,5 +39,13 @@ public class InfernoEffects
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds*20, 0, false);
 		hasCharred.add(target.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasCharred.remove(target.getUniqueId()), seconds*20);
+	}
+	
+	public static void setMelt(LivingEntity target)
+	{
+		MobData data = MobData.getMob(target.getUniqueId());
+		if (data != null) data.setBreak();
+		OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
+		OBSParticles.drawInfernoCastSigil(target);
 	}
 }

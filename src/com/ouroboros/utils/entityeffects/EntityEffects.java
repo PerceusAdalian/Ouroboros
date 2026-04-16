@@ -65,7 +65,13 @@ public class EntityEffects
 	    
 	    p.setHealth(Math.min(p.getHealth() + value, maxHealth));
 	}
-
+	
+	public static void heal(Player p)
+	{
+		if (p == null || !p.isOnline()) return;
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue());	
+	}
+	
 	public static void playSound(Player source, Location loc, Sound sound, SoundCategory soundCategory, float magnitude, float magnitude2) 
 	{
 		source.getPlayer().playSound(loc, sound, soundCategory, magnitude, magnitude2);

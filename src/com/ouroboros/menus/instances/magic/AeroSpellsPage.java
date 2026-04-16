@@ -13,6 +13,7 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
+import com.lol.spells.instances.aero.HealingCurrent;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
@@ -48,14 +49,15 @@ public class AeroSpellsPage extends ObsGui
 		
 		// Three Rarity
 		GuiButton.placeSpellButton(player, new ChainLightning(), 19, this);
+		GuiButton.placeSpellButton(player, new HealingCurrent(), 20, this);
 		
 		// Four Rarity
-		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 20, this);
+		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 21, this);
 		
 		// Five Rarity
-		GuiButton.placeSpellButton(player, new Diffindo(), 21, this);
-		GuiButton.placeSpellButton(player, new Thunderstorm(), 22, this);
-		GuiButton.placeSpellButton(player, new Vaporize(), 23, this);
+		GuiButton.placeSpellButton(player, new Diffindo(), 22, this);
+		GuiButton.placeSpellButton(player, new Thunderstorm(), 23, this);
+		GuiButton.placeSpellButton(player, new Vaporize(), 24, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

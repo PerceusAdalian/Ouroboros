@@ -87,6 +87,7 @@ public class GlacioEffects
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, magnitude, false);
 		ObsTimer.runWithCancel(Ouroboros.instance, e ->
 		{
+			if (target.isDead()) return;
 			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SNOWFLAKE, null);
 		}, 20, seconds * 20);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasFrosted.remove(target.getUniqueId()), seconds * 20);
@@ -100,13 +101,21 @@ public class GlacioEffects
 			int magnitude = chillEffects.get(target.getUniqueId()).magnitude;
 			chillEffects.remove(target.getUniqueId());
 			chillEffects.get(target.getUniqueId()).cancel();
-			EntityEffects.add(target, PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 99, true);
-			EntityEffects.add(target, PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, magnitude, true);
+			EntityEffects.add(target, PotionEffectType.SLOWNESS, target instanceof Player ? 100 : PotionEffect.INFINITE_DURATION, 99, true);
+			EntityEffects.add(target, PotionEffectType.WEAKNESS, target instanceof Player ? 400 : PotionEffect.INFINITE_DURATION, magnitude, true);
 			if (!(target instanceof Player))
 			{
 				((Mob) target).setTarget(null);
 				target.setAI(false);
 			}
 		}
+	}
+	
+	public static void setQuench(LivingEntity target)
+	{
+		MobData data = MobData.getMob(target.getUniqueId());
+		if (data != null) data.setBreak();
+		OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
+		OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 4, 0.3, Particle.SMOKE, null);
 	}
 }

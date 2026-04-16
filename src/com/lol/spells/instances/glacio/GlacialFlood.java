@@ -27,7 +27,7 @@ public class GlacialFlood extends Spell
 
 	public GlacialFlood() 
 	{
-		super("Glacial Flood", "flood", Material.BLUE_DYE, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.MIXED, Rarity.FOUR, 50, 5, false,
+		super("Glacial Flood", "flood", Material.BLUE_DYE, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.MIXED, Rarity.FOUR, 50, 5, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&bGlacial Flood&f: &b&oChilling Cascade&r&f --",
 				"&r&fEmit a burst of cold water about you in a radial &dAOE&f applying &bChill V &7(20m | 30s)","",
@@ -35,10 +35,11 @@ public class GlacialFlood extends Spell
 				"&r&bGlacial Flood&f: &b&oCrystalize&r&f --",
 				"&r&fEmit a blast of cold air to &bFreeze&f &bChilled&f enemies and deal &b&lGlacio",
 				"&r&fdamage equal to &o10 + (Chill stacks x 3) &r&7[Max: 70♥ | 20 meters]","",
-				"&r&bChill &eEffect&f: those affected are inflicted with a "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio DOT effect, and &b&oSlowed&r&f.",
+				"&r&bChill &eEffect&f: &b&oSlows&r&f while inflicting a "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f DOT effect.",
 				"&r&fReapplying &bChill&f increases the &b&omagnitude&r&f, while keeping initial duration.","",
 				"&r&bFrozen &eEffect&f: Those affected by &bChill&f remove their stacks, and instead,",
-				"&r&f\"Freezes\" them. They are &b&oWeakened&r&f by the amount of &bChill&f stacks they had.");
+				"&r&f\"Freezes\" them. They are &b&oWeakened&r&f by the amount of &bChill&f stacks they had.",
+				"&r&cPVP&f: Freeze effect &6Stuns&f for &b&o5 seconds&r&f and &b&oWeakens&r&f for &b&o20 seconds&r&f.");
 	}
 
 	@Override
