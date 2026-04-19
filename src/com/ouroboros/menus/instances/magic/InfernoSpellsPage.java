@@ -30,7 +30,7 @@ public class InfernoSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// 1
-		GuiButton.placeSpellButton(player, new Incendio(), 10, this);
+		GuiButton.placeCantripSpellButton(player, new Incendio(), 10, this);
 		
 		// 2
 		GuiButton.placeSpellButton(player, new Combustion(), 11, this);

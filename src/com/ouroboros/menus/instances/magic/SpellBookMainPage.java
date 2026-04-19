@@ -22,14 +22,14 @@ public class SpellBookMainPage extends ObsGui
 	@Override
 	protected void build()
 	{
-		GuiButton.button(Material.BOOK).setName("&e&lElemental &r&eSpells").setLore("Click to view all primary school &r&espells&f.").place(this, 12, e->
+		GuiButton.button(Material.BOOK).setName("&e&lPrimary School &r&eSpells").setLore("Click to view all elemental &r&espells&f.").place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP, SoundCategory.MASTER, 1, 1);
 			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
 		});
 		
-		GuiButton.button(Material.ENCHANTED_BOOK).setName("&b&lSpecial &r&eSpells").setLore("Click to view all secondary school &espells&f.").place(this, 14, e->
+		GuiButton.button(Material.WRITTEN_BOOK).setName("&b&lSecondary School &r&eSpells").setLore("Click to view all unique &earcana&f.").place(this, 14, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);

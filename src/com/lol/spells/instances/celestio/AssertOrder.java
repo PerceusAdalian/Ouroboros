@@ -39,11 +39,11 @@ public class AssertOrder extends Spell
 	public AssertOrder() 
 	{
 		super("Assert Order", "assert_order", Material.TOTEM_OF_UNDYING, SpellType.DEFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 225, 15, true,
-				"&r&fGrants '&e&oKarma&r&f' for the caster &7(15s)&r&f.",
-				"&r&eKarma&f Effect: all incoming damage is mitigated by 50%.",
+				"&r&fGrants '&e&oKarma&r&f' to &6self &7(15s)&r&f.",
+				"&r&eKarma Effect&f: all incoming damage is mitigated by 50%.",
 				"&r&fDamage received is redirected to the source, multiplied by a factor of &bx1.35&f,",
-				"&r&fand is considered "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage. Damage mitigated is restored by &b25%",
-				"&r&fonce the effect expires, and applies &b&oAbsorption&r&f stacks depending on excess &aHP&f.");
+				"&r&fand is considered "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage. Damage mitigated &a&orestores&r&c HP",
+				"&r&fby &b&o25%&r&f once &eKarma&f expires, and applies &b&oAbsorption&r&f depending on excess &aHP&f.");
 	}
 
 	@Override

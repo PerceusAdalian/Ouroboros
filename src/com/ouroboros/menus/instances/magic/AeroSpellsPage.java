@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
@@ -37,10 +38,10 @@ public class AeroSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// One Rarity
-		GuiButton.placeSpellButton(player, new Gust(), 10, this);
-		GuiButton.placeSpellButton(player, new Tailwind(), 11, this);
-		GuiButton.placeSpellButton(player, new Charge(), 12, this);
-		GuiButton.placeSpellButton(player, new Smite(), 13, this);
+		GuiButton.placeCantripSpellButton(player, new Smite(), 10, this);
+		GuiButton.placeSpellButton(player, new Gust(), 11, this);
+		GuiButton.placeSpellButton(player, new Tailwind(), 12, this);
+		GuiButton.placeSpellButton(player, new Charge(), 13, this);
 		GuiButton.placeSpellButton(player, new Levioso(), 14, this);
 		
 		// Two Rarity
@@ -50,14 +51,14 @@ public class AeroSpellsPage extends ObsGui
 		// Three Rarity
 		GuiButton.placeSpellButton(player, new ChainLightning(), 19, this);
 		GuiButton.placeSpellButton(player, new HealingCurrent(), 20, this);
+		GuiButton.placeSpellButton(player, new Fly(), 21, this);
 		
 		// Four Rarity
-		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 21, this);
-		
+		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 22, this);
 		// Five Rarity
-		GuiButton.placeSpellButton(player, new Diffindo(), 22, this);
-		GuiButton.placeSpellButton(player, new Thunderstorm(), 23, this);
-		GuiButton.placeSpellButton(player, new Vaporize(), 24, this);
+		GuiButton.placeSpellButton(player, new Diffindo(), 23, this);
+		GuiButton.placeSpellButton(player, new Thunderstorm(), 24, this);
+		GuiButton.placeSpellButton(player, new Vaporize(), 25, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
+import com.lol.spells.instances.aero.Fly;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.StatType;
@@ -134,6 +135,14 @@ public class GeneralEvents implements Listener
         	{
         		Player p = e.getPlayer();
         		PlayerData.unloadPlayer(p.getUniqueId());
+        		
+        		if (Fly.flyers.containsKey(p.getUniqueId()))
+        		{        			
+        			p.setFlying(false);
+        			p.setAllowFlight(Fly.flyers.get(p.getUniqueId()));
+        			Fly.flyers.remove(p.getUniqueId());
+        		}
+        		
         		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
         		ObsTimer.cancelCountdown(p);
         	}

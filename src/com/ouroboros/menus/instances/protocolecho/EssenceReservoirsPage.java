@@ -86,7 +86,15 @@ public class EssenceReservoirsPage extends ObsGui
 		});
 		
 		GuiButton.button(Material.ENDER_EYE).setName(PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e Essence")
-		.setLore("Current "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f essence: "+data.getEssence(ElementType.HERESIO)+"&7/ 9999").place(this, 40, e->
+		.setLore("Current "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f essence: "+data.getEssence(ElementType.HERESIO)+"&7/ 9999").place(this, 39, e->
+		{
+			e.setCancelled(true);
+			Player p = (Player) e.getWhoClicked();
+			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, SoundCategory.MASTER);
+		});
+		
+		GuiButton.button(Material.END_CRYSTAL).setName(PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&e Essence")
+		.setLore("Current "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&f essence: "+data.getEssence(ElementType.ARCANO)+"&7/ 9999").place(this, 41, e->
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();

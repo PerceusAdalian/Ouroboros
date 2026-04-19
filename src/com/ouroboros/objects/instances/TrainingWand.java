@@ -16,9 +16,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.lol.enums.SpellType;
+import com.lol.enums.SpellementType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.OBSParticles;
@@ -36,9 +36,9 @@ public class TrainingWand extends AbstractObsObject
 				"&r&e&lSpell Slots&r&f: &e●","",
 				"&b&lEquipped Spell&r&f: Stupefy",
 				"&f&nDescription&r&f:","",
-				"&r&fWeild concentrated &e&lCelestio&r&f energy to attack foes.",
+				"&r&fExpell a bolt of light to deal minor damage.",
 				"","&r&f&nOther Details&r&f:","",
-				PrintUtils.assignElementType(ElementType.CELESTIO),
+				PrintUtils.assignElementType(SpellementType.CELESTIO),
 				PrintUtils.assignSpellType(SpellType.OFFENSIVE),
 				"&r&f&lCooldown&r&f: 1.0", "",
 				"&r&7&oAt Hogwarts, every wizard has to start somewhere. Whether to hone one's skills,",
@@ -58,7 +58,7 @@ public class TrainingWand extends AbstractObsObject
 		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 		if (data.getMagicProficiency() == 0)
 		{
-			PrintUtils.Print(p, "&r&d&oMagic Gnosis&r&e Increased&f: &70 &e&l-> &b&l1&r&f!","&r&fYou've unlocked the magic section in your menu! &7(&d&o/obs menu&r&7)");
+			PrintUtils.Print(p, "&r&d&oMagic Gnosis&r&f Increased: &70 &e&l-> &b&l1&r&f!","&r&fYou've unlocked the magic section in your menu! &7(&d&o/obs menu&r&7)");
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);
 			data.setMagicProficiency(1);

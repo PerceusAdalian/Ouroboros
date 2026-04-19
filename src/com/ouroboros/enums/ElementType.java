@@ -98,7 +98,7 @@ public enum ElementType
 	    return types[ThreadLocalRandom.current().nextInt(types.length)];
 	}
 	
-	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO);
+	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO, ARCANO);
 	public static Set<ElementType> almighty = Set.of(CRUSH, SEVER, IMPALE, BLAST);
 	public static Set<ElementType> natural = Set.of(BLUNT, PIERCE, SLASH, COMBUST, PUNCTURE, CORROSIVE);
 }

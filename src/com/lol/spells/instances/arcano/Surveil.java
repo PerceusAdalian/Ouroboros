@@ -28,8 +28,8 @@ public class Surveil extends Spell
 
 	public Surveil() 
 	{
-		super("Surveil", "serveil", Material.SPYGLASS, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 3, false,
-				"&r&fAcquire intelligence on target's &b&ostats &r&7(30m)");
+		super("Surveil", "serveil", Material.SPYGLASS, SpellType.CANTRIP, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 3, false,
+				"&r&fScan and display &6target &d&omob&r&f's &b&ostats &r&7(30m)");
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import com.eol.materia.components.Catalysts;
 import com.eol.materia.components.ElementCores;
 import com.lol.spells.SpellCastHandler;
 import com.lol.spells.SpellRegistry;
+import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Pneuma;
@@ -41,6 +42,7 @@ public class Ouroboros extends JavaPlugin
 {
 	public static Ouroboros instance; 
 	public static boolean debug;
+	public static boolean debugSpells;
 	private static boolean enabled = false;
 	
 	public static boolean isActive() 
@@ -53,6 +55,7 @@ public class Ouroboros extends JavaPlugin
 	{
 		instance = this;
 		debug = false;
+		debugSpells = false;
 		enabled = true;
 		
 		EchoConfig.load();
@@ -96,6 +99,7 @@ public class Ouroboros extends JavaPlugin
 		Tailwind.registerSpellHelper(instance);
 		Teleport.registerSpellHelper(instance);
 		Warp.registerSpellHelper(instance);
+		Fly.registerSpellHelper(instance);
 		
 		MateriaCastHandler.register(instance);
 		Catalysts.load();

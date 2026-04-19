@@ -22,7 +22,9 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.lol.spells.instances.Spell;
+import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.arcano.Freecast;
+import com.lol.spells.instances.arcano.OuroborosPrime;
 import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
@@ -31,6 +33,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.OBSParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.ArcanoEffects;
@@ -107,6 +110,7 @@ public class SpellCastHandler implements Listener
             GuiHandler.open(p, new CollectWandData(p));
             return;
         }
+        
         if (CastConditions.isValidAction(e, CastConditions.LEFT_CLICK_AIR))
         {
             if (lockedCycling.contains(p.getUniqueId())) return;
@@ -120,7 +124,13 @@ public class SpellCastHandler implements Listener
         }
 
         if (!CastConditions.isValidAction(e, currentSpell.getCastCondition())) return; // Only valid cast conditions allowed.
-
+        
+        if (Fly.flyers.containsKey(p.getUniqueId()) && !currentSpell.getInternalName().equals("fly"))
+        {
+        	PrintUtils.PrintToActionBar(p, "&cFizzle!");
+            return;
+        }
+        
         Set<Spell> onCooldown = cooldownPlayers.get(p.getUniqueId());
         if (onCooldown != null && onCooldown.contains(currentSpell))
         {
@@ -155,12 +165,10 @@ public class SpellCastHandler implements Listener
             EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
             return;
         }
-
+        
         int actualCost = currentSpell.Cast(e);
         if (actualCost < 0) return;
-        if (usingFreecast) actualCost = 0;
-
-        // All checks passed — now actually cast
+        if (usingFreecast || OuroborosPrime.ouroboros_registry.contains(p.getUniqueId())) actualCost = 0;
         
         if (wand.getElementType() != null)
         {
@@ -171,13 +179,13 @@ public class SpellCastHandler implements Listener
         
         boolean overloaded = actualCost > wand.getCurrentMana();
         long cooldown = (long)(overloaded ? Math.max(1200, currentSpell.getCooldown() * 3 * 20) : (currentSpell.getCooldown() * 20));
-        /**
-         * Final check for how much mana the player actually spent casting a spell.
-         * New: if the player overloads, add them to a registry in which case, if they overload again (casts 2 free spells
-         * within the time frame of 2 x cooldown (either base within 2 minutes, or the base cooldown x 3 seconds),
-         * they'll gain EtherDisruption, in which case, they can't cast spells for 5 minutes.
-         * This ensures fairness, while allowing for some interesting combat, and forgiveness.
-         */
+        if (Ouroboros.debugSpells == true) cooldown = 20;
+        if (OuroborosPrime.ouroboros_registry.contains(p.getUniqueId())) 
+        {
+        	MobData.damageUnnaturally(p, p, wand.getCurrentMaxSpellSlots(), false, false, ElementType.PURE);
+        	cooldown = 5;
+        }
+        
         if (actualCost > wand.getCurrentMana())
         {
         	if (recentlyOverloaded.contains(p.getUniqueId()))
@@ -206,10 +214,10 @@ public class SpellCastHandler implements Listener
         cooldownPlayers.computeIfAbsent(p.getUniqueId(), k -> new HashSet<>()).add(currentSpell);
         Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
         {
-            Set<Spell> cd = cooldownPlayers.get(p.getUniqueId());
-            if (cd != null) cd.remove(currentSpell);
+        	Set<Spell> cd = cooldownPlayers.get(p.getUniqueId());
+        	if (cd != null) cd.remove(currentSpell);
         }, cooldown);
-
+        
         p.getInventory().setItemInMainHand(wand.getAsItemStack());
 	}
 	

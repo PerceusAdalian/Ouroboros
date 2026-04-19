@@ -26,8 +26,8 @@ public class GeoSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// 1
-		GuiButton.placeSpellButton(player, new SandBlast(), 10, this);
-		GuiButton.placeSpellButton(player, new Geomorph(), 11, this);
+		GuiButton.placeCantripSpellButton(player, new Geomorph(), 10, this);
+		GuiButton.placeSpellButton(player, new SandBlast(), 11, this);
 		
 		// 2
 		

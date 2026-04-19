@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.menus.instances.abilities.AbilityConfirmationPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.utils.PrintUtils;
@@ -139,18 +140,72 @@ public class GuiButton
                 obfuscatedLore.add(PrintUtils.ColorParser("&7&k" + plainText));
             }
             
-            String obfuscatedName = "&cLocked Spell&f: " + PrintUtils.getElementTypeColor(spell.getElementType()) + 
-            		"&k" +ChatColor.stripColor(spellIcon.getItemMeta().getDisplayName());
             GuiButton.button(Material.PAPER)
-            .setName(obfuscatedName)
+            .setName("&cLocked Spell&f: "+PrintUtils.getElementTypeColor(spell.getElementType())+"&l&k" + ChatColor.stripColor(spellIcon.getItemMeta().getDisplayName()))
             .setLore(obfuscatedLore)
             .place(gui, slot, e -> 
             {
                 Player p = (Player) e.getWhoClicked();
-                EntityEffects.playSound(p, Sound.BLOCK_CHEST_LOCKED, SoundCategory.MASTER);
+                EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
                 e.setCancelled(true);
             });
 		}
+	}
+    
+    public static void placeCantripSpellButton(Player player, Spell spell, int slot, ObsGui gui)
+	{
+		ItemStack spellIcon = spell.getAsItemStack(true);
+		
+		boolean spellRegistered = PlayerData.getPlayer(player.getUniqueId()).getSpell(spell).isRegistered();
+		int essenceHeld = PlayerData.getPlayer(player.getUniqueId()).getEssence(ElementType.getFromSpellement(spell.getElementType()));
+		int luminaTearsHeld = PlayerData.getPlayer(player.getUniqueId()).getLuminite();
+		String spellName = PrintUtils.getElementTypeColor(spell.getElementType())+ "&l" + ChatColor.stripColor(spellIcon.getItemMeta().getDisplayName());
+		
+		List<String> lore = new ArrayList<>();
+		
+		if (!spellRegistered)
+		{			
+			lore.add("&r&c&oPreview&r&f:");
+			lore.add("");
+			lore.addAll(spellIcon.getItemMeta().getLore());
+			lore.add("");
+			lore.add("&r&fClick to register this &aCantrip &fwithout a &eSpell Tome&f.");
+			lore.add("&r&eRegistration Cost&f: "+25+PrintUtils.getElementTypeColor(spell.getElementType())+"⚛&r&7/"+essenceHeld+"&r&f, 30&b۞&7/"+luminaTearsHeld);
+		}
+		else
+		{
+			lore.addAll(spellIcon.getItemMeta().getLore());
+		}
+		
+		GuiButton.button(!spellRegistered ? Material.PAPER : spellIcon.getType())
+		.setName(!spellRegistered ? "&cLocked Spell&f: " + spellName : spellName)
+		.setLore(lore)
+		.place(gui, slot, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			if (spellRegistered)
+			{
+				EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
+				spellActivateConfirm.put(player.getUniqueId(), spell);
+				CollectWandData.pageController.put(p.getUniqueId(), "spellselect");
+				GuiHandler.changeMenu(p, new CollectWandData(p));
+			}
+			else
+			{
+				if (essenceHeld < 25 || luminaTearsHeld < 30) 
+				{
+					EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
+	                e.setCancelled(true);
+	                return;
+				}
+				
+				EntityEffects.playSound(player, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.AMBIENT);
+				PlayerData.subtractEssence(player, ElementType.getFromSpellement(spell.getElementType()), 25);
+				PlayerData.subtractLuminite(player, 30);
+				PlayerData.getPlayer(player.getUniqueId()).getSpell(spell).setRegistered(true);
+				GuiHandler.reload(player);
+			}
+		});
 	}
     
 }

@@ -43,7 +43,7 @@ public class Ascension extends Spell
 
 	public Ascension() 
 	{
-		super("Ascension", "ascension", Material.ELYTRA, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 0, 1, false,
+		super("Ascension", "ascension", Material.ALLAY_SPAWN_EGG, SpellType.ULTIMATE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 0, 1, false,
 				"&r&e&oPrimary &r&f" + PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eAscension&r&f: &e&oJudgement&r&f --",
 				"&r&fUnleash a beam of light at a target &7(45m)&f, dealing"+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f",

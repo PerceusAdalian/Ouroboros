@@ -27,7 +27,7 @@ public class ArcaneBolt extends Spell
 
 	public ArcaneBolt() 
 	{
-		super("Arcane Bolt", "arcane_bolt", Material.ECHO_SHARD, SpellType.OFFENSIVE, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, true,
+		super("Arcane Bolt", "arcane_bolt", Material.ECHO_SHARD, SpellType.OFFENSIVE, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 1, true,
 				"&r&fDeal 4&c♥ "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&f damage to target &7(25m)&f and apply &bEther Overload &7(20s)","",
 				"&r&bEther Overload &eEffect&f: affected take an additional &b&o50% &r&e&oelemental &r&fdamage.");
 	}

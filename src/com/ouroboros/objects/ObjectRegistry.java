@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.ouroboros.objects.instances.AeroEssence;
+import com.ouroboros.objects.instances.ArcanoEssence;
 import com.ouroboros.objects.instances.CelestioEssence;
 import com.ouroboros.objects.instances.CosmoEssence;
 import com.ouroboros.objects.instances.GeoEssence;
@@ -56,6 +57,7 @@ public class ObjectRegistry
         	GeoEssence.class,
         	CosmoEssence.class,
         	HeresioEssence.class,
+        	ArcanoEssence.class,
         	
         	ScrapMateria.class);
         

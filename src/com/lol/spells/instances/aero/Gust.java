@@ -35,7 +35,7 @@ public class Gust extends Spell
 		if (target == null || !(target instanceof LivingEntity)) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);
-		target.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).multiply(1.25));
+		target.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).multiply(1.15));
 		return this.getManacost();
 	}
 	

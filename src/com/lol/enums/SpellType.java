@@ -11,6 +11,8 @@ public enum SpellType
 	CURSE("&r&4&oCurse&r&f"),
 	HEX("&2&lHex&r&f"),
 	ULTIMATE("&r&e&lUltimate&r&f"),
+	SIGNATURE("&r&e&oSignature&r&f"),
+	CANTRIP("&r&aCantrip"),
 	
 	//For administrator operations only. Use wisely.
 	DEBUG("&b&lDebug&r&f");

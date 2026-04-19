@@ -33,7 +33,7 @@ public class CosmoSpellsPage extends ObsGui
 	{
 		
 		// 1
-		GuiButton.placeSpellButton(player, new Reconfigure(), 10, this);
+		GuiButton.placeCantripSpellButton(player, new Reconfigure(), 10, this);
 		GuiButton.placeSpellButton(player, new Nullify(), 11, this);
 		
 		// 2

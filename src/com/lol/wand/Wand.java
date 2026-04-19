@@ -409,8 +409,7 @@ public class Wand
 	    }
 	    
 	    existingLore.add("");
-	    existingLore.add(PrintUtils.ColorParser(
-	    	    "&r&9Mana Capacity&f: " + currentMana + "&r&f/" + maxMana +
+	    existingLore.add(PrintUtils.ColorParser("&r&9Mana Capacity&f: " + currentMana + "&r&f/" + maxMana +
 	    	    (eType != null ? " &7| " + PrintUtils.getElementTypeColor(eType) + eType.getType() + " &r&fspells cost -20%" : "")));
 	    existingLore.add(PrintUtils.ColorParser("&r&d&oLeft-Click&r&f to cycle spells &7| &d&oShift_Left-Click&r&f to remove spells"));
 	    // Finally, set the combined lore at the end

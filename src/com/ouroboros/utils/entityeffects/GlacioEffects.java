@@ -96,19 +96,21 @@ public class GlacioEffects
 	public static Set<UUID> hasFrozen = new HashSet<>();
 	public static void addFrozen(LivingEntity target)
 	{
-		if (chillEffects.containsKey(target.getUniqueId()))
-		{
-			int magnitude = chillEffects.get(target.getUniqueId()).magnitude;
-			chillEffects.remove(target.getUniqueId());
-			chillEffects.get(target.getUniqueId()).cancel();
-			EntityEffects.add(target, PotionEffectType.SLOWNESS, target instanceof Player ? 100 : PotionEffect.INFINITE_DURATION, 99, true);
-			EntityEffects.add(target, PotionEffectType.WEAKNESS, target instanceof Player ? 400 : PotionEffect.INFINITE_DURATION, magnitude, true);
-			if (!(target instanceof Player))
-			{
-				((Mob) target).setTarget(null);
-				target.setAI(false);
-			}
-		}
+	    UUID id = target.getUniqueId();
+	    if (chillEffects.containsKey(id))
+	    {
+	        ChillEffectData existing = chillEffects.remove(id);
+	        existing.cancel();                                  
+
+	        int magnitude = existing.magnitude;
+	        EntityEffects.add(target, PotionEffectType.SLOWNESS, target instanceof Player ? 100 : PotionEffect.INFINITE_DURATION, 99, true);
+	        EntityEffects.add(target, PotionEffectType.WEAKNESS, target instanceof Player ? 400 : PotionEffect.INFINITE_DURATION, magnitude, true);
+	        if (!(target instanceof Player))
+	        {
+	            ((Mob) target).setTarget(null);
+	            target.setAI(false);
+	        }
+	    }
 	}
 	
 	public static void setQuench(LivingEntity target)

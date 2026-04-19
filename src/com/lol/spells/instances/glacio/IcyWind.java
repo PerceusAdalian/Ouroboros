@@ -27,7 +27,7 @@ public class IcyWind extends Spell
 	{
 		super("Icy Wind", "icy_wind", Material.STRING, SpellType.CONTROL, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 75, 2, true,
 				"&r&fApplies &bFrosted II&f  in a &dconal AOE &7(30s, 20m | &cPVP&7: &cFrosted I&7)",
-				"&r&fInflicts &bChill&f while targets are &bFrosted &7(20s | &cPVP&7: &c10s&7).","",
+				"&r&fInflicts &bChill&f while targets are &bFrosted &7(20s | &cPVP&7: &c6s&7).","",
 				"&bFrosted&f Effect: &d&oSlows&r&f and &d&oWeakens&r&f those afflicted.","",
 				"&r&bChill &eEffect&f: &b&oSlows&r&f while inflicting a "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f DOT effect.",
 				"&r&fReapplying &bChill&f increases the &b&omagnitude&r&f, while keeping initial duration.");
@@ -48,9 +48,10 @@ public class IcyWind extends Spell
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.SNOWFLAKE, null);
 			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.3, Particle.BLOCK_CRUMBLE, Material.SNOW.createBlockData());
 			
-			if (GlacioEffects.hasFrosted.contains(target.getUniqueId()));
+			if (GlacioEffects.hasFrosted.contains(target.getUniqueId())) 
 			{
-				GlacioEffects.addChill(p, le, 1, pTarget ? 10 : 20);
+				GlacioEffects.addChill(p, le, 1, pTarget ? 6 : 20);
+				return;
 			}
 			GlacioEffects.addFrosted(le, pTarget ? 0 : 1, getTotalManaCost());
 			

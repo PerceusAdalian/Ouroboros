@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -16,6 +18,7 @@ import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.helpers.DivineFavorData;
 
 public class CelestioEffects
@@ -66,6 +69,7 @@ public class CelestioEffects
 		EntityEffects.add(target, PotionEffectType.SATURATION, 60, 2, false);
 	}
 	
+	public static Set<UUID> hasWard = new HashSet<>();
 	/**
 	 * @param target
 	 * @param magnitude
@@ -73,11 +77,19 @@ public class CelestioEffects
 	 * @Description Ward Effect: grants Absorption, Fire Resistance, and Resistance&r&f equal to the magnitude of Ward.
 	 * 
 	 */
-	public static void addWard(LivingEntity target, int magnitude, int seconds)
+	public static void addWard(Player target, int magnitude, int seconds)
 	{
 		EntityEffects.add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
 		EntityEffects.add(target, PotionEffectType.FIRE_RESISTANCE, seconds * 20, 0, false);
 		EntityEffects.add(target, PotionEffectType.RESISTANCE, seconds * 20, magnitude, false);
+		
+		hasWard.add(target.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{
+			EntityEffects.playSound(target, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);
+			PrintUtils.PrintToActionBar(target, "&e&oWard&r&7&o wore off..");
+			hasWard.remove(target.getUniqueId());
+		}, seconds * 20);
 	}
 	
 	public static Map<UUID, DivineFavorData> divineFavorRegistry = new HashMap<>();
@@ -87,5 +99,21 @@ public class CelestioEffects
 		EntityEffects.add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
 		
 		divineFavorRegistry.put(target.getUniqueId(), new DivineFavorData(magnitude, seconds));
+	}
+	
+	public static Set<UUID> hasEmpowered = new HashSet<>();
+	public static void addEmpowered(Player target, int magnitude, int seconds)
+	{
+		EntityEffects.add(target, PotionEffectType.HASTE, seconds * 20, magnitude, false);
+		EntityEffects.add(target, PotionEffectType.STRENGTH, seconds * 20, magnitude, false);
+		EntityEffects.add(target, PotionEffectType.GLOWING, seconds * 20, 0, false);
+		
+		hasEmpowered.add(target.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{
+			EntityEffects.playSound(target, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);
+			PrintUtils.PrintToActionBar(target, "&e&oEmpowered&r&7&o wore off..");
+			hasEmpowered.remove(target.getUniqueId());
+		}, seconds * 20);
 	}
 }

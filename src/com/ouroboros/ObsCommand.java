@@ -138,6 +138,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("recoverwand"))
 		{
+			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+			if (data.getMagicProficiency() == 0) 
+			{
+				PrintUtils.OBSFormatError(p, "You don't have access to this shortcut yet!");
+				return true;
+			}
 			if (!CollectWandData.wandCollector.containsKey(p.getUniqueId()))
 			{
 				PrintUtils.OBSFormatError(p, "You don't currently have a wand in need of recovery.");
@@ -161,6 +167,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("spellbook"))
 		{
+			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+			if (data.getMagicProficiency() == 0) 
+			{
+				PrintUtils.OBSFormatError(p, "You don't have access to this shortcut yet!");
+				return true;
+			}
 			GuiHandler.open(p, new SpellBookMainPage(p));
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
@@ -170,6 +182,12 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		
 		if (args[0].equals("wand"))
 		{
+			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+			if (data.getMagicProficiency() == 0) 
+			{
+				PrintUtils.OBSFormatError(p, "You don't have access to this shortcut yet!");
+				return true;
+			}
 			GuiHandler.open(p, new WandMainPage(p));
 			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
 			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
@@ -336,6 +354,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Scrap. \nIf you believe this was done in error, contact the server admin.");
 			return true;
 		}
+		
 		if (args[0].equals("debug"))
 		{
 			if (affirmOP(p)) return true;
@@ -350,6 +369,23 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			Ouroboros.debug = false;
 			PrintUtils.OBSFormatDebug(p, "&7Console logging has been turned &c&lOFF");
 			PrintUtils.OBSConsoleDebug("&7Console logging has been turned &c&lOFF");
+			return true;
+		}
+		
+		if (args[0].equals("debugspells"))
+		{
+			if (affirmOP(p)) return true;
+			
+			if (Ouroboros.debugSpells == false)
+			{
+				Ouroboros.debugSpells = true;
+				PrintUtils.OBSFormatDebug(p, "&7Spell debug has been turned &a&lON");
+				PrintUtils.OBSConsoleDebug("&7Spell debug has been turned &a&lON");
+				return true;
+			}
+			Ouroboros.debugSpells = false;
+			PrintUtils.OBSFormatDebug(p, "&7Spell debug has been turned &c&lOFF");
+			PrintUtils.OBSConsoleDebug("&7Spell debug has been turned &c&lOFF");
 			return true;
 		}
 		
@@ -819,7 +855,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				List<String> cmds = new ArrayList<>(List.of("menu", "stats", "welcomekit", "spellbook", "recoverwand", "wand"));
 				
 				// OP-only commands are hidden from regular players.
-				if (isOp) cmds.addAll(List.of("debug", "version", "generate", "money", "register","registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite", "setScrap"));
+				if (isOp) cmds.addAll(List.of("debug", "debugspells", "version", "generate", "money", "register",
+						"registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite", "setScrap"));
 				yield cmds;
 			}
 			case 2 -> 

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -17,6 +18,7 @@ import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
+import com.lol.spells.instances.arcano.PrismaOuroborealis;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.EntityCategory;
 import com.ouroboros.enums.Rarity;
@@ -25,6 +27,7 @@ import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.instances.AeroEssence;
+import com.ouroboros.objects.instances.ArcanoEssence;
 import com.ouroboros.objects.instances.CelestioEssence;
 import com.ouroboros.objects.instances.CosmoEssence;
 import com.ouroboros.objects.instances.GeoEssence;
@@ -53,7 +56,15 @@ public class MobDeathEvent implements Listener
 			    le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(1);
 			    MobData data = MobData.getMob(le.getUniqueId());
 			    if (data == null) return;
+
 			    int level = data.getLevel();
+			    int chanceBonus = 0;
+			    
+			    if (e.getEntity().getKiller() instanceof Player p)
+			    {
+			    	if (PrismaOuroborealis.arcane_prisma_registry.contains(p.getUniqueId())) chanceBonus += 20;
+			    }
+
 			    
 			    // Handle drop table
 			    final int maxDrops = 3;
@@ -64,7 +75,7 @@ public class MobDeathEvent implements Listener
 			    int currentSpellDrops = 0;
 			    int currentCatalystDrops = 0;
 			    
-			    if (Chance.of(75))
+			    if (Chance.of(Math.min(75 + chanceBonus, 100)))
 			    {
 			        ItemStack tearStack = new TearOfLumina().toItemStack();
 			        e.getDrops().add(tearStack);
@@ -74,7 +85,7 @@ public class MobDeathEvent implements Listener
 			    for (AbstractObsObject item : ObjectRegistry.getMoneyItems()) 
 			    {
 			        if (currentDrops >= maxDrops) break;
-			        if (!Chance.of(40)) continue;
+			        if (!Chance.of(Math.min(40 + chanceBonus, 100))) continue;
 			        
 			        int moneyTier = Character.getNumericValue(item.getInternalName().charAt(item.getInternalName().length() - 1));
 			        if (Rarity.getRarityForMobLevel(level) < moneyTier) continue; 
@@ -92,7 +103,7 @@ public class MobDeathEvent implements Listener
 			        {
 			        	if (currentSpellDrops >= maxSpellDrops) break;
 			        	if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
-			        	if (!Chance.of(3.5)) continue;
+			        	if (!Chance.of(Math.min(3.5 + chanceBonus, 100))) continue;
 			            if (spell.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
 			            if (spellDropsRegistry.getOrDefault(spell, false)) continue;
 			            
@@ -103,7 +114,7 @@ public class MobDeathEvent implements Listener
 			        
 			        for (int i = 0; i <= maxEssenceDrops; i++) 
 			        {
-			            if (Chance.of(30)) 
+			            if (Chance.of(Math.min(30 + chanceBonus, 100))) 
 			            {
 			                AbstractObsObject essence = switch (mobCategory) 
 			                {
@@ -115,6 +126,7 @@ public class MobDeathEvent implements Listener
 			                    case GEO_MOBS      -> new GeoEssence();
 			                    case COSMO_MOBS    -> new CosmoEssence();
 			                    case HERESIO_MOBS  -> new HeresioEssence();
+			                    case ARCANO_MOBS   -> new ArcanoEssence();
 			                    default            -> null;
 			                };
 			                if (essence != null) e.getDrops().add(essence.toItemStack());
@@ -123,7 +135,7 @@ public class MobDeathEvent implements Listener
 			        
 			    }
 			    
-			    if (Chance.of(15))
+			    if (Chance.of(Math.min(15 + chanceBonus, 100)))
 			    {
 			    	for (Materia materia : Materia.materia_registry.values().stream().filter(m -> m.getMateriaType() == MateriaType.CATALYST).collect(Collectors.toList()))
 			    	{

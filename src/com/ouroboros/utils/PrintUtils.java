@@ -298,19 +298,21 @@ public class PrintUtils
 	
 	public static String assignAuthor(SpellementType spellementType)
 	{
-		String author = switch(spellementType)
-		{
-			case INFERNO -> author = ColorParser("&c&lAighil&r&f, the Gentle");
-			case AERO -> author = ColorParser("&d&lSeth&r&f, the Looming Storm");
-			case CELESTIO -> author = ColorParser("&e&lLumina&r&f, High Priestess");
-			case COSMO -> author = ColorParser("&3&koo &r&3&lE&ko&r&3&lrr &r&3&ko &r&3&lor&r&3&ko");
-			case GEO -> author = ColorParser("&6&lHaephestus&r&f, Emanator of &6&lNidus");
-			case GLACIO -> author = ColorParser("&b&lBjorn&r&f, Ice Giant");
-			case HERESIO -> author = ColorParser("&2&lSnape&r&f, the 'Mortal Alchemist'");
-			case MORTIO -> author = ColorParser("&4&lGeneral Falric&r&f, Death's Righthand Man");
-			default -> author = "&7&oUknown";
-		};
-		return author;
+	    String raw = switch (spellementType)
+	    {
+	        case INFERNO  -> "&c&l Aighil&r&f, the Gentle";
+	        case AERO     -> "&d&lSeth&r&f, the Looming Storm";
+	        case CELESTIO -> "&e&lLumina&r&f, High Priestess";
+	        case COSMO    -> "&3&lError&r&f: Unknown Spell Origin";
+	        case GEO      -> "&6&lHaephestus&r&f, Emanator of &6&lNidus";
+	        case GLACIO   -> "&b&lBjorn&r&f, Ice Giant";
+	        case HERESIO  -> "&2&lSnape&r&f, the 'Mortal Alchemist'";
+	        case MORTIO   -> "&4&lGeneral Falric&r&f, Death's Righthand Man";
+	        case ARCANO   -> "&b&oThe Forgotten King&r&f, His Majesty";
+	        case ASTRAL   -> "&d&oThe Fantasian Archives&r&f, Source of Knowledge and Science";
+	        default       -> "&7&oUnknown";
+	    };
+	    return ColorParser(raw);
 	}
 	
 	public static String assignSpellType(SpellType type)

@@ -26,8 +26,7 @@ public class Freecast extends Spell
 	public Freecast() 
 	{
 		super("Freecast", "freecast", Material.FLOW_BANNER_PATTERN, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 50, 10, false,
-				"&r&fOverride the laylines around you allowing for unlimited &b&oEther&r&f draw.",
-				"&r&fThe next &eSpell&f you cast has no &b&omana cost&f.");
+				"&r&fMakes the next &eSpell&f you cast cost 0 &b&lMana&f.");
 	}
 
 	public static Set<UUID> hasFreecast = new HashSet<>();

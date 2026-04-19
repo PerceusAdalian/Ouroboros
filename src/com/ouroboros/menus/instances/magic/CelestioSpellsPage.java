@@ -12,15 +12,18 @@ import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
 import com.lol.spells.instances.celestio.Expell;
+import com.lol.spells.instances.celestio.Heal;
+import com.lol.spells.instances.celestio.Lumina;
 import com.lol.spells.instances.celestio.Lumos;
+import com.lol.spells.instances.celestio.MinorBlessing;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.celestio.Satiate;
 import com.lol.spells.instances.celestio.SolarExpanse;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class CelestioSpellsPage extends ObsGui
@@ -34,25 +37,27 @@ public class CelestioSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// 1
-		GuiButton.placeSpellButton(player, new Diagnosis(), 10, this);
-		GuiButton.placeSpellButton(player, new Protego(), 11, this);
-		GuiButton.placeSpellButton(player, new Expell(), 12, this);
+		GuiButton.placeCantripSpellButton(player, new Heal(), 10, this);
+		GuiButton.placeSpellButton(player, new Lumina(), 11, this);
+		GuiButton.placeSpellButton(player, new Diagnosis(), 12, this);
+		GuiButton.placeSpellButton(player, new Protego(), 13, this);
+		GuiButton.placeSpellButton(player, new Expell(), 14, this);
 		
 		// 2
-		GuiButton.placeSpellButton(player, new Satiate(), 13, this);
-		
+		GuiButton.placeSpellButton(player, new Satiate(), 15, this);
+		GuiButton.placeSpellButton(player, new MinorBlessing(), 16, this);
 		// 3
-		GuiButton.placeSpellButton(player, new Lumos(), 14, this);
-		GuiButton.placeSpellButton(player, new Revelio(), 15, this);
-		GuiButton.placeSpellButton(player, new Cure(), 16, this);
+		GuiButton.placeSpellButton(player, new Lumos(), 19, this);
+		GuiButton.placeSpellButton(player, new Revelio(), 20, this);
+		GuiButton.placeSpellButton(player, new Cure(), 21, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new AssertOrder(), 19, this);
-		GuiButton.placeSpellButton(player, new SolarExpanse(), 20, this);
+		GuiButton.placeSpellButton(player, new AssertOrder(), 22, this);
+		GuiButton.placeSpellButton(player, new SolarExpanse(), 23, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Ascension(), 21, this);
-		GuiButton.placeSpellButton(player, new Pneuma(), 22, this);
+		GuiButton.placeSpellButton(player, new Ascension(), 24, this);
+		GuiButton.placeSpellButton(player, new Pneuma(), 25, this);
 		
 		// 6
 		

@@ -28,6 +28,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -40,10 +41,12 @@ public class Lumos extends Spell
 	{
 		super("Lumos", "lumos", Material.SUNFLOWER, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.THREE, 20, 1, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
+				"&r&eLumos&f: &e&oHoly Sprite&r&f --",
 				"&r&fSummon a &e&lCelestio&r&f sprite to illuminate surroundings &7(60s)",
 				"&r&fRecast to trigger &b&oEchoic Dissonance&r&f, exploding the sprite",
 				"&r&fand applying &e&oExposed&r&f within &b&o10m&r&7 (15s)","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
+				"&r&eLumos&f: &e&oIlluminate&r&f --",
 				"&r&fCast a whisp of light at target block &7(30s)","",
 				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",
 				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.","",
@@ -109,20 +112,29 @@ public class Lumos extends Spell
 			Block block = e.getClickedBlock().getRelative(e.getBlockFace());
 			if (!block.getType().isAir()) return -1;
 
-	        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			
+	        EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.AMBIENT);
+	        
 	        block.setType(Material.LIGHT);
 			Levelled lightData = (Levelled) block.getBlockData();
-            lightData.setLevel(15);
-            block.setBlockData(lightData);
-            p.sendBlockChange(block.getLocation(), lightData);
+	        lightData.setLevel(15);
+	        block.setBlockData(lightData);
+	        p.sendBlockChange(block.getLocation(), lightData);
 			
-            Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
-			{
-				if (!block.getType().equals(Material.AIR)) return;
-				block.setType(Material.AIR);
-				OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
-			}, 600);
+	        ObsTimer.runWithCancel(Ouroboros.instance, b->
+	        {
+	        	if (block == null || !block.getType().equals(Material.LIGHT)) b.cancel();
+	        	
+	        	OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
+	        }, 20, 600);
+	        
+	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	        {
+	            if (block.getType().equals(Material.LIGHT))
+	            {
+	                block.setType(Material.AIR);
+	                OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.CLOUD, null);
+	            }
+	        }, 600);
 			
 			return this.getManacost();
 		}

@@ -1,7 +1,9 @@
 package com.ouroboros.menus;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -15,7 +17,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class GuiHandler implements Listener
 {
 	private static final Map<UUID, ObsGui> openGuis = new HashMap<>();
-
+	private static final Set<UUID> transitioning = new HashSet<>();
+	
     public static void open(Player player, ObsGui gui) 
     {
         openGuis.put(player.getUniqueId(), gui);
@@ -24,6 +27,7 @@ public class GuiHandler implements Listener
     
     public static void reload(Player player) 
     {
+    	transitioning.add(player.getUniqueId());
     	openGuis.get(player.getUniqueId()).open();
     }
 
@@ -40,9 +44,9 @@ public class GuiHandler implements Listener
 
     public static void changeMenu(Player player, ObsGui gui) 
     {
+    	transitioning.add(player.getUniqueId());
     	close(player);
     	open(player, gui);
-//    	Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->open(player, gui), 1);
     }
     
     public static void registerEvent(JavaPlugin plugin) 
@@ -62,7 +66,10 @@ public class GuiHandler implements Listener
             @EventHandler
             public void onClose(InventoryCloseEvent e) 
             {
-            	ObsGui gui = openGuis.remove(e.getPlayer().getUniqueId());
+                UUID uuid = e.getPlayer().getUniqueId();
+                if (transitioning.remove(uuid)) return;
+                openGuis.remove(uuid);
+                ObsGui gui = openGuis.remove(uuid);
                 if (gui != null) gui.close(e);
             }
         }, plugin);

@@ -31,8 +31,8 @@ public class MortioSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// 1
-		GuiButton.placeSpellButton(player, new Sew(), 10, this);
-		GuiButton.placeSpellButton(player, new Siphon(), 11, this);
+		GuiButton.placeCantripSpellButton(player, new Siphon(), 10, this);
+		GuiButton.placeSpellButton(player, new Sew(), 11, this);
 		
 		// 2
 		GuiButton.placeSpellButton(player, new Reap(), 12, this);

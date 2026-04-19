@@ -11,6 +11,7 @@ import com.lol.spells.instances.admin.RemoveEntity;
 import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
 import com.lol.spells.instances.aero.Gust;
@@ -24,6 +25,8 @@ import com.lol.spells.instances.aero.Vaporize;
 import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
+import com.lol.spells.instances.arcano.OuroborosPrime;
+import com.lol.spells.instances.arcano.PrismaOuroborealis;
 import com.lol.spells.instances.arcano.Surveil;
 import com.lol.spells.instances.astral.Starfall;
 import com.lol.spells.instances.celestio.Ascension;
@@ -31,7 +34,10 @@ import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
 import com.lol.spells.instances.celestio.Expell;
+import com.lol.spells.instances.celestio.Heal;
+import com.lol.spells.instances.celestio.Lumina;
 import com.lol.spells.instances.celestio.Lumos;
+import com.lol.spells.instances.celestio.MinorBlessing;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
 import com.lol.spells.instances.celestio.Revelio;
@@ -49,6 +55,7 @@ import com.lol.spells.instances.cosmo.Warp;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.SandBlast;
+import com.lol.spells.instances.glacio.Chill;
 import com.lol.spells.instances.glacio.Freeze;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
@@ -91,6 +98,9 @@ public class SpellRegistry
         		Ascension.class,
         		SolarExpanse.class,
         		Satiate.class,
+        		Lumina.class,
+        		MinorBlessing.class,
+        		Heal.class,
         		
         		//Mortio
         		Haunt.class,
@@ -117,6 +127,7 @@ public class SpellRegistry
         		Freeze.class,
         		IcyWind.class,
         		Scald.class,
+        		Chill.class,
         		
         		//Aero
         		Diffindo.class,
@@ -132,6 +143,7 @@ public class SpellRegistry
         		ChainLightning.class,
         		Vaporize.class,
         		HealingCurrent.class,
+        		Fly.class,
         		
         		//Geo
         		Expelliarmus.class,
@@ -157,6 +169,8 @@ public class SpellRegistry
         		ArcaneBolt.class,
         		Surveil.class,
         		Freecast.class,
+        		PrismaOuroborealis.class,
+        		OuroborosPrime.class,
         		
         		//Astral
         		Starfall.class,

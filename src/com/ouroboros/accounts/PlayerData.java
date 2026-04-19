@@ -88,6 +88,7 @@ public class PlayerData
 	    	setFunds(true, 0);
 	    	setFunds(false, 0);
 	    	setLuminite(0);
+	    	setScrap(0);
 	    	for (ElementType eType : ElementType.values())
 	    	{
 	    		if (!ElementType.elemental.contains(eType)) continue;

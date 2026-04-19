@@ -141,7 +141,7 @@ public class WandUpgradePage extends ObsGui
 			if (isNewTier) 
 			{
 			    PrintUtils.OBSFormatPrint(p, "&e&oResonance Liberation Success! \n" + 
-			        "&r&fYou can now access a new tier of magic and wands: " + PrintUtils.rarityToString(currentWand.getRarity()) +" &e&l->&r&f "+ PrintUtils.rarityToString(upgradeTo.getRarity()));
+			        "&r&d&oMagic Gnosis&r&f Increased! You can now access a new tier of magic and wands: " + PrintUtils.rarityToString(currentWand.getRarity()) +" &e&l->&r&f "+ PrintUtils.rarityToString(upgradeTo.getRarity()));
 			    data.setMagicProficiency(upgradeTo.getRarity().getRarity());
 			} 
 			else 
