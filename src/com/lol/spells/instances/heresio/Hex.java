@@ -37,9 +37,9 @@ public class Hex extends Spell
 				"&r&fAny attemps made to &e&oCure&r&f the affliction without a &e&oDiagnosis&r&f",
 				"&r&fwill result in the effect worsening up to &b&o10 levels&r&f.",
 				"&r&c&lPVP&r&f: The Hex will potentially worsen to maximum stacks &7(lvl10)&f within &b&o5min&r &7(14.5%)","",
-				"&r&2WildCard&e Effect&r&f: applies a random debuff on the target.",
+				"&r&2WildCard&e Effect&r&f: applies a random debuff on the target.","",
 				"&r&2Backfire &bChance&f: &b&o2.25%&r&7 / &c&o5.25% &r&7(&cPVP&7)",
-				"&r&2Backfire &eEffect&f: The spell fizzles, and affects the caster instead.");
+				"&r&2Backfire &eEffect&f: The spell fizzles, and may include a &2&oPenance&r&f.");
 	}
 
 	@Override
@@ -65,11 +65,11 @@ public class Hex extends Spell
 			if (Chance.of(Ouroboros.debug ? 100 : backfireChance)) 
 			{
 				OBSParticles.drawLine(target.getLocation(), p.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
-				playBackfire(p);
+				playBackfire(p, 0);
 			} 
 			else 
 			{
-				spellEffect((LivingEntity) target, p);
+				spellEffect((LivingEntity) target, p, 0);
 				if (isPlayer) playerTimer((Player) target);
 			}
 		}, 15);
@@ -83,12 +83,20 @@ public class Hex extends Spell
 		return this.getManacost();
 	}
 
-	private static void spellEffect(LivingEntity entity, Player caster)
+	public static void spellEffect(LivingEntity entity, Player caster, int seconds)
 	{
 		OBSParticles.drawAngledCircle(entity.getEyeLocation(), 2, 8, 45, -0.1, Particle.WARPED_SPORE, null);
 		OBSParticles.drawCylinder(entity.getLocation(), entity.getWidth(), (int)(entity.getHeight()+1), 15, 0.5, 0.5, Particle.ENCHANT, null);
 		EntityEffects.playSound(caster, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		HeresioEffects.addWildcard(entity, 0);
+		
+		if (seconds == 0)
+		{			
+			HeresioEffects.addWildcard(entity, 0);
+		}
+		else
+		{
+			HeresioEffects.addWildcard(entity, 0, seconds);
+		}
 		
 		if (entity instanceof Player p) 
 		{
@@ -97,7 +105,7 @@ public class Hex extends Spell
 		}
 	}
 
-	private static void playBackfire(Player player)
+	public static void playBackfire(Player player, int seconds)
 	{
 		PrintUtils.PrintToActionBar(player, "&cThe Spell Backfired!");
 		if (HeresioEffects.isHexed.containsKey(player.getUniqueId())) 
@@ -108,7 +116,7 @@ public class Hex extends Spell
 		EntityEffects.playSound(player, Sound.BLOCK_CHAIN_BREAK, SoundCategory.AMBIENT);
 		EntityEffects.playSound(player, Sound.ENTITY_ENDERMAN_AMBIENT, SoundCategory.AMBIENT);
 		OBSParticles.drawLine(player.getLocation(), player.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
-		spellEffect(player, player);
+		spellEffect(player, player, seconds);
 		playerTimer(player);
 	}
 

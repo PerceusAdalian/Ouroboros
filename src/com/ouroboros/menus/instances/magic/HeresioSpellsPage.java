@@ -7,10 +7,13 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.heresio.AvadaKedavra;
 import com.lol.spells.instances.heresio.Hex;
-import com.ouroboros.menus.ObsGui;
+import com.lol.spells.instances.heresio.Mania;
+import com.lol.spells.instances.heresio.Penance;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class HeresioSpellsPage extends ObsGui
@@ -23,7 +26,23 @@ public class HeresioSpellsPage extends ObsGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.placeSpellButton(player, new Hex(), 10, this);
+		// 1
+		
+		// 2
+		
+		// 3
+		GuiButton.placeSpellButton(player, new Penance(), 10, this);
+		
+		// 4
+		GuiButton.placeSpellButton(player, new Mania(), 11, this);
+		
+		// 5
+		
+		// 6
+		
+		// 7
+		GuiButton.placeSpellButton(player, new Hex(), 12, this);
+		GuiButton.placeSpellButton(player, new AvadaKedavra(), 13, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
