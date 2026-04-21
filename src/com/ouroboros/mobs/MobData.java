@@ -36,6 +36,7 @@ import com.ouroboros.utils.entityeffects.ArcanoEffects;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.CosmoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.GeoEffects;
 import com.ouroboros.utils.entityeffects.HeresioEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
 
@@ -321,6 +322,7 @@ public class MobData
 		if (AeroEffects.hasShock.contains(uuid) && element == ElementType.AERO) value *= 1.25;
 		if (HeresioEffects.isIntimidated.contains(uuid) && element == ElementType.HERESIO) value *= 1.20;
 		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
+		if (GeoEffects.hasVulnerable.contains(uuid) && ElementType.physical.contains(element)) value *= 1.5;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;

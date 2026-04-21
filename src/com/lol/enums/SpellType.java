@@ -8,6 +8,7 @@ public enum SpellType
 	UTILITY("&r&b&oUtility&r&f"),
 	CONTROL("&r&d&oControl&r&f"),
 	BUFF("&r&6&oBuff&r&f"),
+	DEBUFF("&r&6&oDebuff&r&f"),
 	CURSE("&r&4&oCurse&r&f"),
 	HEX("&2&lHex&r&f"),
 	ULTIMATE("&r&e&lUltimate&r&f"),

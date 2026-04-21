@@ -54,6 +54,7 @@ import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.cosmo.Warp;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
+import com.lol.spells.instances.geo.Petrify;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.Chill;
 import com.lol.spells.instances.glacio.Freeze;
@@ -159,6 +160,7 @@ public class SpellRegistry
         		Expelliarmus.class,
         		SandBlast.class,
         		Geomorph.class,
+        		Petrify.class,
         		
         		//Cosmo
         		ArrestoMomentum.class,

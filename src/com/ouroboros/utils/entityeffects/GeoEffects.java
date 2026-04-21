@@ -1,7 +1,9 @@
 package com.ouroboros.utils.entityeffects;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -83,5 +85,13 @@ public class GeoEffects
 		
 		EntityEffects.playSound(p, Sound.ITEM_SHIELD_BLOCK, SoundCategory.AMBIENT);
 	    guarded_registry.put(p.getUniqueId(), magnitude);
+	}
+	
+	public static Set<UUID> hasVulnerable = new HashSet<>();
+	public static void addVulnerable(LivingEntity target, int seconds)
+	{
+		if (hasVulnerable.contains(target.getUniqueId())) return;
+		hasVulnerable.add(target.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasVulnerable.remove(target.getUniqueId()), seconds * 20);
 	}
 }
