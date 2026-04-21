@@ -112,7 +112,8 @@ public final class EchoLoreBuilder
             ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : "None Equipped";
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&7&o";
-            lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
+            if (ability != null)
+            	lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
             if (ability != null)
                 for (String line : ability.getDescription())
                     lore.add(line);
