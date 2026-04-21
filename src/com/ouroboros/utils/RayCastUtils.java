@@ -111,6 +111,24 @@ public class RayCastUtils
 	    return true;
 	}
 	
+	public static List<Entity> getNearbyEntities(Entity source, int radius)
+	{
+		List<Entity> nearby = source.getNearbyEntities(radius, radius, radius);
+		List<Entity> finalList = new ArrayList<>();
+		
+		if (nearby.isEmpty()) return null;
+		
+		for (Entity entity : nearby)
+		{
+			if (!(entity instanceof LivingEntity)) continue;
+			if (entity.equals(source)) continue;
+			
+			finalList.add(entity);
+		}
+		
+		return finalList;
+	}
+	
 	public static boolean getNearbyPlayers(Location source, double radius, Consumer<LivingEntity> action)
 	{
 		Collection<Entity> nearbyPlayers = source.getWorld().getNearbyEntities(source, radius, radius, radius);

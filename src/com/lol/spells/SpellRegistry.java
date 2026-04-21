@@ -62,7 +62,10 @@ import com.lol.spells.instances.glacio.Glacius;
 import com.lol.spells.instances.glacio.IcyWind;
 import com.lol.spells.instances.glacio.Riptide;
 import com.lol.spells.instances.glacio.Scald;
+import com.lol.spells.instances.heresio.AvadaKedavra;
 import com.lol.spells.instances.heresio.Hex;
+import com.lol.spells.instances.heresio.Mania;
+import com.lol.spells.instances.heresio.Penance;
 import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Combustion;
@@ -163,6 +166,9 @@ public class SpellRegistry
         		
         		//Heresio
         		Hex.class,
+        		AvadaKedavra.class,
+        		Mania.class,
+        		Penance.class,
         		
         		//Arcano
         		Mute.class,

@@ -76,6 +76,13 @@ public class HeresioEffects
 		PotionEffectType debuff = EntityEffects.debuffs.iterator().next();
 		target.addPotionEffect(new PotionEffect(debuff, seconds * 20, magnitude, true, true, true));
 		isHexed.put(target.getUniqueId(), new WildcardData(debuff, magnitude));
+		
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
+		{
+			if (target instanceof Player p) PrintUtils.PrintToActionBar(p, "&2Wildcard&7&o hex resolved!");
+			target.removePotionEffect(debuff);
+			isHexed.remove(target.getUniqueId());
+		}, seconds*20);
 	}
 	
 	/**
@@ -88,6 +95,17 @@ public class HeresioEffects
 		PotionEffectType debuff = EntityEffects.debuffs.iterator().next();
 		target.addPotionEffect(new PotionEffect(debuff, PotionEffect.INFINITE_DURATION, magnitude, true, true, true));
 		isHexed.put(target.getUniqueId(), new WildcardData(debuff, magnitude));
+	}
+	
+	public static Set<UUID> isIntimidated = new HashSet<>();
+	public static void addIntimidate(LivingEntity target, int magnitude, int seconds)
+	{
+		if (isIntimidated.contains(target.getUniqueId())) return;
+		isIntimidated.add(target.getUniqueId());
+		EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds, magnitude, true);
+		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, magnitude, true);
+		EntityEffects.add(target, PotionEffectType.WEAKNESS, seconds, magnitude, true);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->isIntimidated.remove(target.getUniqueId()), seconds * 20);
 	}
 	
 }
