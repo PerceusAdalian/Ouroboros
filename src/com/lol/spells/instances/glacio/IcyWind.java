@@ -14,7 +14,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -45,8 +45,8 @@ public class IcyWind extends Spell
 			
 			boolean pTarget = target instanceof Player;
 
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.SNOWFLAKE, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.3, Particle.BLOCK_CRUMBLE, Material.SNOW.createBlockData());
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.SNOWFLAKE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.3, Particle.BLOCK_CRUMBLE, Material.SNOW.createBlockData());
 			
 			if (GlacioEffects.hasFrosted.contains(target.getUniqueId())) 
 			{

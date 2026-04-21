@@ -17,7 +17,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -41,13 +41,13 @@ public class RemoveEntity extends Spell
 		{
 			if (!(target instanceof LivingEntity) || target instanceof Player) return;
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CRIMSON_SPORE, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.ASH, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1.5, 0.5, Particle.SMOKE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CRIMSON_SPORE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.ASH, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 1.5, 0.5, Particle.SMOKE, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_HURT, SoundCategory.AMBIENT);
-				OBSParticles.drawAdminCastSigil((LivingEntity) target);
+				ObsParticles.drawAdminCastSigil((LivingEntity) target);
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data != null) data.kill();
 				else target.remove();

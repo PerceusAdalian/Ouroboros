@@ -19,7 +19,7 @@ import com.lol.enums.SpellementType;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.utils.TimeUtils.Timeframe;
 
-public class OBSParticles 
+public class ObsParticles 
 {
 	public static <T> void drawPoint(Location source, Particle p, double heightOffset, @Nullable T data) 
 	{
@@ -113,39 +113,39 @@ public class OBSParticles
 		}
 	}
 	
-	//Same as drawArcLine() but adds an angle at which the arc line can follow.
-	public static <T> void drawAngledArcLine(Location loc1, Location loc2, double interval, double arcPeak, double degTheta, double arcDeviation, Particle particle, T data) 
+	public static <T> void drawAngledArcLine(Location loc1, Location loc2, double interval, double arcPeak, double degTheta, double arcDeviation, Particle particle, T data)
 	{
-		Random rand = new Random();
+	    if (!loc1.getWorld().equals(loc2.getWorld())) return;
 
-		if (!loc1.getWorld().equals(loc2.getWorld())) return;
-		World world = loc1.getWorld();
-		
-		Vector vec1 = loc1.toVector();
-		Vector vec2 = loc2.toVector();
-		
-		double distance = loc1.distance(loc2);
-		Vector direction = vec2.subtract(vec1).normalize();
-		
-		double baseArcHeight = distance / arcPeak; //Controls arc height; the higher the value, the smaller the peak.
-		
-		double thetaRad = Math.toRadians(degTheta + (rand.nextDouble() * arcDeviation - arcDeviation / 2)); // Convert degrees-theta to theta-radians, and adds slight random variation to theta.
-		
-		Vector perp = new Vector(-direction.getZ(), 0, direction.getX()).normalize(); //Assigns a perpendicular vector for rotating 
-		Vector rotatedPerp = perp.clone().rotateAroundAxis(direction, thetaRad); // Rotate around the direction perpendicular to thetaRad
-		
-		for (double length = 0; length < distance; length += interval) 
-		{
-			Vector point = vec1.clone().add(direction.clone().multiply(length)); //Creating points from initial location to final.
-			double arcHeightDeviation = baseArcHeight * Math.sin(Math.PI * (length/distance)); //Controls the arc height as a sine wave.
-			Vector displacement = rotatedPerp.clone().multiply((arcHeightDeviation += (rand.nextDouble() * arcDeviation - arcDeviation / 2)));
-			world.spawnParticle(particle, 
-					point.getX() + displacement.getX(), //Applying x, y, and z coordinates of the particle to their displacement. 
-					point.getY() + displacement.getY(), 
-					point.getZ() + displacement.getZ(), 
-					0, 0, 0, 0, 
-					data);
-		}
+	    World world = loc1.getWorld();
+	    Random rand = new Random();
+
+	    Vector vec1 = loc1.toVector();
+	    Vector vec2 = loc2.toVector();
+
+	    double distance = vec1.distance(vec2);
+	    if (distance == 0) return;
+
+	    Vector direction = vec2.clone().subtract(vec1).normalize();
+
+	    double baseArcHeight = distance / arcPeak;
+	    double thetaRad = Math.toRadians(degTheta);
+
+	    Vector up = Math.abs(direction.getY()) < 0.99 ? new Vector(0, 1, 0) : new Vector(1, 0, 0);
+	    Vector perp = direction.clone().crossProduct(up).normalize();
+	    Vector rotatedPerp = perp.clone().rotateAroundAxis(direction, thetaRad);
+
+	    for (double length = 0; length <= distance; length += interval)
+	    {
+	        double t = length / distance; // Normalized 0..1
+	        double arcHeight = baseArcHeight * Math.sin(Math.PI * t);
+	        double deviation = (rand.nextDouble() * 2 - 1) * arcDeviation;
+
+	        Vector point = vec1.clone().add(direction.clone().multiply(length));
+	        Vector displacement = rotatedPerp.clone().multiply(arcHeight + deviation);
+
+	        world.spawnParticle(particle, point.getX() + displacement.getX(), point.getY() + displacement.getY(), point.getZ() + displacement.getZ(), 0, 0, 0, 0, data);
+	    }
 	}
 	
 	public static <T> void drawCircle(Location location, double radius, double density, double heightOffset, Particle particle, T data)
@@ -390,17 +390,17 @@ public class OBSParticles
 		
 		switch (sType)
 		{
-			case NULL -> OBSParticles.drawAdminCastSigil(player);
-			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
-			case AERO -> OBSParticles.drawAeroCastSigil(player);
-			case COSMO -> OBSParticles.drawCosmoCastSigil(player);
-			case GEO -> OBSParticles.drawGeoCastSigil(player);
-			case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
-			case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
-			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
-			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
-			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
-			case ASTRAL -> OBSParticles.drawAstralCastSigil(player, isDay);
+			case NULL -> ObsParticles.drawAdminCastSigil(player);
+			case CELESTIO -> ObsParticles.drawCelestioCastSigil(player);
+			case AERO -> ObsParticles.drawAeroCastSigil(player);
+			case COSMO -> ObsParticles.drawCosmoCastSigil(player);
+			case GEO -> ObsParticles.drawGeoCastSigil(player);
+			case GLACIO -> ObsParticles.drawGlacioCastSigil(player);
+			case HERESIO -> ObsParticles.drawHeresioCastSigil(player);
+			case INFERNO -> ObsParticles.drawInfernoCastSigil(player);
+			case MORTIO -> ObsParticles.drawMortioCastSigil(player);
+			case ARCANO -> ObsParticles.drawArcanoCastSigil(player);
+			case ASTRAL -> ObsParticles.drawAstralCastSigil(player, isDay);
 		}
 	}
 	
@@ -408,15 +408,15 @@ public class OBSParticles
 	{
 		switch (eType)
 		{
-			case CELESTIO -> OBSParticles.drawCelestioCastSigil(player);
-			case AERO -> OBSParticles.drawAeroCastSigil(player);
-			case COSMO -> OBSParticles.drawCosmoCastSigil(player);
-			case GEO -> OBSParticles.drawGeoCastSigil(player);
-			case GLACIO -> OBSParticles.drawGlacioCastSigil(player);
-			case HERESIO -> OBSParticles.drawHeresioCastSigil(player);
-			case INFERNO -> OBSParticles.drawInfernoCastSigil(player);
-			case MORTIO -> OBSParticles.drawMortioCastSigil(player);
-			case ARCANO -> OBSParticles.drawArcanoCastSigil(player);
+			case CELESTIO -> ObsParticles.drawCelestioCastSigil(player);
+			case AERO -> ObsParticles.drawAeroCastSigil(player);
+			case COSMO -> ObsParticles.drawCosmoCastSigil(player);
+			case GEO -> ObsParticles.drawGeoCastSigil(player);
+			case GLACIO -> ObsParticles.drawGlacioCastSigil(player);
+			case HERESIO -> ObsParticles.drawHeresioCastSigil(player);
+			case INFERNO -> ObsParticles.drawInfernoCastSigil(player);
+			case MORTIO -> ObsParticles.drawMortioCastSigil(player);
+			case ARCANO -> ObsParticles.drawArcanoCastSigil(player);
 			default -> throw new IllegalArgumentException("Unexpected value: " + eType);
 		}
 	}

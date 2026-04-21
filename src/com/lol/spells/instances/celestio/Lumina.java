@@ -16,7 +16,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -49,7 +49,7 @@ public class Lumina extends Spell
         {
         	if (block == null || !block.getType().equals(Material.LIGHT)) b.cancel();
         	
-        	OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
+        	ObsParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
         }, 20, 600);
         
         Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
@@ -57,7 +57,7 @@ public class Lumina extends Spell
             if (block.getType().equals(Material.LIGHT))
             {
                 block.setType(Material.AIR);
-                OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.CLOUD, null);
+                ObsParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.CLOUD, null);
             }
         }, 600);
 		

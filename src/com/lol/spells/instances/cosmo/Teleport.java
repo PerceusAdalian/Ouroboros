@@ -29,7 +29,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CosmoEffects;
@@ -71,9 +71,9 @@ public class Teleport extends Spell
 			    pLoc.setPitch(le.getLocation().getPitch());
 			    
 			    EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			    OBSParticles.drawLine(pLoc, tLoc, 0.8, 0.5, Particle.END_ROD, null);
-			    OBSParticles.drawSinLine(pLoc, tLoc, 0.6, Particle.DRAGON_BREATH, 0.5f);
-			    OBSParticles.drawLine(pLoc, tLoc, 0.4, 0.5, Particle.ENCHANT, null);
+			    ObsParticles.drawLine(pLoc, tLoc, 0.8, 0.5, Particle.END_ROD, null);
+			    ObsParticles.drawSinLine(pLoc, tLoc, 0.6, Particle.DRAGON_BREATH, 0.5f);
+			    ObsParticles.drawLine(pLoc, tLoc, 0.4, 0.5, Particle.ENCHANT, null);
 			    
 			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			    {
@@ -84,8 +84,8 @@ public class Teleport extends Spell
 				    			EntityEffects.playSound((Player) le, Sound.ENTITY_PLAYER_TELEPORT, SoundCategory.AMBIENT), 5);
 					    else CosmoEffects.addVoided(le, 20);
 			    		
-			    		OBSParticles.drawCosmoCastSigil(p);
-			    		OBSParticles.drawCosmoCastSigil(le);
+			    		ObsParticles.drawCosmoCastSigil(p);
+			    		ObsParticles.drawCosmoCastSigil(le);
 			    		
 			    		p.teleport(tLoc);
 			    		le.teleport(pLoc);			    		
@@ -111,16 +111,16 @@ public class Teleport extends Spell
 			bLoc.setPitch(p.getLocation().getPitch());
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		    OBSParticles.drawLine(p.getLocation(), bLoc, 0.8, 0.5, Particle.END_ROD, null);
-		    OBSParticles.drawSinLine(p.getLocation(), bLoc, 0.6, Particle.DRAGON_BREATH, 0.5f);
-		    OBSParticles.drawLine(p.getLocation(), bLoc, 0.4, 0.5, Particle.ENCHANT, null);
+		    ObsParticles.drawLine(p.getLocation(), bLoc, 0.8, 0.5, Particle.END_ROD, null);
+		    ObsParticles.drawSinLine(p.getLocation(), bLoc, 0.6, Particle.DRAGON_BREATH, 0.5f);
+		    ObsParticles.drawLine(p.getLocation(), bLoc, 0.4, 0.5, Particle.ENCHANT, null);
 		    
 		    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		    {
 		    	if (bLoc != null)
 		    	{
 		    		p.teleport(bLoc);
-		    		OBSParticles.drawCosmoCastSigil(p);
+		    		ObsParticles.drawCosmoCastSigil(p);
 			    }
 		    	
 		    }, 10);
@@ -179,17 +179,17 @@ public class Teleport extends Spell
 			        if (block != null && !block.getType().equals(Material.AIR) && !p.isSneaking())
 			        {
 			        	Location centered = block.getLocation().clone().add(0.5, 0.5, 0.5);
-			            OBSParticles.drawPoint(centered, Particle.CLOUD, 1.1, null);
-			            OBSParticles.drawDisc(centered, 1, 1, 3, 1.1, Particle.END_ROD, null);
-			            OBSParticles.drawDisc(centered, 1, 1, 3, 1.1, Particle.BLOCK_CRUMBLE, Material.END_STONE.createBlockData());
+			            ObsParticles.drawPoint(centered, Particle.CLOUD, 1.1, null);
+			            ObsParticles.drawDisc(centered, 1, 1, 3, 1.1, Particle.END_ROD, null);
+			            ObsParticles.drawDisc(centered, 1, 1, 3, 1.1, Particle.BLOCK_CRUMBLE, Material.END_STONE.createBlockData());
 		            }
 			        else
 			        {
 			            RayCastUtils.getEntity(p, 30, target ->
 			            {
 			                if (target == null || !(target instanceof LivingEntity le)) return;
-			                OBSParticles.drawDisc(le.getLocation(), le.getWidth()+1.25, 2, 6, 0.5, Particle.PORTAL, null);
-				    		OBSParticles.drawDisc(le.getLocation(), le.getWidth()+2,1,6,0.1,Particle.WITCH,null);
+			                ObsParticles.drawDisc(le.getLocation(), le.getWidth()+1.25, 2, 6, 0.5, Particle.PORTAL, null);
+				    		ObsParticles.drawDisc(le.getLocation(), le.getWidth()+2,1,6,0.1,Particle.WITCH,null);
 			            });
 			        }
 

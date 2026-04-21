@@ -10,7 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 
 public class ArcanoEffects
@@ -22,7 +22,7 @@ public class ArcanoEffects
 		ObsTimer.runWithCancel(Ouroboros.instance, e->
 		{
 			if (target.isDead()) return;
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
 		}, 20, seconds*20);
 		hasEtherOverload.add(target.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasEtherOverload.remove(target.getUniqueId()), seconds * 20);
@@ -35,8 +35,8 @@ public class ArcanoEffects
 		ObsTimer.runWithCancel(Ouroboros.instance, e->
 		{
 			if (target.isDead()) return;
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
-			OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 4, 0.1, Particle.BUBBLE_COLUMN_UP, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 3, Particle.GLOW_SQUID_INK, null);
+			ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 4, 0.1, Particle.BUBBLE_COLUMN_UP, null);
 		}, 20, seconds*20);
 		hasEtherDisruption.add(target.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasEtherDisruption.remove(target.getUniqueId()), seconds * 20);

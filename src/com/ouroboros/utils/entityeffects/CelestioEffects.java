@@ -17,7 +17,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.helpers.DivineFavorData;
 
@@ -29,7 +29,7 @@ public class CelestioEffects
 		if (EntityCategories.celestio_mobs.contains(target.getType())) return;
 		if (hasHumility.contains(target.getUniqueId())) return;
 		hasHumility.add(target.getUniqueId());
-		OBSParticles.drawCelestioCastSigil(target);
+		ObsParticles.drawCelestioCastSigil(target);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasHumility.remove(target.getUniqueId()), seconds * 20);
 	}
 	

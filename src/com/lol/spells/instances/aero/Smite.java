@@ -16,7 +16,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -36,7 +36,7 @@ public class Smite extends Spell
 		Entity target = RayCastUtils.getEntity(p, 25);
 		if (!(target instanceof LivingEntity) || target == null) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			target.getWorld().strikeLightning(target.getLocation()), 15);
 		return this.getManacost();

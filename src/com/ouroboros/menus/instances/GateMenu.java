@@ -18,7 +18,7 @@ import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -51,7 +51,7 @@ public class GateMenu extends ObsGui
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in a &a&ofamiliar world&r&7&o..");
-					OBSParticles.drawCosmoCastSigil(p);
+					ObsParticles.drawCosmoCastSigil(p);
 					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 				}, 25);
 				
@@ -79,7 +79,7 @@ public class GateMenu extends ObsGui
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in &c&oHell&r&7&o..");
-					OBSParticles.drawCosmoCastSigil(p);
+					ObsParticles.drawCosmoCastSigil(p);
 					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 					EntityEffects.playSound(p, Sound.AMBIENT_NETHER_WASTES_ADDITIONS, SoundCategory.AMBIENT);
 				}, 25);
@@ -108,7 +108,7 @@ public class GateMenu extends ObsGui
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					PrintUtils.PrintToActionBar(p, "&7&oYou've arrived in a &3&oforeign dimension&r&f..");
-					OBSParticles.drawCosmoCastSigil(p);
+					ObsParticles.drawCosmoCastSigil(p);
 					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_AMBIENT, SoundCategory.AMBIENT);
 				}, 25);

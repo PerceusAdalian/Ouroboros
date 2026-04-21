@@ -26,7 +26,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -63,8 +63,8 @@ public class ReapAndSew extends ObsAbility
 
             if (!remainingSeconds.containsKey(target.getUniqueId()))
             {
-                OBSParticles.drawMortioCastSigil(p);
-                OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
+                ObsParticles.drawMortioCastSigil(p);
+                ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
                 MortioEffects.addDoom((LivingEntity) target, 2, 20);
                 remainingSeconds.put(target.getUniqueId(), seconds);
                 ObsTimer.runWithCancel(Ouroboros.instance, (r) -> 
@@ -82,9 +82,9 @@ public class ReapAndSew extends ObsAbility
             
             else if (MortioEffects.hasDoom.containsKey(target.getUniqueId()))
             {
-                OBSParticles.drawMortioCastSigil(p);
-                OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
-                OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
+                ObsParticles.drawMortioCastSigil(p);
+                ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SMOKE, null);
+                ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
 
                 int dmg = remainingSeconds.get(target.getUniqueId());
                 
@@ -92,15 +92,15 @@ public class ReapAndSew extends ObsAbility
                 {
                 	p.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).normalize());
                     EntityEffects.playSound(p, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.MASTER);
-                    OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SMOKE, null);
-                    OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SCULK_SOUL, null);
+                    ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SMOKE, null);
+                    ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), target.getHeight()+1, target.getHeight()+2, 3, 6, 0.1, Particle.SCULK_SOUL, null);
                     MobData.damageUnnaturally(p, target, dmg, true, true, ElementType.MORTIO);
                 }, 10);
                 Bukkit.getScheduler().runTaskLater(Ouroboros.instance,()->
                 {
-                    OBSParticles.drawLine(target.getLocation(), p.getLocation(), Math.max(1, (int) target.getLocation().distance(p.getLocation())), 0.5, Particle.HAPPY_VILLAGER, null);
+                    ObsParticles.drawLine(target.getLocation(), p.getLocation(), Math.max(1, (int) target.getLocation().distance(p.getLocation())), 0.5, Particle.HAPPY_VILLAGER, null);
                     EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
-                    OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
+                    ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
                     
                     double maxHealth = ((Attributable) p).getAttribute(Attribute.MAX_HEALTH).getValue();
                     p.setHealth(Math.min(p.getHealth() + (dmg / 2.0), maxHealth));

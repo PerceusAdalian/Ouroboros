@@ -18,7 +18,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -39,7 +39,7 @@ public class Surveil extends Spell
 		if (!RayCastUtils.getEntity(p, 30, target->
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
 			if (target instanceof LivingEntity && !(target instanceof Player))
 			{
 				MobData data = MobData.getMob(target.getUniqueId());
@@ -49,7 +49,7 @@ public class Surveil extends Spell
 				if (name == null) name = PrintUtils.getFancyEntityName(target.getType());
 				double currentHP = new BigDecimal(data.getHp(false)).setScale(1, RoundingMode.HALF_UP).doubleValue();
 				
-				OBSParticles.drawArcanoCastSigil((LivingEntity) target);
+				ObsParticles.drawArcanoCastSigil((LivingEntity) target);
 				
 				PrintUtils.Print(p, "&b&l+&r&7-------------&f{&bΩ&f}&7-------------&b&l+",
 									"         &r&b&lTarget Identified&f:",

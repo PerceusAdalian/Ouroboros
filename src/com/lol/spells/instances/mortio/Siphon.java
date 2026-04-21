@@ -19,7 +19,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -47,8 +47,8 @@ public class Siphon extends Spell
 		if (data == null) return -1;
 		
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		OBSParticles.drawLine(target.getLocation(), p.getLocation(), 0.3, 0.4, Particle.CRIMSON_SPORE, null);
-		OBSParticles.drawLine(target.getLocation(), p.getLocation(), 0.7, 0.4, Particle.SMOKE, null);
+		ObsParticles.drawLine(target.getLocation(), p.getLocation(), 0.3, 0.4, Particle.CRIMSON_SPORE, null);
+		ObsParticles.drawLine(target.getLocation(), p.getLocation(), 0.7, 0.4, Particle.SMOKE, null);
 		
 		double damage;
 		if (target instanceof Player player) 
@@ -60,8 +60,8 @@ public class Siphon extends Spell
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
-			OBSParticles.drawArcLine(target.getLocation(), p.getLocation(), 0.3, 3, Particle.ASH, null);
-			OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
+			ObsParticles.drawArcLine(target.getLocation(), p.getLocation(), 0.3, 3, Particle.ASH, null);
+			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 			EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
 			EntityEffects.heal(p, target instanceof Player ? damage * 0.3d : damage * 0.5d);			
 		}, 15);

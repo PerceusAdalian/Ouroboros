@@ -14,7 +14,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.GlacioEffects;
@@ -40,8 +40,8 @@ public class Glacius extends Spell
 		if (!RayCastUtils.getEntity(p, 20, target ->
 		{
 			if (target == null || !(target instanceof LivingEntity) || target instanceof Player) return;
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.2, 0.5, Particle.SNOWFLAKE, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.7, 0.5, Particle.CRIT, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.2, 0.5, Particle.SNOWFLAKE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.7, 0.5, Particle.CRIT, null);
 			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.GLACIO);
 			GlacioEffects.addFrosted((LivingEntity) target, 0, 10);
 		})) return -1;

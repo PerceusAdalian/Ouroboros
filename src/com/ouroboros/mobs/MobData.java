@@ -29,7 +29,7 @@ import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.Nullable;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.AeroEffects;
 import com.ouroboros.utils.entityeffects.ArcanoEffects;
@@ -38,7 +38,6 @@ import com.ouroboros.utils.entityeffects.CosmoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.HeresioEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
-import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class MobData 
 {
@@ -316,12 +315,12 @@ public class MobData
 			else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
 		}
 		
-		if (MortioEffects.hasDoom.containsKey(uuid) && element == ElementType.MORTIO) value *= 1.25;
-		if (AeroEffects.hasStatic.containsKey(uuid) && element == ElementType.AERO) value *= 1.25;
-		if (HeresioEffects.isCursed.contains(uuid) && element == ElementType.MORTIO) value *= 1.20;
-		if (InfernoEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.15;
-		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
+		//Damage Bonuses From Effects
 		if (CelestioEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
+		if (InfernoEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.25;
+		if (AeroEffects.hasShock.contains(uuid) && element == ElementType.AERO) value *= 1.25;
+		if (HeresioEffects.isIntimidated.contains(uuid) && element == ElementType.HERESIO) value *= 1.20;
+		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
 		
 		double currentHP = data.getHp(false);
 		double newHP = currentHP - value;
@@ -337,7 +336,7 @@ public class MobData
 		MobNameplate.update((LivingEntity) entity);
 		if (healArmor)
 			healArmor(value, setMaxArmor);
-		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
+		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
 	}
 	
 	public void healArmor(double value, boolean setMax)
@@ -347,7 +346,7 @@ public class MobData
 		setArmor(setMax ? getArmor(true) : (getArmor(false) + (int) value), false);
 		Entity entity = Bukkit.getEntity(uuid);
 		MobNameplate.update((LivingEntity) entity);
-		OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
+		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
 	}
 	
 	public void damageArmor(double value)
@@ -361,7 +360,7 @@ public class MobData
 		{
 			setBreak(true);
 			Entity entity = Bukkit.getEntity(uuid);
-			OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
+			ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
 			setArmor(0, false);
 			MobNameplate.update((LivingEntity) entity);
 			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
@@ -470,7 +469,7 @@ public class MobData
 	    setArmor(0, false);
 	    setBreak(true);
 	    Entity entity = Bukkit.getEntity(uuid);
-	    OBSParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
+	    ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
 	    MobNameplate.update((LivingEntity) entity);
 	    Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, () ->
 	    {

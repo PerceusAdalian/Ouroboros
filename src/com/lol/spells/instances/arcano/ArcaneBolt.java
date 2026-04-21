@@ -16,7 +16,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.ArcanoEffects;
@@ -41,7 +41,7 @@ public class ArcaneBolt extends Spell
 		{
 			if (target == null || !(target instanceof LivingEntity)) return;
 			MobData.damageUnnaturally(p, target, 4, true, true, ElementType.ARCANO);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ArcanoEffects.addEtherOverload((LivingEntity) target, 20);			
 		})) return -1;

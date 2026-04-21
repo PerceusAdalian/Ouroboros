@@ -1,7 +1,9 @@
 package com.ouroboros.utils.entityeffects;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -13,7 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 
@@ -36,13 +38,13 @@ public class AeroEffects
 		{
 			if (target.isDead() || (target instanceof Player p && !p.isOnline())) return;
 			
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.ELECTRIC_SPARK, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.ELECTRIC_SPARK, null);
 			
 			RayCastUtils.getNearbyEntities(target, 10, (C)->
 			{
 				if (!(C instanceof LivingEntity) || C.equals(caster)) return;
 				
-				OBSParticles.drawLine(target.getLocation(), C.getLocation(), target.getLocation().distance(target.getLocation())%2+1, 0.5, Particle.END_ROD, null);
+				ObsParticles.drawLine(target.getLocation(), C.getLocation(), target.getLocation().distance(target.getLocation())%2+1, 0.5, Particle.END_ROD, null);
 				
 				MobData data = MobData.getMob(C.getUniqueId());
 				if (EntityCategories.aero_mobs.contains(C.getType()))
@@ -59,16 +61,20 @@ public class AeroEffects
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasStatic.remove(target.getUniqueId()), seconds*20);
 	}
 	
+	public static Set<UUID> hasShock = new HashSet<>();
 	//"&dShock &eEffect&f: stuns those affected and causes them to glow."
 	public static void addShock(LivingEntity target, int seconds)
 	{
+		if (hasShock.contains(target.getUniqueId())) return;
+		hasShock.add(target.getUniqueId());
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 99, true);
 		EntityEffects.add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
 		ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		{
 			if (target.isDead()) return;
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
 		}, 10, seconds*20);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasShock.remove(target.getUniqueId()), seconds * 20);
 	}
 
 	//"&dCharged &eEffect&f: Boosts &bSpeed&f and &bEfficiency&f scaled with the &bmagnitude&f."
@@ -79,7 +85,7 @@ public class AeroEffects
 		ObsTimer.runWithCancel(Ouroboros.instance, (r)->
 		{
 			if (target.isDead()) return;
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.DRAGON_BREATH, 1.0f);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.DRAGON_BREATH, 1.0f);
 		}, 10, seconds*20);
 	}
 }

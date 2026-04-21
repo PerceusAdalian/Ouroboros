@@ -15,7 +15,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.GlacioEffects;
@@ -40,10 +40,10 @@ public class Chill extends Spell
 		Entity target = RayCastUtils.getEntity(p, 20);
 		if (target instanceof LivingEntity le)
 		{
-			OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.4, Particle.SNOWFLAKE, null);
+			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.4, Particle.SNOWFLAKE, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				OBSParticles.drawDisc(le.getLocation(), le.getWidth(), 2, 5, 0.3, Particle.SNOWFLAKE, null);
+				ObsParticles.drawDisc(le.getLocation(), le.getWidth(), 2, 5, 0.3, Particle.SNOWFLAKE, null);
 				if (GlacioEffects.hasFrosted.contains(le.getUniqueId()))
 				{
 					GlacioEffects.addChill(p, le, 0, target instanceof Player ? 3 : 20);

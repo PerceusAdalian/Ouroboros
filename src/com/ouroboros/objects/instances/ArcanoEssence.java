@@ -12,7 +12,7 @@ import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.ItemCollector;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -37,7 +37,7 @@ public class ArcanoEssence extends AbstractObsObject
 		if (PlayerActions.rightClickAir(e)) 
 		{
 			e.setCancelled(true);
-			OBSParticles.drawArcanoCastSigil(p);
+			ObsParticles.drawArcanoCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.ARCANO, e.getItem().getAmount());
 			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r"+PrintUtils.color(ObsColors.ARCANO)+"⚛&f Added");

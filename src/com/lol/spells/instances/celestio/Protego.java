@@ -12,7 +12,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -34,7 +34,7 @@ public class Protego extends Spell
 	{
 		Player p = (Player) e.getPlayer();
 		
-		OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 7, 0.5, 0.5, Particle.ENCHANT, null);
+		ObsParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 7, 0.5, 0.5, Particle.ENCHANT, null);
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		CelestioEffects.addWard(p, 2, 15);
 		return this.getManacost();

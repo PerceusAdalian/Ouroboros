@@ -27,7 +27,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.Nullable;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.WarpData;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -41,7 +41,7 @@ public class PlayerData
 	public static final int MAXMAGIC = 7;
 	public static final int maxLuminite = 9999;
 	public static final int maxEssence = 9999;
-	public static final int maxScrap = 999999;
+	public static final int maxScrap = 9999;
 	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -282,8 +282,8 @@ public class PlayerData
 			if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
 			{
 				EntityEffects.playSound(p, Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER);
-				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
-				OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);	
+				ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 15, 0.5, Particle.CLOUD, null);
+				ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);	
 			}
 			if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
 				PrintUtils.Print(p, "","&f|&bΩ&f|&b&l "+PrintUtils.printStatType(sType)+"&r&f Leveled Up! | &7Lvl "+preLevel+" &r&7-> "+ "&f&lLvl &r&b&l" + level,

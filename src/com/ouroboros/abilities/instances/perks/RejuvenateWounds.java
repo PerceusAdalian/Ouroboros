@@ -26,7 +26,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class RejuvenateWounds extends ObsAbility
@@ -64,8 +64,8 @@ public class RejuvenateWounds extends ObsAbility
 						cooldownSet.add(p.getUniqueId());
 						Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()-> cooldownSet.remove(p.getUniqueId()), 1200);
 						EntityEffects.playSound(p, Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.MASTER);
-						OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 2, 20, 0.5, Particle.CRIMSON_SPORE, null);
-						OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 2, 20, 0.5, Particle.SMOKE, null);
+						ObsParticles.drawDisc(p.getLocation(), p.getWidth()+1, 2, 20, 0.5, Particle.CRIMSON_SPORE, null);
+						ObsParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 2, 20, 0.5, Particle.SMOKE, null);
 						EntityEffects.add(p, PotionEffectType.REGENERATION, 300, 0);
 						return true;
 					}
@@ -86,8 +86,8 @@ public class RejuvenateWounds extends ObsAbility
 					cooldownSet.add(p.getUniqueId());
 					Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()-> cooldownSet.remove(p.getUniqueId()), 1200);
 					EntityEffects.playSound(p, Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.MASTER);
-					OBSParticles.drawDisc(p.getLocation(), p.getWidth()+1, 2, 20, 0.5, Particle.CRIMSON_SPORE, null);
-					OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 2, 20, 0.5, Particle.SMOKE, null);
+					ObsParticles.drawDisc(p.getLocation(), p.getWidth()+1, 2, 20, 0.5, Particle.CRIMSON_SPORE, null);
+					ObsParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 2, 20, 0.5, Particle.SMOKE, null);
 					EntityEffects.add(p, PotionEffectType.REGENERATION, 300, 0);
 					return true;
 				}

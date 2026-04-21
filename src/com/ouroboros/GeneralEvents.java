@@ -30,7 +30,7 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
@@ -95,9 +95,9 @@ public class GeneralEvents implements Listener
         			if (HeresioEffects.isHexed.containsKey(p.getUniqueId()))
         			{
         				e.setCancelled(true);
-        				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
-						OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.SCULK_SOUL, null);
-						OBSParticles.drawHeresioCastSigil(p);
+        				ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
+						ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.SCULK_SOUL, null);
+						ObsParticles.drawHeresioCastSigil(p);
 						PrintUtils.PrintToActionBar(p, "&2&oThe Hex Worsens..");
 						EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
 						
@@ -119,9 +119,9 @@ public class GeneralEvents implements Listener
         			PrintUtils.PrintToActionBar(p, "&2&oThe Hex Came Back!");
         			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
         			{        				
-        				OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
-        				OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.SCULK_SOUL, null);
-        				OBSParticles.drawHeresioCastSigil(p);
+        				ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
+        				ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.SCULK_SOUL, null);
+        				ObsParticles.drawHeresioCastSigil(p);
         				EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
         				
         				WildcardData data = HeresioEffects.isHexed.get(p.getUniqueId());

@@ -20,7 +20,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -58,16 +58,16 @@ public class Voodoo extends Spell
 				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return;
 				
 				int damage = MortioEffects.jinxRegistry.containsKey(p.getUniqueId()) ? MortioEffects.jinxRegistry.get(p.getUniqueId()).magnitude : 0;
-				OBSParticles.drawCosLine(p.getLocation(), le.getLocation(), 0.4, Particle.CRIMSON_SPORE, null);
-				OBSParticles.drawDisc(le.getLocation(), le.getWidth(), 1, 6, 0.5, Particle.DUST_PLUME, null);
+				ObsParticles.drawCosLine(p.getLocation(), le.getLocation(), 0.4, Particle.CRIMSON_SPORE, null);
+				ObsParticles.drawDisc(le.getLocation(), le.getWidth(), 1, 6, 0.5, Particle.DUST_PLUME, null);
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_AMBIENT_OMINOUS, SoundCategory.AMBIENT);
-					OBSParticles.drawMortioCastSigil(le);
-					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 8, Particle.POOF, null);
-					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 3, Particle.SMOKE, null);
-					OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 5, Particle.ASH, null);
+					ObsParticles.drawMortioCastSigil(le);
+					ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 8, Particle.POOF, null);
+					ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 3, Particle.SMOKE, null);
+					ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 5, Particle.ASH, null);
 					MobData.damageUnnaturally(p, le, damage, true, true, ElementType.CORROSIVE);
 					MortioEffects.addDread(target, 20);
 				}, 15);
@@ -85,18 +85,18 @@ public class Voodoo extends Spell
 				
 				targetCount.incrementAndGet();
 				
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.5, Particle.CRIMSON_SPORE, null);
-				OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.6, 0.4, Particle.ASH, null);
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.3, 0.6, Particle.SMOKE, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.5, Particle.CRIMSON_SPORE, null);
+				ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.6, 0.4, Particle.ASH, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.3, 0.6, Particle.SMOKE, null);
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 				MobData data = MobData.getMob(le.getUniqueId());
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					if (data == null || data.isDead()) return;
 					EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
-					OBSParticles.drawMortioCastSigil(le);
-					OBSParticles.drawCosLine(le.getLocation(), p.getLocation(), 0.6, Particle.CRIMSON_SPORE, null);
-					OBSParticles.drawCosLine(le.getLocation(), p.getLocation(), 0.6, Particle.SMOKE, null);
+					ObsParticles.drawMortioCastSigil(le);
+					ObsParticles.drawCosLine(le.getLocation(), p.getLocation(), 0.6, Particle.CRIMSON_SPORE, null);
+					ObsParticles.drawCosLine(le.getLocation(), p.getLocation(), 0.6, Particle.SMOKE, null);
 					MobData.damageUnnaturally(p, le, (data.getHp(false) * 0.2) + 10, true, true, ElementType.MORTIO);
 				}, 15);
 			})) return -1;

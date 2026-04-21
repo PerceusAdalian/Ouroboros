@@ -15,7 +15,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -37,17 +37,17 @@ public class Heal extends Spell
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		if (target == null || !(target instanceof Player))
 		{
-			OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
+			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
 			EntityEffects.heal(p, 10);
 			return 25;
 		}
 		else if (target instanceof Player pTarget)
 		{		
-			OBSParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
-			OBSParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
+			ObsParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
+			ObsParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				OBSParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
+				ObsParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
 				EntityEffects.heal(pTarget, 10);
 			}, 15);
 			return 25;

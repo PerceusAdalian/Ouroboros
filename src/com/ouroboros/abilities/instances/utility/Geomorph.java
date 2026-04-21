@@ -23,7 +23,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.ItemCollector;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -56,7 +56,7 @@ public class Geomorph extends ObsAbility
 				return false;
 			}
 			
-			OBSParticles.drawGeoCastSigil(p);
+			ObsParticles.drawGeoCastSigil(p);
 			EntityEffects.add(p, PotionEffectType.RESISTANCE, 600, 2);
 			EntityEffects.add(p, PotionEffectType.ABSORPTION, 600, 2);
 			EntityEffects.add(p, PotionEffectType.FIRE_RESISTANCE, 600, 2);

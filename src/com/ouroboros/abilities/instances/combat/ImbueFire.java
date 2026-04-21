@@ -20,7 +20,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -55,14 +55,14 @@ public class ImbueFire extends ObsAbility
 			
 			EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER);
-			OBSParticles.drawInfernoCastSigil(p);
+			ObsParticles.drawInfernoCastSigil(p);
 			isImbuedPlayer.put(p.getUniqueId(), true);
 
 			Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Ouroboros.class), () -> 
 			{
 				isImbuedPlayer.remove(p.getUniqueId());
 				EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.MASTER);
-				OBSParticles.drawInfernoCastSigil(p);
+				ObsParticles.drawInfernoCastSigil(p);
 			}, 600);
 
 			return true;

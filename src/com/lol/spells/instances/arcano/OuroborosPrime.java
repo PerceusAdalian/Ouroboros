@@ -18,7 +18,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.ArcanoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -54,7 +54,7 @@ public class OuroborosPrime extends Spell
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
-			OBSParticles.drawArcanoCastSigil(p);
+			ObsParticles.drawArcanoCastSigil(p);
 			PrintUtils.PrintToActionBar(p, "&b&lΩuroboros &r&7&oexpired, &b&oEther Disruption&r&7&o added..");
 			EntityEffects.playSound(p, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);
 			ouroboros_registry.remove(p.getUniqueId());

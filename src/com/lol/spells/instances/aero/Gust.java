@@ -14,7 +14,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -34,7 +34,7 @@ public class Gust extends Spell
 		Entity target = RayCastUtils.getEntity(p, 7);
 		if (target == null || !(target instanceof LivingEntity)) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);
 		target.setVelocity(target.getLocation().toVector().subtract(p.getLocation().toVector()).multiply(1.15));
 		return this.getManacost();
 	}

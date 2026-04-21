@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
@@ -41,7 +41,7 @@ public class HeresioEffects
 		{
 			PrintUtils.PrintToActionBar(p, "&c&oYou've been cursed!");
 			EntityEffects.playSound(p, Sound.ENTITY_WITHER_SPAWN, SoundCategory.AMBIENT);
-			OBSParticles.drawMortioCastSigil(p);
+			ObsParticles.drawMortioCastSigil(p);
 		}
 		
 		EntityEffects.add(target, PotionEffectType.WEAKNESS, seconds * 20, magnitude, false);

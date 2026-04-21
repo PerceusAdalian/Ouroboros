@@ -9,7 +9,7 @@ import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 
 public class CosmoEffects
@@ -27,13 +27,13 @@ public class CosmoEffects
 		if (isVoidedRegistry.containsKey(target.getUniqueId()))return;
 		isVoidedRegistry.put(target.getUniqueId(), true);
 		
-		OBSParticles.drawCosmoCastSigil(target);
+		ObsParticles.drawCosmoCastSigil(target);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> isVoidedRegistry.remove(target.getUniqueId()), seconds * 20);
 		ObsTimer.runWithCancel(Ouroboros.instance, (r) -> 
 		{
 			if (target.isDead()) return;
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.SCULK_SOUL,null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 4, Particle.SCULK_SOUL,null);
 		}, 20, seconds * 20);
 	}
 }

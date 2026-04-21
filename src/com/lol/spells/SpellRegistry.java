@@ -63,9 +63,16 @@ import com.lol.spells.instances.glacio.IcyWind;
 import com.lol.spells.instances.glacio.Riptide;
 import com.lol.spells.instances.glacio.Scald;
 import com.lol.spells.instances.heresio.AvadaKedavra;
+import com.lol.spells.instances.heresio.Axiom;
+import com.lol.spells.instances.heresio.Beguile;
+import com.lol.spells.instances.heresio.Corollary;
 import com.lol.spells.instances.heresio.Hex;
+import com.lol.spells.instances.heresio.Hypothesis;
+import com.lol.spells.instances.heresio.Lemma;
 import com.lol.spells.instances.heresio.Mania;
 import com.lol.spells.instances.heresio.Penance;
+import com.lol.spells.instances.heresio.Postulate;
+import com.lol.spells.instances.heresio.Theorem;
 import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
 import com.lol.spells.instances.inferno.Combustion;
@@ -169,6 +176,13 @@ public class SpellRegistry
         		AvadaKedavra.class,
         		Mania.class,
         		Penance.class,
+        		Beguile.class,
+        		Axiom.class,
+        		Postulate.class,
+        		Hypothesis.class,
+        		Lemma.class,
+        		Theorem.class,
+        		Corollary.class,
         		
         		//Arcano
         		Mute.class,

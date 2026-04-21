@@ -17,7 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.helpers.JinxData;
@@ -145,7 +145,7 @@ public class MortioEffects
 	            return;
 	        }
 	        if (isMortio) data.heal(1, false, true, false);
-	        OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SCULK_SOUL, null);
+	        ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SCULK_SOUL, null);
 	    }, 20, duration);
 	    
 	    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> hasDoom.remove(uuid), duration);
@@ -160,7 +160,7 @@ public class MortioEffects
 			registerMagnitude = jinxRegistry.get(target.getUniqueId()).magnitude + magnitude;
 		}
 		
-		OBSParticles.drawMortioCastSigil(target);
+		ObsParticles.drawMortioCastSigil(target);
 		jinxRegistry.put(target.getUniqueId(), new JinxData(registerMagnitude));
 	}
 }

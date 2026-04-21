@@ -19,7 +19,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -42,14 +42,14 @@ public class PrismaOuroborealis extends Spell
 		Player p = e.getPlayer();
 		
 		if (arcane_prisma_registry.contains(p.getUniqueId())) return -1;
-		OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 7, 0.75, 0.1, Particle.ENCHANT, null);
-		OBSParticles.drawWave(Ouroboros.instance, p.getLocation(), 9, 0.3, 8, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
+		ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 7, 0.75, 0.1, Particle.ENCHANT, null);
+		ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 9, 0.3, 8, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		arcane_prisma_registry.add(p.getUniqueId());
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
-			OBSParticles.drawArcanoCastSigil(p);
+			ObsParticles.drawArcanoCastSigil(p);
 			PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO)+"Arcane Prisma&r&7&o expired..");
 			EntityEffects.playSound(p, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);
 			if (arcane_prisma_registry.contains(p.getUniqueId())) arcane_prisma_registry.remove(p.getUniqueId());

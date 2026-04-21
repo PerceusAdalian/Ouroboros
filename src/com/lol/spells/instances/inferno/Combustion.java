@@ -19,7 +19,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -48,12 +48,12 @@ public class Combustion extends Spell
 		{
 			MobData data = MobData.getMob(le.getUniqueId());
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
-			OBSParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.4, Particle.LAVA, null);
-			OBSParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.5, Particle.FLAME, null);
+			ObsParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.4, Particle.LAVA, null);
+			ObsParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.5, Particle.FLAME, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				OBSParticles.drawInfernoCastSigil(le);
-				OBSParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 6, Particle.FLAME, null);
+				ObsParticles.drawInfernoCastSigil(le);
+				ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 6, Particle.FLAME, null);
 				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, true, false, ElementType.COMBUST);
 				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
 				InfernoEffects.addCharred(le, 20);

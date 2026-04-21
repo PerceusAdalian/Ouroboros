@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 
 public class InfernoEffects
 {
@@ -45,7 +45,7 @@ public class InfernoEffects
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data != null) data.setBreak();
-		OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
-		OBSParticles.drawInfernoCastSigil(target);
+		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
+		ObsParticles.drawInfernoCastSigil(target);
 	}
 }

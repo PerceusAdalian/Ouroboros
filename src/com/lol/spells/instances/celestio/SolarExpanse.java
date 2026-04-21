@@ -23,7 +23,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -73,9 +73,9 @@ public class SolarExpanse extends Spell
 				MobData data = MobData.getMob(le.getUniqueId());
 				if (data == null) return;
 				
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.4, Particle.END_ROD, null);
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.45, Particle.WAX_ON, null);
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 1, 0.5, Particle.CLOUD, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.4, Particle.END_ROD, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.45, Particle.WAX_ON, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 1, 0.5, Particle.CLOUD, null);
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 				
 				if (data.isBreak())
@@ -95,8 +95,8 @@ public class SolarExpanse extends Spell
 			{
 				if (!(target instanceof LivingEntity le) || target instanceof Player) return;
 				
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.4, Particle.END_ROD, null);
-				OBSParticles.drawLine(p.getLocation(), le.getLocation(), 1, 0.5, Particle.CLOUD, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.4, Particle.END_ROD, null);
+				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 1, 0.5, Particle.CLOUD, null);
 				EntityEffects.playSound(p, Sound.ITEM_SPEAR_LUNGE_3, SoundCategory.AMBIENT);
 				
 				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.IMPALE);

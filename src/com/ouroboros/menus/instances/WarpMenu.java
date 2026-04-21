@@ -20,7 +20,7 @@ import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.instances.magic.CollectWandData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.WarpData;
@@ -157,12 +157,12 @@ public class WarpMenu extends ObsGui
 	        				{
 	        					if (!r.isOnline() || r.isDead()) return;
 	        					
-	        					OBSParticles.drawCylinder(r.getLocation(), r.getWidth(), 4, 10, 0.5, 0.5, Particle.LARGE_SMOKE, null);
+	        					ObsParticles.drawCylinder(r.getLocation(), r.getWidth(), 4, 10, 0.5, 0.5, Particle.LARGE_SMOKE, null);
 	        					r.teleport(wData.getLocation());
 	        					
 	        					Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 	        					{
-	        						OBSParticles.drawCosmoCastSigil(r);
+	        						ObsParticles.drawCosmoCastSigil(r);
 	        						EntityEffects.playSound(r, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, SoundCategory.AMBIENT);
 	        					}, 10);
 	        				});

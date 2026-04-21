@@ -25,7 +25,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -61,7 +61,7 @@ public class Tailwind extends Spell
 		{
 			if (p.isSwimming() || p.isInWater()) return -1;
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
             Vector boost = p.getEyeLocation().getDirection().normalize().multiply(3.5);
 			p.setVelocity(p.getVelocity().add(boost));
 			if (!tailwindRegistry.contains(p.getUniqueId())) 

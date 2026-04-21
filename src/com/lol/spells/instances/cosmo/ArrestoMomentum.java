@@ -25,7 +25,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 
@@ -47,9 +47,9 @@ public class ArrestoMomentum extends Spell implements Listener
 		Entity target = RayCastUtils.getEntity(p, 20);
 		if (!(target instanceof LivingEntity) || target == null) return -1;
 		
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);
-		OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 2, 10, 0.5, Particle.GLOW_SQUID_INK, null);
-		OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 8, 1, 0.5, Particle.ENCHANT, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);
+		ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 2, 10, 0.5, Particle.GLOW_SQUID_INK, null);
+		ObsParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 8, 1, 0.5, Particle.ENCHANT, null);
 		
 		if (target instanceof Mob)
 		{
@@ -63,7 +63,7 @@ public class ArrestoMomentum extends Spell implements Listener
 		        mob.setVelocity(new Vector(0,0,0));
 		        mob.teleport(frozenLoc);
 
-		        OBSParticles.drawWisps(mob.getLocation(), mob.getWidth(), mob.getHeight(), 4, Particle.SCULK_SOUL, null);
+		        ObsParticles.drawWisps(mob.getLocation(), mob.getWidth(), mob.getHeight(), 4, Particle.SCULK_SOUL, null);
 		    }, 1, 400);
 		    
 		    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
@@ -81,7 +81,7 @@ public class ArrestoMomentum extends Spell implements Listener
 		        pTarget.setGravity(false);
 		        pTarget.setVelocity(new Vector(0,0,0));
 		        pTarget.teleport(frozenLoc);
-		        OBSParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 4, Particle.END_ROD, null);
+		        ObsParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 4, Particle.END_ROD, null);
 		    }, 1, 60);
 		    
 		    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 

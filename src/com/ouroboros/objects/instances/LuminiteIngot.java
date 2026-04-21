@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.ItemCollector;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 
@@ -31,8 +31,8 @@ public class LuminiteIngot extends AbstractObsObject
 		Player p = e.getPlayer();
 		if (PlayerActions.rightClickAir(e)) 
 		{
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, SoundCategory.MASTER, 1, 1);
 			PlayerData.addMoney(p, e.getItem().getAmount()*500);
 			PrintUtils.PrintToActionBar(p, "&r&b+&f&l"+e.getItem().getAmount()*500+"&r&e₪&f Added");

@@ -16,7 +16,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -36,7 +36,7 @@ public class Freecast extends Spell
 	{
 		Player p = e.getPlayer();
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 7, 0.5, 0.5, Particle.ENCHANT, null);
+		ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 7, 0.5, 0.5, Particle.ENCHANT, null);
 		PrintUtils.PrintToActionBar(p, "&r&f&oYou feel a surge of &b&oEther&r&f..");
 		hasFreecast.add(p.getUniqueId());
 		return this.getManacost();

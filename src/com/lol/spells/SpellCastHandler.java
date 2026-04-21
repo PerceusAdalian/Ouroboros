@@ -34,7 +34,7 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.ArcanoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -81,7 +81,7 @@ public class SpellCastHandler implements Listener
         				{
         					e.setCancelled(true);
         					EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, null);
-        					OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 10, 0.5, 0.5, Particle.ENCHANT, null);
+        					ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 10, 0.5, 0.5, Particle.ENCHANT, null);
         					PrintUtils.OBSFormatDebug(p, "&b&lSpell Registered&r&f: "+spell.getName()+"&r&f. Check your &d&o/obs spellbook&r&f!");
         					data.getSpell(spell).setRegistered(true);
         					data.save();
@@ -209,7 +209,7 @@ public class SpellCastHandler implements Listener
         if (data.doXpNotification()) PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + currentSpell.getManacost() + " &b&o" + PrintUtils.printStatType(StatType.MAGIC));
         if (data.doLevelUpSound()) EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
         PlayerData.addXP(p, StatType.MAGIC, currentSpell.getManacost());
-        OBSParticles.playCastSigil(p, currentSpell.getElementType());
+        ObsParticles.playCastSigil(p, currentSpell.getElementType());
 
         cooldownPlayers.computeIfAbsent(p.getUniqueId(), k -> new HashSet<>()).add(currentSpell);
         Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 

@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.entityeffects.helpers.ChillEffectData;
 
@@ -63,7 +63,7 @@ public class GlacioEffects
 	            dotTask[0].cancel();
 	            return;
 	        }
-	        OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.SNOWFLAKE, null);
+	        ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.SNOWFLAKE, null);
 	        MobData.damageUnnaturally(p, target, finalMagnitude == 0 ? 1 : finalMagnitude, false, true, ElementType.GLACIO);
 	    }, 20L, 20L);
 	    
@@ -88,7 +88,7 @@ public class GlacioEffects
 		ObsTimer.runWithCancel(Ouroboros.instance, e ->
 		{
 			if (target.isDead()) return;
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SNOWFLAKE, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SNOWFLAKE, null);
 		}, 20, seconds * 20);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasFrosted.remove(target.getUniqueId()), seconds * 20);
 	}
@@ -117,7 +117,7 @@ public class GlacioEffects
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data != null) data.setBreak();
-		OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
-		OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 4, 0.3, Particle.SMOKE, null);
+		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
+		ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 4, 0.3, Particle.SMOKE, null);
 	}
 }

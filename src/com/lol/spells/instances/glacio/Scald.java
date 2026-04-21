@@ -17,7 +17,7 @@ import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.EntityCategories;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -67,8 +67,8 @@ public class Scald extends Spell
 			    MobData.damageUnnaturally(p, le, 5, true, false, ElementType.GLACIO);
 			}
 
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, p1, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.3, p2, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, p1, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.3, p2, null);
 			
 		})) return -1;
 		return 50;

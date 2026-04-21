@@ -17,7 +17,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -45,14 +45,14 @@ public class Bombarda extends Spell
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
 		if (!(target instanceof LivingEntity) || target == null) return -1;
-		OBSParticles.drawInfernoCastSigil(p);
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.LAVA, null);
+		ObsParticles.drawInfernoCastSigil(p);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.LAVA, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
 			InfernoEffects.addBurn((LivingEntity) target, 10);
-			OBSParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
-			OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
+			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
+			ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
 		}, 15);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->target.getWorld().createExplosion(target.getLocation(), 3, false, false), 20);
 		return this.getManacost();

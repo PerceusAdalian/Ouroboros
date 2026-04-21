@@ -16,7 +16,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -47,8 +47,8 @@ public class Cure extends Spell
 		
 		if (target instanceof Player)
 		{
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.WAX_ON, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.WAX_ON, null);
 			cureHelper((Player) target, p);
 			return this.getManacost();
 		}
@@ -81,14 +81,14 @@ public class Cure extends Spell
 			{
 				if (HeresioEffects.isHexed.get(target.getUniqueId()) != null && HeresioEffects.isHexed.get(target.getUniqueId()).effect.equals(effect.getType()))
 				{
-					OBSParticles.drawLine(caster.getLocation(), target.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
+					ObsParticles.drawLine(caster.getLocation(), target.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
 					PrintUtils.OBSFormatError(caster, "Attempted to &e&oCure&r&f "+PrintUtils.formatEnumName(effect.getType().getTranslationKey())+
 							" from "+target.getName()+", but it appears to be a &2&lHex&r&f.");
 					Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 					{
-						OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
-						OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SCULK_SOUL, null);
-						OBSParticles.drawHeresioCastSigil(target);
+						ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 15, 0.5, Particle.WARPED_SPORE, null);
+						ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SCULK_SOUL, null);
+						ObsParticles.drawHeresioCastSigil(target);
 						PrintUtils.PrintToActionBar(target, "&2&oThe Hex Worsens..");
 						EntityEffects.playSound(target, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
 						

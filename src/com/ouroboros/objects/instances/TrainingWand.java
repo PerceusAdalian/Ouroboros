@@ -21,7 +21,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -59,8 +59,8 @@ public class TrainingWand extends AbstractObsObject
 		if (data.getMagicProficiency() == 0)
 		{
 			PrintUtils.Print(p, "&r&d&oMagic Gnosis&r&f Increased: &70 &e&l-> &b&l1&r&f!","&r&fYou've unlocked the magic section in your menu! &7(&d&o/obs menu&r&7)");
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
-			OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.WAX_ON, null);
 			data.setMagicProficiency(1);
 		}
 		

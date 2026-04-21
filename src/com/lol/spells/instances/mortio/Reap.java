@@ -21,7 +21,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -54,12 +54,12 @@ public class Reap extends Spell
 		if (isCursed)EntityEffects.playSound(p, Sound.ENTITY_WITHER_SHOOT, SoundCategory.AMBIENT);
 		else EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);
 		if (isCursed)
 		{
-			OBSParticles.drawMortioCastSigil((LivingEntity) target);
+			ObsParticles.drawMortioCastSigil((LivingEntity) target);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-				OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 6, 0.5, 0.5, Particle.SMOKE, null), 10);
+				ObsParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 6, 0.5, 0.5, Particle.SMOKE, null), 10);
 			
 			if (target instanceof Player pt)
 			{

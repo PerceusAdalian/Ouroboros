@@ -20,7 +20,7 @@ import com.ouroboros.GeneralEvents;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -37,7 +37,7 @@ public class Haunt extends Spell
 				"&r&fAs an additional cost, return at &b&o75% &r&cHP&f. Must be cast within &b&o30s&r&f of death.",
 				"&r&fIf the summoning fails, the normal effect takes place.","",
 				"&r&4Doom &eEffect&f: Doom applies a &dDOT&f effect equal to it's &b&omagnitude&r&f.",
-				"&r&fAfflicted take &b&o1.25x &r&4&lMortio&r&f damage, and reapplying instantly kills them &7(NONPVP)",
+				"&r&fReapplying &4Doom&f instantly kills those afflicted &7(NONPVP), while",
 				"&r&4&lMortio&r&f-based mobs are otherwise unaffected, and &a&ohealed&r&f instead.");
 		
 	}
@@ -50,8 +50,8 @@ public class Haunt extends Spell
 		
 		if (target != null)
 		{
-			OBSParticles.drawMortioCastSigil(p);
-			OBSParticles.drawMortioCastSigil(target);
+			ObsParticles.drawMortioCastSigil(p);
+			ObsParticles.drawMortioCastSigil(target);
 			PrintUtils.PrintToActionBar(target, "A soul haunts you!");
 			PrintUtils.PrintToActionBar(p, "Returning to "+target.getName());
 			EntityEffects.add(p, PotionEffectType.SLOWNESS, 80, 99);
@@ -65,21 +65,21 @@ public class Haunt extends Spell
 					p.teleport(p.getLastDeathLocation());
 					CelestioEffects.addWard(p, 2, 15);
 					EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
-					OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null);
+					ObsParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null);
 					return;
 				}
 				EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT);
 				p.teleport(target);
 				MortioEffects.addDoom(target, 2, 300);
-				OBSParticles.drawCylinder(target.getLocation(), target.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null);
+				ObsParticles.drawCylinder(target.getLocation(), target.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
-					OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null), 20);
+					ObsParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null), 20);
 				p.setHealth(p.getHealth() * .75);
 				return;
 			}, 60);
 			return this.getManacost();
 		}
-		OBSParticles.drawMortioCastSigil(p);
+		ObsParticles.drawMortioCastSigil(p);
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		PrintUtils.PrintToActionBar(p, "Returning to last death location..");
 		EntityEffects.add(p, PotionEffectType.SLOWNESS, 40, 99);
@@ -90,7 +90,7 @@ public class Haunt extends Spell
 			p.teleport(p.getLastDeathLocation());
 			CelestioEffects.addWard(p, 2, 15);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
-				OBSParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null), 20);
+				ObsParticles.drawCylinder(p.getLocation(), p.getWidth()+1, 3, 15, 0.5, 0.5, Particle.LARGE_SMOKE, null), 20);
 		
 		}, 20);
 		

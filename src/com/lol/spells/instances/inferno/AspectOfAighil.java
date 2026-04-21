@@ -31,7 +31,7 @@ import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ComboData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.TimeUtils;
@@ -89,8 +89,8 @@ public class AspectOfAighil extends Spell
 			}
 			
 			EntityEffects.playSound(p, Sound.ENTITY_ENDER_DRAGON_AMBIENT, SoundCategory.AMBIENT);
-			OBSParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.30, 7, Particle.LAVA, null);
-			OBSParticles.drawWave(Ouroboros.instance, p.getLocation(), 23, 0.25, 4, Particle.SMOKE, null); 
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.30, 7, Particle.LAVA, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 23, 0.25, 4, Particle.SMOKE, null); 
 			
 			if (!RayCastUtils.getNearbyEntities(p, 30, target ->
 			{
@@ -172,7 +172,7 @@ public class AspectOfAighil extends Spell
 				Block target = RayCastUtils.rayTraceBlock(p, 30);
 				if (target != null && !target.getType().equals(Material.AIR)) 
 				{
-					OBSParticles.drawSinLine(p.getLocation(), target.getLocation(), 0.6, Particle.LAVA, null);
+					ObsParticles.drawSinLine(p.getLocation(), target.getLocation(), 0.6, Particle.LAVA, null);
 					EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 					Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 					{

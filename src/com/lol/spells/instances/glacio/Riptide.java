@@ -15,7 +15,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Riptide extends Spell
@@ -35,7 +35,7 @@ public class Riptide extends Spell
 		if (!p.isSwimming() || !p.isInWater()) return -1;
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->EntityEffects.playSound(p, Sound.ITEM_TRIDENT_RIPTIDE_3, SoundCategory.AMBIENT), 10);
-		OBSParticles.drawPoint(p.getLocation(), Particle.EXPLOSION_EMITTER, 0, null);
+		ObsParticles.drawPoint(p.getLocation(), Particle.EXPLOSION_EMITTER, 0, null);
         Vector boost = p.getEyeLocation().getDirection().normalize().multiply(4);
 		p.setVelocity(p.getVelocity().add(boost));
 		return 5;

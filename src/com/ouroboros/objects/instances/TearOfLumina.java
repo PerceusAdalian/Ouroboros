@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.ItemCollector;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -32,8 +32,8 @@ public class TearOfLumina extends AbstractObsObject
 		Player p = e.getPlayer();
 		if (PlayerActions.rightClickAir(e)) 
 		{
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
 			EntityEffects.playSound(p, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_WATER, SoundCategory.MASTER);
 			PlayerData.addLuminite(p, e.getItem().getAmount());
 			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&b۞&f Added");

@@ -27,7 +27,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
@@ -66,8 +66,8 @@ public class Lumos extends Spell
 			{
 			    LumosTask lumosData = activeLumos.get(p.getUniqueId()); // Store reference before scheduling
 			    Location explosionLoc = lumosData.crystal.getLocation();
-			    OBSParticles.drawWisps(explosionLoc, 5, 5, 3, Particle.GUST_EMITTER_LARGE, null);
-			    OBSParticles.drawCylinder(explosionLoc, 2, 2, 5, 0.5, 0, Particle.ENCHANT, null);
+			    ObsParticles.drawWisps(explosionLoc, 5, 5, 3, Particle.GUST_EMITTER_LARGE, null);
+			    ObsParticles.drawCylinder(explosionLoc, 2, 2, 5, 0.5, 0, Particle.ENCHANT, null);
 			    EntityEffects.playSound(p, Sound.ENTITY_ALLAY_DEATH, SoundCategory.AMBIENT);
 			    
 			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
@@ -75,8 +75,8 @@ public class Lumos extends Spell
 			        EntityEffects.playSound(p, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.AMBIENT);
 			        RayCastUtils.getNearbyEntities(lumosData.stand, 10, (r)-> // Use stored reference
 			        {
-			            OBSParticles.drawLine(explosionLoc, r.getLocation(), 1, 0, Particle.END_ROD, null);
-			            OBSParticles.drawCylinder(r.getLocation(), r.getWidth(), 3, 5, 0.5, 0.5, Particle.END_ROD, null);
+			            ObsParticles.drawLine(explosionLoc, r.getLocation(), 1, 0, Particle.END_ROD, null);
+			            ObsParticles.drawCylinder(r.getLocation(), r.getWidth(), 3, 5, 0.5, 0.5, Particle.END_ROD, null);
 			            CelestioEffects.addExposed(r, 15);
 			        });
 			    }, 10);
@@ -124,7 +124,7 @@ public class Lumos extends Spell
 	        {
 	        	if (block == null || !block.getType().equals(Material.LIGHT)) b.cancel();
 	        	
-	        	OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
+	        	ObsParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.END_ROD, null);
 	        }, 20, 600);
 	        
 	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
@@ -132,7 +132,7 @@ public class Lumos extends Spell
 	            if (block.getType().equals(Material.LIGHT))
 	            {
 	                block.setType(Material.AIR);
-	                OBSParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.CLOUD, null);
+	                ObsParticles.drawWisps(block.getLocation(), 2, 2, 4, Particle.CLOUD, null);
 	            }
 	        }, 600);
 			
@@ -168,7 +168,7 @@ public class Lumos extends Spell
 	            if (duration >= maxDuration || activeLumos.get(p.getUniqueId()).crystal.isDead()) 
 	            {
 	                cancelLumos(p.getUniqueId());
-	                OBSParticles.drawDisc(activeLumos.get(p.getUniqueId()).crystal.getLocation(), 3, 2, 3, 0, Particle.GUST_EMITTER_LARGE, null);
+	                ObsParticles.drawDisc(activeLumos.get(p.getUniqueId()).crystal.getLocation(), 3, 2, 3, 0, Particle.GUST_EMITTER_LARGE, null);
 	                PrintUtils.PrintToActionBar(p, "&e&oLumos' &f&osprite fades away..");
 	                EntityEffects.playSound(p, Sound.ENTITY_ALLAY_DEATH, SoundCategory.AMBIENT);
 	                return;

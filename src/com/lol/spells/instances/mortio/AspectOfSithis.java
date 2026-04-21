@@ -18,7 +18,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -53,9 +53,9 @@ public class AspectOfSithis extends Spell
 			if (target == null || !(target instanceof LivingEntity le)) return -1;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.SMOKE, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.6, Particle.ASH, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.3, 0.6, Particle.CRIMSON_SPORE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.SMOKE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.6, Particle.ASH, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.3, 0.6, Particle.CRIMSON_SPORE, null);
 			
 			MortioEffects.addDread(le, 30);
 			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.MORTIO);

@@ -26,7 +26,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -71,7 +71,7 @@ public class Fly extends Spell
         
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_JUMP, null);
 		p.setVelocity(p.getVelocity().setY(3).multiply(1.1));
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
+		ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
@@ -111,7 +111,7 @@ public class Fly extends Spell
 			        cooldown.add(p.getUniqueId());
 					Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->cooldown.remove(p.getUniqueId()), 600);
 			        EntityEffects.playSound(p, Sound.ENTITY_BREEZE_LAND, SoundCategory.AMBIENT);
-			        OBSParticles.drawAeroCastSigil(p);
+			        ObsParticles.drawAeroCastSigil(p);
 			    }
 			}
 			

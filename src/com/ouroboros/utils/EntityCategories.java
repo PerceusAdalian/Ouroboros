@@ -37,24 +37,24 @@ public class EntityCategories
 	
 	public static final Set<EntityType> calamity = EnumSet.of(EntityType.ELDER_GUARDIAN,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.WITHER);
 	
-	public static final Set<EntityType> arcano_mobs = EnumSet.of(EntityType.WITCH, EntityType.VEX, EntityType.ILLUSIONER, 
-			EntityType.EVOKER, EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN);
+	public static final Set<EntityType> arcano_mobs = EnumSet.of(EntityType.WITCH, EntityType.VEX, EntityType.ILLUSIONER, EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN);
 	
 	public static final Set<EntityType> celestio_mobs = EnumSet.of(EntityType.ALLAY,EntityType.CAT,EntityType.COW,EntityType.GLOW_SQUID,
 			EntityType.MOOSHROOM,EntityType.MULE,EntityType.PANDA,EntityType.FOX,EntityType.RABBIT,EntityType.SHEEP,
 			EntityType.TRADER_LLAMA,EntityType.VILLAGER,EntityType.WOLF);
 	
-	public static final Set<EntityType> mortio_mobs = EnumSet.of(EntityType.DROWNED,EntityType.WITHER_SKELETON,EntityType.GIANT,EntityType.SKELETON,
+	public static final Set<EntityType> mortio_mobs = EnumSet.of(EntityType.DROWNED,EntityType.ZOGLIN,EntityType.WITHER_SKELETON,EntityType.GIANT,EntityType.SKELETON,
 			EntityType.SKELETON_HORSE,EntityType.STRAY,EntityType.ZOMBIE,EntityType.ZOMBIE_HORSE,EntityType.ZOMBIFIED_PIGLIN,EntityType.HUSK,EntityType.ZOMBIE_NAUTILUS);
 	
-	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.GHAST,EntityType.MAGMA_CUBE,
-			EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,EntityType.ZOGLIN,EntityType.HOGLIN,EntityType.STRIDER);
+	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.MAGMA_CUBE,
+			EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,EntityType.HOGLIN,EntityType.STRIDER);
 	
 	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.AXOLOTL,EntityType.PUFFERFISH,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN
 			,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.BOGGED,
 			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.POLAR_BEAR, EntityType.NAUTILUS);
 	
-	public static final Set<EntityType> aero_mobs = EnumSet.of(EntityType.BAT,EntityType.BEE,EntityType.BREEZE,EntityType.CHICKEN,EntityType.HAPPY_GHAST,EntityType.PARROT);
+	public static final Set<EntityType> aero_mobs = EnumSet.of(EntityType.BAT,EntityType.GHAST,EntityType.BEE,EntityType.BREEZE,
+			EntityType.CHICKEN,EntityType.HAPPY_GHAST,EntityType.PARROT);
 	
 	public static final Set<EntityType> geo_mobs = EnumSet.of(EntityType.ARMADILLO,EntityType.DONKEY,EntityType.IRON_GOLEM,
 			EntityType.CAMEL,EntityType.CAVE_SPIDER,EntityType.SPIDER,EntityType.GOAT,EntityType.PIG,EntityType.HORSE,
@@ -62,7 +62,8 @@ public class EntityCategories
 	
 	public static final Set<EntityType> cosmo_mobs = EnumSet.of(EntityType.ENDERMITE,EntityType.ENDERMAN,EntityType.SHULKER,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.PHANTOM);
 	
-	public static final Set<EntityType> heresio_mobs = EnumSet.of(EntityType.CREEPER,EntityType.WITHER,EntityType.VINDICATOR,EntityType.PILLAGER,EntityType.RAVAGER, EntityType.ZOMBIE_VILLAGER);
+	public static final Set<EntityType> heresio_mobs = EnumSet.of(EntityType.CREEPER,EntityType.WITHER,EntityType.VINDICATOR,EntityType.EVOKER,
+			EntityType.PILLAGER,EntityType.RAVAGER, EntityType.ZOMBIE_VILLAGER);
 
 	public static boolean canAccept(Entity entity, EntityCategory category)
 	{

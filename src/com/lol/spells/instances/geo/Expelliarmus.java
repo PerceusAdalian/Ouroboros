@@ -14,7 +14,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.GeoEffects;
 
@@ -48,8 +48,8 @@ public class Expelliarmus extends Spell
 		    if (heldItem.getType() == Material.AIR) return -1;
 		}
 
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 2, 0.5, Particle.SMOKE, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.ASH, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 2, 0.5, Particle.SMOKE, null);
 		GeoEffects.addSanded(living, 20);
 
 		ItemStack droppedItem = heldItem.clone();
@@ -58,7 +58,7 @@ public class Expelliarmus extends Spell
 		else equipment.setItemInOffHand(new ItemStack(Material.AIR));
 
 		target.getWorld().dropItem(target.getLocation(), droppedItem).setPickupDelay(100);
-		OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 4, 0.5, 25, 8, 0.5, Particle.SMOKE, null);
+		ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 4, 0.5, 25, 8, 0.5, Particle.SMOKE, null);
 
 		return this.getManacost();
 	}

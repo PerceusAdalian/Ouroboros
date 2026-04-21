@@ -15,7 +15,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.GlacioEffects;
@@ -41,14 +41,14 @@ public class Freeze extends Spell
 			if (!(target instanceof LivingEntity) || target instanceof Player) return;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.SNOWFLAKE, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.BLOCK_CRUMBLE, Material.ICE.createBlockData());
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.SNOWFLAKE, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.BLOCK_CRUMBLE, Material.ICE.createBlockData());
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.BLOCK_GLASS_BREAK, SoundCategory.AMBIENT);
-				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 7, 1.5, Particle.BLOCK_CRUMBLE, Material.ICE.createBlockData());
-				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 7, 1.5, Particle.SNOWFLAKE, null);
+				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 7, 1.5, Particle.BLOCK_CRUMBLE, Material.ICE.createBlockData());
+				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 7, 1.5, Particle.SNOWFLAKE, null);
 				GlacioEffects.addFrozen((LivingEntity) target);
 			}, 15);
 		}))return -1;

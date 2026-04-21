@@ -18,7 +18,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Chance;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
@@ -37,7 +37,7 @@ public class Hex extends Spell
 				"&r&fAny attemps made to &e&oCure&r&f the affliction without a &e&oDiagnosis&r&f",
 				"&r&fwill result in the effect worsening up to &b&o10 levels&r&f.",
 				"&r&c&lPVP&r&f: The Hex will potentially worsen to maximum stacks &7(lvl10)&f within &b&o5min&r &7(14.5%)","",
-				"&r&2WildCard&e Effect&r&f: applies a random debuff on the target.","",
+				"&r&2WildCard&e Effect&r&f: inflicts a random debuff.","",
 				"&r&2Backfire &bChance&f: &b&o2.25%&r&7 / &c&o5.25% &r&7(&cPVP&7)",
 				"&r&2Backfire &eEffect&f: The spell fizzles, and may include a &2&oPenance&r&f.");
 	}
@@ -58,13 +58,13 @@ public class Hex extends Spell
 		boolean isPlayer = target instanceof Player;
 		double backfireChance = isPlayer ? 5.25 : 2.25;
 		
-		OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
 		{
 			if (Chance.of(Ouroboros.debug ? 100 : backfireChance)) 
 			{
-				OBSParticles.drawLine(target.getLocation(), p.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
+				ObsParticles.drawLine(target.getLocation(), p.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
 				playBackfire(p, 0);
 			} 
 			else 
@@ -85,8 +85,8 @@ public class Hex extends Spell
 
 	public static void spellEffect(LivingEntity entity, Player caster, int seconds)
 	{
-		OBSParticles.drawAngledCircle(entity.getEyeLocation(), 2, 8, 45, -0.1, Particle.WARPED_SPORE, null);
-		OBSParticles.drawCylinder(entity.getLocation(), entity.getWidth(), (int)(entity.getHeight()+1), 15, 0.5, 0.5, Particle.ENCHANT, null);
+		ObsParticles.drawAngledCircle(entity.getEyeLocation(), 2, 8, 45, -0.1, Particle.WARPED_SPORE, null);
+		ObsParticles.drawCylinder(entity.getLocation(), entity.getWidth(), (int)(entity.getHeight()+1), 15, 0.5, 0.5, Particle.ENCHANT, null);
 		EntityEffects.playSound(caster, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		
 		if (seconds == 0)
@@ -115,7 +115,7 @@ public class Hex extends Spell
 		}
 		EntityEffects.playSound(player, Sound.BLOCK_CHAIN_BREAK, SoundCategory.AMBIENT);
 		EntityEffects.playSound(player, Sound.ENTITY_ENDERMAN_AMBIENT, SoundCategory.AMBIENT);
-		OBSParticles.drawLine(player.getLocation(), player.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
+		ObsParticles.drawLine(player.getLocation(), player.getLocation(), 0.5, 0.5, Particle.WARPED_SPORE, null);
 		spellEffect(player, player, seconds);
 		playerTimer(player);
 	}
@@ -129,7 +129,7 @@ public class Hex extends Spell
 				WildcardData data = HeresioEffects.isHexed.get(player.getUniqueId());
 				if (data == null || !player.isOnline()) return;
 				
-				OBSParticles.drawHeresioCastSigil(player);
+				ObsParticles.drawHeresioCastSigil(player);
 				PrintUtils.PrintToActionBar(player, "&2&oThe Hex Worsens..");
 				
 				player.removePotionEffect(data.effect);

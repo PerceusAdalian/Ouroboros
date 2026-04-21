@@ -16,7 +16,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -51,13 +51,13 @@ public class GlacialFlood extends Spell
 		{			
 			EntityEffects.playSound(p, Sound.AMBIENT_UNDERWATER_EXIT, SoundCategory.AMBIENT);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.AMBIENT);
-			OBSParticles.drawWisps(p.getLocation(), p.getWidth() + 20, p.getHeight()+ 15, 20, Particle.SNOWFLAKE, null);
-			OBSParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, .25, 20, Particle.FISHING, null);
+			ObsParticles.drawWisps(p.getLocation(), p.getWidth() + 20, p.getHeight()+ 15, 20, Particle.SNOWFLAKE, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, .25, 20, Particle.FISHING, null);
 			
 			if (!RayCastUtils.getNearbyEntities(p, 20, target ->
 			{
-				OBSParticles.drawGlacioCastSigil(target);
-				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.SNOWFLAKE, null);
+				ObsParticles.drawGlacioCastSigil(target);
+				ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.SNOWFLAKE, null);
 				if (GlacioEffects.chillEffects.containsKey(target.getUniqueId()))
 				{
 					int damage = GlacioEffects.chillEffects.get(target.getUniqueId()).magnitude;
@@ -73,12 +73,12 @@ public class GlacialFlood extends Spell
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
 		{
 			EntityEffects.playSound(p, Sound.AMBIENT_UNDERWATER_ENTER, SoundCategory.AMBIENT);
-			OBSParticles.drawWisps(p.getLocation(), p.getWidth() + 20, p.getHeight()+ 15, 20, Particle.FALLING_WATER, null);
+			ObsParticles.drawWisps(p.getLocation(), p.getWidth() + 20, p.getHeight()+ 15, 20, Particle.FALLING_WATER, null);
 			
 			if (!RayCastUtils.getNearbyEntities(p, 20, target ->
 			{
-				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.DRIPPING_WATER, null);
-				OBSParticles.drawGlacioCastSigil(target);
+				ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.DRIPPING_WATER, null);
+				ObsParticles.drawGlacioCastSigil(target);
 				GlacioEffects.addChill(p, target, 5, 30);
 			}))	return -1;
 			

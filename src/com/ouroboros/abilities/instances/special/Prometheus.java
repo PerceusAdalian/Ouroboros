@@ -23,7 +23,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -61,17 +61,17 @@ public class Prometheus extends ObsAbility
 			{
 				EntityEffects.add(p, PotionEffectType.SLOWNESS, 20, 99);
 				for (Block b : blocks)
-					OBSParticles.drawWisps(b.getLocation(), 1.1, 1.1, 4, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
+					ObsParticles.drawWisps(b.getLocation(), 1.1, 1.1, 4, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
 			}, 10, 50);
 
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.ENTITY_BLAZE_AMBIENT, SoundCategory.AMBIENT);
-				OBSParticles.drawInfernoCastSigil(p);
+				ObsParticles.drawInfernoCastSigil(p);
 				RayCastUtils.getNearbyEntities(p, 25, target->
 				{					
-					OBSParticles.drawSinLine(p.getLocation(), target.getLocation(), 2, Particle.LAVA, null);
-					OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 5, target.getHeight()%2, 2, 5, 0.5, Particle.FLAME, null);
+					ObsParticles.drawSinLine(p.getLocation(), target.getLocation(), 2, Particle.LAVA, null);
+					ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), 5, target.getHeight()%2, 2, 5, 0.5, Particle.FLAME, null);
 					MobData.damageUnnaturally(p, target, 20, true, true, ElementType.INFERNO);
 				});
 			}, 75);

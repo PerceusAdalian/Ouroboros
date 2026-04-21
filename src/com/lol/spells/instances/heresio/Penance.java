@@ -11,6 +11,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.lol.wand.Wand;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -22,7 +23,8 @@ public class Penance extends Spell
 	{
 		super("Penance", "penance", Material.LEAD, SpellType.UTILITY, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 0, 5, false,
 				"&r&fInflict &cdamage&f to &6&oself&r&f and &arestore&f wand's &b&lMana&r&f by &l500&r&f.",
-				"&r&fDamage dealt is equal to &b&o50%&r&f current &cHP&f.");
+				"&r&fDamage dealt is equal to &b&o50%&r&f current &cHP&f.",
+				"&r"+PrintUtils.color(ObsColors.HERESIO)+"&lPenance&r&f cannot be cast if &cHP&f < 5.");
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.AeroEffects;
@@ -36,7 +36,8 @@ public class ChainLightning extends Spell
 		super("Chain Lightning", "chain_lightning", Material.LIGHTNING_ROD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 5, false,
 				"&r&fExpel lightning that chains between up to &l5&r&f targets.",
 				"&r&fDeals 15&c♥&f "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage to the first and 10&c♥&f to all others.",
-				"&r&fInflicts &dShock &7(10s)&f on each target hit.");
+				"&r&fInflicts &dShock &7(10s)&f on each target hit.","",
+				"&r&dShock &eEffect&f: Affected are &6&oStunned&r&f, &e&oGlow&r&f, and take &b&o25% more "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.");
 	}
 
 	@Override
@@ -57,10 +58,10 @@ public class ChainLightning extends Spell
 	        Location from = i == 0 ? p.getLocation() : ((LivingEntity) mobs.get(i - 1)).getLocation();
 	        Location to = le.getLocation();
 
-	        OBSParticles.drawLine(from, to, 0.6, 0.5, Particle.END_ROD, null);
-	        OBSParticles.drawLine(from, to, 0.4, 0.4, Particle.CRIT, null);
-	        OBSParticles.drawLine(from, to, 0.7, 0.4, Particle.DUST, new DustOptions(Color.PURPLE, 1f));
-	        OBSParticles.drawAeroCastSigil(le);
+	        ObsParticles.drawLine(from, to, 0.6, 0.5, Particle.END_ROD, null);
+	        ObsParticles.drawLine(from, to, 0.4, 0.4, Particle.CRIT, null);
+	        ObsParticles.drawLine(from, to, 0.7, 0.4, Particle.DUST, new DustOptions(Color.PURPLE, 1f));
+	        ObsParticles.drawAeroCastSigil(le);
 	        
 	        MobData.damageUnnaturally(p, le, i == 0 ? 15 : 10, true, true, ElementType.AERO);
 	        AeroEffects.addShock(le, 10);

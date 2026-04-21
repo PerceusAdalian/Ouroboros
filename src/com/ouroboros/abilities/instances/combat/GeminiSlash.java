@@ -18,7 +18,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -50,7 +50,7 @@ public class GeminiSlash extends ObsAbility
 			Vector v2 = p.getLocation().toVector();
 			p.setVelocity(v1.subtract(v2).normalize().multiply(1.5));
 			
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER);
 			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.CELESTIO);
 			CelestioEffects.addExposed(le, 300);

@@ -16,7 +16,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CosmoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -39,14 +39,14 @@ public class Nullify extends Spell
 		{
 			if (target instanceof Player || MobData.getMob(target.getUniqueId()) == null) return;
 			
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.END_ROD, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.END_ROD, null);
 			EntityEffects.playSound(p, Sound.ENTITY_SHULKER_SHOOT, SoundCategory.AMBIENT);
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				OBSParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), (int) target.getHeight()+1, 0.5, 45, 6, 0.1, Particle.SCULK_SOUL, null);
-				OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), (int) target.getHeight(), 5, 0.5, 0.1, Particle.ENCHANT, null);
+				ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth(), (int) target.getHeight()+1, 0.5, 45, 6, 0.1, Particle.SCULK_SOUL, null);
+				ObsParticles.drawCylinder(target.getLocation(), target.getWidth(), (int) target.getHeight(), 5, 0.5, 0.1, Particle.ENCHANT, null);
 				EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_CLOSE_SHUTTER, SoundCategory.AMBIENT);
 				CosmoEffects.addVoided((LivingEntity) target, 30); 
 				MobData.getMob(target.getUniqueId()).setBreak();

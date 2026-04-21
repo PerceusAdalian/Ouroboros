@@ -20,7 +20,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsVoucherMenu;
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -63,8 +63,8 @@ public class ObsStatVoucher extends AbstractObsObject
 			return false;
 		}
 		
-		OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 8, 0.5, 0.25, Particle.ENCHANT, null);
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 1, 8, 0.5, Particle.CLOUD, null);
+		ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 8, 0.5, 0.25, Particle.ENCHANT, null);
+		ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 1, 8, 0.5, Particle.CLOUD, null);
 		EntityEffects.playSound(p, p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.MASTER, 1, 1);
 		
 		voucherRegistry.put(UUID.fromString(uuid), held);

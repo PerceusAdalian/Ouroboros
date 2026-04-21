@@ -18,7 +18,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -53,7 +53,7 @@ public class Ignite extends Spell
 		    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
 		    {
 		        block.setType(Material.FIRE);
-		        OBSParticles.drawDisc(block.getLocation(), 2, 1, 5, 0.2, Particle.LAVA, null);
+		        ObsParticles.drawDisc(block.getLocation(), 2, 1, 5, 0.2, Particle.LAVA, null);
 		        EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		    }, 4);
 		    return 25;
@@ -65,7 +65,7 @@ public class Ignite extends Spell
 			if (target == null || !(target instanceof LivingEntity)) return -1;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.FLAME, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.FLAME, null);
 			InfernoEffects.addBurn((LivingEntity) target, target instanceof Player ? 10 : 20);
 			return 25;
 		}

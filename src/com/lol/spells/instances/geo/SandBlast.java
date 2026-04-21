@@ -14,7 +14,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.GeoEffects;
@@ -39,8 +39,8 @@ public class SandBlast extends Spell
 		{
 			if (target == null || !(target instanceof LivingEntity le)) return;
 			
-			OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.5, Particle.BLOCK_CRUMBLE, Material.SAND.createBlockData());
-			OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.ASH, null);
+			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.5, Particle.BLOCK_CRUMBLE, Material.SAND.createBlockData());
+			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.ASH, null);
 			
 			MobData.damageUnnaturally(p, le, 4, false, true, ElementType.GEO);
 			GeoEffects.addSanded(le, 20);

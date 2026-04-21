@@ -15,7 +15,7 @@ import com.lol.spells.instances.inferno.Meteor;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.TimeUtils;
@@ -54,8 +54,8 @@ public class Starfall extends Spell
 			{
 				if (target == null || !(target instanceof LivingEntity le)) return;
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-				OBSParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.4, Particle.SNOWFLAKE, null);
-				OBSParticles.drawGlacioCastSigil(le);
+				ObsParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.4, Particle.SNOWFLAKE, null);
+				ObsParticles.drawGlacioCastSigil(le);
 				GlacioEffects.addChill(p, le, 0, 10);
 			}));
 		}

@@ -14,7 +14,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.WeatherUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -38,7 +38,7 @@ public class HealingCurrent extends Spell
 			if (!(target instanceof Player pTarget)) return;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CRIT, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CRIT, null);
 
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->playSpellEffect(p, pTarget, true), 15);
 		})) {
@@ -58,16 +58,16 @@ public class HealingCurrent extends Spell
 		if (WeatherUtils.checkWeather(target.getWorld(), WeatherUtils.WeatherType.STORMING))
 		{
 			EntityEffects.heal(target);
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 			if (!targetted)
 				EntityEffects.playSound(caster, caster == target ? Sound.BLOCK_BEACON_POWER_SELECT : Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			target.getWorld().strikeLightningEffect(target.getLocation());
 			return;
 		}
 		EntityEffects.heal(target, target.getHealth() * 0.5);
-		OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
+		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 		EntityEffects.playSound(caster, caster == target ? Sound.BLOCK_BEACON_POWER_SELECT : Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		OBSParticles.drawWave(Ouroboros.instance, target.getLocation(), 7, 0.5, 20, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());
+		ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 7, 0.5, 20, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());
 	}
 
 }

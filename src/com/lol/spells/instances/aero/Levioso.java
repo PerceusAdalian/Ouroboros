@@ -17,7 +17,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -41,11 +41,11 @@ public class Levioso extends Spell
 		if (target instanceof LivingEntity) 
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.CRIT, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.CRIT, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{				
 				EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
-				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
+				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
 				EntityEffects.add((LivingEntity) target, PotionEffectType.LEVITATION, target instanceof Player ? 100 : 160, 0, true);
 			}, 10);
 			return this.getManacost();
@@ -53,7 +53,7 @@ public class Levioso extends Spell
 		else if(target == null)
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 5, 0.5, Particle.GUST_EMITTER_SMALL, null);
 			EntityEffects.add(p, PotionEffectType.LEVITATION, 160, 0, true);
 			return this.getManacost();
 		}

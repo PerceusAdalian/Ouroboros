@@ -15,7 +15,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -38,12 +38,12 @@ public class Expell extends Spell
 		Entity target = RayCastUtils.getEntity(p, 25);
 		if (target == null || !(target instanceof LivingEntity le)) return -1;
 		
-		OBSParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.5, Particle.WAX_ON, null);
+		ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.5, Particle.WAX_ON, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
 			CelestioEffects.addExposed(le, 30);
-			OBSParticles.drawCylinder(le.getLocation(), le.getWidth(), (int) le.getHeight(), 4, 0.25, 0.5, Particle.WAX_ON, null);
-			OBSParticles.drawCylinder(le.getLocation(), le.getWidth(), (int) le.getHeight(), 8, 0.5, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawCylinder(le.getLocation(), le.getWidth(), (int) le.getHeight(), 4, 0.25, 0.5, Particle.WAX_ON, null);
+			ObsParticles.drawCylinder(le.getLocation(), le.getWidth(), (int) le.getHeight(), 8, 0.5, 0.5, Particle.CLOUD, null);
 		}, 15);
 		
 		return this.getManacost();

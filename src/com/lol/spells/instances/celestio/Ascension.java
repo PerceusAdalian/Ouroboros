@@ -32,7 +32,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -151,15 +151,15 @@ public class Ascension extends Spell
 	            : data.getHp(true) * hpScaling;
 
 	        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-	        OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.END_ROD, null);
+	        ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.END_ROD, null);
 
 	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
 	        {
 	            if (data == null || data.isDead()) return;
 
 	            EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
-	            OBSParticles.drawSpiralVortex(target.getLocation(), 110, 3, 0.5, Particle.CLOUD, null);
-	            OBSParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
+	            ObsParticles.drawSpiralVortex(target.getLocation(), 110, 3, 0.5, Particle.CLOUD, null);
+	            ObsParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
 	            MobData.damageUnnaturally(p, target, baseDamage + damage, true, true, ElementType.CELESTIO);
 	            CelestioEffects.addHumility((LivingEntity) target, 20);
 	        }, 15);
@@ -203,7 +203,7 @@ public class Ascension extends Spell
 	    p.setFlying(false);
 	    EntityEffects.playSound(p, Sound.BLOCK_VAULT_DEACTIVATE, SoundCategory.AMBIENT);
 	    EntityEffects.add(p, PotionEffectType.SLOW_FALLING, 60, 0);
-	    OBSParticles.drawCelestioCastSigil(p);
+	    ObsParticles.drawCelestioCastSigil(p);
 	}
 	
 	private void ascend(Player p)

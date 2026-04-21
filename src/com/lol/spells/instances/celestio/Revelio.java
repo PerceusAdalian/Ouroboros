@@ -13,7 +13,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -39,7 +39,7 @@ public class Revelio extends Spell
 		if (!RayCastUtils.getNearbyEntities(p, 30, (target)->
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.CLOUD, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.CLOUD, null);
 			CelestioEffects.addExposed(target, 20);	
 		})) return -1;
 		return this.getManacost();

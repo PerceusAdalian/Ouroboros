@@ -41,6 +41,7 @@ import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
@@ -57,7 +58,7 @@ import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.InventoryUtils;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -174,8 +175,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			GuiHandler.open(p, new SpellBookMainPage(p));
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
-			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
 			return true;
 		}
@@ -189,8 +190,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			GuiHandler.open(p, new WandMainPage(p));
-			OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
-			OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+			ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 3, 10, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 			EntityEffects.playSound(p, Sound.BLOCK_CHISELED_BOOKSHELF_PICKUP_ENCHANTED, SoundCategory.AMBIENT);
 			return true;
 		}
@@ -346,12 +347,33 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			if (affirmOP(p)) return true;
 			
 			Player target = Bukkit.getPlayer(args[1]);
-			if (target == null) return false;
+			if (target == null) return true;
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 			data.setScrap(PlayerData.maxScrap);
 			data.save();
+			PlayerHud.updateHud(p);
 			PrintUtils.OBSFormatDebug(p, "Maximum Scrap granted for: "+target.getName());
 			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Scrap. \nIf you believe this was done in error, contact the server admin.");
+			return true;
+		}
+		
+		if (args[0].equals("setEssence"))
+		{
+			if (affirmOP(p)) return true;
+			
+			Player target = Bukkit.getPlayer(args[1]);
+			if (target == null) return true;
+			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+			if (data != null)
+			{
+				for (ElementType eType : ElementType.values())
+				{
+					if (!ElementType.elemental.contains(eType)) continue;
+					data.setEssence(eType, PlayerData.maxEssence);
+				}
+			}
+			PrintUtils.OBSFormatDebug(p, "Maximum Essence granted for: "+target.getName());
+			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Essence. \nIf you believe this was done in error, contact the server admin.");
 			return true;
 		}
 		
@@ -856,7 +878,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				
 				// OP-only commands are hidden from regular players.
 				if (isOp) cmds.addAll(List.of("debug", "debugspells", "version", "generate", "money", "register",
-						"registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite", "setScrap"));
+						"registerAllAbilities", "registerAllMagic", "adminspells", "clearmobs", "setLuminite", "setScrap",
+						"setEssence"));
 				yield cmds;
 			}
 			case 2 -> 
@@ -864,7 +887,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				yield switch(args[0])
 				{
 					// OP-only root commands.
-					case "registerAllAbilities", "registerAllMagic", "setLuminite", "setScrap" ->
+					case "registerAllAbilities", "registerAllMagic", "setLuminite", "setScrap", "setEssence" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
 					case "register" ->
 						isOp ? List.of("spell", "ability") : List.of();

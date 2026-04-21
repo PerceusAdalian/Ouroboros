@@ -19,7 +19,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CosmoEffects;
@@ -45,13 +45,13 @@ public class Antimatter extends Spell
 			if (!(target instanceof LivingEntity)) return;
 			MobData data = MobData.getMob(target.getUniqueId());
 			EntityEffects.playSound(p, Sound.ENTITY_SHULKER_SHOOT, SoundCategory.AMBIENT);
-			OBSParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.7, Particle.DRAGON_BREATH, 0.5f);
-			OBSParticles.drawSinLine(p.getLocation(), target.getLocation(), 1, Particle.END_ROD, null);
+			ObsParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.7, Particle.DRAGON_BREATH, 0.5f);
+			ObsParticles.drawSinLine(p.getLocation(), target.getLocation(), 1, Particle.END_ROD, null);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.BLOCK_SCULK_CATALYST_BLOOM, SoundCategory.AMBIENT);
-				OBSParticles.drawDisc(target.getLocation(), target.getWidth(), 4, 10, 0.5, Particle.WARPED_SPORE, null);
+				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 4, 10, 0.5, Particle.WARPED_SPORE, null);
 				if (target instanceof Player)
 				{
 					((Damageable) target).damage(((Damageable)target).getHealth()*0.25);

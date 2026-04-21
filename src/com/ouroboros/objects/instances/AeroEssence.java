@@ -12,7 +12,7 @@ import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.ItemCollector;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -37,7 +37,7 @@ public class AeroEssence extends AbstractObsObject
 		if (PlayerActions.rightClickAir(e)) 
 		{
 			e.setCancelled(true);
-			OBSParticles.drawAeroCastSigil(p);
+			ObsParticles.drawAeroCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.AERO, e.getItem().getAmount());
 			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&d⚛&f Added");

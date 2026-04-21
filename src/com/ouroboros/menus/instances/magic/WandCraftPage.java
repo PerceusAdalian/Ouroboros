@@ -21,7 +21,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -125,7 +125,7 @@ public class WandCraftPage extends ObsGui
 					PlayerData.subtractScrap(p, craftCost / 3);
 					PlayerData.subtractEssence(p, wand.getElementType(), craftCost / 2);
 					
-					OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+					ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 					EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
 					PrintUtils.OBSFormatDebug(p, wand.getName()+ " Crafted Successfully!");
 					p.getInventory().addItem(stack);
@@ -142,7 +142,7 @@ public class WandCraftPage extends ObsGui
 			else if (wand.getElementType() == null && data.getLuminite() >= craftCost)
 			{
 				PlayerData.subtractLuminite(p, craftCost);
-				OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
+				ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 10, 2, 0.5, Particle.ENCHANT, null);
 				EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.AMBIENT);
 				PrintUtils.OBSFormatDebug(p, wand.getName()+ " Crafted Successfully!");
 				p.getInventory().addItem(stack);

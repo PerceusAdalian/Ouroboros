@@ -17,7 +17,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.AeroEffects;
@@ -39,7 +39,7 @@ public class Thunderstorm extends Spell
 				"&r&dStatic &eEffect&f: causes mobs to emit shockwaves in a 10m radius.",
 				"&r&fAffected mobs receive &b&o1.25x &r"+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.",
 				PrintUtils.color(ObsColors.AERO)+"&lAero&r&f-based mobs are &e&oimmune&r&f, and &a&ohealed&r&f instead.","",
-				"&dShock &eEffect&f: stuns those affected and causes them to glow.");
+				"&r&dShock &eEffect&f: Affected are &6&oStunned&r&f, &e&oGlow&r&f, and take &b&o25% more "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.");
 	}
 
 	boolean nullEntities = false;
@@ -54,20 +54,20 @@ public class Thunderstorm extends Spell
 			if (target == null || !(target instanceof LivingEntity)) return -1;
 
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				target.getWorld().strikeLightning(target.getLocation());
-				OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
+				ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
 				AeroEffects.addStatic((LivingEntity) target, p, target instanceof Player ? 5 : 10);
 			}, 15);
 			RayCastUtils.getNearbyEntities(target, 25, (C)->
 			{
-				OBSParticles.drawLine(target.getLocation(), C.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
+				ObsParticles.drawLine(target.getLocation(), C.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 				
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
-					OBSParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
+					ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.ELECTRIC_SPARK, null);
 					C.getWorld().strikeLightning(C.getLocation());
 					AeroEffects.addShock(C, C instanceof Player ? 3 : 20);						
 				}, 30);
@@ -80,7 +80,7 @@ public class Thunderstorm extends Spell
 			
 			if (!RayCastUtils.getNearbyEntities(p, 20, (C)->
 			{
-				OBSParticles.drawLine(p.getLocation(), C.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
+				ObsParticles.drawLine(p.getLocation(), C.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 				C.getWorld().strikeLightning(C.getLocation());
 				AeroEffects.addShock(C, C instanceof Player ? 3 : 20);
 			})) 

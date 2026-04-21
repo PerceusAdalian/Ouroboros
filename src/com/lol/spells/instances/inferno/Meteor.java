@@ -24,7 +24,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.BiomeUtils;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -89,11 +89,11 @@ public class Meteor extends Spell
 	
 	public static void playSpellEffects(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary, MeteorSize meteorSize)
 	{
-		OBSParticles.drawLine(p.getLocation(), loc, 0.5, 0.5, Particle.LAVA, null);
+		ObsParticles.drawLine(p.getLocation(), loc, 0.5, 0.5, Particle.LAVA, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
-			OBSParticles.drawSpiralVortex(loc, 75, 10, 0.1, Particle.LAVA, null);
+			ObsParticles.drawSpiralVortex(loc, 75, 10, 0.1, Particle.LAVA, null);
 			summonMeteor(p, loc, baseYield, temperatureBonus, bonusModifier, isIncendiary, MeteorSize.NORMAL);
 		}, 20);
 	}

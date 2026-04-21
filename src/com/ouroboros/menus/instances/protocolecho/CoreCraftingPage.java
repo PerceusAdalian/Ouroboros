@@ -20,7 +20,7 @@ import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.utils.InventoryUtils;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -141,7 +141,7 @@ public class CoreCraftingPage extends ObsGui
 				return false;
 			}
 			
-			OBSParticles.playCastSigil(p, eType);
+			ObsParticles.playCastSigil(p, eType);
 			EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.AMBIENT);
 			ItemStack stack = materia.getAsItemStack(MateriaState.ELEMENT_CORE);
 			InventoryUtils.add(p, stack);

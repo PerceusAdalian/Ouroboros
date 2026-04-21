@@ -30,7 +30,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -85,11 +85,11 @@ public class Pneuma extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_WARDEN_SONIC_BOOM, SoundCategory.AMBIENT);
 				Block bTarget = RayCastUtils.rayTraceBlock(p, 30);
 				Location targetLoc = bTarget != null ? bTarget.getLocation() : p.getEyeLocation().add(p.getEyeLocation().getDirection().multiply(30));
-				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 1,   -.5, Particle.CRIT,      null);
-				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 2,   -.6, Particle.WAX_ON,    null);
-				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 3,   -.5, Particle.SQUID_INK, null);
-				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 6,   -.5, Particle.SONIC_BOOM,null);
-				OBSParticles.drawLine(p.getEyeLocation(), targetLoc, 0.5, -.5, Particle.END_ROD,   null);
+				ObsParticles.drawLine(p.getEyeLocation(), targetLoc, 1,   -.5, Particle.CRIT,      null);
+				ObsParticles.drawLine(p.getEyeLocation(), targetLoc, 2,   -.6, Particle.WAX_ON,    null);
+				ObsParticles.drawLine(p.getEyeLocation(), targetLoc, 3,   -.5, Particle.SQUID_INK, null);
+				ObsParticles.drawLine(p.getEyeLocation(), targetLoc, 6,   -.5, Particle.SONIC_BOOM,null);
+				ObsParticles.drawLine(p.getEyeLocation(), targetLoc, 0.5, -.5, Particle.END_ROD,   null);
 				
 				DivineFavorData data = CelestioEffects.divineFavorRegistry.get(p.getUniqueId());
 				int divineFavorStacks = data != null ? data.magnitude : 0;

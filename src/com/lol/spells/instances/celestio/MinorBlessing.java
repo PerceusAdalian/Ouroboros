@@ -15,7 +15,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -52,7 +52,7 @@ public class MinorBlessing extends Spell
 			if (target == null || !(target instanceof Player))
 			{
 				if (CelestioEffects.hasEmpowered.contains(p.getUniqueId())) return -1;
-				OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
+				ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
 				CelestioEffects.addEmpowered(p, 1, 45);
 				return 25;
 			}
@@ -63,13 +63,13 @@ public class MinorBlessing extends Spell
 					PrintUtils.PrintToActionBar(p, "&7&oPlayer already buffed..");
 					return -1;		
 				}
-				OBSParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
-				OBSParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
+				ObsParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
+				ObsParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					EntityEffects.playSound(pTarget, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
-					OBSParticles.drawCelestioCastSigil(pTarget);
-					OBSParticles.drawCylinder(pTarget.getLocation(), pTarget.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
+					ObsParticles.drawCelestioCastSigil(pTarget);
+					ObsParticles.drawCylinder(pTarget.getLocation(), pTarget.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
 					CelestioEffects.addEmpowered(pTarget, 1, 30);
 				}, 15);
 				return 25;
@@ -84,7 +84,7 @@ public class MinorBlessing extends Spell
 			if (target == null || !(target instanceof Player))
 			{
 				if (CelestioEffects.hasWard.contains(p.getUniqueId())) return -1;
-				OBSParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
+				ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
 				CelestioEffects.addWard(p, 2, 30);
 				EntityEffects.heal(p, p.getHealth()*0.5);
 				return 25;
@@ -96,13 +96,13 @@ public class MinorBlessing extends Spell
 					PrintUtils.PrintToActionBar(p, "&7&oPlayer already buffed..");
 					return -1;		
 				}
-				OBSParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
-				OBSParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
+				ObsParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
+				ObsParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
 					EntityEffects.playSound(pTarget, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
-					OBSParticles.drawCelestioCastSigil(pTarget);
-					OBSParticles.drawCylinder(pTarget.getLocation(), pTarget.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
+					ObsParticles.drawCelestioCastSigil(pTarget);
+					ObsParticles.drawCylinder(pTarget.getLocation(), pTarget.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
 					CelestioEffects.addWard(pTarget, 2, 20);
 					EntityEffects.heal(pTarget, pTarget.getHealth()*0.65);
 				}, 15);

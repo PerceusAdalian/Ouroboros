@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.objects.AbstractObsObject;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -48,8 +48,8 @@ public class RemembranceOfHope extends AbstractObsObject
 				PotionEffectType.SATURATION,PotionEffectType.SPEED,PotionEffectType.STRENGTH,PotionEffectType.WATER_BREATHING);
 		
 		EntityEffects.playSound(p, Sound.ENTITY_ALLAY_ITEM_GIVEN, SoundCategory.MASTER);
-		OBSParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 8, 0.5, Particle.CLOUD, null);
-		OBSParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.WAX_ON, null);
+		ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 8, 0.5, Particle.CLOUD, null);
+		ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.WAX_ON, null);
 		
 		EntityEffects.add(p, eType.iterator().next(), 600, 0);
 		

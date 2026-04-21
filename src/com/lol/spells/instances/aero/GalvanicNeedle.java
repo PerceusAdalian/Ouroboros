@@ -16,8 +16,10 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.AeroEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -30,7 +32,8 @@ public class GalvanicNeedle extends Spell
 		super("Galvanic Needle", "galvanic_needle", Material.AMETHYST_SHARD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 2, true,
 				"&r&fFire a charged needle that deals 5&c♥&f Puncture damage,",
 				"&r&fand summons lightning after a short distance &7(2s | ~15m)",
-				"&r&fThose within &b&o10 meters&r&f are inflicted &dShock&r&f &7(14s | &r&cPVP&7: &c4s&7)");
+				"&r&fThose within &b&o10 meters&r&f are inflicted &dShock&r&f &7(14s | &r&cPVP&7: &c4s&7)","",
+				"&r&dShock &eEffect&f: Affected are &6&oStunned&r&f, &e&oGlow&r&f, and take &b&o25% more "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.");
 	}
 
 	@Override
@@ -54,8 +57,8 @@ public class GalvanicNeedle extends Spell
 			arrow.getWorld().strikeLightning(arrow.getLocation());
 			if(!RayCastUtils.getNearbyEntities(arrow, 10, (C)->
 			{   
-				OBSParticles.drawLine(arrow.getLocation(), C.getLocation(), 0.5, 0, Particle.ELECTRIC_SPARK, null);
-				OBSParticles.drawLine(arrow.getLocation(), C.getLocation(), 1, 0, Particle.CRIT, null);
+				ObsParticles.drawLine(arrow.getLocation(), C.getLocation(), 0.5, 0, Particle.ELECTRIC_SPARK, null);
+				ObsParticles.drawLine(arrow.getLocation(), C.getLocation(), 1, 0, Particle.CRIT, null);
 				AeroEffects.addShock(C, C instanceof Player ? 4 : 14);
 				arrow.remove();					
 			})) 

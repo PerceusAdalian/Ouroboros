@@ -12,7 +12,7 @@ import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.ItemCollector;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -37,7 +37,7 @@ public class MortioEssence extends AbstractObsObject
 		if (PlayerActions.rightClickAir(e)) 
 		{
 			e.setCancelled(true);
-			OBSParticles.drawMortioCastSigil(p);
+			ObsParticles.drawMortioCastSigil(p);
 			EntityEffects.playSound(p, Sound.ENTITY_CREAKING_AMBIENT, SoundCategory.AMBIENT);
 			PlayerData.addEssence(p, ElementType.MORTIO, e.getItem().getAmount());
 			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r&4⚛&f Added");

@@ -16,7 +16,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -47,8 +47,8 @@ public class Diagnosis extends Spell
 		
 		if (target instanceof Player)
 		{
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
-			OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 15, 0.75, 0.5, Particle.ENCHANT, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
+			ObsParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 15, 0.75, 0.5, Particle.ENCHANT, null);
 			spellEffect((Player) target, p);
 			return this.getManacost();
 		}
@@ -106,8 +106,8 @@ public class Diagnosis extends Spell
 			{
 				PrintUtils.OBSFormatError(caster, "&cWARNING&f: A &2&lHex&r&f was found: &n"+effectName+"&r&f. Priority Level: &c&lHighest&r&f "+target.getName()+" can be &e&ocured&r&f safely now.");
 				HeresioEffects.isHexed.remove(target.getUniqueId());
-				OBSParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 15, .75, .5, Particle.ENCHANT, null);
-				OBSParticles.drawCelestioCastSigil(target);
+				ObsParticles.drawCylinder(target.getLocation(), target.getWidth(), 3, 15, .75, .5, Particle.ENCHANT, null);
+				ObsParticles.drawCelestioCastSigil(target);
 				EntityEffects.playSound(target, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
 			}, 30);
 		}

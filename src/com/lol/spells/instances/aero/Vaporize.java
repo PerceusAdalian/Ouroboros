@@ -18,7 +18,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.OBSParticles;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.AeroEffects;
@@ -36,7 +36,7 @@ public class Vaporize extends Spell
 				"&r&fIf the &6&otarget&r&f survives, inflict &bEther Overload&f, &bEther Disruption&f, and &dShock&7 (30s)","",
 				"&r&bEther Overload &eEffect&f: affected take an additional &b&o50% &r&e&oelemental &r&fdamage.",
 				"&r&bEther Disruption &eEffect&f: affected &c&oPlayer&r&f(s) can't cast &e&oSpells&r&f.",
-				"&dShock &eEffect&f: stuns those affected and causes them to glow.");
+				"&r&dShock &eEffect&f: Affected are &6&oStunned&r&f, &e&oGlow&r&f, and take &b&o25% more "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.");
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class Vaporize extends Spell
 			if (target == null || !(target instanceof LivingEntity)) return;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			OBSParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.6, Particle.CRIT, null);
-			OBSParticles.drawSinLine(p.getLocation(), target.getLocation(), 0.7, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());
-			OBSParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.9, Particle.CLOUD, null);
-			OBSParticles.drawLine(p.getLocation(), target.getLocation(), 0.6, 0.4, Particle.END_ROD, null);
+			ObsParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.6, Particle.CRIT, null);
+			ObsParticles.drawSinLine(p.getLocation(), target.getLocation(), 0.7, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());
+			ObsParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.9, Particle.CLOUD, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.6, 0.4, Particle.END_ROD, null);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
