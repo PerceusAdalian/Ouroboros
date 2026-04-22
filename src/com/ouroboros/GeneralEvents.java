@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,8 +29,10 @@ import org.bukkit.potion.PotionEffect;
 import com.lol.spells.instances.aero.Fly;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PlayerActions;
@@ -37,6 +40,7 @@ import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.GeoEffects;
 import com.ouroboros.utils.entityeffects.HeresioEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
 import com.ouroboros.utils.entityeffects.MortioEffects;
 import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
@@ -152,11 +156,27 @@ public class GeneralEvents implements Listener
         	{
         		if (e.getEntity() instanceof Player p)
         		{
-        			if (GeoEffects.guarded_registry.containsKey(p.getUniqueId()))
-					{
-        				e.setDamage(e.getFinalDamage()*0.5);
-        				GeoEffects.subGuarded(p);
-					}
+        		    double finalDamage = e.getFinalDamage();
+
+        		    if (GeoEffects.isBarbed.containsKey(p.getUniqueId()) && e.getDamageSource() instanceof LivingEntity le) // Mitigation on barbed
+        		    {
+        		        int barbedDamage = GeoEffects.isBarbed.get(p.getUniqueId());
+        		        MobData.damageUnnaturally(p, le, barbedDamage, false, true, ElementType.GEO);
+        		        finalDamage = Math.max(0, finalDamage - barbedDamage);
+        		    }
+
+        		    if (InfernoEffects.hasInfernalBody.contains(p.getUniqueId()) && e.getDamageSource() instanceof LivingEntity le)
+        		    {
+        		    	InfernoEffects.addBurn(le, 10);
+        		    }
+        		    
+        		    if (GeoEffects.guarded_registry.containsKey(p.getUniqueId())) // Remove guarded stack
+        		    {
+        		        finalDamage *= 0.5;
+        		        GeoEffects.subGuarded(p);
+        		    }
+        		    
+        		    e.setDamage(finalDamage); // final damage for the player while guard is up + barbed is {finalDamage = (finalDamage - barbedDamage) * 0.5}
         		}
         		if (e.getCause().equals(DamageCause.FALL) && e.getEntity() instanceof Player p)
         		{

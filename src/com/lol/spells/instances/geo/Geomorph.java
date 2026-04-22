@@ -20,7 +20,7 @@ public class Geomorph extends Spell
 	public Geomorph()
 	{
 		super("Geomorph", "geomorph", Material.BRICK, SpellType.CANTRIP, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, true,
-				"&r&fApplies &6Guarded&f to &6self&7 (30s)","",
+				"&r&fApplies &6Guarded &bIII to &6self&7 (30s)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 3 instances.");
 	}
 	
@@ -28,15 +28,15 @@ public class Geomorph extends Spell
 	public int Cast(PlayerInteractEvent e)
 	{
 		Player p = e.getPlayer();
-		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		GeoEffects.addGuarded(p, 30);
-		return 50;
+		if (!GeoEffects.addGuarded(p, 3, 30)) return -1;
+		EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.AMBIENT);
+		return 25;
 	}
 
 	@Override
 	public int getTotalManaCost()
 	{
-		return 50;
+		return 25;
 	}
 	
 }

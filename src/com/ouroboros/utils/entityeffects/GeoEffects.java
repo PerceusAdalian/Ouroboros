@@ -57,16 +57,17 @@ public class GeoEffects
 	/**
 	 * Halves incoming damage for 3 instances.
 	 */
-	public static void addGuarded(Player p, int seconds)
+	public static boolean addGuarded(Player p, int magnitude, int seconds)
 	{
-		if (guarded_registry.containsKey(p.getUniqueId())) return;
-		guarded_registry.put(p.getUniqueId(), 3);
+		if (guarded_registry.containsKey(p.getUniqueId())) return false;
+		guarded_registry.put(p.getUniqueId(), magnitude);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
 		{
 			guarded_registry.remove(p.getUniqueId());
 			EntityEffects.playSound(p, Sound.ITEM_SHIELD_BREAK, SoundCategory.AMBIENT);
 			PrintUtils.PrintToActionBar(p, "&6Guarded&7&o expired..");
 		}, seconds * 20);
+		return true;
 	}
 	
 	public static void subGuarded(Player p)
@@ -93,5 +94,14 @@ public class GeoEffects
 		if (hasVulnerable.contains(target.getUniqueId())) return;
 		hasVulnerable.add(target.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasVulnerable.remove(target.getUniqueId()), seconds * 20);
+	}
+	
+	public static Map<UUID, Integer> isBarbed = new HashMap<>();
+	public static boolean addBarbed(Player p, int magnitude, int seconds)
+	{
+		if (isBarbed.containsKey(p.getUniqueId())) return false;
+		isBarbed.put(p.getUniqueId(), magnitude);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->isBarbed.remove(p.getUniqueId()), seconds * 20);
+		return true;
 	}
 }

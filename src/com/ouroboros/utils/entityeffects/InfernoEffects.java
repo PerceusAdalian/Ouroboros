@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
@@ -47,5 +48,14 @@ public class InfernoEffects
 		if (data != null) data.setBreak();
 		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.DRIPPING_WATER, null);
 		ObsParticles.drawInfernoCastSigil(target);
+	}
+	
+	public static Set<UUID> hasInfernalBody = new HashSet<>();
+	public static boolean addInfernalBody(Player p, int seconds)
+	{
+		if (hasInfernalBody.contains(p.getUniqueId())) return false;
+		hasInfernalBody.add(p.getUniqueId());
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasInfernalBody.remove(p.getUniqueId()), seconds*20);
+		return true;
 	}
 }

@@ -52,8 +52,11 @@ import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.cosmo.Warp;
+import com.lol.spells.instances.geo.Dracomorph;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
+import com.lol.spells.instances.geo.Magemorph;
+import com.lol.spells.instances.geo.Metalmorph;
 import com.lol.spells.instances.geo.Petrify;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.Chill;
@@ -88,6 +91,7 @@ import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.Voodoo;
+import com.ouroboros.utils.entityeffects.Dynamorph;
 
 public class SpellRegistry 
 {
@@ -161,6 +165,10 @@ public class SpellRegistry
         		SandBlast.class,
         		Geomorph.class,
         		Petrify.class,
+        		Metalmorph.class,
+        		Magemorph.class,
+        		Dynamorph.class,
+        		Dracomorph.class,
         		
         		//Cosmo
         		ArrestoMomentum.class,

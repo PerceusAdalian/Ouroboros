@@ -7,13 +7,17 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.geo.Dracomorph;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
+import com.lol.spells.instances.geo.Magemorph;
+import com.lol.spells.instances.geo.Metalmorph;
 import com.lol.spells.instances.geo.Petrify;
 import com.lol.spells.instances.geo.SandBlast;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
+import com.ouroboros.utils.entityeffects.Dynamorph;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GeoSpellsPage extends ObsGui
@@ -26,19 +30,24 @@ public class GeoSpellsPage extends ObsGui
 	@Override
 	protected void build() 
 	{
+		
 		// 1
 		GuiButton.placeCantripSpellButton(player, new Geomorph(), 10, this);
 		GuiButton.placeSpellButton(player, new SandBlast(), 11, this);
 		
 		// 2
-		GuiButton.placeSpellButton(player, new Petrify(), 12, this);
+		GuiButton.placeSpellButton(player, new Metalmorph(), 12, this);
+		GuiButton.placeSpellButton(player, new Petrify(), 13, this);
+		
 		// 3
-		GuiButton.placeSpellButton(player, new Expelliarmus(), 13, this);
+		GuiButton.placeSpellButton(player, new Magemorph(), 14, this);
+		GuiButton.placeSpellButton(player, new Expelliarmus(), 15, this);
 		
 		// 4
+		GuiButton.placeSpellButton(player, new Dynamorph(), 16, this);
 		
 		// 5
-		
+		GuiButton.placeSpellButton(player, new Dracomorph(), 19, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
