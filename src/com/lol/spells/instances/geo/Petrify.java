@@ -15,7 +15,6 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
-import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -27,7 +26,7 @@ public class Petrify extends Spell
 	public Petrify() 
 	{
 		super("Petrify", "petrify", Material.CLAY_BALL, SpellType.DEBUFF, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 5, false,
-				"&r&fApplies &6&oVulnerable&r&f to and &6Break&f &6&otarget &r&dMob &7(20m, 25s)","",
+				"&r&fApplies &6&oVulnerable&r&f to &6&otarget &r&dMob &7(20m, 25s)","",
 				"&r&6Vulnerable &eEffect&f: Physical damage resistance is reduced by &b&o50%&r&f.");
 	}
 
@@ -48,8 +47,6 @@ public class Petrify extends Spell
 				EntityEffects.playSound(p, Sound.BLOCK_MUD_BREAK, SoundCategory.AMBIENT);
 				ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 8, Particle.BLOCK_CRUMBLE, Material.DIRT.createBlockData());
 				ObsParticles.drawGeoCastSigil(le);
-				MobData data = MobData.getMob(le.getUniqueId());
-				if (data != null) data.setBreak();
 				GeoEffects.addVulnerable(le, 25);
 			}, 15);
 		})) return -1;

@@ -28,6 +28,7 @@ import com.ouroboros.utils.PrintUtils;
 public class MobManager 
 {
 	public static final NamespacedKey MOB_DATA_KEY = new NamespacedKey(Ouroboros.instance, "mob_data");
+	public static final NamespacedKey MOB_UUID_KEY = new NamespacedKey(Ouroboros.instance, "mob_uuid");
 	
 	public static void respawnAll() 
 	{
@@ -149,11 +150,16 @@ public class MobManager
     			for (LivingEntity mob : w.getLivingEntities())
     			{
     				if (mob instanceof Player) continue;
-    				for (Player p : w.getPlayers())
+    				if (MobData.getMob(mob.getUniqueId()) == null) 
     				{
-    					if (MobData.getMob(mob.getUniqueId()) == null && p.getLocation().distance(mob.getLocation()) > 20) 
+    					boolean anyPlayerNearby = w.getPlayers()
+    							.stream()
+    							.anyMatch(player -> player.getLocation()
+    							.distance(mob.getLocation()) < 20);
+    					
+    					if (!anyPlayerNearby) 
     						MobData.convertLegacyMob(mob);
-    				}    				
+    				}
     			}
     		}
     	}, 0L, 5L);

@@ -45,9 +45,9 @@ public class Corollary extends Spell
 			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, -35, 1.5, Particle.SQUID_INK, null);
+			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, -35, 1.5, Particle.WARPED_SPORE, null);
 			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, -45, 1.2, Particle.WITCH, null);
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, 210, 1.5, Particle.SQUID_INK, null);
+			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, 210, 1.5, Particle.WARPED_SPORE, null);
 			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, 225, 1.2, Particle.WITCH, null);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->

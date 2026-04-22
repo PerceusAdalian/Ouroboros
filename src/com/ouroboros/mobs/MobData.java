@@ -18,8 +18,10 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
@@ -75,70 +77,63 @@ public class MobData
 	
 	public void initialize(LivingEntity entity)
 	{
-		if (!file.exists())
-		{
-			if (!(entity instanceof LivingEntity livingEntity)) return;
-			String name = PrintUtils.getFancyEntityName(entity.getType());
-			double baseHp = livingEntity.getAttribute(Attribute.MAX_HEALTH).getValue();
-			int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
-			double hp = baseHp*((level*0.15d)+1.0);
-			int armor = (int) (hp*0.3);
-			setUUID(uuid);
-			setName(name);
-			setEntityType(livingEntity.getType());
-			setLevel(level);
-			setHp(Math.ceil(hp), true);
-			setHp(Math.ceil(hp), false);
-			setArmor(armor, true);
-			setArmor(armor, false);
-			setBreak(false);
-			setLocation(entity.getLocation());
-			entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
-			save();			
-		}
-		return;
+	    if (!(entity instanceof LivingEntity livingEntity)) return;
+	    String name = PrintUtils.getFancyEntityName(entity.getType());
+	    double baseHp = livingEntity.getAttribute(Attribute.MAX_HEALTH).getValue();
+	    int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
+	    double hp = baseHp * ((level * 0.15d) + 1.0);
+	    int armor = (int) (hp * 0.3);
+	    setUUID(uuid);
+	    setName(name);
+	    setEntityType(livingEntity.getType());
+	    setLevel(level);
+	    setHp(Math.ceil(hp), true);
+	    setHp(Math.ceil(hp), false);
+	    setArmor(armor, true);
+	    setArmor(armor, false);
+	    setBreak(false);
+	    setLocation(entity.getLocation());
+	    entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
+	    entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, uuid.toString()); // add this
+	    save();
 	}
 	
 	public void initializeSummoned(LivingEntity entity, int level, String customName)
 	{
-	    if (!file.exists())
-	    {
-	        double baseHp = entity.getAttribute(Attribute.MAX_HEALTH).getValue();
-	        double hp = baseHp * ((level * 0.15d) + 1.0);
-	        int armor = (int) (hp * 0.3);
-
-	        setUUID(uuid);
-	        setName(customName);          // stored directly, nameplate reads this back
-	        setEntityType(entity.getType());
-	        setLevel(level);
-	        setHp(Math.ceil(hp), true);
-	        setHp(Math.ceil(hp), false);
-	        setArmor(armor, true);
-	        setArmor(armor, false);
-	        setBreak(false);
-	        setLocation(entity.getLocation());
-	        entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
-	        entity.getPersistentDataContainer().set(MobNameplate.customMob, PersistentDataType.STRING, customName);
-	        save();
-	    }
+		double baseHp = entity.getAttribute(Attribute.MAX_HEALTH).getValue();
+		double hp = baseHp * ((level * 0.15d) + 1.0);
+		int armor = (int) (hp * 0.3);
+		
+		setUUID(uuid);
+		setName(customName);          // stored directly, nameplate reads this back
+		setEntityType(entity.getType());
+		setLevel(level);
+		setHp(Math.ceil(hp), true);
+		setHp(Math.ceil(hp), false);
+		setArmor(armor, true);
+		setArmor(armor, false);
+		setBreak(false);
+		setLocation(entity.getLocation());
+		entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
+		entity.getPersistentDataContainer().set(MobNameplate.customMob, PersistentDataType.STRING, customName);
+		save();
 	}
 	
 	public static void convertLegacyMob(LivingEntity entity)
 	{
-		MobData data = MobData.getMob(entity.getUniqueId());
-		if (data == null)
-		{
-			MobData.loadMobData(entity);
-			data = new MobData(entity);
-			data.initialize(entity);
-			data.save();
-			MobNameplate.build(entity, true);
-			
-			var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
-			att.setBaseValue(1023.9);
-			((Damageable) entity).setHealth(att.getBaseValue());
-		}
-		return;
+	    UUID uuid = entity.getUniqueId();
+	    dataMap.remove(uuid);
+
+	    File staleFile = new File(getDataFolder(), "mobs/data/" + uuid + ".yml");
+	    if (staleFile.exists()) staleFile.delete();
+	    MobData data = MobData.loadMobData(entity);
+	    if (data == null) return;
+
+	    MobNameplate.build(entity, true);
+
+	    var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
+	    att.setBaseValue(1023.9);
+	    ((Damageable) entity).setHealth(att.getBaseValue());
 	}
 	
 	public String serialize()
@@ -473,8 +468,12 @@ public class MobData
 	    Entity entity = Bukkit.getEntity(uuid);
 	    ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
 	    MobNameplate.update((LivingEntity) entity);
+	    EntityEffects.add((LivingEntity) entity, PotionEffectType.SLOWNESS, 300, 99, false);
+	    ((Mob) entity).setAI(false);
+	    ((Mob) entity).setTarget(null);
 	    Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, () ->
 	    {
+	    	((Mob) entity).setAI(true);
 	        setArmor(getArmor(true), false);
 	        setBreak(false);
 	        MobNameplate.update((LivingEntity) entity);
@@ -512,22 +511,19 @@ public class MobData
 		return dataMap.get(uuid);
 	}
 	
-	public static UUID parseUUID(Entity entity) 
-	{ 
-		String uuidString = entity.getPersistentDataContainer().get(MobManager.MOB_DATA_KEY, PersistentDataType.STRING);
-		if (uuidString == null) return null;
-
-		UUID uuid;
-		try 
-		{
-			uuid = UUID.fromString(uuidString);
-		} 
-		catch (IllegalArgumentException e) 
-		{
-			e.printStackTrace();
-			return null;
-		}
-		return uuid;
+	public static UUID parseUUID(Entity entity)
+	{
+	    String uuidString = entity.getPersistentDataContainer().get(MobManager.MOB_UUID_KEY, PersistentDataType.STRING);
+	    if (uuidString == null) return null;
+	    try
+	    {
+	        return UUID.fromString(uuidString);
+	    }
+	    catch (IllegalArgumentException e)
+	    {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 	
 	public void deleteFile()

@@ -57,7 +57,7 @@ public class Outbreak
         {
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                if (!Chance.of(5)) continue;
+                if (!Chance.of(1.5)) continue;
 
                 Location center = pickOutbreakCenter(p, 32, 64);
                 if (center == null) continue;
