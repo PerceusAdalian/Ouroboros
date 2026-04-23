@@ -21,6 +21,7 @@ import com.ouroboros.utils.TimeUtils.Timeframe;
 
 public class ObsParticles 
 {
+	
 	public static <T> void drawPoint(Location source, Particle p, double heightOffset, @Nullable T data) 
 	{
 		Vector v = source.toVector();

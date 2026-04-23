@@ -44,7 +44,7 @@ public class AspectOfAighil extends Spell
 
 	public AspectOfAighil()
 	{
-		super("Aspect of Aighil", "aspect_of_aighil", Material.MUSIC_DISC_LAVA_CHICKEN, SpellType.ULTIMATE, SpellementType.INFERNO, CastConditions.MIXED, Rarity.SIX, 50, 0.1, false,
+		super("Aspect of Aighil, The Gentle", "aspect_of_aighil", Material.MUSIC_DISC_LAVA_CHICKEN, SpellType.ULTIMATE, SpellementType.INFERNO, CastConditions.MIXED, Rarity.SIX, 50, 0.1, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&cAspect of Aighil&f: &c&oDraconic Lore&r&f --",
 				"&r&7&l┏--&r&7{&e✧ &oArbanian Combo&f: unleash a volley of "+PrintUtils.color(ObsColors.INFERNO)+"&lInfernal&r&f projectiles.",
