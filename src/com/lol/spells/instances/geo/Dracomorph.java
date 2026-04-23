@@ -30,18 +30,19 @@ public class Dracomorph extends Spell
 	public Dracomorph() 
 	{
 		super("Dracomorph", "dracomorph", Material.NETHERITE_INGOT, SpellType.ULTIMATE, SpellementType.GEO, CastConditions.MIXED, Rarity.FIVE, 300, 120, false,
+				"&r&b&oElemental Fusion&f: "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f --",
 				"&r&e&oPrimary &r&f" + PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
-				"&r&6Dracomorph &7(&b&oElemental Fusion&r&7)&f: &c&oCharred &r&6&oBulwark&r&f --",
-				"&r&fApply &cInfernal Body&f, &6Guarded &bVIII&f, and &6Barbed &bX&f to &6self &7(1min)",
+				"&r&6Dracomorph: &c&oCharred &r&6&oBulwark&r&f --",
+				"&r&fApply &cInfernal Body&f, &6Guarded &bVIII&f, and &6Barbed &bX&f to &6self &7(1min)","",
 				"&r&e&oSecondary &r&f" + PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
-				"&r&6Dracomorph &7(&b&oElemental Fusion&r&7)&f: &c&oDraconic &6&oStomp&r&f --",
+				"&r&6Dracomorph&f: &c&oDraconic &6&oStomp&r&f --",
 				"&r&fErrupt an earthquake that deals 30&c♥&f "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage,",
 				"&r&fand inflicts &cCharred&f and &6Sanded&f to all within a &dradial AOE &7(45m, 30s)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 8 instances.",
 				"&r&6Barbed &eEffect&f: Incoming damage is redirected as "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage",
 				"&r&fequal to the &b&omagnitude&r&f of &6Barbed&f pre &6Guarded&f procs.",
 				"&r&6Sanded &eEffect&f: Affected are &b&oSlowed&r&f and &b&oBlinded&r&f.","",
-				"&r&cInfernal Body&f: Inflicts &cBurn&f for &b&o10 seconds&r&f when applicant is hit.",
+				"&r&cInfernal Body &eEffect&f: Inflicts &cBurn&f for &b&o10 seconds&r&f when applicant is hit.",
 				"&r&cCharred &eEffect&f: Causes &b&oHunger&r&f, &b&oFatigue&r&f, and &b&oSlowness&r&f, while affected take &b&o25%&r&f",
 				"&r&fmore "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno &r&fdamage, and may cause &cBurn&f upon hit removing the effect.");
 	}

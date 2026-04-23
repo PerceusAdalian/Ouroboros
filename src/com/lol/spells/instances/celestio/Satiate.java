@@ -26,7 +26,7 @@ public class Satiate extends Spell
 	public Satiate()
 	{
 		super("Satiate", "satiate", Material.WHEAT, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 35, 5, false,
-				"&r&fGrant &e&oSatiated&r&f to &6self&r&f or target &d&oPlayer&r&7 (20m)","",
+				"&r&fGrant &e&oSatiated&r&f to &6self&r&f or target &b&oPlayer&r&7 (20m)","",
 				"&r&eSatiated Effect&f: grants momentary &b&oSaturation&r&f regen.");
 	}
 

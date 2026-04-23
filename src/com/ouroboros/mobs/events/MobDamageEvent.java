@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SpectralArrow;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Trident;
 import org.bukkit.entity.WindCharge;
@@ -63,6 +64,8 @@ public class MobDamageEvent implements Listener
 				{
 					if (dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player)
 						element = ElementType.PUNCTURE;
+					else if (dmgEvent.getDamager() instanceof SpectralArrow sArrow && sArrow.getShooter() instanceof Player)
+						element = ElementType.CELESTIO;
 					else if (dmgEvent.getDamager() instanceof Trident trident && trident.getShooter() instanceof Player)
 						element = ElementType.IMPALE;
 					else if (dmgEvent.getDamager() instanceof ThrownPotion potion && potion.getShooter() instanceof Player)
@@ -115,7 +118,7 @@ public class MobDamageEvent implements Listener
 						element = ElementType.INFERNO;
 					else if (cause == DamageCause.FALL || cause == DamageCause.FALLING_BLOCK)
 						element = ElementType.GEO;
-					else if (cause == DamageCause.CONTACT || cause == DamageCause.PROJECTILE || cause == DamageCause.THORNS)
+					else if (cause == DamageCause.PROJECTILE || cause == DamageCause.THORNS)
 						element = ElementType.PIERCE;
 					else if (cause == DamageCause.DRAGON_BREATH || cause == DamageCause.CRAMMING
 							|| cause == DamageCause.WORLD_BORDER || cause == DamageCause.VOID

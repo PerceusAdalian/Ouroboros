@@ -21,6 +21,7 @@ import com.ouroboros.objects.instances.LuminiteDust;
 import com.ouroboros.objects.instances.LuminiteFragment;
 import com.ouroboros.objects.instances.LuminiteIngot;
 import com.ouroboros.objects.instances.LuminiteShard;
+import com.ouroboros.objects.instances.ManaGem;
 import com.ouroboros.objects.instances.MortioEssence;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.RemembranceOfHope;
@@ -48,6 +49,7 @@ public class ObjectRegistry
         	
         	TearOfLumina.class,
         	TrainingWand.class,
+        	ManaGem.class,
         	
         	CelestioEssence.class,
         	MortioEssence.class,

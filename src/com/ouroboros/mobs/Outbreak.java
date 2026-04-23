@@ -1,9 +1,11 @@
 package com.ouroboros.mobs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -35,9 +37,11 @@ public class Outbreak
     }
 
     // Factory for random outbreaks — pulls element and level range from context
-    public static Outbreak random(Biome biome, ElementType element, int groupSize)
+    public static Outbreak random(Biome biome, ElementType element, int groupSize, boolean allowBosses)
     {
         Set<EntityType> pool = EntityCategory.parseByElementType(element); // filter EntityCategories by element
+        if (!allowBosses) pool = pool.stream().filter(t -> !EntityCategories.calamity.contains(t)).collect(Collectors.toCollection(HashSet::new));
+        
         List<OutbreakEntry> entries = new ArrayList<>();
         for (int i = 0; i < groupSize; i++)
         {
@@ -64,7 +68,7 @@ public class Outbreak
 
                 Biome biome = center.getBlock().getBiome();
                 ElementType element = ElementType.random();
-                Outbreak outbreak = Outbreak.random(biome, element, ThreadLocalRandom.current().nextInt(3, 7));
+                Outbreak outbreak = Outbreak.random(biome, element, ThreadLocalRandom.current().nextInt(3, 7), false);
                 OutbreakManager.trigger(center, outbreak);
             }
         }, 0L, 600L);

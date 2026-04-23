@@ -26,7 +26,7 @@ public class MinorBlessing extends Spell
 
 	public MinorBlessing()
 	{
-		super("Minor Blessing", "minor_blessing", Material.EMERALD, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.TWO, 25, 3, true,
+		super("Minor Blessing", "minor_blessing", Material.EMERALD, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.TWO, 100, 3, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eMinor Blessing&f: &e&oGrace&r&f --",
 				"&r&aHeal&f &6self&f/&6target &c&oPlayer&r&f by &b&o50%&r&f current &cHP&f,",
@@ -54,7 +54,7 @@ public class MinorBlessing extends Spell
 				if (CelestioEffects.hasEmpowered.contains(p.getUniqueId())) return -1;
 				ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
 				CelestioEffects.addEmpowered(p, 1, 45);
-				return 25;
+				return 100;
 			}
 			else if (target instanceof Player pTarget)
 			{		
@@ -72,7 +72,7 @@ public class MinorBlessing extends Spell
 					ObsParticles.drawCylinder(pTarget.getLocation(), pTarget.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
 					CelestioEffects.addEmpowered(pTarget, 1, 30);
 				}, 15);
-				return 25;
+				return 100;
 			}
 			else return -1;
 		}

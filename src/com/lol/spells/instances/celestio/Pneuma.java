@@ -45,11 +45,11 @@ public class Pneuma extends Spell
 	{
 		super("Pneuma", "pneuma", Material.END_CRYSTAL, SpellType.ULTIMATE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 100, 5, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
-				"&r&e&oPneuma&r&f: &e&lCharge&r&f --",
+				"&r&ePneuma&r&f: &e&oCharge&r&f --",
 				"&r&fGrants &eDivine Favor &bX&f and &b&oRegenerate&r &bIII&f to self &7(60s)",
 				"&r&fSubsequently, all negative status effects, including &2Curses&f, are &e&oCured&r&f.","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
-				"&r&e&oPneuma&r&f: &e&lPhoton Beam&r&f --",
+				"&r&ePneuma&r&f: &e&oPhoton Beam&r&f --",
 				"&r&fExpel a concentrated photon beam up to &b&o30 meters&r&f, applying &eExposed&f and dealing",
 				PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage. Damage scales with &eDivine Favor&f stacks, with a max output of 100&c♥&f.","",
 				"&r&e&oDivine Favor &r&eEffect&r&f: Grants &b&oAbsorption&f &r&fand &b&oResistance&f scaled to its magnitude. ",

@@ -30,7 +30,7 @@ public class Diagnosis extends Spell
 	public Diagnosis() 
 	{
 		super("Diagnosis", "diagnosis", Material.ENDER_EYE, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 50, 5, false,
-				"&r&fDiagnose target &b&oPlayer&r &7(20m)&f or &6&oSelf&r&f to view current statuses.");
+				"&r&fDiagnose target &b&oPlayer&r &7(20m)&f or &6self&f to view current statuses.");
 	}
 
 	@Override

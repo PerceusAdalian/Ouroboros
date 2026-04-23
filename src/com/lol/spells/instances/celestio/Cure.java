@@ -30,7 +30,7 @@ public class Cure extends Spell
 	public Cure() 
 	{
 		super("Cure", "cure", Material.NETHER_STAR, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 5, false,
-				"&r&fCures target &b&oPlayer&r&f &7(20m)&r&f or &6&oSelf&r&f of all negative statuses.");
+				"&r&fCures target &b&oPlayer&r&f &7(20m)&r&f or &6self&f of all negative statuses.");
 	}
 
 	@Override

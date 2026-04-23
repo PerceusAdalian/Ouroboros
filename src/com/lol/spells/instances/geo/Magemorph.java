@@ -10,7 +10,9 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.GeoEffects;
@@ -21,9 +23,11 @@ public class Magemorph extends Spell
 	public Magemorph() 
 	{
 		super("Magemorph", "magemorph", Material.GOLD_INGOT, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 10, false,
-				"&r&fApplies &6Guarded &bII and &eWard &b III to &6self&7 (30s, 45s)","",
-				"&r&6Guarded &eEffect&f: Halves incoming damage for 2 instances.",
-				"&r&eWard Effect&f: grants &b&oAbsorption&r&f, &b&oFire Resistance&r&f, and &b&oResistance&r&f equal to the magnitude of &eWard&f.");
+				"&r&b&oElemental Fusion&f: "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f --",
+				"&r&fApplies &6Guarded &bII&f and &eWard &bIII&f to &6self&7 (30s, 45s)","",
+				"&r&6Guarded &eEffect&f: Halves incoming damage for 2 instances.","",
+				"&r&eWard Effect&f: grants &b&oAbsorption&r&f, &b&oFire Resistance&r&f,",
+				"and &b&oResistance&r&f equal to the magnitude of &eWard&f.");
 	}
 
 	@Override

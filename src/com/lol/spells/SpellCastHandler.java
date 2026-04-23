@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +35,8 @@ import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.mobs.MobData;
+import com.ouroboros.objects.AbstractObsObject;
+import com.ouroboros.utils.ItemCollector;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.ArcanoEffects;
@@ -125,7 +128,7 @@ public class SpellCastHandler implements Listener
 
         if (!CastConditions.isValidAction(e, currentSpell.getCastCondition())) return; // Only valid cast conditions allowed.
         
-        if (Fly.flyers.containsKey(p.getUniqueId()) && !currentSpell.getInternalName().equals("fly"))
+        if (Fly.lockedCasters.contains(p.getUniqueId()) && !currentSpell.getInternalName().equals("fly"))
         {
         	PrintUtils.PrintToActionBar(p, "&cFizzle!");
             return;
@@ -159,7 +162,35 @@ public class SpellCastHandler implements Listener
             manaCost = 0;
             Freecast.hasFreecast.remove(p.getUniqueId());
         }
-        if (wand.getCurrentMana() < manaCost)
+        
+        ItemStack offHand = p.getEquipment().getItemInOffHand();
+        if (wand.getCurrentMana() < manaCost && isManaGem(offHand)) // Optionally, a player may have mana gems to cover the insufficient cast cost of a spell
+        {
+            int gemsConsumed = 0;
+            for (int i = 0; i < offHand.getAmount(); i++)
+            {
+                wand.addMana(500);
+                gemsConsumed++;
+                if (wand.getCurrentMana() >= manaCost)
+                {
+                	ObsParticles.drawArcanoCastSigil(p);
+                	PrintUtils.PrintToActionBar(p, "&fUsed &b&l"+gemsConsumed+"&r&f Mana Gem(s)");
+                	EntityEffects.playSound(p, Sound.BLOCK_MEDIUM_AMETHYST_BUD_BREAK, SoundCategory.AMBIENT);
+                    ItemCollector.remove(e, gemsConsumed);
+                    p.getInventory().setItemInMainHand(wand.getAsItemStack());
+                    break;
+                }
+            }
+
+            // Exhausted all gems and still not enough mana
+            if (wand.getCurrentMana() < manaCost)
+            {
+                PrintUtils.PrintToActionBar(p, "&r&fBut still not enough &b&lMana&r&f!");
+                EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
+                return;
+            }
+        }
+        else if (wand.getCurrentMana() < manaCost) // No mana gems equipped
         {
             PrintUtils.PrintToActionBar(p, "&r&fNot Enough &b&lMana&r&f!");
             EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
@@ -219,6 +250,15 @@ public class SpellCastHandler implements Listener
         }, cooldown);
         
         p.getInventory().setItemInMainHand(wand.getAsItemStack());
+	}
+	
+	public static boolean isManaGem(ItemStack stack)
+	{
+		if (stack == null || stack.getType().equals(Material.AIR)) return false;
+		ItemMeta meta = stack.getItemMeta();
+		PersistentDataContainer pdc = meta.getPersistentDataContainer();
+		if (pdc.has(AbstractObsObject.obsObject) && pdc.get(AbstractObsObject.obsObject, PersistentDataType.STRING).equals("mana_gem")) return true;
+		else return false;
 	}
 	
 }

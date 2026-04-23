@@ -420,4 +420,40 @@ public class ObsParticles
 			default -> throw new IllegalArgumentException("Unexpected value: " + eType);
 		}
 	}
+	
+	public static double deriveDegreeTheta(Location loc1, Location loc2)
+	{
+		int[] rightRange = {-30, -80};
+		int[] leftRange = {181, 260};
+		
+		// Determine left/right relative to loc1's facing direction
+		Vector dirAlpha = loc1.getDirection().setY(0).normalize();
+		Vector toLocation2 = loc2.toVector()
+		    .subtract(loc1.toVector())
+		    .setY(0)
+		    .normalize();
+
+		// Cross product Y > 0 means loc2 is to the left of loc1, < 0 means to the right
+		double cross = dirAlpha.getX() * toLocation2.getZ() - dirAlpha.getZ() * toLocation2.getX();
+
+		Random rand = new Random();
+		int degTheta;
+
+		if (cross < 0)
+		{
+		    // loc2 is to the RIGHT of loc1 -> use negative (right-side) range
+		    int min = Math.min(rightRange[0], rightRange[1]); // -60
+		    int max = Math.max(rightRange[0], rightRange[1]); // -35
+		    degTheta = min + rand.nextInt(max - min + 1);
+		}
+		else
+		{
+		    // loc2 is to the LEFT of loc1 -> use positive (left-side) range
+		    int min = Math.min(leftRange[0], leftRange[1]); // 190
+		    int max = Math.max(leftRange[0], leftRange[1]); // 245
+		    degTheta = min + rand.nextInt(max - min + 1);
+		}
+		
+		return degTheta;
+	}
 }

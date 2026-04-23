@@ -21,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
+import com.lol.spells.SpellCastHandler;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
@@ -36,15 +37,16 @@ public class Fly extends Spell
 	public Fly()
 	{
 		super("Fly", "fly", Material.ELYTRA, SpellType.UTILITY, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 1, false,
-				"&r&e&oToggled&r&f: Grants flight to &6self&f.",
+				"&r&e&oToggled&r&f: Grants flight to &6self&f. &c&oDeactivating&r&f doesn't cost &b&lMana&r&f.",
 				"&r&fAll other &eSpellcasting&f is &c&odisabled&r&f while active.",
 				"&r&fLanding automatically toggles this &eSpell&f.",
 				"&r&cWarning&f: You may receive fall damage if toggling mid-air.","",
-				"&r&b&oEchoic Disonance&r&f: On toggle, &lCD &r&e-> &b&o30 seconds&r&f");
+				"&r&b&oEchoic Dissonance&r&f: On toggle, &lCD &r&e-> &b&o30 seconds&r&f");
 			
 	}
 
 	public static Map<UUID, Boolean> flyers = new HashMap<>();
+	public static Set<UUID> lockedCasters = new HashSet<>();
 	public static Set<UUID> cooldown = new HashSet<>();
 	
 	@Override
@@ -52,9 +54,20 @@ public class Fly extends Spell
 	{
 		Player p = e.getPlayer();
 		
+		return playSpellEffect(p, 100, false, false);
+	}
+
+	@Override
+	public int getTotalManaCost()
+	{
+		return 0;
+	}
+	
+	public static int playSpellEffect(Player p, int finalManaCost, boolean lockCycling, boolean canCastSpells)
+	{
 		if (cooldown.contains(p.getUniqueId()))
 	    {
-	        PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.AERO)+"&lFly&r &7&oon cooldown!");
+	        PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.AERO)+"&lFly&r&7&o effect on cooldown!");
 	        return -1;
 	    }
 		
@@ -63,6 +76,8 @@ public class Fly extends Spell
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_DEACTIVATE, SoundCategory.AMBIENT);
 			p.setAllowFlight(false);
 			p.setFlying(false);
+			if (SpellCastHandler.lockedCycling.contains(p.getUniqueId())) SpellCastHandler.lockedCycling.remove(p.getUniqueId());
+			if (lockedCasters.contains(p.getUniqueId())) lockedCasters.remove(p.getUniqueId());
 			flyers.remove(p.getUniqueId());
 			cooldown.add(p.getUniqueId());
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->cooldown.remove(p.getUniqueId()), 600);
@@ -81,13 +96,19 @@ public class Fly extends Spell
 			EntityEffects.playSound(p, Sound.ENTITY_BREEZE_IDLE_AIR, SoundCategory.AMBIENT);
 		}, 20);
 		
-		return 100;
-	}
-
-	@Override
-	public int getTotalManaCost()
-	{
-		return 100;
+		if (lockCycling)
+		{
+			if (!SpellCastHandler.lockedCycling.contains(p.getUniqueId())) SpellCastHandler.lockedCycling.add(p.getUniqueId());
+	    	else SpellCastHandler.lockedCycling.remove(p.getUniqueId());
+		}
+		
+		if (!canCastSpells)
+		{
+			if (!lockedCasters.contains(p.getUniqueId())) lockedCasters.add(p.getUniqueId());
+			else lockedCasters.remove(p.getUniqueId());
+		}
+		
+		return finalManaCost;
 	}
 	
 	public static void registerSpellHelper(Plugin plugin)
@@ -109,6 +130,8 @@ public class Fly extends Spell
 			        p.setAllowFlight(false);
 			        flyers.remove(p.getUniqueId());
 			        cooldown.add(p.getUniqueId());
+			        if (SpellCastHandler.lockedCycling.contains(p.getUniqueId())) SpellCastHandler.lockedCycling.remove(p.getUniqueId());
+			        if (lockedCasters.contains(p.getUniqueId())) lockedCasters.remove(p.getUniqueId());
 					Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->cooldown.remove(p.getUniqueId()), 600);
 			        EntityEffects.playSound(p, Sound.ENTITY_BREEZE_LAND, SoundCategory.AMBIENT);
 			        ObsParticles.drawAeroCastSigil(p);

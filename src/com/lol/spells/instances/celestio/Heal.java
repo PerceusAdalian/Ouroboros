@@ -25,7 +25,7 @@ public class Heal extends Spell
 	public Heal()
 	{
 		super("Heal", "heal", Material.EMERALD, SpellType.CANTRIP, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, true,
-				"&r&aHeal &6self&f/&6target &c&oPlayer&r&f for 10&c♥ &7(25m)");
+				"&r&aHeal &6self&f/&6target &b&oPlayer&r&f for 10&c♥ &7(25m)");
 	}
 
 	@Override

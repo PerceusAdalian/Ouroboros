@@ -26,7 +26,7 @@ public class Expell extends Spell
 	public Expell() 
 	{
 		super("Expose", "expose", Material.NETHER_STAR, SpellType.OFFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 3, false,
-				"&r&fApply &e&oExposed&r&f to target within &b&o25 meters &r&7(30s)","",
+				"&r&fApply &e&oExposed&r&f to &6target&f &r&7(25m, 30s)","",
 				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",
 				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.");
 	}

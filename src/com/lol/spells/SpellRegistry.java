@@ -37,6 +37,7 @@ import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Heal;
 import com.lol.spells.instances.celestio.Lumina;
 import com.lol.spells.instances.celestio.Lumos;
+import com.lol.spells.instances.celestio.MagicMissile;
 import com.lol.spells.instances.celestio.MinorBlessing;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
@@ -116,6 +117,7 @@ public class SpellRegistry
         		Lumina.class,
         		MinorBlessing.class,
         		Heal.class,
+        		MagicMissile.class,
         		
         		//Mortio
         		Haunt.class,

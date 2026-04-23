@@ -33,6 +33,7 @@ import com.ouroboros.mobs.events.MobDeathEvent;
 import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.objects.ManaGemRecipe;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
 import com.ouroboros.objects.TrainingWandRecipe;
@@ -89,6 +90,8 @@ public class Ouroboros extends JavaPlugin
 
 		TrainingWandRecipe.init();
 		TrainingWandRecipe.register();
+		ManaGemRecipe.init();
+		ManaGemRecipe.register();
 		
 		ObjectRegistry.itemInit();
 		ObsObjectCastHandler.register(instance);

@@ -34,7 +34,7 @@ public class Tailwind extends Spell
 
 	public Tailwind()
 	{
-		super("Tailwind", "tailwind", Material.FEATHER, SpellType.UTILITY, SpellementType.AERO, CastConditions.MIXED, Rarity.ONE, 5, 1.5, false,
+		super("Tailwind", "tailwind", Material.FEATHER, SpellType.UTILITY, SpellementType.AERO, CastConditions.MIXED, Rarity.ONE, 10, 1.5, false,
 				"&ePrimary&f "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&dTailwind&f: &d&oJetstream&r&f --",
 				"&r&fGives a momentary boost of velocity towards target direction.","",
@@ -55,7 +55,7 @@ public class Tailwind extends Spell
 		{
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			EntityEffects.add(p, PotionEffectType.SPEED, 400, 2, false);
-			return 5;
+			return 10;
 		}
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
 		{
@@ -70,7 +70,7 @@ public class Tailwind extends Spell
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->tailwindRegistry.remove(p.getUniqueId()), 200);
 			}
 			
-			return 5;
+			return 10;
 		}
 		return -1;
 	}
@@ -78,7 +78,7 @@ public class Tailwind extends Spell
 	@Override
 	public int getTotalManaCost()
 	{
-		return 5;
+		return 10;
 	}
 	
 	public static void registerSpellHelper(JavaPlugin plugin)
