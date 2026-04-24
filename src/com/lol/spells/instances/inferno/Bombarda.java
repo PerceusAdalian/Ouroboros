@@ -15,8 +15,10 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
@@ -43,19 +45,7 @@ public class Bombarda extends Spell
 	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
-		Entity target = RayCastUtils.getEntity(p, 25);
-		if (!(target instanceof LivingEntity) || target == null) return -1;
-		ObsParticles.drawInfernoCastSigil(p);
-		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.LAVA, null);
-		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
-		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-		{
-			InfernoEffects.addBurn((LivingEntity) target, 10);
-			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
-			ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
-		}, 15);
-		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->target.getWorld().createExplosion(target.getLocation(), 3, false, false), 20);
-		return this.getManacost();
+		return playSpellEffect(p, 0, 25) ? 200 : -1;
 	}
 	
 	@Override
@@ -64,4 +54,30 @@ public class Bombarda extends Spell
 		return this.getManacost();
 	}
 
+	public static boolean playSpellEffect(Player p, double damage, int range)
+	{
+		Entity target = RayCastUtils.getEntity(p, range);
+		if (!(target instanceof LivingEntity) || target == null) return false;
+		
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.LAVA, null);
+		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{
+			InfernoEffects.addBurn((LivingEntity) target, 10);
+			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
+			ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
+		}, 15);
+		
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{
+			if (damage != 0 && damage > 0)
+			{
+				MobData.damageUnnaturally(p, target, damage, true, true, ElementType.INFERNO);
+			}
+			else target.getWorld().createExplosion(target.getLocation(), 3, false, false);
+		}, 20);
+		
+		return true;
+	}
+	
 }

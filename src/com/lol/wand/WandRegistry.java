@@ -39,7 +39,7 @@ public class WandRegistry
 		Wand.register(new Wand("&eΣOL&f: "+PrintUtils.color(ObsColors.AERO)+"&lSeth&r&f's Caduceus&r&f", "seth_caduceus", Rarity.SIX, ElementType.AERO, 5, 3000));
 		Wand.register(new Wand("&eΣOL&f: &r&fAntenna of "+PrintUtils.color(ObsColors.COSMO)+"&lEnd&r&f", "antenna_of_end", Rarity.SIX, ElementType.COSMO, 5, 3000));
 		Wand.register(new Wand("&eΣOL&f: Stave of "+PrintUtils.color(ObsColors.HERESIO)+"&lGeneral Falric&r&f", "stave_of_general_falric", Rarity.SIX, ElementType.HERESIO, 5, 3000));
-
+		
 		// Seven
 		Wand.register(new Wand("&eΣOL&f: "+PrintUtils.color(ObsColors.CELESTIO)+"&lLumina's Scepter&r&f", "luminas_wand", Rarity.SEVEN, ElementType.CELESTIO, 5, 5000));
 		Wand.register(new Wand("&eΣOL&f: &2&lTwilight Catalyst&r&f", "twilight_catalyst", Rarity.SEVEN, ElementType.HERESIO, 5, 5000));

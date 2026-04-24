@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.arcano.ArcaneBolt;
+import com.lol.spells.instances.arcano.AspectOfLordran;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
@@ -47,8 +48,9 @@ public class ArcanoSpellsPage extends ObsGui
 		// 6
 		
 		// 7
+		GuiButton.placeSpellButton(player, new AspectOfLordran(), 16, this);
 		GuiButton.placeSpellButton(player, new OuroborosPrime(), 15, this);
-		
+
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
 		{

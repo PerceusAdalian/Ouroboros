@@ -33,16 +33,8 @@ public class Axiom extends Spell
 	public int Cast(PlayerInteractEvent e)
 	{
 		Player p = e.getPlayer();
-		
-		if (!RayCastUtils.getEntity(p, 15, target ->
-		{
-			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
-			
-			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.GLOW_SQUID_INK, null);
-			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.WARPED_SPORE, null);
-			MobData.damageUnnaturally(p, le, 5, true, true, ElementType.HERESIO);
-		})) return -1;
+
+		if (!playSpellEffect(p, 5, 15)) return -1;
 		
 		return 10;
 	}
@@ -53,4 +45,18 @@ public class Axiom extends Spell
 		return 10;
 	}
 
+	public static boolean playSpellEffect(Player p, double damage, int range)
+	{
+		if (!RayCastUtils.getEntity(p, range, target ->
+		{
+			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
+			
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.GLOW_SQUID_INK, null);
+			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.WARPED_SPORE, null);
+			MobData.damageUnnaturally(p, le, damage, true, true, ElementType.HERESIO);
+		})) return true;
+		return false;
+	}
+	
 }

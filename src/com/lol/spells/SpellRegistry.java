@@ -23,6 +23,7 @@ import com.lol.spells.instances.aero.Thunderbolt;
 import com.lol.spells.instances.aero.Thunderstorm;
 import com.lol.spells.instances.aero.Vaporize;
 import com.lol.spells.instances.arcano.ArcaneBolt;
+import com.lol.spells.instances.arcano.AspectOfLordran;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
@@ -203,6 +204,7 @@ public class SpellRegistry
         		Freecast.class,
         		PrismaOuroborealis.class,
         		OuroborosPrime.class,
+        		AspectOfLordran.class,
         		
         		//Astral
         		Starfall.class,

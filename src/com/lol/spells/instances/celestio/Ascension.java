@@ -57,7 +57,7 @@ public class Ascension extends Spell
 
 	    if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
 	    {
-	    	return castJudgement(p, 25);
+	    	return castJudgement(p, 10, 45, true) ? 25 : -1;
 	    }
 
 	    return -1;
@@ -69,11 +69,11 @@ public class Ascension extends Spell
 		return 50;
 	}
 	
-	private int castJudgement(Player p, int finalManaCost)
+	public static boolean castJudgement(Player p, double damage, int range, boolean requiresFlying)
 	{
-	    if (!p.isFlying()) return -1;
+		if (requiresFlying && !p.isFlying()) return false;
 	    
-		boolean hit = RayCastUtils.getEntity(p, 45, target ->
+		boolean hit = RayCastUtils.getEntity(p, range, target ->
 	    {
 	        if (!(target instanceof LivingEntity)) return;
 
@@ -87,14 +87,14 @@ public class Ascension extends Spell
 	            EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
 	            ObsParticles.drawSpiralVortex(target.getLocation(), 110, 3, 0.5, Particle.CLOUD, null);
 	            ObsParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
-	            MobData.damageUnnaturally(p, target, 10, true, true, ElementType.CELESTIO);
+	            MobData.damageUnnaturally(p, target, damage, true, true, ElementType.CELESTIO);
 	            CelestioEffects.addHumility((LivingEntity) target, 20);
 	        }, 15);
 	    });
 
-	    if (!hit) return -1;
+	    if (!hit) return false;
 	    
-	    return finalManaCost;
+	    return true;
 	}
 
 	
