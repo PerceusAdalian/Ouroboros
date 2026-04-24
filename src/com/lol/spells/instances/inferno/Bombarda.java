@@ -59,7 +59,7 @@ public class Bombarda extends Spell
 		Entity target = RayCastUtils.getEntity(p, range);
 		if (!(target instanceof LivingEntity) || target == null) return false;
 		
-		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.LAVA, null);
+		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.FLAME, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{

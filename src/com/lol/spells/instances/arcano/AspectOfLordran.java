@@ -52,7 +52,7 @@ public class AspectOfLordran extends Spell
 				"&r&7&l┏--&r&7{&e✧ &oArbanian Combo&f: unleash a volley of "+PrintUtils.color(ObsColors.ARCANO)+"&lArcane&r&f spells.",
 				"&r&7&l┗┳- &r&f1. "+PrintUtils.color(ObsColors.HERESIO)+"Regal Axiom &f(&6⌖&f: 10&c♥&f, 30m)",
 				"&r&7&l ┗┳- &r&f2. "+PrintUtils.color(ObsColors.CELESTIO)+"Royal Judgement &f(&6⌖&f: 15&c♥&f, 30m)",
-				"&r&7&l  ┗┳- &r&f3. "+PrintUtils.color(ObsColors.INFERNO)+"Burning Will &f(&6⌖&f: 25&c♥&f, 30m)",
+				"&r&7&l  ┗┳- &r&f3. "+PrintUtils.color(ObsColors.INFERNO)+"Burning Will &f(&dFOV &6⌖&f: 25&c♥&f, 30m)",
 				"&r&7&l   ┗--&r&7{&r&e✧ &f4. "+PrintUtils.color(ObsColors.ARCANO)+"Crowned Imperion &f(&6⌖&f: 50&c♥&f, 30m, &6Break ⌖&f)","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordran&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return&r&f --",
@@ -112,15 +112,15 @@ public class AspectOfLordran extends Spell
 			}
 			
 			// Axiom
-			if (ComboData.build(uuid, this, 1, false, c -> {Axiom.playSpellEffect(p, 10, 30);}, e)) return 50;
+			if (ComboData.build(uuid, this, 1, false, c -> {if (!Axiom.playSpellEffect(p, 10, 30)) return;}, e)) return 50;
 			
 			// Judgement
-			if (ComboData.build(uuid, this, 2, false, c -> {Ascension.castJudgement(p, 15, 30, false);}, e)) return 50;
+			if (ComboData.build(uuid, this, 2, false, c -> {if (!Ascension.castJudgement(p, 15, 30, false)) return;}, e)) return 50;
 		
 			// Burning Will
-			if (ComboData.build(uuid, this, 3, false, c -> {Bombarda.playSpellEffect(p, 25, 30);}, e)) return 50;
+			if (ComboData.build(uuid, this, 3, false, c -> {if (!Bombarda.playSpellEffect(p, 25, 30)) return;}, e)) return 50;
 			
-			if (ComboData.build(uuid, this, 4, true, c ->{playUltimate(p, 30);}, e)) 
+			if (ComboData.build(uuid, this, 4, true, c -> {if (!playUltimate(p, 30)) return;}, e)) 
 			{
 				cooldown_primary.add(uuid);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldown_primary.remove(uuid), 200);
@@ -151,7 +151,7 @@ public class AspectOfLordran extends Spell
 						e.setCancelled(true);
 						PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return &r&a&oactivated&r&f!");
 						EntityEffects.playSound(p, Sound.ITEM_TOTEM_USE, SoundCategory.AMBIENT);
-						Cure.cureHelper(p, p);
+						Cure.playSpellEffect(p, p);
 						for (PotionEffect effect : p.getActivePotionEffects())
 						{
 							if (EntityEffects.debuffs.contains(effect.getType())) continue;
@@ -168,18 +168,17 @@ public class AspectOfLordran extends Spell
 	
 	private static boolean playUltimate(Player p, int range)
 	{
-		if (!RayCastUtils.getEntity(p, range, target ->
+		if (!RayCastUtils.getEntitiesInFov(p, range, target ->
 		{
 			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
+			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, -35, 1.5, Particle.GLOW_SQUID_INK, null);
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, -45, 1.2, Particle.CRIT, null);
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, 215, 1.5, Particle.GLOW_SQUID_INK, null);
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, 225, 1.2, Particle.CRIT, null);
+			double dTheta = ObsParticles.deriveDegreeTheta(p.getLocation(), le.getLocation());
+			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, dTheta, 1.5, Particle.GLOW_SQUID_INK, null);
 			
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				EntityEffects.playSound(p, Sound.ENTITY_WITHER_AMBIENT, SoundCategory.AMBIENT);
+				EntityEffects.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.AMBIENT);
 				ObsParticles.drawSpiralVortex(le.getLocation(), 45, 3, 0.1, Particle.GLOW_SQUID_INK, null);
 				ObsParticles.drawSpiralVortex(le.getLocation(), 30, 2, 0.1, Particle.CRIT, null);
 				ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 10, 0.8, 20, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());

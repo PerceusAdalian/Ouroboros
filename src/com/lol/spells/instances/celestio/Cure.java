@@ -41,7 +41,7 @@ public class Cure extends Spell
 		
 		if (target == null)
 		{
-			cureHelper(p, p);
+			playSpellEffect(p, p);
 			return this.getManacost();
 		}
 		
@@ -49,7 +49,7 @@ public class Cure extends Spell
 		{
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.CLOUD, null);
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.WAX_ON, null);
-			cureHelper((Player) target, p);
+			playSpellEffect((Player) target, p);
 			return this.getManacost();
 		}
 		
@@ -62,7 +62,7 @@ public class Cure extends Spell
 		return this.getManacost();
 	}
 
-	public static void cureHelper(Player target, Player caster)
+	public static void playSpellEffect(Player target, Player caster)
 	{
 		EntityEffects.playSound(caster, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		

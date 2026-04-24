@@ -130,7 +130,7 @@ public class Pneuma extends Spell
 				HeresioEffects.isCursed.remove(p.getUniqueId());
 				PrintUtils.OBSFormatPrint(p, "Your &2Curse&f has been removed.");
 			}
-			Cure.cureHelper(p, p);
+			Cure.playSpellEffect(p, p);
 			return 100;
 		}
 		

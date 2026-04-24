@@ -78,7 +78,7 @@ public class Ascension extends Spell
 	        if (!(target instanceof LivingEntity)) return;
 
 	        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-	        ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.END_ROD, null);
+	        if (requiresFlying) ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.END_ROD, null);
 
 	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
 	        {
@@ -89,7 +89,7 @@ public class Ascension extends Spell
 	            ObsParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
 	            MobData.damageUnnaturally(p, target, damage, true, true, ElementType.CELESTIO);
 	            CelestioEffects.addHumility((LivingEntity) target, 20);
-	        }, 15);
+	        }, 6);
 	    });
 
 	    if (!hit) return false;
