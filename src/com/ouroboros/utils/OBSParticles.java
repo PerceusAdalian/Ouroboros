@@ -311,43 +311,43 @@ public class ObsParticles
 	
 	public static void drawInfernoCastSigil(LivingEntity entity) 
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, Particle.LAVA, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.5, 2, 9, 0.45, Particle.ASH, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.15, Particle.LAVA, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.25, Particle.SMOKE, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.5, 2, 9, 0.35, Particle.ASH, null);
 	}
 
 	public static void drawGlacioCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, Material.SNOW.createBlockData());
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.SNOWFLAKE, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.CLOUD,null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.15, Particle.BLOCK_CRUMBLE, Material.SNOW.createBlockData());
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.25, Particle.SNOWFLAKE, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.2,Particle.CLOUD,null);
 	}
 	
 	public static void drawGeoCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.ASH, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.SMOKE,null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.4, Particle.ASH, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.15,Particle.SMOKE,null);
 	}	
 	
 	public static void drawAeroCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.SWEEP_ATTACK, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.CRIT, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.END_ROD,null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.35, Particle.CRIT, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.25,Particle.END_ROD,null);
 	}
 	
 	public static void drawCelestioCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, 1.0, Particle.CLOUD, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, 1.0, Particle.WAX_ON, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, .35, Particle.CLOUD, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, .45, Particle.WAX_ON, null);
 	}
 
 	public static void drawMortioCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, Particle.ASH, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.35, Particle.SMOKE, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.5, 2, 9, 0.45, Particle.CRIMSON_SPORE, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.5, 2, 9, 0.35, Particle.CRIMSON_SPORE, null);
 	}
 	
 	public static void drawCosmoCastSigil(LivingEntity entity)
@@ -359,29 +359,29 @@ public class ObsParticles
 	
 	public static void drawHeresioCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIMSON_SPORE, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.TRIAL_OMEN, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.WITCH, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.WARPED_SPORE, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.25, Particle.SCULK_SOUL, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.25,Particle.WITCH, null);
 	}
 	
 	public static void drawArcanoCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIT, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.BUBBLE_COLUMN_UP, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.3, Particle.BUBBLE_COLUMN_UP, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.GLOW_SQUID_INK, null);
 	}
 	
 	public static void drawAstralCastSigil(LivingEntity entity, boolean isDay)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, isDay ? new DustOptions(Color.RED, 1.0f) : null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, isDay ? Particle.LAVA : Particle.BUBBLE_COLUMN_UP, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.2, isDay ? Particle.LAVA : Particle.BUBBLE_COLUMN_UP, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1, isDay ? Particle.LARGE_SMOKE : Particle.GLOW_SQUID_INK, null);	
 	}
 	
 	public static void drawAdminCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIT, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.TRIAL_OMEN, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.2, Particle.TRIAL_OMEN, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.CRIMSON_SPORE, null);
 	}	
 	

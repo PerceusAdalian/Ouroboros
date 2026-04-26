@@ -34,7 +34,7 @@ public class Mute extends Spell
 		
 		if (RayCastUtils.getEntity(p, 30, target->
 		{
-			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW, null);
+			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.GLOW_SQUID_INK, null);
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 0.5, Particle.SONIC_BOOM, null);
 			ObsParticles.drawWisps(target.getLocation(), target.getHeight(), target.getWidth(), 4, Particle.WARPED_SPORE, null);
 			if (target instanceof Player)

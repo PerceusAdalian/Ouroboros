@@ -50,10 +50,10 @@ public class AspectOfLordran extends Spell
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordan&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oNobility Incarnate&r&f --",
 				"&r&7&l┏--&r&7{&e✧ &oArbanian Combo&f: unleash a volley of "+PrintUtils.color(ObsColors.ARCANO)+"&lArcane&r&f spells.",
-				"&r&7&l┗┳- &r&f1. "+PrintUtils.color(ObsColors.HERESIO)+"Regal Axiom &f(&6⌖&f: 10&c♥&f, 30m)",
-				"&r&7&l ┗┳- &r&f2. "+PrintUtils.color(ObsColors.CELESTIO)+"Royal Judgement &f(&6⌖&f: 15&c♥&f, 30m)",
-				"&r&7&l  ┗┳- &r&f3. "+PrintUtils.color(ObsColors.INFERNO)+"Burning Will &f(&dFOV &6⌖&f: 25&c♥&f, 30m)",
-				"&r&7&l   ┗--&r&7{&r&e✧ &f4. "+PrintUtils.color(ObsColors.ARCANO)+"Crowned Imperion &f(&6⌖&f: 50&c♥&f, 30m, &6Break ⌖&f)","",
+				"&r&7&l┗┳- &r&f1. "+PrintUtils.color(ObsColors.HERESIO)+"Regal Axiom         &7(&6⌖&7: 10&c♥&7, 30m)",
+				"&r&7&l ┗┳- &r&f2. "+PrintUtils.color(ObsColors.CELESTIO)+"Royal Judgement &7(&6⌖&7: 15&c♥&7, 30m)",
+				"&r&7&l  ┗┳- &r&f3. "+PrintUtils.color(ObsColors.INFERNO)+"Burning Pride    &7(&6⌖&7: 25&c♥&7, 30m)",
+				"&r&7&l   ┗--&r&7{&r&e✧ &f4. "+PrintUtils.color(ObsColors.ARCANO)+"Crowned Imperion &7(&6⌖&7: 50&c♥&7, 30m, &6Break&7)","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordran&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return&r&f --",
 				"&r&fIncoming damage that would otherwise cause &4&lDeath&r&f is &b&onullified&r&f &7(30s)",
@@ -112,15 +112,15 @@ public class AspectOfLordran extends Spell
 			}
 			
 			// Axiom
-			if (ComboData.build(uuid, this, 1, false, c -> {if (!Axiom.playSpellEffect(p, 10, 30)) return;}, e)) return 50;
+			if (ComboData.build(uuid, this, 1, false, c -> {if (!Axiom.playSpellEffect(c.getPlayer(), 10, 30)) return;}, e)) return 50;
 			
 			// Judgement
-			if (ComboData.build(uuid, this, 2, false, c -> {if (!Ascension.castJudgement(p, 15, 30, false)) return;}, e)) return 50;
+			if (ComboData.build(uuid, this, 2, false, c -> {if (!Ascension.castJudgement(c.getPlayer(), 15, 30, false)) return;}, e)) return 50;
 		
 			// Burning Will
-			if (ComboData.build(uuid, this, 3, false, c -> {if (!Bombarda.playSpellEffect(p, 25, 30)) return;}, e)) return 50;
+			if (ComboData.build(uuid, this, 3, false, c -> {if (!Bombarda.playSpellEffect(c.getPlayer(), 25, 30)) return;}, e)) return 50;
 			
-			if (ComboData.build(uuid, this, 4, true, c -> {if (!playUltimate(p, 30)) return;}, e)) 
+			if (ComboData.build(uuid, this, 4, true, c -> {if (!playUltimate(c.getPlayer(), 30)) return;}, e)) 
 			{
 				cooldown_primary.add(uuid);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldown_primary.remove(uuid), 200);
@@ -168,7 +168,7 @@ public class AspectOfLordran extends Spell
 	
 	private static boolean playUltimate(Player p, int range)
 	{
-		if (!RayCastUtils.getEntitiesInFov(p, range, target ->
+		if (!RayCastUtils.getEntity(p, range, target ->
 		{
 			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
 			

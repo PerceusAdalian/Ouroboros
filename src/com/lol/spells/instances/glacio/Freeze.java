@@ -38,7 +38,7 @@ public class Freeze extends Spell
 		Player p = e.getPlayer();
 		if (!RayCastUtils.getEntity(p, 15, target ->
 		{
-			if (!(target instanceof LivingEntity) || target instanceof Player) return;
+			if (!(target instanceof LivingEntity)) return;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, Particle.SNOWFLAKE, null);

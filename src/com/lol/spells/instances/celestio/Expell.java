@@ -36,7 +36,7 @@ public class Expell extends Spell
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
-		if (target == null || !(target instanceof LivingEntity le)) return -1;
+		if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return -1;
 		
 		ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.5, Particle.WAX_ON, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->

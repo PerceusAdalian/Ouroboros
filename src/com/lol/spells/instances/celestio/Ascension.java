@@ -89,7 +89,7 @@ public class Ascension extends Spell
 	            ObsParticles.drawSpiralVortex(target.getLocation(), 90, 4, 0.4, Particle.END_ROD, null);
 	            MobData.damageUnnaturally(p, target, damage, true, true, ElementType.CELESTIO);
 	            CelestioEffects.addHumility((LivingEntity) target, 20);
-	        }, 6);
+	        }, requiresFlying ? 6 : 1);
 	    });
 
 	    if (!hit) return false;

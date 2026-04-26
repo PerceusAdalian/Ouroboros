@@ -27,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import com.lol.spells.instances.aero.Fly;
+import com.lol.spells.instances.arcano.Sigil;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.ElementType;
@@ -140,6 +141,10 @@ public class GeneralEvents implements Listener
         		Player p = e.getPlayer();
         		PlayerData.unloadPlayer(p.getUniqueId());
         		
+        		if (Sigil.awaitingTrade.containsKey(p.getUniqueId()))
+        		{
+        			Sigil.cancelTrade(p, Bukkit.getPlayer(Sigil.awaitingTrade.get(p.getUniqueId())));
+        		}
         		if (Fly.flyers.containsKey(p.getUniqueId()))
         		{        			
         			p.setFlying(false);

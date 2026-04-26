@@ -24,12 +24,12 @@ import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.MortioEffects;
 
-public class AspectOfSithis extends Spell
+public class SeethingSkull extends Spell
 {
 
-	public AspectOfSithis() 
+	public SeethingSkull() 
 	{
-		super("Aspect of Sithis", "aspect_of_sithis", Material.WITHER_SKELETON_SKULL, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FOUR, 100, 1.5, false,
+		super("Seething Skull", "seething_skull", Material.WITHER_SKELETON_SKULL, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FOUR, 100, 1.5, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&4Aspect of Sithis&f: &4&oSeething Skull&r&f --",
 				"&r&fSummon a seething demon skull and launch it foward, exploding on impact.",
@@ -50,7 +50,7 @@ public class AspectOfSithis extends Spell
 		if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
 		{
 			Entity target = RayCastUtils.getEntity(p, 10);
-			if (target == null || !(target instanceof LivingEntity le)) return -1;
+			if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return -1;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.SMOKE, null);

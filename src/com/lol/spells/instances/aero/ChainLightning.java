@@ -53,7 +53,7 @@ public class ChainLightning extends Spell
 	    
 	    for (int i = 0; i < mobs.size(); i++)
 	    {
-	        if (!(mobs.get(i) instanceof LivingEntity le)) continue;
+	        if (!(mobs.get(i) instanceof LivingEntity le) || le instanceof Player) continue;
 	        
 	        Location from = i == 0 ? p.getLocation() : ((LivingEntity) mobs.get(i - 1)).getLocation();
 	        Location to = le.getLocation();

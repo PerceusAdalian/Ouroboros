@@ -13,6 +13,7 @@ import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
 import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -31,25 +32,26 @@ public class ArcanoSpellsPage extends ObsGui
 	protected void build() 
 	{
 		// 1
-		GuiButton.placeCantripSpellButton(player, new Surveil(), 11, this);
+		GuiButton.placeCantripSpellButton(player, new Surveil(), 10, this);
+		GuiButton.placeCantripSpellButton(player, new Sigil(), 11, this);
 		
 		// 2
-		GuiButton.placeSpellButton(player, new ArcaneBolt(), 10, this);
+		GuiButton.placeSpellButton(player, new ArcaneBolt(), 12, this);
 		
 		// 3
 		
 		// 4
-		GuiButton.placeSpellButton(player, new Mute(), 12, this);
+		GuiButton.placeSpellButton(player, new Mute(), 13, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Freecast(), 13, this);
-		GuiButton.placeSpellButton(player, new PrismaOuroborealis(), 14, this);
+		GuiButton.placeSpellButton(player, new Freecast(), 14, this);
+		GuiButton.placeSpellButton(player, new PrismaOuroborealis(), 15, this);
 		
 		// 6
 		
 		// 7
 		GuiButton.placeSpellButton(player, new AspectOfLordran(), 16, this);
-		GuiButton.placeSpellButton(player, new OuroborosPrime(), 15, this);
+		GuiButton.placeSpellButton(player, new OuroborosPrime(), 19, this);
 
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

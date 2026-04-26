@@ -7,7 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.lol.spells.instances.mortio.AspectOfSithis;
+import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
@@ -41,7 +41,7 @@ public class MortioSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Demonform(), 14, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new AspectOfSithis(), 15, this);
+		GuiButton.placeSpellButton(player, new SeethingSkull(), 15, this);
 		
 		// 5
 		GuiButton.placeSpellButton(player, new Haunt(), 16, this);

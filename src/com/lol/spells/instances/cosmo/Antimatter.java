@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -32,8 +31,8 @@ public class Antimatter extends Spell
 	{
 		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, false,
 				"&r&fDecay target's life dealing "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f damage",
-				"&r&fequal to &b&o3 + 25% &r&aHP &7(20m)&f and applies &3Voided &7(20s)","",
-				"&r&3Voided &eEffect&f: neutralizes affected entity's elemental affinity.");
+				"&r&fequal to &b&o3 + 25% &r&cHP &7(20m)&f and applies &3Voided &7(20s)","",
+				"&r&3Voided &eEffect&f: Neutralizes elemental affinity.");
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class Antimatter extends Spell
 		Player p = e.getPlayer();
 		if (!RayCastUtils.getEntity(p, 20, target ->
 		{
-			if (!(target instanceof LivingEntity)) return;
+			if (!(target instanceof LivingEntity) || target instanceof Player) return;
 			MobData data = MobData.getMob(target.getUniqueId());
 			EntityEffects.playSound(p, Sound.ENTITY_SHULKER_SHOOT, SoundCategory.AMBIENT);
 			ObsParticles.drawCosLine(p.getLocation(), target.getLocation(), 0.7, Particle.DRAGON_BREATH, 0.5f);
@@ -52,11 +51,7 @@ public class Antimatter extends Spell
 			{
 				EntityEffects.playSound(p, Sound.BLOCK_SCULK_CATALYST_BLOOM, SoundCategory.AMBIENT);
 				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 4, 10, 0.5, Particle.WARPED_SPORE, null);
-				if (target instanceof Player)
-				{
-					((Damageable) target).damage(((Damageable)target).getHealth()*0.25);
-				}
-				else if (data != null)
+				if (data != null)
 				{
 					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, true, ElementType.COSMO);
 					CosmoEffects.addVoided((LivingEntity) target, 20);

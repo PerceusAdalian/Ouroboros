@@ -34,7 +34,7 @@ public class Smite extends Spell
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
-		if (!(target instanceof LivingEntity) || target == null) return -1;
+		if (!(target instanceof LivingEntity) || target instanceof Player || target == null) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_CHARGE, SoundCategory.AMBIENT);
 		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.ELECTRIC_SPARK, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->

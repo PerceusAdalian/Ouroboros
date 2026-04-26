@@ -28,6 +28,7 @@ import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
 import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
 import com.lol.spells.instances.astral.Starfall;
 import com.lol.spells.instances.celestio.Ascension;
@@ -47,6 +48,7 @@ import com.lol.spells.instances.celestio.Satiate;
 import com.lol.spells.instances.celestio.SolarExpanse;
 import com.lol.spells.instances.cosmo.Antimatter;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
+import com.lol.spells.instances.cosmo.Collapse;
 import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
@@ -85,7 +87,7 @@ import com.lol.spells.instances.inferno.Combustion;
 import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
-import com.lol.spells.instances.mortio.AspectOfSithis;
+import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
@@ -124,7 +126,7 @@ public class SpellRegistry
         		Haunt.class,
         		Sew.class,
         		Reap.class,
-        		AspectOfSithis.class,
+        		SeethingSkull.class,
         		Siphon.class,
         		Demonform.class,
         		Shroud.class,
@@ -183,6 +185,7 @@ public class SpellRegistry
         		VoidForm.class,
         		Teleport.class,
         		Warp.class,
+        		Collapse.class,
         		
         		//Heresio
         		Hex.class,
@@ -205,6 +208,7 @@ public class SpellRegistry
         		PrismaOuroborealis.class,
         		OuroborosPrime.class,
         		AspectOfLordran.class,
+        		Sigil.class,
         		
         		//Astral
         		Starfall.class,

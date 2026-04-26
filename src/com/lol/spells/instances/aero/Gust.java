@@ -23,7 +23,7 @@ public class Gust extends Spell
 
 	public Gust() 
 	{
-		super("Gust", "gust", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, false,
+		super("Gust", "gust", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, true,
 				"&r&fSend a gust of wind at your target &7(7m)&f blowing them away.");
 	}
 

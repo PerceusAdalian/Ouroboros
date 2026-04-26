@@ -96,7 +96,7 @@ public class WarpMenu extends ObsGui
                     {
                     	GuiHandler.close(player);
                     	Warp.awaitingWarpNickname.put(p.getUniqueId(), warpIndex);
-                    	PrintUtils.Print(player, "&f&lWarp Core &b#&e&l" + warpIndex + "&r&f — Provide a nickname for your current location:");
+                    	PrintUtils.Print(player, "&f&lWarp Core &b#&e&l" + warpIndex + "&r&f Initialized — Provide a nickname for your current location:");
                     	PrintUtils.Print(player, "&7(Max 16 characters. Type in chat to confirm.)");                    	
                     }
                     else

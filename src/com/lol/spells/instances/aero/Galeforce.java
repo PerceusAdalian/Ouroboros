@@ -37,7 +37,7 @@ public class Galeforce extends Spell
 	{
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 7);
-		if (target == null || !(target instanceof LivingEntity)) return -1;
+		if (target == null || !(target instanceof LivingEntity) || target instanceof Player) return -1;
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.8, 0.5, Particle.GUST, null);
 		MobData.damageUnnaturally(p, target, 4, true, true, ElementType.AERO);

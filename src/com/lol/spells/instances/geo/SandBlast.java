@@ -37,7 +37,7 @@ public class SandBlast extends Spell
 		
 		if (!RayCastUtils.getEntitiesInFov(p, 10, target ->
 		{
-			if (target == null || !(target instanceof LivingEntity le)) return;
+			if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return;
 			
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.5, Particle.BLOCK_CRUMBLE, Material.SAND.createBlockData());
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.ASH, null);

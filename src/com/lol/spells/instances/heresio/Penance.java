@@ -1,5 +1,6 @@
 package com.lol.spells.instances.heresio;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -10,9 +11,11 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.lol.wand.Wand;
+import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.ItemCollector;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -41,8 +44,12 @@ public class Penance extends Spell
 		
 		EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_CHAIN, SoundCategory.AMBIENT);
 		p.setHealth(p.getHealth()/2.0); 
-		wand.addMana(500);
-		p.getInventory().setItemInMainHand(wand.getAsItemStack());
+		ItemCollector.remove(e);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{			
+			wand.addMana(500);
+			p.getInventory().setItemInMainHand(wand.getAsItemStack());
+		}, 1);
 		
 		return 0;
 	}

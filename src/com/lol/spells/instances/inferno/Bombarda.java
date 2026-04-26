@@ -57,7 +57,7 @@ public class Bombarda extends Spell
 	public static boolean playSpellEffect(Player p, double damage, int range)
 	{
 		Entity target = RayCastUtils.getEntity(p, range);
-		if (!(target instanceof LivingEntity) || target == null) return false;
+		if (!(target instanceof LivingEntity) || target instanceof Player || target == null) return false;
 		
 		ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.5, 0.5, Particle.FLAME, null);
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
@@ -65,17 +65,19 @@ public class Bombarda extends Spell
 		{
 			InfernoEffects.addBurn((LivingEntity) target, 10);
 			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
-			ObsParticles.drawVerticalVortex(target.getLocation(), target.getWidth()+1, target.getHeight(), 0.5, 30, 10, 0.5, Particle.SMOKE, null);
-		}, 15);
+			ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 6, 0.5, 6, Particle.FLAME, null);
+		}, 9);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
 			if (damage != 0 && damage > 0)
 			{
+				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 1, 4, 0.1, Particle.DUST_PLUME, null);
+				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
 				MobData.damageUnnaturally(p, target, damage, true, true, ElementType.INFERNO);
 			}
 			else target.getWorld().createExplosion(target.getLocation(), 3, false, false);
-		}, 20);
+		}, 14);
 		
 		return true;
 	}
