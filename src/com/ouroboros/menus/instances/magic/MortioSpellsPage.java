@@ -7,17 +7,18 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
+import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
+import com.lol.spells.instances.mortio.Sleuth;
 import com.lol.spells.instances.mortio.Voodoo;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class MortioSpellsPage extends ObsGui
@@ -37,15 +38,16 @@ public class MortioSpellsPage extends ObsGui
 		// 2
 		GuiButton.placeSpellButton(player, new Reap(), 12, this);
 		GuiButton.placeSpellButton(player, new Shroud(), 13, this);
+		GuiButton.placeSpellButton(player, new Sleuth(), 14, this);
 		// 3
-		GuiButton.placeSpellButton(player, new Demonform(), 14, this);
+		GuiButton.placeSpellButton(player, new Demonform(), 15, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new SeethingSkull(), 15, this);
+		GuiButton.placeSpellButton(player, new SeethingSkull(), 16, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Haunt(), 16, this);
-		GuiButton.placeSpellButton(player, new Voodoo(), 19, this);
+		GuiButton.placeSpellButton(player, new Haunt(), 19, this);
+		GuiButton.placeSpellButton(player, new Voodoo(), 20, this);
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
 		{

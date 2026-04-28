@@ -37,8 +37,7 @@ public class Gate extends Spell
 				"&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&3Gate&f: &3&oQuantum Leap&r&f --",
 				"&r&fTeleport between saved &a&lOverworld&r&f, &c&lNether&r&f, and &3&lEnd&r&f locations.","",
-				"&r&bEchoic Dissonance&r&f: &e&oSecondary Cast&r&f sets cooldown",
-				"&r&fto &b&o1 minute&f and costs an extra &b150 &9&lMana&r&f.");
+				"&r&bEchoic Dissonance&r&f: On &e&oSecondary Cast&r&f, &lCD &r&e-> &b1min&f, &lMC &r&e-> &b200&r&f.");
 	}
 
 	public static Set<UUID> cooldown = new HashSet<>();

@@ -36,9 +36,9 @@ public class Revelio extends Spell
 	public int Cast(PlayerInteractEvent e) 
 	{
 		Player p = e.getPlayer();
+		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		if (!RayCastUtils.getNearbyEntities(p, 30, (target)->
 		{
-			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.CLOUD, null);
 			CelestioEffects.addExposed(target, 20);	
 		})) return -1;

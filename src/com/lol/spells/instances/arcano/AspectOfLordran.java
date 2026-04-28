@@ -11,6 +11,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,10 +24,7 @@ import org.bukkit.potion.PotionEffect;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
-import com.lol.spells.instances.celestio.Ascension;
 import com.lol.spells.instances.celestio.Cure;
-import com.lol.spells.instances.heresio.Axiom;
-import com.lol.spells.instances.inferno.Bombarda;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
@@ -50,16 +48,16 @@ public class AspectOfLordran extends Spell
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordan&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oNobility Incarnate&r&f --",
 				"&r&7&l┏--&r&7{&e✧ &oArbanian Combo&f: unleash a volley of "+PrintUtils.color(ObsColors.ARCANO)+"&lArcane&r&f spells.",
-				"&r&7&l┗┳- &r&f1. "+PrintUtils.color(ObsColors.HERESIO)+"Regal Axiom         &7(&6⌖&7: 10&c♥&7, 30m)",
-				"&r&7&l ┗┳- &r&f2. "+PrintUtils.color(ObsColors.CELESTIO)+"Royal Judgement &7(&6⌖&7: 15&c♥&7, 30m)",
-				"&r&7&l  ┗┳- &r&f3. "+PrintUtils.color(ObsColors.INFERNO)+"Burning Pride    &7(&6⌖&7: 25&c♥&7, 30m)",
+				"&r&7&l┗┳- &r&f1. "+PrintUtils.color(ObsColors.ARCANO)+"Regal Axiom &7(&6⌖&7: 25&c♥&7, 30m)",
+				"&r&7&l ┗┳- &r&f2. "+PrintUtils.color(ObsColors.ARCANO)+"Royal Escapade &7(&6⌖&7: 35&c♥&7, 30m)",
+				"&r&7&l  ┗┳- &r&f3. "+PrintUtils.color(ObsColors.ARCANO)+"Dominion Cascade &7(&6⌖&7: 20&c♥&7, 30m)",
 				"&r&7&l   ┗--&r&7{&r&e✧ &f4. "+PrintUtils.color(ObsColors.ARCANO)+"Crowned Imperion &7(&6⌖&7: 50&c♥&7, 30m, &6Break&7)","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordran&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return&r&f --",
 				"&r&fIncoming damage that would otherwise cause &4&lDeath&r&f is &b&onullified&r&f &7(30s)",
 				"&r&fUpon resurrection, activate &e&oCure&r&f to self, &arestore &cHP&f to &b&o100%&r&f and gain &eWard &bV &7(20s)","",
 				"&r&bEchoic Dissonance&r&f: ",
-				"&r&fCasting "+PrintUtils.color(ObsColors.ARCANO)+"Crowned Imperion&r&f: &lCD &r&e->&r&f &b10s&f, &f&lMC &r&e->&r&b 200",
+				"&r&fCasting "+PrintUtils.color(ObsColors.ARCANO)+"Crowned Imperion&r&f: &lCD &r&e->&r&f &b4.5s&f, &f&lMC &r&e->&r&b 200",
 				"&r&e&oSecondary Cast&r&f: &lCD &r&e->&r&f &b3min&r&f, &f&lMC &r&e-> &b300&f. Requires an "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano &r&fattuned&r&f wand.");
 	}
 
@@ -111,19 +109,76 @@ public class AspectOfLordran extends Spell
 				return -1;
 			}
 			
-			// Axiom
-			if (ComboData.build(uuid, this, 1, false, c -> {if (!Axiom.playSpellEffect(c.getPlayer(), 10, 30)) return;}, e)) return 50;
-			
-			// Judgement
-			if (ComboData.build(uuid, this, 2, false, c -> {if (!Ascension.castJudgement(c.getPlayer(), 15, 30, false)) return;}, e)) return 50;
-		
-			// Burning Will
-			if (ComboData.build(uuid, this, 3, false, c -> {if (!Bombarda.playSpellEffect(c.getPlayer(), 25, 30)) return;}, e)) return 50;
-			
-			if (ComboData.build(uuid, this, 4, true, c -> {if (!playUltimate(c.getPlayer(), 30)) return;}, e)) 
+			// Regal Axiom
+			if (ComboData.build(uuid, this, 1, false, c -> 
 			{
+				Entity target = RayCastUtils.getEntity(p, 30);
+				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return false;
+				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+				ObsParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.6, Particle.GLOW_SQUID_INK, null);
+				ObsParticles.drawCosLine(p.getLocation(), le.getLocation(), 0.4, Particle.BUBBLE_COLUMN_UP, null);
+				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.ARCANO);
+				return true;
+			}, e)) return 50;
+			
+			// Royal Escapade
+			if (ComboData.build(uuid, this, 2, false, c -> 
+			{
+				Entity target = RayCastUtils.getEntity(p, 30);
+				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return false;
+				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+				ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, -35, 1.5, Particle.GLOW_SQUID_INK, null);
+				ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, -45, 1.2, Particle.BUBBLE_COLUMN_UP, null);
+				ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, 215, 1.5, Particle.GLOW_SQUID_INK, null);
+				ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, 225, 1.2, Particle.BUBBLE_COLUMN_UP, null);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.CRIT, null);
+					ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.BUBBLE_COLUMN_UP, null);
+					MobData.damageUnnaturally(p, le, 35, true, true, ElementType.ARCANO);
+				}, 4);
+				return true;
+			}, e)) return 50;
+		
+			// Dominion Cascade
+			if (ComboData.build(uuid, this, 3, false, c -> 
+			{
+				Entity target = RayCastUtils.getEntity(p, 30);
+				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return false;
+				EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
+				ObsParticles.drawX(le.getLocation(), p.getEyeLocation().toVector(), 10, 0.8, 0.4, false, Particle.GLOW_SQUID_INK, null);
+				ObsParticles.drawX(le.getLocation(), p.getEyeLocation().toVector(), 8.5, 0.8, 0.5, false, Particle.BUBBLE_COLUMN_UP, null);
+				ObsParticles.drawX(le.getLocation(), p.getEyeLocation().toVector(), 8.5, 0.8, 0.45, false, Particle.CRIT, null);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					MobData.damageUnnaturally(p, le, 20, true, true, ElementType.ARCANO);
+				}, 4);
+				return true;
+			}, e)) return 50;
+			
+			if (ComboData.build(uuid, this, 4, true, c -> 
+			{
+				Entity target = RayCastUtils.getEntity(p, 30);
+				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return false;
+				
+				EntityEffects.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.AMBIENT);
+				ObsParticles.drawSpiralVortex(le.getLocation(), 45, 3, 0.1, Particle.GLOW_SQUID_INK, null);
+				ObsParticles.drawSpiralVortex(le.getLocation(), 30, 2, 0.1, Particle.CRIT, null);
+				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.ARCANO);
+
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				{
+					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 10, 0.65, 20, Particle.BLOCK_CRUMBLE, Material.CYAN_TERRACOTTA.createBlockData());
+					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 11, 0.65, 20, Particle.BLOCK_CRUMBLE, Material.BLUE_WOOL.createBlockData());
+					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 9, 0.65, 20, Particle.BLOCK_CRUMBLE, Material.PRISMARINE.createBlockData());
+					ObsParticles.drawCylinder(le.getLocation(), le.getWidth()+4, 5, 15, 0.5, 0.1, Particle.ENCHANT, null);
+					if (MobData.getMob(le.getUniqueId()) != null) MobData.getMob(le.getUniqueId()).setBreak();
+				}, 4);
+				
+				return true;
+			}, e)) {
 				cooldown_primary.add(uuid);
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldown_primary.remove(uuid), 200);
+				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldown_primary.remove(uuid), 90);
 				return 200;
 			};
 		}
@@ -164,30 +219,6 @@ public class AspectOfLordran extends Spell
 				}
 			}
 		}, plugin);
-	}
-	
-	private static boolean playUltimate(Player p, int range)
-	{
-		if (!RayCastUtils.getEntity(p, range, target ->
-		{
-			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
-			
-			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-			double dTheta = ObsParticles.deriveDegreeTheta(p.getLocation(), le.getLocation());
-			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, dTheta, 1.5, Particle.GLOW_SQUID_INK, null);
-			
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			{
-				EntityEffects.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.AMBIENT);
-				ObsParticles.drawSpiralVortex(le.getLocation(), 45, 3, 0.1, Particle.GLOW_SQUID_INK, null);
-				ObsParticles.drawSpiralVortex(le.getLocation(), 30, 2, 0.1, Particle.CRIT, null);
-				ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 10, 0.8, 20, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
-				ObsParticles.drawCylinder(le.getLocation(), le.getWidth()+4, 5, 15, 0.5, 0.1, Particle.ENCHANT, null);
-				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.ARCANO);
-				if (MobData.getMob(le.getUniqueId()) != null) MobData.getMob(le.getUniqueId()).setBreak();
-			}, 5);
-		})) return false;
-		return true;
 	}
 	
 }

@@ -42,7 +42,7 @@ public class Tailwind extends Spell
 				"&r&dTailwind&f: &d&oBoost&r&f --",
 				"&r&fProvides a temporary &b&oSpeed Boost&r&7 (20s)","",
 				"&r&e&lEchoic Resonance&r&f: &e&oPrimary Cast&r&f negates the next",
-				"instance of &d&oFall Damage&r&f for &b&o10 seconds&r&f.");
+				"&r&finstance of &d&oFall Damage&r&f for &b&o10 seconds&r&f.");
 	}
 
 	private static Set<UUID> tailwindRegistry = new HashSet<>();

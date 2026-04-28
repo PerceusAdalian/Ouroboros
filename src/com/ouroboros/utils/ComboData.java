@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -60,8 +61,8 @@ public class ComboData
 		
 	    ComboData current = get(uuid);
 	    if (current == null) return false;
-	    if (!current.spell.getInternalName().equals(spell.getInternalName()) || 
-	    		current.comboStage != comboStage) return false; // Wrong spell chain or wrong stage, skip silently
+	    if (!current.spell.getInternalName().equals(spell.getInternalName()) || current.comboStage != comboStage) 
+	    	return false; // Wrong spell chain or wrong stage, skip silently
 	    
 	    ObsTimer.cancelCountdown(player);
 	    action.accept(event);
@@ -96,4 +97,49 @@ public class ComboData
 	    return true;
 	}
 	
+	public static boolean build(UUID uuid, Spell spell, int comboStage, boolean isFinalStage, Function<PlayerInteractEvent, Boolean> action, PlayerInteractEvent event)
+	{
+	    Player player = Bukkit.getPlayer(uuid);
+
+	    if (comboStage == 1 && !contains(uuid)) set(uuid, new ComboData(uuid, spell, 1));
+
+	    ComboData current = get(uuid);
+	    if (current == null) return false;
+	    if (!current.spell.getInternalName().equals(spell.getInternalName()) || current.comboStage != comboStage) 
+	    	return false;
+
+	    ObsTimer.cancelCountdown(player);
+
+	    boolean actionSucceeded = action.apply(event);
+
+	    if (!actionSucceeded) return false;
+
+	    if (isFinalStage)
+	    {
+	        clear(uuid);
+	        PrintUtils.PrintToActionBar(player, "&f&oCombo End!");
+	        return true;
+	    }
+	    
+	    current.comboStage++;
+	    int expectedNextStage = current.comboStage;
+
+	    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	    {
+	        if (current.comboStage == expectedNextStage && player != null && player.isOnline() && active_combos.containsKey(uuid))
+	        {
+	            if (!ObsTimer.hasActiveCountdown(player))
+	            {
+	                ObsTimer.startCountdown(player, 3, Ouroboros.instance, p ->
+	                {
+	                    EntityEffects.playSound(player, Sound.BLOCK_CHAIN_BREAK, SoundCategory.AMBIENT);
+	                    PrintUtils.PrintToActionBar(player, "&f&oCombo End!");
+	                    clear(uuid);
+	                });
+	            }
+	        }
+	    }, 240);
+	    
+	    return true;
+	}
 }

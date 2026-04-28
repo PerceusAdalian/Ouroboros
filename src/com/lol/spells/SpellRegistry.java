@@ -94,6 +94,7 @@ import com.lol.spells.instances.mortio.Reap;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
+import com.lol.spells.instances.mortio.Sleuth;
 import com.lol.spells.instances.mortio.Voodoo;
 import com.ouroboros.utils.entityeffects.Dynamorph;
 
@@ -131,6 +132,7 @@ public class SpellRegistry
         		Demonform.class,
         		Shroud.class,
         		Voodoo.class,
+        		Sleuth.class,
         		
         		//Inferno
         		Incendio.class,

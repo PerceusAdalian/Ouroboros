@@ -48,6 +48,7 @@ public class CelestioSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Satiate(), 15, this);
 		GuiButton.placeSpellButton(player, new MinorBlessing(), 16, this);
 		GuiButton.placeSpellButton(player, new MagicMissile(), 19, this);
+		
 		// 3
 		GuiButton.placeSpellButton(player, new Lumos(), 20, this);
 		GuiButton.placeSpellButton(player, new Revelio(), 21, this);

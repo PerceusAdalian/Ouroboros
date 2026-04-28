@@ -309,6 +309,39 @@ public class ObsParticles
 	    }, 1, (int)(range / speed) + 2); // cancelTicks derived from how many ticks it takes to reach range
 	}
 	
+	/**
+	 * @param origin Location of the X.
+	 * @param reference A direction for the X to be positioned.
+	 * @param spread How wide the X should render.
+	 * @param interval Interval of particles.
+	 * @param heightOffset
+	 * @param reflected Swaps the direction at which the X forms the cross. Reflected = true will form infront of the location, instead of behind, and vice versa.
+	 * @param particle
+	 * @param data
+	 */
+	public static <T> void drawX(Location origin, Vector reference, double spread, double interval, double heightOffset, boolean reflected, Particle particle, T data)
+	{
+		Vector up = new Vector(0, 1, 0);
+		
+		// Normalizes the reference located directly above/below the origin to coordinate flatly
+	    Vector flatRef = new Vector(reference.getX(), 0, reference.getZ()).normalize();
+	    
+	    if (flatRef.lengthSquared() < 0.001) flatRef = new Vector(1, 0, 0);
+	    
+	    Vector perp1 = flatRef.clone().crossProduct(up).normalize(); // left/right axis
+	    Vector perp2 = up.clone().crossProduct(perp1).normalize();   // forward/back axis
+
+	    Vector perp1Used = reflected ? perp1.clone().multiply(-1) : perp1; // Reflects the vectors for style reasons 
+
+	    Location pointA = origin.clone().add(perp1Used.clone().multiply( spread));
+	    Location pointB = origin.clone().add(perp1Used.clone().multiply(-spread));
+	    Location pointC = origin.clone().add(perp2.clone().multiply( spread));
+	    Location pointD = origin.clone().add(perp2.clone().multiply(-spread));
+
+	    drawLine(pointA, pointB, interval, heightOffset, particle, data);
+	    drawLine(pointC, pointD, interval, heightOffset, particle, data);
+	}
+	
 	public static void drawInfernoCastSigil(LivingEntity entity) 
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.15, Particle.LAVA, null);
@@ -352,29 +385,29 @@ public class ObsParticles
 	
 	public static void drawCosmoCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.END_ROD, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 5, 0.25, Particle.END_ROD, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.5, Particle.PORTAL, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.WITCH,null);
 	}
 	
 	public static void drawHeresioCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.WARPED_SPORE, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.25, Particle.SCULK_SOUL, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 5, 0.25, Particle.WARPED_SPORE, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 1, 6, 0.25, Particle.SCULK_SOUL, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.25,Particle.WITCH, null);
 	}
 	
 	public static void drawArcanoCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIT, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.3, Particle.BUBBLE_COLUMN_UP, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.GLOW_SQUID_INK, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, Particle.CRIT, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 1, 6, 0.3, Particle.BUBBLE_COLUMN_UP, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2, 1, 6,0.1,Particle.GLOW_SQUID_INK, null);
 	}
 	
 	public static void drawAstralCastSigil(LivingEntity entity, boolean isDay)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, isDay ? new DustOptions(Color.RED, 1.0f) : null);
-		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 2, 6, 0.2, isDay ? Particle.LAVA : Particle.BUBBLE_COLUMN_UP, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, isDay ? new DustOptions(Color.RED, 1.0f) : null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 1, 6, 0.2, isDay ? Particle.LAVA : Particle.BUBBLE_COLUMN_UP, null);
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1, isDay ? Particle.LARGE_SMOKE : Particle.GLOW_SQUID_INK, null);	
 	}
 	

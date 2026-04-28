@@ -37,7 +37,7 @@ public class Lumina extends Spell
 		Block block = e.getClickedBlock().getRelative(e.getBlockFace());
 		if (!block.getType().isAir()) return -1;
 
-        EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.AMBIENT);
+        EntityEffects.playSound(p, Sound.ENTITY_ALLAY_AMBIENT_WITH_ITEM, SoundCategory.AMBIENT);
         
         block.setType(Material.LIGHT);
 		Levelled lightData = (Levelled) block.getBlockData();
