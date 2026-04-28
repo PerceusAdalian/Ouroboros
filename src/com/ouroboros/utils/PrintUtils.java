@@ -300,7 +300,7 @@ public class PrintUtils
 	{
 	    String raw = switch (spellementType)
 	    {
-	        case INFERNO  -> "&c&l Aighil&r&f, the Gentle";
+	        case INFERNO  -> "&c&lAighil&r&f, the Gentle";
 	        case AERO     -> "&d&lSeth&r&f, the Looming Storm";
 	        case CELESTIO -> "&e&lLumina&r&f, High Priestess";
 	        case COSMO    -> "&3&lError&r&f: Unknown Spell Origin";
