@@ -21,6 +21,7 @@ import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
@@ -114,7 +115,7 @@ public class Sigil extends Spell
 				} 
 				catch (NumberFormatException ex) 
 				{
-				    PrintUtils.OBSFormatError(p, "&cInvalid input — please enter a number: &o0 < &lamount &r&c&o<= "+PlayerData.maxLuminite+"&r&c.");
+				    PrintUtils.OBSFormatError(p, "&cInvalid input — please enter a number: &o0 < &lamount &r&c&o<= "+PlayerData.fundsIntegerMax+"&r&c.");
 				    return;
 				}
 				
@@ -128,19 +129,21 @@ public class Sigil extends Spell
 						cancelTrade(p, pTarget);
 						return;
 					}
-					if (data.getLuminite() < amount)
+					if (data.getFunds(false) < amount)
 					{
 						PrintUtils.OBSFormatError(p, "&c&oInsufficient funds to conclude transaction!");
 						cancelTrade(p, pTarget);
 						return;
 					}
 
-					PlayerData.subtractLuminite(p, amount);
-					PlayerData.addLuminite(pTarget, amount);
+					PlayerData.subtractMoney(p, amount);
+					PlayerData.addMoney(pTarget, amount);
+					PlayerHud.updateHud(pTarget);
+					PlayerHud.updateHud(p);
 					PrintUtils.OBSFormatPrint(p, "&b&l"+amount+" &r&eLuminite&r&f has been deducted from your account and added to: &b&o"+pTarget.getDisplayName()+
-							"\n&r&fNew Balance: "+data.getLuminite()+"&e₪&f.");
+							"\n&r&fNew Balance: "+data.getFunds(false)+"&e₪&f.");
 					PrintUtils.OBSFormatPrint(pTarget, "&r&fPlayer: &b&o"+p.getDisplayName()+"&r&f has transfered &b&l"+amount+
-							" &r&eLuminite&f to your account. \n&r&fNew Balance: "+data.getLuminite()+"&e₪&f.");
+							" &r&eLuminite&f to your account. \n&r&fNew Balance: "+data.getFunds(false)+"&e₪&f.");
 					awaitingTrade.remove(uuid);
 				});
 			}
@@ -156,7 +159,7 @@ public class Sigil extends Spell
 		}
 		if (p.isOnline())
 		{
-			PrintUtils.OBSFormatDebug(p, "&r&eTrade &c&lCanceled&r&f with player: &b&o"+target.getDisplayName()+"&r&f.");
+			PrintUtils.OBSFormatDebug(p, "&r&eTrade &c&lCancelled&r&f with player: &b&o"+target.getDisplayName()+"&r&f.");
 			ObsParticles.drawArcanoCastSigil(p);
 		}
 		awaitingTrade.remove(p.getUniqueId());

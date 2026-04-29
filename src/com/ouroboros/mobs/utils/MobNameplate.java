@@ -1,5 +1,7 @@
 package com.ouroboros.mobs.utils;
 
+import java.util.Comparator;
+
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -178,16 +180,20 @@ public class MobNameplate
     	{
     		for (World w : Bukkit.getWorlds())
     		{
+    			// Compromise: use the closest player's LOS to set global visibility
     			for (LivingEntity mob : w.getLivingEntities())
     			{
-    				if (mob instanceof Player) continue;
-    				if (mob.getCustomName() == null) continue;
-    				
-    				for (Player p : w.getPlayers())
-    				{
-    					if (MobData.getMob(mob.getUniqueId()) == null) continue;
-    					mob.setCustomNameVisible(RayCastUtils.isMobVisible(p, mob, 35, 90));
-    				}
+    			    if (mob instanceof Player) continue;
+    			    if (mob.getCustomName() == null) continue;
+    			    if (MobData.getMob(mob.getUniqueId()) == null) continue;
+
+    			    Player nearest = w.getPlayers().stream()
+    			        .filter(p -> p.getWorld().equals(mob.getWorld()))
+    			        .min(Comparator.comparingDouble(p -> p.getLocation().distanceSquared(mob.getLocation())))
+    			        .orElse(null);
+
+    			    if (nearest == null) continue;
+    			    mob.setCustomNameVisible(RayCastUtils.isMobVisible(nearest, mob, 35, 90));
     			}
     		}
     	}, 0L, 5L);
