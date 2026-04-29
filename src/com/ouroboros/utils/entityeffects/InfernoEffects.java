@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
+import com.ouroboros.utils.ObsTimer;
 
 public class InfernoEffects
 {
@@ -34,11 +35,16 @@ public class InfernoEffects
 	 */
 	public static void addCharred(LivingEntity target, int seconds)
 	{
-		target.setFireTicks(seconds * 20);
 		EntityEffects.add(target, PotionEffectType.HUNGER, seconds*20, 0, false);
 		EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds*20, 0, false);
 		EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds*20, 0, false);
 		hasCharred.add(target.getUniqueId());
+		ObsTimer.runWithCancel(Ouroboros.instance, e ->
+		{
+			if (target.isDead()) return;
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SMOKE, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.FLAME, null);
+		}, 20, seconds * 20);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasCharred.remove(target.getUniqueId()), seconds*20);
 	}
 	

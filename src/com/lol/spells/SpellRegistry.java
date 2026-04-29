@@ -14,7 +14,7 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
-import com.lol.spells.instances.aero.Gust;
+import com.lol.spells.instances.aero.Depulso;
 import com.lol.spells.instances.aero.HealingCurrent;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
@@ -28,6 +28,7 @@ import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
 import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.spells.instances.arcano.Reparo;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
 import com.lol.spells.instances.astral.Starfall;
@@ -61,7 +62,7 @@ import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.Magemorph;
 import com.lol.spells.instances.geo.Metalmorph;
-import com.lol.spells.instances.geo.Petrify;
+import com.lol.spells.instances.geo.PetrificusTotalis;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.Chill;
 import com.lol.spells.instances.glacio.Freeze;
@@ -83,10 +84,12 @@ import com.lol.spells.instances.heresio.Postulate;
 import com.lol.spells.instances.heresio.Theorem;
 import com.lol.spells.instances.inferno.AspectOfAighil;
 import com.lol.spells.instances.inferno.Bombarda;
-import com.lol.spells.instances.inferno.Combustion;
+import com.lol.spells.instances.inferno.Confringo;
+import com.lol.spells.instances.inferno.Explosion;
 import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
+import com.lol.spells.instances.inferno.Primer;
 import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
@@ -138,9 +141,11 @@ public class SpellRegistry
         		Incendio.class,
         		Bombarda.class,
         		Ignite.class,
-        		Combustion.class,
+        		Confringo.class,
         		Meteor.class,
         		AspectOfAighil.class,
+        		Primer.class,
+        		Explosion.class,
         		
         		//Glacio
         		Glacius.class,
@@ -159,7 +164,7 @@ public class SpellRegistry
         		Charge.class,
         		Thunderstorm.class,
         		GalvanicNeedle.class,
-        		Gust.class,
+        		Depulso.class,
         		Galeforce.class,
         		Tailwind.class,
         		ChainLightning.class,
@@ -171,7 +176,7 @@ public class SpellRegistry
         		Expelliarmus.class,
         		SandBlast.class,
         		Geomorph.class,
-        		Petrify.class,
+        		PetrificusTotalis.class,
         		Metalmorph.class,
         		Magemorph.class,
         		Dynamorph.class,
@@ -211,6 +216,7 @@ public class SpellRegistry
         		OuroborosPrime.class,
         		AspectOfLordran.class,
         		Sigil.class,
+        		Reparo.class,
         		
         		//Astral
         		Starfall.class,

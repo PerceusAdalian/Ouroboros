@@ -13,7 +13,7 @@ import com.lol.spells.instances.aero.Diffindo;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
-import com.lol.spells.instances.aero.Gust;
+import com.lol.spells.instances.aero.Depulso;
 import com.lol.spells.instances.aero.HealingCurrent;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
@@ -39,7 +39,7 @@ public class AeroSpellsPage extends ObsGui
 	{
 		// One Rarity
 		GuiButton.placeCantripSpellButton(player, new Smite(), 10, this);
-		GuiButton.placeSpellButton(player, new Gust(), 11, this);
+		GuiButton.placeSpellButton(player, new Depulso(), 11, this);
 		GuiButton.placeSpellButton(player, new Tailwind(), 12, this);
 		GuiButton.placeSpellButton(player, new Charge(), 13, this);
 		GuiButton.placeSpellButton(player, new Levioso(), 14, this);

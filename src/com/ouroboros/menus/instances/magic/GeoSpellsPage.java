@@ -12,7 +12,7 @@ import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.Magemorph;
 import com.lol.spells.instances.geo.Metalmorph;
-import com.lol.spells.instances.geo.Petrify;
+import com.lol.spells.instances.geo.PetrificusTotalis;
 import com.lol.spells.instances.geo.SandBlast;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -37,7 +37,7 @@ public class GeoSpellsPage extends ObsGui
 		
 		// 2
 		GuiButton.placeSpellButton(player, new Metalmorph(), 12, this);
-		GuiButton.placeSpellButton(player, new Petrify(), 13, this);
+		GuiButton.placeSpellButton(player, new PetrificusTotalis(), 13, this);
 		
 		// 3
 		GuiButton.placeSpellButton(player, new Magemorph(), 14, this);
