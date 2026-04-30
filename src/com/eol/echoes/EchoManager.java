@@ -1,11 +1,78 @@
 package com.eol.echoes;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.eol.echoes.records.EchoManifest;
+import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ObsColors;
+import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class EchoManager 
 {
+	private static final Set<UUID> durabilityLock = new HashSet<>();
+
+	public static void removeDurability(Player player, ItemStack stack, int value)
+	{
+	    if (!EchoManifestCodec.isEcho(stack)) return;
+	    
+	    EchoManifest manifest = EchoManifestCodec.read(stack);
+	    if (manifest == null) return;
+
+	    EchoData data = manifest.baseStats();
+	    int current = Math.max(0, data.getCurrentDurability() - value);
+
+	    EchoData updatedEchoData = new EchoData(
+	        data.getAttack(), data.getAttackRating(),
+	        data.getCritRate(), data.getCritModifier(),
+	        data.getMaxDurability(), current);
+
+	    EchoManifest updatedManifest = new EchoManifest(
+	        manifest.echoId(), manifest.rarity(), updatedEchoData,
+	        manifest.modifiers(), manifest.slotType(),
+	        manifest.equippedAbilityKey(), manifest.lockedAbilityKey(),
+	        manifest.echoForm(), manifest.echoMaterial());
+
+	    EchoManifestCodec.write(stack, updatedManifest);
+
+	    ItemMeta meta = stack.getItemMeta();
+	    if (meta != null)
+	    {
+	        List<String> lore = manifest.echoMaterial() != null
+	            ? EchoLoreBuilder.build(updatedManifest, manifest.echoMaterial())
+	            : EchoLoreBuilder.build(updatedManifest);
+	        meta.setLore(lore);
+	        stack.setItemMeta(meta);
+	    }
+	    
+	    durabilityLock.add(player.getUniqueId());
+	    Bukkit.getScheduler().runTask(Ouroboros.instance, () ->
+	    {
+	        player.getInventory().setItemInMainHand(stack);
+	        durabilityLock.remove(player.getUniqueId());
+	    });
+	    
+	    if (current <= 0)
+	    {
+	        player.getInventory().setItemInMainHand(null);
+	        EntityEffects.playSound(player, Sound.ENTITY_BREEZE_INHALE, SoundCategory.MASTER);
+	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	        {
+	            EntityEffects.playSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.MASTER);
+	            PrintUtils.PrintToActionBar(player, PrintUtils.color(ObsColors.CELESTIO) + "&cYour Echo has shattered..");
+	        }, 5);
+	    }
+	}
 	
 	/**
      * Equips an ability onto a procedural Echo, and attempts to rebuild the item stack.

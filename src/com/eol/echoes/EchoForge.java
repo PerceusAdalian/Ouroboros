@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,6 +24,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
+import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.PrintUtils;
 
@@ -123,7 +130,7 @@ public final class EchoForge
         EchoManifest manifest = new EchoManifest(echoId, rarity, stats, modifiers, slotType, form, echoMaterial);
  
         // --- Build ItemStack ---
-        return buildWeaponItem(manifest, form, echoMaterial, base.getRarity());
+        return buildItem(manifest, form, echoMaterial, base.getRarity());
     }
  
     // -------------------------------------------------------------------------
@@ -142,7 +149,7 @@ public final class EchoForge
     // ItemStack construction
     // -------------------------------------------------------------------------
  
-    private static ItemStack buildWeaponItem(EchoManifest manifest, EchoForm form, EchoMaterial echoMaterial, Rarity baseRarity)
+    private static ItemStack buildItem(EchoManifest manifest, EchoForm form, EchoMaterial echoMaterial, Rarity baseRarity)
     {
         // Resolve the Bukkit Material from EchoForm + EchoMaterial
         Material material = EchoFormResolver.toBukkitMaterial(form, echoMaterial);
@@ -161,9 +168,14 @@ public final class EchoForge
         meta.setDisplayName(PrintUtils.ColorParser(displayName));
         meta.setLore(EchoLoreBuilder.build(manifest, echoMaterial));
         meta.setEnchantmentGlintOverride(manifest.rarity().getRarity() >= 4);
- 
+        
+        // Echoes manage their own durability via PDC — lock out vanilla durability system
+        meta.setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+        
+        applyAttackSpeed(meta, manifest);
         stack.setItemMeta(meta);
- 
+
         // Bake manifest into PDC
         EchoManifestCodec.write(stack, manifest);
  
@@ -182,7 +194,7 @@ public final class EchoForge
     static ItemStack rebuild(EchoManifest manifest)
     {
         if (manifest.echoForm() == null || manifest.echoMaterial() == null) return null;
-        return buildWeaponItem(manifest, manifest.echoForm(), manifest.echoMaterial(), manifest.rarity());
+        return buildItem(manifest, manifest.echoForm(), manifest.echoMaterial(), manifest.rarity());
     }
     
     /**
@@ -227,13 +239,41 @@ public final class EchoForge
     private static String buildDisplayName(Rarity rarity, EchoForm form, EchoMaterial echoMaterial)
     {
         char rarityColor = PrintUtils.getRarityColor(rarity);
- 
+        
         String formLabel     = PrintUtils.formatEnumName(form.name());
         String materialLabel = PrintUtils.formatEnumName(echoMaterial.name());
- 
-        return "&" + rarityColor + materialLabel + " " + formLabel + " &r&fEcho";
+        
+        return "&r&b&lΣcho&r&f: " + materialLabel + " " + formLabel + " &r&" + rarityColor + "&l" + PrintUtils.getRarityAsNumeralValue(rarity);
     }
  
+    /**
+     * Stamps ATTACK_SPEED onto the item's meta using the manifest's attackRating.
+     * attackRating is stored as attacks-per-second (matching vanilla's unit).
+     *
+     * ATTACK_SPEED base value is 4.0. We use ADD_NUMBER to set an absolute
+     * target by supplying (target - 4.0) as the delta. The modifier UUID is derived
+     * deterministically from the echoId so re-forging never accumulates duplicates.
+     */
+    private static void applyAttackSpeed(ItemMeta meta, EchoManifest manifest)
+    {
+        meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+        
+        double attacksPerSecond = manifest.baseStats().getAttackRating();
+        if (attacksPerSecond <= 0) return;
+        
+        double delta = attacksPerSecond - 4.0;
+        
+        NamespacedKey key = new NamespacedKey(Ouroboros.instance, "echo_attack_speed");
+        AttributeModifier mod = new AttributeModifier(
+                key,
+                delta,
+                Operation.ADD_NUMBER,
+                EquipmentSlotGroup.ANY
+            );
+
+        meta.addAttributeModifier(Attribute.ATTACK_SPEED, mod);
+    }
+
     private static boolean validate(Materia materia, MateriaComponent expected, String label)
     {
         if (materia == null)
@@ -249,7 +289,7 @@ public final class EchoForge
         }
         return true;
     }
- 
+
     private static void warn(String msg)
     {
         System.err.println("[EchoForge] " + msg);

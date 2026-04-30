@@ -34,7 +34,6 @@ public final class StatResolver
      */
     public static EchoData resolve(Materia base, Materia binding)
     {
-        // --- Validate components ---
         if (base == null || base.getMateriaComponent() != MateriaComponent.BASE)
         {
             warn("StatResolver: base Materia is null or not a BASE component.");
@@ -46,7 +45,6 @@ public final class StatResolver
             return null;
         }
 
-        // --- Resolve base MateriaType → EchoMaterial ---
         EchoMaterial echoMaterial = MateriaTypeResolver.toEchoMaterial(base.getMateriaType());
         if (echoMaterial == null)
         {
@@ -55,26 +53,31 @@ public final class StatResolver
             return null;
         }
 
-        // --- Load stat ranges from config ---
-        EchoConfig 		  config     = EchoConfig.get();
-        MaterialStatRange matRange   = config.getMaterialStats(echoMaterial);
-        BindingStatBlock  bindBlock  = config.getBindingStats(binding.getMateriaType());
+        EchoConfig        config    = EchoConfig.get();
+        MaterialStatRange matRange  = config.getMaterialStats(echoMaterial);
+        BindingStatBlock  bindBlock = config.getBindingStats(binding.getMateriaType());
 
-        // --- Roll base stats from material range ---
-        double rolledAttack   		 = matRange.rollBaseAttack();
-        double rolledCritRate 		 = matRange.critRateBase();
-        double rolledCritMod  		 = matRange.rollCritModifier();
+        // --- Roll base stats ---
+        double rolledAttack   = matRange.rollBaseAttack();
+        double rolledCritRate = matRange.critRateBase();
+        double rolledCritMod  = matRange.rollCritModifier();
 
+        // --- Roll attack rating within binding band ---
+        double arMin  = bindBlock.attackRatingMin();
+        double arMax  = bindBlock.attackRatingMax();
+        double arRoll = arMin + (Math.random() * (arMax - arMin));
+        double finalAttackRating = Math.round(arRoll * 100.0) / 100.0;
+
+        // --- Roll durability within binding band ---
+        int    rawDurability   = matRange.rollDurability();
+        int    finalDurability = (int) Math.round(rawDurability * bindBlock.durabilityMultiplier());
+    
         // --- Apply binding deltas ---
-        double finalAttack       	 = rolledAttack   + bindBlock.attackBonus();
-        double finalAttackRating 	 = bindBlock.attackRating();            		// AR comes entirely from binding
-        double finalCritRate     	 = rolledCritRate + bindBlock.critRateBonus();
-        double finalCritMod      	 = rolledCritMod;                       		// binding doesn't touch crit mod
+        double finalAttack    = rolledAttack + bindBlock.attackBonus();
+        double finalCritRate  = Math.max(0.0, Math.min(1.0, rolledCritRate + bindBlock.critRateBonus()));
+        double finalCritMod   = rolledCritMod;
 
-        // Clamp crit rate to [0.0, 1.0]
-        finalCritRate = Math.max(0.0, Math.min(1.0, finalCritRate));
-
-        return new EchoData(finalAttack, finalAttackRating, finalCritRate, finalCritMod);
+        return new EchoData(finalAttack, finalAttackRating, finalCritRate, finalCritMod, finalDurability, finalDurability);
     }
 
     /**

@@ -130,6 +130,8 @@ public class EchoManifestCodec
         stats.addProperty("attackRating",  data.getAttackRating());
         stats.addProperty("critRate",      data.getCritRate());
         stats.addProperty("critModifier",  data.getCritModifier());
+        stats.addProperty("maxDurability",     data.getMaxDurability());
+        stats.addProperty("currentDurability", data.getCurrentDurability());
         root.add("baseStats", stats);
  
         // Modifiers
@@ -171,18 +173,21 @@ public class EchoManifestCodec
         Rarity             rarity   	= Rarity.valueOf(root.get("rarity").getAsString());
         ElementiumSlotType slot     	= ElementiumSlotType.valueOf(root.get("slotType").getAsString());
         
-        JsonElement echoFormEl = root.get("echoForm");
-        EchoForm echoForm = (echoFormEl == null || echoFormEl.isJsonNull())
-                ? null : EchoForm.valueOf(echoFormEl.getAsString());
+        JsonElement echoFormElement = root.get("echoForm");
+        EchoForm echoForm = (echoFormElement == null || echoFormElement.isJsonNull())
+                ? null 
+                : EchoForm.valueOf(echoFormElement.getAsString());
 
-        JsonElement echoMaterialEl = root.get("echoMaterial");
-        EchoMaterial echoMaterial = (echoMaterialEl == null || echoMaterialEl.isJsonNull())
-                ? null : EchoMaterial.valueOf(echoMaterialEl.getAsString());
+        JsonElement echoMaterialElement = root.get("echoMaterial");
+        EchoMaterial echoMaterial = (echoMaterialElement == null || echoMaterialElement.isJsonNull())
+                ? null 
+                : EchoMaterial.valueOf(echoMaterialElement.getAsString());
         
         // lockedAbilityKey is nullable — check before calling getAsString()
         JsonElement lockedEl = root.get("lockedAbilityKey");
         String lockedAbilityKey = (lockedEl == null || lockedEl.isJsonNull())
-                ? null : lockedEl.getAsString();
+                ? null 
+                : lockedEl.getAsString();
  
         /**
          *  If the object that's being deserialized isn't an EOL echo, 
@@ -191,14 +196,24 @@ public class EchoManifestCodec
         
         JsonElement equippedAbility = root.get("equippedAbility");
         String abilityKey = (equippedAbility == null || equippedAbility.isJsonNull())
-        		? null : equippedAbility.getAsString();
+        		? null 
+        		: equippedAbility.getAsString();
         
         JsonObject statsObj = root.getAsJsonObject("baseStats");
+        
+        JsonElement maxDurabilityElement = statsObj.get("maxDurability");
+        int maxDurability = (maxDurabilityElement == null || maxDurabilityElement.isJsonNull()) ? 200 : maxDurabilityElement.getAsInt();
+
+        JsonElement currentDurabilityElement = statsObj.get("currentDurability");
+        int currentDurability = (currentDurabilityElement == null || currentDurabilityElement.isJsonNull()) ? maxDurability : currentDurabilityElement.getAsInt();
+
         EchoData baseStats = new EchoData(
                 statsObj.get("attack").getAsDouble(),
                 statsObj.get("attackRating").getAsDouble(),
                 statsObj.get("critRate").getAsDouble(),
-                statsObj.get("critModifier").getAsDouble());
+                statsObj.get("critModifier").getAsDouble(),
+                maxDurability,
+                currentDurability);
  
         List<Modifier> modifiers = new ArrayList<>();
         JsonArray modsArr = root.getAsJsonArray("modifiers");

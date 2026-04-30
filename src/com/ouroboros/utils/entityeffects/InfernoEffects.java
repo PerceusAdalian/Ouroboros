@@ -41,7 +41,7 @@ public class InfernoEffects
 		hasCharred.add(target.getUniqueId());
 		ObsTimer.runWithCancel(Ouroboros.instance, e ->
 		{
-			if (target.isDead()) return;
+			if (target.isDead() || !hasCharred.contains(target.getUniqueId())) return;
 			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.SMOKE, null);
 			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.FLAME, null);
 		}, 20, seconds * 20);

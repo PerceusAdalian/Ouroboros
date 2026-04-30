@@ -42,6 +42,7 @@ public class PlayerData
 	public static final int maxLuminite = 9999;
 	public static final int maxEssence = 9999;
 	public static final int maxScrap = 9999;
+	public static final int maxShards = 999;
 	private static final double ExpMultiplier = 1.18;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
@@ -143,7 +144,7 @@ public class PlayerData
 	    	
 	    	for (Spell spell : SpellRegistry.spellRegistry.values())
 	    	{
-	    		getSpell(spell).setRegistered(false);
+	    		getSpell(spell).setRegistered(false).setShards(0);
 	    	}
 	    	
 	    	for (ObsAbility ability : AbilityRegistry.abilityRegistry.values())

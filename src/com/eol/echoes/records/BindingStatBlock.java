@@ -1,11 +1,18 @@
 package com.eol.echoes.records;
 
 /**
- * BindingStatBlock is an immutable snapshot of one Binding type's stat deltas,
- * loaded from echo_config.yml by EchoConfig.
+ * Stat block loaded from echo_config.yml for a given binding MateriaType.
  *
- * StatResolver applies these on top of the MaterialStatRange roll to produce
- * the final EchoData. The Binding is responsible for attack rating, durability
- * scaling, and any minor flat/crit bonuses it contributes.
+ * attackRatingMin/Max  - rolled attack speed range (attacks per second)
+ * durabilityMin/Max    - rolled durability range (absolute item durability units)
+ * durabilityMultiplier - scalar applied to the rolled durability value
+ * critRateBonus        - flat addition to material's crit_rate_base
+ * attackBonus          - flat addition to rolled base attack
  */
-public record BindingStatBlock(double attackRating, double durabilityMultiplier, double critRateBonus, double attackBonus) {}
+public record BindingStatBlock(
+    double attackRatingMin,
+    double attackRatingMax,
+    double durabilityMultiplier,
+    double critRateBonus,
+    double attackBonus
+) {}

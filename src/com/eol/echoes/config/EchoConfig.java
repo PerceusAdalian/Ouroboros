@@ -180,10 +180,14 @@ public class EchoConfig
             if (mat == null) continue;
 
             materialStats.put(material, new MaterialStatRange(
-                mat.getDouble("base_attack_min", 3),
-                mat.getDouble("base_attack_max", 6),
-                mat.getDouble("crit_rate_base", 0.05),
-                mat.getDouble("crit_modifier_ceiling", 1.5)));
+            	    mat.getDouble("base_attack_min",       3),
+            	    mat.getDouble("base_attack_max",       6),
+            	    mat.getDouble("base_attack_rate_min",  1.6),
+            	    mat.getDouble("base_attack_rate_max",  4.0),
+            	    mat.getDouble("crit_rate_base",        0.05),
+            	    mat.getDouble("crit_modifier_ceiling", 1.5),
+            	    mat.getInt   ("durability_min",        100),
+            	    mat.getInt   ("durability_max",        300)));
         }
     }
 
@@ -202,10 +206,11 @@ public class EchoConfig
             if (binding == null) continue;
 
             bindingStats.put(key.toUpperCase(), new BindingStatBlock(
-                binding.getDouble("attack_rating", 1.0),
-                binding.getDouble("durability_multiplier", 1.0),
-                binding.getDouble("crit_rate_bonus", 0.0),
-                binding.getDouble("attack_bonus", 0)));
+            	    binding.getDouble("attack_rating_min",     1.0),
+            	    binding.getDouble("attack_rating_max",     4.0),
+            	    binding.getDouble("durability_multiplier", 1.0),
+            	    binding.getDouble("crit_rate_bonus",       0.0),
+            	    binding.getDouble("attack_bonus",          0)));
         }
     }
 

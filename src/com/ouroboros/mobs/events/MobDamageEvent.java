@@ -2,6 +2,9 @@ package com.ouroboros.mobs.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
@@ -24,6 +27,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.echoes.EchoData;
+import com.eol.echoes.EchoManager;
+import com.eol.echoes.EchoManifestCodec;
+import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.enums.ElementType;
@@ -32,8 +39,10 @@ import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.EntityCategories;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class MobDamageEvent implements Listener
@@ -53,15 +62,61 @@ public class MobDamageEvent implements Listener
 				if (!(target instanceof LivingEntity)) return;
 				if (!target.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
 				if (target.hasMetadata("ouroboros_dying")) return;
-				
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
 				
 				ElementType element = ElementType.PURE;
 				double dmg;
 				
+				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && // PvP While using Echoes is prohibited. This is a PvE Echo Damage Event only.
+							EchoManifestCodec.isEcho(p.getInventory().getItemInMainHand()))
+				{
+					ItemStack echo = p.getInventory().getItemInMainHand();
+					String str = echo.getItemMeta().getPersistentDataContainer().get(EchoManifestCodec.MANIFEST_KEY, PersistentDataType.STRING);
+					EchoManifest codec = EchoManifestCodec.fromJson(str);
+					if (codec == null) return;
+					
+					element = ResolveCombatElement.getFromMaterial(echo.getType());
+					EchoData echoData = codec.baseStats();
+
+					dmg = echoData.getAttack();
+					float charge = p.getAttackCooldown();
+					double chargeScalar = 0.1 + ((1.0 - 0.1) * charge);
+					dmg *= chargeScalar;
+					
+					if (ImbueFire.isImbuedPlayer.containsKey(p.getUniqueId()))
+					{
+						element = ElementType.INFERNO;
+						dmg *= 1.1;
+						target.setFireTicks(100);
+					}
+					
+					if (InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(10))
+					{
+						InfernoEffects.addBurn((LivingEntity) target, 20);
+						InfernoEffects.hasCharred.remove(target.getUniqueId());
+					}
+					
+					boolean crit = false;
+					if(Chance.of(echoData.getCritRate() * 100)) 
+					{
+						crit = true;
+						ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+						EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
+						dmg *= echoData.getCritModifier();
+					}
+					
+					EchoManager.removeDurability(p, echo, crit ? 2 : 1);
+					
+					if (data.isBreak()) 
+						data.breakDamage(dmg, element);
+					else 
+						data.damage(dmg, true, element);
+				}
+				
 				//In the event the damage source is as shown below, execute this block
-				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p)
+				else if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && // Player damage to entity event, however, no echo used.
+						!EchoManifestCodec.isEcho(p.getInventory().getItemInMainHand()))
 				{
 					if (dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player)
 						element = ElementType.PUNCTURE;

@@ -3,6 +3,8 @@ package com.lol.spells.instances.celestio;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -19,6 +21,7 @@ import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class Expell extends Spell
 {
@@ -37,7 +40,8 @@ public class Expell extends Spell
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
 		if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return -1;
-		
+
+		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.6, 0.5, Particle.WAX_ON, null);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{

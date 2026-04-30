@@ -3,6 +3,7 @@ package com.lol.spells;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.lol.spells.instances.Spell;
+import com.ouroboros.accounts.PlayerData;
 
 public class SpellDataHandler 
 {
@@ -43,6 +44,40 @@ public class SpellDataHandler
 	public SpellDataHandler setRegistered(boolean value)
 	{
 		config.set(path(".registered"), value);
+		return this;
+	}
+	
+	public int getShards()
+	{
+		return config.getInt(path(".shards"));
+	}
+	
+	public SpellDataHandler setShards(int value)
+	{
+		config.set(path(".shards"), value);
+		return this;
+	}
+	
+	public SpellDataHandler addShards(int value)
+	{
+		if (getShards() + value > PlayerData.maxShards)
+		{
+			setShards(PlayerData.maxShards);
+			return this;
+		}
+		setShards(getShards() + value);
+		return this;
+	}
+	
+	public SpellDataHandler subtractShards(int value)
+	{
+		if (getShards() - value < 0) 
+		{
+			setShards(0);
+			return this;
+		}
+		
+		setShards(getShards() - value);
 		return this;
 	}
 	

@@ -82,45 +82,59 @@ rarity_bands:
 
 material_stats:
   WOODEN:
-    base_attack_min: 3
-    base_attack_max: 6
+    base_attack_min: 5
+    base_attack_max: 10
+    durability_min: 100
+    durability_max: 150
     crit_rate_base: 0.025
     crit_modifier_ceiling: 1.1 
 
   STONE:
     base_attack_min: 5
     base_attack_max: 15
-    crit_rate_base: 0.05
+    durability_min: 150
+    durability_max: 500
+    crit_rate_base: 0.10
     crit_modifier_ceiling: 1.25
 
   COPPER:
-    base_attack_min: 6
-    base_attack_max: 11
-    crit_rate_base: 0.15
+    base_attack_min: 10
+    base_attack_max: 25
+    durability_min: 350
+    durability_max: 1000
+    crit_rate_base: 0.20
     crit_modifier_ceiling: 1.25
 
   IRON:
-    base_attack_min: 8
-    base_attack_max: 20
+    base_attack_min: 20
+    base_attack_max: 35
+    durability_min: 500
+    durability_max: 1500
     crit_rate_base: 0.15
     crit_modifier_ceiling: 1.5
 
   GOLDEN:
-    base_attack_min: 6
-    base_attack_max: 25
-    crit_rate_base: 0.5
+    base_attack_min: 10
+    base_attack_max: 30
+    durability_min: 50
+    durability_max: 200
+    crit_rate_base: 0.50
     crit_modifier_ceiling: 4.0
 
   DIAMOND:
     base_attack_min: 20
-    base_attack_max: 35
-    crit_rate_base: 0.15
+    base_attack_max: 50
+    durability_min: 2000
+    durability_max: 5000
+    crit_rate_base: 0.30
     crit_modifier_ceiling: 2.5
 
   NETHERITE:
-    base_attack_min: 20
-    base_attack_max: 50
-    crit_rate_base: 0.20
+    base_attack_min: 30
+    base_attack_max: 100
+    durability_min: 2500
+    durability_max: 10000
+    crit_rate_base: 0.30
     crit_modifier_ceiling: 3.0
 
 # ------------------------------------------------------------
@@ -136,23 +150,30 @@ material_stats:
 # attack_bonus          - flat addition to rolled base attack
 # ------------------------------------------------------------
 binding_stats:
-  # MateriaType.STRING - light, fast, crit-favoring
+
+# MateriaType.STRING - light, fast, crit-favoring
+# Fast tempo — dagger/rapier feel
   STRING:
-    attack_rating: 1.25
+    attack_rating_min: 4.0
+    attack_rating_max: 5.0
     durability_multiplier: 0.75
     crit_rate_bonus: 0.05
     attack_bonus: 0
 
-  # MateriaType.PELT - balanced, slightly durable
+# MateriaType.PELT - balanced, slightly durable
+# Neutral tempo — standard sword feel
   PELT:
-    attack_rating: 1.0
+    attack_rating_min: 2.0
+    attack_rating_max: 4.0
     durability_multiplier: 1.25
     crit_rate_bonus: 0.0
     attack_bonus: 1
 
-  # MateriaType.LEATHER - heavy grip, trades speed for damage and durability
+# MateriaType.LEATHER - heavy grip, trades speed for damage and durability
+# Slow tempo — greatsword/hammer feel
   LEATHER:
-    attack_rating: 0.85
+    attack_rating_min: 1.0
+    attack_rating_max: 3.5
     durability_multiplier: 1.75
     crit_rate_bonus: -0.03
     attack_bonus: 4

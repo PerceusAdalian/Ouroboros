@@ -65,7 +65,7 @@ public final class EchoLoreBuilder
  
         // Attack Rating: binding-sourced. Color relative to [0.5, 2.0] as a universal AR range.
         lore.add(statLine("Attack Rate",
-                rollQualityColor(stats.getAttackRating(), 0.5, 2.0)
+                rollQualityColor(stats.getAttackRating(), range.baseAttackRateMin(), range.baseAttackRateMax())
                 + formatStat(stats.getAttackRating(), false)));
  
         // Crit Rate: color relative to [0.0, 1.0]
@@ -121,9 +121,14 @@ public final class EchoLoreBuilder
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
  
+        
+        int currentDurability = manifest.baseStats().getCurrentDurability();
+        int maxDurability = manifest.baseStats().getMaxDurability();
+        lore.add(PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
+        
         // --- Echo ID ---
         lore.add(PrintUtils.ColorParser("&r&7Echo ID: Σ_" + manifest.echoId()));
- 
+        
         return lore;
     }
  
@@ -182,7 +187,11 @@ public final class EchoLoreBuilder
         }
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
- 
+        
+        int currentDurability = manifest.baseStats().getCurrentDurability();
+        int maxDurability = manifest.baseStats().getMaxDurability();
+        lore.add(PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
+        
         lore.add(PrintUtils.ColorParser("&r&7Echo ID: Σ_" + manifest.echoId()));
  
         return lore;

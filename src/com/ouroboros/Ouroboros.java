@@ -60,9 +60,9 @@ public class Ouroboros extends JavaPlugin
 		debugSpells = false;
 		enabled = true;
 		
-		EchoConfig.load();
-		
 		this.getCommand("obs").setExecutor(new ObsCommand());;
+		
+		EchoConfig.load();
 		
 		PlayerData.initializeDataFolder();
 		MobData.initializeDataFolder();	
