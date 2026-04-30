@@ -26,7 +26,7 @@ public class MagicMissile extends Spell
 
 	public MagicMissile()
 	{
-		super("Magic Missile", "magic_missile", Material.SPECTRAL_ARROW, SpellType.OFFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 35, 1.0, true,
+		super("Magic Missile", "magic_missile", Material.SPECTRAL_ARROW, SpellType.OFFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 35, 1.0, true, false,
 				"&r&fDeal 10&c♥ "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage to &6target &7(40m | &cPVP&7: &c2♥&7)");
 	}
 

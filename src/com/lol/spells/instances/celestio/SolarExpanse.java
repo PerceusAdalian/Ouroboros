@@ -34,7 +34,7 @@ public class SolarExpanse extends Spell
 
 	public SolarExpanse()
 	{
-		super("Solar Expanse", "solar_expanse", Material.GOLDEN_SPEAR, SpellType.OFFENSIVE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FOUR, 150, 3, false,
+		super("Solar Expanse", "solar_expanse", Material.GOLDEN_SPEAR, SpellType.OFFENSIVE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FOUR, 150, 3, false, true,
 				"&ePrimary&f "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eSolar Expanse&f: &e&oHoly Bayonet&r&f --",
 				"&r&fDealing 25&c♥ &e&lImpale&r&f damage to your &6target&f applying &e&oExpose&r&7 (30m)","",

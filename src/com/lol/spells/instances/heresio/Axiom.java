@@ -25,7 +25,7 @@ public class Axiom extends Spell
 {
 	public Axiom()
 	{
-		super("Axiom", "axiom", Material.GREEN_DYE, SpellType.CANTRIP, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, false,
+		super("Axiom", "axiom", Material.GREEN_DYE, SpellType.CANTRIP, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, false, false,
 				"&r&fDeal 5&c♥&f of "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage to &6&otarget &r&dMob &7(15m)");
 	}
 

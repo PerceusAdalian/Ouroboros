@@ -25,7 +25,7 @@ public class PetrificusTotalis extends Spell
 
 	public PetrificusTotalis() 
 	{
-		super("Petrificus Totalis", "petrificus_totalis", Material.CLAY_BALL, SpellType.DEBUFF, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 5, false,
+		super("Petrificus Totalis", "petrificus_totalis", Material.CLAY_BALL, SpellType.DEBUFF, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 5, false, false,
 				"&r&fApplies &6&oVulnerable&r&f to &6&otarget &r&dMob &7(20m, 25s)","",
 				"&r&6Vulnerable &eEffect&f: Physical damage resistance is reduced by &b&o50%&r&f.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",

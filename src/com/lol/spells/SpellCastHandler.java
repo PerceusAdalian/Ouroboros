@@ -67,6 +67,7 @@ public class SpellCastHandler implements Listener
         }
         if (held == null || held.getType() == Material.AIR) return;
 		
+        // Book Interact
         if (!Wand.isWand(held) && held.getItemMeta().getPersistentDataContainer().has(Spell.LOLSPELLBOOK)) 
 		{
         	if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
@@ -96,8 +97,37 @@ public class SpellCastHandler implements Listener
         	
         	return;
 		}
+        
+        // Shard Cast Call
+        else if (!Wand.isWand(held) && held.getItemMeta().getPersistentDataContainer().has(Spell.LOLSPELLSHARD))
+        {
+        	PersistentDataContainer pdc = held.getItemMeta().getPersistentDataContainer();
+        	String internalName = pdc.get(Spell.LOLSPELLSHARD, PersistentDataType.STRING);
+        	Spell spell = SpellRegistry.spellRegistry.get(internalName);
+        	if (spell != null && CastConditions.isValidAction(e, spell.getCastCondition()))
+        	{
+        		if (Fly.lockedCasters.contains(p.getUniqueId()) && !spell.getInternalName().equals("fly"))
+                {
+                	PrintUtils.PrintToActionBar(p, "&cFizzle!");
+                    return;
+                }
+        		
+        		if (spell.isWandOnly() || spell.Cast(e) == -1) 
+        		{
+        			EntityEffects.playSound(p, Sound.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.MASTER);
+        			return;
+        		}
+        		
+        		EntityEffects.playSound(p, Sound.BLOCK_SMALL_AMETHYST_BUD_BREAK, SoundCategory.MASTER);
+        		ObsParticles.playCastSigil(p, spell.getElementType());
+        		ItemCollector.remove(e);
+        	}
+        	return;
+        }
 
         if (!Wand.isWand(held)) return;
+        
+        // Normal Spell Casting
         
         Wand wand = new Wand(held);
         if (!wand.hasSpell(wand.getSpellIndex())) return;

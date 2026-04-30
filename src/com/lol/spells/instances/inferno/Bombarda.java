@@ -30,7 +30,7 @@ public class Bombarda extends Spell
 
 	public Bombarda() 
 	{
-		super("Bombarda", "bombarda", Material.BLAZE_POWDER, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 3, false,
+		super("Bombarda", "bombarda", Material.BLAZE_POWDER, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 3, false, false,
 				"&r&fExpell a short-range burst of &c&lInferno&r&f energy",
 				"&r&fcausing a concentrated explosion of ether about your target,",
 				"&r&finflicting &e&lBlast&r&f damage and causing &cBurn &7(20s).",

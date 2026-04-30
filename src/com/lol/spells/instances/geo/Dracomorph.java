@@ -29,7 +29,7 @@ public class Dracomorph extends Spell
 
 	public Dracomorph() 
 	{
-		super("Dracomorph", "dracomorph", Material.NETHERITE_INGOT, SpellType.ULTIMATE, SpellementType.GEO, CastConditions.MIXED, Rarity.FIVE, 300, 120, false,
+		super("Dracomorph", "dracomorph", Material.NETHERITE_INGOT, SpellType.ULTIMATE, SpellementType.GEO, CastConditions.MIXED, Rarity.FIVE, 300, 120, false, true,
 				"&r&b&oElemental Fusion&f: "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f --",
 				"&r&e&oPrimary &r&f" + PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&6Dracomorph: &c&oCharred &r&6&oBulwark&r&f --",

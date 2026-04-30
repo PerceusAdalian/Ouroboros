@@ -31,7 +31,7 @@ public class Primer extends Spell
 
 	public Primer()
 	{
-		super("Primer", "primer", Material.FIREWORK_STAR, SpellType.DEBUFF, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 3, false,
+		super("Primer", "primer", Material.FIREWORK_STAR, SpellType.DEBUFF, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 3, false, false,
 				"&r&fInflicts &6target&f with &cCharred&f and set &cPrimed&f &7(20m, 30s)","",
 				"&r&cCharred &eEffect&f: Causes &b&oHunger&r&f, &b&oFatigue&r&f, and &b&oSlowness&r&f, while affected take &b&o25%&r&f",
 				"&r&fmore "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno &r&fdamage, and may cause &cBurn&f upon hit removing the effect.");

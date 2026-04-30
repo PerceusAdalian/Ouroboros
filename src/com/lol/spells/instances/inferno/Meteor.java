@@ -34,7 +34,7 @@ public class Meteor extends Spell
 
 	public Meteor()
 	{
-		super("Meteor", "meteor", Material.FIRE_CHARGE, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 100, 5, false,
+		super("Meteor", "meteor", Material.FIRE_CHARGE, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 100, 5, false, false,
 				"&r&fSummon a meteor at target &d&oBlock&r&7 (50m) &for &d&oMob&r&7 (30m)",
 				"&r&fMeteor's yeild = 4 &r&f&l± &r&e2 bonus&r&f in &d&ohot&r&f/&d&ocold climates&r&f,",
 				"&r&fand deals variable "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f and &e&lBlast&r&f damage.");

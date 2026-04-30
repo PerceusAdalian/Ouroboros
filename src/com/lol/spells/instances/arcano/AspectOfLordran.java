@@ -44,7 +44,7 @@ public class AspectOfLordran extends Spell
 	public AspectOfLordran() 
 	{
 		super("Aspect of Lordran, Forgotten King", "aspect_of_lordran", Material.GLOBE_BANNER_PATTERN, 
-				SpellType.ULTIMATE, SpellementType.ARCANO, CastConditions.MIXED, Rarity.SEVEN, 50, 0.1, false,
+				SpellType.ULTIMATE, SpellementType.ARCANO, CastConditions.MIXED, Rarity.SEVEN, 50, 0.1, false, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordan&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oNobility Incarnate&r&f --",
 				"&r&7&l┏--&r&7{&e✧ &oArbanian Combo&f: unleash a volley of "+PrintUtils.color(ObsColors.ARCANO)+"&lArcane&r&f spells.",

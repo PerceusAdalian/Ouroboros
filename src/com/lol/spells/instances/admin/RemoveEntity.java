@@ -26,7 +26,7 @@ public class RemoveEntity extends Spell
 
 	public RemoveEntity() 
 	{
-		super("Remove Entity", "admin_remove_entity", Material.SPECTRAL_ARROW, SpellType.DEBUG, SpellementType.NULL, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 0, 1, false,
+		super("Remove Entity", "admin_remove_entity", Material.SPECTRAL_ARROW, SpellType.DEBUG, SpellementType.NULL, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 0, 1, false, true,
 				"&r&fKill target mob within &b&o50 meters&r&f.","",
 				"&r&c&lWarning&r&f: This spell is intended for use by admins only.");
 	}

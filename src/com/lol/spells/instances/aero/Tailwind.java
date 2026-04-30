@@ -34,7 +34,7 @@ public class Tailwind extends Spell
 
 	public Tailwind()
 	{
-		super("Tailwind", "tailwind", Material.FEATHER, SpellType.UTILITY, SpellementType.AERO, CastConditions.MIXED, Rarity.ONE, 10, 1.5, false,
+		super("Tailwind", "tailwind", Material.FEATHER, SpellType.UTILITY, SpellementType.AERO, CastConditions.MIXED, Rarity.ONE, 10, 1.5, false, false,
 				"&ePrimary&f "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&dTailwind&f: &d&oJetstream&r&f --",
 				"&r&fGives a momentary boost of velocity towards target direction.","",

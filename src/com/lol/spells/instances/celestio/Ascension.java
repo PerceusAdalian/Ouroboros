@@ -30,7 +30,7 @@ public class Ascension extends Spell
 
 	public Ascension() 
 	{
-		super("Ascension", "ascension", Material.ALLAY_SPAWN_EGG, SpellType.ULTIMATE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 0, 1, false,
+		super("Ascension", "ascension", Material.ALLAY_SPAWN_EGG, SpellType.ULTIMATE, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.FIVE, 0, 1, false, true,
 				"&r&e&oPrimary &r&f" + PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eAscension&r&f: &e&oJudgement&r&f -- 25 &b&lMana",
 				"&r&fDeal 10&c♥ "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage to &6target&f, and apply &eHumility &7(45m, 20s)","",

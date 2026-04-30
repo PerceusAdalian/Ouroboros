@@ -24,7 +24,7 @@ public class HealingCurrent extends Spell
 
 	public HealingCurrent()
 	{
-		super("Healing Current", "healing_current", Material.NETHER_STAR, SpellType.SUPPORT, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 3, true,
+		super("Healing Current", "healing_current", Material.NETHER_STAR, SpellType.SUPPORT, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 3, true, false,
 				"&r&aHeal &6self&f/&6target player&f equal to &b&o50%&r&f of current &cHP &7(25m)","",
 				"&r&e&lEchoic Resonance&r&f: Restores &cHP&f to &b&o100%&r&f while &d&oStorming&r&f.");
 	}

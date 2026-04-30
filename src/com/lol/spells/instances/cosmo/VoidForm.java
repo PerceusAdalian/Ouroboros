@@ -23,7 +23,7 @@ public class VoidForm extends Spell
 
 	public VoidForm()
 	{
-		super("Void Form", "void_form", Material.ENDER_EYE, SpellType.DEFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 50, 30, false,
+		super("Void Form", "void_form", Material.ENDER_EYE, SpellType.DEFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 50, 30, false, false,
 				"&r&fTemporarily shift into a limbic state of matter &7(15s)");
 	}
 

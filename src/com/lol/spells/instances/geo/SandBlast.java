@@ -24,7 +24,7 @@ public class SandBlast extends Spell
 
 	public SandBlast()
 	{
-		super("Sand Blast", "sand_blast", Material.GLOWSTONE_DUST, SpellType.OFFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 2, false,
+		super("Sand Blast", "sand_blast", Material.GLOWSTONE_DUST, SpellType.OFFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 2, false, false,
 				"&r&fSend a handful of sand infront of you as a &d&oConal&r&f AOE dealing",
 				"&r&f4&c♥&f "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage and inflict &6Sanded&7 (10m, 20s)","",
 				"&6Sanded &eEffect&f: Afflicted are &b&oBlinded&r&f and &b&oSlowed&r&f.");

@@ -31,7 +31,7 @@ public class Voodoo extends Spell
 
 	public Voodoo()
 	{
-		super("Voodoo", "voodoo", Material.TOTEM_OF_UNDYING, SpellType.CURSE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FIVE, 100, 2, false,
+		super("Voodoo", "voodoo", Material.TOTEM_OF_UNDYING, SpellType.CURSE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FIVE, 100, 2, false, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&4Voodoo&f: &4&oSoul Harvest&r&f --",
 				"&r&fHarvest the souls of targets infront of you &7(15m)&f as a &d&oConal AOE&r&f",

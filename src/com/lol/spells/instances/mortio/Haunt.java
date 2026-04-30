@@ -31,7 +31,7 @@ public class Haunt extends Spell
 
 	public Haunt() 
 	{
-		super("Haunt", "haunt", Material.WITHER_ROSE, SpellType.ULTIMATE, SpellementType.MORTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.FIVE, 200, 180, true,
+		super("Haunt", "haunt", Material.WITHER_ROSE, SpellType.ULTIMATE, SpellementType.MORTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.FIVE, 200, 180, true, false,
 				"&r&fReturn to last death location and apply &e&oWard&r&b III &7(15s)",
 				"&r&c&lPVP&r&f: Summon yourself to your oppressor and inflict &4Doom&r &bIII &7(20s)",
 				"&r&fAs an additional cost, return at &b&o75% &r&cHP&f. Must be cast within &b&o30s&r&f of death.",

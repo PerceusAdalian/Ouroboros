@@ -58,6 +58,7 @@ import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.cosmo.Warp;
 import com.lol.spells.instances.geo.Dracomorph;
+import com.lol.spells.instances.geo.Dynamorph;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.Magemorph;
@@ -99,7 +100,6 @@ import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.Sleuth;
 import com.lol.spells.instances.mortio.Voodoo;
-import com.ouroboros.utils.entityeffects.Dynamorph;
 
 public class SpellRegistry 
 {

@@ -28,7 +28,7 @@ public class Thunderbolt extends Spell
 
 	public Thunderbolt() 
 	{
-		super("Thunderbolt", "thunderbolt", Material.LARGE_AMETHYST_BUD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 100, 3, true,
+		super("Thunderbolt", "thunderbolt", Material.LARGE_AMETHYST_BUD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 100, 3, true, false,
 				"&r&fStrike your target with &d&lAero&r&f energy &7(30m)&f inflicting &dStatic &7(10s / &r&cPVP&7:&r&c 5s&r&7)","",
 				"&r&dStatic &eEffect&f: causes mobs to emit shockwaves in a 10m radius.",
 				"&r&fAffected mobs receive &b&o1.25x &r&d&lAero&r&f damage.",

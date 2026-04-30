@@ -415,10 +415,11 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		{
 			if (affirmOP(p)) return true;
 			
-			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]))
+			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]) && args.length == 4)
 			{
 				Spell spell = SpellRegistry.spellRegistry.get(args[2]);
-				ItemStack stack = spell.getAsItemStack(false);
+				boolean toSpellBook = Boolean.parseBoolean(args[3]);
+				ItemStack stack = spell.getAsItemStack(toSpellBook ? Spell.SpellGenerateCondition.BOOK : Spell.SpellGenerateCondition.SHARD);
 				p.getInventory().addItem(stack);
 				return true;
 			}

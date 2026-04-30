@@ -12,10 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.ouroboros.enums.ElementType;
-import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.MobNameplate;
-
 public class EntityEffects 
 {
 	public static final Set<PotionEffectType> debuffs = Set.of(PotionEffectType.BLINDNESS, PotionEffectType.DARKNESS, PotionEffectType.HUNGER,
@@ -81,51 +77,4 @@ public class EntityEffects
 	{
 		source.getPlayer().playSound(source.getLocation(), sound, soundCategory, 1, 1);
 	}
-	
-	public static void checkFromCombat(LivingEntity target, ElementType element) 
-	{
-		MobData data = MobData.getMob(target.getUniqueId());
-		if (data == null) return;
-
-		// Puncture and Pierce remove an extra 20% of the mob's AR as long as they
-		// aren't broken.
-		if ((element == ElementType.PUNCTURE || element == ElementType.PIERCE) && !data.isBreak())
-			data.damageArmor(data.getArmor(false) * 0.2d);
-		
-		// Slash damage will deal an additional 50% of the mob's overall health so long
-		// as they won't die and are broken.
-		if (element == ElementType.SLASH && data.isBreak())
-			data.damage(data.getHp(false) * 0.5, false, ElementType.PURE);
-		
-		// Blunt damage temporarily slows mobs that aren't yet broken, making it easy to
-		// stack stun procs.
-		if (element == ElementType.BLUNT && !data.isBreak())
-			EntityEffects.add(target, PotionEffectType.SLOWNESS, 200, 0, true);
-		
-		// Impale will force a BREAK so long as they aren't already broken. This is one
-		// of three PURE DAMAGE types.
-		if (element == ElementType.IMPALE && !data.isBreak())
-			data.setBreak();
-		
-		// Sever will remove the remainder of the mob's HP after damage calculations so
-		// long as they're broken and not already defeated; the second PURE DAMAGE type.
-		if (element == ElementType.SEVER && data.isBreak())
-			data.damage(data.getHp(false), false, ElementType.PURE);
-		
-		// Crush will indefinitely stun a mob, regardless if they recover from the
-		// applied break status; the third and final PURE DAMAGE type.
-		if (element == ElementType.CRUSH) 
-		{
-			EntityEffects.add(target, PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 99, true);
-			data.setBreak(true);
-			data.setArmor(0, false);
-		}
-		
-		// Corrosive will erode target's armor by 30% of its current value.
-		if (element == ElementType.CORROSIVE && !data.isBreak())
-			data.damageArmor(data.getArmor(false) * 0.3d);
-		
-		MobNameplate.update(target);
-	}
-
 }

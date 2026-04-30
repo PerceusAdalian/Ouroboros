@@ -23,7 +23,7 @@ public class Riptide extends Spell
 
 	public Riptide()
 	{
-		super("Riptide", "riptide", Material.LAPIS_LAZULI, SpellType.UTILITY, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1.5, false,
+		super("Riptide", "riptide", Material.LAPIS_LAZULI, SpellType.UTILITY, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1.5, false, false,
 				"&r&fGrants a momentary boosts to velocity while swimming.");
 	}
 

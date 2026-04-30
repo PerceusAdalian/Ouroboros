@@ -23,7 +23,7 @@ public class Depulso extends Spell
 
 	public Depulso() 
 	{
-		super("Depulso", "depulso", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, true,
+		super("Depulso", "depulso", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, true, false,
 				"&r&fSend a gust of wind at your target &7(7m)&f blowing them away.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&d&oGust&r&7&o', however, colloquially known as '&r&d&oDepulso&r&7&o'.");

@@ -25,7 +25,7 @@ public class Lumina extends Spell
 
 	public Lumina()
 	{
-		super("Lumina", "lumina", Material.LANTERN, SpellType.SIGNATURE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_BLOCK, Rarity.ONE, 10, 1, false,
+		super("Lumina", "lumina", Material.LANTERN, SpellType.SIGNATURE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_BLOCK, Rarity.ONE, 10, 1, false, false,
 				"&r&fCast a whisp of light at &6target &dBlock &7(30s)");
 	}
 

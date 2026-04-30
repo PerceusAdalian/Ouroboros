@@ -19,7 +19,7 @@ public class Geomorph extends Spell
 	
 	public Geomorph()
 	{
-		super("Geomorph", "geomorph", Material.BRICK, SpellType.CANTRIP, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, true,
+		super("Geomorph", "geomorph", Material.BRICK, SpellType.CANTRIP, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, true, false,
 				"&r&fApplies &6Guarded &bIII&f to &6self&7 (30s)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 3 instances.");
 	}

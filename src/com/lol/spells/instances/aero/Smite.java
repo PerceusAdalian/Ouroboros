@@ -25,7 +25,7 @@ public class Smite extends Spell
 
 	public Smite() 
 	{
-		super("Smite", "smite", Material.AMETHYST_SHARD, SpellType.CANTRIP, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, false,
+		super("Smite", "smite", Material.AMETHYST_SHARD, SpellType.CANTRIP, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 1, false, false,
 				"&r&fSmite your target within &b&o25 meters&r&f.");
 	}
 

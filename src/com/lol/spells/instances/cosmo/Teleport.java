@@ -40,7 +40,7 @@ public class Teleport extends Spell
 
 	public Teleport()
 	{
-		super("Teleport", "teleport", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.MIXED, Rarity.THREE, 50, 3, false,
+		super("Teleport", "teleport", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.MIXED, Rarity.THREE, 50, 3, false, true,
 				"&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&3Teleport&f: &3&oSpatial Jump&r&f --",
 				"&r&3Teleport&f to &d&otarget block &7(50m)&f highlighted via a convergence reticle.","",

@@ -28,7 +28,7 @@ public class Lemma extends Spell
 {
 	public Lemma()
 	{
-		super("Lemma", "lemma", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 150, 1, false,
+		super("Lemma", "lemma", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 150, 1, false, false,
 				"&r&fDeal 35&c♥&f of "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage to &6&otarget &r&dMob &7(30m)",
 				"&r&fAlso inflicts &2Intimidated &bI&f for &b&o20 seconds&r&f.","",
 				"&r&2Intimidated &eEffect&f: affected are &b&oFatigued&r&f and &b&oWeakened&r&f equal to",

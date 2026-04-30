@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.geo.Dracomorph;
+import com.lol.spells.instances.geo.Dynamorph;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
 import com.lol.spells.instances.geo.Magemorph;
@@ -17,7 +18,6 @@ import com.lol.spells.instances.geo.SandBlast;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.entityeffects.Dynamorph;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GeoSpellsPage extends ObsGui

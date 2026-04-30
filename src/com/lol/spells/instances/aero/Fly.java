@@ -36,7 +36,7 @@ public class Fly extends Spell
 
 	public Fly()
 	{
-		super("Fly", "fly", Material.ELYTRA, SpellType.UTILITY, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 1, false,
+		super("Fly", "fly", Material.ELYTRA, SpellType.UTILITY, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 1, false, true,
 				"&r&e&oToggled&r&f: Grants flight to &6self&f. &c&oDeactivating&r&f doesn't cost &b&lMana&r&f.",
 				"&r&fAll other &eSpellcasting&f is &c&odisabled&r&f while active.",
 				"&r&fLanding automatically toggles this &eSpell&f.",

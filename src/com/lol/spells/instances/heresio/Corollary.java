@@ -28,7 +28,7 @@ public class Corollary extends Spell
 {
 	public Corollary()
 	{
-		super("Corollary", "corollary", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SIX, 350, 2.5, false,
+		super("Corollary", "corollary", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SIX, 350, 2.5, false, false,
 				"&r&fDeal 100&c♥&f of "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage to &6&otarget &r&dMob &7(35m)",
 				"&r&fAlso inflicts &2Intimidated &bIII&f for &b&o30 seconds&r&f.","",
 				"&r&2Intimidated &eEffect&f: affected are &b&oFatigued&r&f and &b&oWeakened&r&f equal to",

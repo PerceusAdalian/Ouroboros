@@ -35,7 +35,7 @@ public class Sigil extends Spell
 
 	public Sigil()
 	{
-		super("Sigil", "sigil", Material.MOJANG_BANNER_PATTERN, SpellType.CANTRIP, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 0, 1, true,
+		super("Sigil", "sigil", Material.MOJANG_BANNER_PATTERN, SpellType.CANTRIP, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 0, 1, true, true,
 				"&r&fTrade &eLuminite&f with &6target &c&oPlayer &r&7(45m)");
 	}
 

@@ -25,7 +25,7 @@ public class Freeze extends Spell
 
 	public Freeze()
 	{
-		super("Freeze", "freeze", Material.ICE, SpellType.CONTROL, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 100, 4.5, true,
+		super("Freeze", "freeze", Material.ICE, SpellType.CONTROL, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 100, 4.5, true, false,
 				"&r&fInflict &bFrozen&f and &6Break&f on &6target &7(15m)","",
 				"&r&bFrozen &eEffect&f: Those affected by &bChill&f remove their stacks, and instead,",
 				"&r&f\"Freezes\" them. They are &b&oWeakened&r&f by the amount of &bChill&f stacks they had.",

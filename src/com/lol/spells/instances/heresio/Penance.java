@@ -24,7 +24,7 @@ public class Penance extends Spell
 
 	public Penance() 
 	{
-		super("Penance", "penance", Material.LEAD, SpellType.UTILITY, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 0, 5, false,
+		super("Penance", "penance", Material.LEAD, SpellType.UTILITY, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 0, 5, false, true,
 				"&r&fInflict &cdamage&f to &6&oself&r&f and &arestore&f wand's &b&lMana&r&f by &l500&r&f.",
 				"&r&fDamage dealt is equal to &b&o50%&r&f current &cHP&f.",
 				"&r"+PrintUtils.color(ObsColors.HERESIO)+"&lPenance&r&f cannot be cast if &cHP&f < 5.");

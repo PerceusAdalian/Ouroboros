@@ -28,7 +28,7 @@ public class Theorem extends Spell
 {
 	public Theorem()
 	{
-		super("Theorem", "theorem", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 200, 1.5, false,
+		super("Theorem", "theorem", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 200, 1.5, false, false,
 				"&r&fDeal 50&c♥&f of "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage to &6&otarget &r&dMob &7(35m)",
 				"&r&fAlso inflicts &2Intimidated &bII&f for &b&o30 seconds&r&f.","",
 				"&r&2Intimidated &eEffect&f: affected are &b&oFatigued&r&f and &b&oWeakened&r&f equal to",

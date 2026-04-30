@@ -29,7 +29,7 @@ public class Confringo extends Spell
 
 	public Confringo()
 	{
-		super("Confringo", "confringo", Material.BLAZE_POWDER, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1, false,
+		super("Confringo", "confringo", Material.BLAZE_POWDER, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1, false, false,
 				"&r&fExpell a heated blast at target dealing "+PrintUtils.color(ObsColors.COMBUST)+"Combust&f damage",
 				"&r&fequal to their &6AR&r&7(&6⛨&7)&f inflicting &cCharred &7(10m, 20s)","",
 				"&r&cCharred &eEffect&f: Causes &b&oHunger&r&f, &b&oFatigue&r&f, and &b&oSlowness&r&f, while affected take &b&o25%&r&f",

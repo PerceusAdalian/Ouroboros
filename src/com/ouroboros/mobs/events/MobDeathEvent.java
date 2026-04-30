@@ -47,6 +47,7 @@ public class MobDeathEvent implements Listener
 		Bukkit.getPluginManager().registerEvents(new Listener()
 		{
 			public static HashMap<Spell, Boolean> spellDropsRegistry = new HashMap<>();
+			public static HashMap<Spell, Boolean> spellShardDropsRegistry = new HashMap<>();
 			
 			@EventHandler
 			public void onDeath(EntityDeathEvent e) 
@@ -64,15 +65,16 @@ public class MobDeathEvent implements Listener
 			    {
 			    	if (PrismaOuroborealis.arcane_prisma_registry.contains(p.getUniqueId())) chanceBonus += 20;
 			    }
-
 			    
 			    // Handle drop table
-			    final int maxDrops = 3;
+			    final int maxMoneyDrops = 2;
 			    final int maxSpellDrops = 1;
+			    final int maxSpellShardDrops = 1;
 			    final int maxEssenceDrops = 4;
 			    final int catalystDrops = 1;
 			    int currentDrops = 0;
 			    int currentSpellDrops = 0;
+			    int currentSpellShardDrops = 0;
 			    int currentCatalystDrops = 0;
 			    
 			    if (Chance.of(Math.min(75 + chanceBonus, 100)))
@@ -84,7 +86,7 @@ public class MobDeathEvent implements Listener
 			    // Money drops
 			    for (AbstractObsObject item : ObjectRegistry.getMoneyItems()) 
 			    {
-			        if (currentDrops >= maxDrops) break;
+			        if (currentDrops >= maxMoneyDrops) break;
 			        if (!Chance.of(Math.min(40 + chanceBonus, 100))) continue;
 			        
 			        int moneyTier = Character.getNumericValue(item.getInternalName().charAt(item.getInternalName().length() - 1));
@@ -103,13 +105,26 @@ public class MobDeathEvent implements Listener
 			        {
 			        	if (currentSpellDrops >= maxSpellDrops) break;
 			        	if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
-			        	if (!Chance.of(Math.min(3.5 + chanceBonus, 100))) continue;
+			        	if (!Chance.of(Math.min(0.49 + chanceBonus, 100))) continue;
 			            if (spell.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
 			            if (spellDropsRegistry.getOrDefault(spell, false)) continue;
 			            
-			            e.getDrops().add(spell.getAsItemStack(false));
+			            e.getDrops().add(spell.getAsItemStack(Spell.SpellGenerateCondition.BOOK));
 			            spellDropsRegistry.put(spell, true);
 			            currentSpellDrops++;
+			        }
+			        
+			        for (Spell shard : SpellRegistry.spellRegistry.values())
+			        {
+			        	if (currentSpellShardDrops >= maxSpellShardDrops) break;
+			        	if (!EntityCategoryToSpellement.isElementMatch(shard.getElementType(), mobCategory)) continue;
+			        	if (!Chance.of(Math.min(9.95 + chanceBonus, 100))) continue;
+			            if (shard.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
+			            if (spellShardDropsRegistry.getOrDefault(shard, false)) continue;
+			           
+			            e.getDrops().add(shard.getAsItemStack(Spell.SpellGenerateCondition.SHARD));
+			            spellShardDropsRegistry.put(shard, true);
+			            currentSpellShardDrops++;
 			        }
 			        
 			        for (int i = 0; i <= maxEssenceDrops; i++) 
@@ -149,7 +164,11 @@ public class MobDeathEvent implements Listener
 			    }
 			    
 			    // Clear recently dropped maps after 30 seconds
-			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> spellDropsRegistry.clear(), 600L);
+			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+			    {
+			    	spellDropsRegistry.clear();	
+			    	spellShardDropsRegistry.clear();
+			    }, 600L);
 			    
 			    if (Ouroboros.debug) 
 			    {

@@ -23,7 +23,7 @@ public class Reparo extends Spell
 
 	public Reparo()
 	{
-		super("Reparo", "reparo", Material.MUSIC_DISC_11, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 10, false,
+		super("Reparo", "reparo", Material.MUSIC_DISC_11, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 10, false, false,
 				"&r&fRepairs &d&ooff-hand&r&f item to &b&o100%&r&f durability.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '"+PrintUtils.color(ObsColors.ARCANO)+"&oRestore Armament&r&7&o', however, colloquially known as '&r"+PrintUtils.color(ObsColors.ARCANO)+"&oReparo&r&7&o'.");

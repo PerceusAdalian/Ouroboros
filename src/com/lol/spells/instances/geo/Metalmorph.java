@@ -20,7 +20,7 @@ public class Metalmorph extends Spell
 
 	public Metalmorph() 
 	{
-		super("Metalmorph", "metalmorph", Material.IRON_INGOT, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1, false,
+		super("Metalmorph", "metalmorph", Material.IRON_INGOT, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1, false, false,
 				"&r&fApplies &6Guarded &bV&f and minor &b&oSlowness&r&f to &6self&7 (45s)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 5 instances.");
 	}

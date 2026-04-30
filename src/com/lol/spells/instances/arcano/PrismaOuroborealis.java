@@ -28,7 +28,7 @@ public class PrismaOuroborealis extends Spell
 
 	public PrismaOuroborealis()
 	{
-		super("Prisma Ouroborealis", "prisma_ouroborealis", Material.NETHER_STAR, SpellType.BUFF, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 350, 240, false,
+		super("Prisma Ouroborealis", "prisma_ouroborealis", Material.NETHER_STAR, SpellType.BUFF, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 350, 240, false, false,
 				"&r&fGrants "+PrintUtils.color(ObsColors.ARCANO)+"Arcane Prisma&r&f for &b&o30 seconds&r&f.","",
 				"&r"+PrintUtils.color(ObsColors.ARCANO)+"Arcane Prisma &eEffect&f: Boosts drop rate of certain items by &b&o20%&r&f.",
 				"&r&fLuck-based buffs/items stack, and may contribute to these select items:");

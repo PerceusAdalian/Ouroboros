@@ -31,7 +31,7 @@ public class AvadaKedavra extends Spell
 
 	public AvadaKedavra() 
 	{
-		super("Avada Kedavra", "avada_kedavra", Material.TOTEM_OF_UNDYING, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 1500, 600, true,
+		super("Avada Kedavra", "avada_kedavra", Material.TOTEM_OF_UNDYING, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 1500, 600, true, true,
 				PrintUtils.color(ObsColors.HERESIO)+"&l&oUnforgivable Curse&r&f --",
 				"&r&fDeal "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage equal to the target's current &cHP&f.",
 				"&r&cPVP&f: Instantly kill target &cPlayer&f. Your Wand's &e&oAffinity&r&f must be "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f.",

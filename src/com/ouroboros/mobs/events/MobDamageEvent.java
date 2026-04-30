@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,7 +34,6 @@ import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
-import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class MobDamageEvent implements Listener
@@ -52,6 +52,7 @@ public class MobDamageEvent implements Listener
 				Entity target = e.getEntity();
 				if (!(target instanceof LivingEntity)) return;
 				if (!target.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
+				if (target.hasMetadata("ouroboros_dying")) return;
 				
 				MobData data = MobData.getMob(target.getUniqueId());
 				if (data == null) return; 
@@ -98,11 +99,8 @@ public class MobDamageEvent implements Listener
 						InfernoEffects.hasCharred.remove(target.getUniqueId());
 					}
 					
-					//Apply relevent effects based on the combat element used.
-					EntityEffects.checkFromCombat((LivingEntity) target, element);
-					
 					if (data.isBreak()) 
-						data.breakDamage(dmg, 10);
+						data.breakDamage(dmg, element);
 					else 
 						data.damage(dmg, true, element);
 					
@@ -142,7 +140,7 @@ public class MobDamageEvent implements Listener
 					dmg = e.getFinalDamage();
 					
 					if (data.isBreak()) 
-						data.breakDamage(dmg, 10);
+						data.breakDamage(dmg, element);
 					else
 						data.damage(dmg, true, element);
 					
@@ -170,12 +168,16 @@ public class MobDamageEvent implements Listener
 				
 				data.save(); //Save the mob's data profile
 				
-				if (data.isDead()) //Check for death status and potential removal
+				if (data.isDead()) 
 				{
-					LivingEntity le = (LivingEntity) target;
-					Bukkit.getScheduler().runTaskLater(plugin, () -> le.setHealth(0), 5L);
-					MobNameplate.remove(le);
-					return;
+				    LivingEntity le = (LivingEntity) target;
+				    MobNameplate.remove(le);
+				    data.save();
+				    e.setDamage(0);
+				    le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
+				    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+				    	le.damage(le.getHealth() + 1.0), 1L);
+				    return;
 				}
 				
 				if (Ouroboros.debug) 

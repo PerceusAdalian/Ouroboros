@@ -28,7 +28,7 @@ public class OuroborosPrime extends Spell
 
 	public OuroborosPrime()
 	{
-		super("Ωuroboros", "ouroboros_spell", Material.BREWING_STAND, SpellType.SIGNATURE, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 2000, 480, false,
+		super("Ωuroboros", "ouroboros_spell", Material.BREWING_STAND, SpellType.SIGNATURE, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 2000, 480, false, true,
 				"&r&fGrants "+PrintUtils.color(ObsColors.ARCANO)+"&bLayline Override&f for &b&o30 seconds&r&f.","",
 				"&r&bEchoic Dissonance&r&f: Applies &b&oEther Disruption&r&f for &b&o3 minutes&r&f.","",
 				"&r"+PrintUtils.color(ObsColors.ARCANO)+"&bLayline Override &eEffect&f: ",

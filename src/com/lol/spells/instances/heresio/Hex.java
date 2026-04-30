@@ -31,7 +31,7 @@ public class Hex extends Spell
 
 	public Hex() 
 	{
-		super("Hex", "hex", Material.ENDER_EYE, SpellType.HEX, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 500, 5, true,
+		super("Hex", "hex", Material.ENDER_EYE, SpellType.HEX, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.SEVEN, 500, 5, true, true,
 				"&r&2&lHex&r&f target entity &7(&b&o20m&r&7)&f with the &2Wildcard&r&f debuff.",
 				"&r&fThe effects of Hex can Backfire, are &b&opermanent&r&f and &c&ocannot be removed&r&f.",
 				"&r&fAny attemps made to &e&oCure&r&f the affliction without a &e&oDiagnosis&r&f",

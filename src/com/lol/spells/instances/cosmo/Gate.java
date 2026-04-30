@@ -30,7 +30,7 @@ public class Gate extends Spell
 
 	public Gate() 
 	{
-		super("Gate", "gate", Material.TRIAL_KEY, SpellType.UTILITY, SpellementType.COSMO, CastConditions.MIXED, Rarity.FOUR, 50, 5, false,
+		super("Gate", "gate", Material.TRIAL_KEY, SpellType.UTILITY, SpellementType.COSMO, CastConditions.MIXED, Rarity.FOUR, 50, 5, false, true,
 				"&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&3Gate&f: &3&oSpatial Convergence Protocol&r&f --",
 				"&r&fSets your &b&oAnchor Location&r&f in the current dimension.",

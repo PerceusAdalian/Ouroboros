@@ -33,7 +33,7 @@ public class Reap extends Spell
 
 	public Reap() 
 	{
-		super("Reap", "reap", Material.OPEN_EYEBLOSSOM, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true,
+		super("Reap", "reap", Material.OPEN_EYEBLOSSOM, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true, false,
 				"&r&fSlash your target within &b&o12 meters&r&f dealing 3&c♥&f &e&lSever&r&f damage.",
 				"&r&fIf that target is &4Cursed&f, remove it, and deal 6&c♥&f "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage instead:",
 				"&r&aRestore &b&o50%&r&f of the damage to self, and inflict &4Doom &r&bI &7(30s | &cPVP&7: &c75%&7, &cDoom II&7)","",

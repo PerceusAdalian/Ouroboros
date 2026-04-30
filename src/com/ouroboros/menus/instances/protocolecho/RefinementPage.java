@@ -20,11 +20,12 @@ import com.eol.materia.Materia;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.objects.instances.ScrapMateria;
 import com.ouroboros.utils.Chance;
+import com.ouroboros.utils.NumberUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class RefinementPage extends ObsGui
@@ -197,40 +198,33 @@ public class RefinementPage extends ObsGui
 	    // 5-star: unlocks at 80, scales from 25% -> 80% by level 100
 	    if (refinementLevel >= 80)
 	    {
-	        int chance = (int) lerp(25, 80, refinementLevel, 80, 100);
+	        int chance = (int) NumberUtils.lerp(25, 80, refinementLevel, 80, 100);
 	        if (Chance.of(chance)) return Rarity.FIVE;
 	    }
 
 	    // 4-star: unlocks at 60, scales from 55% -> 75% by level 100
 	    if (refinementLevel >= 60)
 	    {
-	        int chance = (int) lerp(55, 75, refinementLevel, 60, 100);
+	        int chance = (int) NumberUtils.lerp(55, 75, refinementLevel, 60, 100);
 	        if (Chance.of(chance)) return Rarity.FOUR;
 	    }
 
 	    // 3-star: unlocks at 40, scales from 75% -> 55% by level 100
 	    if (refinementLevel >= 40)
 	    {
-	        int chance = (int) lerp(75, 55, refinementLevel, 40, 100);
+	        int chance = (int) NumberUtils.lerp(75, 55, refinementLevel, 40, 100);
 	        if (Chance.of(chance)) return Rarity.THREE;
 	    }
 
 	    // 2-star: unlocks at 30, scales from 80% -> 25% by level 100
 	    if (refinementLevel >= 30)
 	    {
-	        int chance = (int) lerp(80, 25, refinementLevel, 30, 100);
+	        int chance = (int) NumberUtils.lerp(80, 25, refinementLevel, 30, 100);
 	        if (Chance.of(chance)) return Rarity.TWO;
 	    }
 
 	    // 1-star: fallback, always possible but less likely at higher levels
 	    return Rarity.ONE;
-	}
-
-	// Reusable lerp: maps 'level' from [minLevel, maxLevel] onto [minVal, maxVal]
-	private static double lerp(double minVal, double maxVal, int level, int minLevel, int maxLevel)
-	{
-	    double t = Math.min(1.0, (double)(level - minLevel) / (maxLevel - minLevel));
-	    return minVal + t * (maxVal - minVal);
 	}
 
 	private static int calculateXp(int refinementLevel, Rarity rarity, boolean isUpgrade)

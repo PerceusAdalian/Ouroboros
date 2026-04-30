@@ -19,7 +19,7 @@ public class ElementalConfinement extends Spell
 
 	public ElementalConfinement() 
 	{
-		super("Elemental Confinement", "elemental_confinement", Material.ENDER_CHEST, SpellType.UTILITY, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 25, 1, false,
+		super("Elemental Confinement", "elemental_confinement", Material.ENDER_CHEST, SpellType.UTILITY, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 25, 1, false, false,
 				"&r&fOpen a spatial rift to store items.");
 	}
 

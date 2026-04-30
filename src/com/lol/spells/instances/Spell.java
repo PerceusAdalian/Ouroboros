@@ -20,6 +20,7 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.PrintUtils;
 
@@ -38,13 +39,15 @@ public abstract class Spell
 	private double cooldown;
 	private Rarity spellTier;
 	private boolean pvpCompatible;
+	private boolean wandOnly;
 	private String[] spellDescription;
 	
 	public static final NamespacedKey LOLSPELL = new NamespacedKey(Ouroboros.instance, "lolspell");
 	public static final NamespacedKey LOLSPELLBOOK = new NamespacedKey(Ouroboros.instance, "lolspellbook");
+	public static final NamespacedKey LOLSPELLSHARD = new NamespacedKey(Ouroboros.instance, "lolspellshard");
 	
 	public Spell(String name, String internalName, Material icon, SpellType sType, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, 
-			boolean pvpCompatible, String...spellDescription)
+			boolean pvpCompatible, boolean wandOnly, String...spellDescription)
 	{
 		this.name = name;
 		this.internalName = internalName;
@@ -57,6 +60,7 @@ public abstract class Spell
 		this.cooldown = cooldown;
 		this.spellDescription = spellDescription;
 		this.pvpCompatible = pvpCompatible;
+		this.wandOnly = wandOnly;
 		
 		this.file = new File(getDataFolder(), "spells/"+internalName+".yml");
 		this.config = YamlConfiguration.loadConfiguration(file);
@@ -153,8 +157,14 @@ public abstract class Spell
 		return spellTier;
 	}
 
-	public boolean isPvpCombatible() {
+	public boolean isPvpCombatible() 
+	{
 		return pvpCompatible;
+	}
+	
+	public boolean isWandOnly()
+	{
+		return wandOnly;
 	}
 
 	public List<String> getLore() 
@@ -170,19 +180,32 @@ public abstract class Spell
 	public abstract int Cast(PlayerInteractEvent e);
 	public abstract int getTotalManaCost();
 	
-	public ItemStack getAsItemStack(boolean toIcon)
+	public ItemStack getAsItemStack(SpellGenerateCondition condition)
 	{
-		ItemStack stack = new ItemStack(toIcon?icon:Material.WRITTEN_BOOK, 1);
+		Material material = switch(condition)
+		{
+			case ICON -> icon;
+			case SHARD -> Material.ECHO_SHARD;
+			case BOOK -> Material.WRITTEN_BOOK;
+		};
+		
+		ItemStack stack = new ItemStack(material, 1);
 		ItemMeta meta = stack.getItemMeta();
 		List<String> lore = new ArrayList<>();
 		
-		meta.setDisplayName(PrintUtils.ColorParser(toIcon?"&r&f"+name:"&b&lOld Spellbook&r&f: "+name));
+		String displayName = switch(condition)
+		{
+			case ICON -> "&r&f" + name;
+			case BOOK -> "&b&lOld Spellbook&r&f: " + name;
+			case SHARD -> PrintUtils.color(ObsColors.COSMO) + "&lSpell Shard&r&f: " + name;
+		};
+		
+		meta.setDisplayName(PrintUtils.ColorParser(displayName));
 
 		lore.add(PrintUtils.assignRarity(spellTier));
 		lore.add("");
-		lore.add(PrintUtils.assignElementType(eType));		
 		
-		if (toIcon)
+		if (condition == SpellGenerateCondition.ICON)
 		{       
 			if (pvpCompatible) PrintUtils.assignPVPCompatible();
 			lore.add(PrintUtils.assignSpellType(sType));
@@ -201,7 +224,7 @@ public abstract class Spell
 		    lore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+manacost+" &7| &r&f&lCooldown&r&f: "+cooldown));
 		    meta.getPersistentDataContainer().set(LOLSPELL, PersistentDataType.STRING, internalName.toString());
 		}
-		else
+		else if (condition == SpellGenerateCondition.BOOK)
 		{
 		    lore.add("");
 		    lore.add(PrintUtils.ColorParser("&f&nUsage&r&f: &d&oShift_Right-Click&r&f to register this spell to your account."));
@@ -267,6 +290,29 @@ public abstract class Spell
 		    
 		    return stack;
 		}
+		else
+		{
+		    if (!wandOnly)
+			{				
+				lore.add(PrintUtils.ColorParser("&f- &oDescription&r&f: \n"));
+				List<String> parsedDescriptionLines = new ArrayList<>();
+				for (String line : spellDescription) 
+				{
+					parsedDescriptionLines.add(PrintUtils.ColorParser(line));
+				}
+				lore.addAll(parsedDescriptionLines);
+				lore.add("");				
+				lore.add(PrintUtils.ColorParser("&r&f- Other Details:"));
+				if (pvpCompatible) lore.add(PrintUtils.assignPVPCompatible());
+				lore.add(PrintUtils.assignElementType(eType));
+				lore.add(PrintUtils.assignSpellType(sType));
+				lore.add(PrintUtils.assignCastCondition(castCondition));
+				lore.add("");
+			}
+	        if (!wandOnly) lore.add(PrintUtils.ColorParser("&r&fThis "+PrintUtils.color(ObsColors.COSMO)+"&lSpell Shard&r&f may be &e&oCast&r&f, &6&oScrapped&r&f, or used in &a&oCrafting&r&f."));
+	        else lore.add(PrintUtils.ColorParser("&r&fThis "+PrintUtils.color(ObsColors.COSMO)+"&lSpell Shard&r&f may be &6&oScrapped&r&f or used in &a&oCrafting&r&f."));
+	        meta.getPersistentDataContainer().set(LOLSPELLSHARD, PersistentDataType.STRING, internalName.toString());
+		}
 
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
@@ -274,5 +320,10 @@ public abstract class Spell
 		return stack;
 	}
 	
-	
+	public enum SpellGenerateCondition
+	{
+		BOOK,
+		ICON,
+		SHARD;
+	}
 }

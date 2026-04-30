@@ -25,7 +25,7 @@ public class Glacius extends Spell
 	public Glacius() 
 	{
 		
-		super("Glacius", "glacius", Material.TIPPED_ARROW, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1.5, false,
+		super("Glacius", "glacius", Material.TIPPED_ARROW, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1.5, false, false,
 				"&r&fSend a frozen lance of ice at your target &7(20m)&f dealing",
 				"&r&f10&c♥&r"+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f damage &r&fapplying &bFrosted I &7(10s)",
 				"&bFrosted&f Effect: &d&oSlows&r&f and &d&oWeakens&r&f those afflicted.","",

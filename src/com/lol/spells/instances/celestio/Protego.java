@@ -21,7 +21,7 @@ public class Protego extends Spell
 
 	public Protego() 
 	{
-		super("Protego", "protego", Material.NETHER_STAR, SpellType.DEFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 15, true,
+		super("Protego", "protego", Material.NETHER_STAR, SpellType.DEFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 25, 15, true, false,
 				"&r&fGrants &eWard &bIII&r&f to &6self&f &7(15s)&r&f.","",
 				"&r&eWard Effect&r&f: grants &b&oAbsorption&r&f, &b&oFire Resistance&r&f,",
 				"and &b&oResistance&r&f equal to the magnitude of &eWard&f.","",

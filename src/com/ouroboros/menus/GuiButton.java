@@ -112,7 +112,7 @@ public class GuiButton
     
     public static void placeSpellButton(Player player, Spell spell, int slot, ObsGui gui)
 	{
-    	ItemStack spellIcon = spell.getAsItemStack(true);
+    	ItemStack spellIcon = spell.getAsItemStack(Spell.SpellGenerateCondition.ICON);
 		
 		boolean spellRegistered = PlayerData.getPlayer(player.getUniqueId()).getSpell(spell).isRegistered();
 		if (spellRegistered)
@@ -154,7 +154,7 @@ public class GuiButton
     
     public static void placeCantripSpellButton(Player player, Spell spell, int slot, ObsGui gui)
 	{
-		ItemStack spellIcon = spell.getAsItemStack(true);
+		ItemStack spellIcon = spell.getAsItemStack(Spell.SpellGenerateCondition.ICON);
 		
 		boolean spellRegistered = PlayerData.getPlayer(player.getUniqueId()).getSpell(spell).isRegistered();
 		int essenceHeld = PlayerData.getPlayer(player.getUniqueId()).getEssence(ElementType.getFromSpellement(spell.getElementType()));

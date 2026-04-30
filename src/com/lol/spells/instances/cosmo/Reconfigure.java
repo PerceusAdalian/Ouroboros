@@ -18,7 +18,7 @@ public class Reconfigure extends Spell
 
 	public Reconfigure() 
 	{
-		super("Reconfigure", "reconfigure", Material.CRAFTER, SpellType.CANTRIP, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, false,
+		super("Reconfigure", "reconfigure", Material.CRAFTER, SpellType.CANTRIP, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 5, 1, false, false,
 				"&r&fOpen a crafting simulation to reconfigure held items.");
 	}
 

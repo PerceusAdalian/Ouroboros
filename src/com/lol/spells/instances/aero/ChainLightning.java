@@ -33,7 +33,7 @@ public class ChainLightning extends Spell
 
 	public ChainLightning()
 	{
-		super("Chain Lightning", "chain_lightning", Material.LIGHTNING_ROD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 5, false,
+		super("Chain Lightning", "chain_lightning", Material.LIGHTNING_ROD, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 5, false, false,
 				"&r&fExpel lightning that chains between up to &l5&r&f targets.",
 				"&r&fDeals 15&c♥&f "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage to the first and 10&c♥&f to all others.",
 				"&r&fInflicts &dShock &7(10s)&f on each target hit.","",

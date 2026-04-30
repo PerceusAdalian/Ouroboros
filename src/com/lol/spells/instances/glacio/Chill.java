@@ -27,7 +27,7 @@ public class Chill extends Spell
 
 	public Chill()
 	{
-		super("Chill", "chill", Material.SNOWBALL, SpellType.CANTRIP, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 20, 1, true,
+		super("Chill", "chill", Material.SNOWBALL, SpellType.CANTRIP, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 20, 1, true, false,
 				"&r&fInflicts &6target &fwith &bFrosted I &7(30s, 20m | &cPVP&7: &c15s&7)",
 				"&r&fInflicts &bChill&f while targets are &bFrosted &7(20s | &cPVP&7: &c3s&7)","",
 				"&bFrosted &eEffect&f: &b&oSlows&r&f and &b&oWeakens&r&f those afflicted.","",

@@ -38,7 +38,7 @@ public class AssertOrder extends Spell
 
 	public AssertOrder() 
 	{
-		super("Assert Order", "assert_order", Material.TOTEM_OF_UNDYING, SpellType.DEFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 225, 15, true,
+		super("Assert Order", "assert_order", Material.TOTEM_OF_UNDYING, SpellType.DEFENSIVE, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 225, 15, true, false,
 				"&r&fGrants &eKarma&f to &6self &7(15s)&r&f.",
 				"&r&eKarma Effect&f: all incoming damage is mitigated by &b&o50%&r&f,",
 				"&r&freflected by &bx1.35&f, and is considered "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage.",

@@ -25,7 +25,7 @@ public class Hypothesis extends Spell
 {
 	public Hypothesis()
 	{
-		super("Hypothesis", "hypothesis", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 70, 1, false,
+		super("Hypothesis", "hypothesis", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 70, 1, false, false,
 				"&r&fDeal 25&c♥&f of "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage to &6&otarget &r&dMob &7(25m)");
 	}
 

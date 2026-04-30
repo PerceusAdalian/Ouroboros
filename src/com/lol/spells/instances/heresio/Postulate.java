@@ -26,7 +26,7 @@ public class Postulate extends Spell
 
 	public Postulate()
 	{
-		super("Postulate", "postulate", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 35, 1, false,
+		super("Postulate", "postulate", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 35, 1, false, false,
 				"&r&fDeal 15&c♥&f of "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage to &6&otarget &r&dMob &7(20m)");
 	}
 

@@ -27,7 +27,7 @@ public class Explosion extends Spell
 
 	public Explosion()
 	{
-		super("Explosion", "explosion", Material.TNT, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 4.5, false,
+		super("Explosion", "explosion", Material.TNT, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 4.5, false, false,
 				"&r&fCreate an &c&oexplosion&r&f at &6target &dMob&f dealing &r&fdealing 45&c♥ &e&lBlast ",
 				"&r&fdamage causing &cBurn &7(40m, 20s)&r&f. If the &6target&f was &cPrimed&f and",
 				"&r&fdied as a result of the &c&oexplosion&r&f, create another &c&oexplosion&r&f dealing",

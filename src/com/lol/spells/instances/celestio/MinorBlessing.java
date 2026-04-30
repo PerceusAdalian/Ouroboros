@@ -26,7 +26,7 @@ public class MinorBlessing extends Spell
 
 	public MinorBlessing()
 	{
-		super("Minor Blessing", "minor_blessing", Material.EMERALD, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.TWO, 100, 3, true,
+		super("Minor Blessing", "minor_blessing", Material.EMERALD, SpellType.SUPPORT, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.TWO, 100, 3, true, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eMinor Blessing&f: &e&oGrace&r&f --",
 				"&r&aHeal&f &6self&f/&6target &c&oPlayer&r&f by &b&o50%&r&f current &cHP&f,",

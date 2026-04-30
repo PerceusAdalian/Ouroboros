@@ -24,7 +24,7 @@ public class Revelio extends Spell
 
 	public Revelio() 
 	{
-		super("Revelio", "revelio", Material.NETHER_STAR, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.THREE, 200, 5, false,
+		super("Revelio", "revelio", Material.NETHER_STAR, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.THREE, 200, 5, false, false,
 				"&r&fApplies &e&oExposed&r&7 (20s) &r&fto all nearby entities within 30 &b&ometers&r&f.","",
 				"&r&e&oExposed &r&fEffect: Reveals an entity's location and &6&oBreaks &r&fthem.",
 				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.","",

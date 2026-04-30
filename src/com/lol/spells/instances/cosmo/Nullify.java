@@ -26,7 +26,7 @@ public class Nullify extends Spell
 
 	public Nullify() 
 	{
-		super("Nullify", "nullify", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 20, 3, false,
+		super("Nullify", "nullify", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 20, 3, false, false,
 				"&r&fNullify &6target &dMob&f's &7(20m)&f defenses applying &3&oVoided&r&7 (30s)&f and &6&oBreak&r&f.","",
 				"&r&3Voided &eEffect&f: Neutralizes elemental affinity.");
 	}

@@ -23,7 +23,7 @@ public class Shroud extends Spell
 
 	public Shroud() 
 	{
-		super("Shroud", "shroud", Material.OMINOUS_BOTTLE, SpellType.BUFF, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 45, false,
+		super("Shroud", "shroud", Material.OMINOUS_BOTTLE, SpellType.BUFF, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 45, false, false,
 				"&r&fApply &4Shroud &bII&f and remove emnity to &6self &7(45s | 30m)","",
 				"&r&4Shroud &eEffect&f: Grants an increase to &b&oSpeed&r&f and &b&oJump Height&r&f",
 				"&r&fequal to the magnitude of Shroud, plus &b&oInvisibility&r&f.");

@@ -21,7 +21,7 @@ public class Charge extends Spell
 
 	public Charge() 
 	{
-		super("Charge", "charge", Material.STRING, SpellType.BUFF, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 15, false,
+		super("Charge", "charge", Material.STRING, SpellType.BUFF, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 15, false, false,
 				"&r&fGrant &dCharged &bIII &fto self &7(15s)","",
 				"&dCharged &eEffect&f: Boosts &bSpeed&f and &bEfficiency&f scaled with the &bmagnitude&f.");
 	}

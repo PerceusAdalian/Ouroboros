@@ -29,7 +29,7 @@ public class SeethingSkull extends Spell
 
 	public SeethingSkull() 
 	{
-		super("Seething Skull", "seething_skull", Material.WITHER_SKELETON_SKULL, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FOUR, 100, 1.5, false,
+		super("Seething Skull", "seething_skull", Material.WITHER_SKELETON_SKULL, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.MIXED, Rarity.FOUR, 100, 1.5, false, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&4Aspect of Sithis&f: &4&oSeething Skull&r&f --",
 				"&r&fSummon a seething demon skull and launch it foward, exploding on impact.",

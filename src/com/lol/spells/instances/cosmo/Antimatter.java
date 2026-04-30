@@ -29,7 +29,7 @@ public class Antimatter extends Spell
 
 	public Antimatter()
 	{
-		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, false,
+		super("Antimatter", "antimatter", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, false, false,
 				"&r&fDecay target's life dealing "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f damage",
 				"&r&fequal to &b&o3 + 25% &r&cHP &7(20m)&f and applies &3Voided &7(20s)","",
 				"&r&3Voided &eEffect&f: Neutralizes elemental affinity.");

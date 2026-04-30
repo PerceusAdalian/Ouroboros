@@ -30,7 +30,7 @@ public class Vaporize extends Spell
 
 	public Vaporize()
 	{
-		super("Vaporize", "vaporize", Material.AMETHYST_CLUSTER, SpellType.ULTIMATE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 450, 3.5, true,
+		super("Vaporize", "vaporize", Material.AMETHYST_CLUSTER, SpellType.ULTIMATE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 450, 3.5, true, true,
 				"&r&fSend a bolt of kilowatt lightning at your &6&otarget&r&7 (40m)",
 				"&r&fdealing 100&c♥&f of "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage &7(&cPVP&7: &c18♥&7)",
 				"&r&fIf the &6&otarget&r&f survives, inflict &bEther Overload&f, &bEther Disruption&f, and &dShock&7 (30s)","",

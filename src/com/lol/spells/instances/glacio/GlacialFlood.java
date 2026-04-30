@@ -27,7 +27,7 @@ public class GlacialFlood extends Spell
 
 	public GlacialFlood() 
 	{
-		super("Glacial Flood", "flood", Material.BLUE_DYE, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.MIXED, Rarity.FOUR, 50, 5, true,
+		super("Glacial Flood", "flood", Material.BLUE_DYE, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.MIXED, Rarity.FOUR, 50, 5, true, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&bGlacial Flood&f: &b&oChilling Cascade&r&f --",
 				"&r&fEmit a burst of cold water about you in a radial &dAOE&f applying &bChill V &7(20m | 30s)","",

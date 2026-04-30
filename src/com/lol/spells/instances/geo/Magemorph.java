@@ -22,7 +22,7 @@ public class Magemorph extends Spell
 
 	public Magemorph() 
 	{
-		super("Magemorph", "magemorph", Material.GOLD_INGOT, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 10, false,
+		super("Magemorph", "magemorph", Material.GOLD_INGOT, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 10, false, false,
 				"&r&b&oElemental Fusion&f: "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f --",
 				"&r&fApplies &6Guarded &bII&f and &eWard &bIII&f to &6self&7 (30s, 45s)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 2 instances.","",

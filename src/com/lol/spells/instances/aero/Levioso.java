@@ -26,7 +26,7 @@ public class Levioso extends Spell
 
 	public Levioso() 
 	{
-		super("Levioso", "levioso", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 3, true,
+		super("Levioso", "levioso", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 3, true, false,
 				"&r&fApplies &3&oLevitate &r&bI&r&f to either target &7(20m)&f or to self &7(8s | &cPVP&f: &c5s&7)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&d&oLight Weighted&r&7&o', however, colloquially known as '&r&d&oLevioso&r&7&o'.");

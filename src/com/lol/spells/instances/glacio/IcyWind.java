@@ -25,7 +25,7 @@ public class IcyWind extends Spell
 
 	public IcyWind()
 	{
-		super("Icy Wind", "icy_wind", Material.STRING, SpellType.CONTROL, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 75, 2, true,
+		super("Icy Wind", "icy_wind", Material.STRING, SpellType.CONTROL, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 75, 2, true, false,
 				"&r&fApplies &bFrosted II&f  in a &dconal AOE &7(30s, 20m | &cPVP&7: &cFrosted I&7)",
 				"&r&fInflicts &bChill&f while targets are &bFrosted &7(20s | &cPVP&7: &c6s&7).","",
 				"&bFrosted&f Effect: &d&oSlows&r&f and &d&oWeakens&r&f those afflicted.","",

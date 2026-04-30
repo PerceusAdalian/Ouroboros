@@ -27,7 +27,7 @@ public class Galeforce extends Spell
 
 	public Galeforce() 
 	{
-		super("Galeforce", "galeforce", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1, false,
+		super("Galeforce", "galeforce", Material.STRING, SpellType.CONTROL, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 20, 1, false, false,
 				"&r&fBlast your target &7(7m)&f with high pressurized air,",
 				"&r&fdealing 4&c♥ "+PrintUtils.color(ObsColors.AERO)+"&lAero &r&fdamage, and blowing them away.");
 	}

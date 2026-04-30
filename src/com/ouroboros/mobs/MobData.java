@@ -20,6 +20,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -81,8 +82,11 @@ public class MobData
 	    String name = PrintUtils.getFancyEntityName(entity.getType());
 	    double baseHp = livingEntity.getAttribute(Attribute.MAX_HEALTH).getValue();
 	    int level = LevelTable.getLevel(entity.getLocation().getBlock().getBiome());
-	    double hp = baseHp * ((level * 0.15d) + 1.0);
-	    int armor = (int) (hp * 0.3);
+	    double t = (double)(level - 1) / 99.0;
+	    double multiplier = 1.0 + (t * t) * 99.0;
+	    double hp = Math.ceil(Math.min(baseHp * multiplier, 200000));
+	    int armor = Math.min(1000, Math.max((int)(hp * 0.3), 10));
+	    
 	    setUUID(uuid);
 	    setName(name);
 	    setEntityType(livingEntity.getType());
@@ -101,9 +105,11 @@ public class MobData
 	public void initializeSummoned(LivingEntity entity, int level, String customName)
 	{
 		double baseHp = entity.getAttribute(Attribute.MAX_HEALTH).getValue();
-		double hp = baseHp * ((level * 0.15d) + 1.0);
-		int armor = (int) (hp * 0.3);
-		
+		double t = (double)(level - 1) / 99.0;
+	    double multiplier = 1.0 + (t * t) * 99.0;
+	    double hp = Math.ceil(Math.min(baseHp * multiplier, 200000));
+		int armor = Math.min(1000, Math.max((int)(hp * 0.3), 10));
+	    
 		setUUID(uuid);
 		setName(customName);          // stored directly, nameplate reads this back
 		setEntityType(entity.getType());
@@ -163,8 +169,8 @@ public class MobData
 		
 		//Data IDs
 		UUID uuid = UUID.fromString(segments[0]);
-		String name = segments[1];
-		EntityType eType = EntityType.valueOf(segments[2].trim().toUpperCase().replace(" ", "_"));
+		EntityType eType = EntityType.valueOf(segments[1].trim().toUpperCase().replace(" ", "_"));
+		String name = segments[2];
 		int level = Integer.parseInt(segments[3]);
 		double baseHp = Double.parseDouble(segments[4]);
 		double currentHp = Double.parseDouble(segments[5]);
@@ -319,11 +325,20 @@ public class MobData
 		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
 		if (GeoEffects.hasVulnerable.contains(uuid) && ElementType.physical.contains(element)) value *= 1.5;
 		
+		if (element == ElementType.SLASH && data.isBreak()) value *= 1.5;
+		if (element == ElementType.SEVER && data.isBreak()) value *= 2;
+		
 		double currentHP = data.getHp(false);
-		double newHP = currentHP - value;
+		double newHP = currentHP - (data.isBreak() ? value : value * 0.7);
 		data.setHp(newHP, false);
 
-		if (damageArmor) damageArmor(value);
+		if (damageArmor) damageArmor(value, element);
+	}
+	
+	public void breakDamage(double value, ElementType element)
+	{
+		double baseHP = getHp(true);
+	    damage((baseHP * 0.1) + value, false, element);
 	}
 	
 	public void heal(double value, boolean setMaxHp, boolean healArmor, boolean setMaxArmor)
@@ -346,27 +361,24 @@ public class MobData
 		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
 	}
 	
-	public void damageArmor(double value)
+	public void damageArmor(double value, ElementType element)
 	{
-		
+		double armorDamageCoeff = switch (element)
+	    {
+	        case BLUNT, CORROSIVE         -> 1.5;
+	        case PUNCTURE, PIERCE 		  -> 1.25;
+	        default 					  -> 0.5;
+	    };
+	    
 		if (isBreak()) return;
 		int currentArmor = getArmor(false);
-		int newArmor = (int) (currentArmor - (value * 0.5));
+	    int newArmor = (int)(currentArmor - (value * armorDamageCoeff));
 		setArmor(newArmor, false);
 		if (getArmor(false) <= 0)
 		{
-			setBreak(true);
-			Entity entity = Bukkit.getEntity(uuid);
-			ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
-			setArmor(0, false);
-			MobNameplate.update((LivingEntity) entity);
-			Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
-			{
-				setArmor(getArmor(true), false);
-				setBreak(false);
-				MobNameplate.update((LivingEntity) entity);
-			}, 300);
+			setBreak();
 		}
+		if (element == ElementType.IMPALE || element == ElementType.CRUSH) setBreak();
 	}
 	
 	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element)
@@ -380,24 +392,24 @@ public class MobData
 		else 
 		{
 			if (element == null) element = ElementType.PURE;
-			EntityEffects.checkFromCombat((LivingEntity) target, element); // apply effects first
-
-			if (data.isBreak())
-			    data.breakDamage(value, 10);
-			else
-			    data.damage(value, damageArmor, element);
+			
+			if (data.isBreak()) 
+				data.breakDamage(value, element);
+			else 
+				data.damage(value, true, element);
 			
 			data.save();
 
-			//Update their HP bar
 			MobNameplate.update((LivingEntity) target);
 			
-			if (data.isDead())
+			if (data.isDead()) 
 			{
-				LivingEntity le = (LivingEntity) target;
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
-				MobNameplate.remove(le);
-				data.deleteFile();
+			    LivingEntity le = (LivingEntity) target;
+			    MobNameplate.remove(le);
+			    data.save();
+			    le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
+			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+			        le.damage(le.getHealth() + 1.0), 1L);
 			}
 		}
 
@@ -436,15 +448,6 @@ public class MobData
 		deleteFile();
 	}
 	
-	
-	public void breakDamage(double value, double percent)
-	{
-		MobData data = MobData.getMob(uuid);
-		double baseHP = data.getHp(true);
-		double damage = ((percent/100.0)*baseHP)+value;
-		damage(damage, false, ElementType.PURE);
-	}
-	
 	public boolean isBreak() 
 	{
 		return config.getBoolean("mob.broken_status");
@@ -465,19 +468,27 @@ public class MobData
 	{
 	    setArmor(0, false);
 	    setBreak(true);
+	    
 	    Entity entity = Bukkit.getEntity(uuid);
-	    ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 10, Particle.END_ROD, null);
-	    MobNameplate.update((LivingEntity) entity);
-	    EntityEffects.add((LivingEntity) entity, PotionEffectType.SLOWNESS, 300, 99, false);
 	    ((Mob) entity).setAI(false);
 	    ((Mob) entity).setTarget(null);
-	    Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, () ->
-	    {
-	    	((Mob) entity).setAI(true);
-	        setArmor(getArmor(true), false);
-	        setBreak(false);
-	        MobNameplate.update((LivingEntity) entity);
-	    }, 300);
+	    
+	    MobNameplate.update((LivingEntity) entity);
+	    EntityEffects.add((LivingEntity) entity, PotionEffectType.SLOWNESS, 300, 99, false);
+	    ObsParticles.drawDisc(entity.getLocation(), entity.getWidth(), 1, 7, 0.1, Particle.CRIMSON_SPORE, null);
+		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 8, Particle.SMOKE, null);
+		
+		double t = (double)(getLevel() - 1) / 99.0;
+		long recoverySeconds = (long)(20 + (t * t) * 90) * 20L; // 20s -> 120s, quadratic
+		
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
+		{
+			((Mob) entity).setAI(true);
+		    setArmor(getArmor(true), false);
+			setBreak(false);
+			MobNameplate.update((LivingEntity) entity);
+			ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
+		}, recoverySeconds);
 	}
 	
 	public boolean isDead()

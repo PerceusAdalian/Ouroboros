@@ -31,7 +31,7 @@ public class Collapse extends Spell
 {
 	public Collapse()
 	{
-		super("Collapse", "collapse", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 2.5, false,
+		super("Collapse", "collapse", Material.ENDER_PEARL, SpellType.OFFENSIVE, SpellementType.COSMO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 2.5, false, false,
 				"&r&fCollapses &b&onearby Mobs&r&f into &6target&r&d Mob &7(Range: &640m&7, Radius: &b20m&7)",
 				"&r&fPulled &d&oMobs&r&f take "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo &r&fdamage equal to the &6target&f's &eLevel&r&f.",
 				"&r&6Target&f takes &e&lCrush &r&fdamage equal to &b&o# Pulled ÷ 4&r&f.");

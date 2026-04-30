@@ -29,7 +29,7 @@ public class Mania extends Spell
 
 	public Mania() 
 	{
-		super("Mania", "mania", Material.ENDER_EYE, SpellType.CONTROL, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 10, false,
+		super("Mania", "mania", Material.ENDER_EYE, SpellType.CONTROL, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 10, false, false,
 				"&r&fCauses other &d&oMobs&r&f around you to attack each other &7(30m, 1min)");
 	}
 

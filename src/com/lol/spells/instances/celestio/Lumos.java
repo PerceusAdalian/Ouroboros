@@ -39,7 +39,7 @@ public class Lumos extends Spell
 
 	public Lumos() 
 	{
-		super("Lumos", "lumos", Material.SUNFLOWER, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.THREE, 20, 1, false,
+		super("Lumos", "lumos", Material.SUNFLOWER, SpellType.UTILITY, SpellementType.CELESTIO, CastConditions.MIXED, Rarity.THREE, 20, 1, false, true,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&eLumos&f: &e&oHoly Sprite&r&f --",
 				"&r&fSummon a &e&lCelestio&r&f sprite to illuminate surroundings &7(60s)",

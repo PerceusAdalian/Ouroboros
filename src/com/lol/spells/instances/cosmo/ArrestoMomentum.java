@@ -34,7 +34,7 @@ public class ArrestoMomentum extends Spell implements Listener
 
 	public ArrestoMomentum() 
 	{
-		super("Arresto Momentum", "arresto_momentum", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.TWO, 50, 3, true,
+		super("Arresto Momentum", "arresto_momentum", Material.ENDER_PEARL, SpellType.CONTROL, SpellementType.COSMO, CastConditions.SHIFT_RIGHT_CLICK_AIR, Rarity.TWO, 50, 3, true, false,
 				"&r&fFreezes target lifeform within &b&o20 meters&r&7 (20s | &cPVP&7: &c5s&7)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&3&oHalt Life&r&7&o', however, colloquially known as '&r&3&oArresto Momentum&r&7&o'.");

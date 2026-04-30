@@ -29,7 +29,7 @@ public class Scald extends Spell
 
 	public Scald()
 	{
-		super("Scald", "scald", Material.LIGHT_BLUE_DYE, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1.5, false,
+		super("Scald", "scald", Material.LIGHT_BLUE_DYE, SpellType.OFFENSIVE, SpellementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1.5, false, false,
 				"&r&fExpels a blast of hot water &7(15m)&f, dealing 5&c♥ "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f damage to most targets.",
 				"&r&fDamage becomes 10&c♥ "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f against "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f mobs, applying &cMelt&f,",
 				"&r&fand 10&c♥ "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f against "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f mobs, applying &bQuench&f.","",

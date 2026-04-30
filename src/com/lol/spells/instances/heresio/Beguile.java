@@ -26,7 +26,7 @@ public class Beguile extends Spell
 {
 	public Beguile() 
 	{
-		super("Beguile", "beguile", Material.ENDER_EYE, SpellType.CURSE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 2, true,
+		super("Beguile", "beguile", Material.ENDER_EYE, SpellType.CURSE, SpellementType.HERESIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 2, true, false,
 				"&r&fInflict &2Intimidated &bII &fon &6target &dMob&f/&c&oPlayer&r&7 (20m, 30s | &cPVP&7: 20s)","",
 				"&r&2Intimidated &eEffect&f: affected are &b&oFatigued&r&f and &b&oWeakened&r&f equal to",
 				"&r&fthe &b&omagnitude&r&f of &2Intimidated&f, and take 20% more "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage.");

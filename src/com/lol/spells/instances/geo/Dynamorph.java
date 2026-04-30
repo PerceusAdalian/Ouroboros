@@ -1,4 +1,4 @@
-package com.ouroboros.utils.entityeffects;
+package com.lol.spells.instances.geo;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,13 +13,15 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.GeoEffects;
 
 public class Dynamorph extends Spell
 {
 
 	public Dynamorph() 
 	{
-		super("Dynamorph", "dynamorph", Material.DIAMOND, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 20, false,
+		super("Dynamorph", "dynamorph", Material.DIAMOND, SpellType.DEFENSIVE, SpellementType.GEO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 200, 20, false, false,
 				"&r&fApplies &6Guarded &bVII&f, &6Barbed &bV&f, and minor &b&oSlowness&r&f to &6self&7 (1min)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 7 instances.",
 				"&r&6Barbed &eEffect&f: Incoming damage is redirected as "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage",

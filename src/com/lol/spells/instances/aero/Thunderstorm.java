@@ -28,7 +28,7 @@ public class Thunderstorm extends Spell
 
 	public Thunderstorm() 
 	{
-		super("Thunderstorm", "thunderstorm", Material.AMETHYST_CLUSTER, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.MIXED, Rarity.FIVE, 250, 5, true,
+		super("Thunderstorm", "thunderstorm", Material.AMETHYST_CLUSTER, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.MIXED, Rarity.FIVE, 250, 5, true, true,
 				"&ePrimary&f "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&dThunderstorm&f: &d&oElectric Expanse&r&f --",
 				"&r&fSummon an &dAOE&f storm &7(20m)&f inflicting &dShock &7(20s / &cPVP&7: &c3s&r&7)","",

@@ -19,7 +19,7 @@ public class Sleuth extends Spell
 
 	public Sleuth()
 	{
-		super("Sleuth", "sleuth", Material.ENDER_EYE, SpellType.BUFF, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1, false,
+		super("Sleuth", "sleuth", Material.ENDER_EYE, SpellType.BUFF, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 50, 1, false, false,
 				"&r&fGrants &b&oNight Vision&r&f to &6self &7(1min)");
 	}
 

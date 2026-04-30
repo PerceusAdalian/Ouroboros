@@ -29,7 +29,7 @@ public class Ignite extends Spell
 
 	public Ignite()
 	{
-		super("Ignite", "ignite", Material.FLINT_AND_STEEL, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.MIXED, Rarity.THREE, 25, 3, true,
+		super("Ignite", "ignite", Material.FLINT_AND_STEEL, SpellType.OFFENSIVE, SpellementType.INFERNO, CastConditions.MIXED, Rarity.THREE, 25, 3, true, false,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&cIgnite&f: &c&oBurn Other&r&f --",
 				"&r&fIgnite target &d&oPlayer&r&f or &d&oMob&r&f inflicting &cBurn&r&7 (20m, 20s | &cPVP&7: &c10s&7)",

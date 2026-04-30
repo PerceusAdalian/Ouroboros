@@ -36,7 +36,7 @@ public class Warp extends Spell
 
 	public Warp()
 	{
-		super("Warp", "warp", Material.OMINOUS_TRIAL_KEY, SpellType.UTILITY, SpellementType.COSMO, CastConditions.MIXED, Rarity.FIVE, 100, 1, false,
+		super("Warp", "warp", Material.OMINOUS_TRIAL_KEY, SpellType.UTILITY, SpellementType.COSMO, CastConditions.MIXED, Rarity.FIVE, 100, 1, false, true,
 				"&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&3Warp&f: &3&oWarp Core Protocol γ&r&f --",
 				"&r&aInitialize&f/&bExecute &3Warp Cores&f with saved locations.",

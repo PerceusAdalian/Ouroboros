@@ -25,7 +25,7 @@ public class Freecast extends Spell
 
 	public Freecast() 
 	{
-		super("Freecast", "freecast", Material.FLOW_BANNER_PATTERN, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 50, 10, false,
+		super("Freecast", "freecast", Material.FLOW_BANNER_PATTERN, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 50, 10, false, false,
 				"&r&fMakes the next &eSpell&f you cast cost 0 &b&lMana&f.");
 	}
 
