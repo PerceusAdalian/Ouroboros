@@ -84,9 +84,10 @@ public class SpellCastHandler implements Listener
         				if (spellID != null && spellID.equals(spell.getInternalName()) && !data.getSpell(spell).isRegistered())
         				{
         					e.setCancelled(true);
-        					EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, null);
+        					EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
         					ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 4, 10, 0.5, 0.5, Particle.ENCHANT, null);
-        					PrintUtils.OBSFormatDebug(p, "&b&lSpell Registered&r&f: "+spell.getName()+"&r&f. Check your &d&o/obs spellbook&r&f!");
+        					ObsParticles.playCastSigil(p, spell.getElementType());
+        					PrintUtils.Print(p, "&b&lSpell Registered&r&f: "+PrintUtils.getElementTypeColor(spell.getElementType())+"&l"+spell.getName()+"&r&f. \n&r&fCheck your &d&o/obs spellbook&r&f!");
         					data.getSpell(spell).setRegistered(true);
         					data.save();
         					return;
