@@ -137,6 +137,22 @@ material_stats:
     crit_rate_base: 0.30
     crit_modifier_ceiling: 3.0
 
+  MACE:
+    base_attack_min: 75
+    base_attack_max: 150
+    durability_min: 1000
+    durability_max: 3500
+    crit_rate_base: 0.05
+    crit_modifier_ceiling: 1.5
+
+  TRIDENT:
+    base_attack_min: 50
+    base_attack_max: 125
+    durability_min: 450
+    durability_max: 2000
+    crit_rate_base: 0.25
+    crit_modifier_ceiling: 2.0
+
 # ------------------------------------------------------------
 # Binding Stats
 # ------------------------------------------------------------

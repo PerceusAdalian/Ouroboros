@@ -13,12 +13,15 @@ public enum MateriaType
 {
 	WOOD("wooden_chunk",         Material.OAK_BUTTON),
 	STONE("stone_chunk",         Material.STONE_BUTTON),
-	IRON("iron_slag",            Material.IRON_NUGGET),
-	COPPER("copper_nugget",      Material.COPPER_NUGGET),
-	GOLD("gold_nugget",          Material.GOLD_NUGGET),
+	IRON("iron_slag",            Material.IRON_INGOT),
+	COPPER("copper_slag",        Material.COPPER_INGOT),
+	GOLD("gold_slag",            Material.GOLD_INGOT),
 	DIAMOND("diamond",     		 Material.DIAMOND),
-	NETHERITE("netherite_scrap", Material.NETHERITE_SCRAP),
+	NETHERITE("netherite_slag",  Material.NETHERITE_INGOT),
 
+	MACE("heavy_core",           Material.HEAVY_CORE),
+	TRIDENT("artifact",          Material.NAUTILUS_SHELL),
+	
 	STRING("string",       		 Material.STRING),
 	PELT("pelt",           		 Material.RABBIT_HIDE),
 	LEATHER("leather",     		 Material.LEATHER),

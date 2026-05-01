@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.eol.echoes.EchoManager;
+import com.eol.echoes.EchoManifestCodec;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
@@ -23,7 +25,7 @@ public class Reparo extends Spell
 
 	public Reparo()
 	{
-		super("Reparo", "reparo", Material.MUSIC_DISC_11, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 150, 10, false, false,
+		super("Reparo", "reparo", Material.MUSIC_DISC_11, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 300, 10, false, false,
 				"&r&fRepairs &d&ooff-hand&r&f item to &b&o100%&r&f durability.","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '"+PrintUtils.color(ObsColors.ARCANO)+"&oRestore Armament&r&7&o', however, colloquially known as '&r"+PrintUtils.color(ObsColors.ARCANO)+"&oReparo&r&7&o'.");
@@ -34,22 +36,30 @@ public class Reparo extends Spell
 	{
 		Player p = e.getPlayer();
 		ItemStack offhand = p.getInventory().getItemInOffHand();
-		ItemMeta meta = offhand.getItemMeta();
 		
-		if (offhand == null || offhand.getType().equals(Material.AIR) || !(meta instanceof Damageable damageMeta)) return -1;
-		if (!damageMeta.hasDamage()) return -1;
+		if (!EchoManifestCodec.isEcho(offhand))
+		{			
+			ItemMeta meta = offhand.getItemMeta();
+			
+			if (offhand == null || offhand.getType().equals(Material.AIR) || !(meta instanceof Damageable damageMeta)) return -1;
+			if (!damageMeta.hasDamage()) return -1;
+			
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+			damageMeta.setDamage(0);
+			offhand.setItemMeta(damageMeta);
+			return 300;
+		}
 		
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		damageMeta.setDamage(0);
-		offhand.setItemMeta(damageMeta);
+		EchoManager.modifyDurability(p, offhand, EchoManager.DurabilityOperation.SETMAX, 100, true);
 		
-		return 150;
+		return 300;
 	}
 
 	@Override
 	public int getTotalManaCost()
 	{
-		return 150;
+		return 300;
 	}
 
 }

@@ -56,11 +56,16 @@ public class GuiHandler implements Listener
 	    gui.getInventory().setContents(contents);
 	}
     
-    public static void reload(Player player) 
-    {
-    	transitioning.add(player.getUniqueId());
-    	openGuis.get(player.getUniqueId()).open();
-    }
+	public static void reload(Player player) 
+	{
+	    UUID uuid = player.getUniqueId();
+	    ObsGui gui = openGuis.get(uuid);
+	    if (gui == null) return;
+
+	    transitioning.add(uuid);
+	    openGuis.remove(uuid);
+	    open(player, gui);
+	}
 
     public static ObsGui getOpenGui(Player player) 
     {
@@ -114,7 +119,6 @@ public class GuiHandler implements Listener
             {
                 UUID uuid = e.getPlayer().getUniqueId();
                 if (transitioning.remove(uuid)) return;
-                openGuis.remove(uuid);
                 ObsGui gui = openGuis.remove(uuid);
                 if (gui != null) gui.close(e);
             }

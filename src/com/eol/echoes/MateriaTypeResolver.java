@@ -31,6 +31,8 @@ public final class MateriaTypeResolver
             case GOLD      -> EchoMaterial.GOLDEN;
             case DIAMOND   -> EchoMaterial.DIAMOND;
             case NETHERITE -> EchoMaterial.NETHERITE;
+            case MACE    -> EchoMaterial.MACE;
+            case TRIDENT -> EchoMaterial.TRIDENT;
             default        -> null; // LEATHER, COPPER, STRING, PELT, element types — not weapon bases
         };
     }

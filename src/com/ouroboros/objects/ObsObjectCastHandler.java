@@ -31,6 +31,7 @@ public class ObsObjectCastHandler
         		
         		if (ObjectRegistry.itemRegistry.get(held.getItemMeta().getPersistentDataContainer().get(AbstractObsObject.obsObject, PersistentDataType.STRING)).cast(e)) 
         		{
+        			e.setCancelled(true);
         			if (Ouroboros.debug) 
         			{
         				PrintUtils.OBSConsoleDebug(e.getPlayer().getName()+" used: "+held.getItemMeta().getDisplayName());

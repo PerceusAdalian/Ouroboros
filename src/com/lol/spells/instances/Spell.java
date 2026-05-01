@@ -196,8 +196,8 @@ public abstract class Spell
 		String displayName = switch(condition)
 		{
 			case ICON -> "&r&f" + name;
-			case BOOK -> "&b&lOld Spellbook&r&f: " + name;
-			case SHARD -> PrintUtils.color(ObsColors.COSMO) + "&lSpell Shard&r&f: " + name;
+			case BOOK -> "&b&lOld Spellbook&r&f: " + PrintUtils.getElementTypeColor(eType) + "&l" + name;
+			case SHARD -> PrintUtils.color(ObsColors.COSMO) + "&lSpell Shard&r&f: " + PrintUtils.getElementTypeColor(eType) + "&l" + name;
 		};
 		
 		meta.setDisplayName(PrintUtils.ColorParser(displayName));

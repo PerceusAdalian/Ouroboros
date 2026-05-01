@@ -204,8 +204,14 @@ public final class EchoForge
      */
     private static EchoForm rollForm(EchoMaterial echoMaterial)
     {
-        EchoForm[] forms = EchoForm.values();
-        return forms[(int)(Math.random() * forms.length)];
+        EchoForm[] pool = switch (echoMaterial)
+        {
+            case MACE    -> new EchoForm[]{ EchoForm.MACE };
+            case TRIDENT -> new EchoForm[]{ EchoForm.TRIDENT };
+            default      -> new EchoForm[]{ EchoForm.SWORD, EchoForm.AXE, EchoForm.SPEAR,
+                                            EchoForm.PICKAXE, EchoForm.SHOVEL, EchoForm.HOE };
+        };
+        return pool[(int)(Math.random() * pool.length)];
     }
  
     /**
@@ -242,8 +248,15 @@ public final class EchoForge
         
         String formLabel     = PrintUtils.formatEnumName(form.name());
         String materialLabel = PrintUtils.formatEnumName(echoMaterial.name());
+        String displayNameLabel;
         
-        return "&r&b&lΣcho&r&f: " + materialLabel + " " + formLabel + " &r&" + rarityColor + "&l" + PrintUtils.getRarityAsNumeralValue(rarity);
+        if (form == EchoForm.MACE || form == EchoForm.TRIDENT)
+        {
+        	displayNameLabel = "&r&b&lΣcho&r&f: " + formLabel + " &r&" + rarityColor + "&l" + PrintUtils.getRarityAsNumeralValue(rarity);
+        }
+        else displayNameLabel = "&r&b&lΣcho&r&f: " + materialLabel + " " + formLabel + " &r&" + rarityColor + "&l" + PrintUtils.getRarityAsNumeralValue(rarity);
+        
+        return displayNameLabel;
     }
  
     /**
@@ -264,12 +277,7 @@ public final class EchoForge
         double delta = attacksPerSecond - 4.0;
         
         NamespacedKey key = new NamespacedKey(Ouroboros.instance, "echo_attack_speed");
-        AttributeModifier mod = new AttributeModifier(
-                key,
-                delta,
-                Operation.ADD_NUMBER,
-                EquipmentSlotGroup.ANY
-            );
+        AttributeModifier mod = new AttributeModifier(key, delta, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY);
 
         meta.addAttributeModifier(Attribute.ATTACK_SPEED, mod);
     }

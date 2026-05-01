@@ -142,7 +142,7 @@ public final class ModifierPipeline
 
         pool.addAll(switch (form)
         {
-            case SWORD, AXE, SPEAR -> MELEE_PASSIVES;
+            case SWORD, AXE, SPEAR, MACE, TRIDENT -> MELEE_PASSIVES;
             case HOE, SHOVEL, PICKAXE -> TOOL_PASSIVES;
         });
 

@@ -154,7 +154,7 @@ public class Materia
 		ItemStack stack = new ItemStack(type.getMaterial(), 1);
 		ItemMeta meta = stack.getItemMeta();
 		
-		meta.setDisplayName(PrintUtils.ColorParser(type.getLabel()));
+		meta.setDisplayName(PrintUtils.ColorParser("&r&f" + type.getLabel()));
 		meta.setEnchantmentGlintOverride(false);
 		meta.setLore(List.of(
 				PrintUtils.ColorParser("&7&oUnrefined"),"",

@@ -1,27 +1,18 @@
 package com.ouroboros.mobs.events;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SpectralArrow;
-import org.bukkit.entity.ThrownPotion;
-import org.bukkit.entity.Trident;
-import org.bukkit.entity.WindCharge;
-import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataType;
@@ -106,7 +97,7 @@ public class MobDamageEvent implements Listener
 						dmg *= echoData.getCritModifier();
 					}
 					
-					EchoManager.removeDurability(p, echo, crit ? 2 : 1);
+					EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, element);
@@ -118,47 +109,17 @@ public class MobDamageEvent implements Listener
 				else if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && // Player damage to entity event, however, no echo used.
 						!EchoManifestCodec.isEcho(p.getInventory().getItemInMainHand()))
 				{
-					if (dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player)
-						element = ElementType.PUNCTURE;
-					else if (dmgEvent.getDamager() instanceof SpectralArrow sArrow && sArrow.getShooter() instanceof Player)
-						element = ElementType.CELESTIO;
-					else if (dmgEvent.getDamager() instanceof Trident trident && trident.getShooter() instanceof Player)
-						element = ElementType.IMPALE;
-					else if (dmgEvent.getDamager() instanceof ThrownPotion potion && potion.getShooter() instanceof Player)
-						element = ElementType.ARCANO;
-					else if (dmgEvent.getDamager() instanceof Fireball fb && fb.getShooter() instanceof Player)
-						element = ElementType.INFERNO;
-					else if (dmgEvent.getDamager() instanceof WindCharge wc && wc.getShooter() instanceof Player)
-						element = ElementType.AERO;
-					else if (dmgEvent.getDamager() instanceof WitherSkull ws && ws.getShooter() instanceof Player)
-						element = ElementType.MORTIO;
-					else 
-					{
-						ItemStack held = p.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
-						Material m = held != null ? held.getType() : Material.AIR;
-						element = ResolveCombatElement.getFromMaterial(m);
-					}
-					
+					/**
+					 * The player is punished for not using Echoes in combat, no matter the damage source.
+					 * This effectively cancels normal items as well.. These are considered "non-weapons".
+					 */
+					dmgEvent.setDamage(1);
 					dmg = dmgEvent.getFinalDamage();
-					
-					if (ImbueFire.isImbuedPlayer.containsKey(p.getUniqueId()))
-					{
-						element = ElementType.INFERNO;
-						dmg *= 1.1;
-						target.setFireTicks(100);
-					}
-					
-					if (element == ElementType.INFERNO && InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(10))
-					{
-						InfernoEffects.addBurn((LivingEntity) target, 20);
-						InfernoEffects.hasCharred.remove(target.getUniqueId());
-					}
 					
 					if (data.isBreak()) 
 						data.breakDamage(dmg, element);
 					else 
 						data.damage(dmg, true, element);
-					
 				}
 				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
 				{
@@ -192,6 +153,7 @@ public class MobDamageEvent implements Listener
 					else if (cause == DamageCause.MAGIC)
 						element = ElementType.ARCANO;
 					
+					e.setDamage(1);
 					dmg = e.getFinalDamage();
 					
 					if (data.isBreak()) 

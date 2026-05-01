@@ -306,6 +306,90 @@ public class Bases
 				Rarity.FIVE,
 				false,
 				"&7&o\"&e&oAn artisan's touch made all the difference.. Next!&7&o\""));
+		
+		//-------------------------------OTHER-------------------------------//
+		Materia.register(new Materia("Heavy Core",
+				"heavy_core_1",
+				MateriaType.MACE,
+				MateriaComponent.BASE,
+				Rarity.ONE,
+				false,
+				"&r&7&oSome shoddy heavy core.. nothing to write home about."));
+		
+		Materia.register(new Materia("Heavy Core",
+				"heavy_core_2",
+				MateriaType.MACE,
+				MateriaComponent.BASE,
+				Rarity.TWO,
+				false,
+				"&7&o\"&6&oTemplars used maces as a badge of honnor,",
+				"&r&6&owhen they fell, we looted those powerful maces.&7&o\""));
+		
+		Materia.register(new Materia("Heavy Core",
+				"heavy_core_3",
+				MateriaType.MACE,
+				MateriaComponent.BASE,
+				Rarity.THREE,
+				false,
+				"&7&o\"&b&oHeavy Cores were traded like Diamonds, only the rich possessed them.&7&o\""));
+		
+		Materia.register(new Materia("Heavy Core",
+				"heavy_core_4",
+				MateriaType.MACE,
+				MateriaComponent.BASE,
+				Rarity.FOUR,
+				false,
+				"&7&o\"&d&oBashing heads in with this would hurt, but ouh shiny!&7&o\""));
+		
+		Materia.register(new Materia("Heavy Core",
+				"heavy_core_5",
+				MateriaType.MACE,
+				MateriaComponent.BASE,
+				Rarity.FIVE,
+				false,
+				"&7&o\"&e&oAn archaeologist's find made true.. Next!&7&o\""));
+		
+		Materia.register(new Materia("Artifact",
+				"artifact_1",
+				MateriaType.TRIDENT,
+				MateriaComponent.BASE,
+				Rarity.ONE,
+				false,
+				"&r&7&oA strange chipped artifact.. nothing to write home about."));
+		
+		Materia.register(new Materia("Artifact",
+				"artifact_2",
+				MateriaType.TRIDENT,
+				MateriaComponent.BASE,
+				Rarity.TWO,
+				false,
+				"&7&o\"&6&oThe Atlantians were lost to time, and their technology vast,",
+				"&r&6&owhen their civilization was rediscovered, we found these.&7&o\""));
+		
+		Materia.register(new Materia("Artifact",
+				"artifact_3",
+				MateriaType.TRIDENT,
+				MateriaComponent.BASE,
+				Rarity.THREE,
+				false,
+				"&7&o\"&b&oSome felt these were omens of our fate, others sought fortune..&7&o\""));
+		
+		Materia.register(new Materia("Artifact",
+				"artifact_4",
+				MateriaType.TRIDENT,
+				MateriaComponent.BASE,
+				Rarity.FOUR,
+				false,
+				"&7&o\"&d&oOnly the best of us could harness the mysterious power within these",
+				"&r&d&oartifacts. Those successful made powerful armaments for war.&7&o\""));
+		
+		Materia.register(new Materia("Artifact",
+				"artifact_5",
+				MateriaType.TRIDENT,
+				MateriaComponent.BASE,
+				Rarity.FIVE,
+				false,
+				"&7&o\"&e&oAn refiner's hard work paid off.. Next!&7&o\""));
 
 	}
 }

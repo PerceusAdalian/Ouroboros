@@ -31,6 +31,8 @@ public final class EchoFormResolver
             case PICKAXE -> toPickaxe(material);
             case SHOVEL  -> toShovel(material);
             case HOE     -> toHoe(material);
+            case MACE    -> toMace(material);
+            case TRIDENT -> toTrident(material);
         };
     }
 
@@ -45,6 +47,7 @@ public final class EchoFormResolver
             case GOLDEN   -> Material.GOLDEN_SWORD;
             case DIAMOND  -> Material.DIAMOND_SWORD;
             case NETHERITE -> Material.NETHERITE_SWORD;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
         };
     }
 
@@ -59,6 +62,7 @@ public final class EchoFormResolver
             case GOLDEN   -> Material.GOLDEN_AXE;
             case DIAMOND  -> Material.DIAMOND_AXE;
             case NETHERITE -> Material.NETHERITE_AXE;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
         };
     }
 
@@ -75,6 +79,7 @@ public final class EchoFormResolver
             case GOLDEN    -> Material.GOLDEN_SPEAR;
             case DIAMOND   -> Material.DIAMOND_SPEAR;
             case NETHERITE -> Material.NETHERITE_SPEAR;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
         };
     }
 
@@ -89,6 +94,7 @@ public final class EchoFormResolver
             case GOLDEN   -> Material.GOLDEN_PICKAXE;
             case DIAMOND  -> Material.DIAMOND_PICKAXE;
             case NETHERITE -> Material.NETHERITE_PICKAXE;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
         };
     }
 
@@ -103,6 +109,7 @@ public final class EchoFormResolver
             case GOLDEN   -> Material.GOLDEN_SHOVEL;
             case DIAMOND  -> Material.DIAMOND_SHOVEL;
             case NETHERITE -> Material.NETHERITE_SHOVEL;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
         };
     }
 
@@ -117,6 +124,19 @@ public final class EchoFormResolver
             case GOLDEN   -> Material.GOLDEN_HOE;
             case DIAMOND  -> Material.DIAMOND_HOE;
             case NETHERITE -> Material.NETHERITE_HOE;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
         };
+    }
+    
+    private static Material toMace(EchoMaterial material)
+    {
+    	if (material == EchoMaterial.MACE) return Material.MACE;
+		return null;
+    }
+    
+    private static Material toTrident(EchoMaterial material)
+    {
+    	if (material == EchoMaterial.TRIDENT) return Material.TRIDENT;
+    	return null;
     }
 }

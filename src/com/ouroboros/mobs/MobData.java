@@ -365,9 +365,9 @@ public class MobData
 	{
 		double armorDamageCoeff = switch (element)
 	    {
-	        case BLUNT, CORROSIVE         -> 1.5;
-	        case PUNCTURE, PIERCE 		  -> 1.25;
-	        default 					  -> 0.5;
+	        case CORROSIVE        -> 1.5;
+	        case PUNCTURE, PIERCE -> 1.25;
+	        default 			  -> 0.5;
 	    };
 	    
 		if (isBreak()) return;
@@ -478,9 +478,6 @@ public class MobData
 	    ObsParticles.drawDisc(entity.getLocation(), entity.getWidth(), 1, 7, 0.1, Particle.CRIMSON_SPORE, null);
 		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 8, Particle.SMOKE, null);
 		
-		double t = (double)(getLevel() - 1) / 99.0;
-		long recoverySeconds = (long)(20 + (t * t) * 90) * 20L; // 20s -> 120s, quadratic
-		
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
 		{
 			((Mob) entity).setAI(true);
@@ -488,7 +485,7 @@ public class MobData
 			setBreak(false);
 			MobNameplate.update((LivingEntity) entity);
 			ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
-		}, recoverySeconds);
+		}, 400);
 	}
 	
 	public boolean isDead()

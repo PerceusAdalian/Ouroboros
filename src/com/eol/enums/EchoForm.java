@@ -7,5 +7,8 @@ public enum EchoForm
 	SPEAR,
 	PICKAXE,
 	SHOVEL,
-	HOE;
+	HOE,
+	
+	MACE,
+	TRIDENT;
 }

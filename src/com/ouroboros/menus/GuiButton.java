@@ -15,11 +15,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.lol.spells.instances.Spell;
 import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.menus.instances.abilities.AbilityConfirmationPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.utils.PrintUtils;
@@ -139,15 +142,61 @@ public class GuiButton
                 String plainText = line.replaceAll("§[0-9a-fk-or]", "").replaceAll("&[0-9a-fk-or]", "");
                 obfuscatedLore.add(PrintUtils.ColorParser("&7&k" + plainText));
             }
+            obfuscatedLore.add("");
+            obfuscatedLore.add("&r&fClick with &n50&r&f "+PrintUtils.getElementTypeColor(spell.getElementType())+spell.getName()+PrintUtils.color(ObsColors.COSMO)+
+            		" &lSpell Shards&r&f to &a&ocraft&r&f this &eSpell&f.");
             
             GuiButton.button(Material.PAPER)
-            .setName("&cLocked Spell&f: "+PrintUtils.getElementTypeColor(spell.getElementType())+"&l&k" + ChatColor.stripColor(spellIcon.getItemMeta().getDisplayName()))
+            .setName("&cLocked Spell&f: "+PrintUtils.getElementTypeColor(spell.getElementType())+"&l"+spellIcon.getItemMeta().getDisplayName())
             .setLore(obfuscatedLore)
             .place(gui, slot, e -> 
             {
-                Player p = (Player) e.getWhoClicked();
-                EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
                 e.setCancelled(true);
+                Player p = (Player) e.getWhoClicked();
+
+                ItemStack cursor = p.getItemOnCursor();
+                if (cursor == null || cursor.getType().isAir())
+                {
+                    EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
+                    return;
+                }
+
+                ItemMeta meta = cursor.getItemMeta();
+                if (meta == null)
+                {
+                    EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
+                    return;
+                }
+
+                PersistentDataContainer pdc = meta.getPersistentDataContainer();
+
+                if (!pdc.has(Spell.LOLSPELLSHARD, PersistentDataType.STRING)
+                    || !pdc.get(Spell.LOLSPELLSHARD, PersistentDataType.STRING).equals(spell.getInternalName()))
+                {
+                    EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
+                    return;
+                }
+
+                if (cursor.getAmount() < 50)
+                {
+                    EntityEffects.playSound(p, Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER);
+                    return;
+                }
+
+                // Valid shard, sufficient count — perform the craft.
+                int refundAmount = cursor.getAmount() - 50;
+                if (refundAmount > 0)
+                {
+                    ItemStack refundStack = cursor.clone();
+                    refundStack.setAmount(refundAmount);
+                    p.getInventory().addItem(refundStack);
+                }
+                p.setItemOnCursor(null);
+
+                EntityEffects.playSound(p, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.AMBIENT);
+                PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+                data.getSpell(spell).setRegistered(true);
+                GuiHandler.reload(p);
             });
 		}
 	}

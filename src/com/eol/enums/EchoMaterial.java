@@ -8,5 +8,9 @@ public enum EchoMaterial
 	IRON,
 	GOLDEN,
 	DIAMOND,
-	NETHERITE
+	NETHERITE,
+	
+	MACE,
+	TRIDENT,
+	;
 }
