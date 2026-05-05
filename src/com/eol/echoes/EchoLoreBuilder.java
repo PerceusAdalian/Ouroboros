@@ -3,13 +3,13 @@ package com.eol.echoes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.records.ActiveModifier;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.MaterialStatRange;
 import com.eol.echoes.records.Modifier;
 import com.eol.enums.EchoMaterial;
-import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.utils.PrintUtils;
 
 /**
@@ -47,7 +47,8 @@ public final class EchoLoreBuilder
     public static List<String> build(EchoManifest manifest, EchoMaterial echoMaterial)
     {
         List<String> lore = new ArrayList<>();
- 
+        boolean isBow = echoMaterial == EchoMaterial.BOW;
+        
         MaterialStatRange range = EchoConfig.get().getMaterialStats(echoMaterial);
  
         // --- Rarity ---
@@ -58,13 +59,13 @@ public final class EchoLoreBuilder
         lore.add(PrintUtils.ColorParser("&r&f&lBase Stats&r&f:"));
  
         EchoData stats = manifest.baseStats();
- 
-        lore.add(statLine("Attack Damage",
+        
+        lore.add(statLine(isBow ? "Puncture Damage" : "Attack Damage",
                 rollQualityColor(stats.getAttack(), range.baseAttackMin(), range.baseAttackMax())
                 + formatStat(stats.getAttack(), false)));
  
         // Attack Rating: binding-sourced. Color relative to [0.5, 2.0] as a universal AR range.
-        lore.add(statLine("Attack Rate",
+        lore.add(statLine(isBow ? "Draw Rate" : "Attack Rate",
                 rollQualityColor(stats.getAttackRating(), range.baseAttackRateMin(), range.baseAttackRateMax())
                 + formatStat(stats.getAttackRating(), false)));
  
@@ -99,7 +100,7 @@ public final class EchoLoreBuilder
         // --- Locked Ability (EOL only) ---
         if (manifest.hasLockedAbility())
         {
-            ObsAbility ability = ObsAbility.fromInternalName(manifest.lockedAbilityKey());
+            EchoAbility ability = EchoAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
             lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
@@ -109,7 +110,7 @@ public final class EchoLoreBuilder
         }
         else // Normal Equipped Ability
         {
-            ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
+            EchoAbility ability = EchoAbility.fromInternalName(manifest.equippedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : "None Equipped";
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&7&o";
             if (ability != null)
@@ -136,7 +137,7 @@ public final class EchoLoreBuilder
      * Overload for contexts where EchoMaterial is unavailable (e.g. EOL hand-authored items).
      * Falls back to uncolored gold values.
      */
-    public static List<String> build(EchoManifest manifest)
+    public static List<String> build(EchoManifest manifest, boolean isBow)
     {
         List<String> lore = new ArrayList<>();
  
@@ -145,8 +146,8 @@ public final class EchoLoreBuilder
  
         lore.add(PrintUtils.ColorParser("&r&f&lBase Stats&r&f:"));
         EchoData stats = manifest.baseStats();
-        lore.add(statLine("Attack Damage",    "&6" + formatStat(stats.getAttack(), false)));
-        lore.add(statLine("Attack Rating",    "&6" + formatStat(stats.getAttackRating(), false)));
+        lore.add(statLine(isBow ? "Puncture Damage" : "Attack Damage",    "&6" + formatStat(stats.getAttack(), false)));
+        lore.add(statLine(isBow ? "Draw Rate" : "Attack Rate",    "&6" + formatStat(stats.getAttackRating(), false)));
         lore.add(statLine("Critical Rating",  "&6" + formatPercent(stats.getCritRate())));
         lore.add(statLine("Critical Modifier","&6x" + formatDecimal(stats.getCritModifier())));
         lore.add("");
@@ -167,7 +168,7 @@ public final class EchoLoreBuilder
         // --- Locked Ability (EOL only) ---
         if (manifest.hasLockedAbility())
         {
-            ObsAbility ability = ObsAbility.fromInternalName(manifest.lockedAbilityKey());
+            EchoAbility ability = EchoAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
             lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
@@ -177,7 +178,7 @@ public final class EchoLoreBuilder
         }
         else // Normal Equipped Ability
         {
-            ObsAbility ability = ObsAbility.fromInternalName(manifest.equippedAbilityKey());
+            EchoAbility ability = EchoAbility.fromInternalName(manifest.equippedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : "None Equipped";
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&7&o";
             lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));

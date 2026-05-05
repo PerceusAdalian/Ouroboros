@@ -10,7 +10,8 @@ public enum EchoMaterial
 	DIAMOND,
 	NETHERITE,
 	
-	MACE,
-	TRIDENT,
-	;
+	HAMMER,
+	ARMAMENT,
+	BOW,
+	CROSSBOW;
 }

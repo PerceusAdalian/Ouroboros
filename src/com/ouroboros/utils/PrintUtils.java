@@ -16,14 +16,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import com.eol.echoes.abilities.enums.AbilityType;
+import com.eol.enums.EchoForm;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.AbilityMaterialClass;
-import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
@@ -244,11 +244,9 @@ public class PrintUtils
 		return ColorParser("&r&f&lCast Condition&r&f: {"+condition.getKey()+"&r&f}");
 	}
 	
-	public static String assignAbilityCategory(AbilityMaterialClass category)
+	public static String assignEchoForm(EchoForm echoForm)
 	{
-		boolean isAnyCategory = category.equals(AbilityMaterialClass.ANY) ? true : false;
-		String printStr = isAnyCategory ? "&r&f&lCast Category&r&f: &b&oAny&r&f" : "&r&f&lCast Category: "+category.getKey()+" only.";
-		return ColorParser(printStr);
+		return ColorParser("&r&e&o"+Symbols.EOL+"cho Form: {"+echoForm.getLabel()+"}");
 	}
 	
 	public static String assignElementType(SpellementType type) 

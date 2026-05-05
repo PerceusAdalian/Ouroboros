@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -20,10 +21,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoManager;
-import com.eol.echoes.EchoManifestCodec;
+import com.eol.echoes.ResolveEchoInteract;
+import com.eol.echoes.abilities.instances.combat.ImbueFire;
 import com.eol.echoes.records.EchoManifest;
+import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobManager;
@@ -40,127 +42,155 @@ public class MobDamageEvent implements Listener
 {
 	public static void register(JavaPlugin plugin)
 	{
-		/**
-		 * @TODO: Hookup damage event to compare against mob 
-		 * 		  affinities and calculate damage that way instead of vanilla.
-		 */
 		Bukkit.getPluginManager().registerEvents(new Listener()
 		{
 			@EventHandler(priority = EventPriority.HIGHEST)
 			public void onHit(EntityDamageEvent e)
 			{
 				Entity target = e.getEntity();
-				if (!(target instanceof LivingEntity)) return;
-				if (!target.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
-				if (target.hasMetadata("ouroboros_dying")) return;
-				MobData data = MobData.getMob(target.getUniqueId());
-				if (data == null) return; 
-				
-				ElementType element = ElementType.PURE;
-				double dmg;
-				
-				if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && // PvP While using Echoes is prohibited. This is a PvE Echo Damage Event only.
-							EchoManifestCodec.isEcho(p.getInventory().getItemInMainHand()))
-				{
-					ItemStack echo = p.getInventory().getItemInMainHand();
-					String str = echo.getItemMeta().getPersistentDataContainer().get(EchoManifestCodec.MANIFEST_KEY, PersistentDataType.STRING);
-					EchoManifest codec = EchoManifestCodec.fromJson(str);
-					if (codec == null) return;
-					
-					element = ResolveCombatElement.getFromMaterial(echo.getType());
-					EchoData echoData = codec.baseStats();
+			    if (!(target instanceof LivingEntity)) return;
+			    if (!target.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
+			    if (target.hasMetadata("ouroboros_dying")) return;
+			    MobData data = MobData.getMob(target.getUniqueId());
+			    if (data == null) return;
 
-					dmg = echoData.getAttack();
-					float charge = p.getAttackCooldown();
-					double chargeScalar = 0.1 + ((1.0 - 0.1) * charge);
-					dmg *= chargeScalar;
-					
-					if (ImbueFire.isImbuedPlayer.containsKey(p.getUniqueId()))
-					{
-						element = ElementType.INFERNO;
-						dmg *= 1.1;
-						target.setFireTicks(100);
-					}
-					
-					if (InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(10))
-					{
-						InfernoEffects.addBurn((LivingEntity) target, 20);
-						InfernoEffects.hasCharred.remove(target.getUniqueId());
-					}
-					
-					boolean crit = false;
-					if(Chance.of(echoData.getCritRate() * 100)) 
-					{
-						crit = true;
-						ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
-						EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
-						dmg *= echoData.getCritModifier();
-					}
-					
-					EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
-					
-					if (data.isBreak()) 
-						data.breakDamage(dmg, element);
-					else 
-						data.damage(dmg, true, element);
-				}
-				
-				//In the event the damage source is as shown below, execute this block
-				else if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && // Player damage to entity event, however, no echo used.
-						!EchoManifestCodec.isEcho(p.getInventory().getItemInMainHand()))
-				{
-					/**
-					 * The player is punished for not using Echoes in combat, no matter the damage source.
-					 * This effectively cancels normal items as well.. These are considered "non-weapons".
-					 */
-					dmgEvent.setDamage(1);
-					dmg = dmgEvent.getFinalDamage();
-					
-					if (data.isBreak()) 
-						data.breakDamage(dmg, element);
-					else 
-						data.damage(dmg, true, element);
-				}
-				else //Run normal damage calculations if the damage event is a passive trigger (i.e. fall damage)
-				{
-					DamageCause cause = e.getCause();
-					
-					if (cause == DamageCause.ENTITY_EXPLOSION || cause == DamageCause.BLOCK_EXPLOSION)
-						element = ElementType.BLAST;
-					else if (cause == DamageCause.CAMPFIRE || cause == DamageCause.FIRE || cause == DamageCause.LAVA
-							|| cause == DamageCause.FIRE_TICK)
-						element = ElementType.INFERNO;
-					else if (cause == DamageCause.FALL || cause == DamageCause.FALLING_BLOCK)
-						element = ElementType.GEO;
-					else if (cause == DamageCause.PROJECTILE || cause == DamageCause.THORNS)
-						element = ElementType.PIERCE;
-					else if (cause == DamageCause.DRAGON_BREATH || cause == DamageCause.CRAMMING
-							|| cause == DamageCause.WORLD_BORDER || cause == DamageCause.VOID
-							|| cause == DamageCause.SONIC_BOOM)
-						element = ElementType.COSMO;
-					else if (cause == DamageCause.DROWNING || cause == DamageCause.SUFFOCATION
-							|| cause == DamageCause.WITHER || cause == DamageCause.DRYOUT
-							|| cause == DamageCause.STARVATION)
-						element = ElementType.MORTIO;
-					else if (cause == DamageCause.FALLING_BLOCK)
-						element = ElementType.CRUSH;
-					else if (cause == DamageCause.FREEZE)
-						element = ElementType.GLACIO;
-					else if (cause == DamageCause.FLY_INTO_WALL || cause == DamageCause.LIGHTNING)
-						element = ElementType.AERO;
-					else if (cause == DamageCause.POISON)
-						element = ElementType.CORROSIVE;
-					else if (cause == DamageCause.MAGIC)
-						element = ElementType.ARCANO;
-					
-					e.setDamage(1);
-					dmg = e.getFinalDamage();
-					
-					if (data.isBreak()) 
-						data.breakDamage(dmg, element);
-					else
-						data.damage(dmg, true, element);
-					
+			    ElementType element = ElementType.PURE;
+			    double dmg;
+
+			    // --- Echo Melee ---
+			    if (e instanceof EntityDamageByEntityEvent dmgEvent
+			        && dmgEvent.getDamager() instanceof Player p
+			        && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			    {
+			        ItemStack echo = p.getInventory().getItemInMainHand();
+			        EchoManifest codec = EchoManager.getCodec(echo);
+			        if (codec == null) return;
+
+			        // Block bow melee hits entirely
+			        if (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW)
+			        {
+			            e.setCancelled(true);
+			            return;
+			        }
+
+			        element = ResolveCombatElement.getFromMaterial(echo.getType());
+			        EchoData echoData = codec.baseStats();
+
+			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
+			        float charge = p.getAttackCooldown();
+			        dmg *= 0.1 + (0.9 * charge);
+
+			        if (ImbueFire.isImbuedPlayer.containsKey(p.getUniqueId()))
+			        {
+			            element = ElementType.INFERNO;
+			            dmg *= 1.1;
+			            target.setFireTicks(100);
+			        }
+
+			        if (InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(10))
+			        {
+			            InfernoEffects.addBurn((LivingEntity) target, 20);
+			            InfernoEffects.hasCharred.remove(target.getUniqueId());
+			        }
+
+			        boolean crit = false;
+			        double critRate     = ResolveEchoInteract.resolveCritRate(p, (LivingEntity) target, codec, echoData.getCritRate());
+			        double critModifier = ResolveEchoInteract.resolveCritModifier(p, (LivingEntity) target, codec, echoData.getCritModifier());
+			        if (Chance.of(critRate * 100))
+			        {
+			            crit = true;
+			            ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+			            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
+			            dmg *= critModifier;
+			        }
+
+			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
+
+			        if (data.isBreak()) data.breakDamage(dmg, element);
+			        else                data.damage(dmg, true, element);
+
+			        ResolveEchoInteract.resolvePassiveEffect(codec, p, (LivingEntity) target);
+			    }
+
+			    // --- Echo Bow / Arrow ---
+			    else if (e instanceof EntityDamageByEntityEvent dmgEvent
+			        && dmgEvent.getDamager() instanceof Arrow arrow
+			        && arrow.getShooter() instanceof Player p
+			        && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			    {
+			        ItemStack echo = p.getInventory().getItemInMainHand();
+			        EchoManifest codec = EchoManager.getCodec(echo);
+			        if (codec == null) return;
+
+			        // Only intercept if they're actually holding a bow echo
+			        if (codec.echoForm() != EchoForm.BOW && codec.echoForm() != EchoForm.CROSSBOW) return;
+
+			        e.setCancelled(true); // cancel vanilla arrow damage
+
+			        EchoData echoData = codec.baseStats();
+			        element = ElementType.PUNCTURE;
+
+			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
+
+			        boolean crit = false;
+			        double critRate     = ResolveEchoInteract.resolveCritRate(p, (LivingEntity) target, codec, echoData.getCritRate());
+			        double critModifier = ResolveEchoInteract.resolveCritModifier(p, (LivingEntity) target, codec, echoData.getCritModifier());
+			        if (Chance.of(critRate * 100))
+			        {
+			            crit = true;
+			            ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIT, null);
+			            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
+			            dmg *= critModifier;
+			        }
+
+			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
+
+			        if (data.isBreak()) data.breakDamage(dmg, element);
+			        else                data.damage(dmg, true, element);
+
+			        ResolveEchoInteract.resolvePassiveEffect(codec, p, (LivingEntity) target);
+			    }
+
+			    // --- Non-Echo Player Hit ---
+			    else if (e instanceof EntityDamageByEntityEvent dmgEvent
+			        && dmgEvent.getDamager() instanceof Player p
+			        && !EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			    {
+			        dmgEvent.setDamage(1);
+			        dmg = dmgEvent.getFinalDamage();
+
+			        if (data.isBreak()) data.breakDamage(dmg, element);
+			        else                data.damage(dmg, true, element);
+			    }
+
+			    // --- Environmental / Passive Damage ---
+			    else
+			    {
+			        DamageCause cause = e.getCause();
+
+			        element = switch (cause)
+			        {
+		            	case ENTITY_EXPLOSION, BLOCK_EXPLOSION      -> ElementType.BLAST;
+			            case CAMPFIRE, FIRE, LAVA, FIRE_TICK        -> ElementType.INFERNO;
+			            case FALL, FALLING_BLOCK                    -> ElementType.GEO;
+			            case THORNS                     	 		-> ElementType.PIERCE;
+			            case PROJECTILE								-> ElementType.PUNCTURE;
+			            case DRAGON_BREATH, CRAMMING, WORLD_BORDER,
+			                 VOID, SONIC_BOOM                       -> ElementType.COSMO;
+			            case DROWNING, SUFFOCATION, WITHER,
+			                 DRYOUT, STARVATION                     -> ElementType.MORTIO;
+			            case FREEZE                                 -> ElementType.GLACIO;
+			            case FLY_INTO_WALL, LIGHTNING               -> ElementType.AERO;
+			            case POISON                                 -> ElementType.CORROSIVE;
+			            case MAGIC                                  -> ElementType.ARCANO;
+			            default                                     -> ElementType.PURE;
+			        };
+			        
+			        dmg = e.getFinalDamage();
+
+			        if (data.isBreak()) data.breakDamage(dmg, element);
+			        else                data.damage(dmg, true, element);
+			        
 					if (Ouroboros.debug) 
 					{
 						String name = target.getCustomName();
@@ -172,30 +202,27 @@ public class MobDamageEvent implements Listener
 					}
 				}
 				
-				//Update their HP bar
-				if (target.getCustomName() == null) 
-				{
-					MobNameplate.build((LivingEntity) target, true);
-					MobNameplate.update((LivingEntity) target);
-				}
-				else 
-				{
-					MobNameplate.update((LivingEntity) target);
-				}
-				
-				data.save(); //Save the mob's data profile
-				
-				if (data.isDead()) 
-				{
-				    LivingEntity le = (LivingEntity) target;
-				    MobNameplate.remove(le);
-				    data.save();
-				    e.setDamage(0);
-				    le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
-				    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
-				    	le.damage(le.getHealth() + 1.0), 1L);
-				    return;
-				}
+			    // --- Handle Nameplate Update, Data Saving, and Death Calls ---
+			    if (target.getCustomName() == null)
+			    {
+			        MobNameplate.build((LivingEntity) target, true);
+			        MobNameplate.update((LivingEntity) target);
+			    }
+			    else MobNameplate.update((LivingEntity) target);
+
+			    data.save();
+
+			    if (data.isDead())
+			    {
+			        LivingEntity le = (LivingEntity) target;
+			        MobNameplate.remove(le);
+			        data.save();
+			        e.setDamage(0);
+			        le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
+			        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+			            le.damage(le.getHealth() + 1.0), 1L);
+			        return;
+			    }
 				
 				if (Ouroboros.debug) 
 				{

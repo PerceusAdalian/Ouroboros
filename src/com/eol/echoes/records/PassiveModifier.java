@@ -1,5 +1,6 @@
 package com.eol.echoes.records;
 
+import com.eol.enums.PassiveEchoEffect;
 import com.eol.enums.WeaponModifierCondition;
 
 /**
@@ -20,12 +21,17 @@ import com.eol.enums.WeaponModifierCondition;
  *   ">Atk Rate become 2.0 in The End"         -> effectKey="set_attack_rate", magnitude=2.0,  condition=END
  *   ">Increased Movement Speed (Nether)"      -> effectKey="movement_speed",  magnitude=0.0,  condition=NETHER
  */
-public record PassiveModifier(WeaponModifierCondition condition, String effectKey, double magnitude) implements Modifier
+public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffect effectKey, double magnitude) implements Modifier
 {
     @Override
     public boolean isActive()
     {
         return false;
+    }
+    
+    public PassiveEchoEffect getType()
+    {
+    	return effectKey;
     }
 
     @Override
@@ -48,17 +54,19 @@ public record PassiveModifier(WeaponModifierCondition condition, String effectKe
         // Simple key-to-display mapping. Extend as effects are added.
         return switch (effectKey)
         {
-            case "apply_expose"    -> "Attacks Apply Expose";
-            case "apply_burn"      -> "Attacks Apply Burn";
-            case "apply_poison"    -> "Attacks Apply Poison";
-            case "apply_slowness"  -> "Attacks Apply Slowness";
-            case "apply_fatigue"   -> "Attacks Apply Fatigue";
-            case "apply_stun"      -> "Attacks Apply Stun";
-            case "ignore_arrow"    -> (int)(magnitude * 100) + "% Chance to Ignore Arrow Consumption";
-            case "set_attack_rate" -> "Atk Rate becomes " + magnitude;
-            case "movement_speed"  -> "Increased Movement Speed";
-            case "knockback"       -> "Increased Knockback";
-            default                -> effectKey; // fallback: raw key shown as-is
+            case EXPOSE          -> "Attacks Apply Expose";
+            case BURNING         -> "Attacks Inflict Burn";
+            case POISONOUS       -> "Attacks Are Corrosive";
+            case SLOWING  	 	 -> "Attacks Inflict Slowness";
+            case FATIGUING   	 -> "Attacks Inflict Fatigue";
+            case STUNNING      	 -> "Attacks Inflict Stun";
+            case IGNORE_ARROW    -> "Ignore Arrow Consumption: "+(int)(magnitude * 100) + "%";
+            case SET_ATTACK_RATE -> "Atk Rate becomes " + magnitude;
+            case MOVEMENT_SPEED  -> "Swift Footed";
+            case KNOCKBACK       -> "Increased Knockback";
+            case LUCKY 			 -> "Increased Collection Luck";
+            case NIMBLE          -> "Nimble Footed";
+            case INFINITY        -> "Infinity";
         };
     }
 
@@ -72,7 +80,11 @@ public record PassiveModifier(WeaponModifierCondition condition, String effectKe
             case UNDEAD    		-> "PVE: Undead";
             case LIVING    		-> "PVE: Living";
             case FLYING    		-> "PVE: Flying";
-            case AQUATIC   		-> "PVE: Aquatic";
+            case GLACIAL   		-> "PVE: Glacial";
+            case INFERNAL 		-> "PVE: Infernal";
+            case GROUNDED		-> "PVE: Grounded";
+            case COSMIC			-> "PVE: Cosmic";
+            case OCCULTIC		-> "PVE: Occultic";
             case BUGS      		-> "PVE: Bugs";
             case RAID      		-> "PVE: Raid";
             case OVERWORLD 		-> "Overworld";
@@ -86,6 +98,13 @@ public record PassiveModifier(WeaponModifierCondition condition, String effectKe
             case COLDBIOMES   	-> "Biome: Cold";
             case HOTBIOMES    	-> "Biome: Hot";
             case GENERICBIOMES 	-> "Biome";
+            case ELEMENTAL 		-> "Elemental";
         };
     }
+
+	@Override
+	public double getMagnitude()
+	{
+		return magnitude;
+	}
 }

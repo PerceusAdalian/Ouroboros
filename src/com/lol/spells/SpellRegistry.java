@@ -11,6 +11,7 @@ import com.lol.spells.instances.admin.RemoveEntity;
 import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.RazorWind;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
@@ -171,6 +172,7 @@ public class SpellRegistry
         		Vaporize.class,
         		HealingCurrent.class,
         		Fly.class,
+        		RazorWind.class,
         		
         		//Geo
         		Expelliarmus.class,

@@ -15,14 +15,14 @@ import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.eol.echoes.abilities.AbilityHandler;
+import com.eol.echoes.abilities.AbilityRegistry;
+import com.eol.echoes.abilities.enums.AbilityType;
+import com.eol.echoes.abilities.instances.EchoAbility;
 import com.lol.spells.SpellDataHandler;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
-import com.ouroboros.abilities.AbilityHandler;
-import com.ouroboros.abilities.AbilityRegistry;
-import com.ouroboros.abilities.instances.ObsAbility;
-import com.ouroboros.enums.AbilityType;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
@@ -147,7 +147,7 @@ public class PlayerData
 	    		getSpell(spell).setRegistered(false).setShards(0);
 	    	}
 	    	
-	    	for (ObsAbility ability : AbilityRegistry.abilityRegistry.values())
+	    	for (EchoAbility ability : AbilityRegistry.abilityRegistry.values())
 	    	{
 	    		getAbility(ability).setActive(false).setRegistered(false);
 	    	}
@@ -186,14 +186,14 @@ public class PlayerData
 		else return true;
 	}
 	
-	public ObsAbility getActiveCombatAbility()
+	public EchoAbility getActiveCombatAbility()
 	{
 		String internalName = config.getString("stats.abilities.activecombatability");
 		if (internalName == null) return null;
-		return ObsAbility.fromInternalName(internalName);
+		return EchoAbility.fromInternalName(internalName);
 	}
 	
-	public static void activateAbility(Player p, ObsAbility ability) 
+	public static void activateAbility(Player p, EchoAbility ability) 
 	{
 	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 
@@ -208,7 +208,7 @@ public class PlayerData
 	    PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o" + ability.getDisplayName());
 	}
 
-	public static void deactivateAbility(Player p, ObsAbility ability) 
+	public static void deactivateAbility(Player p, EchoAbility ability) 
 	{
 	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 
@@ -224,7 +224,7 @@ public class PlayerData
 	}
 
 	
-	public void setActiveCombatAbility(@Nullable ObsAbility ability) 
+	public void setActiveCombatAbility(@Nullable EchoAbility ability) 
 	{
 	    String path = "stats.abilities.activecombatability";
 
@@ -234,7 +234,7 @@ public class PlayerData
 	    	config.set(path, null);
 	}
 
-	public void addUtilityAbility(ObsAbility ability) 
+	public void addUtilityAbility(EchoAbility ability) 
 	{
 	    String path = "stats.abilities.activeutilityabilities"; // plural
 	    List<String> utilities = getActiveUtilityAbilities();
@@ -251,7 +251,7 @@ public class PlayerData
 	    return config.getStringList(path);
 	}
 
-	public void removeUtilityAbility(ObsAbility ability) 
+	public void removeUtilityAbility(EchoAbility ability) 
 	{
 	    String path = "stats.abilities.activeutilityabilities";
 	    List<String> utilities = getActiveUtilityAbilities();
@@ -341,7 +341,7 @@ public class PlayerData
 	
 	public void initializeAbilities() 
 	{
-		for (ObsAbility a : AbilityRegistry.abilityRegistry.values()) 
+		for (EchoAbility a : AbilityRegistry.abilityRegistry.values()) 
     	{
 			String registered = ".registered";
 			String active = ".active";
@@ -384,7 +384,7 @@ public class PlayerData
 		config.set("points.ability", value);
 	}
 	
-	public AbilityHandler getAbility(ObsAbility ability) 
+	public AbilityHandler getAbility(EchoAbility ability) 
 	{
 		return new AbilityHandler(ability, config);
 	}
@@ -399,10 +399,10 @@ public class PlayerData
 		return getStat(sType, true);
 	}
 	
-	public static boolean canRegister(UUID uuid, ObsAbility ability) 
+	public static boolean canRegister(UUID uuid, EchoAbility ability) 
 	{
 		PlayerData data = PlayerData.getPlayer(uuid);
-		ObsAbility pAbility = ability.getInstance();
+		EchoAbility pAbility = ability.getInstance();
 		
 		boolean statRequirement = data.getStatLevel(pAbility.getStatRequirement()) >= pAbility.getLevelRequirement();
 		boolean notRegistered = (!data.getAbility(pAbility).isRegistered());

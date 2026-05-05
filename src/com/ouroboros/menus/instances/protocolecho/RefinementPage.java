@@ -82,6 +82,7 @@ public class RefinementPage extends ObsGui
 		            }
 		        }
 		    }
+		    
 		    // Unrefined: first-time refinement
 		    else if (meta.has(Materia.materiaTypeKey) && 
 		    		meta.has(Materia.materiaStateKey) && 

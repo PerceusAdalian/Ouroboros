@@ -19,7 +19,9 @@ public enum EntityCategory
 	AERO_MOBS,
 	GEO_MOBS,
 	HERESIO_MOBS,
-	COSMO_MOBS;
+	COSMO_MOBS,
+	BUGS,
+	ELEMENTAL;
 	
 	public String getKey()
 	{
@@ -65,6 +67,8 @@ public enum EntityCategory
 			case COSMO_MOBS -> EntityCategories.cosmo_mobs;
 			case HERESIO_MOBS -> EntityCategories.heresio_mobs;
 			case ARCANO_MOBS -> EntityCategories.arcano_mobs;
+			case BUGS -> EntityCategories.bugs;
+			case ELEMENTAL -> EntityCategories.elemental;
 		};
 	}
 	

@@ -7,11 +7,9 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.perks.RejuvenateWounds;
-import com.ouroboros.abilities.instances.utility.Geomorph;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 
 public class PerksAndUtilitiesMenu extends ObsGui
 {
@@ -23,8 +21,7 @@ public class PerksAndUtilitiesMenu extends ObsGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.placeAbilityButton(player, new RejuvenateWounds(), 10, this);
-		GuiButton.placeAbilityButton(player, new Geomorph(), 11, this);
+		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Ability Main Page").place(this, 37, e->
 		{

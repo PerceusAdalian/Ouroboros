@@ -10,9 +10,9 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.ObsAbility;
+import com.eol.echoes.abilities.enums.AbilityType;
+import com.eol.echoes.abilities.instances.EchoAbility;
 import com.ouroboros.accounts.PlayerData;
-import com.ouroboros.enums.AbilityType;
 import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -27,7 +27,7 @@ public class AbilityConfirmationPage extends ObsGui
 		super(player, "Ability Confirmation", 27, Set.of(10,13,16));
 	}
 
-	public static Map<UUID, ObsAbility> abilityChangeMap = new HashMap<>();
+	public static Map<UUID, EchoAbility> abilityChangeMap = new HashMap<>();
 
 	@Override
 	protected void build() 
@@ -36,7 +36,7 @@ public class AbilityConfirmationPage extends ObsGui
 		String confirmActivate = "&a&lConfirm Activation Toggle&r&f?";
 		String confirmRegister = "&a&lConfirm Registration&r&f?";
 		boolean isRegistering = GuiButton.confirmRegister.get(player);
-		ObsAbility ability = GuiButton.abilityConfirmMap.get(player);
+		EchoAbility ability = GuiButton.abilityConfirmMap.get(player);
 		
 		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE).setName(isRegistering ? confirmRegister : confirmActivate).setLore("Click to Confirm Action").place(this, 13, e->
 		{

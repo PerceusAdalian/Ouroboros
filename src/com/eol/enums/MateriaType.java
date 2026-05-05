@@ -19,8 +19,11 @@ public enum MateriaType
 	DIAMOND("diamond",     		 Material.DIAMOND),
 	NETHERITE("netherite_slag",  Material.NETHERITE_INGOT),
 
-	MACE("heavy_core",           Material.HEAVY_CORE),
-	TRIDENT("artifact",          Material.NAUTILUS_SHELL),
+	HAMMER("heavy_core",         Material.HEAVY_CORE),
+	ARMAMENT("artifact",         Material.NAUTILUS_SHELL),
+	
+	BOW("bow_limb", 		 	 Material.STICK),
+	CROSSBOW("bow_stock",        Material.TRIPWIRE_HOOK),
 	
 	STRING("string",       		 Material.STRING),
 	PELT("pelt",           		 Material.RABBIT_HIDE),
@@ -96,7 +99,7 @@ public enum MateriaType
 		return PrintUtils.formatEnumName(getName());
 	}
 	
-	public static final Set<Material> exemptMaterials = Set.of(
+	public static final Set<Material> exemptMaterials = Set.of(Material.STICK,
 			Material.NETHER_STAR, Material.ECHO_SHARD, Material.END_CRYSTAL,
 			Material.WITHER_SKELETON_SKULL, Material.TOTEM_OF_UNDYING, Material.AMETHYST_SHARD, 
 			Material.RESIN_CLUMP, Material.NAUTILUS_SHELL, Material.BLAZE_ROD);

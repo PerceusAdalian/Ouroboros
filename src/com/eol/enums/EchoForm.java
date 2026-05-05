@@ -2,13 +2,28 @@ package com.eol.enums;
 
 public enum EchoForm 
 {
-	SWORD,
-	AXE,
-	SPEAR,
-	PICKAXE,
-	SHOVEL,
-	HOE,
+	SWORD("&r&c⚔︎&f"),
+	HATCHET("&r&c🪓&f"),
+	POLEARM("&r&c𐃆&f"),
+	PICKAXE("&r&6⛏&f"),
+	SPADE("&r&6♠&f"),
+	SCYTHE("&r&6☭&f"),
 	
-	MACE,
-	TRIDENT;
+	HAMMER("&r&b🔨&f"),
+	ARMAMENT("&r&b🔱&f"),
+	BOW("&r&d🏹&f"),
+	CROSSBOW("&r&d🏹&f")
+	;
+	
+	private final String symbol;
+	EchoForm(String string)
+	{
+		this.symbol = string;
+	}
+	
+	public String getLabel()
+	{
+		return symbol;
+	}
+	
 }

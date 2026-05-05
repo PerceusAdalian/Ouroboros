@@ -1,5 +1,7 @@
 package com.eol.echoes.config;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import com.eol.echoes.EchoData;
 import com.eol.echoes.MateriaTypeResolver;
 import com.eol.echoes.records.BindingStatBlock;
@@ -7,6 +9,8 @@ import com.eol.echoes.records.MaterialStatRange;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.MateriaComponent;
 import com.eol.materia.Materia;
+import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.NumberUtils;
 
 /**
  * StatResolver produces a rolled EchoData from a base Materia and a binding Materia.
@@ -32,7 +36,7 @@ public final class StatResolver
      * @param binding A Materia with MateriaComponent.BINDING
      * @return Rolled EchoData, or null if either Materia is invalid
      */
-    public static EchoData resolve(Materia base, Materia binding)
+    public static EchoData resolve(Materia base, Materia binding, Rarity catalystRarity)
     {
         if (base == null || base.getMateriaComponent() != MateriaComponent.BASE)
         {
@@ -53,42 +57,62 @@ public final class StatResolver
             return null;
         }
 
+        // t=0 at rarity 1, t=1 at rarity 7
+        double t = (catalystRarity.getRarity() - 1) / 6.0;
+
         EchoConfig        config    = EchoConfig.get();
         MaterialStatRange matRange  = config.getMaterialStats(echoMaterial);
         BindingStatBlock  bindBlock = config.getBindingStats(binding.getMateriaType());
 
-        // --- Roll base stats ---
-        double rolledAttack   = matRange.rollBaseAttack();
-        double rolledCritRate = matRange.critRateBase();
-        double rolledCritMod  = matRange.rollCritModifier();
+        // --- Roll base stats with rarity bias ---
+        double rolledAttack  = rollBiased(matRange.baseAttackMin(), matRange.baseAttackMax(), t);
+        double rolledCritMod = rollBiased(1.0, matRange.critModifierCeiling(), t);
 
-        // --- Roll attack rating within binding band ---
-        double arMin  = bindBlock.attackRatingMin();
-        double arMax  = bindBlock.attackRatingMax();
-        double arRoll = arMin + (Math.random() * (arMax - arMin));
+        // Crit rate is fixed per material tier - bias just scales how close to the base you get
+        // Rarity 1 gets ~60% of the base crit rate, rarity 7 gets the full value
+        double critRateScale = NumberUtils.lerp(0.60, 1.0, t);
+        double rolledCritRate = matRange.critRateBase() * critRateScale;
+
+        // --- Roll attack rating with bias ---
+        double arRoll = rollBiased(bindBlock.attackRatingMin(), bindBlock.attackRatingMax(), t);
         double finalAttackRating = Math.round(arRoll * 100.0) / 100.0;
 
-        // --- Roll durability within binding band ---
-        int    rawDurability   = matRange.rollDurability();
-        int    finalDurability = (int) Math.round(rawDurability * bindBlock.durabilityMultiplier());
-    
-        // --- Apply binding deltas ---
-        double finalAttack    = rolledAttack + bindBlock.attackBonus();
-        double finalCritRate  = Math.max(0.0, Math.min(1.0, rolledCritRate + bindBlock.critRateBonus()));
-        double finalCritMod   = rolledCritMod;
+        // --- Roll durability with bias ---
+        double rawDurability  = rollBiased(matRange.durabilityMin(), matRange.durabilityMax(), t);
+        int finalDurability   = (int) Math.round(rawDurability * bindBlock.durabilityMultiplier());
 
-        return new EchoData(finalAttack, finalAttackRating, finalCritRate, finalCritMod, finalDurability, finalDurability);
+        // --- Apply binding deltas ---
+        double finalAttack   = rolledAttack + bindBlock.attackBonus();
+        double finalCritRate = Math.max(0.0, Math.min(1.0, rolledCritRate + bindBlock.critRateBonus()));
+        double finalCritMod  = rolledCritMod;
+
+        return new EchoData(
+            Math.round(finalAttack * 100.0) / 100.0,
+            finalAttackRating,
+            Math.round(finalCritRate * 100.0) / 100.0,
+            Math.round(finalCritMod * 100.0) / 100.0,
+            finalDurability,
+            finalDurability);
     }
 
     /**
-     * Convenience overload: resolve using internal names looked up from the Materia registry.
-     * Useful for testing or command-driven forge calls.
+     * Rolls a value biased toward min at low t and toward max at high t.
+     * At t=1 the mean sits at 95% of the range so rarity 7 rolls are
+     * almost always near the ceiling but can't guarantee an exact max.
      */
+    private static double rollBiased(double min, double max, double t)
+    {
+        double mean   = NumberUtils.lerp(min, NumberUtils.lerp(min, max, 0.95), t);
+        double spread = (max - min) * 0.10;
+        double roll   = mean + (ThreadLocalRandom.current().nextGaussian() * spread);
+        return Math.max(min, Math.min(max, roll));
+    }
+
     public static EchoData resolve(String baseInternalName, String bindingInternalName)
     {
         Materia base    = Materia.get(baseInternalName);
         Materia binding = Materia.get(bindingInternalName);
-        return resolve(base, binding);
+        return resolve(base, binding, Rarity.ONE); // fallback for test calls
     }
 
     private static void warn(String msg)

@@ -18,8 +18,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.eol.echoes.abilities.instances.EchoAbility;
 import com.lol.spells.instances.Spell;
-import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
@@ -78,10 +78,10 @@ public class GuiButton
     }
     
 
-	public static Map<Player, ObsAbility> abilityConfirmMap = new HashMap<>();
+	public static Map<Player, EchoAbility> abilityConfirmMap = new HashMap<>();
 	public static Map<Player, Boolean> confirmRegister = new HashMap<>();
 	
-    public static void placeAbilityButton(Player player, ObsAbility ability, int slot, ObsGui gui) 
+    public static void placeAbilityButton(Player player, EchoAbility ability, int slot, ObsGui gui) 
 	{
 	    ItemStack stack = ability.toIcon(player);
 

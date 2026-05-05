@@ -12,7 +12,11 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
@@ -21,7 +25,10 @@ import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.enums.StatType;
+import com.ouroboros.menus.instances.protocolecho.RefinementPage;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
@@ -127,6 +134,16 @@ public class Materia
 	public static Materia get(String internalName)
 	{
 		return materia_registry.getOrDefault(internalName, null);
+	}
+	
+	public static Materia get(ItemStack stack)
+	{
+		ItemMeta meta = stack.getItemMeta();
+		if (meta == null) return null;
+		
+		return meta.getPersistentDataContainer().has(materiaKey) 
+				? get(meta.getPersistentDataContainer().get(materiaKey, PersistentDataType.STRING)) 
+			    : null;
 	}
 	
 	public ItemStack getAsItemStack()
@@ -275,9 +292,91 @@ public class Materia
 		            changed = true;
 		        }
 
-		        if (changed) player.getInventory().setContents(contents);
+		        if (changed) 
+		        {
+		        	player.getInventory().setContents(contents);
+		        	consolidateMateriaStacks(player);
+		        }
 		    }
 		}, 0L, 20L);
 	}
 	
+	private static void consolidateMateriaStacks(Player player)
+	{
+	    PlayerInventory inv = player.getInventory();
+	    ItemStack[] contents = inv.getContents();
+
+	    for (int i = 0; i < contents.length; i++)
+	    {
+	        ItemStack source = contents[i];
+	        if (source == null || source.getType().isAir()) continue;
+	        if (!source.getItemMeta().getPersistentDataContainer().has(materiaTypeKey, PersistentDataType.STRING)) continue;
+
+	        String sourceType = source.getItemMeta().getPersistentDataContainer().get(materiaTypeKey, PersistentDataType.STRING);
+
+	        int maxStack = source.getMaxStackSize();
+	        if (source.getAmount() >= maxStack) continue;
+
+	        for (int j = i + 1; j < contents.length; j++)
+	        {
+	            ItemStack other = contents[j];
+	            if (other == null || other.getType().isAir()) continue;
+	            if (!other.getItemMeta().getPersistentDataContainer().has(materiaTypeKey, PersistentDataType.STRING)) continue;
+
+	            String otherType = other.getItemMeta().getPersistentDataContainer().get(materiaTypeKey, PersistentDataType.STRING);
+
+	            if (!sourceType.equals(otherType)) continue;
+
+	            int space = maxStack - source.getAmount();
+	            int available = other.getAmount();
+
+	            if (available <= space)
+	            {
+	                source.setAmount(source.getAmount() + available);
+	                contents[j] = null;
+	            }
+	            else
+	            {
+	                source.setAmount(maxStack);
+	                other.setAmount(available - space);
+	                break;
+	            }
+
+	            if (source.getAmount() >= maxStack) break;
+	        }
+	    }
+
+	    inv.setContents(contents);
+	}
+	
+	public static void registerRefinementHelper(Plugin plugin)
+	{
+		Bukkit.getPluginManager().registerEvents(new Listener() 
+		{
+			@EventHandler
+        	public void refinementCloseout(InventoryCloseEvent e)
+        	{
+        	    if (!e.getView().getTitle().equals("Protocol α - Refinement Results")) return;
+        	    Player p = (Player) e.getPlayer();
+        	    
+        	    Map<ItemStack, Integer> results = RefinementPage.refineryResult.get(p.getUniqueId());
+        	    int xp = RefinementPage.refineryXp.get(p.getUniqueId());
+        	    if (results != null && !results.isEmpty())
+        	    {
+        	    	results.forEach((item, amount) ->
+        	        {
+        	            ItemStack toDrop = item.clone();
+        	            toDrop.setAmount(amount);
+        	            p.getWorld().dropItemNaturally(p.getLocation(), toDrop);
+        	        });
+        	    	PlayerData.addXP(p, StatType.REFINEMENT, xp);
+        	        RefinementPage.refineryResult.remove(p.getUniqueId());
+        	        RefinementPage.refineryXp.remove(p.getUniqueId());
+        	        PrintUtils.Print(p, "&eYour uncollected results were dropped at your feet.");
+        	    }
+        	}
+        	
+		}, plugin);
+	}
+
 }

@@ -2,7 +2,9 @@ package com.eol.echoes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.eol.echoes.config.EchoConfig;
@@ -12,8 +14,10 @@ import com.eol.echoes.records.PassiveModifier;
 import com.eol.echoes.records.RarityBand;
 import com.eol.enums.CombatStat;
 import com.eol.enums.EchoForm;
+import com.eol.enums.PassiveEchoEffect;
 import com.eol.enums.WeaponModifierCondition;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.NumberUtils;
 
 /**
  * ModifierPipeline is the gacha-style roller that generates a List of WeaponModifiers
@@ -47,12 +51,18 @@ public final class ModifierPipeline
     {
         RarityBand band = EchoConfig.get().getRarityBand(rarity);
         List<Modifier> result = new ArrayList<>();
+        Set<PassiveEchoEffect> rolledPassives = new HashSet<>();
 
         for (int i = 0; i < band.modifierSlots(); i++)
         {
-            Modifier modifier = band.rollIsActive()
-                    ? rollActive(band, form)
-                    : rollPassive(band, form);
+            Modifier modifier;
+            if (band.rollIsActive())
+                modifier = rollActive(band, form, rarity);
+            else
+            {
+                PassiveModifier passive = rollPassive(band, form, rolledPassives);
+                modifier = passive != null ? passive : rollActive(band, form, rarity);
+            }
             result.add(modifier);
         }
 
@@ -63,19 +73,42 @@ public final class ModifierPipeline
     // Active modifier rolling
     // -------------------------------------------------------------------------
 
-    private static ActiveModifier rollActive(RarityBand band, EchoForm form)
+    private static ActiveModifier rollActive(RarityBand band, EchoForm form, Rarity rarity)
     {
         CombatStat stat   = rollCombatStat(form);
-        double magnitude  = band.rollMagnitude();
         boolean isPercent = rollIsPercent(stat);
         WeaponModifierCondition condition = rollCondition(true);
-     
-        // If a bonus should be a whole number, we round accordingly..
-        if (!isPercent && stat == CombatStat.ATTACK) magnitude = Math.round(magnitude * 3); 
-        else magnitude = Math.round(magnitude * 100.0) / 100.0;  // Otherwise, all others: clamp to 2 decimal places
+
+        // Rarity bias: t=0 at rarity 1, t=1 at rarity 7
+        // Low rarity rolls cluster near the floor, high rarity cluster near the ceiling
+        double t = (rarity.getRarity() - 1) / 6.0;
+        double magnitude = rollBiasedMagnitude(band, t);
+
+        // Negative modifier chance scales inversely with rarity
+        // Rarity 1: 40% chance of drawback, Rarity 7: 5% chance
+        double negativeChance = NumberUtils.lerp(0.40, 0.05, t);
+        if (ThreadLocalRandom.current().nextDouble() < negativeChance) magnitude = -magnitude;
+
+        if (!isPercent && stat == CombatStat.ATTACK) magnitude = Math.round(magnitude * 3);
+        else magnitude = Math.round(magnitude * 100.0) / 100.0;
 
         return new ActiveModifier(condition, stat, magnitude, isPercent);
     }
+    
+    private static double rollBiasedMagnitude(RarityBand band, double t)
+    {
+        double floor   = band.magnitudeFloor();
+        double ceiling = band.magnitudeCeiling();
+
+        // Mean slides from floor to ceiling as rarity increases
+        double mean   = NumberUtils.lerp(floor, ceiling, t);
+        double spread = (ceiling - floor) * 0.15; // tighter spread keeps rolls feeling intentional
+
+        double roll = mean + (ThreadLocalRandom.current().nextGaussian() * spread);
+        return Math.max(floor, Math.min(ceiling, roll)); // clamp to valid range
+    }
+
+    
     
     /**
      * Rolls which CombatStat this active modifier targets.
@@ -86,12 +119,9 @@ public final class ModifierPipeline
     {
         CombatStat[] pool = switch (form)
         {
-            // Ranged weapons bias toward crit and attack; attack rating is handled
-            // differently for bows (draw speed) so we exclude ATTACK_RATING here
-            // to avoid generating nonsensical "draw speed" active modifiers.
-            case HOE, SHOVEL, PICKAXE ->
-                new CombatStat[]{ CombatStat.ATTACK, CombatStat.CRIT_RATE };
-
+            case SCYTHE, SPADE, PICKAXE -> new CombatStat[]{ CombatStat.ATTACK, CombatStat.ATTACK_RATING };
+            case BOW, CROSSBOW -> new CombatStat[] {CombatStat.ATTACK, CombatStat.CRIT_RATE, CombatStat.CRIT_MODIFIER};
+            
             // Melee and default: all four stats available
             default -> CombatStat.values();
         };
@@ -119,52 +149,48 @@ public final class ModifierPipeline
     // Passive modifier rolling
     // -------------------------------------------------------------------------
 
-    private static PassiveModifier rollPassive(RarityBand band, EchoForm form)
+    private static PassiveModifier rollPassive(RarityBand band, EchoForm form, Set<PassiveEchoEffect> rolledPassives)
     {
-        String effectKey = rollEffectKey(form);
-        double magnitude = rollPassiveMagnitude(effectKey, band);
-        WeaponModifierCondition condition = rollCondition(false);
-        
-        // Passives that handle flat bonuses will always clamp to 2 decimal places.
-        double roundedMagnitude = Math.round(magnitude * 100.0) / 100.0; 
-        
-        return new PassiveModifier(condition, effectKey, roundedMagnitude);
-    }
-
-    /**
-     * Rolls an effectKey from the pool valid for the given EchoForm.
-     * Ranged-only effects (arrow consumption) are excluded from melee forms,
-     * and melee-only effects are excluded from tools.
-     */
-    private static String rollEffectKey(EchoForm form)
-    {
-        List<String> pool = new ArrayList<>(UNIVERSAL_PASSIVES);
-
+        List<PassiveEchoEffect> pool = new ArrayList<>(UNIVERSAL_PASSIVES);
         pool.addAll(switch (form)
         {
-            case SWORD, AXE, SPEAR, MACE, TRIDENT -> MELEE_PASSIVES;
-            case HOE, SHOVEL, PICKAXE -> TOOL_PASSIVES;
+            case SWORD, HATCHET, POLEARM, HAMMER, ARMAMENT -> MELEE_PASSIVES;
+            case SCYTHE, SPADE, PICKAXE                    -> TOOL_PASSIVES;
+            case BOW, CROSSBOW                             -> RANGED_PASSIVES;
         });
 
-        return pool.get(ThreadLocalRandom.current().nextInt(pool.size()));
+        // Remove already-rolled effects from the pool
+        pool.removeAll(rolledPassives);
+
+        PassiveEchoEffect effectKey = pool.get(ThreadLocalRandom.current().nextInt(pool.size()));
+        
+        // Infinity cannot be on a bow with arrow consumption mitigation, and vice versa.
+        if (effectKey == PassiveEchoEffect.INFINITY) rolledPassives.add(PassiveEchoEffect.IGNORE_ARROW);
+        else if (effectKey == PassiveEchoEffect.IGNORE_ARROW) rolledPassives.add(PassiveEchoEffect.INFINITY);
+        
+        rolledPassives.add(effectKey);
+
+        double magnitude = rollPassiveMagnitude(effectKey, band);
+        double roundedMagnitude = Math.round(magnitude * 100.0) / 100.0;
+        WeaponModifierCondition condition = rollCondition(false);
+
+        return new PassiveModifier(condition, effectKey, roundedMagnitude);
     }
 
     /**
      * Some passive effects have a meaningful magnitude (proc chance, set value),
      * others are binary (fire and forget on condition). This determines which.
      */
-    private static double rollPassiveMagnitude(String effectKey, RarityBand band)
+    private static double rollPassiveMagnitude(PassiveEchoEffect effectKey, RarityBand band)
     {
         return switch (effectKey)
         {
             // Proc-chance passives: magnitude is the chance [0.0-1.0]
-            case "apply_burn", "apply_poison", "apply_expose",
-                 "apply_slowness", "apply_stun", "apply_fatigue" ->
-                band.rollMagnitude();
+            case EXPOSE, BURNING, POISONOUS, SLOWING,
+        	FATIGUING, STUNNING, IGNORE_ARROW, KNOCKBACK -> band.rollMagnitude();
 
             // Set-value passives: magnitude is the new value
-            case "set_attack_rate" ->
-                1.0 + ThreadLocalRandom.current().nextDouble(); // 1.0 - 2.0 range
+            case SET_ATTACK_RATE -> 1.0 + ThreadLocalRandom.current().nextDouble();
 
             // Binary passives: magnitude is unused
             default -> 0.0;
@@ -198,11 +224,14 @@ public final class ModifierPipeline
         WeaponModifierCondition.UNDEAD,
         WeaponModifierCondition.LIVING,
         WeaponModifierCondition.FLYING,
-        WeaponModifierCondition.AQUATIC,
+        WeaponModifierCondition.GLACIAL,
+        WeaponModifierCondition.INFERNAL,
+        WeaponModifierCondition.GROUNDED,
+        WeaponModifierCondition.COSMIC,
+        WeaponModifierCondition.OCCULTIC,
+        WeaponModifierCondition.ELEMENTAL,
         WeaponModifierCondition.BUGS,
         WeaponModifierCondition.RAID,
-        WeaponModifierCondition.END,
-        WeaponModifierCondition.NETHER,
     };
 
     /** Conditions that make sense for passive/environmental modifiers. */
@@ -222,24 +251,31 @@ public final class ModifierPipeline
     };
 
     /** Passive effects available to all weapon/tool forms. */
-    private static final List<String> UNIVERSAL_PASSIVES = Arrays.asList(
-        "apply_burn",
-        "apply_poison",
-        "apply_expose",
-        "apply_slowness",
-        "apply_fatigue",
-        "movement_speed",
-        "knockback"
+    private static final List<PassiveEchoEffect> UNIVERSAL_PASSIVES = Arrays.asList(
+    	PassiveEchoEffect.MOVEMENT_SPEED
     );
 
     /** Passive effects exclusive to melee weapon forms (SWORD, AXE, SPEAR). */
-    private static final List<String> MELEE_PASSIVES = Arrays.asList(
-        "apply_stun",
-        "set_attack_rate"
+    private static final List<PassiveEchoEffect> MELEE_PASSIVES = Arrays.asList(
+		PassiveEchoEffect.EXPOSE,
+		PassiveEchoEffect.BURNING,
+		PassiveEchoEffect.POISONOUS,
+		PassiveEchoEffect.SLOWING,
+		PassiveEchoEffect.FATIGUING,
+		PassiveEchoEffect.STUNNING,
+		PassiveEchoEffect.SET_ATTACK_RATE,
+		PassiveEchoEffect.KNOCKBACK
     );
 
+    /** Passive Effects exclusive to ranged weapon forms */
+    private static final List<PassiveEchoEffect> RANGED_PASSIVES = Arrays.asList(
+    		PassiveEchoEffect.IGNORE_ARROW,
+    		PassiveEchoEffect.NIMBLE,
+    		PassiveEchoEffect.INFINITY
+    );
+    
     /** Passive effects for tool forms (HOE, SHOVEL, PICKAXE). */
-    private static final List<String> TOOL_PASSIVES = List.of(
-        // Future codes will be implemented, for now, tools share universal passives.
+    private static final List<PassiveEchoEffect> TOOL_PASSIVES = List.of(
+        PassiveEchoEffect.LUCKY
     );
 }

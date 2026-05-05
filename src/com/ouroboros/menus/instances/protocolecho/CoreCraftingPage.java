@@ -42,7 +42,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.INFERNO);
-			build();
+			GuiHandler.reload(p);
 		});
 
 		GuiButton.button(Material.NAUTILUS_SHELL).setName("&r&fCraft "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&e Core").setLore(setCoreLore(data, ElementType.GLACIO)).place(this, 21, e->
@@ -50,7 +50,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.GLACIO);
-			build();
+			GuiHandler.reload(p);
 		});
 
 		GuiButton.button(Material.RESIN_CLUMP).setName("&r&fCraft "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&e Core").setLore(setCoreLore(data, ElementType.GEO)).place(this, 23, e->
@@ -58,7 +58,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.GEO);
-			build();
+			GuiHandler.reload(p);
 		});
 
 		GuiButton.button(Material.AMETHYST_SHARD).setName("&r&fCraft "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&e Essence").setLore(setCoreLore(data, ElementType.AERO)).place(this, 24, e->
@@ -66,7 +66,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.AERO);
-			build();
+			GuiHandler.reload(p);
 		});
 
 		GuiButton.button(Material.END_CRYSTAL).setName("&r&fCraft "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&e Essence").setLore(setCoreLore(data, ElementType.CELESTIO)).place(this, 13, e->
@@ -74,7 +74,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.CELESTIO);
-			build();
+			GuiHandler.reload(p);
 		});
 
 		GuiButton.button(Material.ECHO_SHARD).setName("&r&fCraft "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&e Essence").setLore(setCoreLore(data, ElementType.COSMO)).place(this, 22, e->
@@ -82,7 +82,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.COSMO);
-			build();
+			GuiHandler.reload(p);
 		});
 
 		GuiButton.button(Material.WITHER_SKELETON_SKULL).setName("&r&fCraft "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&e Essence").setLore(setCoreLore(data, ElementType.MORTIO)).place(this, 31, e->
@@ -90,7 +90,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.MORTIO);
-			build();
+			GuiHandler.reload(p);
 		});
 		
 		GuiButton.button(Material.TOTEM_OF_UNDYING).setName("&r&fCraft "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&e Essence").setLore(setCoreLore(data, ElementType.HERESIO)).place(this, 40, e->
@@ -98,7 +98,7 @@ public class CoreCraftingPage extends ObsGui
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			addCore(p, ElementType.HERESIO);
-			build();
+			GuiHandler.reload(p);
 		});
 		
 		//Exits

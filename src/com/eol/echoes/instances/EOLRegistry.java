@@ -1,6 +1,9 @@
 package com.eol.echoes.instances;
 
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.NamespacedKey;
@@ -8,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
 
@@ -33,7 +37,7 @@ public final class EOLRegistry
 
     public static final NamespacedKey EOL_TARGET_KEY = new NamespacedKey(Ouroboros.instance, "echo_eol_target");
 
-    private static final Map<String, AbstractEOL> registry = new HashMap<>();
+    public static final Map<String, AbstractEOL> registry = new HashMap<>();
 
     // -------------------------------------------------------------------------
     // Registration
@@ -117,5 +121,28 @@ public final class EOLRegistry
         stack.setItemMeta(meta);
         
         return stack;
+    }
+    
+    public static void itemInit() 
+    {
+        List<Class<? extends AbstractEOL>> itemClasses = Arrays.asList(
+           LuminusBroadsword.class
+           
+        );
+        
+        for (Class<? extends AbstractEOL> clazz : itemClasses) 
+        {
+            try 
+            {
+                Constructor<? extends AbstractEOL> constructor = clazz.getDeclaredConstructor();
+                constructor.setAccessible(true);
+                AbstractEOL instance = constructor.newInstance();
+                register(instance);
+            } 
+            catch (Exception e) 
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }

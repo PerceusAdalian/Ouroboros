@@ -24,7 +24,7 @@ public class Diffindo extends Spell
 
 	public Diffindo() 
 	{
-		super("Diffindo", "diffindo", Material.WIND_CHARGE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 150, 3.5, true, false,
+		super("Diffindo", "diffindo", Material.WIND_CHARGE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.FOUR, 150, 3.5, true, false,
 				"&r&fDeal 45&c♥&f &e&lSever&r&f damage to &6target &7(30m | &cPVP&7: &c15♥&7)","",
 				"&r&7&oIn &r&eFantasia's Academy for Mystical Arts&r&7&o, this spell is formally registered",
 				"&r&7as '&d&oSlicing Tempest&r&7&o', however, colloquially known as '&r&d&oDiffindo&r&7&o'.");

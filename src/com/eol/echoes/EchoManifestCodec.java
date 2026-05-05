@@ -17,6 +17,7 @@ import com.eol.enums.CombatStat;
 import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
+import com.eol.enums.PassiveEchoEffect;
 import com.eol.enums.WeaponModifierCondition;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -95,19 +96,6 @@ public class EchoManifestCodec
         return fromJson(json);
     }
  
-    /**
-     * Convenience: returns true if the item carries a manifest (i.e. is an Echo).
-     */
-    public static boolean isEcho(ItemStack item)
-    {
-        if (item == null) return false;
-        
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return false;
-        
-        return meta.getPersistentDataContainer().has(MANIFEST_KEY, PersistentDataType.STRING);
-    }
- 
     // -------------------------------------------------------------------------
     // Serialization
     // -------------------------------------------------------------------------
@@ -151,7 +139,7 @@ public class EchoManifestCodec
             {
                 m.addProperty("type",      "passive");
                 m.addProperty("condition", passive.condition().name());
-                m.addProperty("effectKey", passive.effectKey());
+                m.addProperty("effectKey", passive.effectKey().toString());
                 m.addProperty("magnitude", passive.magnitude());
             }
             mods.add(m);
@@ -232,7 +220,7 @@ public class EchoManifestCodec
             }
             else if (type.equals("passive"))
             {
-                String effectKey = m.get("effectKey").getAsString();
+                PassiveEchoEffect effectKey = PassiveEchoEffect.valueOf(m.get("effectKey").getAsString());
                 double magnitude = m.get("magnitude").getAsDouble();
                 modifiers.add(new PassiveModifier(condition, effectKey, magnitude));
             }

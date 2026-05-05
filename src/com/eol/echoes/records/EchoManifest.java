@@ -7,6 +7,7 @@ import com.eol.echoes.EchoData;
 import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
+import com.eol.enums.PassiveEchoEffect;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
 
@@ -79,5 +80,23 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
     public List<Modifier> getPassiveModifiers()
     {
         return modifiers.stream().filter(m -> !m.isActive()).toList();
+    }
+    
+    public boolean containsPassiveModifier(PassiveEchoEffect effect)
+    {
+        return modifiers().stream()
+            .filter(m -> !m.isActive())
+            .map(m -> (PassiveModifier) m)
+            .anyMatch(m -> m.effectKey() == effect);
+    }
+
+    public PassiveModifier getPassiveModifier(PassiveEchoEffect effect)
+    {
+        return modifiers().stream()
+            .filter(m -> !m.isActive())
+            .map(m -> (PassiveModifier) m)
+            .filter(m -> m.effectKey() == effect)
+            .findFirst()
+            .orElse(null);
     }
 }

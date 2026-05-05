@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -46,10 +47,11 @@ public class GuiHandler implements Listener
 	        if (stack == null || stack.getType().isAir()) continue;
 	        ItemMeta meta = stack.getItemMeta();
 	        if (meta == null) continue;
-
+	        
 	        PersistentDataContainer pdc = meta.getPersistentDataContainer();
 	        pdc.set(NOISE_KEY, PersistentDataType.LONG, Random.newSeed());
 	        pdc.set(SESSION_KEY, PersistentDataType.LONG, sessionTime);
+	        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 	        stack.setItemMeta(meta);
 	    }
 	    

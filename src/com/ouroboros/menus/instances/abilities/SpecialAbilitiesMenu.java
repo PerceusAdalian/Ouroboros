@@ -7,10 +7,9 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.special.Prometheus;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class SpecialAbilitiesMenu extends ObsGui
@@ -24,7 +23,6 @@ public class SpecialAbilitiesMenu extends ObsGui
 	@Override
 	protected void build() 
 	{
-		GuiButton.placeAbilityButton(player, new Prometheus(), 10, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Ability Main Page").place(this, 37, e->

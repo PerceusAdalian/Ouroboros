@@ -18,7 +18,7 @@
 #                           (as a decimal: 0.10 = 10%)
 #   magnitude_ceiling     - maximum rolled magnitude for any modifier
 #
-# Rarity 1 = Common, Rarity 5 = Legendary
+# Rarity 1 = Common, Rarity 5 = Legendary, Rarity 6 = Special EOLs, Rarity 7 = Unique (Story Related)
 # ------------------------------------------------------------
 
 rarity_bands:
@@ -52,14 +52,12 @@ rarity_bands:
     magnitude_floor: 0.35
     magnitude_ceiling: 0.65
 
-  # Rarity 6 - reserved for special/unobtainable catalysts (catalyst_6)
   6:
     modifier_slots: 6
     active_modifier_chance: 0.85
     magnitude_floor: 0.50
     magnitude_ceiling: 0.85
 
-  # Rarity 7 - calamity tier, catalyst_7; likely hand-authored EOL territory
   7:
     modifier_slots: 7
     active_modifier_chance: 1.0
@@ -71,13 +69,6 @@ rarity_bands:
 # ------------------------------------------------------------
 # Each EchoMaterial tier defines the base stat ranges that
 # StatResolver rolls within when generating EchoData.
-#
-#   base_attack_min/max   - flat attack damage range
-#   crit_rate_base        - starting critical hit chance (decimal)
-#   crit_modifier_ceiling - maximum possible crit multiplier
-#
-# Attack Rating and Durability are determined by the Binding,
-# not the material, so they are not defined here.
 # ------------------------------------------------------------
 
 material_stats:
@@ -137,7 +128,7 @@ material_stats:
     crit_rate_base: 0.30
     crit_modifier_ceiling: 3.0
 
-  MACE:
+  HAMMER:
     base_attack_min: 75
     base_attack_max: 150
     durability_min: 1000
@@ -145,13 +136,29 @@ material_stats:
     crit_rate_base: 0.05
     crit_modifier_ceiling: 1.5
 
-  TRIDENT:
+  ARMAMENT:
     base_attack_min: 50
     base_attack_max: 125
     durability_min: 450
     durability_max: 2000
     crit_rate_base: 0.25
     crit_modifier_ceiling: 2.0
+
+  BOW:
+    base_attack_min: 5
+    base_attack_max: 50
+    durability_min: 400
+    durability_max: 1000
+    crit_rate_base: 0.05
+    crit_modifier_ceiling: 2.0
+
+  CROSSBOW:
+    base_attack_min: 50
+    base_attack_max: 100
+    durability_min: 500
+    durability_max: 1500
+    crit_rate_base: 0.10
+    crit_modifier_ceiling: 4.0
 
 # ------------------------------------------------------------
 # Binding Stats
@@ -170,10 +177,10 @@ binding_stats:
 # MateriaType.STRING - light, fast, crit-favoring
 # Fast tempo — dagger/rapier feel
   STRING:
-    attack_rating_min: 4.0
-    attack_rating_max: 5.0
+    attack_rating_min: 2.0
+    attack_rating_max: 4.5
     durability_multiplier: 0.75
-    crit_rate_bonus: 0.05
+    crit_rate_bonus: 0.1
     attack_bonus: 0
 
 # MateriaType.PELT - balanced, slightly durable
@@ -182,14 +189,14 @@ binding_stats:
     attack_rating_min: 2.0
     attack_rating_max: 4.0
     durability_multiplier: 1.25
-    crit_rate_bonus: 0.0
-    attack_bonus: 1
+    crit_rate_bonus: 0.05
+    attack_bonus: 4
 
 # MateriaType.LEATHER - heavy grip, trades speed for damage and durability
 # Slow tempo — greatsword/hammer feel
   LEATHER:
     attack_rating_min: 1.0
-    attack_rating_max: 3.5
+    attack_rating_max: 2.5
     durability_multiplier: 1.75
-    crit_rate_bonus: -0.03
-    attack_bonus: 4
+    crit_rate_bonus: -0.1
+    attack_bonus: 10

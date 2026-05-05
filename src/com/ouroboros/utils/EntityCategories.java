@@ -37,7 +37,7 @@ public class EntityCategories
 	
 	public static final Set<EntityType> calamity = EnumSet.of(EntityType.ELDER_GUARDIAN,EntityType.ENDER_DRAGON,EntityType.WARDEN,EntityType.WITHER);
 	
-	public static final Set<EntityType> arcano_mobs = EnumSet.of(EntityType.WITCH, EntityType.VEX, EntityType.ILLUSIONER, EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN);
+	public static final Set<EntityType> arcano_mobs = EnumSet.of(EntityType.WITCH,EntityType.CREAKING,EntityType.VEX, EntityType.ILLUSIONER, EntityType.ELDER_GUARDIAN,EntityType.GUARDIAN);
 	
 	public static final Set<EntityType> celestio_mobs = EnumSet.of(EntityType.ALLAY,EntityType.CAT,EntityType.COW,EntityType.GLOW_SQUID,
 			EntityType.MOOSHROOM,EntityType.MULE,EntityType.PANDA,EntityType.FOX,EntityType.RABBIT,EntityType.SHEEP,
@@ -49,7 +49,7 @@ public class EntityCategories
 	public static final Set<EntityType> inferno_mobs = EnumSet.of(EntityType.BLAZE,EntityType.MAGMA_CUBE,
 			EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,EntityType.HOGLIN,EntityType.STRIDER);
 	
-	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.AXOLOTL,EntityType.PUFFERFISH,EntityType.COD,EntityType.CREAKING,EntityType.DOLPHIN
+	public static final Set<EntityType> glacio_mobs	 = EnumSet.of(EntityType.AXOLOTL,EntityType.PUFFERFISH,EntityType.COD,EntityType.DOLPHIN
 			,EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.BOGGED,
 			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.POLAR_BEAR, EntityType.NAUTILUS);
 	
@@ -65,10 +65,24 @@ public class EntityCategories
 	public static final Set<EntityType> heresio_mobs = EnumSet.of(EntityType.CREEPER,EntityType.WITHER,EntityType.VINDICATOR,EntityType.EVOKER,
 			EntityType.PILLAGER,EntityType.RAVAGER, EntityType.ZOMBIE_VILLAGER);
 
+	public static final Set<EntityType> bugs = EnumSet.of(EntityType.BEE, EntityType.SILVERFISH, EntityType.SPIDER, EntityType.CAVE_SPIDER);
+	
+	public static final Set<EntityType> elemental = EnumSet.of(EntityType.BLAZE,EntityType.MAGMA_CUBE,
+			EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,EntityType.HOGLIN,EntityType.STRIDER,
+			EntityType.AXOLOTL,EntityType.PUFFERFISH,EntityType.COD,EntityType.DOLPHIN,
+			EntityType.GLOW_SQUID,EntityType.SALMON,EntityType.SNOW_GOLEM,EntityType.SQUID,EntityType.TADPOLE,EntityType.BOGGED,
+			EntityType.TROPICAL_FISH,EntityType.TURTLE,EntityType.POLAR_BEAR, EntityType.NAUTILUS,
+			EntityType.BAT,EntityType.GHAST,EntityType.BEE,EntityType.BREEZE,
+			EntityType.CHICKEN,EntityType.HAPPY_GHAST,EntityType.PARROT,
+			EntityType.ARMADILLO,EntityType.DONKEY,EntityType.IRON_GOLEM,
+			EntityType.CAMEL,EntityType.CAVE_SPIDER,EntityType.SPIDER,EntityType.GOAT,EntityType.PIG,EntityType.HORSE,
+			EntityType.LLAMA,EntityType.OCELOT,EntityType.SLIME,EntityType.SNIFFER,EntityType.SILVERFISH,EntityType.FROG);
+
 	public static boolean canAccept(Entity entity, EntityCategory category)
 	{
 		return EntityCategory.get(category).contains(entity.getType()) ? true : false;
 	}
+	
 	
 	private static final Map<EntityCategory, Set<ElementType>> WEAKNESSES = Map.of(
 	    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.MORTIO, ElementType.COSMO, ElementType.HERESIO),

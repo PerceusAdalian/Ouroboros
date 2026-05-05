@@ -3,7 +3,10 @@ package com.eol.materia.components;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
+import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.Symbols;
 
 public class Catalysts 
 {
@@ -92,5 +95,23 @@ public class Catalysts
 				"&r&7&oAn echo of the distant past. Unstable waveform emanates..",
 				"&r&7&oThere's a memory engram encoded within. It's a memory of.. you?",
 				"&r&7&o\"&r&3&oWell this.. this probably shouldn't exist.&r&7&o\""));
+		
+		//-------------------------------EOL CATALYSTS-------------------------------//
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.CELESTIO)+Symbols.EOL+"cho Of Luminus",
+				"echo_of_luminus",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				"&r&e&oMy sweet sister.. thank you for watching over me, even from beyond.",
+				"&r&e&oSince we were children, &r&e&l&ngold&r&e&o was always the metal I admired most--",
+				"&r&e&oyou always said it reminded you of morning light. Do you remember",
+				"&r&e&othe day Father took us into the woods to hunt for &r&e&l&nrabbit pelt&r&e&o?",
+				"&r&e&oYou were so patient teaching me the prayers of &r&e&l&nCelestio&r&e&o,",
+				"&r&e&othe same magic you devoted yourself to until the very end.",
+				"&r&e&oI carry these memories like a forge carries heat. I miss you, sister.."));
+		
 	}
 }

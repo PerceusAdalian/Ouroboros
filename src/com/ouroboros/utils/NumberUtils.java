@@ -7,4 +7,9 @@ public class NumberUtils
 	    double t = Math.min(1.0, (double)(clampValue - minLevel) / (maxLevel - minLevel));
 	    return minVal + t * (maxVal - minVal);
 	}
+	
+	public static double lerp(double floor, double ceiling, double t)
+    {
+        return floor + (ceiling - floor) * t;
+    }
 }

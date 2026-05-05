@@ -9,11 +9,12 @@ import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
+import com.lol.spells.instances.aero.Depulso;
 import com.lol.spells.instances.aero.Diffindo;
+import com.lol.spells.instances.aero.RazorWind;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
-import com.lol.spells.instances.aero.Depulso;
 import com.lol.spells.instances.aero.HealingCurrent;
 import com.lol.spells.instances.aero.Levioso;
 import com.lol.spells.instances.aero.Smite;
@@ -50,15 +51,16 @@ public class AeroSpellsPage extends ObsGui
 		
 		// Three Rarity
 		GuiButton.placeSpellButton(player, new ChainLightning(), 19, this);
-		GuiButton.placeSpellButton(player, new HealingCurrent(), 20, this);
-		GuiButton.placeSpellButton(player, new Fly(), 21, this);
-		
+		GuiButton.placeSpellButton(player, new RazorWind(), 20, this);
+		GuiButton.placeSpellButton(player, new HealingCurrent(), 21, this);
+		GuiButton.placeSpellButton(player, new Fly(), 22, this);
 		// Four Rarity
-		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 22, this);
+		GuiButton.placeSpellButton(player, new GalvanicNeedle(), 23, this);
+		GuiButton.placeSpellButton(player, new Diffindo(), 24, this);
+		
 		// Five Rarity
-		GuiButton.placeSpellButton(player, new Diffindo(), 23, this);
-		GuiButton.placeSpellButton(player, new Thunderstorm(), 24, this);
-		GuiButton.placeSpellButton(player, new Vaporize(), 25, this);
+		GuiButton.placeSpellButton(player, new Thunderstorm(), 25, this);
+		GuiButton.placeSpellButton(player, new Vaporize(), 28, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

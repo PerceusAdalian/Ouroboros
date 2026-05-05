@@ -33,4 +33,7 @@ public sealed interface Modifier permits ActiveModifier, PassiveModifier
      * Implemented by ActiveModifier; PassiveModifier returns false.
      */
     boolean isActive();
+    
+    double getMagnitude();
+    
 }

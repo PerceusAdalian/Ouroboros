@@ -50,7 +50,10 @@ public class Collapse extends Spell
 		
 		List<Entity> nearby = RayCastUtils.getNearbyEntities(target, 20);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-		{			
+		{		
+			ObsParticles.drawX(target.getLocation(), p.getEyeLocation().getDirection(), 8, 0.4, 0.1, false, Particle.END_ROD, null);
+			ObsParticles.drawX(target.getLocation(), p.getEyeLocation().getDirection(), 8, 0.4, 0.1, false, Particle.GLOW_SQUID_INK, null);
+			
 			if (nearby.isEmpty()) // No damage possible; there aren't any mobs to deal damage/crush inward towards the mob, so it just "fails"
 			{
 				EntityEffects.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.AMBIENT);

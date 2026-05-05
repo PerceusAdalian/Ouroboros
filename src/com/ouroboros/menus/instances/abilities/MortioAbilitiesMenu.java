@@ -7,8 +7,8 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.combat.ReapAndSew;
 import com.ouroboros.menus.ObsGui;
+import com.eol.echoes.abilities.instances.combat.ReapAndSew;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 

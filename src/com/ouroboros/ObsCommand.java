@@ -29,6 +29,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.EchoForge;
+import com.eol.echoes.abilities.AbilityRegistry;
+import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.instances.EolGenerator;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
@@ -37,8 +40,6 @@ import com.lol.enums.SpellType;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.lol.wand.Wand;
-import com.ouroboros.abilities.AbilityRegistry;
-import com.ouroboros.abilities.instances.ObsAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.ElementType;
@@ -279,7 +280,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			
 			if (args[1].equals("ability") && AbilityRegistry.abilityRegistry.containsKey(args[2]) && args.length == 5)
 			{
-				ObsAbility ability = AbilityRegistry.abilityRegistry.get(args[2]);
+				EchoAbility ability = AbilityRegistry.abilityRegistry.get(args[2]);
 				Player target = Bukkit.getPlayer(args[3]);
 				if (target == null) return false;
 				boolean toggle = Boolean.parseBoolean(args[4]);
@@ -317,7 +318,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			Player target = Bukkit.getPlayer(args[1]);
 			if (target == null) return false;
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
-			for (ObsAbility ability : AbilityRegistry.abilityRegistry.values())
+			for (EchoAbility ability : AbilityRegistry.abilityRegistry.values())
 			{
 				data.getAbility(ability).setRegistered(true);
 			}
@@ -529,6 +530,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			if (args[1].equals("echo") && args.length == 6)
 			{
 				Materia catalyst = null;
+				ItemStack markedCatalyst = null;
+				
 				Materia base = null;
 				Materia binding = null;
 				Materia element_core = null;
@@ -537,7 +540,6 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				if (Materia.get(args[3]) != null) base = Materia.get(args[3]);
 				if (Materia.get(args[4]) != null) binding = Materia.get(args[4]);
 				if (Materia.get(args[5]) != null) element_core = Materia.get(args[5]);
-				
 				
 				if (catalyst.getMateriaComponent() != MateriaComponent.CATALYST)
 					PrintUtils.OBSFormatError(p, "Catalyst Invalid: "+catalyst == null ? "null" : catalyst.getInternalName() + ", "+catalyst.getMateriaComponent().getLabel());
@@ -551,10 +553,18 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				if (element_core != null && element_core.getMateriaComponent() != MateriaComponent.ELEMENT_CORE)
 					PrintUtils.OBSFormatError(p, "Base Invalid: "+ element_core == null ? "null" : element_core.getInternalName() + ", "+element_core.getMateriaComponent().getLabel());
 				
-				ItemStack echo = EchoForge.forge(catalyst, base, binding, element_core);
-				p.getInventory().addItem(echo);
+				if (catalyst.getInternalName().equals("echo_of_luminus")) markedCatalyst = EolGenerator.generateLuminusCatalyst();
+				
+				ItemStack echo = EchoForge.forge(markedCatalyst != null ? markedCatalyst : catalyst.getAsItemStack(MateriaState.CATALYST), base, binding, element_core);
+				if (echo == null)
+				{
+				    PrintUtils.OBSConsoleError("Forge Failed -- generated echo returned null!");
+				    return true;
+				}
+				InventoryUtils.add(p, echo);
 				PrintUtils.OBSFormatDebug(p, "Echo Generated Successfully!", "Echo Generation");
 			}
+			
 		}
 		
 		if (args[0].equals("money")) 

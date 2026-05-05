@@ -52,8 +52,13 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
             case PASSIVE  		-> "Passive";
             case UNDEAD    		-> "PVE: Undead";
             case LIVING    		-> "PVE: Living";
-            case FLYING    		-> "PVE: Flying";
-            case AQUATIC   		-> "PVE: Aquatic";
+            case FLYING    		-> "PVE: Arial";
+            case GLACIAL   		-> "PVE: Glacial";
+            case INFERNAL 		-> "PVE: Infernal";
+            case GROUNDED		-> "PVE: Grounded";
+            case COSMIC			-> "PVE: Cosmic";
+            case OCCULTIC		-> "PVE: Occultic";
+            case ELEMENTAL 		-> "PVE: Elementals";
             case BUGS      		-> "PVE: Bugs";
             case RAID      		-> "PVE: Raid";
             case OVERWORLD 		-> "Overworld";
@@ -66,7 +71,23 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
             case END            -> "World: The End";
             case COLDBIOMES   	-> "Biome: Cold";
             case HOTBIOMES    	-> "Biome: Hot";
-            case GENERICBIOMES 	-> "Biome";
+            case GENERICBIOMES 	-> "Biome: Any";
         };
+    }
+    
+    /**
+     * @return True if the modifier is/should be expressed as a percent value.
+     */
+    public boolean isPercent()
+    {
+    	return isPercent;
+    }
+    
+    /**
+     * @return Returns the magnitude of the modifier's stat.
+     */
+    public double getMagnitude()
+    {
+    	return magnitude;
     }
 }

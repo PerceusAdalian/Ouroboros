@@ -363,22 +363,24 @@ public class MobData
 	
 	public void damageArmor(double value, ElementType element)
 	{
-		double armorDamageCoeff = switch (element)
+	    double armorDamageCoeff = switch (element)
 	    {
 	        case CORROSIVE        -> 1.5;
 	        case PUNCTURE, PIERCE -> 1.25;
-	        default 			  -> 0.5;
+	        default               -> 0.5;
 	    };
-	    
-		if (isBreak()) return;
-		int currentArmor = getArmor(false);
+
+	    if (isBreak()) return;
+	    int currentArmor = getArmor(false);
 	    int newArmor = (int)(currentArmor - (value * armorDamageCoeff));
-		setArmor(newArmor, false);
-		if (getArmor(false) <= 0)
-		{
-			setBreak();
-		}
-		if (element == ElementType.IMPALE || element == ElementType.CRUSH) setBreak();
+	    setArmor(newArmor, false);
+
+	    if (getArmor(false) <= 0 || element == ElementType.IMPALE || element == ElementType.CRUSH)
+	    {
+	        setBreak();
+	    }
+
+	    save();
 	}
 	
 	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element)
@@ -466,7 +468,7 @@ public class MobData
 	 */
 	public void setBreak()
 	{
-	    setArmor(0, false);
+		setArmor(0, false);
 	    setBreak(true);
 	    
 	    Entity entity = Bukkit.getEntity(uuid);

@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -21,6 +27,8 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.materia.Materia;
+import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
@@ -51,10 +59,11 @@ public abstract class AbstractEOL
     private final List<Modifier> modifiers;
     private final String lockedAbilityKey;   // nullable
     private final String[] description;
-
+    private boolean isIntegrityArmament;
     protected AbstractEOL(
     		String displayName,
             String internalName,
+            boolean isIntegrityArmament,
             EOLRecipe recipe,
             EchoForm form,
             ElementiumSlotType slotType,
@@ -62,14 +71,15 @@ public abstract class AbstractEOL
             @Nullable String lockedAbilityKey,
             String... description)
     {
-        this.displayName      = displayName;
-        this.internalName     = internalName;
-        this.recipe           = recipe;
-        this.form             = form;
-        this.slotType         = slotType;
-        this.modifiers        = List.copyOf(modifiers);
-        this.lockedAbilityKey = lockedAbilityKey;
-        this.description      = description;
+        this.displayName      	 = displayName;
+        this.internalName        = internalName;
+        this.isIntegrityArmament = isIntegrityArmament;
+        this.recipe           	 = recipe;
+        this.form                = form;
+        this.slotType            = slotType;
+        this.modifiers        	 = List.copyOf(modifiers);
+        this.lockedAbilityKey 	 = lockedAbilityKey;
+        this.description      	 = description;
     }
 
     // -------------------------------------------------------------------------
@@ -86,28 +96,25 @@ public abstract class AbstractEOL
      * @param catalyst    The special catalyst Materia (rarity used as EOL rarity)
      * @return The forged EOL ItemStack, or null if stat resolution fails
      */
-    public final ItemStack forge(Materia base, Materia binding, Materia elementCore, Materia catalyst)
+    public final ItemStack forge(Materia catalyst, Materia base, Materia binding, Materia elementCore, boolean isIntegrityArmament)
     {
-        // Roll stats from the provided Materia pair
-        EchoData stats = StatResolver.resolve(base, binding);
+        EchoData stats = StatResolver.resolve(base, binding, catalyst.getRarity());
         if (stats == null) return null;
 
         Rarity rarity = catalyst.getRarity();
         EchoMaterial echoMaterial = MateriaTypeResolver.toEchoMaterial(base.getMateriaType());
 
-        // Build the manifest from authored data + rolled stats
         EchoManifest manifest = new EchoManifest(
                 buildEchoId(catalyst),
                 rarity,
                 stats,
                 modifiers,
                 slotType,
-                null, // EOLs will never have an "equipped ability", this is just to distinguish non-EOLs.
-                lockedAbilityKey, 
+                null,
+                lockedAbilityKey,
                 form,
                 echoMaterial);
 
-        // Build the ItemStack
         Material material = EchoFormResolver.toBukkitMaterial(form, echoMaterial);
         if (material == null) return null;
 
@@ -116,8 +123,13 @@ public abstract class AbstractEOL
         if (meta == null) return null;
 
         meta.setDisplayName(PrintUtils.ColorParser(displayName));
-        meta.setLore(buildLore(manifest, echoMaterial));
-        meta.setEnchantmentGlintOverride(true); // EOLs always glow
+        meta.setLore(buildLore(manifest, echoMaterial, isIntegrityArmament));
+        meta.setEnchantmentGlintOverride(true);
+        meta.setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+
+        // Apply attack speed — EOLs bypass EchoForge.buildItem so this must live here too
+        applyAttackSpeed(meta, manifest);
 
         stack.setItemMeta(meta);
         EchoManifestCodec.write(stack, manifest);
@@ -125,11 +137,22 @@ public abstract class AbstractEOL
         return stack;
     }
 
+    private void applyAttackSpeed(ItemMeta meta, EchoManifest manifest)
+    {
+        meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+        double attacksPerSecond = manifest.baseStats().getAttackRating();
+        if (attacksPerSecond <= 0) return;
+        double delta = attacksPerSecond - 4.0;
+        NamespacedKey key = new NamespacedKey(Ouroboros.instance, "echo_attack_speed");
+        AttributeModifier mod = new AttributeModifier(key, delta, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY);
+        meta.addAttributeModifier(Attribute.ATTACK_SPEED, mod);
+    }
+
     // -------------------------------------------------------------------------
     // Lore construction
     // -------------------------------------------------------------------------
 
-    private List<String> buildLore(EchoManifest manifest, EchoMaterial echoMaterial)
+    private List<String> buildLore(EchoManifest manifest, EchoMaterial echoMaterial, boolean isIntegrityArmament)
     {
         List<String> lore = new ArrayList<>(EchoLoreBuilder.build(manifest, echoMaterial));
 
@@ -145,7 +168,8 @@ public abstract class AbstractEOL
 
         // Mark as EOL above the Echo ID
         int idIndex = lore.size() - 1;
-        lore.add(idIndex, PrintUtils.ColorParser("&r&f&lIntegrity Armament"));
+        lore.add(idIndex, PrintUtils.ColorParser(isIntegrityArmament ? 
+        		PrintUtils.color(ObsColors.CELESTIO)+"&lIntegrity Armament&r&f" : PrintUtils.color(ObsColors.HERESIO) + "&lTwilight Armament&r&f"));
 
         return lore;
     }
@@ -207,5 +231,10 @@ public abstract class AbstractEOL
     { 
     	return lockedAbilityKey != null && !lockedAbilityKey.isBlank(); 
     }
+
+	public boolean isIntegrityArmament()
+	{
+		return isIntegrityArmament;
+	}
     
 }

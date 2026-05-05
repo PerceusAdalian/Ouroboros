@@ -7,9 +7,9 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.abilities.instances.combat.Flamelash;
-import com.ouroboros.abilities.instances.combat.ImbueFire;
 import com.ouroboros.menus.ObsGui;
+import com.eol.echoes.abilities.instances.combat.Flamelash;
+import com.eol.echoes.abilities.instances.combat.ImbueFire;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 

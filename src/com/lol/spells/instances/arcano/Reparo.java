@@ -10,7 +10,6 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.eol.echoes.EchoManager;
-import com.eol.echoes.EchoManifestCodec;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
@@ -37,7 +36,7 @@ public class Reparo extends Spell
 		Player p = e.getPlayer();
 		ItemStack offhand = p.getInventory().getItemInOffHand();
 		
-		if (!EchoManifestCodec.isEcho(offhand))
+		if (!EchoManager.isEcho(offhand))
 		{			
 			ItemMeta meta = offhand.getItemMeta();
 			

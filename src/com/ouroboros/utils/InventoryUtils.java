@@ -34,4 +34,5 @@ public class InventoryUtils
 		Map<Integer, ItemStack> leftover = p.getInventory().addItem(stack);
 		leftover.values().forEach(drop -> p.getWorld().dropItemNaturally(p.getLocation(), drop));
 	}
+	
 }

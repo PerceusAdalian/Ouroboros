@@ -81,7 +81,7 @@ public final class EchoForge
         {
             AbstractEOL eol = EOLRegistry.resolveFromCatalyst(catalyst);
             if (eol != null && eol.getRecipe().matches(base, binding, elementCore))
-                return eol.forge(base, binding, elementCore, catalyst);
+                return eol.forge(catalyst, base, binding, elementCore, eol.isIntegrityArmament());
             // Special catalyst present but recipe doesn't match — fall through to procedural
         }
  
@@ -100,6 +100,24 @@ public final class EchoForge
  
         return forgeWeapon(rarity, base, binding, elementCore, echoMaterial);
     }
+    
+    public static ItemStack forge(ItemStack markedCatalystStack, Materia base, Materia binding, Materia elementCore)
+    {
+        Materia catalyst = Materia.get(markedCatalystStack);
+        if (catalyst == null) return null;
+
+        Rarity rarity = catalyst.getRarity();
+        if (rarity == Rarity.NONE) return null;
+
+        if (EOLRegistry.isSpecialCatalyst(markedCatalystStack))
+        {
+            AbstractEOL eol = EOLRegistry.get(EOLRegistry.getEOLTarget(markedCatalystStack));
+            if (eol != null && eol.getRecipe().matches(base, binding, elementCore))
+                return eol.forge(catalyst, base, binding, elementCore, eol.isIntegrityArmament());
+        }
+
+        return forge(catalyst, base, binding, elementCore);
+    }
  
     // -------------------------------------------------------------------------
     // Weapon forge path
@@ -108,7 +126,7 @@ public final class EchoForge
     private static ItemStack forgeWeapon(Rarity rarity, Materia base, Materia binding, Materia elementCore, EchoMaterial echoMaterial)
     {
         // --- Roll stats ---
-        EchoData stats = StatResolver.resolve(base, binding);
+        EchoData stats = StatResolver.resolve(base, binding, rarity);
         if (stats == null)
         {
             warn("StatResolver returned null for base='" + base.getInternalName()
@@ -206,10 +224,11 @@ public final class EchoForge
     {
         EchoForm[] pool = switch (echoMaterial)
         {
-            case MACE    -> new EchoForm[]{ EchoForm.MACE };
-            case TRIDENT -> new EchoForm[]{ EchoForm.TRIDENT };
-            default      -> new EchoForm[]{ EchoForm.SWORD, EchoForm.AXE, EchoForm.SPEAR,
-                                            EchoForm.PICKAXE, EchoForm.SHOVEL, EchoForm.HOE };
+            case HAMMER   -> new EchoForm[]{EchoForm.HAMMER };
+            case ARMAMENT -> new EchoForm[]{EchoForm.ARMAMENT };
+            case BOW 	  -> new EchoForm[]{EchoForm.BOW};
+            case CROSSBOW -> new EchoForm[]{EchoForm.CROSSBOW};
+            default       -> new EchoForm[]{EchoForm.SWORD, EchoForm.HATCHET, EchoForm.POLEARM, EchoForm.PICKAXE, EchoForm.SPADE, EchoForm.SCYTHE};
         };
         return pool[(int)(Math.random() * pool.length)];
     }
@@ -250,7 +269,7 @@ public final class EchoForge
         String materialLabel = PrintUtils.formatEnumName(echoMaterial.name());
         String displayNameLabel;
         
-        if (form == EchoForm.MACE || form == EchoForm.TRIDENT)
+        if (form == EchoForm.HAMMER || form == EchoForm.ARMAMENT || form == EchoForm.BOW || form == EchoForm.CROSSBOW)
         {
         	displayNameLabel = "&r&b&lΣcho&r&f: " + formLabel + " &r&" + rarityColor + "&l" + PrintUtils.getRarityAsNumeralValue(rarity);
         }

@@ -3,7 +3,12 @@ package com.ouroboros;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.echoes.EchoHeldEvent;
+import com.eol.echoes.EchoManager;
+import com.eol.echoes.abilities.AbilityCastHandler;
+import com.eol.echoes.abilities.AbilityRegistry;
 import com.eol.echoes.config.EchoConfig;
+import com.eol.echoes.instances.EOLRegistry;
 import com.eol.materia.Materia;
 import com.eol.materia.MateriaCastHandler;
 import com.eol.materia.components.Bases;
@@ -21,8 +26,6 @@ import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.Warp;
 import com.lol.wand.WandRegistry;
-import com.ouroboros.abilities.AbilityCastHandler;
-import com.ouroboros.abilities.AbilityRegistry;
 import com.ouroboros.accounts.ExpHandler;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiHandler;
@@ -34,6 +37,7 @@ import com.ouroboros.mobs.events.MobDeathEvent;
 import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.objects.BowLimbRecipe;
 import com.ouroboros.objects.ManaGemRecipe;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
@@ -67,6 +71,7 @@ public class Ouroboros extends JavaPlugin
 		PlayerData.initializeDataFolder();
 		MobData.initializeDataFolder();	
 		GeneralEvents.register(instance);
+		EchoManager.registerEventHelpers(instance);
 		MobGenerateEvent.register(instance);
 		MobDeathEvent.register(instance);
 		MobDamageEvent.register(instance);
@@ -93,7 +98,8 @@ public class Ouroboros extends JavaPlugin
 		TrainingWandRecipe.register();
 		ManaGemRecipe.init();
 		ManaGemRecipe.register();
-		
+		BowLimbRecipe.init();
+		BowLimbRecipe.register();
 		ObjectRegistry.itemInit();
 		ObsObjectCastHandler.register(instance);
 		
@@ -112,12 +118,19 @@ public class Ouroboros extends JavaPlugin
 		Bindings.load();
 		ElementCores.load();
 		Materia.convertItemsTask(instance);
+		Materia.registerRefinementHelper(instance);
+		EOLRegistry.itemInit();
 		
 		Outbreak.registerRandomOutbreakTask(instance);
+		
+		EchoHeldEvent.register(instance);
+		EchoHeldEvent.queueBuffTask(instance);
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Materia -- &e&l"+Materia.materia_registry.size());
+		PrintUtils.OBSConsolePrint("&fLoaded &eEOLs&f -- &e&l"+EOLRegistry.registry.size());
+		
 		PrintUtils.OBSConsolePrint("&fΩuroboros -- &aOK");
 	}
 	
