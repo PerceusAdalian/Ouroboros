@@ -3,6 +3,7 @@ package com.eol.echoes.abilities.instances.special;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -23,10 +24,10 @@ public class Radiance extends EchoAbility
 
 	public Radiance()
 	{
-		super("Radiance", "radiance", Material.NETHER_STAR, StatType.MELEE, 0, 0, AbilityType.SPECIALABILITY, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
-				"&r&fRemove &e&l50 &r&b&oDurability&r&f:",
-				"&r&fApplies &e&oExposed&r&7 (10s) &r&fto all nearby entities within 25 &b&ometers&r&f.","",
-				"&r&e&oExposed &r&fEffect: Reveals an entity's location and &6&oBreaks &r&fthem.",
+		super("Luminus' Radiance", "radiance", Material.NETHER_STAR, StatType.MELEE, 0, 0, AbilityType.SPECIALABILITY, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+				"&r&fRemove 50 &r&bDurability&r&f:",
+				"&r&fApplies &e&oExposed &r&fto all nearby &dMobs &7(25m, 10s)","",
+				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",
 				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.");
 	}
 
@@ -37,6 +38,7 @@ public class Radiance extends EchoAbility
 		EntityEffects.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.AMBIENT);
 		if (!RayCastUtils.getNearbyEntities(p, 25, (target)->
 		{
+			if (!(target instanceof LivingEntity) && (target instanceof Player)) return;
 			CelestioEffects.addExposed(target, 10);	
 		})) return -1;
 		return 50;

@@ -13,6 +13,8 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.PassiveEchoEffect;
 import com.eol.enums.WeaponModifierCondition;
+import com.ouroboros.enums.ObsColors;
+import com.ouroboros.utils.PrintUtils;
 
 public class LuminusBroadsword extends AbstractEOL
 {
@@ -26,16 +28,18 @@ public class LuminusBroadsword extends AbstractEOL
 				ElementiumSlotType.CELESTIO, 
 				buildModifiers(), 
 				"radiance", 
-				"&r&fMy &e&oBeloved Sister&r&f-- Always one to make me smile.",
-				"&r&eShe&f gave me this sword so that I may repel both the darkness of &2Twilight&f",
-				"&r&fand the darkness I hold within myself. I bear arms in honor of her,",
-				"&r&fand wish to be by her side in due time. &o'&r&e&oGlory to Her Majesty&r&f&o'...");
+				"My beloved sister—she who never failed to make me smile.",
+				"his blade she entrusted to me, that I might repel the darkness of "+PrintUtils.color(ObsColors.HERESIO)+"Twilight&7",
+				"nd the darkness that festers within my own soul. I carry it in her name,",
+				"and await the day I may stand beside her again.",
+				"&o'&r"+PrintUtils.color(ObsColors.CELESTIO)+"&oGlory to Her Majesty&r&7&o'...");
 	}
 	
+	@SuppressWarnings("null")
 	private static List<Modifier> buildModifiers()
     {
         return List.of(
-            new ActiveModifier(WeaponModifierCondition.UNDEAD,  CombatStat.ATTACK,        0.25, true),
+            new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.ATTACK, 0.25, true),
             new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.CRIT_RATE, 0.30, true),
             new ActiveModifier(WeaponModifierCondition.DURING_NIGHT, CombatStat.CRIT_MODIFIER, 1.0, false),
             new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.EXPOSE, 0.25),

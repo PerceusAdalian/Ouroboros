@@ -153,7 +153,8 @@ public class EchoManifestCodec
     // Deserialization
     // -------------------------------------------------------------------------
  
-    public static EchoManifest fromJson(String json)
+    @SuppressWarnings("null")
+	public static EchoManifest fromJson(String json)
     {
         JsonObject root = GSON.fromJson(json, JsonObject.class);
  

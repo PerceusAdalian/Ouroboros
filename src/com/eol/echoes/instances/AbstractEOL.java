@@ -166,10 +166,10 @@ public abstract class AbstractEOL
                 lore.add(idIndex, PrintUtils.ColorParser("&r&7&o" + description[i]));
         }
 
-        // Mark as EOL above the Echo ID
-        int idIndex = lore.size() - 1;
-        lore.add(idIndex, PrintUtils.ColorParser(isIntegrityArmament ? 
-        		PrintUtils.color(ObsColors.CELESTIO)+"&lIntegrity Armament&r&f" : PrintUtils.color(ObsColors.HERESIO) + "&lTwilight Armament&r&f"));
+        // Mark as EOL at the top
+        lore.add(0, PrintUtils.ColorParser(isIntegrityArmament 
+        		? PrintUtils.color(ObsColors.CELESTIO)+"&lIntegrity Armament&r&f" 
+        		: PrintUtils.color(ObsColors.HERESIO) + "&lTwilight Armament&r&f"));
 
         return lore;
     }
@@ -185,7 +185,8 @@ public abstract class AbstractEOL
     private String buildEchoId(Materia catalyst)
     {
         String shortUUID = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-        return internalName.toUpperCase() + "-" + catalyst.getInternalNameAsID() + "-" + shortUUID;
+        return internalName.toUpperCase().replace(" ", "_")
+                + "-" + shortUUID;
     }
 
     // -------------------------------------------------------------------------

@@ -66,6 +66,7 @@ import com.ouroboros.utils.entityeffects.EntityEffects;
 public class ObsCommand implements CommandExecutor, TabCompleter
 {
 	
+	@SuppressWarnings("null")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) 
 	{

@@ -11,16 +11,18 @@ import com.eol.echoes.abilities.instances.combat.Flamelash;
 import com.eol.echoes.abilities.instances.combat.GeminiSlash;
 import com.eol.echoes.abilities.instances.combat.ImbueFire;
 import com.eol.echoes.abilities.instances.combat.ReapAndSew;
+import com.eol.echoes.abilities.instances.special.Radiance;
 
 public class AbilityRegistry 
 {
 	public static final Map<String, EchoAbility> abilityRegistry = new HashMap<>();
     
+	@SuppressWarnings("null")
 	public static void abilityInit() 
     {
         List<Class<? extends EchoAbility>> itemClasses = Arrays.asList(
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
-            ReapAndSew.class);
+            ReapAndSew.class,Radiance.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

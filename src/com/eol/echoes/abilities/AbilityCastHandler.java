@@ -10,6 +10,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
@@ -31,6 +32,7 @@ public class AbilityCastHandler implements Listener
         if (e.getHand() == null) return;
         if (e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
         if (held == null || held.getType() == Material.AIR) return;
+        if (!EchoManager.isEcho(held)) return;
         
         for (EchoAbility ability : AbilityRegistry.abilityRegistry.values()) 
         {
@@ -42,6 +44,8 @@ public class AbilityCastHandler implements Listener
                 ability.cast(e);
             }
         }
+        
+        
     }
 
 }

@@ -103,10 +103,10 @@ public final class EchoLoreBuilder
             EchoAbility ability = EchoAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
-            lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
+            lore.add(PrintUtils.ColorParser("&r&bCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
             if (ability != null)
                 for (String line : ability.getDescription())
-                    lore.add(line);
+                    lore.add(PrintUtils.ColorParser(line));
         }
         else // Normal Equipped Ability
         {
@@ -117,7 +117,7 @@ public final class EchoLoreBuilder
             	lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
             if (ability != null)
                 for (String line : ability.getDescription())
-                    lore.add(line);
+                	lore.add(PrintUtils.ColorParser(line));
         }
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
@@ -125,7 +125,7 @@ public final class EchoLoreBuilder
         
         int currentDurability = manifest.baseStats().getCurrentDurability();
         int maxDurability = manifest.baseStats().getMaxDurability();
-        lore.add(PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
+        lore.add(lore.size() - 1, PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
         
         // --- Echo ID ---
         lore.add(PrintUtils.ColorParser("&r&7Echo ID: Σ_" + manifest.echoId()));
@@ -146,8 +146,8 @@ public final class EchoLoreBuilder
  
         lore.add(PrintUtils.ColorParser("&r&f&lBase Stats&r&f:"));
         EchoData stats = manifest.baseStats();
-        lore.add(statLine(isBow ? "Puncture Damage" : "Attack Damage",    "&6" + formatStat(stats.getAttack(), false)));
-        lore.add(statLine(isBow ? "Draw Rate" : "Attack Rate",    "&6" + formatStat(stats.getAttackRating(), false)));
+        lore.add(statLine(isBow ? "Puncture Damage" : "Attack Damage", "&6" + formatStat(stats.getAttack(), false)));
+        lore.add(statLine(isBow ? "Draw Rate" : "Attack Rate", "&6" + formatStat(stats.getAttackRating(), false)));
         lore.add(statLine("Critical Rating",  "&6" + formatPercent(stats.getCritRate())));
         lore.add(statLine("Critical Modifier","&6x" + formatDecimal(stats.getCritModifier())));
         lore.add("");
@@ -171,10 +171,10 @@ public final class EchoLoreBuilder
             EchoAbility ability = EchoAbility.fromInternalName(manifest.lockedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : manifest.lockedAbilityKey();
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
-            lore.add(PrintUtils.ColorParser("&r&f&lCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
+            lore.add(PrintUtils.ColorParser("&r&bCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
             if (ability != null)
                 for (String line : ability.getDescription())
-                    lore.add(line);
+                    lore.add(PrintUtils.ColorParser(line));
         }
         else // Normal Equipped Ability
         {
@@ -184,7 +184,7 @@ public final class EchoLoreBuilder
             lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
             if (ability != null)
                 for (String line : ability.getDescription())
-                    lore.add(line);
+                	lore.add(PrintUtils.ColorParser(line));
         }
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
