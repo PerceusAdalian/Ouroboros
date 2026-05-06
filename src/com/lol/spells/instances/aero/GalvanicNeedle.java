@@ -36,6 +36,7 @@ public class GalvanicNeedle extends Spell
 				"&r&dShock &eEffect&f: Affected are &6&oStunned&r&f, &e&oGlow&r&f, and take &b&o25% more "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage.");
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public int Cast(PlayerInteractEvent e) 
 	{

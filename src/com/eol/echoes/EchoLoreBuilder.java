@@ -122,7 +122,6 @@ public final class EchoLoreBuilder
  
         if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
  
-        
         int currentDurability = manifest.baseStats().getCurrentDurability();
         int maxDurability = manifest.baseStats().getMaxDurability();
         lore.add(lore.size() - 1, PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
@@ -207,7 +206,7 @@ public final class EchoLoreBuilder
      *   10–30%     → &6 Orange (Low)
      *   Bottom 10% → &c Red    (Lowest)
      */
-    private static String rollQualityColor(double value, double min, double max)
+    static String rollQualityColor(double value, double min, double max)
     {
         if (max <= min) return "&6"; // degenerate range, default orange
         double ratio = (value - min) / (max - min);

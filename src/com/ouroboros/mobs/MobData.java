@@ -383,6 +383,7 @@ public class MobData
 	    save();
 	}
 	
+	@SuppressWarnings("null")
 	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());

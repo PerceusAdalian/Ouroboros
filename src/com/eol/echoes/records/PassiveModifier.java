@@ -62,7 +62,9 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case STUNNING      	 -> "Attacks Inflict Stun";
             case IGNORE_ARROW    -> "Ignore Arrow Consumption: "+(int)(magnitude * 100) + "%";
             case SET_ATTACK_RATE -> "Atk Rate becomes " + magnitude;
-            case MOVEMENT_SPEED  -> "Swift Footed";
+            case INCREASED_MOVEMENT_SPEED  -> "Swift Footed";
+            case DECREASED_MOVEMENT_SPEED  -> "Heavy Weapon";
+            case PROTECTIVE	     -> "Protective Armament";
             case KNOCKBACK       -> "Increased Knockback";
             case LUCKY 			 -> "Increased Collection Luck";
             case NIMBLE          -> "Nimble Footed";

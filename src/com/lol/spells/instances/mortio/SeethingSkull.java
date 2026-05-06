@@ -43,6 +43,7 @@ public class SeethingSkull extends Spell
 				"&r&fsubsequent applications will inflict &4Doom&f after a second application.");
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public int Cast(PlayerInteractEvent e) 
 	{

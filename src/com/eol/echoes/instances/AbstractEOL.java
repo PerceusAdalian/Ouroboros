@@ -13,6 +13,7 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoFormResolver;
@@ -57,9 +58,12 @@ public abstract class AbstractEOL
     private final EchoForm form;
     private final ElementiumSlotType slotType;
     private final List<Modifier> modifiers;
-    private final String lockedAbilityKey;   // nullable
+    private final String lockedAbilityKey;
     private final String[] description;
     private boolean isIntegrityArmament;
+    
+    public static final NamespacedKey eolKey = new NamespacedKey(Ouroboros.instance, "eol");
+    
     protected AbstractEOL(
     		String displayName,
             String internalName,
@@ -127,7 +131,8 @@ public abstract class AbstractEOL
         meta.setEnchantmentGlintOverride(true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-
+        meta.getPersistentDataContainer().set(eolKey, PersistentDataType.STRING, internalName);
+        
         // Apply attack speed — EOLs bypass EchoForge.buildItem so this must live here too
         applyAttackSpeed(meta, manifest);
 

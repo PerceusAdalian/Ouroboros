@@ -46,6 +46,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionType;
 
+import com.eol.echoes.EchoManager;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
@@ -393,23 +394,27 @@ public class ExpHandler implements Listener
 			@EventHandler
 			public void onKill(EntityDamageByEntityEvent e) 
 			{
-				if (!(e.getEntity() instanceof LivingEntity target)) return;
+			    if (!(e.getEntity() instanceof LivingEntity target)) return;
 
 			    Player p = null;
 			    StatType sType = null;
-			    
+
 			    MobData data = MobData.getMob(target.getUniqueId());
 			    if (data == null) return;
-	
-			    if (e.getDamager() instanceof Player player) 
+
+			    if (e.getDamager() instanceof Player player) // Vanilla Weapons don't provide ranged/melee xp
 			    {
 			        p = player;
-			        sType = StatType.MELEE;
+			        ItemStack held = player.getInventory().getItemInMainHand();
+			        if (EchoManager.isEcho(held) || held.getType().isAir()) 
+			        	sType = StatType.MELEE; 
 			    }
 			    else if (e.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player shooter) 
 			    {
 			        p = shooter;
-			        sType = StatType.RANGED;
+			        ItemStack held = shooter.getInventory().getItemInMainHand();
+			        if (EchoManager.isEcho(held))
+			            sType = StatType.RANGED;
 			    }
 			    else if (e.getDamager() instanceof ThrownPotion potion && potion.getShooter() instanceof Player thrower) 
 			    {
@@ -419,14 +424,13 @@ public class ExpHandler implements Listener
 
 			    if (p == null || sType == null) return;
 
-			    // Only award XP if the attack will kill the entity
 			    if (!data.isDead() && data.getHp(false) - e.getFinalDamage() <= 0.0) 
 			    {
-					if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
-						EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
-					if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
-						PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(target)+" &b&o"+PrintUtils.printStatType(sType));
-					PlayerData.addXP(p, sType, XpUtils.getXp(target));
+			        if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
+			            EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
+			        if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
+			            PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(target)+" &b&o"+PrintUtils.printStatType(sType));
+			        PlayerData.addXP(p, sType, XpUtils.getXp(target));
 			    }
 			}
 		}, plugin);

@@ -156,7 +156,8 @@ public class Materia
 		ItemStack stack = new ItemStack(materiaType.getMaterial(), 1);
 		ItemMeta meta = stack.getItemMeta();
 
-		meta.setDisplayName(PrintUtils.ColorParser(name + (state != MateriaState.ELEMENT_CORE ? (" " + PrintUtils.getRarityAsNumeralValue(rarity)) : "")));
+		
+		meta.setDisplayName(PrintUtils.ColorParser("&r&f"+name));
 		meta.setEnchantmentGlintOverride(state == MateriaState.NORMAL);
 		meta.setLore(buildLore(materiaType, state, materiaComponent));
 		applyPersistentData(meta, state);
@@ -267,6 +268,7 @@ public class Materia
 	}
 
 	/* Converts relevant items from MateriaType respective to each item in inventory to the unrefined counterpart */
+	@SuppressWarnings("null")
 	public static void convertItemsTask(Plugin plugin)
 	{
 		Bukkit.getScheduler().runTaskTimer(plugin, () ->

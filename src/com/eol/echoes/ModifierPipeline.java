@@ -85,14 +85,19 @@ public final class ModifierPipeline
         double magnitude = rollBiasedMagnitude(band, t);
 
         // Negative modifier chance scales inversely with rarity
-        // Rarity 1: 40% chance of drawback, Rarity 7: 5% chance
-        double negativeChance = NumberUtils.lerp(0.40, 0.05, t);
-        if (ThreadLocalRandom.current().nextDouble() < negativeChance) magnitude = -magnitude;
+        // Rarity 1: 25% chance of drawback, Rarity 7: 1% chance
+        double negativeChance = NumberUtils.lerp(0.25, 0.01, t);
+        boolean isNegative = false;
+        if (ThreadLocalRandom.current().nextDouble() < negativeChance) 
+        {
+        	isNegative = true;
+        	magnitude = -magnitude;
+        }
 
         if (!isPercent && stat == CombatStat.ATTACK) magnitude = Math.round(magnitude * 3);
         else magnitude = Math.round(magnitude * 100.0) / 100.0;
 
-        return new ActiveModifier(condition, stat, magnitude, isPercent);
+        return new ActiveModifier(condition, stat, magnitude, isPercent, isNegative);
     }
     
     private static double rollBiasedMagnitude(RarityBand band, double t)
@@ -252,7 +257,9 @@ public final class ModifierPipeline
 
     /** Passive effects available to all weapon/tool forms. */
     private static final List<PassiveEchoEffect> UNIVERSAL_PASSIVES = Arrays.asList(
-    	PassiveEchoEffect.MOVEMENT_SPEED
+    	PassiveEchoEffect.INCREASED_MOVEMENT_SPEED,
+    	PassiveEchoEffect.DECREASED_MOVEMENT_SPEED,
+    	PassiveEchoEffect.PROTECTIVE
     );
 
     /** Passive effects exclusive to melee weapon forms (SWORD, AXE, SPEAR). */

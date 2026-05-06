@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
@@ -116,5 +117,12 @@ public class EntityEffects
 	public static void playSound(Player source, Sound sound, SoundCategory soundCategory) 
 	{
 		source.getPlayer().playSound(source.getLocation(), sound, soundCategory, 1, 1);
+	}
+	
+	public static void rushEntity(Player source, LivingEntity target, double magnitude)
+	{
+		Vector v1 = target.getLocation().toVector();
+		Vector v2 = source.getLocation().toVector();
+		source.setVelocity(v1.subtract(v2).normalize().multiply(magnitude));
 	}
 }

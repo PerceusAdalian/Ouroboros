@@ -21,7 +21,7 @@ public class LuminusBroadsword extends AbstractEOL
 
 	public LuminusBroadsword()
 	{
-		super("&r&e&lΣOL&r&f: &oLuminus' Broadsword &r&e&l✦", 
+		super("&r&e&lΣOL&r&f: &oLuminus' Broadsword "+PrintUtils.color(ObsColors.CELESTIO)+"✦", 
 				"luminus_broadsword", true,
 				new EOLRecipe(MateriaType.GOLD, MateriaType.PELT, MateriaType.CELESTIO), 
 				EchoForm.SWORD, 
@@ -39,11 +39,11 @@ public class LuminusBroadsword extends AbstractEOL
 	private static List<Modifier> buildModifiers()
     {
         return List.of(
-            new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.ATTACK, 0.25, true),
-            new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.CRIT_RATE, 0.30, true),
-            new ActiveModifier(WeaponModifierCondition.DURING_NIGHT, CombatStat.CRIT_MODIFIER, 1.0, false),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.EXPOSE, 0.25),
-            new PassiveModifier(WeaponModifierCondition.STORMY_WEATHER, PassiveEchoEffect.MOVEMENT_SPEED, 0));
+            new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.ATTACK, 0.25, true, false),
+            new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.CRIT_RATE, 0.30, true, false),
+            new ActiveModifier(WeaponModifierCondition.DURING_NIGHT, CombatStat.CRIT_MODIFIER, 1.5, false, false),
+            new ActiveModifier(WeaponModifierCondition.LIVING, CombatStat.ATTACK, -0.90, true, true),
+            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.EXPOSE, 10));
     }
 
 }

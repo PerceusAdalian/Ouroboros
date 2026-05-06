@@ -3,7 +3,6 @@ package com.ouroboros.accounts;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,7 +16,6 @@ import org.bukkit.entity.Player;
 
 import com.eol.echoes.abilities.AbilityHandler;
 import com.eol.echoes.abilities.AbilityRegistry;
-import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.lol.spells.SpellDataHandler;
 import com.lol.spells.SpellRegistry;
@@ -26,7 +24,6 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.WarpData;
@@ -134,8 +131,6 @@ public class PlayerData
 	    	setGate(GateCodes.NETHER, null);
 	    	setGate(GateCodes.END, null);
 	    	
-	    	setActiveCombatAbility(null);
-	    	
 	    	doLevelUpSound(true);
 	    	doXpNotification(true);
 	    	setAbilityPoints(0);
@@ -149,7 +144,7 @@ public class PlayerData
 	    	
 	    	for (EchoAbility ability : AbilityRegistry.abilityRegistry.values())
 	    	{
-	    		getAbility(ability).setActive(false).setRegistered(false);
+	    		getAbility(ability).setRegistered(false);
 	    	}
 	    	
 	    	setMagicProficiency(0);
@@ -180,86 +175,6 @@ public class PlayerData
 		config.set(path, value);
 	}
 	
-	public boolean hasActiveCombatAbility()
-	{
-		if (getActiveCombatAbility() == null) return false;
-		else return true;
-	}
-	
-	public EchoAbility getActiveCombatAbility()
-	{
-		String internalName = config.getString("stats.abilities.activecombatability");
-		if (internalName == null) return null;
-		return EchoAbility.fromInternalName(internalName);
-	}
-	
-	public static void activateAbility(Player p, EchoAbility ability) 
-	{
-	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-
-	    if (ability.getAbilityType() == AbilityType.COMBAT) 
-	    	data.setActiveCombatAbility(ability);
-	    else if (ability.getAbilityType() == AbilityType.UTILITY) 
-	    	data.addUtilityAbility(ability);
-	    
-	    data.getAbility(ability).setActive(true);
-	    data.save();
-	    
-	    PrintUtils.OBSFormatPrint(p, "&r&fActivated Ability: &b&o" + ability.getDisplayName());
-	}
-
-	public static void deactivateAbility(Player p, EchoAbility ability) 
-	{
-	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-
-	    if (ability.getAbilityType() == AbilityType.COMBAT) 
-	    	data.setActiveCombatAbility(null);
-	    else if (ability.getAbilityType() == AbilityType.UTILITY) 
-	    	data.removeUtilityAbility(ability);
-	    
-	    data.getAbility(ability).setActive(false);
-	    data.save();
-	    
-	    PrintUtils.OBSFormatPrint(p, "&r&fDeactivated Ability: &b&o" + ability.getDisplayName());
-	}
-
-	
-	public void setActiveCombatAbility(@Nullable EchoAbility ability) 
-	{
-	    String path = "stats.abilities.activecombatability";
-
-	    if (ability != null) 
-	    	config.set(path, ability.getInternalName());
-	    else 
-	    	config.set(path, null);
-	}
-
-	public void addUtilityAbility(EchoAbility ability) 
-	{
-	    String path = "stats.abilities.activeutilityabilities"; // plural
-	    List<String> utilities = getActiveUtilityAbilities();
-	    if (!utilities.contains(ability.getInternalName())) 
-	    {
-	        utilities.add(ability.getInternalName());
-	        config.set(path, utilities);
-	    }
-	}
-	
-	public List<String> getActiveUtilityAbilities() 
-	{
-	    String path = "stats.abilities.activeutilityabilities";
-	    return config.getStringList(path);
-	}
-
-	public void removeUtilityAbility(EchoAbility ability) 
-	{
-	    String path = "stats.abilities.activeutilityabilities";
-	    List<String> utilities = getActiveUtilityAbilities();
-
-	    if (utilities.remove(ability.getInternalName())) 
-	    	config.set(path, utilities);
-	}
-
 	public static void addXP(Player p, StatType sType, int value) 
 	{
 		UUID uuid = p.getUniqueId();
@@ -348,7 +263,6 @@ public class PlayerData
 			String pathAlpha = switch(a.getAbilityType()) 
 			{
 				case COMBAT -> pathAlpha = "abilities.combat_ability."+a.getInternalName();
-				case PERK -> pathAlpha = "abilities.perk."+a.getInternalName();
 				case SPECIALABILITY -> pathAlpha = "abilities.special_ability."+a.getInternalName();
 				case UTILITY -> pathAlpha = "abilities.utility."+a.getInternalName();
 			};
@@ -379,6 +293,12 @@ public class PlayerData
 		return config.getInt("points.ability");
 	}
 	
+	public void subtractAbilityPoints(int value)
+	{
+		if (getAbilityPoints() - value < 0) setAbilityPoints(0);
+		setAbilityPoints(getAbilityPoints() - value);
+	}
+	
 	public void setAbilityPoints(int value) 
 	{
 		config.set("points.ability", value);
@@ -399,7 +319,7 @@ public class PlayerData
 		return getStat(sType, true);
 	}
 	
-	public static boolean canRegister(UUID uuid, EchoAbility ability) 
+	public static boolean canRegisterEchoAbility(UUID uuid, EchoAbility ability) 
 	{
 		PlayerData data = PlayerData.getPlayer(uuid);
 		EchoAbility pAbility = ability.getInstance();

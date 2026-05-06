@@ -15,7 +15,6 @@ import com.lol.wand.Wand;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.PrintUtils;
 
 public class CollectWandData extends ObsGui
 {
@@ -56,37 +55,30 @@ public class CollectWandData extends ObsGui
 					GuiHandler.changeMenu(p, new WandViewPage(p));
 				return;
 			}
-			PrintUtils.OBSFormatError(p, "Invalid object submitted.. Please try again.");
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
+			else e.setCancelled(true);
 		});
 		
 		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 4, e->
 		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
+		
 		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 12, e->
 		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
+		
 		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 14, e->
 		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
+		
 		GuiButton.button(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ")
 		.place(this, 22, e->
 		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
 		

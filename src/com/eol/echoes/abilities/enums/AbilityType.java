@@ -2,10 +2,9 @@ package com.eol.echoes.abilities.enums;
 
 public enum AbilityType 
 {
-	PERK("&r&f&oPerk"),
-	COMBAT("&r&cCombat"),
-	SPECIALABILITY("&r&c&lSpecial"),
-	UTILITY("&r&b&oUtility");
+	COMBAT("&r&cCombat&r&f"),
+	SPECIALABILITY("&r&e&lSpecial&r&f"),
+	UTILITY("&r&b&oUtility&r&f");
 	
 	private final String abilityType; 
 	

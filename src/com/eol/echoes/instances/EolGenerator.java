@@ -3,6 +3,7 @@ package com.eol.echoes.instances;
 import org.bukkit.inventory.ItemStack;
 
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.enums.MateriaState;
 import com.eol.materia.Materia;
 
@@ -13,6 +14,14 @@ public class EolGenerator
 		Materia luminus = Materia.get("echo_of_luminus");
 		ItemStack catalyst = luminus.getAsItemStack(MateriaState.CATALYST);
 		EOLRegistry.markCatalyst(catalyst, new LuminusBroadsword().getInternalName());
+		return catalyst;
+	}
+	
+	public static ItemStack generateNidusCatalyst()
+	{
+		Materia luminus = Materia.get("echo_of_nidus");
+		ItemStack catalyst = luminus.getAsItemStack(MateriaState.CATALYST);
+		EOLRegistry.markCatalyst(catalyst, new HammerOfNidus().getInternalName());
 		return catalyst;
 	}
 	

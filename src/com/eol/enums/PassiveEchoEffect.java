@@ -3,7 +3,9 @@ package com.eol.enums;
 public enum PassiveEchoEffect
 {
 	// Universal Passives
-	MOVEMENT_SPEED,
+	INCREASED_MOVEMENT_SPEED,
+	DECREASED_MOVEMENT_SPEED,
+	PROTECTIVE,
 	
 	// Melee Passives
 	EXPOSE,
@@ -14,7 +16,7 @@ public enum PassiveEchoEffect
 	STUNNING,
 	SET_ATTACK_RATE,
 	KNOCKBACK,
-
+	
 	// Ranged Passives
 	IGNORE_ARROW,
 	INFINITY,

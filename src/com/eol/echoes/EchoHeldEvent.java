@@ -120,6 +120,8 @@ public class EchoHeldEvent
 			    UUID uuid = p.getUniqueId();
 			    ResolveEchoInteract.ignore_arrow.remove(uuid);
 			    ResolveEchoInteract.increase_movement_speed.remove(uuid);
+			    ResolveEchoInteract.decrease_movement_speed.remove(uuid);
+			    ResolveEchoInteract.has_protected.remove(uuid);
 			    ResolveEchoInteract.has_lucky.remove(uuid);
 			    ResolveEchoInteract.has_nimble.remove(uuid);
 			    ResolveEchoInteract.negate_arrow_consumption.remove(uuid);
@@ -128,6 +130,7 @@ public class EchoHeldEvent
 		}, plugin);
 	}
 	
+	@SuppressWarnings("null")
 	public static void queueBuffTask(Plugin plugin)
 	{
 		Bukkit.getScheduler().runTaskTimer(plugin, () ->
@@ -135,15 +138,19 @@ public class EchoHeldEvent
 	        for (Player p : Bukkit.getOnlinePlayers())
 	        {
 	            UUID uuid = p.getUniqueId();
+	            if (uuid == null) return;
+	            
 	            if (ResolveEchoInteract.increase_movement_speed.contains(uuid))
-	            {
 	            	EntityEffects.add(p, PotionEffectType.SPEED, 100, 0, false);
-	            }
 	            
 	            if (ResolveEchoInteract.has_nimble.contains(uuid))
-	            {
 	            	EntityEffects.add(p, PotionEffectType.JUMP_BOOST, 100, 0, false);
-	            }
+	            
+	            if (ResolveEchoInteract.decrease_movement_speed.contains(uuid))
+	            	EntityEffects.add(p, PotionEffectType.SLOWNESS, 100, 0, false);
+	            
+	            if (ResolveEchoInteract.has_protected.contains(uuid))
+	            	EntityEffects.add(p, PotionEffectType.RESISTANCE, 100, 0, false);
 	            
 	        }
 	    }, 0, 20);

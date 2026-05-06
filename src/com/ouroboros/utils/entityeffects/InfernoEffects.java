@@ -1,19 +1,25 @@
 package com.ouroboros.utils.entityeffects;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
+import com.ouroboros.utils.PrintUtils;
 
 public class InfernoEffects
 {
@@ -62,6 +68,29 @@ public class InfernoEffects
 		if (hasInfernalBody.contains(p.getUniqueId())) return false;
 		hasInfernalBody.add(p.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasInfernalBody.remove(p.getUniqueId()), seconds*20);
+		return true;
+	}
+	
+	public static Map<UUID, Boolean> isImbuedPlayer = new HashMap<>();
+	public static boolean addImbueFire(Player p, int seconds)
+	{
+		if (isImbuedPlayer.containsKey(p.getUniqueId()))
+		{
+			PrintUtils.PrintToActionBar(p, "&cAlready Imbued!");
+			return false;
+		}
+		
+		EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
+		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_BURN, SoundCategory.MASTER);
+		isImbuedPlayer.put(p.getUniqueId(), true);
+		
+		Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Ouroboros.class), () -> 
+		{
+			isImbuedPlayer.remove(p.getUniqueId());
+			EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.MASTER);
+			ObsParticles.drawInfernoCastSigil(p);
+		}, 600);
+		
 		return true;
 	}
 }

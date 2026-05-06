@@ -2,17 +2,17 @@ package com.eol.enums;
 
 public enum EchoForm 
 {
-	SWORD("&r&c⚔︎&f"),
-	HATCHET("&r&c🪓&f"),
-	POLEARM("&r&c𐃆&f"),
-	PICKAXE("&r&6⛏&f"),
-	SPADE("&r&6♠&f"),
-	SCYTHE("&r&6☭&f"),
+	SWORD("&r&cSwords&f"),
+	HATCHET("&r&cHatchets&f"),
+	POLEARM("&r&cPolearms&f"),
+	PICKAXE("&r&6Pickaxes&f"),
+	SPADE("&r&6Spades&f"),
+	SCYTHE("&r&6Scythes&f"),
 	
-	HAMMER("&r&b🔨&f"),
-	ARMAMENT("&r&b🔱&f"),
-	BOW("&r&d🏹&f"),
-	CROSSBOW("&r&d🏹&f")
+	HAMMER("&r&bHammer&f"),
+	ARMAMENT("&r&bArmament&f"),
+	BOW("&r&dBow&f"),
+	CROSSBOW("&r&dCrossbow&f")
 	;
 	
 	private final String symbol;

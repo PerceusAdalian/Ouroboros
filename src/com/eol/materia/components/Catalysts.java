@@ -113,5 +113,20 @@ public class Catalysts
 				"&r&e&othe same magic you devoted yourself to until the very end.",
 				"&r&e&oI carry these memories like a forge carries heat. I miss you, sister.."));
 		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.GEO)+Symbols.EOL+"cho Of Nidus",
+				"echo_of_nidus",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.GEO)+"&oFantasian Academy Dossier Entry: Nidus -- One of The Endless.",
+				PrintUtils.color(ObsColors.GEO)+"&oPatron of the "+PrintUtils.color(ObsColors.GEO)+"&l&nGeo&r"+PrintUtils.color(ObsColors.GEO)+"&o element, he exists beyond corporeal form.",
+				PrintUtils.color(ObsColors.GEO)+"&oHis icon, the "+PrintUtils.color(ObsColors.GEO)+"&l&nHammer&r"+PrintUtils.color(ObsColors.GEO)+"&o, speaks to his doctrine of preservation:",
+				PrintUtils.color(ObsColors.GEO)+"&oTo shape the world without breaking it, situated on the discipline of Earth Magiks.",
+				PrintUtils.color(ObsColors.GEO)+"&oDevotees laid "+PrintUtils.color(ObsColors.GEO)+"&l&nLeather&r"+PrintUtils.color(ObsColors.GEO)+"&o at his shrine, believing the offering would earn",
+				PrintUtils.color(ObsColors.GEO)+"favor from Father Nature himself."));
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.eol.enums.ElementiumSlotType;
 import com.lol.enums.SpellementType;
 
 public enum ElementType
@@ -84,6 +85,24 @@ public enum ElementType
 			case NULL 		-> ElementType.NONE;
 			default 		-> ElementType.NONE;	
 			
+		};
+		
+		return eType;
+	}
+	
+	public static ElementType getFromElementiumSlotType(ElementiumSlotType slotType)
+	{
+		ElementType eType = switch(slotType)
+		{
+			case AERO 		-> ElementType.AERO;
+			case CELESTIO 	-> ElementType.CELESTIO;
+			case COSMO 		-> ElementType.COSMO;
+			case GEO 		-> ElementType.GEO;
+			case GLACIO 	-> ElementType.GLACIO;
+			case HERESIO 	-> ElementType.HERESIO;
+			case INFERNO 	-> ElementType.INFERNO;
+			case MORTIO 	-> ElementType.MORTIO;
+			default 		-> null;	
 		};
 		
 		return eType;

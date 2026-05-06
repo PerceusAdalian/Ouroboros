@@ -10,8 +10,9 @@ import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.echoes.abilities.instances.combat.Flamelash;
 import com.eol.echoes.abilities.instances.combat.GeminiSlash;
 import com.eol.echoes.abilities.instances.combat.ImbueFire;
-import com.eol.echoes.abilities.instances.combat.ReapAndSew;
-import com.eol.echoes.abilities.instances.special.Radiance;
+import com.eol.echoes.abilities.instances.combat.Cleave;
+import com.eol.echoes.abilities.instances.special.LuminusRadiance;
+import com.eol.echoes.abilities.instances.special.NidusPreservation;
 
 public class AbilityRegistry 
 {
@@ -22,7 +23,11 @@ public class AbilityRegistry
     {
         List<Class<? extends EchoAbility>> itemClasses = Arrays.asList(
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
-            ReapAndSew.class,Radiance.class);
+            Cleave.class,
+            
+            // Special
+            LuminusRadiance.class,
+            NidusPreservation.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

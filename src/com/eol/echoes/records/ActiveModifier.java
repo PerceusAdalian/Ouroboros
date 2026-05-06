@@ -19,7 +19,7 @@ import com.eol.enums.WeaponModifierCondition;
  *   "+5 Atk (PVE: The End)"    → condition=END,    combatStat=ATTACK,        magnitude=5.0,  isPercent=false
  *   "+0.5x Crit Mod"           → condition=PASSIVE,combatStat=CRIT_MODIFIER, magnitude=0.5,  isPercent=false
  */
-public record ActiveModifier(WeaponModifierCondition condition, CombatStat combatStat, double magnitude, boolean isPercent) implements Modifier
+public record ActiveModifier(WeaponModifierCondition condition, CombatStat combatStat, double magnitude, boolean isPercent, boolean isNegative) implements Modifier
 {
     @Override
     public boolean isActive()
@@ -30,7 +30,7 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
     @Override
     public String loreLabel()
     {
-        String sign = magnitude >= 0 ? "+" : "-";
+        String sign = magnitude >= 0 ? "+" : "";
         String mag  = isPercent
                 ? sign + (int)(magnitude * 100) + "% "
                 : sign + (magnitude == (long) magnitude ? String.valueOf((long) magnitude) : String.valueOf(magnitude)) + " ";
@@ -81,6 +81,14 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
     public boolean isPercent()
     {
     	return isPercent;
+    }
+    
+    /**
+     * @return True if the modifier is/should be expressed as a negative value.
+     */
+    public boolean isNegative()
+    {
+    	return isNegative;
     }
     
     /**

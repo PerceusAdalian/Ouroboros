@@ -61,12 +61,8 @@ public class RefinementResultsPage extends ObsGui
 				InventoryUtils.add(p, item);
 				results.remove(entry.getKey());
 				
-				PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-				boolean doXpNotif = data.doLevelUpSound();
-				data.doXpNotification(false);
 				PlayerData.addXP(p, StatType.REFINEMENT, xp);
-				EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.AMBIENT);
-				data.doXpNotification(doXpNotif);
+				EntityEffects.playSound(p, Sound.BLOCK_VAULT_EJECT_ITEM, SoundCategory.AMBIENT);
 				
 				getInventory().clear();
 				build();
@@ -94,12 +90,8 @@ public class RefinementResultsPage extends ObsGui
 			});
 			results.clear();
 			
-			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-			boolean doXpNotif = data.doLevelUpSound();
-			data.doXpNotification(false);
 			PlayerData.addXP(p, StatType.REFINEMENT, xp);
-			EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.AMBIENT);
-			data.doXpNotification(doXpNotif);
+			EntityEffects.playSound(p, Sound.BLOCK_VAULT_EJECT_ITEM, SoundCategory.AMBIENT);
 			
 			GuiHandler.changeMenu(p, new RefinementPage(p));
 		});

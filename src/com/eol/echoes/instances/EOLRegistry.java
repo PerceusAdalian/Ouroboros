@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
 
@@ -36,7 +37,7 @@ public final class EOLRegistry
     private EOLRegistry() {}
 
     public static final NamespacedKey EOL_TARGET_KEY = new NamespacedKey(Ouroboros.instance, "echo_eol_target");
-
+    
     public static final Map<String, AbstractEOL> registry = new HashMap<>();
 
     // -------------------------------------------------------------------------
@@ -126,8 +127,8 @@ public final class EOLRegistry
     public static void itemInit() 
     {
         List<Class<? extends AbstractEOL>> itemClasses = Arrays.asList(
-           LuminusBroadsword.class
-           
+           LuminusBroadsword.class,
+           HammerOfNidus.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 

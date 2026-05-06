@@ -13,7 +13,7 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.menus.instances.abilities.AbilityMainPage;
+import com.ouroboros.menus.instances.abilities.AbilitiesMainPage;
 import com.ouroboros.menus.instances.magic.MagicMainPage;
 import com.ouroboros.menus.instances.protocolecho.ProtocolEchoMainPage;
 import com.ouroboros.menus.instances.store.ObsShopGui;
@@ -35,7 +35,7 @@ public class ObsMainMenu extends ObsGui
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new AbilityMainPage(p));
+			GuiHandler.changeMenu(p, new AbilitiesMainPage(p));
 		});
 
 		PlayerData data = PlayerData.getPlayer(player.getUniqueId());

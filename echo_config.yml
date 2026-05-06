@@ -133,7 +133,7 @@ material_stats:
     base_attack_max: 150
     durability_min: 1000
     durability_max: 3500
-    crit_rate_base: 0.05
+    crit_rate_base: 0.10
     crit_modifier_ceiling: 1.5
 
   ARMAMENT:

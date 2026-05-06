@@ -22,7 +22,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.ResolveEchoInteract;
-import com.eol.echoes.abilities.instances.combat.ImbueFire;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
@@ -80,7 +79,7 @@ public class MobDamageEvent implements Listener
 			        float charge = p.getAttackCooldown();
 			        dmg *= 0.1 + (0.9 * charge);
 
-			        if (ImbueFire.isImbuedPlayer.containsKey(p.getUniqueId()))
+			        if (InfernoEffects.isImbuedPlayer.containsKey(p.getUniqueId()))
 			        {
 			            element = ElementType.INFERNO;
 			            dmg *= 1.1;

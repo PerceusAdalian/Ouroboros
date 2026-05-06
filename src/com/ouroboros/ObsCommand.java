@@ -285,7 +285,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				Player target = Bukkit.getPlayer(args[3]);
 				if (target == null) return false;
 				boolean toggle = Boolean.parseBoolean(args[4]);
-				PlayerData.getPlayer(target.getUniqueId()).getAbility(ability).setRegistered(toggle).setActive(false);
+				PlayerData.getPlayer(target.getUniqueId()).getAbility(ability).setRegistered(toggle);
 				PlayerData.getPlayer(target.getUniqueId()).save();
 				String registered = toggle ? " registered for " : " removed from ";
 				PrintUtils.OBSFormatDebug(p, "Ability: "+ability.getDisplayName()+registered+": "+target.getName());
@@ -555,6 +555,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					PrintUtils.OBSFormatError(p, "Base Invalid: "+ element_core == null ? "null" : element_core.getInternalName() + ", "+element_core.getMateriaComponent().getLabel());
 				
 				if (catalyst.getInternalName().equals("echo_of_luminus")) markedCatalyst = EolGenerator.generateLuminusCatalyst();
+				if (catalyst.getInternalName().equals("echo_of_nidus")) markedCatalyst = EolGenerator.generateNidusCatalyst();
 				
 				ItemStack echo = EchoForge.forge(markedCatalyst != null ? markedCatalyst : catalyst.getAsItemStack(MateriaState.CATALYST), base, binding, element_core);
 				if (echo == null)

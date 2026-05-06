@@ -88,14 +88,16 @@ public class ResolveEchoInteract
 		        case SLOWING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 0, false);
 		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds, 0, false);
 		        case STUNNING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 99, false);
-		        case KNOCKBACK, POISONOUS, IGNORE_ARROW, SET_ATTACK_RATE, MOVEMENT_SPEED, LUCKY,
-		        NIMBLE, INFINITY -> { /* handled elsewhere */ }
+		        case KNOCKBACK, POISONOUS, IGNORE_ARROW, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
+		        LUCKY,NIMBLE, INFINITY -> { /* handled elsewhere */ }
 	        }
 	    }
 	}
 	
 	public static Set<UUID> ignore_arrow = new HashSet<>();
 	public static Set<UUID> increase_movement_speed = new HashSet<>();
+	public static Set<UUID> decrease_movement_speed = new HashSet<>();
+	public static Set<UUID> has_protected = new HashSet<>();
 	public static Set<UUID> has_lucky = new HashSet<>();
 	public static Set<UUID> has_nimble = new HashSet<>();
 	public static Set<UUID> negate_arrow_consumption = new HashSet<>();
@@ -106,7 +108,9 @@ public class ResolveEchoInteract
 		switch(mod.effectKey())
 		{
 			case LUCKY -> has_lucky.add(uuid);
-			case MOVEMENT_SPEED -> increase_movement_speed.add(uuid);
+			case INCREASED_MOVEMENT_SPEED -> increase_movement_speed.add(uuid);
+			case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.add(uuid);
+			case PROTECTIVE -> has_protected.add(uuid);
 			case IGNORE_ARROW -> ignore_arrow.add(uuid);
 			case NIMBLE -> has_nimble.add(uuid);
 			case INFINITY -> negate_arrow_consumption.add(uuid);
@@ -120,7 +124,9 @@ public class ResolveEchoInteract
 		switch(mod.effectKey())
 		{
 			case LUCKY -> has_lucky.remove(uuid);
-			case MOVEMENT_SPEED -> increase_movement_speed.remove(uuid);
+			case INCREASED_MOVEMENT_SPEED -> increase_movement_speed.remove(uuid);
+			case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.remove(uuid);
+			case PROTECTIVE -> has_protected.remove(uuid);
 			case IGNORE_ARROW -> ignore_arrow.remove(uuid);
 			case NIMBLE -> has_nimble.remove(uuid);
 			case INFINITY -> negate_arrow_consumption.remove(uuid);

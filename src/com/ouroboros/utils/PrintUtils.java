@@ -239,6 +239,11 @@ public class PrintUtils
 		return ColorParser("&r&f&lAbility Type&r&f: {"+type.getAbilityType()+"&r&f}");
 	}
 	
+	public static String assignDurabilityCost(int cost)
+	{
+		return ColorParser("&r&cRemove &f"+cost+" &bdurability&f --");
+	}
+	
 	public static String assignCastCondition(CastConditions condition)
 	{
 		return ColorParser("&r&f&lCast Condition&r&f: {"+condition.getKey()+"&r&f}");
@@ -246,7 +251,7 @@ public class PrintUtils
 	
 	public static String assignEchoForm(EchoForm echoForm)
 	{
-		return ColorParser("&r&e&o"+Symbols.EOL+"cho Form: {"+echoForm.getLabel()+"}");
+		return ColorParser("&r&fRequired &e"+Symbols.EOL+"cho Form&r&f: { "+echoForm.getLabel()+" &r&f}");
 	}
 	
 	public static String assignElementType(SpellementType type) 
@@ -256,7 +261,7 @@ public class PrintUtils
 	
 	public static String assignElementType(ElementType type) 
 	{
-		return ColorParser("&r&f&lDamage Type&r&f: {&r&f"+getElementTypeColor(type)+type.getType()+"&r&f}");
+		return ColorParser("&r&f&lElement Type&r&f: {&r&f"+getElementTypeColor(type)+type.getType()+"&r&f}");
 	}
 	
 	public static String getElementTypeColor(SpellementType spellementType)
@@ -404,6 +409,7 @@ public class PrintUtils
 	    return buffer.toString().replace("&", "§");
 	}
 
+	@SuppressWarnings("null")
 	private static final Map<ChatColor, Color> LEGACY_COLORS = new EnumMap<>(ChatColor.class);
 	static
 	{

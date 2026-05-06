@@ -372,8 +372,8 @@ public class ObsParticles
 	
 	public static void drawCelestioCastSigil(LivingEntity entity)
 	{
-		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, .35, Particle.CLOUD, null);
-		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, .45, Particle.WAX_ON, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, .30, Particle.CLOUD, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+0.5, 1, 10, .35, Particle.WAX_ON, null);
 	}
 
 	public static void drawMortioCastSigil(LivingEntity entity)
@@ -404,6 +404,7 @@ public class ObsParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+2, 1, 6,0.1,Particle.GLOW_SQUID_INK, null);
 	}
 	
+	@SuppressWarnings("null")
 	public static void drawAstralCastSigil(LivingEntity entity, boolean isDay)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, isDay ? new DustOptions(Color.RED, 1.0f) : null);

@@ -48,6 +48,11 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
         return lockedAbilityKey != null && !lockedAbilityKey.isBlank();
     }
     
+    public ElementiumSlotType getElementiumSlotType()
+    {
+    	return slotType;
+    }
+    
     public boolean hasElementiumSlot()
     {
         return slotType != null && slotType != ElementiumSlotType.NO_SLOT;
@@ -58,6 +63,11 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
     	return equippedAbilityKey != null && !equippedAbilityKey.isBlank();
     }
  
+    public EchoForm getEchoForm()
+    {
+    	return echoForm;
+    }
+    
     /**
      * Returns true if any modifier on this Echo is active (i.e. directly mutates combat stats).
      */
@@ -74,6 +84,16 @@ public record EchoManifest(String echoId, Rarity rarity, EchoData baseStats, Lis
         return modifiers.stream().filter(Modifier::isActive).toList();
     }
  
+    public String getAbilityKey()
+    {
+    	return hasEquippedAbility() ? equippedAbilityKey : null;
+    }
+    
+    public String getLockedAbilityKey()
+    {
+    	return hasLockedAbility() ? lockedAbilityKey : null;
+    }
+    
     /**
      * Filters and returns only the passive modifiers on this manifest.
      */

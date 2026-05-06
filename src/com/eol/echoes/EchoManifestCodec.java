@@ -107,10 +107,11 @@ public class EchoManifestCodec
         root.addProperty("echoId",           manifest.echoId());
         root.addProperty("rarity",           manifest.rarity().name());
         root.addProperty("slotType",         manifest.slotType().name());
-        root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey()); // null-safe — Gson writes JSON null
+        root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey());
         root.addProperty("equippedAbility",  manifest.equippedAbilityKey());
         root.addProperty("echoForm",     	 manifest.echoForm()     != null ? manifest.echoForm().name()     : null);
         root.addProperty("echoMaterial", 	 manifest.echoMaterial() != null ? manifest.echoMaterial().name() : null);
+        
         // Base stats
         JsonObject stats = new JsonObject();
         EchoData data = manifest.baseStats();
@@ -134,6 +135,7 @@ public class EchoManifestCodec
                 m.addProperty("combatStat", active.combatStat().name());
                 m.addProperty("magnitude",  active.magnitude());
                 m.addProperty("isPercent",  active.isPercent());
+                m.addProperty("isNegative", active.isNegative());
             }
             else if (mod instanceof PassiveModifier passive)
             {
@@ -172,17 +174,11 @@ public class EchoManifestCodec
                 ? null 
                 : EchoMaterial.valueOf(echoMaterialElement.getAsString());
         
-        // lockedAbilityKey is nullable — check before calling getAsString()
         JsonElement lockedEl = root.get("lockedAbilityKey");
         String lockedAbilityKey = (lockedEl == null || lockedEl.isJsonNull())
                 ? null 
                 : lockedEl.getAsString();
  
-        /**
-         *  If the object that's being deserialized isn't an EOL echo, 
-         *  We'll want to attempt to get an equipped ability, and if applicable, return that internal name to register.
-         */
-        
         JsonElement equippedAbility = root.get("equippedAbility");
         String abilityKey = (equippedAbility == null || equippedAbility.isJsonNull())
         		? null 
@@ -217,7 +213,8 @@ public class EchoManifestCodec
                 CombatStat combatStat = CombatStat.valueOf(m.get("combatStat").getAsString());
                 double     magnitude  = m.get("magnitude").getAsDouble();
                 boolean    isPercent  = m.get("isPercent").getAsBoolean();
-                modifiers.add(new ActiveModifier(condition, combatStat, magnitude, isPercent));
+                boolean    isNegative = m.get("isNegative").getAsBoolean();
+                modifiers.add(new ActiveModifier(condition, combatStat, magnitude, isPercent, isNegative));
             }
             else if (type.equals("passive"))
             {

@@ -6,7 +6,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.AbstractArrow;
@@ -30,13 +32,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.PassiveModifier;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.PassiveEchoEffect;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ObsColors;
+import com.ouroboros.objects.AbstractObsObject;
+import com.ouroboros.objects.instances.ScrapMateria;
 import com.ouroboros.utils.Chance;
+import com.ouroboros.utils.InventoryUtils;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -127,31 +134,140 @@ public class EchoManager
 	    ItemMeta meta = stack.getItemMeta();
 	    if (meta != null)
 	    {
-	        List<String> lore = manifest.echoMaterial() != null
-	            ? EchoLoreBuilder.build(updatedManifest, manifest.echoMaterial())
-	            : EchoLoreBuilder.build(updatedManifest, updatedManifest.echoMaterial() == EchoMaterial.BOW ? true : false);
-	        meta.setLore(lore);
+	        if (meta.getPersistentDataContainer().has(AbstractEOL.eolKey))
+	        {
+	            List<String> lore = meta.getLore();
+	            if (lore != null)
+	            {
+	                String durabilityLine = PrintUtils.ColorParser("&b&lDurability&r&f: " 
+	                    + EchoLoreBuilder.rollQualityColor(current, 0, data.getMaxDurability()) 
+	                    + current + "&r&7/" + data.getMaxDurability());
+	                
+	                for (int i = 0; i < lore.size(); i++)
+	                {
+	                    if (ChatColor.stripColor(lore.get(i)).startsWith("Durability:"))
+	                    {
+	                        lore.set(i, durabilityLine);
+	                        break;
+	                    }
+	                }
+	                meta.setLore(lore);
+	            }
+	        }
+	        else
+	        {
+	            List<String> lore = manifest.echoMaterial() != null
+	                ? EchoLoreBuilder.build(updatedManifest, manifest.echoMaterial())
+	                : EchoLoreBuilder.build(updatedManifest, updatedManifest.echoMaterial() == EchoMaterial.BOW ? true : false);
+	            meta.setLore(lore);
+	        }
 	        stack.setItemMeta(meta);
 	    }
 	    
+	    if (current <= 10 && current > 0)
+    	{
+    	    EntityEffects.playSound(player, Sound.BLOCK_CHAIN_STEP, SoundCategory.MASTER);
+    	}
+	    
+	    final int finalDurability = current;
 	    durabilityLock.add(player.getUniqueId());
 	    Bukkit.getScheduler().runTask(Ouroboros.instance, () ->
 	    {
-	    	if (setOffhand) player.getInventory().setItemInOffHand(stack);
-	    	else player.getInventory().setItemInMainHand(stack);
+	        if (finalDurability <= 0)
+	        {
+	            player.getInventory().setItemInMainHand(null);
+	            EntityEffects.playSound(player, Sound.ENTITY_BREEZE_INHALE, SoundCategory.MASTER);
+	            ObsParticles.drawWisps(player.getLocation(), player.getWidth(), player.getHeight(), 5, Particle.ASH, null);
+	            Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	            {
+	                EntityEffects.playSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.MASTER);
+	                ObsParticles.drawWisps(player.getLocation(), player.getWidth(), player.getHeight(), 5, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
+	                PrintUtils.PrintToActionBar(player, PrintUtils.color(ObsColors.CELESTIO) + "&cYour Echo has shattered..");
+	            }, 20);
+	            
+	            AbstractObsObject scrap = new ScrapMateria();
+	            ItemStack scrapStack = scrap.toItemStack();
+	            int amount = manifest.rarity().getRarity() * 5;
+	            scrapStack.setAmount(amount);
+	            InventoryUtils.add(player, scrapStack);
+	        }
+	        else
+	        {
+	        	if (setOffhand) player.getInventory().setItemInOffHand(stack);
+	            else player.getInventory().setItemInMainHand(stack);
+	        }
 	        durabilityLock.remove(player.getUniqueId());
 	    });
-	    
-	    if (current <= 0)
+	}
+	
+	public static ItemStack modifyDurabilityAndReturn(ItemStack stack, DurabilityOperation operation, int value)
+	{
+	    if (!isEcho(stack)) return stack;
+
+	    EchoManifest manifest = EchoManifestCodec.read(stack);
+	    if (manifest == null) return stack;
+
+	    EchoData data = manifest.baseStats();
+
+	    int current = 0;
+	    if (operation == DurabilityOperation.ADD)
+	        current = Math.min(data.getCurrentDurability() + value, data.getMaxDurability());
+	    else if (operation == DurabilityOperation.SUBTRACT)
+	        current = Math.max(0, data.getCurrentDurability() - value);
+	    else if (operation == DurabilityOperation.RESTORE)
+	        current = (int) Math.min(data.getCurrentDurability() + (value / 100.0) * data.getMaxDurability(), data.getMaxDurability());
+	    else if (operation == DurabilityOperation.DIMINISH)
+	        current = (int) Math.max(0, data.getCurrentDurability() - (value / 100.0) * data.getMaxDurability());
+	    else if (operation == DurabilityOperation.SETMAX)
+	        current = data.getMaxDurability();
+
+	    EchoData updatedEchoData = new EchoData(
+	        data.getAttack(), data.getAttackRating(),
+	        data.getCritRate(), data.getCritModifier(),
+	        data.getMaxDurability(), current);
+
+	    EchoManifest updatedManifest = new EchoManifest(
+	        manifest.echoId(), manifest.rarity(), updatedEchoData,
+	        manifest.modifiers(), manifest.slotType(),
+	        manifest.equippedAbilityKey(), manifest.lockedAbilityKey(),
+	        manifest.echoForm(), manifest.echoMaterial());
+
+	    EchoManifestCodec.write(stack, updatedManifest);
+
+	    ItemMeta meta = stack.getItemMeta();
+	    if (meta != null)
 	    {
-	        player.getInventory().setItemInMainHand(null);
-	        EntityEffects.playSound(player, Sound.ENTITY_BREEZE_INHALE, SoundCategory.MASTER);
-	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	        if (meta.getPersistentDataContainer().has(AbstractEOL.eolKey))
 	        {
-	            EntityEffects.playSound(player, Sound.ITEM_SHIELD_BREAK, SoundCategory.MASTER);
-	            PrintUtils.PrintToActionBar(player, PrintUtils.color(ObsColors.CELESTIO) + "&cYour Echo has shattered..");
-	        }, 5);
+	            List<String> lore = meta.getLore();
+	            if (lore != null)
+	            {
+	                String durabilityLine = PrintUtils.ColorParser("&b&lDurability&r&f: " 
+	                    + EchoLoreBuilder.rollQualityColor(current, 0, data.getMaxDurability()) 
+	                    + current + "&r&7/" + data.getMaxDurability());
+	                
+	                for (int i = 0; i < lore.size(); i++)
+	                {
+	                    if (ChatColor.stripColor(lore.get(i)).startsWith("Durability:"))
+	                    {
+	                        lore.set(i, durabilityLine);
+	                        break;
+	                    }
+	                }
+	                meta.setLore(lore);
+	            }
+	        }
+	        else
+	        {
+	            List<String> lore = manifest.echoMaterial() != null
+	                ? EchoLoreBuilder.build(updatedManifest, manifest.echoMaterial())
+	                : EchoLoreBuilder.build(updatedManifest, updatedManifest.echoMaterial() == EchoMaterial.BOW ? true : false);
+	            meta.setLore(lore);
+	        }
+	        stack.setItemMeta(meta);
 	    }
+
+	    return stack;
 	}
 	
 	/**
@@ -159,7 +275,7 @@ public class EchoManager
      * Fails silently (returns false) if the echo has a locked ability, no slot, or the key is blank.
      * Also fails if the item could not be rebuilt; but that's an edge case.
      */
-	public ItemStack equipAbility(ItemStack item, String abilityKey)
+	public static ItemStack equipAbility(ItemStack item, String abilityKey)
 	{
 	    if (item == null || abilityKey == null || abilityKey.isBlank()) return null;
 
@@ -184,7 +300,7 @@ public class EchoManager
      * Will not remove a locked ability.
      * Attempts to also rebuild the item, and silently fails if any operation results in a null item stack.
      */
-	public ItemStack removeAbility(ItemStack item)
+	public static ItemStack removeAbility(ItemStack item)
 	{
 	    if (item == null) return null;
 
@@ -206,7 +322,7 @@ public class EchoManager
     /**
      * Simply returns an echo manifest with the old data wrapped alongside an input ability's key (internal name).
      */
-    private EchoManifest withEquippedAbility(EchoManifest old, String abilityKey) 
+    private static EchoManifest withEquippedAbility(EchoManifest old, String abilityKey) 
     {
         return new EchoManifest(
             old.echoId(),
@@ -336,7 +452,8 @@ public class EchoManager
         	    }
         	}
         	
-        	@EventHandler
+        	@SuppressWarnings("null")
+			@EventHandler
         	public void onBowEchoShoot(EntityShootBowEvent e)
         	{
         	    if (!(e.getEntity() instanceof Player p)) return;

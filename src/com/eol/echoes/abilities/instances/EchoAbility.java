@@ -35,7 +35,7 @@ public abstract class EchoAbility
 	private final AbilityType aType;
 	private final StatType statRequirement;
 	private final ElementType eType;
-	private final CastConditions condition;
+	private final CastConditions castCondition;
 	private final EchoForm echoForm;
 	private final int levelRequirement;
 	private final int APCost;
@@ -43,7 +43,7 @@ public abstract class EchoAbility
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
 	public EchoAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCost, 
-			AbilityType aType, ElementType eType, CastConditions condition, EchoForm echoForm, String...description) 
+			AbilityType aType, ElementType eType, CastConditions castCondition, EchoForm echoForm, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
@@ -53,7 +53,7 @@ public abstract class EchoAbility
 		this.levelRequirement = levelRequirement;
 		this.aType = aType;
 		this.eType = eType;
-		this.condition = condition;
+		this.castCondition = castCondition;
 		this.echoForm = echoForm;
 		this.description = description;
 		
@@ -69,15 +69,14 @@ public abstract class EchoAbility
 	
 	public void setInfo() 
 	{
-		config.set("ability_name", displayName);
-		config.set("internal_name", internalName);
-		config.set("icon_material", icon.toString());
-		config.set("ap_cost", APCost);
-		config.set("stat_requirement", statRequirement.getKey());
-		config.set("level_requirement", levelRequirement);
-		config.set("description", description);
-		config.set("ability_type", aType.getKey());
-		if (eType != null) config.set("damage_type", eType.getType());
+	    config.set("ability_name", displayName);
+	    config.set("internal_name", internalName);
+	    config.set("ability_type", aType.getKey());
+	    if (icon != null)             config.set("icon_material", icon.toString());
+	    if (statRequirement != null)  config.set("stat_requirement", statRequirement.getKey());
+	    if (levelRequirement > 0)     config.set("level_requirement", levelRequirement);
+	    if (APCost > 0)               config.set("ap_cost", APCost);
+	    if (eType != null)            config.set("damage_type", eType.getType());
 	}
 	
 	public void save() 
@@ -138,6 +137,11 @@ public abstract class EchoAbility
 		return this;
 	}
 	
+	public static EchoAbility get(String internalName)
+	{
+		return AbilityRegistry.abilityRegistry.getOrDefault(internalName, null);
+	}
+	
 	public NamespacedKey getKey() 
 	{
 		return OBSABILITY;
@@ -155,9 +159,9 @@ public abstract class EchoAbility
 	
 	public CastConditions getCastCondition() 
 	{
-		return condition;
+		return castCondition;
 	}
-	public EchoForm getAbilityCategory() 
+	public EchoForm getEchoForm() 
 	{
 		return echoForm;
 	}
@@ -172,6 +176,7 @@ public abstract class EchoAbility
 	}
 	
 	public abstract int cast(PlayerInteractEvent e);
+	public abstract int getFinalDurabilityCost();
 	
 	// For gui display
 	public ItemStack toIcon(Player p) 
@@ -213,11 +218,9 @@ public abstract class EchoAbility
 		{
 			lore.add(PrintUtils.assignAbilityType(aType));
 			if (eType != null) lore.add(PrintUtils.assignElementType(eType));
-			if (condition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(condition));
+			if (castCondition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(castCondition));
 			lore.add(PrintUtils.assignEchoForm(echoForm));
 			lore.add("");
-			boolean activatedAbility = PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isActive();
-			lore.add(PrintUtils.ColorParser("&b> &nActivated&r&f: &l" + (activatedAbility ? "True" : "False")));
 			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
 		}
 		

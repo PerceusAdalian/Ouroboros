@@ -116,7 +116,7 @@ public class RefinementPage extends ObsGui
 		    p.setItemOnCursor(null);
 		    Map<ItemStack, Integer> finalResults = refineryResult.getOrDefault(p.getUniqueId(), new HashMap<>());
 		    int finalXp = refineryXp.getOrDefault(p.getUniqueId(), 0);
-		    EntityEffects.playSound(p, Sound.BLOCK_VAULT_EJECT_ITEM, SoundCategory.AMBIENT);
+		    EntityEffects.playSound(p, Sound.BLOCK_VAULT_INSERT_ITEM, SoundCategory.AMBIENT);
 		    GuiHandler.changeMenu(p, new RefinementResultsPage(p, finalResults, finalXp));
 		});
 		
@@ -156,8 +156,9 @@ public class RefinementPage extends ObsGui
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
 			e.setCancelled(true);
 		});
+		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to the Echo Main Page").place(this, 10, e->
+		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to \"&bProtocol&f: &e&lΣ&r&f&l.C.H.O.&r&f\" Main Page.").place(this, 10, e->
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
@@ -251,10 +252,10 @@ public class RefinementPage extends ObsGui
 	// Lightweight result carrier
 	public record RefinementResult(Rarity rarity, boolean failed, int xp) {}
 	
+	@SuppressWarnings("null")
 	private void addResult(UUID uuid, ItemStack item, int xp)
 	{
-	    refineryResult.computeIfAbsent(uuid, k -> new HashMap<>())
-	                  .merge(item, 1, Integer::sum);
+	    refineryResult.computeIfAbsent(uuid, k -> new HashMap<>()).merge(item, 1, Integer::sum);
 	    refineryXp.merge(uuid, xp, Integer::sum);
 	}
 }

@@ -48,6 +48,7 @@ public class TrainingWand extends AbstractObsObject
 
 	private static Set<UUID> cooldown = new HashSet<>();
 	
+	@SuppressWarnings("null")
 	@Override
 	public boolean cast(PlayerInteractEvent e) 
 	{

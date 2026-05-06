@@ -20,7 +20,6 @@ public class AbilityHandler
     	String pathAlpha = switch(ability.getAbilityType()) 
     	{
 	    	case COMBAT -> pathAlpha = "combat_ability.";
-	    	case PERK -> pathAlpha = "perk.";
 	    	case UTILITY -> pathAlpha = "utility.";
 	    	case SPECIALABILITY -> pathAlpha = "special_ability.";
     	};
@@ -38,20 +37,9 @@ public class AbilityHandler
         return this;
     }
     
-    public boolean isActive() 
-    {
-    	return config.getBoolean(path(".active"));
-    }
-    
-    public AbilityHandler setActive(boolean value) 
-    {
-		config.set(path(".active"), value);
-		return this;
-    }
-    
     public EchoAbility getInstance() 
     {
         return ability;
     }
-
+    
 }

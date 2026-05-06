@@ -19,6 +19,15 @@ public class ItemCollector
 		}
 	}
 	
+	public static void remove(ItemStack stack)
+	{
+		if (Ouroboros.debug == false)
+		{
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				stack.setAmount(stack.getAmount() -1), 1);
+		}
+	}
+	
 	public static void remove(PlayerInteractEvent e) 
 	{
 		if (Ouroboros.debug == false) 

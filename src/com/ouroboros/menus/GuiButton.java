@@ -23,7 +23,7 @@ import com.lol.spells.instances.Spell;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
-import com.ouroboros.menus.instances.abilities.AbilityConfirmationPage;
+import com.ouroboros.menus.instances.abilities.EquipAbilityPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -77,42 +77,61 @@ public class GuiButton
         gui.clickActions.put(slot, action);
     }
     
+    public static void placeAbilityButton(Player player, EchoAbility ability, int slot, ObsGui gui)
+    {
+        ItemStack abilityIcon = ability.toIcon(player);
+        boolean abilityRegistered = PlayerData.getPlayer(player.getUniqueId()).getAbility(ability).isRegistered();
 
-	public static Map<Player, EchoAbility> abilityConfirmMap = new HashMap<>();
-	public static Map<Player, Boolean> confirmRegister = new HashMap<>();
-	
-    public static void placeAbilityButton(Player player, EchoAbility ability, int slot, ObsGui gui) 
-	{
-	    ItemStack stack = ability.toIcon(player);
-
-	    GuiButton.button(stack.getType())
-	        .setName(stack.getItemMeta().getDisplayName())
-	        .setLore(stack.getItemMeta().getLore())
-	        .place(gui, slot, e -> 
-	        {
-	            Player p = (Player) e.getWhoClicked();
-	            if (PlayerData.canRegister(p.getUniqueId(), ability)) 
-	    		{
-	    	        abilityConfirmMap.put(p, ability.getInstance());
-	    	        confirmRegister.put(p, true);
-	    	        GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-	    	    }
-	    	    else if (PlayerData.getPlayer(p.getUniqueId()).getAbility(ability).isRegistered()) 
-	    	    {
-	    	        abilityConfirmMap.put(p, ability.getInstance());
-	    	        confirmRegister.put(p, false);
-	    	        GuiHandler.changeMenu(p, new AbilityConfirmationPage(p));
-	    	    }
-	    	    else 
-	    	    {
-	    	        e.setCancelled(true);
-	    	        p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-	    	    }
-	        });
-	}
+        if (abilityRegistered)
+        {
+            GuiButton.button(abilityIcon.getType())
+            .setName(PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + ChatColor.stripColor(ability.getDisplayName()))
+            .setLore(abilityIcon.getItemMeta().getLore())
+            .place(gui, slot, e ->
+            {
+                Player p = (Player) e.getWhoClicked();
+                e.setCancelled(true);
+                EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.MASTER);
+                EquipAbilityPage.echoEquip.put(p.getUniqueId(), ability);
+                GuiHandler.changeMenu(p, new EquipAbilityPage(p));
+            });
+        }
+        else
+        {
+            GuiButton.button(abilityIcon.getType())
+            .setName("&cLocked Ability&f: " + PrintUtils.getElementTypeColor(ability.getElementType()) + "&l" + ChatColor.stripColor(ability.getDisplayName()))
+            .setLore(abilityIcon.getItemMeta().getLore())
+            .place(gui, slot, e ->
+            {
+            	Player p = (Player) e.getWhoClicked();
+            	UUID uuid = p.getUniqueId();
+            	PlayerData data = PlayerData.getPlayer(uuid);
+            	if (data == null)
+            	{
+            		e.setCancelled(true);
+            		return;
+            	}
+            	
+            	if (!PlayerData.canRegisterEchoAbility(uuid, ability))
+            	{
+            		e.setCancelled(true);
+            		return;
+            	}
+            	
+            	int apCost = ability.getAPCost();
+            	data.subtractAbilityPoints(apCost);
+            	data.getAbility(ability).setRegistered(true);
+            	EntityEffects.playSound(p, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.MASTER);
+                PrintUtils.OBSFormatPrint(p, "&r&fSuccessfully registered &e&oAbility&r&f: "+
+						PrintUtils.getElementTypeColor(ability.getElementType())+"&l"+
+						ChatColor.stripColor(ability.getDisplayName())+"&r&f!");
+        		e.setCancelled(true);
+        		GuiHandler.reload(player);
+            });
+        }
+    }
     
     public static Map<UUID, Spell> spellActivateConfirm = new HashMap<>();
-    
     public static void placeSpellButton(Player player, Spell spell, int slot, ObsGui gui)
 	{
     	ItemStack spellIcon = spell.getAsItemStack(Spell.SpellGenerateCondition.ICON);
