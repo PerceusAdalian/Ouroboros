@@ -138,8 +138,8 @@ public class Sigil extends Spell
 
 					PlayerData.subtractMoney(p, amount);
 					PlayerData.addMoney(pTarget, amount);
-					PlayerHud.updateHud(pTarget);
-					PlayerHud.updateHud(p);
+					PlayerHud.update(pTarget);
+					PlayerHud.update(p);
 					PrintUtils.OBSFormatPrint(p, "&b&l"+amount+" &r&eLuminite&r&f has been deducted from your account and added to: &b&o"+pTarget.getDisplayName()+
 							"\n&r&fNew Balance: "+data.getFunds(false)+"&e₪&f.");
 					PrintUtils.OBSFormatPrint(pTarget, "&r&fPlayer: &b&o"+p.getDisplayName()+"&r&f has transfered &b&l"+amount+

@@ -105,8 +105,12 @@ public final class EchoLoreBuilder
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
             lore.add(PrintUtils.ColorParser("&r&bCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
             if (ability != null)
-                for (String line : ability.getDescription())
-                    lore.add(PrintUtils.ColorParser(line));
+            {
+            	lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
+            	for (String line : ability.getDescription())
+            		lore.add(PrintUtils.ColorParser(line));
+            	lore.add("");
+            }
         }
         else // Normal Equipped Ability
         {
@@ -116,15 +120,17 @@ public final class EchoLoreBuilder
             if (ability != null)
             	lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
             if (ability != null)
-                for (String line : ability.getDescription())
-                	lore.add(PrintUtils.ColorParser(line));
+            {
+            	lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
+            	for (String line : ability.getDescription())
+            		lore.add(PrintUtils.ColorParser(line));
+            	lore.add("");
+            }
         }
- 
-        if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
  
         int currentDurability = manifest.baseStats().getCurrentDurability();
         int maxDurability = manifest.baseStats().getMaxDurability();
-        lore.add(lore.size() - 1, PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
+        lore.add(PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
         
         // --- Echo ID ---
         lore.add(PrintUtils.ColorParser("&r&7Echo ID: Σ_" + manifest.echoId()));
@@ -172,28 +178,36 @@ public final class EchoLoreBuilder
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&f";
             lore.add(PrintUtils.ColorParser("&r&bCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
             if (ability != null)
-                for (String line : ability.getDescription())
-                    lore.add(PrintUtils.ColorParser(line));
+            {
+            	lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
+            	for (String line : ability.getDescription())
+            		lore.add(PrintUtils.ColorParser(line));
+            	lore.add("");
+            }
         }
         else // Normal Equipped Ability
         {
             EchoAbility ability = EchoAbility.fromInternalName(manifest.equippedAbilityKey());
             String abilityName = ability != null ? ability.getDisplayName() : "None Equipped";
             String elementColor = ability != null ? PrintUtils.getElementTypeColor(ability.getElementType()) : "&7&o";
-            lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
             if (ability != null)
-                for (String line : ability.getDescription())
-                	lore.add(PrintUtils.ColorParser(line));
+            	lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
+            if (ability != null)
+            {
+            	lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
+            	for (String line : ability.getDescription())
+            		lore.add(PrintUtils.ColorParser(line));
+            	lore.add("");
+            }
         }
  
-        if (manifest.hasElementiumSlot() || manifest.hasLockedAbility()) lore.add("");
-        
         int currentDurability = manifest.baseStats().getCurrentDurability();
         int maxDurability = manifest.baseStats().getMaxDurability();
         lore.add(PrintUtils.ColorParser("&b&lDurability&r&f: " + rollQualityColor(currentDurability, 0, maxDurability) + currentDurability + "&r&7/" + maxDurability));
         
+        // --- Echo ID ---
         lore.add(PrintUtils.ColorParser("&r&7Echo ID: Σ_" + manifest.echoId()));
- 
+        
         return lore;
     }
  

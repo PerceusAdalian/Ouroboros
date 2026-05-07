@@ -89,8 +89,8 @@ public class AspectOfAighil extends Spell
 			}
 			
 			EntityEffects.playSound(p, Sound.ENTITY_ENDER_DRAGON_AMBIENT, SoundCategory.AMBIENT);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.30, 7, Particle.LAVA, null);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 23, 0.25, 4, Particle.SMOKE, null); 
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.30, 7, 0.3, Particle.LAVA, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 23, 0.25, 4, 0.3, Particle.SMOKE, null); 
 			
 			if (!RayCastUtils.getNearbyEntities(p, 30, target ->
 			{

@@ -39,15 +39,17 @@ public abstract class EchoAbility
 	private final EchoForm echoForm;
 	private final int levelRequirement;
 	private final int APCost;
+	private final int durabilityCost;
 	
 	public static final NamespacedKey OBSABILITY = new NamespacedKey(Ouroboros.instance, "obsability");
 	
-	public EchoAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCost, 
+	public EchoAbility(String displayName, String internalName, Material icon, StatType statRequirement, int levelRequirement, int APCost, int durabilityCost, 
 			AbilityType aType, ElementType eType, CastConditions castCondition, EchoForm echoForm, String...description) 
 	{
 		this.displayName = displayName;
 		this.internalName = internalName;
 		this.APCost = APCost;
+		this.durabilityCost = durabilityCost;
 		this.icon = icon;
 		this.statRequirement = statRequirement;
 		this.levelRequirement = levelRequirement;
@@ -132,6 +134,11 @@ public abstract class EchoAbility
 		return config.getInt("ap_cost");
 	}
 	
+	public int getDurabilityCost()
+	{
+		return durabilityCost;
+	}
+
 	public EchoAbility getInstance() 
 	{
 		return this;
@@ -186,8 +193,6 @@ public abstract class EchoAbility
 		List<String> lore = new ArrayList<>();
 		
 		meta.setDisplayName(PrintUtils.ColorParser("&r&f"+displayName));
-		lore.add("\n");
-		
 		if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isRegistered()) 
 		{
 			stack.setType(Material.NETHER_STAR);
@@ -202,6 +207,8 @@ public abstract class EchoAbility
 			};
 			
 			lore.add(PrintUtils.assignAbilityType(aType));
+			lore.add(PrintUtils.assignDurabilityCost(durabilityCost));
+			lore.add(PrintUtils.ColorParser("&r&f- &oDescription&r&f:"));
 			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");	
 			lore.add("");
 			if (PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true) < levelRequirement) 
@@ -216,11 +223,13 @@ public abstract class EchoAbility
 		}
 		else 
 		{
+			lore.add(PrintUtils.assignDurabilityCost(durabilityCost));
 			lore.add(PrintUtils.assignAbilityType(aType));
 			if (eType != null) lore.add(PrintUtils.assignElementType(eType));
 			if (castCondition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(castCondition));
 			lore.add(PrintUtils.assignEchoForm(echoForm));
 			lore.add("");
+			lore.add(PrintUtils.ColorParser("&r&f- &oDescription&r&f:"));
 			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
 		}
 		

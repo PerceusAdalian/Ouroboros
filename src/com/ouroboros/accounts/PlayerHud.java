@@ -13,7 +13,7 @@ import com.ouroboros.utils.PrintUtils;
 public class PlayerHud
 {
 		
-    public static void createHud(Player p) 
+    public static void create(Player p) 
     {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective hud = board.registerNewObjective("obs_hud", Criteria.DUMMY, 
@@ -28,7 +28,7 @@ public class PlayerHud
         p.setScoreboard(board);
     }
 
-    public static void updateHud(Player p) 
+    public static void update(Player p) 
     {
     	Scoreboard board = p.getScoreboard();
    	 	Objective obj = board.getObjective(DisplaySlot.SIDEBAR);

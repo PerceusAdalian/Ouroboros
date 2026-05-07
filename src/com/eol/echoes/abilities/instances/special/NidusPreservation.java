@@ -26,8 +26,7 @@ public class NidusPreservation extends EchoAbility
 
 	public NidusPreservation()
 	{
-		super("Nidus' Preservation", "nidus_preservation", Material.NETHER_STAR, StatType.MELEE, 0, 0, AbilityType.SPECIALABILITY, ElementType.GEO, CastConditions.RIGHT_CLICK_AIR, EchoForm.HAMMER, 
-				PrintUtils.assignDurabilityCost(100),
+		super("Nidus' Preservation", "nidus_preservation", Material.NETHER_STAR, StatType.MELEE, 0, 0, 100, AbilityType.SPECIALABILITY, ElementType.GEO, CastConditions.RIGHT_CLICK_AIR, EchoForm.HAMMER, 
 				"&r&fApplies &6Guarded &bX&f and &6Barbed &bX&f to &6self&7 (1min)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 10 instances.",
 				"&r&6Barbed &eEffect&f: Incoming damage is redirected as "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage",
@@ -44,7 +43,7 @@ public class NidusPreservation extends EchoAbility
 		{
 			GeoEffects.addBarbed(p, 5, 60);
 			EntityEffects.playSound(p, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 5, 0.8, 30, Particle.BLOCK_CRUMBLE, Material.DIRT.createBlockData());
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 5, 0.8, 30, 0.4, Particle.BLOCK_CRUMBLE, Material.DIRT.createBlockData());
 		}, 20);
 		return 100;
 	}

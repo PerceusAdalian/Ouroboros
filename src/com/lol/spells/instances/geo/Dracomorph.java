@@ -65,9 +65,9 @@ public class Dracomorph extends Spell
 			})) return -1;
 			
 			EntityEffects.playSound(p, Sound.ENTITY_RAVAGER_ROAR, SoundCategory.MASTER);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 30, .45, 25, Particle.BLOCK_CRUMBLE, Material.DIRT.createBlockData());
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 30, .35, 25, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 30, .35, 25, Particle.SMOKE, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 30, .45, 25, 0.3, Particle.BLOCK_CRUMBLE, Material.DIRT.createBlockData());
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 30, .35, 25, 0.3, Particle.BLOCK_CRUMBLE, Material.STONE.createBlockData());
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 30, .35, 25, 0.3, Particle.SMOKE, null);
 			
 			return 300;
 		}

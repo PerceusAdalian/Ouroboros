@@ -81,7 +81,7 @@ public class AspectOfLordran extends Spell
 			if (shouldRevive.contains(uuid)) return -1;
 			
 			EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.MASTER);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 15, 0.8, 20, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 15, 0.8, 20, 0.3, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
 			ObsParticles.drawCylinder(p.getLocation(), p.getWidth()+3, 3, 10, 0.9, 0.1, Particle.ENCHANT, null);
 			ObsParticles.drawCylinder(p.getLocation(), p.getWidth()+2, 2, 15, 0.6, 0.1, Particle.ENCHANT, null);
 			
@@ -168,9 +168,9 @@ public class AspectOfLordran extends Spell
 
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
-					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 10, 0.65, 20, Particle.BLOCK_CRUMBLE, Material.CYAN_TERRACOTTA.createBlockData());
-					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 11, 0.65, 20, Particle.BLOCK_CRUMBLE, Material.BLUE_WOOL.createBlockData());
-					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 9, 0.65, 20, Particle.BLOCK_CRUMBLE, Material.PRISMARINE.createBlockData());
+					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 10, 0.65, 20, 0.3, Particle.BLOCK_CRUMBLE, Material.CYAN_TERRACOTTA.createBlockData());
+					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 11, 0.65, 20, 0.3, Particle.BLOCK_CRUMBLE, Material.BLUE_WOOL.createBlockData());
+					ObsParticles.drawWave(Ouroboros.instance, le.getLocation(), 9, 0.65, 20, 0.3, Particle.BLOCK_CRUMBLE, Material.PRISMARINE.createBlockData());
 					ObsParticles.drawCylinder(le.getLocation(), le.getWidth()+4, 5, 15, 0.5, 0.1, Particle.ENCHANT, null);
 					if (MobData.getMob(le.getUniqueId()) != null) MobData.getMob(le.getUniqueId()).setBreak();
 				}, 4);

@@ -21,6 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import com.eol.echoes.instances.EOLRegistry;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
@@ -125,12 +126,19 @@ public class Materia
 	}
 
 	public static final Map<String, Materia> materia_registry = new HashMap<>();
-	
+	public static final Map<String, String> eol_catalyst_registry = new HashMap<>();
+		
 	public static void register(Materia materia)
 	{
 		materia_registry.put(materia.getInternalName(), materia);
 	}
 	
+	public static void register(Materia materia, String eolInternalName)
+	{
+	    materia_registry.put(materia.getInternalName(), materia);
+	    eol_catalyst_registry.put(materia.getInternalName(), eolInternalName);
+	}
+
 	public static Materia get(String internalName)
 	{
 		return materia_registry.getOrDefault(internalName, null);
@@ -163,6 +171,13 @@ public class Materia
 		applyPersistentData(meta, state);
 		stack.setItemMeta(meta);
 
+		if (state == MateriaState.CATALYST)
+	    {
+	        String eolTarget = eol_catalyst_registry.get(internalName);
+	        if (eolTarget != null)
+	        	EOLRegistry.markCatalyst(stack, eolTarget);
+	    }
+		
 		return stack;
 	}
 	

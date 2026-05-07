@@ -59,9 +59,9 @@ public class AvadaKedavra extends Spell
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.4, Particle.GLOW_SQUID_INK, null);
 		    ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.3, Particle.TRIAL_OMEN, null);
 		    ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.3, Particle.WARPED_SPORE, null);
-		    ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.3, 8, Particle.WITCH, null);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.4, 8, Particle.TRIAL_OMEN, null);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.35, 8, Particle.GLOW_SQUID_INK, null);
+		    ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.3, 8, 0.3, Particle.WITCH, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.4, 8, 0.3, Particle.TRIAL_OMEN, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.35, 8, 0.3, Particle.GLOW_SQUID_INK, null);
 			
 		    if (Chance.of(wand.getElementType() == ElementType.HERESIO ? 1.25 : 5.0)) 
 		    {

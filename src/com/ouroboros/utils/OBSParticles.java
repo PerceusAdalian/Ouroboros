@@ -16,6 +16,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import com.lol.enums.SpellementType;
+import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.utils.TimeUtils.Timeframe;
 
@@ -288,7 +289,7 @@ public class ObsParticles
 	 * @param particle 
 	 * @param data - Optional
 	 */
-	public static <T> void drawWave(Plugin plugin, Location center, double range, double speed, int density, Particle particle, T data)
+	public static <T> void drawWave(Plugin plugin, Location center, double range, double speed, int density, double heightOffset, Particle particle, T data)
 	{
 	    AtomicReference<Double> radius = new AtomicReference<>(0.0);
 
@@ -302,7 +303,7 @@ public class ObsParticles
 	            return;
 	        }
 
-	        drawDisc(center.clone(), r, 1, density, 0.1, particle, data);
+	        drawDisc(center.clone(), r, 1, density, heightOffset, particle, data);
 
 	        radius.set(r + speed);
 
@@ -340,6 +341,17 @@ public class ObsParticles
 
 	    drawLine(pointA, pointB, interval, heightOffset, particle, data);
 	    drawLine(pointC, pointD, interval, heightOffset, particle, data);
+	}
+	
+	public static void drawLandingWave(LivingEntity target)
+	{
+		drawDisc(target.getLocation(), target.getWidth()+1, 1, 4, 0.2, Particle.DUST_PLUME, null);
+		drawWave(Ouroboros.instance, target.getLocation(), 3, 0.6, 30, 0.4, Particle.BLOCK_CRUMBLE, target.getWorld().getHighestBlockAt(target.getLocation()).getType().createBlockData());
+	}
+	
+	public static void drawLandingDisc(LivingEntity target)
+	{
+		drawDisc(target.getLocation(), target.getWidth()+1, 1, 4, 0.2, Particle.BLOCK_CRUMBLE, target.getWorld().getHighestBlockAt(target.getLocation()).getType().createBlockData());
 	}
 	
 	public static void drawInfernoCastSigil(LivingEntity entity) 

@@ -10,6 +10,7 @@ import com.lol.enums.SpellementType;
 public enum ElementType
 {
 	NONE(null),
+	
 	//Neutral Damage Type
 	PURE("&r&f&lPure&r&f"),
 	//Normal Melee Damage Types
@@ -31,6 +32,8 @@ public enum ElementType
 	//Special Almighty Explosive Damage Type
 	BLAST("&r&e&o&lBlast&r&f"),
 	//Elemental Damage Types
+	MODULO("&lModulo&r&f"), // Universal "Any" Element Type for Compatibility With Echoes
+	
 	CELESTIO("&lCelestio&r&f"),
 	MORTIO("&lMortio&r&f"),
 	INFERNO("&lInferno&r&f"),
@@ -102,10 +105,30 @@ public enum ElementType
 			case HERESIO 	-> ElementType.HERESIO;
 			case INFERNO 	-> ElementType.INFERNO;
 			case MORTIO 	-> ElementType.MORTIO;
+			case MODULO     -> ElementType.MODULO;
 			default 		-> null;	
 		};
 		
 		return eType;
+	}
+	
+	public static ElementType getFromEntityCategory(EntityCategory category)
+	{
+		ElementType element = switch (category) 
+		{
+		case CELESTIO_MOBS -> ElementType.CELESTIO;
+		case MORTIO_MOBS   -> ElementType.MORTIO;
+		case INFERNO_MOBS  -> ElementType.INFERNO;
+		case GLACIO_MOBS   -> ElementType.GLACIO;
+		case AERO_MOBS     -> ElementType.AERO;
+		case GEO_MOBS      -> ElementType.GEO;
+		case COSMO_MOBS    -> ElementType.COSMO;
+		case HERESIO_MOBS  -> ElementType.HERESIO;
+		case ARCANO_MOBS   -> ElementType.ARCANO;
+		default            -> null;
+		};
+		
+		return element;
 	}
 	
 	public static final EnumSet<ElementType> mobElements = EnumSet.of(

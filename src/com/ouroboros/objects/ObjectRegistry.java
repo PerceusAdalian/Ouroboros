@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.ouroboros.objects.instances.AeroEssence;
 import com.ouroboros.objects.instances.ArcanoEssence;
@@ -16,12 +14,8 @@ import com.ouroboros.objects.instances.GeoEssence;
 import com.ouroboros.objects.instances.GlacioEssence;
 import com.ouroboros.objects.instances.HeresioEssence;
 import com.ouroboros.objects.instances.InfernoEssence;
-import com.ouroboros.objects.instances.LuminiteCore;
-import com.ouroboros.objects.instances.LuminiteDust;
-import com.ouroboros.objects.instances.LuminiteFragment;
-import com.ouroboros.objects.instances.LuminiteIngot;
-import com.ouroboros.objects.instances.LuminiteShard;
 import com.ouroboros.objects.instances.ManaGem;
+import com.ouroboros.objects.instances.MoneyObject;
 import com.ouroboros.objects.instances.MortioEssence;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.RemembranceOfHope;
@@ -33,16 +27,11 @@ public class ObjectRegistry
 {
 	public static final Map<String, AbstractObsObject> itemRegistry = new HashMap<>();
 
-    public static void itemInit() 
+    @SuppressWarnings("null")
+	public static void itemInit() 
     {
         List<Class<? extends AbstractObsObject>> itemClasses = Arrays.asList(
-            //Money Items:
-    		LuminiteDust.class,
-    		LuminiteShard.class,
-    		LuminiteFragment.class,
-    		LuminiteIngot.class,
-    		LuminiteCore.class,
-    		
+            MoneyObject.class,
         	ObsStatVoucher.class,
         	
         	RemembranceOfHope.class,
@@ -77,12 +66,5 @@ public class ObjectRegistry
                 e.printStackTrace();
             }
         }
-    }
-    
-    public static Set<AbstractObsObject> getMoneyItems()
-    {
-        return itemRegistry.values().stream()
-            .filter(obj -> obj.getInternalName().startsWith("money_"))
-            .collect(Collectors.toSet());
     }
 }

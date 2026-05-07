@@ -52,7 +52,7 @@ public class GlacialFlood extends Spell
 			EntityEffects.playSound(p, Sound.AMBIENT_UNDERWATER_EXIT, SoundCategory.AMBIENT);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.AMBIENT);
 			ObsParticles.drawWisps(p.getLocation(), p.getWidth() + 20, p.getHeight()+ 15, 20, Particle.SNOWFLAKE, null);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, .25, 20, Particle.FISHING, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, .25, 20, 0.3, Particle.FISHING, null);
 			
 			if (!RayCastUtils.getNearbyEntities(p, 20, target ->
 			{

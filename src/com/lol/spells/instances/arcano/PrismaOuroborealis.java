@@ -42,7 +42,7 @@ public class PrismaOuroborealis extends Spell
 		
 		if (arcane_prisma_registry.contains(p.getUniqueId())) return -1;
 		ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 7, 0.75, 0.1, Particle.ENCHANT, null);
-		ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 9, 0.3, 8, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
+		ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 9, 0.3, 8, 0.3, Particle.BLOCK_CRUMBLE, Material.PRISMARINE_BRICKS.createBlockData());
 		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		arcane_prisma_registry.add(p.getUniqueId());
 		

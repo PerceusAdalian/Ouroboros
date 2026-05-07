@@ -77,7 +77,7 @@ public class GeneralEvents implements Listener
         		}
         		
         		PlayerData.loadPlayer(p.getUniqueId());
-        		PlayerHud.createHud(p);
+        		PlayerHud.create(p);
         	}
         	
         	@EventHandler

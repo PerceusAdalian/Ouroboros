@@ -67,7 +67,7 @@ public class HealingCurrent extends Spell
 		EntityEffects.heal(target, target.getHealth() * 0.5);
 		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 		EntityEffects.playSound(caster, caster == target ? Sound.BLOCK_BEACON_POWER_SELECT : Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-		ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 7, 0.5, 20, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());
+		ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 7, 0.5, 20, 0.2, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());
 	}
 
 }

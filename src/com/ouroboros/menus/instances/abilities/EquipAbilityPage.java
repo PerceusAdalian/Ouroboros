@@ -79,12 +79,23 @@ public class EquipAbilityPage extends ObsGui
 					return;
 				}
 				
-				EchoAbility ability = echoEquip.get(p.getUniqueId()); // Must have matching element type for the slot, and form requirement
-				if (!ElementType.getFromElementiumSlotType(codec.getElementiumSlotType()).equals(ability.getElementType())
-						|| !ability.getEchoForm().equals(codec.getEchoForm()))
+				EchoAbility ability = echoEquip.get(p.getUniqueId());
+				
+				boolean isModulo        = ability.getElementType() == ElementType.MODULO;
+				boolean hasSlot         = codec.hasElementiumSlot();
+				boolean formMismatch    = !ability.getEchoForm().equals(codec.getEchoForm());
+				boolean elementMismatch = hasSlot && !ElementType.getFromElementiumSlotType(codec.getElementiumSlotType()).equals(ability.getElementType());
+
+				boolean shouldCancel;
+				// MODULO abilities ignore element matching but still require form match
+				if (isModulo) shouldCancel = !hasSlot || formMismatch ;
+				// Non-MODULO abilities require both element match and form match, and a slot must exist
+				else shouldCancel = elementMismatch || formMismatch || !hasSlot;
+				
+				if (shouldCancel)
 				{
-					e.setCancelled(true);
-					return;
+				    e.setCancelled(true);
+				    return;
 				}
 				
 				// All checks passed, equip the ability

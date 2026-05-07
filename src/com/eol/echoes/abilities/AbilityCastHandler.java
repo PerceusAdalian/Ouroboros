@@ -72,7 +72,7 @@ public class AbilityCastHandler implements Listener
         	
         	int cost = ability.cast(e);
         	if (cost < 0) return;
-        	
+        	e.setCancelled(true);
         	EchoManager.modifyDurability(p, held, DurabilityOperation.SUBTRACT, cost, false);
         }
     }

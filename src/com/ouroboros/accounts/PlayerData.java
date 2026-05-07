@@ -133,6 +133,7 @@ public class PlayerData
 	    	
 	    	doLevelUpSound(true);
 	    	doXpNotification(true);
+	    	doAutoCollectLootDrops(false);
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
 	    	initializeWarpLocations();
@@ -365,7 +366,7 @@ public class PlayerData
 		data.setFunds(false, currentMoney);
 		data.setFunds(true, currentDebt);
 		data.save();
-		PlayerHud.updateHud(p);
+		PlayerHud.update(p);
 	}
 
 	
@@ -383,7 +384,7 @@ public class PlayerData
 		data.setFunds(false, currentMoney);
 		data.setFunds(true, currentDebt);
 		data.save();
-		PlayerHud.updateHud(p);
+		PlayerHud.update(p);
 	}
 
 	public int getLuminite()
@@ -402,7 +403,7 @@ public class PlayerData
 		data.setLuminite(data.getLuminite()+value);
 		if (data.getLuminite() > maxLuminite) data.setLuminite(maxLuminite);
 		data.save();
-		PlayerHud.updateHud(p);
+		PlayerHud.update(p);
 	}
 	
 	public static void subtractLuminite(Player p, int value)
@@ -411,7 +412,7 @@ public class PlayerData
 		data.setLuminite(data.getLuminite()-value);
 		if (data.getLuminite() < 0) data.setLuminite(0);
 		data.save();
-		PlayerHud.updateHud(p);
+		PlayerHud.update(p);
 	}
 	
 	public int getEssence(ElementType elementType)
@@ -480,7 +481,7 @@ public class PlayerData
 		data.setScrap(data.getScrap()+value);
 		if (data.getScrap() > maxScrap) data.setScrap(maxScrap);
 		data.save();
-		PlayerHud.updateHud(p);
+		PlayerHud.update(p);
 	}
 	
 	public static void subtractScrap(Player p, int value)
@@ -489,7 +490,7 @@ public class PlayerData
 		data.setScrap(data.getScrap()-value);
 		if (data.getScrap() < 0) data.setScrap(0);
 		data.save();
-		PlayerHud.updateHud(p);
+		PlayerHud.update(p);
 	}
 	
 	public void setMagicProficiency(int value)
@@ -603,6 +604,7 @@ public class PlayerData
 	public void doLevelUpSound(boolean bool) 
 	{
 		config.set("dolevelupsound", bool);
+		save();
 	}
 	
 	public boolean doLevelUpSound() 
@@ -613,11 +615,23 @@ public class PlayerData
 	public void doXpNotification(boolean bool) 
 	{
 		config.set("doxpnotifs", bool);
+		save();
 	}
 	
 	public boolean doXpNotification() 
 	{
 		return config.getBoolean("doxpnotifs");
+	}
+	
+	public void doAutoCollectLootDrops(boolean bool)
+	{
+		config.set("auto_collect_loot_drops", bool);
+		save();
+	}
+	
+	public boolean doAutoCollectLootDrops()
+	{
+		return config.getBoolean("auto_collect_loot_drops");
 	}
 	
 	public boolean hasKitClaimed()

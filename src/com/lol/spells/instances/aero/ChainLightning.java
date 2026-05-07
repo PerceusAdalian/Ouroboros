@@ -45,7 +45,7 @@ public class ChainLightning extends Spell
 	{	    
 		Player p = e.getPlayer();
 	 
-		List<Entity> mobs = RayCastUtils.getEntitiesInFov(p, 20.0, 5);
+		List<Entity> mobs = RayCastUtils.getEntitiesInFOV(p, 20.0, 5);
 	    
 		if (mobs == null || mobs.isEmpty()) return -1;
 

@@ -20,18 +20,14 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BrewingStartEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -46,10 +42,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionType;
 
-import com.eol.echoes.EchoManager;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -391,48 +385,6 @@ public class ExpHandler implements Listener
 				}, 1L);
 			}
 
-			@EventHandler
-			public void onKill(EntityDamageByEntityEvent e) 
-			{
-			    if (!(e.getEntity() instanceof LivingEntity target)) return;
-
-			    Player p = null;
-			    StatType sType = null;
-
-			    MobData data = MobData.getMob(target.getUniqueId());
-			    if (data == null) return;
-
-			    if (e.getDamager() instanceof Player player) // Vanilla Weapons don't provide ranged/melee xp
-			    {
-			        p = player;
-			        ItemStack held = player.getInventory().getItemInMainHand();
-			        if (EchoManager.isEcho(held) || held.getType().isAir()) 
-			        	sType = StatType.MELEE; 
-			    }
-			    else if (e.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player shooter) 
-			    {
-			        p = shooter;
-			        ItemStack held = shooter.getInventory().getItemInMainHand();
-			        if (EchoManager.isEcho(held))
-			            sType = StatType.RANGED;
-			    }
-			    else if (e.getDamager() instanceof ThrownPotion potion && potion.getShooter() instanceof Player thrower) 
-			    {
-			        p = thrower;
-			        sType = StatType.MAGIC;
-			    }
-
-			    if (p == null || sType == null) return;
-
-			    if (!data.isDead() && data.getHp(false) - e.getFinalDamage() <= 0.0) 
-			    {
-			        if (PlayerData.getPlayer(p.getUniqueId()).doLevelUpSound()) 
-			            EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
-			        if (PlayerData.getPlayer(p.getUniqueId()).doXpNotification())
-			            PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f"+XpUtils.getXp(target)+" &b&o"+PrintUtils.printStatType(sType));
-			        PlayerData.addXP(p, sType, XpUtils.getXp(target));
-			    }
-			}
 		}, plugin);
 	}
 }

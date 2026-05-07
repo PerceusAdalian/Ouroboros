@@ -65,7 +65,7 @@ public class Bombarda extends Spell
 		{
 			InfernoEffects.addBurn((LivingEntity) target, 10);
 			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), 3, 0.1, Particle.LAVA, null);
-			ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 6, 0.5, 6, Particle.FLAME, null);
+			ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 6, 0.5, 6, 0.3, Particle.FLAME, null);
 		}, 9);
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->

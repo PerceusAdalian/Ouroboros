@@ -1,4 +1,4 @@
-package com.eol.echoes.abilities.instances.combat;
+package com.eol.echoes.abilities.instances.sword;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -16,7 +16,6 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
-import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
@@ -26,8 +25,7 @@ public class Flamelash extends EchoAbility
 
 	public Flamelash() 
 	{
-		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 5, 1, AbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
-				PrintUtils.assignDurabilityCost(10),
+		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 3, 1, 10, AbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fDeal &l5&r&c♥ &e&lSlash&r&f damage to &6target &dMob&f, inflicting &cBurn &7(7m, 10s)");
 	}
 

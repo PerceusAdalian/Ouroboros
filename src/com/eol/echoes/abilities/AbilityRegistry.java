@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.eol.echoes.abilities.instances.EchoAbility;
-import com.eol.echoes.abilities.instances.combat.Flamelash;
-import com.eol.echoes.abilities.instances.combat.GeminiSlash;
-import com.eol.echoes.abilities.instances.combat.ImbueFire;
-import com.eol.echoes.abilities.instances.combat.Cleave;
+import com.eol.echoes.abilities.instances.hatchet.HeavyChop;
+import com.eol.echoes.abilities.instances.pickaxe.HeavySwing;
+import com.eol.echoes.abilities.instances.polearm.Lunge;
+import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
+import com.eol.echoes.abilities.instances.sword.Flamelash;
+import com.eol.echoes.abilities.instances.sword.GeminiSlash;
+import com.eol.echoes.abilities.instances.sword.ImbueFire;
 
 public class AbilityRegistry 
 {
@@ -23,7 +26,7 @@ public class AbilityRegistry
     {
         List<Class<? extends EchoAbility>> itemClasses = Arrays.asList(
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
-            Cleave.class,
+            Cleave.class, HeavySwing.class, Lunge.class, HeavyChop.class,
             
             // Special
             LuminusRadiance.class,

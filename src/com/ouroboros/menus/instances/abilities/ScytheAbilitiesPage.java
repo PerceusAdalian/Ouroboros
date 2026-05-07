@@ -7,7 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.eol.echoes.abilities.instances.combat.Cleave;
+import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;

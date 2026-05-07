@@ -79,11 +79,13 @@ public class CelestioEffects
 	 */
 	public static void addWard(Player target, int magnitude, int seconds)
 	{
+		if (hasWard.contains(target.getUniqueId())) return;
+		hasWard.add(target.getUniqueId());
+		
 		EntityEffects.add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
 		EntityEffects.add(target, PotionEffectType.FIRE_RESISTANCE, seconds * 20, 0, false);
 		EntityEffects.add(target, PotionEffectType.RESISTANCE, seconds * 20, magnitude, false);
 		
-		hasWard.add(target.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
 			EntityEffects.playSound(target, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);

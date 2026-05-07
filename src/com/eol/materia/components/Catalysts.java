@@ -1,5 +1,7 @@
 package com.eol.materia.components;
 
+import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
@@ -111,7 +113,7 @@ public class Catalysts
 				"&r&e&othe day Father took us into the woods to hunt for &r&e&l&nrabbit pelt&r&e&o?",
 				"&r&e&oYou were so patient teaching me the prayers of &r&e&l&nCelestio&r&e&o,",
 				"&r&e&othe same magic you devoted yourself to until the very end.",
-				"&r&e&oI carry these memories like a forge carries heat. I miss you, sister.."));
+				"&r&e&oI carry these memories like a forge carries heat. I miss you, sister.."), new LuminusBroadsword().getInternalName());
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.GEO)+Symbols.EOL+"cho Of Nidus",
 				"echo_of_nidus",
@@ -126,7 +128,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.GEO)+"&oHis icon, the "+PrintUtils.color(ObsColors.GEO)+"&l&nHammer&r"+PrintUtils.color(ObsColors.GEO)+"&o, speaks to his doctrine of preservation:",
 				PrintUtils.color(ObsColors.GEO)+"&oTo shape the world without breaking it, situated on the discipline of Earth Magiks.",
 				PrintUtils.color(ObsColors.GEO)+"&oDevotees laid "+PrintUtils.color(ObsColors.GEO)+"&l&nLeather&r"+PrintUtils.color(ObsColors.GEO)+"&o at his shrine, believing the offering would earn",
-				PrintUtils.color(ObsColors.GEO)+"favor from Father Nature himself."));
+				PrintUtils.color(ObsColors.GEO)+"favor from Father Nature himself."), new HammerOfNidus().getInternalName());
 		
 	}
 }

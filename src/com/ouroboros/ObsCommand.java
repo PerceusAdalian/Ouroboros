@@ -31,7 +31,6 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.echoes.EchoForge;
 import com.eol.echoes.abilities.AbilityRegistry;
 import com.eol.echoes.abilities.instances.EchoAbility;
-import com.eol.echoes.instances.EolGenerator;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
@@ -53,8 +52,8 @@ import com.ouroboros.menus.instances.magic.WandMainPage;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.MobSummoner;
 import com.ouroboros.objects.AbstractObsObject;
+import com.ouroboros.objects.MoneyHandler;
 import com.ouroboros.objects.ObjectRegistry;
-import com.ouroboros.objects.instances.LuminiteCore;
 import com.ouroboros.objects.instances.ObsStatVoucher;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.EntityCategories;
@@ -102,16 +101,13 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			meta.getPersistentDataContainer().set(ObsStatVoucher.voucherKey, PersistentDataType.STRING, p.getUniqueId().toString());
 			voucherStack.setItemMeta(meta);
 			
-			AbstractObsObject luminiteCoreObj = new LuminiteCore();
-			ItemStack luminiteCoreStack = luminiteCoreObj.toItemStack();
-
 			AbstractObsObject luminiteTear = new TearOfLumina();
 			ItemStack luminiteTearStack = luminiteTear.toItemStack();
 			luminiteTearStack.setAmount(10);
 			
 			ItemStack bag = new ItemStack(Material.BUNDLE, 1);
 			BundleMeta bagMeta = (BundleMeta) bag.getItemMeta();
-			bagMeta.addItem(luminiteCoreStack);
+			bagMeta.addItem(MoneyHandler.of(10000).build());
 			bagMeta.addItem(voucherStack);
 			bagMeta.addItem(luminiteTearStack);
 			bagMeta.addItem(Wand.get("wand_1").getAsItemStack());
@@ -338,7 +334,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 			data.setLuminite(PlayerData.maxLuminite);
 			data.save();
-			PlayerHud.updateHud(target);
+			PlayerHud.update(target);
 			PrintUtils.OBSFormatDebug(p, "Maximum Luminite granted for: "+target.getName());
 			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Luminite. \nIf you believe this was done in error, contact the server admin.");
 			return true;
@@ -353,7 +349,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 			data.setScrap(PlayerData.maxScrap);
 			data.save();
-			PlayerHud.updateHud(p);
+			PlayerHud.update(p);
 			PrintUtils.OBSFormatDebug(p, "Maximum Scrap granted for: "+target.getName());
 			PrintUtils.OBSFormatPrint(p, "You have been granted maximum Scrap. \nIf you believe this was done in error, contact the server admin.");
 			return true;
@@ -531,7 +527,6 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			if (args[1].equals("echo") && args.length == 6)
 			{
 				Materia catalyst = null;
-				ItemStack markedCatalyst = null;
 				
 				Materia base = null;
 				Materia binding = null;
@@ -554,10 +549,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				if (element_core != null && element_core.getMateriaComponent() != MateriaComponent.ELEMENT_CORE)
 					PrintUtils.OBSFormatError(p, "Base Invalid: "+ element_core == null ? "null" : element_core.getInternalName() + ", "+element_core.getMateriaComponent().getLabel());
 				
-				if (catalyst.getInternalName().equals("echo_of_luminus")) markedCatalyst = EolGenerator.generateLuminusCatalyst();
-				if (catalyst.getInternalName().equals("echo_of_nidus")) markedCatalyst = EolGenerator.generateNidusCatalyst();
-				
-				ItemStack echo = EchoForge.forge(markedCatalyst != null ? markedCatalyst : catalyst.getAsItemStack(MateriaState.CATALYST), base, binding, element_core);
+				ItemStack echo = EchoForge.forge(catalyst.getAsItemStack(MateriaState.CATALYST), base, binding, element_core);
 				if (echo == null)
 				{
 				    PrintUtils.OBSConsoleError("Forge Failed -- generated echo returned null!");
@@ -638,7 +630,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				data.setFunds(true, 0);
 				data.setFunds(false, PlayerData.fundsIntegerMax);
 				data.save();
-				PlayerHud.updateHud(target);
+				PlayerHud.update(target);
 				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added max &r&e₪ &r&7&oto: &r&f&l"+target.getName()+"&r&7&o's account.");
 				return true;
 			}
@@ -651,7 +643,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				data.setFunds(true, PlayerData.fundsIntegerMax);
 				data.setFunds(false, 0);
 				data.save();
-				PlayerHud.updateHud(target);
+				PlayerHud.update(target);
 				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully added max &r&cЖ &r&7&oto: &r&f&l"+target.getName()+"&r&7&o's account.");
 				return true;
 			}
@@ -664,7 +656,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				data.setFunds(false, 0);
 				data.setFunds(true, 0);
 				data.save();
-				PlayerHud.updateHud(target);
+				PlayerHud.update(target);
 				PrintUtils.OBSFormatPrint(p, "&r&7&oSuccessfully reset { &r&e₪ &r&7&o& &r&cЖ &r&7&o} from: &r&f&l"+target.getName()+"&r&7&o's account.");
 				return true;
 			}
@@ -766,6 +758,22 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			
+			if (args[1].equals("doAutoPickupLoot") && args.length == 3)
+			{
+				Boolean bool = Boolean.parseBoolean(args[2]);
+				if (bool) 
+				{
+					PlayerData.getPlayer(uuid).doAutoCollectLootDrops(true);
+					PrintUtils.OBSFormatDebug(p, "Auto Collect Loot Drops Turned: &a&lON");
+				}
+				else 
+				{
+					PlayerData.getPlayer(uuid).doAutoCollectLootDrops(false);
+					PrintUtils.OBSFormatDebug(p, "Auto Collect Loot Drops Turned: &c&lOFF");
+				}
+				return true;
+			}
+			
 			if (args[1].equals("reset") && args.length == 3)
 			{
 				if (affirmOP(p)) return true;
@@ -780,7 +788,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		        PlayerData.getPlayer(target.getUniqueId()).getFile().delete();
 		        PlayerData.getPlayer(target.getUniqueId()).setDefaults();
 		        PlayerData.getPlayer(target.getUniqueId()).save();
-		        PlayerHud.updateHud(target);
+		        PlayerHud.update(target);
 		        PrintUtils.OBSFormatDebug(p, "Successfully Reset " + target.getName() + "'s Account");
 		        return true;
 			}
@@ -911,7 +919,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					// Stats sub-commands: some are OP-only.
 					case "stats" ->
 					{
-						List<String> statSubs = new ArrayList<>(List.of("doLevelUpSound", "doXpNotifs"));
+						List<String> statSubs = new ArrayList<>(List.of("doLevelUpSound", "doXpNotifs", "doAutoPickupLoot"));
 						if (isOp) statSubs.addAll(List.of("set", "reset", "addXp"));
 						yield statSubs;
 					}
@@ -939,7 +947,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney" ->
 						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
 					// General-use sub-command completions.
-					case "doLevelUpSound", "doXpNotifs" -> List.of("true", "false");
+					case "doLevelUpSound", "doXpNotifs", "doAutoPickupLoot" -> List.of("true", "false");
 					default -> List.of();	
 				};
 			}

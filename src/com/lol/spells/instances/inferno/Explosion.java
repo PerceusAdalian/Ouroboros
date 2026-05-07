@@ -67,7 +67,7 @@ public class Explosion extends Spell
 				{
 					EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 					ObsParticles.drawSpiralVortex(leLoc, 75, 5, 0.1, Particle.LAVA, null);
-					ObsParticles.drawWave(Ouroboros.instance, leLoc, 10, 0.85, 25, Particle.LAVA, null);
+					ObsParticles.drawWave(Ouroboros.instance, leLoc, 10, 0.85, 25, 0.3, Particle.LAVA, null);
 				}, 25);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> 
 					leLoc.getWorld().createExplosion(leLoc, 5, true, false, p), 30);

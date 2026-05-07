@@ -49,9 +49,9 @@ public class Mania extends Spell
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{			
 			EntityEffects.playSound(p, Sound.ENTITY_ENDERMAN_SCREAM, SoundCategory.AMBIENT);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.3, 8, Particle.WITCH, null);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.4, 8, Particle.TRIAL_OMEN, null);
-			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.35, 8, Particle.GLOW_SQUID_INK, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.3, 8, 0.3, Particle.WITCH, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.4, 8, 0.3, Particle.TRIAL_OMEN, null);
+			ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 20, 0.35, 8, 0.3, Particle.GLOW_SQUID_INK, null);
 			
 			List<LivingEntity> shuffled = new ArrayList<>(nearby);
 			Collections.shuffle(shuffled);

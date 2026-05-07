@@ -224,9 +224,7 @@ public class PrintUtils
 	
 	public static String printStatType(StatType sType) 
 	{
-		char[] chars = sType.getKey().toCharArray();
-		chars[0] = Character.toUpperCase(chars[0]);
-		return new String(chars);
+		return formatEnumName(sType.toString());
 	}
 	
 	public static String assignAbilityType(AbilityType type1, AbilityType type2) 
@@ -295,6 +293,7 @@ public class PrintUtils
 	        case HERESIO  -> color(ObsColors.HERESIO);
 	        case MORTIO   -> color(ObsColors.MORTIO);
 	        case ARCANO   -> color(ObsColors.ARCANO);
+	        case MODULO   -> color(ObsColors.MODULO);
 	        default       -> color(ObsColors.NULL);
 	    };
 	}

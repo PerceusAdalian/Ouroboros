@@ -1,4 +1,4 @@
-package com.eol.echoes.abilities.instances.combat;
+package com.eol.echoes.abilities.instances.scythe;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -27,9 +27,8 @@ public class Cleave extends EchoAbility
 
     public Cleave() // Check for functionality
     {
-        super("Cleave", "cleave", Material.BLACK_DYE, StatType.MELEE, 20, 10, AbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,EchoForm.SCYTHE, 
-                PrintUtils.assignDurabilityCost(20),
-                "&r&fDeal &l15&r&c♥ "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage inflicting &4Dread &7(7m, 15s)","",
+        super("Cleave", "cleave", Material.BLACK_DYE, StatType.MELEE, 20, 10, 25, AbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,EchoForm.SCYTHE, 
+                "&r&fDeal &l30&r&c♥ "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage inflicting &4Dread &7(7m, 15s)","",
                 "&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 				"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",
 				"&r&fsubsequent applications will inflict &4Doom&f after a second application.");
@@ -49,17 +48,17 @@ public class Cleave extends EchoAbility
 			ObsParticles.drawX(target.getLocation(), p.getEyeLocation().getDirection(), 8, 0.5, 0.1, false, Particle.CRIMSON_SPORE, null);
 			ObsParticles.drawX(target.getLocation(), p.getEyeLocation().getDirection(), 6, 0.6, 0.4, false, Particle.ASH, null);
 			EntityEffects.playSound(p, Sound.ITEM_SPEAR_LUNGE_3, SoundCategory.MASTER);
-			MobData.damageUnnaturally(p, target, 15, true, true, ElementType.MORTIO);
+			MobData.damageUnnaturally(p, target, 30, true, true, ElementType.MORTIO);
 			MortioEffects.addDread(le, 300);
 		})) return -1;
 		
-        return 20;
+        return 25;
     }
 
 	@Override
 	public int getFinalDurabilityCost()
 	{
-		return 20;
+		return 25;
 	}
 }
 

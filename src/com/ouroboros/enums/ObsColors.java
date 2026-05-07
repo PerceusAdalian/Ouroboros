@@ -13,6 +13,8 @@ public enum ObsColors
     MORTIO("#B36679"),
     ARCANO("#FFB5C0"),
     ASTRAL("#887CC2"),
+    MODULO("#F2F0EC"),
+    
     // Combat Colors
     COMBUST("#FF746C"),
     CORROSIVE("#9BB88F"),
