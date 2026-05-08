@@ -19,10 +19,10 @@ import com.ouroboros.utils.PrintUtils;
 public class Sword14 extends AbstractEOL
 {
 	/**
-	 * @TODO make catalyst, and ability for this eol
+	 * @TODO Test Echo, build, and catalyst.
 	 */
 	
-	protected Sword14()
+	public Sword14()
 	{
 		super("&r&e&lΣOL&r&f: &oSword No. 14 "+PrintUtils.color(ObsColors.CELESTIO)+"✦", 
 			"sword_14", false, 
@@ -30,7 +30,7 @@ public class Sword14 extends AbstractEOL
 			EchoForm.SWORD, 
 			ElementiumSlotType.COSMO, 
 			buildModifiers(),
-			"protocol_alpha",
+			"spacial_rend",
 			"[ System Log 14 ]",
 			"..Construction records nominal. Waveform stability: unresolved..",
 			"Server load anomalies persist — origin traced to generative overflow..",
@@ -38,7 +38,7 @@ public class Sword14 extends AbstractEOL
 			"..one instance, designation: "+PrintUtils.color(ObsColors.CELESTIO)+"&oLumina&r&7&o, drawing excess ether..",
 			"..source unclear.. flagged for review. Cache flush scheduled prior to",
 			"next cycle: Subject Echoic Dissonance events increasing in frequency..",
-			"We'll address it after the reset.. Log End [1616:4:30-5:26:34]");
+			"We'll address it after the reset.. [ Log End 1616:4:30-17:26:34]");
 	}
 	
 	@SuppressWarnings("null")

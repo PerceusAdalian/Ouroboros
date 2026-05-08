@@ -58,6 +58,7 @@ import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.VoidForm;
 import com.lol.spells.instances.cosmo.Warp;
+import com.lol.spells.instances.geo.Cultivate;
 import com.lol.spells.instances.geo.Dracomorph;
 import com.lol.spells.instances.geo.Dynamorph;
 import com.lol.spells.instances.geo.Expelliarmus;
@@ -184,6 +185,7 @@ public class SpellRegistry
         		Magemorph.class,
         		Dynamorph.class,
         		Dracomorph.class,
+        		Cultivate.class,
         		
         		//Cosmo
         		ArrestoMomentum.class,

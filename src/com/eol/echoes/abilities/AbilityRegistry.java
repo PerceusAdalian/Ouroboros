@@ -15,6 +15,7 @@ import com.eol.echoes.abilities.instances.polearm.Lunge;
 import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
+import com.eol.echoes.abilities.instances.special.SpacialRend;
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
 import com.eol.echoes.abilities.instances.sword.ImbueFire;
@@ -33,7 +34,8 @@ public class AbilityRegistry
             
             // Special
             LuminusRadiance.class,
-            NidusPreservation.class);
+            NidusPreservation.class,
+            SpacialRend.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

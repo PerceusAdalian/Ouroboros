@@ -1,6 +1,7 @@
 package com.eol.materia.components;
 
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
@@ -129,6 +130,22 @@ public class Catalysts
 				PrintUtils.color(ObsColors.GEO)+"&oTo shape the world without breaking it, situated on the discipline of Earth Magiks.",
 				PrintUtils.color(ObsColors.GEO)+"&oDevotees laid "+PrintUtils.color(ObsColors.GEO)+"&l&nLeather&r"+PrintUtils.color(ObsColors.GEO)+"&o at his shrine, believing the offering would earn",
 				PrintUtils.color(ObsColors.GEO)+"favor from Father Nature himself."), new HammerOfNidus().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.COSMO)+"System Log 14",
+				"echo_of_sword14",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.COSMO)+"[ Log 14 : Echo Generation Engine Resource Analysis 1616:4:29-00:14:01 ]",
+				PrintUtils.color(ObsColors.COSMO)+"&oGenerative sequence confirmed. Alias Codename Injection: &l"+Symbols.EOL+"CHO 14.",
+				PrintUtils.color(ObsColors.COSMO)+"&oResource draw exceeds prior projections. Allocation unstable.",
+				PrintUtils.color(ObsColors.COSMO)+"&o&lCosmo"+PrintUtils.color(ObsColors.COSMO)+" &oelement flagged for injection -- scheduled post-reset.",
+				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lSword&r"+PrintUtils.color(ObsColors.COSMO)+"&o. Materia: &lNetherite"+PrintUtils.color(ObsColors.COSMO)+".",
+				PrintUtils.color(ObsColors.COSMO)+"&oAuxiliary binding: &lString"+PrintUtils.color(ObsColors.COSMO)+"&o. Combat efficacy expected to normalize.",
+				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into echoic object. Awaiting next confirmed cycle.."), new Sword14().getInternalName());
 		
 	}
 }
