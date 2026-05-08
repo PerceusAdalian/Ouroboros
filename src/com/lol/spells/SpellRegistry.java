@@ -106,6 +106,7 @@ public class SpellRegistry
 {
 	public static final Map<String, Spell> spellRegistry = new HashMap<>();
     
+	@SuppressWarnings("null")
 	public static void init() 
     {
         List<Class<? extends Spell>> itemClasses = Arrays.asList(

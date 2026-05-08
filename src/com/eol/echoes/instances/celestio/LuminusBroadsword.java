@@ -45,5 +45,5 @@ public class LuminusBroadsword extends AbstractEOL
             new ActiveModifier(WeaponModifierCondition.LIVING, CombatStat.ATTACK, -0.90, true, true),
             new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.EXPOSE, 10));
     }
-
+	
 }

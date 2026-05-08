@@ -57,7 +57,17 @@ public class EchoManager
 		ADD,
 		RESTORE,
 		DIMINISH,
-		SETMAX
+		SETMAX,
+	}
+	
+	public enum EchoDataOperation
+	{
+		ATTACK,
+		ATTACK_SPEED,
+		CRIT_RATE,
+		CRIT_MODIFIER,
+		DURABILITY,
+		MAX_DURABILITY,
 	}
 	
 	/**
@@ -85,19 +95,44 @@ public class EchoManager
 	    
 	    return EchoManifestCodec.fromJson(str);
 	}
-	
+    
+    public static EchoData getEchoData(ItemStack item)
+    {
+    	if(!isEcho(item)) return null;
+
+    	EchoManifest codec = getCodec(item);
+    	if (codec == null) return null;
+    	
+    	return codec.baseStats();
+    }
+    
+    public static Number getEchoData(ItemStack item, EchoDataOperation op)
+    {
+    	EchoData data = getEchoData(item);
+    	if (data == null) return 0.0;
+    	return switch(op)
+		{
+	    	case ATTACK -> data.getAttack();
+	    	case ATTACK_SPEED -> data.getAttackRating();
+	    	case CRIT_RATE -> data.getCritRate();
+	    	case CRIT_MODIFIER -> data.getCritModifier();
+	    	case DURABILITY -> data.getCurrentDurability();
+	    	case MAX_DURABILITY -> data.getMaxDurability();
+		};
+    }
+    
 	/**
 	 * @param player
 	 * @param stack -- Assumes an item stack that may or may not be an echo.
-	 * @param durabilityType -- An operation type: 
-	 * @DurabilityOperation1 ADD -> Adds the value to the durability. 
-	 * @DurabilityOperation2 SUBTRACT -> Subtracts the value from the durability. 
-	 * @DurabilityOperation3 RESTORE -> Restores durability as a percent of the value back to the echo.
-	 * @DurabilityOperation4 DIMINISH -> Reduces durability as a percent of the value from the echo.
-	 * @DurabilityOperation5 SETMAX -> Sets the echo's durability to it's base default max.
+	 * @param durabilityType -- An operation type
+	 * @DurabilityOperation ADD -> Adds the value to the durability. 
+	 * @DurabilityOperation SUBTRACT -> Subtracts the value from the durability. 
+	 * @DurabilityOperation RESTORE -> Restores durability as a percent of the value back to the echo.
+	 * @DurabilityOperation DIMINISH -> Reduces durability as a percent of the value from the echo.
+	 * @DurabilityOperation SETMAX -> Sets the echo's durability to it's base default max.
 	 * @param value
 	 */
-	public static void modifyDurability(Player player, ItemStack stack, DurabilityOperation operation, int value, boolean setOffhand)
+	public static void modifyDurability(Player player, ItemStack stack, DurabilityOperation op, int value, boolean setOffhand)
 	{
 	    if (!isEcho(stack)) return;
 	    
@@ -106,17 +141,14 @@ public class EchoManager
 
 	    EchoData data = manifest.baseStats();
 
-	    int current = 0;
-	    if (operation == DurabilityOperation.ADD)
-	    	current = Math.min(data.getCurrentDurability() + value, data.getMaxDurability());
-	    else if (operation == DurabilityOperation.SUBTRACT) 
-	    	current = Math.max(0, data.getCurrentDurability() - value);
-	    else if (operation == DurabilityOperation.RESTORE) 
-	    	current = (int) Math.min(data.getCurrentDurability() + (value / 100.0) * data.getMaxDurability(), data.getMaxDurability());
-	    else if (operation == DurabilityOperation.DIMINISH)
-	    	current = (int) Math.max(0, data.getCurrentDurability() - (value / 100.0) * data.getMaxDurability());
-	    else if (operation == DurabilityOperation.SETMAX)
-	    	current = data.getMaxDurability();
+	    int current = switch(op)
+		{
+		    case ADD -> Math.min(data.getCurrentDurability() + value, data.getMaxDurability());
+		    case SUBTRACT -> Math.max(0, data.getCurrentDurability() - value);
+		    case RESTORE -> (int) Math.min(data.getCurrentDurability() + (value / 100.0) * data.getMaxDurability(), data.getMaxDurability());
+		    case DIMINISH -> (int) Math.max(0, data.getCurrentDurability() - (value / 100.0) * data.getMaxDurability());
+		    case SETMAX -> data.getMaxDurability();
+		};
 	    
 	    EchoData updatedEchoData = new EchoData(
 	        data.getAttack(), data.getAttackRating(),
