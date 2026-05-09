@@ -38,6 +38,7 @@ import com.ouroboros.mobs.events.MobGenerateEvent;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.objects.BowLimbRecipe;
+import com.ouroboros.objects.HealthCrystalRecipe;
 import com.ouroboros.objects.ManaGemRecipe;
 import com.ouroboros.objects.ObjectRegistry;
 import com.ouroboros.objects.ObsObjectCastHandler;
@@ -100,6 +101,9 @@ public class Ouroboros extends JavaPlugin
 		ManaGemRecipe.register();
 		BowLimbRecipe.init();
 		BowLimbRecipe.register();
+		HealthCrystalRecipe.init();
+		HealthCrystalRecipe.register();
+		
 		ObjectRegistry.itemInit();
 		ObsObjectCastHandler.register(instance);
 		

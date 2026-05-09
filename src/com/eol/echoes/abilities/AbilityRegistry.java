@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.echoes.abilities.instances.armament.Riptide;
+import com.eol.echoes.abilities.instances.bow.Launch;
 import com.eol.echoes.abilities.instances.hammer.Bulwark;
 import com.eol.echoes.abilities.instances.hatchet.HeavyChop;
 import com.eol.echoes.abilities.instances.pickaxe.HeavySwing;
@@ -30,7 +31,7 @@ public class AbilityRegistry
         List<Class<? extends EchoAbility>> itemClasses = Arrays.asList(
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
             Cleave.class, HeavySwing.class, Lunge.class, HeavyChop.class,
-            Riptide.class, Bulwark.class,
+            Riptide.class, Bulwark.class, Launch.class,
             
             // Special
             LuminusRadiance.class,

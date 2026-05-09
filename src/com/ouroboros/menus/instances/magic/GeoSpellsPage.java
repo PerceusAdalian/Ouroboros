@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.geo.Cultivate;
 import com.lol.spells.instances.geo.Dracomorph;
 import com.lol.spells.instances.geo.Dynamorph;
 import com.lol.spells.instances.geo.Expelliarmus;
@@ -33,21 +34,22 @@ public class GeoSpellsPage extends ObsGui
 		
 		// 1
 		GuiButton.placeCantripSpellButton(player, new Geomorph(), 10, this);
-		GuiButton.placeSpellButton(player, new SandBlast(), 11, this);
+		GuiButton.placeCantripSpellButton(player, new Cultivate(), 11, this);
+		GuiButton.placeSpellButton(player, new SandBlast(), 12, this);
 		
 		// 2
-		GuiButton.placeSpellButton(player, new Metalmorph(), 12, this);
-		GuiButton.placeSpellButton(player, new PetrificusTotalis(), 13, this);
+		GuiButton.placeSpellButton(player, new Metalmorph(), 13, this);
+		GuiButton.placeSpellButton(player, new PetrificusTotalis(), 14, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Magemorph(), 14, this);
-		GuiButton.placeSpellButton(player, new Expelliarmus(), 15, this);
+		GuiButton.placeSpellButton(player, new Magemorph(), 15, this);
+		GuiButton.placeSpellButton(player, new Expelliarmus(), 16, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new Dynamorph(), 16, this);
+		GuiButton.placeSpellButton(player, new Dynamorph(), 19, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Dracomorph(), 19, this);
+		GuiButton.placeSpellButton(player, new Dracomorph(), 20, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

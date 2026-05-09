@@ -64,11 +64,7 @@ public class Tailwind extends Spell
 			ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
             Vector boost = p.getEyeLocation().getDirection().normalize().multiply(3.5);
 			p.setVelocity(p.getVelocity().add(boost));
-			if (!tailwindRegistry.contains(p.getUniqueId())) 
-			{
-				tailwindRegistry.add(p.getUniqueId());
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->tailwindRegistry.remove(p.getUniqueId()), 200);
-			}
+			assignTailwindNegation(p);
 			
 			return 10;
 		}
@@ -79,6 +75,15 @@ public class Tailwind extends Spell
 	public int getTotalManaCost()
 	{
 		return 10;
+	}
+
+	public static void assignTailwindNegation(Player p)
+	{
+		if (!tailwindRegistry.contains(p.getUniqueId())) 
+		{
+			tailwindRegistry.add(p.getUniqueId());
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->tailwindRegistry.remove(p.getUniqueId()), 200);
+		}
 	}
 	
 	public static void registerSpellHelper(JavaPlugin plugin)

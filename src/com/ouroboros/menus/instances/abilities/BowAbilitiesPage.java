@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import com.eol.echoes.abilities.instances.bow.Launch;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
@@ -24,6 +25,7 @@ public class BowAbilitiesPage extends ObsGui
 	@Override
 	protected void build()
 	{
+		GuiButton.placeAbilityButton(player, new Launch(), 10, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Abilities Main Page").place(this, 37, e->

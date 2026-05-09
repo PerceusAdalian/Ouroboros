@@ -12,6 +12,7 @@ import com.ouroboros.objects.instances.CelestioEssence;
 import com.ouroboros.objects.instances.CosmoEssence;
 import com.ouroboros.objects.instances.GeoEssence;
 import com.ouroboros.objects.instances.GlacioEssence;
+import com.ouroboros.objects.instances.HealthCrystal;
 import com.ouroboros.objects.instances.HeresioEssence;
 import com.ouroboros.objects.instances.InfernoEssence;
 import com.ouroboros.objects.instances.ManaGem;
@@ -39,6 +40,7 @@ public class ObjectRegistry
         	TearOfLumina.class,
         	TrainingWand.class,
         	ManaGem.class,
+        	HealthCrystal.class,
         	
         	CelestioEssence.class,
         	MortioEssence.class,
