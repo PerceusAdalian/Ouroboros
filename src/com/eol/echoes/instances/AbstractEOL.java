@@ -64,7 +64,7 @@ public abstract class AbstractEOL
     
     public static final NamespacedKey eolKey = new NamespacedKey(Ouroboros.instance, "eol");
     
-    protected AbstractEOL(
+    public AbstractEOL(
     		String displayName,
             String internalName,
             boolean isIntegrityArmament,

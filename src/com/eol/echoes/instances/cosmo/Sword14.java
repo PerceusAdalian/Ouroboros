@@ -2,6 +2,7 @@ package com.eol.echoes.instances.cosmo;
 
 import java.util.List;
 
+import com.eol.echoes.abilities.instances.special.SpacialRend;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.ActiveModifier;
 import com.eol.echoes.records.EOLRecipe;
@@ -30,7 +31,7 @@ public class Sword14 extends AbstractEOL
 			EchoForm.SWORD, 
 			ElementiumSlotType.COSMO, 
 			buildModifiers(),
-			"spacial_rend",
+			new SpacialRend().getInternalName(),
 			"[ System Log 14 ]",
 			"..Construction records nominal. Waveform stability: unresolved..",
 			"Server load anomalies persist — origin traced to generative overflow..",

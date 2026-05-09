@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
+import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
 
@@ -130,7 +131,8 @@ public final class EOLRegistry
         List<Class<? extends AbstractEOL>> itemClasses = Arrays.asList(
            LuminusBroadsword.class,
            HammerOfNidus.class,
-           Sword14.class
+           Sword14.class,
+           AxeOfBjorn.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 

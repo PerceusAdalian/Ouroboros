@@ -19,12 +19,22 @@ public class ItemCollector
 		}
 	}
 	
+	public static void remove(ItemStack stack, int value)
+	{
+		if (Ouroboros.debug == false)
+		{
+			int newAmount = stack.getAmount() - value;
+			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+				stack.setAmount(newAmount < 0 ? 0 : newAmount), 1);
+		}
+	}
+	
 	public static void remove(ItemStack stack)
 	{
 		if (Ouroboros.debug == false)
 		{
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-				stack.setAmount(stack.getAmount() -1), 1);
+				stack.setAmount(stack.getAmount() - 1), 1);
 		}
 	}
 	

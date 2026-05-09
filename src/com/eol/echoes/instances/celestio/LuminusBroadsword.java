@@ -2,6 +2,7 @@ package com.eol.echoes.instances.celestio;
 
 import java.util.List;
 
+import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.ActiveModifier;
 import com.eol.echoes.records.EOLRecipe;
@@ -27,7 +28,7 @@ public class LuminusBroadsword extends AbstractEOL
 				EchoForm.SWORD, 
 				ElementiumSlotType.CELESTIO, 
 				buildModifiers(), 
-				"radiance", 
+				new LuminusRadiance().getInternalName(), 
 				"My beloved sister—she who never failed to make me smile.",
 				"his blade she entrusted to me, that I might repel the darkness of "+PrintUtils.color(ObsColors.HERESIO)+"Twilight&7",
 				"nd the darkness that festers within my own soul. I carry it in her name,",

@@ -86,7 +86,7 @@ public class AbilitiesMainPage extends ObsGui
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
 			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.AMBIENT);
-			GuiHandler.changeMenu(p, new CrossBowAbilitiesPage(p));
+			GuiHandler.changeMenu(p, new CrossbowAbilitiesPage(p));
 		});
 		
 		GuiButton.button(Material.MACE).setName("&r&b&lHammer &r&eAbilities").setLore("Click to view all &b&lHammer &r&eAbilities").place(this, 31, e->
