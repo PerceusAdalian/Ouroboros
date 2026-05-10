@@ -27,12 +27,12 @@ import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.Symbols;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class SpacialRend extends EchoAbility
+public class SpatialRend extends EchoAbility
 {
 
-	public SpacialRend() 
+	public SpatialRend() 
 	{
-		super("Spacial Rend", "spacial_rend", Material.NETHER_STAR, StatType.MELEE, 0, 0, 30, AbilityType.COMBAT, ElementType.COSMO,
+		super("Spatial Rend", "spatial_rend", Material.NETHER_STAR, StatType.MELEE, 0, 0, 30, AbilityType.COMBAT, ElementType.COSMO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD, 
 				"&r&3Teleport&r&f to &6target &dMob &fand deal 77&c"+Symbols.HP+PrintUtils.color(ObsColors.COSMO)+" &lCosmo&r&f damage &7(30m)",
 				"&r&fIf the target doesn't die, return to previous location.");

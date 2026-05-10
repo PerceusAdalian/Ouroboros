@@ -89,7 +89,7 @@ public class ResolveEchoInteract
 		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds, 0, false);
 		        case STUNNING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 99, false);
 		        case KNOCKBACK, POISONOUS, IGNORE_ARROW, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
-		        LUCKY,NIMBLE, INFINITY -> { /* handled elsewhere */ }
+		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT -> { /* handled elsewhere */ }
 	        }
 	    }
 	}
@@ -101,6 +101,7 @@ public class ResolveEchoInteract
 	public static Set<UUID> has_lucky = new HashSet<>();
 	public static Set<UUID> has_nimble = new HashSet<>();
 	public static Set<UUID> negate_arrow_consumption = new HashSet<>();
+	public static Set<UUID> nightsight = new HashSet<>();
 	
 	public static void resolveHeldEffects(PassiveModifier mod, Player p)
 	{
@@ -114,6 +115,7 @@ public class ResolveEchoInteract
 			case IGNORE_ARROW -> ignore_arrow.add(uuid);
 			case NIMBLE -> has_nimble.add(uuid);
 			case INFINITY -> negate_arrow_consumption.add(uuid);
+			case NIGHTSIGHT -> nightsight.add(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}
@@ -130,6 +132,7 @@ public class ResolveEchoInteract
 			case IGNORE_ARROW -> ignore_arrow.remove(uuid);
 			case NIMBLE -> has_nimble.remove(uuid);
 			case INFINITY -> negate_arrow_consumption.remove(uuid);
+			case NIGHTSIGHT -> nightsight.remove(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}

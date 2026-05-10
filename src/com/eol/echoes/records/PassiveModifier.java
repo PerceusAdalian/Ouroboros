@@ -69,6 +69,7 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case LUCKY 			 -> "Increased Collection Luck";
             case NIMBLE          -> "Nimble Footed";
             case INFINITY        -> "Infinity";
+            case NIGHTSIGHT		 -> "Grants Nightvision";
         };
     }
 

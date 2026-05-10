@@ -259,7 +259,8 @@ public final class ModifierPipeline
     private static final List<PassiveEchoEffect> UNIVERSAL_PASSIVES = Arrays.asList(
     	PassiveEchoEffect.INCREASED_MOVEMENT_SPEED,
     	PassiveEchoEffect.DECREASED_MOVEMENT_SPEED,
-    	PassiveEchoEffect.PROTECTIVE
+    	PassiveEchoEffect.PROTECTIVE,
+    	PassiveEchoEffect.NIGHTSIGHT
     );
 
     /** Passive effects exclusive to melee weapon forms (SWORD, AXE, SPEAR). */

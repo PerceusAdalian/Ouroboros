@@ -6,6 +6,7 @@ public enum PassiveEchoEffect
 	INCREASED_MOVEMENT_SPEED,
 	DECREASED_MOVEMENT_SPEED,
 	PROTECTIVE,
+	NIGHTSIGHT,
 	
 	// Melee Passives
 	EXPOSE,

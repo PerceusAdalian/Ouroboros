@@ -19,6 +19,8 @@ import org.bukkit.potion.PotionEffectType;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
+import com.ouroboros.utils.TimeUtils;
+import com.ouroboros.utils.TimeUtils.Timeframe;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class EchoHeldEvent
@@ -125,6 +127,7 @@ public class EchoHeldEvent
 			    ResolveEchoInteract.has_lucky.remove(uuid);
 			    ResolveEchoInteract.has_nimble.remove(uuid);
 			    ResolveEchoInteract.negate_arrow_consumption.remove(uuid);
+			    ResolveEchoInteract.nightsight.remove(uuid);
 			}
 			
 		}, plugin);
@@ -151,6 +154,9 @@ public class EchoHeldEvent
 	            
 	            if (ResolveEchoInteract.has_protected.contains(uuid))
 	            	EntityEffects.add(p, PotionEffectType.RESISTANCE, 100, 0, false);
+	            
+	            if (ResolveEchoInteract.nightsight.contains(uuid) && TimeUtils.checkTime(p.getWorld(), Timeframe.NIGHT))
+	            	EntityEffects.add(p, PotionEffectType.NIGHT_VISION, 100, 0, false);
 	            
 	        }
 	    }, 0, 20);
