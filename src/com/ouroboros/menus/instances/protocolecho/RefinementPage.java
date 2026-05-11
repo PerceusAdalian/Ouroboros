@@ -101,7 +101,6 @@ public class RefinementPage extends ObsGui
 		                		result.rarity());
 		                addResult(p.getUniqueId(), refined.getAsItemStack(MateriaState.NORMAL), result.xp());
 		            }
-		            // First-time refinement can't fail, so no else needed here
 		        }
 		    }
 		    else
@@ -197,29 +196,43 @@ public class RefinementPage extends ObsGui
 
 	private static Rarity rollRarity(int refinementLevel)
 	{
-	    // 5-star: unlocks at 80, scales from 25% -> 80% by level 100
-	    if (refinementLevel >= 80)
+		// 7-star: unlocks at 90, scales from 1% -> 5% by level 100
+		if (refinementLevel >= 100)
+		{
+			int chance = (int) NumberUtils.lerp(1, 5, refinementLevel, 80, 100);
+	        if (Chance.of(chance)) return Rarity.SEVEN;
+		}
+			
+		// 6-star: unlocks at 80, scales from 1% -> 10% by level 100
+		if (refinementLevel >= 80)
+		{
+			int chance = (int) NumberUtils.lerp(1, 10, refinementLevel, 80, 100);
+	        if (Chance.of(chance)) return Rarity.SIX;
+		}
+		
+	    // 5-star: unlocks at 60, scales from 25% -> 80% by level 100
+	    if (refinementLevel >= 60)
 	    {
 	        int chance = (int) NumberUtils.lerp(25, 80, refinementLevel, 80, 100);
 	        if (Chance.of(chance)) return Rarity.FIVE;
 	    }
 
-	    // 4-star: unlocks at 60, scales from 55% -> 75% by level 100
-	    if (refinementLevel >= 60)
+	    // 4-star: unlocks at 40, scales from 55% -> 75% by level 100
+	    if (refinementLevel >= 40)
 	    {
 	        int chance = (int) NumberUtils.lerp(55, 75, refinementLevel, 60, 100);
 	        if (Chance.of(chance)) return Rarity.FOUR;
 	    }
 
-	    // 3-star: unlocks at 40, scales from 75% -> 55% by level 100
-	    if (refinementLevel >= 40)
+	    // 3-star: unlocks at 30, scales from 75% -> 55% by level 100
+	    if (refinementLevel >= 30)
 	    {
 	        int chance = (int) NumberUtils.lerp(75, 55, refinementLevel, 40, 100);
 	        if (Chance.of(chance)) return Rarity.THREE;
 	    }
 
-	    // 2-star: unlocks at 30, scales from 80% -> 25% by level 100
-	    if (refinementLevel >= 30)
+	    // 2-star: unlocks at 20, scales from 80% -> 25% by level 100
+	    if (refinementLevel >= 20)
 	    {
 	        int chance = (int) NumberUtils.lerp(80, 25, refinementLevel, 30, 100);
 	        if (Chance.of(chance)) return Rarity.TWO;
@@ -239,6 +252,8 @@ public class RefinementPage extends ObsGui
 	        case THREE -> 50;
 	        case FOUR  -> 100;
 	        case FIVE  -> 200;
+	        case SIX   -> 300;
+	        case SEVEN -> 500;
 	        default    -> 10;
 	    };
 

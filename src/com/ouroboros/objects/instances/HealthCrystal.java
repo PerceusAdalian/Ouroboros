@@ -31,11 +31,11 @@ public class HealthCrystal extends AbstractObsObject
 	{
 		if (!PlayerActions.rightClickAir(e)) return false;
 		Player p = e.getPlayer();
+		if(!EntityEffects.heal(p, 10)) return false;
 		ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 3, 0.8, 20, 0.2, Particle.BLOCK_CRUMBLE, Material.EMERALD_BLOCK.createBlockData());
 		ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.HAPPY_VILLAGER, null);
 		EntityEffects.playSound(p, Sound.BLOCK_LARGE_AMETHYST_BUD_BREAK, SoundCategory.AMBIENT);
-		EntityEffects.heal(p, 10);
-		ItemCollector.remove(e, 1);
+		ItemCollector.remove(e);
 		return true;
 	}
 

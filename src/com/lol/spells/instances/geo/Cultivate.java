@@ -25,7 +25,7 @@ public class Cultivate extends Spell
 
 	public Cultivate() 
 	{
-		super("Cultivate", "cultivate", Material.WHEAT, SpellType.CANTRIP, SpellementType.GEO, CastConditions.MIXED, Rarity.ONE, 15, 1, false, false,
+		super("Cultivate", "cultivate", Material.WHEAT, SpellType.CANTRIP, SpellementType.GEO, CastConditions.MIXED, Rarity.ONE, 15, 0.1, false, false,
 				"&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_BLOCK),
 				"&r&6Cultivate&f: &6&oFertilize&r&f --",
 				"&r&fFully grow &6target &b&oCrop&r&f.","",
@@ -46,7 +46,6 @@ public class Cultivate extends Spell
 			Block b = e.getClickedBlock();
 			if (!soilBlocks.contains(b.getType())) return -1;
 			
-			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			EntityEffects.playSound(p, Sound.ITEM_HOE_TILL, SoundCategory.MASTER);
 			ObsParticles.drawWisps(b.getLocation().add(0,0.5,0), 1, 1, 4, Particle.HAPPY_VILLAGER, null);
 		    
@@ -60,8 +59,8 @@ public class Cultivate extends Spell
 			Block b = e.getClickedBlock();
 			
 			if (!(b.getBlockData() instanceof Ageable crop)) return -1;
+			if (crop.getAge() == crop.getMaximumAge()) return -1;
 			
-			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.MASTER);
 			ObsParticles.drawWisps(b.getLocation().add(0,0.5,0), 1, 1, 4, Particle.HAPPY_VILLAGER, null);
 			

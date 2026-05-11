@@ -229,12 +229,12 @@ public class PrintUtils
 	
 	public static String assignAbilityType(AbilityType type1, AbilityType type2) 
 	{
-		return ColorParser("&r&f&lAbility Type&r&f: {"+ type1.getAbilityType() + "&r&f | " + type2.getAbilityType() + "&r&f}");
+		return ColorParser("&r&f&lAbility Type&r&f: { "+ type1.getAbilityType() + "&r&f | " + type2.getAbilityType() + "&r&f }");
 	}
 	
 	public static String assignAbilityType(AbilityType type) 
 	{
-		return ColorParser("&r&f&lAbility Type&r&f: {"+type.getAbilityType()+"&r&f}");
+		return ColorParser("&r&f&lAbility Type&r&f: { "+type.getAbilityType()+"&r&f }");
 	}
 	
 	public static String assignDurabilityCost(int cost)
@@ -244,7 +244,7 @@ public class PrintUtils
 	
 	public static String assignCastCondition(CastConditions condition)
 	{
-		return ColorParser("&r&f&lCast Condition&r&f: {"+condition.getKey()+"&r&f}");
+		return ColorParser("&r&f&lCast Condition&r&f: { "+condition.getKey()+"&r&f }");
 	}
 	
 	public static String assignEchoForm(EchoForm echoForm)
@@ -254,12 +254,12 @@ public class PrintUtils
 	
 	public static String assignElementType(SpellementType type) 
 	{
-		return ColorParser("&r&f&lElement Type&r&f: {&r&f"+getElementTypeColor(type)+type.getType()+"&r&f}");
+		return ColorParser("&r&f&lElement Type&r&f: {&r&f "+getElementTypeColor(type)+type.getType()+" &r&f}");
 	}
 	
 	public static String assignElementType(ElementType type) 
 	{
-		return ColorParser("&r&f&lElement Type&r&f: {&r&f"+getElementTypeColor(type)+type.getType()+"&r&f}");
+		return ColorParser("&r&f&lElement Type&r&f: {&r&f "+getElementTypeColor(type)+type.getType()+" &r&f}");
 	}
 	
 	public static String getElementTypeColor(SpellementType spellementType)
@@ -319,12 +319,12 @@ public class PrintUtils
 	
 	public static String assignSpellType(SpellType type)
 	{
-		return ColorParser("&r&f&lSpell Type&r&f: {"+type.getSpellType()+"&r&f}");
+		return ColorParser("&r&f&lSpell Type&r&f: { "+type.getSpellType()+"&r&f }");
 	}
 	
 	public static String assignSpellType(SpellType type1, SpellType type2)
 	{
-		return ColorParser("&r&f&lSpell Type&r&f: {"+ type1.getSpellType() + "&r&f | " + type2.getSpellType() + "&r&f}");
+		return ColorParser("&r&f&lSpell Type&r&f: { "+ type1.getSpellType() + "&r&f | " + type2.getSpellType() + "&r&f }");
 	}
 	
 	public static String assignPVPCompatible()
@@ -452,17 +452,17 @@ public class PrintUtils
 	
 	public static String assignMateriaType(MateriaType type)
 	{
-		return ColorParser("&r&bType&f: &7{&r&f"+formatEnumName(type.getKey())+"&r&7}");
+		return ColorParser("&r&bType&f: &7{ &r&f"+formatEnumName(type.getKey())+"&r&7 }");
 	}
 	
 	public static String assignMateriaState(MateriaState state)
 	{
-		return ColorParser("&r&bState&f: &7{&r&f"+state.getState()+"&r&7}");
+		return ColorParser("&r&bState&f: &7{ &r&f"+state.getState()+"&r&7 }");
 	}
 	
 	public static String assignMateriaComponent(MateriaComponent component)
 	{
-		return ColorParser("&r&bComponent&f: &7{&r&f"+component.getLabel()+"&r&7}");
+		return ColorParser("&r&bComponent&f: &7{ &r&f"+component.getLabel()+"&r&7 }");
 	}
 	
 	public static String getRarityAsNumeralValue(Rarity rarity)

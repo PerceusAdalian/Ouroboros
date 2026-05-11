@@ -52,7 +52,7 @@ public class EchoHeldEvent
 			        	}
 			        }
 			    }
-
+			    
 			    // Add effects from newly held item
 			    ItemStack next = inv.getItem(e.getNewSlot());
 			    if (EchoManager.isEcho(next))

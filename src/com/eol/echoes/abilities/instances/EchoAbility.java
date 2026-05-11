@@ -1,13 +1,10 @@
 package com.eol.echoes.abilities.instances;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -26,8 +23,6 @@ import com.ouroboros.utils.PrintUtils;
 
 public abstract class EchoAbility 
 {
-	private final File file;
-	private final YamlConfiguration config;
 	private final String displayName;
 	private final String internalName;
 	private final Material icon;
@@ -58,59 +53,21 @@ public abstract class EchoAbility
 		this.castCondition = castCondition;
 		this.echoForm = echoForm;
 		this.description = description;
-		
-		this.file = new File(getDataFolder(), "abilities/"+internalName+".yml");
-		this.config = YamlConfiguration.loadConfiguration(file);
-		
-		if (!file.exists()) 
-		{
-			setInfo();
-			save();
-		}
-	}
-	
-	public void setInfo() 
-	{
-	    config.set("ability_name", displayName);
-	    config.set("internal_name", internalName);
-	    config.set("ability_type", aType.getKey());
-	    if (icon != null)             config.set("icon_material", icon.toString());
-	    if (statRequirement != null)  config.set("stat_requirement", statRequirement.getKey());
-	    if (levelRequirement > 0)     config.set("level_requirement", levelRequirement);
-	    if (APCost > 0)               config.set("ap_cost", APCost);
-	    if (eType != null)            config.set("damage_type", eType.getType());
-	}
-	
-	public void save() 
-	{
-		try 
-		{
-			config.save(file);
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public static File getDataFolder() 
-	{
-		return Ouroboros.instance.getDataFolder();
 	}
 	
 	public String getDisplayName() 
 	{
-		return config.getString("ability_name");
+		return displayName;
 	}
 	
 	public String getInternalName() 
 	{
-		return config.getString("internal_name");
+		return internalName;
 	}
 	
 	public Material getIcon() 
 	{
-		return Material.getMaterial(config.getString("icon_material"));
+		return icon;
 	}
 	
 	public String[] getDescription() 
@@ -121,17 +78,17 @@ public abstract class EchoAbility
 	public StatType getStatRequirement() 
 	{
 		
-		return StatType.fromString(config.getString("stat_requirement"));
+		return statRequirement;
 	}
 	
 	public int getLevelRequirement() 
 	{
-		return config.getInt("level_requirement");
+		return levelRequirement;
 	}
 	
 	public int getAPCost() 
 	{
-		return config.getInt("ap_cost");
+		return APCost;
 	}
 	
 	public int getDurabilityCost()
@@ -185,7 +142,6 @@ public abstract class EchoAbility
 	public abstract int cast(PlayerInteractEvent e);
 	public abstract int getFinalDurabilityCost();
 	
-	// For gui display
 	public ItemStack toIcon(Player p) 
 	{
 		ItemStack stack = new ItemStack(icon, 1);
@@ -196,6 +152,7 @@ public abstract class EchoAbility
 		if (!PlayerData.getPlayer(p.getUniqueId()).getAbility(getInstance()).isRegistered()) 
 		{
 			stack.setType(Material.NETHER_STAR);
+		    meta = stack.getItemMeta();
 			meta.setDisplayName(PrintUtils.ColorParser("&r&7LOCKED: &f"+displayName));
 			
 			char color = switch(statRequirement) 
@@ -207,9 +164,12 @@ public abstract class EchoAbility
 			};
 			
 			lore.add(PrintUtils.assignAbilityType(aType));
-			lore.add(PrintUtils.assignDurabilityCost(durabilityCost));
 			lore.add(PrintUtils.ColorParser("&r&f- &oDescription&r&f:"));
-			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");	
+			if (durabilityCost > 0) lore.add(PrintUtils.assignDurabilityCost(durabilityCost));
+			for (String line : description)
+			{
+				lore.add(PrintUtils.ColorParser(line));	
+			}
 			lore.add("");
 			if (PlayerData.getPlayer(p.getUniqueId()).getStat(statRequirement, true) < levelRequirement) 
 			{
@@ -223,14 +183,16 @@ public abstract class EchoAbility
 		}
 		else 
 		{
-			lore.add(PrintUtils.assignDurabilityCost(durabilityCost));
 			lore.add(PrintUtils.assignAbilityType(aType));
 			if (eType != null) lore.add(PrintUtils.assignElementType(eType));
-			if (castCondition != CastConditions.PASSIVE) lore.add(PrintUtils.assignCastCondition(castCondition));
 			lore.add(PrintUtils.assignEchoForm(echoForm));
 			lore.add("");
 			lore.add(PrintUtils.ColorParser("&r&f- &oDescription&r&f:"));
-			for (String line : description) lore.add(PrintUtils.ColorParser("&r&f"+line) + "\n");
+			if (durabilityCost > 0) lore.add(PrintUtils.assignDurabilityCost(durabilityCost));
+			for (String line : description) 
+			{
+				lore.add(PrintUtils.ColorParser(line));
+			}
 		}
 		
 		meta.setLore(lore);

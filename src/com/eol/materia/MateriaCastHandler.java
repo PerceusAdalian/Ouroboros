@@ -2,6 +2,9 @@ package com.eol.materia;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +17,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eol.enums.MateriaComponent;
 import com.ouroboros.enums.CastConditions;
-import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.instances.protocolecho.EchoForgePage;
+import com.ouroboros.utils.ObsParticles;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class MateriaCastHandler implements Listener
 {
@@ -47,7 +53,10 @@ public class MateriaCastHandler implements Listener
             
             if (validInteractMethod)
             {
-                PrintUtils.Print(p, "Interact Event Logged");
+            	EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.AMBIENT);
+            	ObsParticles.drawLandingWave(p);
+            	ObsParticles.drawCylinder(p.getLocation(), 2.5, 3, 15, 0.4, 0.1, Particle.ENCHANT, null);
+                GuiHandler.open(p, new EchoForgePage(p, e.getItem()));
             }
         }
         

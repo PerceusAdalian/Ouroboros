@@ -25,7 +25,6 @@ public class HammerAbilitiesPage extends ObsGui
 	@Override
 	protected void build()
 	{
-		
 		GuiButton.placeAbilityButton(player, new Bulwark(), 10, this);
 		
 		//Exits

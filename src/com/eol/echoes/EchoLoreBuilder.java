@@ -106,7 +106,8 @@ public final class EchoLoreBuilder
             lore.add(PrintUtils.ColorParser("&r&bCore Memory&r&f: " + elementColor + "&l" + abilityName + " &r&7(Locked)"));
             if (ability != null)
             {
-            	lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
+            	if (ability.getDurabilityCost() > 0)
+            		lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
             	for (String line : ability.getDescription())
             		lore.add(PrintUtils.ColorParser(line));
             	lore.add("");
@@ -121,7 +122,8 @@ public final class EchoLoreBuilder
             	lore.add(PrintUtils.ColorParser("&r&fSkill: " + elementColor + abilityName));
             if (ability != null)
             {
-            	lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
+            	if (ability.getDurabilityCost() > 0)
+            		lore.add(PrintUtils.assignDurabilityCost(ability.getDurabilityCost()));
             	for (String line : ability.getDescription())
             		lore.add(PrintUtils.ColorParser(line));
             	lore.add("");

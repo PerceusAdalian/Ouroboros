@@ -419,8 +419,12 @@ public class MobData
 		((LivingEntity) target).playHurtAnimation(0);
 		if (doHurtAnimation && player != null) 
 		{
-			Vector direction = target.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(0.4);
-			target.setVelocity(direction.setY(0.4));	
+			Vector kb = target.getLocation().toVector().subtract(player.getLocation().toVector());
+		    if (kb.lengthSquared() > 0.001)
+		    {
+		        Vector direction = kb.normalize().multiply(0.4);
+		        target.setVelocity(direction.setY(0.4));
+		    }
 		}
 
 		if (Ouroboros.debug) 

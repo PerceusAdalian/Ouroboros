@@ -17,6 +17,7 @@ public enum PassiveEchoEffect
 	STUNNING,
 	SET_ATTACK_RATE,
 	KNOCKBACK,
+	VAMPIRE,
 	
 	// Ranged Passives
 	IGNORE_ARROW,
@@ -25,4 +26,7 @@ public enum PassiveEchoEffect
 	
 	// Tool Passives
 	LUCKY,
+	
+	// Special Passives
+	HERESIO_ARMAMENT
 }

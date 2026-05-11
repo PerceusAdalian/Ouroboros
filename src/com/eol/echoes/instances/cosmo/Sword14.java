@@ -25,7 +25,7 @@ public class Sword14 extends AbstractEOL
 	
 	public Sword14()
 	{
-		super("&r&e&lΣOL&r&f: &oSword No. 14 "+PrintUtils.color(ObsColors.CELESTIO)+"✦", 
+		super("&r&e&lΣOL&r&f: &oSword No. 14 "+PrintUtils.color(ObsColors.COSMO)+"✦", 
 			"sword_14", false, 
 			new EOLRecipe(MateriaType.NETHERITE, MateriaType.STRING, MateriaType.COSMO), 
 			EchoForm.SWORD, 
@@ -34,12 +34,10 @@ public class Sword14 extends AbstractEOL
 			new SpatialRend().getInternalName(),
 			"[ System Log 14 ]",
 			"..Construction records nominal. Waveform stability: unresolved..",
-			"Server load anomalies persist — origin traced to generative overflow..",
-			"Memory bleed detected across several active instances..",
+			"Server load anomalies persist: Memory bleed detected across several instances..",
 			"..one instance, designation: "+PrintUtils.color(ObsColors.CELESTIO)+"&oLumina&r&7&o, drawing excess ether..",
-			"..source unclear.. flagged for review. Cache flush scheduled prior to",
-			"next cycle: Subject Echoic Dissonance events increasing in frequency..",
-			"We'll address it after the reset.. [ Log End 1616:4:30-17:26:34]");
+			"Anomalous events increasing in frequency. We'll address it after the reset.. ",
+			"[ Log End 1616:4:30-17:26:34]");
 	}
 	
 	@SuppressWarnings("null")

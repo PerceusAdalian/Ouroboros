@@ -94,13 +94,14 @@ public class EntityEffects
 		
 	}
 	
-	public static void heal(Player p, double value) 
+	public static boolean heal(Player p, double value) 
 	{
-	    if (p == null || !p.isOnline() || value <= 0) return;
+	    if (p == null || !p.isOnline() || value <= 0) return false;
 	
 	    double maxHealth = p.getAttribute(Attribute.MAX_HEALTH).getValue();
 	    
 	    p.setHealth(Math.min(p.getHealth() + value, maxHealth));
+	    return true;
 	}
 	
 	public static void heal(Player p)

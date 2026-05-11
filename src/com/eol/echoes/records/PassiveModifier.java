@@ -70,6 +70,8 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case NIMBLE          -> "Nimble Footed";
             case INFINITY        -> "Infinity";
             case NIGHTSIGHT		 -> "Grants Nightvision";
+            case VAMPIRE         -> "Vampiric Weapon";
+            case HERESIO_ARMAMENT -> "Attacks Deal Heresio Damage";
         };
     }
 

@@ -64,7 +64,7 @@ public class GuiButton
     {
     	for (String line : lines) 
         {
-            lore.add(PrintUtils.ColorParser("&r&f" + line));
+            lore.add(PrintUtils.ColorParser(line));
         }
         return this;
     }

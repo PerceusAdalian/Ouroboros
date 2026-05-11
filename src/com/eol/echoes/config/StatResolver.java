@@ -57,40 +57,42 @@ public final class StatResolver
             return null;
         }
 
-        // t=0 at rarity 1, t=1 at rarity 7
-        double t = (catalystRarity.getRarity() - 1) / 6.0;
-
+        // Normalize all three rarity contributors to [0,1]
+        double tCatalyst = (catalystRarity.getRarity() - 1) / 6.0;
+        double tBase     = (base.getRarity().getRarity() - 1) / 6.0;
+        double tBinding  = (binding.getRarity().getRarity() - 1) / 6.0;
+        
+        // Base stats: catalyst 50%, base Materia 50%
+        double tBaseRoll    = (tCatalyst * 0.50) + (tBase * 0.50);
+        
+        // Binding stats: catalyst 50%, binding Materia 50%
+        double tBindingRoll = (tCatalyst * 0.50) + (tBinding * 0.50);
+        
         EchoConfig        config    = EchoConfig.get();
         MaterialStatRange matRange  = config.getMaterialStats(echoMaterial);
         BindingStatBlock  bindBlock = config.getBindingStats(binding.getMateriaType());
-
-        // --- Roll base stats with rarity bias ---
-        double rolledAttack  = rollBiased(matRange.baseAttackMin(), matRange.baseAttackMax(), t);
-        double rolledCritMod = rollBiased(1.0, matRange.critModifierCeiling(), t);
-
-        // Crit rate is fixed per material tier - bias just scales how close to the base you get
-        // Rarity 1 gets ~60% of the base crit rate, rarity 7 gets the full value
-        double critRateScale = NumberUtils.lerp(0.60, 1.0, t);
-        double rolledCritRate = matRange.critRateBase() * critRateScale;
-
-        // --- Roll attack rating with bias ---
-        double arRoll = rollBiased(bindBlock.attackRatingMin(), bindBlock.attackRatingMax(), t);
-        double finalAttackRating = Math.round(arRoll * 100.0) / 100.0;
-
-        // --- Roll durability with bias ---
-        double rawDurability  = rollBiased(matRange.durabilityMin(), matRange.durabilityMax(), t);
-        int finalDurability   = (int) Math.round(rawDurability * bindBlock.durabilityMultiplier());
-
+        
+        // --- Roll base stats ---
+        double rolledAttack   = rollBiased(matRange.baseAttackMin(), matRange.baseAttackMax(), tBaseRoll);
+        double rolledCritMod  = rollBiased(1.0, matRange.critModifierCeiling(), tBaseRoll);
+        double rolledCritRate = matRange.critRateBase() * NumberUtils.lerp(0.60, 1.0, tBaseRoll);
+        
+        // --- Roll binding stats ---
+        double attackRating  = rollBiased(bindBlock.attackRatingMin(), bindBlock.attackRatingMax(), tBindingRoll);
+        double rawDurability = rollBiased(matRange.durabilityMin(), matRange.durabilityMax(), tBindingRoll);
+        
         // --- Apply binding deltas ---
-        double finalAttack   = rolledAttack + bindBlock.attackBonus();
-        double finalCritRate = Math.max(0.0, Math.min(1.0, rolledCritRate + bindBlock.critRateBonus()));
-        double finalCritMod  = rolledCritMod;
-
+        double finalAttack       = Math.round((rolledAttack + bindBlock.attackBonus()) * 100.0) / 100.0;
+        double finalAttackRating = Math.round(attackRating * 100.0) / 100.0;
+        double finalCritRate     = Math.round(Math.max(0.0, Math.min(1.0, rolledCritRate + bindBlock.critRateBonus())) * 100.0) / 100.0;
+        double finalCritMod      = Math.round(rolledCritMod * 100.0) / 100.0;
+        int    finalDurability   = (int) Math.round(rawDurability * bindBlock.durabilityMultiplier());
+        
         return new EchoData(
-            Math.round(finalAttack * 100.0) / 100.0,
+            finalAttack,
             finalAttackRating,
-            Math.round(finalCritRate * 100.0) / 100.0,
-            Math.round(finalCritMod * 100.0) / 100.0,
+            finalCritRate,
+            finalCritMod,
             finalDurability,
             finalDurability);
     }

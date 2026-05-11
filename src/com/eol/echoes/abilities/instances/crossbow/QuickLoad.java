@@ -19,9 +19,8 @@ public class QuickLoad extends EchoAbility
 
 	public QuickLoad() 
 	{
-		super("Quick Load", "quick_load", Material.CROSSBOW, StatType.RANGED, 5, 1, 0, AbilityType.UTILITY, ElementType.MODULO,
-				CastConditions.LEFT_CLICK_AIR, EchoForm.CROSSBOW, 
-				"Quickly reload the next available &b&oarrow&r&f into this &b&oCrossbow&r&f.");
+		super("Quick Load", "quick_load", Material.CROSSBOW, StatType.RANGED, 5, 1, 0, AbilityType.UTILITY, ElementType.MODULO, CastConditions.LEFT_CLICK_AIR, EchoForm.CROSSBOW, 
+				"&r&fQuickly reload the next available &b&oarrow&r&f into this &b&oCrossbow&r&f.");
 	}
 
 	@Override

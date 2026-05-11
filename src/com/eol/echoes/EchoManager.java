@@ -7,7 +7,9 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -31,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Vector;
 
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.EchoManifest;
@@ -514,23 +517,22 @@ public class EchoManager
         	    e.setCancelled(true);
 
         	    Arrow original = (Arrow) e.getProjectile();
-        	    Arrow refired = p.getWorld().spawn(original.getLocation(), Arrow.class);
-        	    refired.setVelocity(original.getVelocity());
+        	    Location spawnLoc = original.getLocation().clone();
+        	    Vector velocity = original.getVelocity().clone();
+        	    boolean critical = original.isCritical();
+        	    double damage = original.getDamage();
+        	    original.remove();
+
+        	    Arrow refired = p.getWorld().spawn(spawnLoc, Arrow.class);
+        	    refired.setVelocity(velocity);
         	    refired.setShooter(p);
-        	    refired.setCritical(original.isCritical());
-        	    refired.setDamage(original.getDamage());
+        	    refired.setCritical(critical);
+        	    refired.setDamage(damage);
         	    refired.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
 
-        	    Bukkit.getScheduler().runTask(Ouroboros.instance, () ->
-        	    {
-        	        ItemStack offhand = p.getInventory().getItemInOffHand();
-        	        if (offhand.getType() == Material.ARROW)
-        	        {
-        	            offhand.setAmount(offhand.getAmount() + 1);
-        	            p.getInventory().setItemInOffHand(offhand);
-        	        }
-        	        else p.getInventory().addItem(new ItemStack(Material.ARROW, 1));
-        	    });
+        	    if (e.getBow() != null) refired.setWeapon(e.getBow());
+
+        	    refired.getPersistentDataContainer().set(new NamespacedKey(Ouroboros.instance, "echo_refired"),PersistentDataType.BYTE,(byte) 1);
         	}
         	
         	@EventHandler

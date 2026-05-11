@@ -57,14 +57,12 @@ public class MobDamageEvent implements Listener
 			    double dmg;
 
 			    // --- Echo Melee ---
-			    if (e instanceof EntityDamageByEntityEvent dmgEvent
-			        && dmgEvent.getDamager() instanceof Player p
-			        && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			    if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
 			    {
 			        ItemStack echo = p.getInventory().getItemInMainHand();
 			        EchoManifest codec = EchoManager.getCodec(echo);
 			        if (codec == null) return;
-
+			        
 			        // Block bow melee hits entirely
 			        if (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW)
 			        {
@@ -73,12 +71,15 @@ public class MobDamageEvent implements Listener
 			        }
 
 			        element = ResolveCombatElement.getFromMaterial(echo.getType());
+			        
+			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        
 			        EchoData echoData = codec.baseStats();
 
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
 			        float charge = p.getAttackCooldown();
 			        dmg *= 0.1 + (0.9 * charge);
-
+			        
 			        if (InfernoEffects.isImbuedPlayer.containsKey(p.getUniqueId()))
 			        {
 			            element = ElementType.INFERNO;
@@ -91,7 +92,7 @@ public class MobDamageEvent implements Listener
 			            InfernoEffects.addBurn((LivingEntity) target, 20);
 			            InfernoEffects.hasCharred.remove(target.getUniqueId());
 			        }
-
+			        
 			        boolean crit = false;
 			        double critRate     = ResolveEchoInteract.resolveCritRate(p, (LivingEntity) target, codec, echoData.getCritRate());
 			        double critModifier = ResolveEchoInteract.resolveCritModifier(p, (LivingEntity) target, codec, echoData.getCritModifier());
@@ -102,35 +103,39 @@ public class MobDamageEvent implements Listener
 			            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
 			            dmg *= critModifier;
 			        }
-
+			        
 			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
-
+			        
 			        ResolveEchoInteract.resolvePassiveEffect(codec, p, (LivingEntity) target);
+			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
+			        {
+			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+			            EntityEffects.heal(p, 2);
+			        }
 			    }
 
 			    // --- Echo Bow / Arrow ---
 			    else if (e instanceof EntityDamageByEntityEvent dmgEvent
-			        && dmgEvent.getDamager() instanceof Arrow arrow
-			        && arrow.getShooter() instanceof Player p
+			        && dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player p
 			        && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
 			    {
 			        ItemStack echo = p.getInventory().getItemInMainHand();
 			        EchoManifest codec = EchoManager.getCodec(echo);
 			        if (codec == null) return;
-
+			        
 			        // Only intercept if they're actually holding a bow echo
 			        if (codec.echoForm() != EchoForm.BOW && codec.echoForm() != EchoForm.CROSSBOW) return;
-
+			        
 			        e.setCancelled(true); // cancel vanilla arrow damage
-
+			        
 			        EchoData echoData = codec.baseStats();
 			        element = ElementType.PUNCTURE;
-
+			        
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
-
+			        
 			        boolean crit = false;
 			        double critRate     = ResolveEchoInteract.resolveCritRate(p, (LivingEntity) target, codec, echoData.getCritRate());
 			        double critModifier = ResolveEchoInteract.resolveCritModifier(p, (LivingEntity) target, codec, echoData.getCritModifier());
@@ -141,19 +146,22 @@ public class MobDamageEvent implements Listener
 			            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
 			            dmg *= critModifier;
 			        }
-
+			        
 			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
-
+			        
 			        ResolveEchoInteract.resolvePassiveEffect(codec, p, (LivingEntity) target);
+			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
+			        {
+			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+			            EntityEffects.heal(p, 2);
+			        }
 			    }
 
 			    // --- Non-Echo Player Hit ---
-			    else if (e instanceof EntityDamageByEntityEvent dmgEvent
-			        && dmgEvent.getDamager() instanceof Player p
-			        && !EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			    else if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && !EchoManager.isEcho(p.getInventory().getItemInMainHand()))
 			    {
 			        dmgEvent.setDamage(1);
 			        dmg = dmgEvent.getFinalDamage();

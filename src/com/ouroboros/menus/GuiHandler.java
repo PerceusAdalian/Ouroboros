@@ -76,7 +76,6 @@ public class GuiHandler implements Listener
 
     public static void close(Player player) 
     {
-        openGuis.remove(player.getUniqueId());
         player.closeInventory();
     }
 

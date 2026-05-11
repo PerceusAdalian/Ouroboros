@@ -1,7 +1,5 @@
 package com.eol.echoes.abilities.instances.special;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,46 +39,48 @@ public class SpatialRend extends EchoAbility
 	@Override
 	public int cast(PlayerInteractEvent e) 
 	{
-		Player p = e.getPlayer();
-		Location prev = p.getLocation();
-		AtomicBoolean fatalDamage = new AtomicBoolean(false);
-		
-		if (RayCastUtils.getEntity(p, 30, target ->
-		{
-			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
-			
-			Location to = le.getLocation();
-			Vector dir = p.getLocation().getDirection();
-			
-			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, SoundCategory.AMBIENT);
-			
-			MobData data = MobData.getMob(le.getUniqueId());
-			if (data.getHp(false) - 77 <= 0) fatalDamage.set(true);
-			
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			{
-				p.teleport(to);
-				p.getLocation().setDirection(dir);
-				EntityEffects.playSound(p, Sound.ENTITY_PLAYER_TELEPORT, SoundCategory.AMBIENT);
-				EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS);
-				ObsParticles.drawLandingWave(le);
-				MobData.damageUnnaturally(p, le, 77, true, true, ElementType.COSMO);
-			}, 20);
-		})) return -1;
-		
-		if (!fatalDamage.get())
-		{
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, SoundCategory.AMBIENT), 40);
-			
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->{
-				p.teleport(prev);
-				EntityEffects.playSound(p, Sound.ENTITY_PLAYER_TELEPORT, SoundCategory.AMBIENT);
-				ObsParticles.drawCosmoCastSigil(p);
-			}, 50);
-		}
-		
-		return 30;
+	    Player p = e.getPlayer();
+	    Location prev = p.getLocation().clone();
+
+	    if (!RayCastUtils.getEntity(p, 30, target ->
+	    {
+	        if (!(target instanceof LivingEntity le) || target instanceof Player) return;
+
+	        Location to = le.getLocation().clone();
+	        Vector dir = p.getLocation().getDirection().clone();
+
+	        EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, SoundCategory.AMBIENT);
+
+	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	        {
+	            p.teleport(to);
+	            p.getLocation().setDirection(dir);
+	            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_TELEPORT, SoundCategory.AMBIENT);
+	            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS);
+	            ObsParticles.drawLandingWave(le);
+
+	            MobData data = MobData.getMob(le.getUniqueId());
+	            boolean fatal = data != null && (data.getHp(false) - 77 <= 0);
+
+	            MobData.damageUnnaturally(p, le, 77, true, true, ElementType.COSMO);
+
+	            if (!fatal)
+	            {
+	                Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	                    EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, SoundCategory.AMBIENT), 20);
+
+	                Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+	                {
+	                    p.teleport(prev);
+	                    EntityEffects.playSound(p, Sound.ENTITY_PLAYER_TELEPORT, SoundCategory.AMBIENT);
+	                    ObsParticles.drawCosmoCastSigil(p);
+	                }, 20);
+	            }
+	        }, 10);
+
+	    })) return -1;
+
+	    return 30;
 	}
 
 	@Override

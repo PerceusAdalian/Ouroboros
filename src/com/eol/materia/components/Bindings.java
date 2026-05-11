@@ -45,7 +45,21 @@ public class Bindings
 				Rarity.FIVE,
 				false,
 				"&7&o\"&e&oA seamstress's hard work paid off.. Next!&7&o\""));
-		
+		Materia.register(new Materia("String Binding",
+				"string_6",
+				MateriaType.STRING,
+				MateriaComponent.BINDING,
+				Rarity.SIX,
+				false,
+				"&7&o\"&c&oA royally sewn string.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("String Binding",
+				"string_7",
+				MateriaType.STRING,
+				MateriaComponent.BINDING,
+				Rarity.SEVEN,
+				false,
+				"&7&o\"&2&oThis string feels alive and elastic.. Why is it slimy?&7&o\""));
+
 		//-------------------------------PELT-------------------------------//
 		Materia.register(new Materia("Pelt Binding",
 				"pelt_1",
@@ -82,6 +96,21 @@ public class Bindings
 				Rarity.FIVE,
 				false,
 				"&7&o\"&e&oA artisan's hard work payed off.. Next!&7&o\""));
+		Materia.register(new Materia("Pelt Binding",
+				"pelt_6",
+				MateriaType.PELT,
+				MateriaComponent.BINDING,
+				Rarity.SIX,
+				false,
+				"&7&o\"&c&oA royally sewn pelt.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Pelt Binding",
+				"pelt_7",
+				MateriaType.PELT,
+				MateriaComponent.BINDING,
+				Rarity.SEVEN,
+				false,
+				"&7&o\"&2&oThis pelt feels alive and tough.. Why is it slimy?&7&o\""));
+
 
 		//-------------------------------LEATHER-------------------------------//
 		Materia.register(new Materia("Leather Binding",
@@ -119,6 +148,20 @@ public class Bindings
 				Rarity.FIVE,
 				false,
 				"&7&o\"&e&oAn expert's touch makes all the difference.. Next!&7&o\""));
+		Materia.register(new Materia("Leather Binding",
+				"leather_6",
+				MateriaType.LEATHER,
+				MateriaComponent.BINDING,
+				Rarity.SIX,
+				false,
+				"&7&o\"&c&oA royally sewn leather.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Leather Binding",
+				"leather_7",
+				MateriaType.LEATHER,
+				MateriaComponent.BINDING,
+				Rarity.SEVEN,
+				false,
+				"&7&o\"&2&oThis leather feels alive and supple.. Why is it slimy?&7&o\""));
 
 	}
 }

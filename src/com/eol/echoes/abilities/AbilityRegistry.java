@@ -16,7 +16,7 @@ import com.eol.echoes.abilities.instances.pickaxe.HeavySwing;
 import com.eol.echoes.abilities.instances.polearm.Lunge;
 import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
-import com.eol.echoes.abilities.instances.special.BlasphemousBlade;
+import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
@@ -41,7 +41,7 @@ public class AbilityRegistry
             NidusPreservation.class,
             SpatialRend.class,
             BjornsGlaciate.class,
-            BlasphemousBlade.class);
+            BloodFolliedBlade.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

@@ -26,7 +26,8 @@ public class Launch extends EchoAbility
 		super("Launch", "launch", Material.BOW, StatType.RANGED, 10, 1, 5, AbilityType.UTILITY, ElementType.MODULO,
 				CastConditions.RIGHT_CLICK_BLOCK, EchoForm.BOW, 
 				"&r&fLaunch backwards from &6target &dBlock&f.","",
-				"&r&e&lEchoic Resonance&r&f: negates the next instance of &d&oFall Damage&r&f for &b&o10 seconds&r&f.");
+				"&r&e&lEchoic Resonance&r&f: negates the next instance of",
+				"&d&oFall Damage&r&f for &b&o10 seconds&r&f.");
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class Launch extends EchoAbility
 		
 		EntityEffects.playSound(p, Sound.ENTITY_BREEZE_SHOOT, SoundCategory.AMBIENT);
 		ObsParticles.drawDisc(p.getLocation(), p.getWidth(), 2, 4, 0.5, Particle.EXPLOSION, null);
-		Vector away = p.getEyeLocation().toVector().subtract(b.getLocation().toVector()).normalize();
+		Vector away = p.getLocation().toVector().subtract(b.getLocation().toVector()).normalize();
 		p.setVelocity(away.multiply(3.5));
 		
 		return 5;

@@ -10,191 +10,261 @@ public class Bases
 	public static void load()
 	{
 		//-------------------------------WOOD-------------------------------//
-		Materia.register(new Materia("Wooden Chunk",
-			"wooden_chunk_1",
+		Materia.register(new Materia("Wooden Bit",
+			"wood_1",
 			MateriaType.WOOD,
 			MateriaComponent.BASE,
 			Rarity.ONE,
 			false,
 			"&r&7&oA chipped wooden chunk.. nothing to write home about."));
-		Materia.register(new Materia("Wooden Chunk",
-			"wooden_chunk_2",
+		Materia.register(new Materia("Wooden Bit",
+			"wood_2",
 			MateriaType.WOOD,
 			MateriaComponent.BASE,
 			Rarity.TWO,
 			false,
 			"&7&o\"&6&oThey came in hoards, even wooden swords had their use.&7&o\""));
-		Materia.register(new Materia("Wooden Chunk",
-			"wooden_chunk_3",
+		Materia.register(new Materia("Wooden Bit",
+			"wood_3",
 			MateriaType.WOOD,
 			MateriaComponent.BASE,
 			Rarity.THREE,
 			false,
 			"&7&o\"&b&oWith the last slain, more came. We had no other choice.&7&o\""));
-		Materia.register(new Materia("Wooden Chunk",
-			"wooden_chunk_4",
+		Materia.register(new Materia("Wooden Bit",
+			"wood_4",
 			MateriaType.WOOD,
 			MateriaComponent.BASE,
 			Rarity.FOUR,
 			false,
 			"&7&o\"&d&oPitiful knight. Don't you know wood warps? Stand up, and fight!&7&o\""));
-		Materia.register(new Materia("Wooden Chunk",
-			"wooden_chunk_5",
+		Materia.register(new Materia("Wooden Bit",
+			"wood_5",
 			MateriaType.WOOD,
 			MateriaComponent.BASE,
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oA carpenter's hard work paid off.. Next!&7&o\""));
-		
+		Materia.register(new Materia("Wooden Bit",
+			"wood_6",
+			MateriaType.WOOD,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally crafted Wooden Bit.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Wooden Bit",
+			"wood_7",
+			MateriaType.WOOD,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis wood looks.. warped. Is it breathing?&7&o\""));
+			
 		//-------------------------------STONE-------------------------------//
-		Materia.register(new Materia("Stone Chunk",
-			"stone_chunk_1",
+		Materia.register(new Materia("Stone Bit",
+			"stone_1",
 			MateriaType.STONE,
 			MateriaComponent.BASE,
 			Rarity.ONE,
 			false,
-			"&r&7&oA chipped stone chunk.. nothing to write home about."));
-		Materia.register(new Materia("Stone Chunk",
-			"stone_chunk_2",
+			"&r&7&oA chipped Stone Bit.. nothing to write home about."));
+		Materia.register(new Materia("Stone Bit",
+			"stone_2",
 			MateriaType.STONE,
 			MateriaComponent.BASE,
 			Rarity.TWO,
 			false,
 			"&7&o\"&6&oSome chose wood.. smart people chose weight.&7&o\""));
-		Materia.register(new Materia("Stone Chunk",
-			"stone_chunk_3",
+		Materia.register(new Materia("Stone Bit",
+			"stone_3",
 			MateriaType.STONE,
 			MateriaComponent.BASE,
 			Rarity.THREE,
 			false,
 			"&7&o\"&b&oEven the dullest of blades can bash someone's head in.&7&o\""));
-		Materia.register(new Materia("Stone Chunk",
-			"stone_chunk_4",
+		Materia.register(new Materia("Stone Bit",
+			"stone_4",
 			MateriaType.STONE,
 			MateriaComponent.BASE,
 			Rarity.FOUR,
 			false,
 			"&7&o\"&d&oThis could pack a serious punch.. Oh look, a zombie!&7&o\""));
-		Materia.register(new Materia("Stone Chunk",
-			"stone_chunk_5",
+		Materia.register(new Materia("Stone Bit",
+			"stone_5",
 			MateriaType.STONE,
 			MateriaComponent.BASE,
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oA mason's hard work paid off.. Next!&7&o\""));
-		
+		Materia.register(new Materia("Stone Bit",
+			"stone_6",
+			MateriaType.STONE,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally crafted Stone Bit. This should come in handy..&7&o\""));
+		Materia.register(new Materia("Stone Bit",
+			"stone_7",
+			MateriaType.STONE,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis stone looks.. odd. Is it breathing?&7&o\""));
+			
 		//-------------------------------COPPER-------------------------------//
-		Materia.register(new Materia("Copper Nugget",
-			"copper_nugget_1",
+		Materia.register(new Materia("Copper Ingot",
+			"copper_1",
 			MateriaType.COPPER,
 			MateriaComponent.BASE,
 			Rarity.ONE,
 			false,
-			"&r&7&oA simple copper nugget.. nothing to write home about."));
-		Materia.register(new Materia("Copper Nugget",
-			"copper_nugget_2",
+			"&r&7&oA simple Copper Ingot.. nothing to write home about."));
+		Materia.register(new Materia("Copper Ingot",
+			"copper_2",
 			MateriaType.COPPER,
 			MateriaComponent.BASE,
 			Rarity.TWO,
 			false,
 			"&7&o\"&6&oEven salvaged copper had its uses..&7&o\""));
-		Materia.register(new Materia("Copper Nugget",
-			"copper_nugget_3",
+		Materia.register(new Materia("Copper Ingot",
+			"copper_3",
 			MateriaType.COPPER,
 			MateriaComponent.BASE,
 			Rarity.THREE,
 			false,
 			"&7&o\"&b&oHomes were built with copper, so were our swords.&7&o\""));
-		Materia.register(new Materia("Copper Nugget",
-			"copper_nugget_4",
+		Materia.register(new Materia("Copper Ingot",
+			"copper_4",
 			MateriaType.COPPER,
 			MateriaComponent.BASE,
 			Rarity.FOUR,
 			false,
 			"&7&o\"&d&oWe salvaged everything we could, down to the insulation.&7&o\""));
-		Materia.register(new Materia("Copper Nugget",
-			"copper_nugget_5",
+		Materia.register(new Materia("Copper Ingot",
+			"copper_5",
 			MateriaType.COPPER,
 			MateriaComponent.BASE,
 			Rarity.FIVE,
 			false,
-			"&7&o\"&e&oAn thurgist's hard work paid off.. Next!&7&o\""));
-
+			"&7&o\"&e&oA theurgist's hard work paid off.. Next!&7&o\""));
+		Materia.register(new Materia("Copper Ingot",
+			"copper_6",
+			MateriaType.COPPER,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally forged Copper Ingot.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Copper Ingot",
+			"copper_7",
+			MateriaType.COPPER,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis copper looks odd.. It's pulsating when I touch it..&7&o\""));
+			
 		//-------------------------------IRON-------------------------------//
-		Materia.register(new Materia("Iron Slag",
-			"iron_slag_1",
+		Materia.register(new Materia("Iron Ingot",
+			"iron_1",
 			MateriaType.IRON,
 			MateriaComponent.BASE,
 			Rarity.ONE,
 			false,
-			"&r&7&oA shilling of iron slag.. nothing to write home about."));
-		Materia.register(new Materia("Iron Slag",
-			"iron_slag_2",
+			"&r&7&oA shilling of Iron Ingot.. nothing to write home about."));
+		Materia.register(new Materia("Iron Ingot",
+			"iron_2",
 			MateriaType.IRON,
 			MateriaComponent.BASE,
 			Rarity.TWO,
 			false,
 			"&7&o\"&6&oSome slag and paste, and you got a 'sword'..&7&o\""));
-		Materia.register(new Materia("Iron Slag",
-			"iron_slag_3",
+		Materia.register(new Materia("Iron Ingot",
+			"iron_3",
 			MateriaType.IRON,
 			MateriaComponent.BASE,
 			Rarity.THREE,
 			false,
 			"&7&o\"&b&oIf slicing didn't cut it, we'd bludgeon them.&7&o\""));
-		Materia.register(new Materia("Iron Slag",
-			"iron_slag_4",
+		Materia.register(new Materia("Iron Ingot",
+			"iron_4",
 			MateriaType.IRON,
 			MateriaComponent.BASE,
 			Rarity.FOUR,
 			false,
 			"&7&o\"&d&oOur smiths quickly became used to bulk orders..&7&o\""));
-		Materia.register(new Materia("Iron Slag",
-			"iron_slag_5",
+		Materia.register(new Materia("Iron Ingot",
+			"iron_5",
 			MateriaType.IRON,
 			MateriaComponent.BASE,
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oA blacksmith's hard work paid off.. Next!&7&o\""));
+		Materia.register(new Materia("Iron Ingot",
+			"iron_6",
+			MateriaType.IRON,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally forged Iron Ingot.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Iron Ingot",
+			"iron_7",
+			MateriaType.IRON,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oWhat kind of smithing work is this? Why is it.. breathing?&7&o\""));
 		
 		//-------------------------------GOLD-------------------------------//
-		Materia.register(new Materia("Gold Nugget",
-			"gold_nugget_1",
+		Materia.register(new Materia("Gold Ingot",
+			"gold_1",
 			MateriaType.GOLD,
 			MateriaComponent.BASE,
 			Rarity.ONE,
 			false,
-			"&r&7&oA simple gold nugget.. nothing to write home about."));
-		Materia.register(new Materia("Gold Nugget",
-			"gold_nugget_2",
+			"&r&7&oA simple Gold Ingot.. nothing to write home about."));
+		Materia.register(new Materia("Gold Ingot",
+			"gold_2",
 			MateriaType.GOLD,
 			MateriaComponent.BASE,
 			Rarity.TWO,
 			false,
 			"&7&o\"&6&oPrecious in currency and in piercing some skulls.&7&o\""));
-		Materia.register(new Materia("Gold Nugget",
-			"gold_nugget_3",
+		Materia.register(new Materia("Gold Ingot",
+			"gold_3",
 			MateriaType.GOLD,
 			MateriaComponent.BASE,
 			Rarity.THREE,
 			false,
 			"&7&o\"&b&oGold was seldom used as decoration but payment for.. services.&7&o\""));
-		Materia.register(new Materia("Gold Nugget",
-			"gold_nugget_4",
+		Materia.register(new Materia("Gold Ingot",
+			"gold_4",
 			MateriaType.GOLD,
 			MateriaComponent.BASE,
 			Rarity.FOUR,
 			false,
 			"&7&o\"&d&oNo one knows for certain where pure Luminite Ore came",
 			"&r&d&ofrom but it had its uses for pretty much everything.&7&o\""));
-		Materia.register(new Materia("Gold Nugget",
-			"gold_nugget_5",
+		Materia.register(new Materia("Gold Ingot",
+			"gold_5",
 			MateriaType.GOLD,
 			MateriaComponent.BASE,
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oA master goldsmith's work is unmatched.. Next!&7&o\""));
-
+		Materia.register(new Materia("Gold Ingot",
+			"gold_6",
+			MateriaType.GOLD,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royall forged Golden Ingot.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Gold Ingot",
+			"gold_7",
+			MateriaType.GOLD,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oI thought I just saw an eye form.. is this alive?&7&o\""));
+			
 		//-------------------------------DIAMOND-------------------------------//
 		Materia.register(new Materia("Ouran Diamond",
 			"diamond_1",
@@ -231,45 +301,73 @@ public class Bases
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oA master gemcutter's work is unmatched.. Next!&7&o\""));
-
+		Materia.register(new Materia("Ouran Diamond",
+			"diamond_6",
+			MateriaType.DIAMOND,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally cut Ouran Diamond.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Ouran Diamond",
+			"diamond_7",
+			MateriaType.DIAMOND,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oSomething's off about this diamond.. is it breathing?&7&o\""));
+		
 		//-------------------------------NETHERITE-------------------------------//
-		Materia.register(new Materia("Netherite Scrap",
-			"netherite_scrap_1",
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_1",
 			MateriaType.NETHERITE,
 			MateriaComponent.BASE,
 			Rarity.ONE,
 			false,
-			"&r&7&oSome imperfect netherite scrap.. nothing to write home about."));
-		Materia.register(new Materia("Netherite Scrap",
-			"netherite_scrap_2",
+			"&r&7&oSome imperfect Netherite Ingot.. nothing to write home about."));
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_2",
 			MateriaType.NETHERITE,
 			MateriaComponent.BASE,
 			Rarity.TWO,
 			false,
 			"&7&o\"&6&oThose of us that treked into Hell came out with some",
 			"&r&6&ovaluable resources. Netherite was one of them.&7&o\""));
-		Materia.register(new Materia("Netherite Scrap",
-			"netherite_scrap_3",
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_3",
 			MateriaType.NETHERITE,
 			MateriaComponent.BASE,
 			Rarity.THREE,
 			false,
 			"&7&o\"&b&oNetherite was used for the most elite weapons and armor.&7&o\""));
-		Materia.register(new Materia("Netherite Scrap",
-			"netherite_scrap_4",
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_4",
 			MateriaType.NETHERITE,
 			MateriaComponent.BASE,
 			Rarity.FOUR,
 			false,
 			"&7&o\"&d&oNetherite: Protective, durable, and unyieldingly powerful.&7&o\""));
-		Materia.register(new Materia("Netherite Scrap",
-			"netherite_scrap_5",
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_5",
 			MateriaType.NETHERITE,
 			MateriaComponent.BASE,
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oOnly the highest quality for Her Majesty.. Next!&7&o\""));
-
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_6",
+			MateriaType.NETHERITE,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally forged Netherite Ingot.. Nice!&7&o\""));
+		Materia.register(new Materia("Netherite Ingot",
+			"netherite_7",
+			MateriaType.NETHERITE,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis.. shouldn't exist.. Why is it growling?&7&o\""));
+		
 		//-------------------------------LEATHER-------------------------------//
 		Materia.register(new Materia("Hide",
 			"hide_1",
@@ -344,6 +442,20 @@ public class Bases
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oAn archaeologist's find made true.. Next!&7&o\""));
+		Materia.register(new Materia("Heavy Core",
+			"heavy_core_6",
+			MateriaType.HAMMER,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally forged Heavy Core.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Heavy Core",
+			"heavy_core_7",
+			MateriaType.HAMMER,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis heavy core looks.. odd. It's pulsating when I touch it..&7&o\""));
 		
 		Materia.register(new Materia("Artifact",
 			"artifact_1",
@@ -382,6 +494,21 @@ public class Bases
 			Rarity.FIVE,
 			false,
 			"&7&o\"&e&oAn refiner's hard work paid off.. Next!&7&o\""));
+		Materia.register(new Materia("Artifact",
+			"artifact_6",
+			MateriaType.ARMAMENT,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally refined artifact.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Artifact",
+			"artifact_7",
+			MateriaType.ARMAMENT,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis artifact feels ancient and powerful.. Is it breathing?&7&o\""));
+
 
 		Materia.register(new Materia("Bow Limb",
 			"bow_limb_1",
@@ -421,6 +548,21 @@ public class Bases
 			false,
 			"&7&o\"&e&oA keen eye for detail made all the difference, And",
 			"&r&e&othis would make any arrow flight straighter than a ray of light.. Next!&7&o\""));
+		Materia.register(new Materia("Bow Limb",
+			"bow_limb_6",
+			MateriaType.BOW,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally crafted bow limb.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Bow Limb",
+			"bow_limb_7",
+			MateriaType.BOW,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis bow limb feels alive and slimy.. Is it breathing?&7&o\""));
+
 
 		Materia.register(new Materia("Bow Stock",
 			"bow_stock_1",
@@ -461,6 +603,19 @@ public class Bases
 			false,
 			"&7&o\"&e&oThe penacle of an artificer's work. This should have",
 			"&r&e&ono trouble forging into a masterpiece of ranged combat.. Next!&7&o\""));
-
+		Materia.register(new Materia("Bow Stock",
+			"bow_stock_6",
+			MateriaType.CROSSBOW,
+			MateriaComponent.BASE,
+			Rarity.SIX,
+			false,
+			"&7&o\"&c&oA royally crafted bow stock.. This should come in handy.&7&o\""));
+		Materia.register(new Materia("Bow Stock",
+			"bow_stock_7",
+			MateriaType.CROSSBOW,
+			MateriaComponent.BASE,
+			Rarity.SEVEN,
+			false,
+			"&7&o\"&2&oThis bow stock feels like it's pulsating.. Is it breathing?&7&o\""));
 	}
 }

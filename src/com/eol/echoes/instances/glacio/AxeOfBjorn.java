@@ -32,9 +32,9 @@ public class AxeOfBjorn extends AbstractEOL
 				"Thou who takes up my axe -- hear me, and be not afraid.",
 				"My element, "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&7&o, is not the Cold of Death.",
 				"It is stillness.. Preservation.. Warmth-- The moment before the world moves.",
-				"I did not forge my weapon from anger, but of knowing, of readying.",
-				"Wield me now with intention in &b&oEcho Form&7&o, as "+PrintUtils.color(ObsColors.CELESTIO)+"&oShe&r&7&o intended.",
-				"And do not confuse my mercy for fragility.. I protect the creatures of the Forest.");
+				"Wield me with intention in &b&oEcho Form&7&o, as "+PrintUtils.color(ObsColors.CELESTIO)+"&oShe&r&7&o intended.",
+				"And do not confuse my mercy for fragility..",
+				"I protect the creatures of the Forest.");
 	}
 
 	@SuppressWarnings("null")

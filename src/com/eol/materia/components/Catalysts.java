@@ -1,5 +1,6 @@
 package com.eol.materia.components;
 
+
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
@@ -141,7 +142,7 @@ public class Catalysts
 				false,
 				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
 				"&r&7&oThere's a memory engram encoded within:",
-				PrintUtils.color(ObsColors.COSMO)+"[ Log 14 : Echo Generation Engine Resource Analysis 1616:4:29-00:14:01 ]",
+				PrintUtils.color(ObsColors.COSMO)+"[ Log 14 : Protocol E.G.E.R.A 1616:4:29-00:14:01 ]",
 				PrintUtils.color(ObsColors.COSMO)+"&oGenerative sequence confirmed. Alias Codename Injection: &l"+Symbols.EOL+"CHO 14.",
 				PrintUtils.color(ObsColors.COSMO)+"&oResource draw exceeds prior projections. Allocation unstable.",
 				PrintUtils.color(ObsColors.COSMO)+"&o&lCosmo"+PrintUtils.color(ObsColors.COSMO)+" &oelement flagged for injection -- scheduled post-reset.",
@@ -168,15 +169,14 @@ public class Catalysts
 				"echo_of_general_falric",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
-				Rarity.FIVE,
+				Rarity.SEVEN,
 				false,"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
 				"&r&7&oThere's a memory engram encoded within:",
-				PrintUtils.color(ObsColors.GLACIO)+"&oFantasian Academy Dossier Entry: Bjorn -- One of The Endless.",
-				PrintUtils.color(ObsColors.GLACIO)+"&oPatron of the "+PrintUtils.color(ObsColors.GLACIO)+"&l&nGlacio&r"+PrintUtils.color(ObsColors.GLACIO)+"&o element, he endures beyond the passage of time.",
-				PrintUtils.color(ObsColors.GLACIO)+"&oHis icon, the "+PrintUtils.color(ObsColors.GLACIO)+"&l&nOuran Diamond&r"+PrintUtils.color(ObsColors.GLACIO)+"&o, speaks to his doctrine of stillness:",
-				PrintUtils.color(ObsColors.GLACIO)+"&oTo preserve life beyond time and erosion, grounded in the discipline of the Jötnar.",
-				PrintUtils.color(ObsColors.GLACIO)+"&oDevotees offered "+PrintUtils.color(ObsColors.GLACIO)+"&l&nLeather&r"+PrintUtils.color(ObsColors.GLACIO)+"&o at his shrine, believing the act of restraint",
-				PrintUtils.color(ObsColors.GLACIO)+"&owould earn audience from the Jötunn of the Eternal Freeze."), new GeneralFalricStave().getInternalName());
+				PrintUtils.color(ObsColors.HERESIO)+"&oKingdom of Twilight Dossier: &lGeneral Falric",
+				PrintUtils.color(ObsColors.HERESIO)+"&oRight-hand to "+PrintUtils.color(ObsColors.MORTIO)+"&lSithis&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and accreditor",
+				PrintUtils.color(ObsColors.HERESIO)+"of &lHeresian Magik&r"+PrintUtils.color(ObsColors.HERESIO)+"&o for over 2,000 years. Of unknown origin,",
+				PrintUtils.color(ObsColors.HERESIO)+"&oFalric favored &lNetherite&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and &lString&r"+PrintUtils.color(ObsColors.HERESIO)+"&o bound weaponry.",
+				PrintUtils.color(ObsColors.HERESIO)+"&oMany heard of him however few who faced him lived to tell the tale."), new GeneralFalricStave().getInternalName());
 		
 	}
 }
