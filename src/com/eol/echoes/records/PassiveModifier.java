@@ -54,24 +54,25 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
         // Simple key-to-display mapping. Extend as effects are added.
         return switch (effectKey)
         {
-            case EXPOSE          -> "Attacks Apply Expose";
-            case BURNING         -> "Attacks Inflict Burn";
-            case POISONOUS       -> "Attacks Are Corrosive";
-            case SLOWING  	 	 -> "Attacks Inflict Slowness";
-            case FATIGUING   	 -> "Attacks Inflict Fatigue";
-            case STUNNING      	 -> "Attacks Inflict Stun";
-            case IGNORE_ARROW    -> "Ignore Arrow Consumption: "+(int)(magnitude * 100) + "%";
-            case SET_ATTACK_RATE -> "Atk Rate becomes " + magnitude;
+            case EXPOSE           -> "Attacks Apply Expose";
+            case BURNING          -> "Attacks Inflict Burn";
+            case POISONOUS        -> "Attacks Are Corrosive";
+            case SLOWING  	 	  -> "Attacks Inflict Slowness";
+            case FATIGUING   	  -> "Attacks Inflict Fatigue";
+            case STUNNING      	  -> "Attacks Inflict Stun";
+            case IGNORE_ARROW     -> "Ignore Arrow Consumption: "+(int)(magnitude * 100) + "%";
+            case SET_ATTACK_RATE  -> "Atk Rate becomes " + magnitude;
             case INCREASED_MOVEMENT_SPEED  -> "Swift Footed";
             case DECREASED_MOVEMENT_SPEED  -> "Heavy Weapon";
-            case PROTECTIVE	     -> "Protective Armament";
-            case KNOCKBACK       -> "Increased Knockback";
-            case LUCKY 			 -> "Increased Collection Luck";
-            case NIMBLE          -> "Nimble Footed";
-            case INFINITY        -> "Infinity";
-            case NIGHTSIGHT		 -> "Grants Nightvision";
-            case VAMPIRE         -> "Vampiric Weapon";
+            case PROTECTIVE	      -> "Protective Armament";
+            case KNOCKBACK        -> "Increased Knockback";
+            case LUCKY 			  -> "Increased Collection Luck";
+            case NIMBLE           -> "Nimble Footed";
+            case INFINITY         -> "Infinity";
+            case NIGHTSIGHT		  -> "Grants Nightvision";
+            case VAMPIRE          -> "Vampiric Weapon";
             case HERESIO_ARMAMENT -> "Attacks Deal Heresio Damage";
+            case COSMO_ARMAMENT   -> "Attacks Deal Cosmo Damage";
         };
     }
 
@@ -92,7 +93,7 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case OCCULTIC		-> "PVE: Occultic";
             case BUGS      		-> "PVE: Bugs";
             case RAID      		-> "PVE: Raid";
-            case OVERWORLD 		-> "Overworld";
+            case OVERWORLD 		-> "Overworld: Any Condition";
             case DURING_DAY   	-> "Overworld: Daytime";
             case DURING_NIGHT 	-> "Overworld: Nighttime";
             case CLEAR_WEATHER  -> "Overworld: Clear";

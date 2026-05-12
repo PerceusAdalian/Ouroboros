@@ -53,7 +53,7 @@ public class EchoForgePage extends ObsGui
 				"&e&l"+Symbols.EOL+"OL &r&fForging&f: Certain &b&o"+Symbols.EOL+"choes&r&f are crafted using a unique &e&lCatalyst&r&f,",
 				"&r&frequiring a specific &3Materia&f recipe hinted within the Catalyst's description.",
 				"&r&fRecipes are rarity-agnostic — only the &3Materia&f types matter, not their quality.",
-				"&r&fThe resulting &b&o"+Symbols.EOL+"choes&r&f are among the most &opowerful &r&fweapons to weild.")
+				"&r&fThe resulting &b&o"+Symbols.EOL+"choes&r&f are among the most &opowerful &r&fweapons to wield.")
 		.place(this, 4, e->
 		{
 			Player p = (Player) e.getWhoClicked();

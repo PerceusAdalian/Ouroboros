@@ -500,6 +500,20 @@ public class MobData
 		return config.getDouble("mob.hp.current") <= 0;
 	}
 	
+	public static boolean checkFatalDamage(MobData data, double damage)
+	{
+		if (data == null) return false;
+		double hp = data.getHp(false);
+		if (hp - damage < 0) return true;
+		return false;
+	}
+	
+	public static double getOverflowFatalDamage(MobData data, double damage)
+	{
+		if (data == null || !checkFatalDamage(data, damage)) return 0;
+		return Math.abs(data.getHp(false) - damage);
+	}
+	
 	public void save() 
 	{
 		try {config.save(file);}

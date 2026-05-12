@@ -73,6 +73,7 @@ public class MobDamageEvent implements Listener
 			        element = ResolveCombatElement.getFromMaterial(echo.getType());
 			        
 			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
 			        
 			        EchoData echoData = codec.baseStats();
 

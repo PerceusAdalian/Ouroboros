@@ -21,6 +21,7 @@ import com.eol.echoes.EchoManager.DurabilityOperation;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.enums.CastConditions;
+import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -73,6 +74,7 @@ public class AbilityCastHandler implements Listener
         	int cost = ability.cast(e);
         	if (cost < 0) return;
         	e.setCancelled(true);
+        	ObsParticles.playCastSigil(p, ability.getElementType());
         	EchoManager.modifyDurability(p, held, DurabilityOperation.SUBTRACT, cost, false);
         }
     }

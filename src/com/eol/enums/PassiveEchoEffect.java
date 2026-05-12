@@ -28,5 +28,6 @@ public enum PassiveEchoEffect
 	LUCKY,
 	
 	// Special Passives
-	HERESIO_ARMAMENT
+	HERESIO_ARMAMENT,
+	COSMO_ARMAMENT
 }

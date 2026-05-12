@@ -2,6 +2,7 @@ package com.eol.materia.components;
 
 
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
@@ -178,5 +179,22 @@ public class Catalysts
 				PrintUtils.color(ObsColors.HERESIO)+"&oFalric favored &lNetherite&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and &lString&r"+PrintUtils.color(ObsColors.HERESIO)+"&o bound weaponry.",
 				PrintUtils.color(ObsColors.HERESIO)+"&oMany heard of him however few who faced him lived to tell the tale."), new GeneralFalricStave().getInternalName());
 		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.COSMO)+"System Log 84",
+				"echo_of_axe84",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SEVEN,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.COSMO)+"[ Log 84 : Fantasia Simulation Integrity Analysis 1619:5:14-00:01:23 ]",
+				"&r&c&lERROR: "+PrintUtils.color(ObsColors.COSMO)+"&oRecent resets intercepted by suspect instance: "+PrintUtils.color(ObsColors.CELESTIO)+"&oLumina&r&f",
+				PrintUtils.color(ObsColors.COSMO)+"&ooverwrote to alias: &lThe Nihility&r"+PrintUtils.color(ObsColors.COSMO)+"&o - system resource enum in conflict.",
+				PrintUtils.color(ObsColors.COSMO)+"&oTheoretical resource consumption exceeding historic data shows signs of",
+				PrintUtils.color(ObsColors.COSMO)+"&ochronic, systemic memory influx: Simulative Paradoxes Unavoidable!",
+				PrintUtils.color(ObsColors.COSMO)+"&o&lCosmo"+PrintUtils.color(ObsColors.COSMO)+" &oelement flagged for emergency injection - dropping in now.",
+				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lAxe&r"+PrintUtils.color(ObsColors.COSMO)+"&o. Materia: &lNetherite"+PrintUtils.color(ObsColors.COSMO)+". "+PrintUtils.color(ObsColors.COSMO)+"&oAuxiliary binding: &lString&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
+				PrintUtils.color(ObsColors.COSMO)+"&oMalware Annihilation Protocol: &lAuthorized&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
+				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into "+Symbols.EOL+"choic object. Awaiting administrative orders.."), new Axe84().getInternalName());
 	}
 }

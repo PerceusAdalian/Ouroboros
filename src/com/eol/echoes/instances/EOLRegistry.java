@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
@@ -134,7 +135,8 @@ public final class EOLRegistry
            HammerOfNidus.class,
            Sword14.class,
            AxeOfBjorn.class,
-           GeneralFalricStave.class
+           GeneralFalricStave.class,
+           Axe84.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 

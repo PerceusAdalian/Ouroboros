@@ -85,11 +85,12 @@ public class ResolveEchoInteract
 	        {
 		        case EXPOSE -> CelestioEffects.addExposed(target, seconds);
 		        case BURNING -> InfernoEffects.addBurn(target, seconds);
+		        case POISONOUS -> EntityEffects.addErosion(target, 10);
 		        case SLOWING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 0, false);
 		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds, 0, false);
 		        case STUNNING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 99, false);
-		        case KNOCKBACK, POISONOUS, IGNORE_ARROW, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
-		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT -> { /* handled elsewhere */ }
+		        case KNOCKBACK, IGNORE_ARROW, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
+		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT, COSMO_ARMAMENT -> { /* handled elsewhere */ }
 	        }
 	    }
 	}
@@ -104,6 +105,7 @@ public class ResolveEchoInteract
 	public static Set<UUID> nightsight = new HashSet<>();
 	public static Set<UUID> vampire = new HashSet<>();
 	public static Set<UUID> heresio_armament = new HashSet<>();
+	public static Set<UUID> cosmo_armament = new HashSet<>();
 	
 	public static void resolveHeldEffects(PassiveModifier mod, Player p)
 	{
@@ -120,6 +122,7 @@ public class ResolveEchoInteract
 			case NIGHTSIGHT -> nightsight.add(uuid);
 			case VAMPIRE -> vampire.add(uuid);
 			case HERESIO_ARMAMENT -> heresio_armament.add(uuid);
+			case COSMO_ARMAMENT -> cosmo_armament.add(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}
@@ -139,6 +142,7 @@ public class ResolveEchoInteract
 			case NIGHTSIGHT -> nightsight.remove(uuid);
 			case VAMPIRE -> vampire.remove(uuid);
 			case HERESIO_ARMAMENT -> heresio_armament.remove(uuid);
+			case COSMO_ARMAMENT -> cosmo_armament.remove(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}

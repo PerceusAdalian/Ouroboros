@@ -328,7 +328,8 @@ public class Materia
 	        ItemStack source = contents[i];
 	        if (source == null || source.getType().isAir()) continue;
 	        if (!source.getItemMeta().getPersistentDataContainer().has(materiaTypeKey, PersistentDataType.STRING)) continue;
-
+	        if (!Materia.isUnrefined(source)) continue;
+	        
 	        String sourceType = source.getItemMeta().getPersistentDataContainer().get(materiaTypeKey, PersistentDataType.STRING);
 
 	        int maxStack = source.getMaxStackSize();
@@ -339,7 +340,7 @@ public class Materia
 	            ItemStack other = contents[j];
 	            if (other == null || other.getType().isAir()) continue;
 	            if (!other.getItemMeta().getPersistentDataContainer().has(materiaTypeKey, PersistentDataType.STRING)) continue;
-
+	            
 	            String otherType = other.getItemMeta().getPersistentDataContainer().get(materiaTypeKey, PersistentDataType.STRING);
 
 	            if (!sourceType.equals(otherType)) continue;
