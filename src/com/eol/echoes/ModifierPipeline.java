@@ -279,7 +279,8 @@ public final class ModifierPipeline
     private static final List<PassiveEchoEffect> RANGED_PASSIVES = Arrays.asList(
     		PassiveEchoEffect.IGNORE_ARROW,
     		PassiveEchoEffect.NIMBLE,
-    		PassiveEchoEffect.INFINITY
+    		PassiveEchoEffect.INFINITY,
+    		PassiveEchoEffect.RECYCLE_ARROWS
     );
     
     /** Passive effects for tool forms (HOE, SHOVEL, PICKAXE). */

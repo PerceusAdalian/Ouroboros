@@ -56,7 +56,7 @@ public class Explosion extends Spell
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.MASTER);
-				MobData.damageUnnaturally(p, le, 45, true, true, ElementType.BLAST);
+				MobData.damageUnnaturally(p, le, 45, true, true, ElementType.BLAST, null);
 			}, 10);
 			
 			if (doSecondExplosion)

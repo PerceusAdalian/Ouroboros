@@ -42,7 +42,7 @@ public class SandBlast extends Spell
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.5, 0.5, Particle.BLOCK_CRUMBLE, Material.SAND.createBlockData());
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.ASH, null);
 			
-			MobData.damageUnnaturally(p, le, 4, false, true, ElementType.GEO);
+			MobData.damageUnnaturally(p, le, 4, false, true, ElementType.GEO, null);
 			GeoEffects.addSanded(le, 20);
 			
 		})) return -1;

@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.enums.EchoForm;
@@ -41,7 +42,7 @@ public class Flamelash extends EchoAbility
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
 			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null);
 			
-			MobData.damageUnnaturally(p, target, 5, true, true, ElementType.SLASH);
+			MobData.damageUnnaturally(p, target, 5, true, true, ElementType.SLASH, EchoManager.getCodec(e.getItem()));
 			InfernoEffects.addBurn((LivingEntity) target, 10);
 			
 		})) return -1;

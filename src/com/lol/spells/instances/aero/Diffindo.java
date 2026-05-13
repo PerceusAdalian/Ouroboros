@@ -40,7 +40,7 @@ public class Diffindo extends Spell
 			if (!(target instanceof LivingEntity) || target == null) return;
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 3, 1, Particle.SWEEP_ATTACK, null);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.AMBIENT);
-			MobData.damageUnnaturally(p, target, target instanceof Player ? 15 : 45, true, true, ElementType.SEVER);
+			MobData.damageUnnaturally(p, target, target instanceof Player ? 15 : 45, true, true, ElementType.SEVER, null);
 		})) return -1;
 
 		return 150;

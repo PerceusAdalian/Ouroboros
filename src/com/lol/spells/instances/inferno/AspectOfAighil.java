@@ -96,7 +96,7 @@ public class AspectOfAighil extends Spell
 			{
 				if (target == null || !(target instanceof LivingEntity le) || (target instanceof Player)) return;
 				
-				MobData.damageUnnaturally(p, le, 40, true, true, ElementType.INFERNO);
+				MobData.damageUnnaturally(p, le, 40, true, true, ElementType.INFERNO, null);
 				InfernoEffects.addCharred(le, 20);
 			})) return -1;
 			

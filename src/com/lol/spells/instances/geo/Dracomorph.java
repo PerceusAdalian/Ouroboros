@@ -57,7 +57,7 @@ public class Dracomorph extends Spell
 			{
 				if (!(target instanceof LivingEntity le) || target instanceof Player) return;
 				
-				MobData.damageUnnaturally(p, le, 30, true, true, ElementType.GEO);
+				MobData.damageUnnaturally(p, le, 30, true, true, ElementType.GEO, null);
 				GeoEffects.addSanded(le, 30);
 				InfernoEffects.addCharred(le, 30);
 				ObsParticles.drawGeoCastSigil(le);

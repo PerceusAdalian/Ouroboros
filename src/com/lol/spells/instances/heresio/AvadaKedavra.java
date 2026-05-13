@@ -81,7 +81,7 @@ public class AvadaKedavra extends Spell
 		        if (le instanceof Player pTarget && wand.getElementType() == ElementType.HERESIO)
 		            pTarget.setHealth(0);
 		        else if (!(le instanceof Player))
-		            MobData.damageUnnaturally(p, le, damage, true, false, ElementType.HERESIO);
+		            MobData.damageUnnaturally(p, le, damage, true, false, ElementType.HERESIO, null);
 		        else
 		            PrintUtils.PrintToActionBar(p, "&cFizzle!");
 		    }, 20);

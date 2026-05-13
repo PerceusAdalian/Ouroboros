@@ -7,6 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.enums.EchoForm;
@@ -40,7 +41,7 @@ public class HeavySwing extends EchoAbility
 			EntityEffects.rushEntity(p, le, 1.3);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.MASTER);
 			ObsParticles.drawLandingDisc(le);
-			MobData.damageUnnaturally(p, le, 50, true, true, ElementType.BLUNT);
+			MobData.damageUnnaturally(p, le, 50, true, true, ElementType.BLUNT, EchoManager.getCodec(e.getItem()));
 		})) return -1;
 		
 		return 15;

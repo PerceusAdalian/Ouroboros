@@ -141,7 +141,7 @@ public class EchoManifestCodec
             {
                 m.addProperty("type",      "passive");
                 m.addProperty("condition", passive.condition().name());
-                m.addProperty("effectKey", passive.effectKey().toString());
+                m.addProperty("effectKey", passive.effectKey().name());
                 m.addProperty("magnitude", passive.magnitude());
             }
             mods.add(m);

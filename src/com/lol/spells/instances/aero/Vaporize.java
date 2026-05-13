@@ -60,7 +60,7 @@ public class Vaporize extends Spell
 					target.getWorld().strikeLightningEffect(target.getLocation());
 				}
 				
-				MobData.damageUnnaturally(p, target, target instanceof Player ? 18 : 100, true, true, ElementType.AERO);
+				MobData.damageUnnaturally(p, target, target instanceof Player ? 18 : 100, true, true, ElementType.AERO, null);
 				
 				if (!target.isDead() || MobData.getMob(target.getUniqueId()) != null)
 				{

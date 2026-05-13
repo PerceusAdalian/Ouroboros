@@ -64,7 +64,7 @@ public class GlacioEffects
 	            return;
 	        }
 	        ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 8, Particle.SNOWFLAKE, null);
-	        MobData.damageUnnaturally(p, target, finalMagnitude == 0 ? 1 : finalMagnitude, false, true, ElementType.GLACIO);
+	        MobData.damageUnnaturally(p, target, finalMagnitude == 0 ? 1 : finalMagnitude, false, true, ElementType.GLACIO, null);
 	    }, 20L, 20L);
 	    
 	    // Expiry cleanup

@@ -77,7 +77,7 @@ public class SolarExpanse extends Spell
 				EntityEffects.playSound(p, Sound.ITEM_SPEAR_LUNGE_3, SoundCategory.AMBIENT);
 				
 				if (data.isBreak())
-					MobData.damageUnnaturally(p, le, data.getHp(false) * .45, true, true, ElementType.CELESTIO);
+					MobData.damageUnnaturally(p, le, data.getHp(false) * .45, true, true, ElementType.CELESTIO, null);
 
 				cooldown.add(p.getUniqueId());
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> cooldown.remove(p.getUniqueId()), 200);
@@ -96,7 +96,7 @@ public class SolarExpanse extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_BREEZE_WIND_BURST, SoundCategory.AMBIENT);
 
 				CelestioEffects.addExposed(le, 20);
-				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.IMPALE);
+				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.IMPALE, null);
 			})) return -1;
 			return this.getManacost();
 		}

@@ -9,6 +9,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.eol.echoes.EchoManager;
@@ -44,12 +46,13 @@ public class Annihilate extends EchoAbility
 	@Override
 	public int cast(PlayerInteractEvent e)
 	{
-		Player p = e.getPlayer();
-		
-		if (!RayCastUtils.getEntity(p, 25, target ->
-		{
-			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
-			
+	    Player p = e.getPlayer();
+	    EquipmentSlot hand = e.getHand();
+
+	    if (!RayCastUtils.getEntity(p, 25, target ->
+	    {
+	        if (!(target instanceof LivingEntity le) || target instanceof Player) return;
+
 	        Location to = le.getLocation().clone();
 	        Vector dir = p.getLocation().getDirection().clone();
 
@@ -57,7 +60,7 @@ public class Annihilate extends EchoAbility
 	        double theta = ObsParticles.deriveDegreeTheta(p.getLocation(), to);
 	        ObsParticles.drawAngledArcLine(p.getLocation(), to, 0.6, 10, theta, 0.3, Particle.GLOW_SQUID_INK, null);
 	        ObsParticles.drawAngledArcLine(p.getLocation(), to, 0.6, 10, theta, 0.3, Particle.END_ROD, null);
-	        
+
 	        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
 	        {
 	            p.teleport(to);
@@ -67,23 +70,31 @@ public class Annihilate extends EchoAbility
 	            ObsParticles.drawLandingWave(le);
 
 	            MobData data = MobData.getMob(le.getUniqueId());
-	            EchoManifest codec = EchoManager.getCodec(e.getItem());
 	            
+	            ItemStack liveItem = p.getInventory().getItem(hand);
+	            if (liveItem == null) return;
+	            
+	            EchoManifest codec = EchoManager.getCodec(liveItem);
+
 	            double damage = codec.baseStats().getCritModifier() * (codec.baseStats().getAttack() * 3.5);
 	            boolean fatal = MobData.checkFatalDamage(data, damage);
-	            
-	            MobData.damageUnnaturally(p, le, damage, true, true, ElementType.COSMO);
-	            
+
+	            MobData.damageUnnaturally(p, le, damage, true, true, ElementType.COSMO, EchoManager.getCodec(e.getItem()));
+
 	            if (fatal)
 	            {
 	                ObsParticles.drawCosmoCastSigil(p);
 	                int refundDurability = (int) MobData.getOverflowFatalDamage(data, damage);
-	                Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-	                	EchoManager.modifyDurability(p, e.getItem(), DurabilityOperation.ADD, refundDurability, false),1);
+	                Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	                {
+	                    ItemStack itemAtWrite = p.getInventory().getItem(hand);
+	                    if (itemAtWrite == null) return;
+	                    EchoManager.modifyDurability(p, itemAtWrite, DurabilityOperation.ADD, refundDurability, false);
+	                }, 1);
 	            }
 	        }, 10);
-		})) return -1;
-		return 500;
+	    })) return -1;
+	    return 500;
 	}
 
 	@Override

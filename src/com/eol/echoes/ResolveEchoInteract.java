@@ -13,6 +13,8 @@ import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
 import com.eol.enums.CombatStat;
+import com.ouroboros.mobs.MobData;
+import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
@@ -77,25 +79,29 @@ public class ResolveEchoInteract
 
 	public static void resolvePassiveEffect(EchoManifest codec, Player p, LivingEntity target)
 	{
+		MobData data = MobData.getMob(target.getUniqueId());
 		for (Modifier mod : codec.getPassiveModifiers())
 	    {
 	        if (!mod.condition().satisfies(p, target, p.getWorld())) continue;
-	        int seconds = (int)(mod.getMagnitude() * 20);
+	        if (!Chance.of(mod.getMagnitude()*100)) continue;
+	        
+	        int seconds = 30;
 	        switch (((PassiveModifier) mod).effectKey())
 	        {
 		        case EXPOSE -> CelestioEffects.addExposed(target, seconds);
 		        case BURNING -> InfernoEffects.addBurn(target, seconds);
 		        case POISONOUS -> EntityEffects.addErosion(target, 10);
-		        case SLOWING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 0, false);
-		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds, 0, false);
-		        case STUNNING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds, 99, false);
-		        case KNOCKBACK, IGNORE_ARROW, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
+		        case SLOWING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 0, false);
+		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
+		        case STUNNING  -> data.setBreak();
+		        case KNOCKBACK, IGNORE_ARROW, RECYCLE_ARROWS, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
 		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT, COSMO_ARMAMENT -> { /* handled elsewhere */ }
 	        }
 	    }
 	}
 	
 	public static Set<UUID> ignore_arrow = new HashSet<>();
+	public static Set<UUID> recycle_arrows = new HashSet<>();
 	public static Set<UUID> increase_movement_speed = new HashSet<>();
 	public static Set<UUID> decrease_movement_speed = new HashSet<>();
 	public static Set<UUID> has_protected = new HashSet<>();
@@ -117,6 +123,7 @@ public class ResolveEchoInteract
 			case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.add(uuid);
 			case PROTECTIVE -> has_protected.add(uuid);
 			case IGNORE_ARROW -> ignore_arrow.add(uuid);
+			case RECYCLE_ARROWS -> recycle_arrows.add(uuid);
 			case NIMBLE -> has_nimble.add(uuid);
 			case INFINITY -> negate_arrow_consumption.add(uuid);
 			case NIGHTSIGHT -> nightsight.add(uuid);
@@ -137,6 +144,7 @@ public class ResolveEchoInteract
 			case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.remove(uuid);
 			case PROTECTIVE -> has_protected.remove(uuid);
 			case IGNORE_ARROW -> ignore_arrow.remove(uuid);
+			case RECYCLE_ARROWS -> recycle_arrows.remove(uuid);
 			case NIMBLE -> has_nimble.remove(uuid);
 			case INFINITY -> negate_arrow_consumption.remove(uuid);
 			case NIGHTSIGHT -> nightsight.remove(uuid);
@@ -145,6 +153,23 @@ public class ResolveEchoInteract
 			case COSMO_ARMAMENT -> cosmo_armament.remove(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
+	}
+	
+	public static void clearEffects(Player p)
+	{
+		UUID uuid = p.getUniqueId();
+	    ignore_arrow.remove(uuid);
+	    increase_movement_speed.remove(uuid);
+	    decrease_movement_speed.remove(uuid);
+	    has_protected.remove(uuid);
+	    has_lucky.remove(uuid);
+	    has_nimble.remove(uuid);
+	    negate_arrow_consumption.remove(uuid);
+	    nightsight.remove(uuid);
+	    vampire.remove(uuid);
+	    heresio_armament.remove(uuid);
+	    cosmo_armament.remove(uuid);
+	    recycle_arrows.remove(uuid);
 	}
 	
 	

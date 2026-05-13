@@ -54,7 +54,7 @@ public class RazorWind extends Spell
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.ENTITY_BREEZE_WHIRL, SoundCategory.AMBIENT);
-				MobData.damageUnnaturally(p, le, 20, true, false, ElementType.AERO);
+				MobData.damageUnnaturally(p, le, 20, true, false, ElementType.AERO, null);
 				EntityEffects.addErosion(le, 20);
 			}, 12);
 			

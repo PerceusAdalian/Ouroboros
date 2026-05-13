@@ -50,7 +50,7 @@ public class MagicMissile extends Spell
 				ObsParticles.drawAngledArcLine(p.getLocation(), target.getLocation(), 1.5, 5, ObsParticles.deriveDegreeTheta(p.getLocation(), target.getLocation()), 0.25, Particle.CLOUD, null);
 				ObsParticles.drawAngledArcLine(p.getLocation(), target.getLocation(), .9, 5, ObsParticles.deriveDegreeTheta(p.getLocation(), target.getLocation()), 0.1, Particle.END_ROD, null);
 			}
-			MobData.damageUnnaturally(p, le, target instanceof Player ? 2 : 10, target instanceof Player ? false : true, true, ElementType.CELESTIO);
+			MobData.damageUnnaturally(p, le, target instanceof Player ? 2 : 10, target instanceof Player ? false : true, true, ElementType.CELESTIO, null);
 		})) return -1;
 		
 		return 35;

@@ -70,13 +70,13 @@ public class Collapse extends Spell
 					ObsParticles.drawAngledArcLine(target.getLocation(), nTarget.getLocation(), 0.6, 10, deltaAngle, 0.5, Particle.GLOW_SQUID_INK, null);
 					
 					Vector pull = target.getLocation().toVector().subtract(nTarget.getLocation().toVector());
-					MobData.damageUnnaturally(p, nTarget, damageToNearby, true, true, ElementType.COSMO);
+					MobData.damageUnnaturally(p, nTarget, damageToNearby, true, true, ElementType.COSMO, null);
 					if (pull.lengthSquared() < 0.001) continue;
 					pull.normalize().multiply(4);
 					nTarget.setVelocity(pull);
 					count++;
 				}
-				MobData.damageUnnaturally(p, target, count / 4.0, true, true, ElementType.CRUSH);
+				MobData.damageUnnaturally(p, target, count / 4.0, true, true, ElementType.CRUSH, null);
 			}
 		}, 15);
 		

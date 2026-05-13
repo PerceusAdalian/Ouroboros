@@ -2,6 +2,7 @@ package com.eol.echoes.instances.geo;
 
 import java.util.List;
 
+import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.ActiveModifier;
@@ -28,6 +29,7 @@ public class HammerOfNidus extends AbstractEOL
 				EchoForm.HAMMER, 
 				ElementiumSlotType.GEO, 
 				buildModifiers(), 
+				new EchoData(200, 2.5, 0, 1.5, 2000, 2000),
 				new NidusPreservation().getInternalName(), 
 				"Thou who wouldst beckon the earth itself -- listen well.",
 				"My element, "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&7&o, is neither gift nor curse.",

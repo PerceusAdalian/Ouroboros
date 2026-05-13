@@ -2,6 +2,7 @@ package com.ouroboros.mobs.events;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -84,7 +85,15 @@ public class MobDeathEvent implements Listener
 			    int currentCatalystDrops = 0;
 			    boolean overrideDrops = false;
 			    
-			    if (e.getEntity().getKiller() instanceof Player p)
+			    Player p = null;
+			    if (le.getKiller() instanceof Player killer) p = killer;
+			    else if (le.hasMetadata("ouroboros_killer"))
+			    {
+			        UUID killerUUID = UUID.fromString(le.getMetadata("ouroboros_killer").get(0).asString());
+			        p = Bukkit.getPlayer(killerUUID);
+			        le.removeMetadata("ouroboros_killer", Ouroboros.instance);
+			    }
+			    if (p != null)
 			    {
 			    	if (PrismaOuroborealis.arcane_prisma_registry.contains(p.getUniqueId())) chanceBonus += 20;
 			    	PlayerData pData = PlayerData.getPlayer(p.getUniqueId());

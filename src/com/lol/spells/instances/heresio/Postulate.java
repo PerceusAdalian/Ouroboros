@@ -42,7 +42,7 @@ public class Postulate extends Spell
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.GLOW_SQUID_INK, null);
 			ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.WARPED_SPORE, null);
-			MobData.damageUnnaturally(p, le, 15, true, true, ElementType.HERESIO);
+			MobData.damageUnnaturally(p, le, 15, true, true, ElementType.HERESIO, null);
 		})) return -1;
 		
 		return 35;

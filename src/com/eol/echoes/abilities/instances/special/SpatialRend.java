@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.enums.EchoForm;
@@ -62,7 +63,7 @@ public class SpatialRend extends EchoAbility
 	            MobData data = MobData.getMob(le.getUniqueId());
 	            boolean fatal = data != null && (data.getHp(false) - 77 <= 0);
 
-	            MobData.damageUnnaturally(p, le, 77, true, true, ElementType.COSMO);
+	            MobData.damageUnnaturally(p, le, 77, true, true, ElementType.COSMO, EchoManager.getCodec(e.getItem()));
 
 	            if (!fatal)
 	            {

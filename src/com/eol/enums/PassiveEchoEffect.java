@@ -23,6 +23,7 @@ public enum PassiveEchoEffect
 	IGNORE_ARROW,
 	INFINITY,
 	NIMBLE,
+	RECYCLE_ARROWS,
 	
 	// Tool Passives
 	LUCKY,

@@ -90,9 +90,9 @@ public class BloodFolliedBlade extends EchoAbility
 					MobData data = MobData.getMob(le.getUniqueId());
 					boolean fatal = data != null && (data.getHp(false) - damage <= 0);
 					
-					MobData.damageUnnaturally(p, le, damage, true, true, ElementType.HERESIO);
+					MobData.damageUnnaturally(p, le, damage, true, true, ElementType.HERESIO, EchoManager.getCodec(e.getItem()));
 					HeresioEffects.addIntimidate(le, 0, 10);
-					MobData.damageUnnaturally(p, p, 2, false, false, null);
+					MobData.damageUnnaturally(p, p, 2, false, false, null, EchoManager.getCodec(e.getItem()));
 					if (fatal)
 					{
 						MortioEffects.addJinxStacks(p, 1);

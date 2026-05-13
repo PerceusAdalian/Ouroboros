@@ -53,7 +53,7 @@ public class Antimatter extends Spell
 				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 4, 10, 0.5, Particle.WARPED_SPORE, null);
 				if (data != null)
 				{
-					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, true, ElementType.COSMO);
+					MobData.damageUnnaturally(p, target, 3 + data.getHp(false) * 0.25, true, true, ElementType.COSMO, null);
 					CosmoEffects.addVoided((LivingEntity) target, 20);
 				}
 			}, 10);

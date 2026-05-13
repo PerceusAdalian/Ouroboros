@@ -106,9 +106,9 @@ public class AssertOrder extends Spell
 				ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 2, Particle.GUST_EMITTER_SMALL, null);
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER);
 				
-				e.setDamage(finalDamage * 0.5d); // Half incoming damage
-				MobData.damageUnnaturally(p, le, finalDamage * 1.35d, true, true, ElementType.CELESTIO); // Redirect it to the source entity
-				playersDamageMap.put(p.getUniqueId(), storedDamage + (finalDamage * 0.5d)); // Adds the damage for later healing
+				e.setDamage(finalDamage * 0.5d);
+				MobData.damageUnnaturally(p, le, finalDamage * 1.35d, true, true, ElementType.CELESTIO, null);
+				playersDamageMap.put(p.getUniqueId(), storedDamage + (finalDamage * 0.5d));
 			}
 		}, plugin);
 	}

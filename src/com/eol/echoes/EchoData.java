@@ -9,6 +9,14 @@ public class EchoData
     private final int    maxDurability;
     private final int    currentDurability;
 
+    /**
+     * @param attack
+     * @param attackRating
+     * @param critRate
+     * @param critModifier
+     * @param maxDurability
+     * @param currentDurability
+     */
     public EchoData(double attack, double attackRating, double critRate, double critModifier, int maxDurability, int currentDurability)
     {
         this.attack            = attack;

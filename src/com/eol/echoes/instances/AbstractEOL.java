@@ -20,7 +20,6 @@ import com.eol.echoes.EchoFormResolver;
 import com.eol.echoes.EchoLoreBuilder;
 import com.eol.echoes.EchoManifestCodec;
 import com.eol.echoes.MateriaTypeResolver;
-import com.eol.echoes.config.StatResolver;
 import com.eol.echoes.records.EOLRecipe;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
@@ -58,6 +57,7 @@ public abstract class AbstractEOL
     private final EchoForm form;
     private final ElementiumSlotType slotType;
     private final List<Modifier> modifiers;
+    private final EchoData echoData;
     private final String lockedAbilityKey;
     private final String[] description;
     private boolean isIntegrityArmament;
@@ -72,6 +72,7 @@ public abstract class AbstractEOL
             EchoForm form,
             ElementiumSlotType slotType,
             List<Modifier> modifiers,
+            EchoData echoData,
             @Nullable String lockedAbilityKey,
             String... description)
     {
@@ -81,6 +82,7 @@ public abstract class AbstractEOL
         this.recipe           	 = recipe;
         this.form                = form;
         this.slotType            = slotType;
+        this.echoData 			 = echoData;
         this.modifiers        	 = List.copyOf(modifiers);
         this.lockedAbilityKey 	 = lockedAbilityKey;
         this.description      	 = description;
@@ -100,18 +102,15 @@ public abstract class AbstractEOL
      * @param catalyst    The special catalyst Materia (rarity used as EOL rarity)
      * @return The forged EOL ItemStack, or null if stat resolution fails
      */
-    public final ItemStack forge(Materia catalyst, Materia base, Materia binding, Materia elementCore, boolean isIntegrityArmament)
+    public final ItemStack forge(Materia catalyst, Materia base, boolean isIntegrityArmament)
     {
-        EchoData stats = StatResolver.resolve(base, binding, catalyst.getRarity());
-        if (stats == null) return null;
-
         Rarity rarity = catalyst.getRarity();
         EchoMaterial echoMaterial = MateriaTypeResolver.toEchoMaterial(base.getMateriaType());
 
         EchoManifest manifest = new EchoManifest(
                 buildEchoId(catalyst),
                 rarity,
-                stats,
+                echoData,
                 modifiers,
                 slotType,
                 null,
@@ -242,5 +241,10 @@ public abstract class AbstractEOL
 	{
 		return isIntegrityArmament;
 	}
-    
+	
+	public EchoData getStats()
+	{
+		return echoData;
+	}
+	
 }

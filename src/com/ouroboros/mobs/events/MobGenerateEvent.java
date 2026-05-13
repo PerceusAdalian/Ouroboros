@@ -25,7 +25,7 @@ public class MobGenerateEvent implements Listener
 {
     public record SummonRequest(int level, String customName) {}
 	public static final Map<Location, SummonRequest> pendingSummons = new HashMap<>();
-	
+	public static boolean suppressSpawnInit = false;
     public static void register(JavaPlugin plugin)
     {
         Bukkit.getPluginManager().registerEvents(new Listener()
@@ -33,12 +33,14 @@ public class MobGenerateEvent implements Listener
             @EventHandler
             public void onSpawn(EntitySpawnEvent e)
             {
-                if (!Ouroboros.isActive())
+            	if (suppressSpawnInit) return;
+
+            	if (!Ouroboros.isActive())
                 {
                     e.setCancelled(true);
                     return;
                 }
-
+                
                 Entity entity = e.getEntity();
                 if (!(entity instanceof LivingEntity living) || entity instanceof ArmorStand) return;
 
@@ -61,11 +63,9 @@ public class MobGenerateEvent implements Listener
 
     private static void initializeNatural(LivingEntity entity)
     {
-        MobData.loadMobData(entity);
-        MobData data = MobData.getMob(entity.getUniqueId());
+        if (suppressSpawnInit) return;
+        MobData data = MobData.loadMobData(entity);
         if (data == null) return;
-
-        data.initialize(entity);
         MobNameplate.build(entity, false);
         setMaxHealth(entity);
     }
@@ -81,7 +81,7 @@ public class MobGenerateEvent implements Listener
         setMaxHealth(entity);
     }
 
-    private static void setMaxHealth(LivingEntity entity)
+    public static void setMaxHealth(LivingEntity entity)
     {
         var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
         att.setBaseValue(1023.9);

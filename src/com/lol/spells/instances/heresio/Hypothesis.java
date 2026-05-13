@@ -41,7 +41,7 @@ public class Hypothesis extends Spell
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.6, 3, -30, 1.5, Particle.GLOW_SQUID_INK, null);
 			ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 2, -210, 1.2, Particle.WITCH, null);
-			MobData.damageUnnaturally(p, le, 25, true, true, ElementType.HERESIO);
+			MobData.damageUnnaturally(p, le, 25, true, true, ElementType.HERESIO, null);
 		})) return -1;
 		
 		return 70;

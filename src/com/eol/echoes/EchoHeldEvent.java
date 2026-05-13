@@ -92,42 +92,30 @@ public class EchoHeldEvent
 			public void onItemPickup(EntityPickupItemEvent e)
 			{
 				if (!(e.getEntity() instanceof Player p)) return;
-				
 				ItemStack stack = e.getItem().getItemStack();
 				if (!EchoManager.isEcho(stack)) return;
 				
-				EchoManifest codec = EchoManager.getCodec(stack);
-				if(codec == null) return;
-				
-				for (Modifier mod : codec.getPassiveModifiers())
-				{
-					ResolveEchoInteract.resolveHeldEffects((PassiveModifier) mod, p);
-				}
+				Bukkit.getScheduler().runTaskLater(plugin, () ->
+			    {
+			        ItemStack held = p.getInventory().getItemInMainHand();
+			        if (!EchoManager.isEcho(held)) return;
+			        EchoManifest codec = EchoManager.getCodec(held);
+			        if (codec == null) return;
+			        for (Modifier mod : codec.getPassiveModifiers())
+			            ResolveEchoInteract.resolveHeldEffects((PassiveModifier) mod, p);
+			    }, 1L);
 			}
 			
 			@EventHandler
 			public void onQuit(PlayerQuitEvent e)
 			{
-			    clearHeldEffects(e.getPlayer());
+				ResolveEchoInteract.clearEffects(e.getPlayer());
 			}
 
 			@EventHandler
 			public void onDeath(PlayerDeathEvent e)
 			{
-			    clearHeldEffects(e.getEntity());
-			}
-
-			private void clearHeldEffects(Player p)
-			{
-			    UUID uuid = p.getUniqueId();
-			    ResolveEchoInteract.ignore_arrow.remove(uuid);
-			    ResolveEchoInteract.increase_movement_speed.remove(uuid);
-			    ResolveEchoInteract.decrease_movement_speed.remove(uuid);
-			    ResolveEchoInteract.has_protected.remove(uuid);
-			    ResolveEchoInteract.has_lucky.remove(uuid);
-			    ResolveEchoInteract.has_nimble.remove(uuid);
-			    ResolveEchoInteract.negate_arrow_consumption.remove(uuid);
-			    ResolveEchoInteract.nightsight.remove(uuid);
+				ResolveEchoInteract.clearEffects(e.getEntity());
 			}
 			
 		}, plugin);
@@ -156,7 +144,7 @@ public class EchoHeldEvent
 	            	EntityEffects.add(p, PotionEffectType.RESISTANCE, 100, 0, false);
 	            
 	            if (ResolveEchoInteract.nightsight.contains(uuid) && TimeUtils.checkTime(p.getWorld(), Timeframe.NIGHT))
-	            	EntityEffects.add(p, PotionEffectType.NIGHT_VISION, 100, 0, false);
+	            	EntityEffects.add(p, PotionEffectType.NIGHT_VISION, 400, 0, false);
 	            
 	        }
 	    }, 0, 20);

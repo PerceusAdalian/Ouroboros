@@ -57,7 +57,7 @@ public class Theorem extends Spell
 			{
 				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.GLOW_SQUID_INK, null);
 				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.WARPED_SPORE, null);
-				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.HERESIO);
+				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.HERESIO, null);
 				HeresioEffects.addIntimidate(le, 1, 30);
 			}, 5);
 		})) return -1;

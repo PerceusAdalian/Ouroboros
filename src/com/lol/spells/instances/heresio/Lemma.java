@@ -55,7 +55,7 @@ public class Lemma extends Spell
 				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.GLOW_SQUID_INK, null);
 				ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.WARPED_SPORE, null);
 				HeresioEffects.addIntimidate(le, 0, 20);
-				MobData.damageUnnaturally(p, le, 15, true, true, ElementType.HERESIO);
+				MobData.damageUnnaturally(p, le, 15, true, true, ElementType.HERESIO, null);
 			}, 4);
 		})) return -1;
 		

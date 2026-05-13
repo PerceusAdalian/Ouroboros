@@ -77,8 +77,8 @@ public class Ouroboros extends JavaPlugin
 		MobDeathEvent.register(instance);
 		MobDamageEvent.register(instance);
 		
-		MobManager.clearLegacyMobs();
 		MobManager.respawnAll();
+		MobManager.clearLegacyMobs();
 		MobNameplate.registerTaskHandler(instance);
 		MobManager.convertLegacyMobsTask(instance);
 		

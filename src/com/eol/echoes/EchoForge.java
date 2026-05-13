@@ -81,7 +81,7 @@ public final class EchoForge
         {
             AbstractEOL eol = EOLRegistry.resolveFromCatalyst(catalyst);
             if (eol != null && eol.getRecipe().matches(base, binding, elementCore))
-                return eol.forge(catalyst, base, binding, elementCore, eol.isIntegrityArmament());
+                return eol.forge(catalyst, base, eol.isIntegrityArmament());
             // Special catalyst present but recipe doesn't match — fall through to procedural
         }
  
@@ -113,7 +113,7 @@ public final class EchoForge
         {
             AbstractEOL eol = EOLRegistry.get(EOLRegistry.getEOLTarget(markedCatalystStack));
             if (eol != null && eol.getRecipe().matches(base, binding, elementCore))
-                return eol.forge(catalyst, base, binding, elementCore, eol.isIntegrityArmament());
+                return eol.forge(catalyst, base, eol.isIntegrityArmament());
         }
 
         return forge(catalyst, base, binding, elementCore);

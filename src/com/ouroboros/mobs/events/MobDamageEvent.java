@@ -78,8 +78,9 @@ public class MobDamageEvent implements Listener
 			        EchoData echoData = codec.baseStats();
 
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
-			        float charge = p.getAttackCooldown();
-			        dmg *= 0.1 + (0.9 * charge);
+			        
+//			        float charge = p.getAttackCooldown();
+//			        dmg *= 0.1 + (0.9 * charge);
 			        
 			        if (InfernoEffects.isImbuedPlayer.containsKey(p.getUniqueId()))
 			        {
@@ -130,10 +131,12 @@ public class MobDamageEvent implements Listener
 			        // Only intercept if they're actually holding a bow echo
 			        if (codec.echoForm() != EchoForm.BOW && codec.echoForm() != EchoForm.CROSSBOW) return;
 			        
-			        e.setCancelled(true); // cancel vanilla arrow damage
+			        e.setDamage(0);
 			        
 			        EchoData echoData = codec.baseStats();
 			        element = ElementType.PUNCTURE;
+			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
 			        
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
 			        
@@ -227,6 +230,10 @@ public class MobDamageEvent implements Listener
 			        data.save();
 			        e.setDamage(0);
 			        le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
+
+			        if (e instanceof EntityDamageByEntityEvent damageEvent && damageEvent.getDamager() instanceof Player killer)
+			            le.setMetadata("ouroboros_killer", new FixedMetadataValue(Ouroboros.instance, killer.getUniqueId().toString()));
+
 			        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
 			            le.damage(le.getHealth() + 1.0), 1L);
 			        return;

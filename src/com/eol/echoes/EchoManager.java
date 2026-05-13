@@ -7,20 +7,20 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -33,7 +33,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Vector;
 
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.EchoManifest;
@@ -53,7 +52,8 @@ import com.ouroboros.utils.entityeffects.EntityEffects;
 public class EchoManager 
 {
 	private static final Set<UUID> durabilityLock = new HashSet<>();
-
+	private static final NamespacedKey cancelArrow = new NamespacedKey(Ouroboros.instance, "cancel_arrow");
+	
 	public enum DurabilityOperation
 	{
 		SUBTRACT,
@@ -487,7 +487,6 @@ public class EchoManager
         	    }
         	}
         	
-        	@SuppressWarnings("null")
 			@EventHandler
         	public void onBowEchoShoot(EntityShootBowEvent e)
         	{
@@ -497,43 +496,57 @@ public class EchoManager
         	    EchoManifest codec = EchoManager.getCodec(e.getBow());
         	    if (codec == null) return;
 
+        	    PassiveModifier infinity = codec.getPassiveModifier(PassiveEchoEffect.INFINITY);
+        	    PassiveModifier ignoreArrow = codec.getPassiveModifier(PassiveEchoEffect.IGNORE_ARROW);
+        	    
         	    boolean shouldNegate = false;
-
         	    if (ResolveEchoInteract.negate_arrow_consumption.contains(p.getUniqueId()) 
-        	    	&& codec.containsPassiveModifier(PassiveEchoEffect.INFINITY))
-        	    {
-        	        shouldNegate = true;
-        	    }
+        	    	&& infinity != null && infinity.condition().satisfies(p, null, p.getWorld()))
+        	    		shouldNegate = true;
+
         	    else if (ResolveEchoInteract.ignore_arrow.contains(p.getUniqueId())
-        	        && codec.containsPassiveModifier(PassiveEchoEffect.IGNORE_ARROW))
+        	        && ignoreArrow != null && ignoreArrow.condition().satisfies(p, null, p.getWorld()))
         	    {
-        	        PassiveModifier mod = codec.getPassiveModifier(PassiveEchoEffect.IGNORE_ARROW);
-        	        if (mod != null && Chance.of(mod.magnitude() * 100))
+        	        if (Chance.of(ignoreArrow.magnitude() * 100))
         	            shouldNegate = true;
         	    }
 
         	    if (!shouldNegate) return;
 
-        	    e.setCancelled(true);
-
-        	    Arrow original = (Arrow) e.getProjectile();
-        	    Location spawnLoc = original.getLocation().clone();
-        	    Vector velocity = original.getVelocity().clone();
-        	    boolean critical = original.isCritical();
-        	    double damage = original.getDamage();
-        	    original.remove();
-
-        	    Arrow refired = p.getWorld().spawn(spawnLoc, Arrow.class);
-        	    refired.setVelocity(velocity);
-        	    refired.setShooter(p);
-        	    refired.setCritical(critical);
-        	    refired.setDamage(damage);
-        	    refired.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
-
-        	    if (e.getBow() != null) refired.setWeapon(e.getBow());
-
-        	    refired.getPersistentDataContainer().set(new NamespacedKey(Ouroboros.instance, "echo_refired"),PersistentDataType.BYTE,(byte) 1);
+        	    e.getProjectile().getPersistentDataContainer().set(cancelArrow, PersistentDataType.BYTE,(byte) 1);
         	}
+			
+			@EventHandler
+			public void onArrowHit(ProjectileHitEvent e)
+			{
+			    if (!(e.getEntity() instanceof Arrow arrow)) return;
+			    if (!(arrow.getShooter() instanceof Player p)) return;
+			    
+			    boolean hitMob = e.getHitEntity() instanceof LivingEntity;
+			    boolean hasArrowKey = arrow.getPersistentDataContainer().has(cancelArrow, PersistentDataType.BYTE);
+			    if (hitMob && hasArrowKey)
+			    {
+			        boolean refunded = false;
+			    	for (int i = 0; i < p.getInventory().getSize(); i++)
+			    	{
+			    	    ItemStack slot = p.getInventory().getItem(i);
+			    	    if (slot != null && slot.getType() == Material.ARROW)
+			    	    {
+			    	        slot.setAmount(slot.getAmount() + 1);
+			    	        refunded = true;
+			    	        break;
+			    	    }
+			    	}
+			    	
+			    	if (!refunded) p.getInventory().addItem(new ItemStack(Material.ARROW, 1));
+	        	    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> arrow.remove(), 10);
+			    }
+			    else
+			    {
+			    	if (ResolveEchoInteract.recycle_arrows.contains(p.getUniqueId())) return;
+			    	Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> arrow.remove(), 10);
+			    }
+			}
         	
         	@EventHandler
         	public void onVanillaItemCraft(CraftItemEvent e)

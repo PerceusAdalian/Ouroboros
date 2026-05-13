@@ -63,7 +63,7 @@ public class Corollary extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_WITHER_SHOOT, SoundCategory.AMBIENT);
 				ObsParticles.drawSpiralVortex(le.getLocation(), 45, 3, 0.1, Particle.GLOW_SQUID_INK, null);
 				ObsParticles.drawSpiralVortex(le.getLocation(), 30, 2, 0.1, Particle.WARPED_SPORE, null);
-				MobData.damageUnnaturally(p, le, 100, true, true, ElementType.HERESIO);
+				MobData.damageUnnaturally(p, le, 100, true, true, ElementType.HERESIO, null);
 				HeresioEffects.addIntimidate(le, 2, 30);				
 			}, 6);
 			

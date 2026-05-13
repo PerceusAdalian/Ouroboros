@@ -25,6 +25,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import com.eol.echoes.ResolveEchoInteract;
+import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.utils.LevelTable;
@@ -128,18 +130,29 @@ public class MobData
 	public static void convertLegacyMob(LivingEntity entity)
 	{
 	    UUID uuid = entity.getUniqueId();
-	    dataMap.remove(uuid);
+
+	    if (entity.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
+	    if (dataMap.containsKey(uuid)) return;
 
 	    File staleFile = new File(getDataFolder(), "mobs/data/" + uuid + ".yml");
 	    if (staleFile.exists()) staleFile.delete();
-	    MobData data = MobData.loadMobData(entity);
-	    if (data == null) return;
 
-	    MobNameplate.build(entity, true);
+	    MobData data = loadMobData(entity);
+	    if (data == null) return;
 
 	    var att = ((Attributable) entity).getAttribute(Attribute.MAX_HEALTH);
 	    att.setBaseValue(1023.9);
 	    ((Damageable) entity).setHealth(att.getBaseValue());
+
+	    MobNameplate.build(entity, true);
+	    
+	    if (Ouroboros.debug)
+	    {
+	        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oConvertLegacyMob&r&f -- &aOK&7 || &fMob: " +
+	            PrintUtils.getFancyEntityName(entity.getType()) +
+	            " &7|| &fLevel: &b" + data.getLevel() +
+	            " &7|| &aHP: &f" + data.getHp(false) + "&7/&f" + data.getHp(true));
+	    }
 	}
 	
 	public String serialize()
@@ -208,6 +221,41 @@ public class MobData
         mobData.save();
         
         return mobData;
+	}
+	
+	public static MobData rehydrate(LivingEntity entity, String serialized, Server server)
+	{
+	    MobData snapshot = deserialize(serialized, server);
+	    if (snapshot == null) return null;
+
+	    UUID uuid = entity.getUniqueId();
+	    File newFile = new File(getDataFolder(), "mobs/data/" + uuid + ".yml");
+	    YamlConfiguration newConfig = new YamlConfiguration();
+
+	    MobData data = new MobData(uuid, newFile, newConfig);
+	    data.setUUID(uuid);
+	    data.setName(snapshot.getName());
+	    data.setEntityType(snapshot.getEntityType());
+	    data.setLevel(snapshot.getLevel());
+	    data.setHp(snapshot.getHp(true),  true);
+	    data.setHp(snapshot.getHp(false), false);
+	    data.setArmor(snapshot.getArmor(true),  true);
+	    data.setArmor(snapshot.getArmor(false), false);
+	    data.setBreak(snapshot.isBreak());
+	    data.setLocation(entity.getLocation());
+
+	    String correctSerialized = data.serialize();
+	    entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, correctSerialized);
+	    entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, uuid.toString());
+
+	    dataMap.put(uuid, data);
+
+	    dataMap.remove(snapshot.uuid);
+	    File staleFile = new File(getDataFolder(), "mobs/data/" + snapshot.uuid + ".yml");
+	    if (staleFile.exists()) staleFile.delete();
+
+	    data.save();
+	    return data;
 	}
 	
 	public Location getLocation()
@@ -376,15 +424,13 @@ public class MobData
 	    setArmor(newArmor, false);
 
 	    if (getArmor(false) <= 0 || element == ElementType.IMPALE || element == ElementType.CRUSH)
-	    {
-	        setBreak();
-	    }
+	    	setBreak();
 
 	    save();
 	}
 	
 	@SuppressWarnings("null")
-	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element)
+	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element, @Nullable EchoManifest codec)
 	{
 		MobData data = MobData.getMob(target.getUniqueId());
 		
@@ -405,12 +451,17 @@ public class MobData
 
 			MobNameplate.update((LivingEntity) target);
 			
+			if (codec != null && player != null)
+	            ResolveEchoInteract.resolvePassiveEffect(codec, player, (LivingEntity) target);
+			
 			if (data.isDead()) 
 			{
 			    LivingEntity le = (LivingEntity) target;
 			    MobNameplate.remove(le);
 			    data.save();
 			    le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
+			    if (player != null) le.setMetadata("ouroboros_killer", new FixedMetadataValue(Ouroboros.instance, player.getUniqueId().toString()));
+			    
 			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
 			        le.damage(le.getHealth() + 1.0), 1L);
 			}
@@ -473,6 +524,8 @@ public class MobData
 	 */
 	public void setBreak()
 	{
+		if (getMob(uuid) == null) return;
+		
 		setArmor(0, false);
 	    setBreak(true);
 	    
@@ -483,7 +536,7 @@ public class MobData
 	    MobNameplate.update((LivingEntity) entity);
 	    EntityEffects.add((LivingEntity) entity, PotionEffectType.SLOWNESS, 300, 99, false);
 	    ObsParticles.drawDisc(entity.getLocation(), entity.getWidth(), 1, 7, 0.1, Particle.CRIMSON_SPORE, null);
-		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 8, Particle.SMOKE, null);
+		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 8, Particle.LARGE_SMOKE, null);
 		
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
 		{

@@ -244,7 +244,7 @@ public class SpellCastHandler implements Listener
         if (Ouroboros.debugSpells == true) cooldown = 20;
         if (OuroborosPrime.ouroboros_registry.contains(p.getUniqueId())) 
         {
-        	MobData.damageUnnaturally(p, p, wand.getCurrentMaxSpellSlots(), false, false, ElementType.PURE);
+        	MobData.damageUnnaturally(p, p, wand.getCurrentMaxSpellSlots(), false, false, ElementType.PURE, null);
         	cooldown = 5;
         }
         

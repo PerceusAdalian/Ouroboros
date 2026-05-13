@@ -42,7 +42,7 @@ public class Glacius extends Spell
 			if (target == null || !(target instanceof LivingEntity) || target instanceof Player) return;
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.2, 0.5, Particle.SNOWFLAKE, null);
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.7, 0.5, Particle.CRIT, null);
-			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.GLACIO);
+			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.GLACIO, null);
 			GlacioEffects.addFrosted((LivingEntity) target, 0, 10);
 		})) return -1;
 		return this.getManacost();

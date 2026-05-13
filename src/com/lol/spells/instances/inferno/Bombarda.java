@@ -74,7 +74,7 @@ public class Bombarda extends Spell
 			{
 				ObsParticles.drawDisc(target.getLocation(), target.getWidth(), 1, 4, 0.1, Particle.DUST_PLUME, null);
 				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
-				MobData.damageUnnaturally(p, target, damage, true, true, ElementType.INFERNO);
+				MobData.damageUnnaturally(p, target, damage, true, true, ElementType.INFERNO, null);
 			}
 			else target.getWorld().createExplosion(target.getLocation(), 3, false, false);
 		}, 14);

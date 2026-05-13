@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.enums.EchoForm;
@@ -43,7 +44,7 @@ public class Lunge extends EchoAbility
 			{				
 				EntityEffects.playSound(p, Sound.ITEM_SPEAR_LUNGE_1, SoundCategory.MASTER);
 				ObsParticles.drawLandingWave(le);
-				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.IMPALE);
+				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.IMPALE, EchoManager.getCodec(e.getItem()));
 			}, 10);
 		})) return -1;
 		

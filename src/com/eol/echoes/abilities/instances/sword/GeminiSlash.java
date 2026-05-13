@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.enums.EchoForm;
@@ -45,7 +46,7 @@ public class GeminiSlash extends EchoAbility
 			
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 1, 0.5, Particle.CLOUD, null);
 			EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.MASTER);
-			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.CELESTIO);
+			MobData.damageUnnaturally(p, target, 10, true, true, ElementType.CELESTIO, EchoManager.getCodec(e.getItem()));
 			CelestioEffects.addExposed(le, 300);
 		})) return -1;
 		return 30;

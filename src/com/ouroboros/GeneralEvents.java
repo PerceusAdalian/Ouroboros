@@ -162,7 +162,7 @@ public class GeneralEvents implements Listener
         		    if (GeoEffects.isBarbed.containsKey(p.getUniqueId()) && e.getDamageSource() instanceof LivingEntity le) // Mitigation on barbed
         		    {
         		        int barbedDamage = GeoEffects.isBarbed.get(p.getUniqueId());
-        		        MobData.damageUnnaturally(p, le, barbedDamage, false, true, ElementType.GEO);
+        		        MobData.damageUnnaturally(p, le, barbedDamage, false, true, ElementType.GEO, null);
         		        finalDamage = Math.max(0, finalDamage - barbedDamage);
         		    }
 

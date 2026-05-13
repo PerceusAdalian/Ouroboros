@@ -54,7 +54,7 @@ public class Confringo extends Spell
 			{
 				ObsParticles.drawInfernoCastSigil(le);
 				ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 6, Particle.FLAME, null);
-				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, true, false, ElementType.COMBUST);
+				MobData.damageUnnaturally(p, target, data != null ? data.getArmor(false) : 10, true, false, ElementType.COMBUST, null);
 				EntityEffects.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT);
 				InfernoEffects.addCharred(le, 20);
 			}, 15);

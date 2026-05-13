@@ -53,18 +53,18 @@ public class Scald extends Spell
 			if (EntityCategories.glacio_mobs.contains(le.getType()))
 			{
 			    p2 = Particle.FLAME;
-			    MobData.damageUnnaturally(p, le, 10, true, false, ElementType.INFERNO);
+			    MobData.damageUnnaturally(p, le, 10, true, false, ElementType.INFERNO, null);
 			    InfernoEffects.setMelt(le);
 			}
 			else if (EntityCategories.inferno_mobs.contains(le.getType()))
 			{
 			    p1 = Particle.FLAME;
-			    MobData.damageUnnaturally(p, le, 10, true, false, ElementType.GLACIO);
+			    MobData.damageUnnaturally(p, le, 10, true, false, ElementType.GLACIO, null);
 			    GlacioEffects.setQuench(le);
 			}
 			else
 			{
-			    MobData.damageUnnaturally(p, le, 5, true, false, ElementType.GLACIO);
+			    MobData.damageUnnaturally(p, le, 5, true, false, ElementType.GLACIO, null);
 			}
 
 			ObsParticles.drawLine(p.getLocation(), target.getLocation(), 0.4, 0.4, p1, null);

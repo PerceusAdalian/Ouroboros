@@ -2,6 +2,7 @@ package com.eol.echoes.instances.heresio;
 
 import java.util.List;
 
+import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.ActiveModifier;
@@ -28,6 +29,7 @@ public class GeneralFalricStave extends AbstractEOL
 				EchoForm.SWORD, 
 				ElementiumSlotType.HERESIO, 
 				buildModifiers(),
+				new EchoData(95, 4, .35, 3.5, 3500, 3500),
 				new BloodFolliedBlade().getInternalName(),
 				"Some dead guy:",
 				"\"Excuse me, but did that knight just use his own "+PrintUtils.color(ObsColors.HERESIO)+"&oblood&r&7&o to attack?",
@@ -44,9 +46,9 @@ public class GeneralFalricStave extends AbstractEOL
     		new ActiveModifier(WeaponModifierCondition.DURING_NIGHT, CombatStat.CRIT_RATE, 0.25, true, false),
     		new ActiveModifier(WeaponModifierCondition.DURING_NIGHT, CombatStat.CRIT_MODIFIER, 1.5, false, false),
     		new ActiveModifier(WeaponModifierCondition.OCCULTIC, CombatStat.ATTACK, -0.90, true, true),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.VAMPIRE, 0),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.HERESIO_ARMAMENT, 0),
-            new PassiveModifier(WeaponModifierCondition.DURING_NIGHT, PassiveEchoEffect.INCREASED_MOVEMENT_SPEED, 0));
+            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.VAMPIRE, 1),
+            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.HERESIO_ARMAMENT, 1),
+            new PassiveModifier(WeaponModifierCondition.DURING_NIGHT, PassiveEchoEffect.INCREASED_MOVEMENT_SPEED, 1));
     }
 	
 }

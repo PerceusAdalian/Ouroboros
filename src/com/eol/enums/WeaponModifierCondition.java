@@ -50,7 +50,7 @@ public enum WeaponModifierCondition
 	        // Generic
 	        case PVE     -> target != null && !(target instanceof Player);
 	        case PVP     -> target instanceof Player;
-	        case PASSIVE -> target == null;
+	        case PASSIVE -> true;
 
 	        // World
 	        case OVERWORLD    -> world.getEnvironment() == World.Environment.NORMAL;

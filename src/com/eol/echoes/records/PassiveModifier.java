@@ -60,7 +60,8 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case SLOWING  	 	  -> "Attacks Inflict Slowness";
             case FATIGUING   	  -> "Attacks Inflict Fatigue";
             case STUNNING      	  -> "Attacks Inflict Stun";
-            case IGNORE_ARROW     -> "Ignore Arrow Consumption: "+(int)(magnitude * 100) + "%";
+            case IGNORE_ARROW     -> "Optimized Quiver: "+(int)(magnitude * 100) + "%";
+            case RECYCLE_ARROWS   -> "Recyclable Arrows";
             case SET_ATTACK_RATE  -> "Atk Rate becomes " + magnitude;
             case INCREASED_MOVEMENT_SPEED  -> "Swift Footed";
             case DECREASED_MOVEMENT_SPEED  -> "Heavy Weapon";
@@ -68,7 +69,7 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case KNOCKBACK        -> "Increased Knockback";
             case LUCKY 			  -> "Increased Collection Luck";
             case NIMBLE           -> "Nimble Footed";
-            case INFINITY         -> "Infinity";
+            case INFINITY         -> "Optimized Quiver";
             case NIGHTSIGHT		  -> "Grants Nightvision";
             case VAMPIRE          -> "Vampiric Weapon";
             case HERESIO_ARMAMENT -> "Attacks Deal Heresio Damage";

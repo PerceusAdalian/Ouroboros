@@ -117,7 +117,7 @@ public class AspectOfLordran extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 				ObsParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.6, Particle.GLOW_SQUID_INK, null);
 				ObsParticles.drawCosLine(p.getLocation(), le.getLocation(), 0.4, Particle.BUBBLE_COLUMN_UP, null);
-				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.ARCANO);
+				MobData.damageUnnaturally(p, le, 25, true, true, ElementType.ARCANO, null);
 				return true;
 			}, e)) return 50;
 			
@@ -135,7 +135,7 @@ public class AspectOfLordran extends Spell
 				{
 					ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.7, 0.5, Particle.CRIT, null);
 					ObsParticles.drawLine(p.getLocation(), le.getLocation(), 0.4, 0.4, Particle.BUBBLE_COLUMN_UP, null);
-					MobData.damageUnnaturally(p, le, 35, true, true, ElementType.ARCANO);
+					MobData.damageUnnaturally(p, le, 35, true, true, ElementType.ARCANO, null);
 				}, 4);
 				return true;
 			}, e)) return 50;
@@ -151,7 +151,7 @@ public class AspectOfLordran extends Spell
 				ObsParticles.drawX(le.getLocation(), p.getEyeLocation().toVector(), 8.5, 0.8, 0.45, false, Particle.CRIT, null);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
-					MobData.damageUnnaturally(p, le, 20, true, true, ElementType.ARCANO);
+					MobData.damageUnnaturally(p, le, 20, true, true, ElementType.ARCANO, null);
 				}, 4);
 				return true;
 			}, e)) return 50;
@@ -164,7 +164,7 @@ public class AspectOfLordran extends Spell
 				EntityEffects.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.AMBIENT);
 				ObsParticles.drawSpiralVortex(le.getLocation(), 45, 3, 0.1, Particle.GLOW_SQUID_INK, null);
 				ObsParticles.drawSpiralVortex(le.getLocation(), 30, 2, 0.1, Particle.CRIT, null);
-				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.ARCANO);
+				MobData.damageUnnaturally(p, le, 50, true, true, ElementType.ARCANO, null);
 
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{

@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.enums.EchoForm;
@@ -48,7 +49,7 @@ public class Cleave extends EchoAbility
 			ObsParticles.drawX(target.getLocation(), p.getEyeLocation().getDirection(), 8, 0.5, 0.1, false, Particle.CRIMSON_SPORE, null);
 			ObsParticles.drawX(target.getLocation(), p.getEyeLocation().getDirection(), 6, 0.6, 0.4, false, Particle.ASH, null);
 			EntityEffects.playSound(p, Sound.ITEM_SPEAR_LUNGE_3, SoundCategory.MASTER);
-			MobData.damageUnnaturally(p, target, 30, true, true, ElementType.MORTIO);
+			MobData.damageUnnaturally(p, target, 30, true, true, ElementType.MORTIO, EchoManager.getCodec(e.getItem()));
 			MortioEffects.addDread(le, 300);
 		})) return -1;
 		

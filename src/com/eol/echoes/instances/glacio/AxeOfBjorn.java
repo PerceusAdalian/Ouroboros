@@ -2,6 +2,7 @@ package com.eol.echoes.instances.glacio;
 
 import java.util.List;
 
+import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.ActiveModifier;
@@ -27,7 +28,8 @@ public class AxeOfBjorn extends AbstractEOL
 				new EOLRecipe(MateriaType.DIAMOND, MateriaType.LEATHER, MateriaType.GLACIO), 
 				EchoForm.HATCHET, 
 				ElementiumSlotType.GLACIO, 
-				buildModifiers(), 
+				buildModifiers(),
+				new EchoData(75, 2.5, .40, 2.5, 3000, 3000), 
 				new BjornsGlaciate().getInternalName(), 
 				"Thou who takes up my axe -- hear me, and be not afraid.",
 				"My element, "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&7&o, is not the Cold of Death.",
