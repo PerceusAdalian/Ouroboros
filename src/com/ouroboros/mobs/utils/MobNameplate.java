@@ -16,19 +16,21 @@ import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 
-/**
- * @Documented newest itteration for mob health and identity display. Disregard ObsMobHealthbar.java
- * Further updates may delete the deprecated class; until then, please use this implementation.
- */
 public class MobNameplate
 {
 	public static final NamespacedKey customMob = new NamespacedKey(Ouroboros.instance, "customMobName");
-	
-	//Nameplate handler
-    public static void build(LivingEntity mob, boolean buildCustom)
+	private static final double NAMEPLATE_RANGE = 64.0;
+
+	public static void build(LivingEntity mob, boolean buildCustom)
     {
         MobData data = MobData.getMob(mob.getUniqueId());
-        if (data == null) return;
+        if (data == null)
+        {
+        	if (Ouroboros.debug)
+        		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oSpawnNameplate&r&f -- &cSKIPPED&f" +
+        			" &7(data null for UUID " + mob.getUniqueId() + ")");
+        	return;
+        }
 
         mob.setCustomNameVisible(true);
         if (mob.getPersistentDataContainer().has(customMob) && buildCustom)
@@ -70,7 +72,6 @@ public class MobNameplate
     	mob.setCustomNameVisible(true);
     }
 
-    // Nameplate builder
     private static String initialize(LivingEntity mob, MobData data)
     {
         return PrintUtils.ColorParser(
@@ -80,11 +81,8 @@ public class MobNameplate
     }
     
     /**
-     * @description: Initializes a custom mob nameplate with a chosen name.
-     * @param mob
-     * @param name : Chosen Name
-     * @param data
-     * @return
+     * Builds a nameplate with a chosen display name (for summoned/boss mobs).
+     * Writes the chosen name into PDC so it survives nameplate rebuilds.
      */
     private static String initialize(LivingEntity mob, String name, MobData data)
     {
@@ -93,10 +91,10 @@ public class MobNameplate
     	return PrintUtils.ColorParser(buildIdentitySegment(mob, data.getName(), data) + " &7| &f{" + 
         		buildHPSegment(data) + "&f} &7| &f{" + 
         		buildArmorSegment(data) + "&f}");
-    	
     }
 
-    // Segments
+	// ------------------------- Segment Builders -------------------------
+
     private static String buildIdentitySegment(LivingEntity mob, MobData data)
     {
     	String levelTag = " &eLv&f: &r&b&l" + data.getLevel();
@@ -104,13 +102,6 @@ public class MobNameplate
         return affinityTag + PrintUtils.getFancyEntityName(mob.getType()) + levelTag;
     }
     
-    /**
-     * 
-     * @param mob
-     * @param name takes in an optional name segment for custom mob building.
-     * @param data
-     * @return
-     */
     private static String buildIdentitySegment(LivingEntity mob, String name, MobData data)
     {
     	String levelTag = " &eLv&f: &r&b&l" + data.getLevel();
@@ -123,12 +114,8 @@ public class MobNameplate
         double current = data.getHp(false);
         double max = data.getHp(true);
         double ratio = (max <= 0) ? 0 : Math.min(1.0, current / max);
-
-        String bar = buildHPBarString(ratio, 10);
-
-        return "&c❤&r&f: " + bar;
+        return "&c❤&r&f: " + buildHPBarString(ratio, 10);
     }
-
 
     private static String buildArmorSegment(MobData data)
     {
@@ -136,20 +123,15 @@ public class MobNameplate
         double current = data.getArmor(false);
         double max = data.getArmor(true);
         double ratio = (max <= 0) ? 0 : Math.min(1.0, current / max);
-        
-        String bar = buildArmorBarString(ratio, 5);
-        
-        return "&6⛨&r&f: " + bar;
+        return "&6⛨&r&f: " + buildArmorBarString(ratio, 5);
     }
     
     private static String buildHPBarString(double ratio, int segments)
     {
     	int filled = Math.min(segments, Math.max(0, (int) Math.round(ratio * segments)));
     	int empty = segments - filled;
-    	
-    	String barColor  = ratio >= 0.6 ? "&a" : ratio >= 0.35 ? "&e" : "&c";
+    	String barColor   = ratio >= 0.6 ? "&a" : ratio >= 0.35 ? "&e" : "&c";
     	String emptyColor = ratio >= 0.6 ? "&2" : ratio >= 0.35 ? "&6" : "&4";
-    	
     	return barColor + "|".repeat(filled) + emptyColor + "|".repeat(empty);
     }
     
@@ -157,7 +139,6 @@ public class MobNameplate
     {
     	int filled = Math.min(segments, Math.max(0, (int) Math.round(ratio * segments)));
     	int empty = segments - filled;
-    	
     	return "&e" + "|".repeat(filled) + "&6" + "|".repeat(empty);
     }
     
@@ -173,14 +154,27 @@ public class MobNameplate
 		String affinityTag = "&r&f⊰" + PrintUtils.getElementTypeColor(EntityCategories.parseElementType(mob.getType())) + entityTierIcon + "&r&f⊱ ";
     	return affinityTag;
     }
+
+	// ------------------------- Visibility task -------------------------
     
+    /**
+     * Runs every 5 ticks. For each Ouroboros mob, finds the nearest player
+     * and shows/hides the nameplate based on whether that player has line-of-
+     * sight and the mob is within NAMEPLATE_RANGE blocks.
+     *
+     * DESIGN NOTE — nearest-player compromise:
+     *   Using a single player's perspective for global visibility is O(mobs)
+     *   per tick, which is cheap. The downside: if the nearest player is not
+     *   looking at the mob but another player is, the nameplate stays hidden
+     *   for everyone. This is acceptable for typical play and avoids the
+     *   O(mobs × players) cost of per-player metadata packets.
+     */
     public static void registerTaskHandler(Plugin plugin)
     {
     	Bukkit.getScheduler().runTaskTimer(plugin, ()->
     	{
     		for (World w : Bukkit.getWorlds())
     		{
-    			// Compromise: use the closest player's LOS to set global visibility
     			for (LivingEntity mob : w.getLivingEntities())
     			{
     			    if (mob instanceof Player) continue;
@@ -189,14 +183,19 @@ public class MobNameplate
 
     			    Player nearest = w.getPlayers().stream()
     			        .filter(p -> p.getWorld().equals(mob.getWorld()))
+    			        .filter(p -> p.getLocation().distanceSquared(mob.getLocation()) <= NAMEPLATE_RANGE * NAMEPLATE_RANGE)
     			        .min(Comparator.comparingDouble(p -> p.getLocation().distanceSquared(mob.getLocation())))
     			        .orElse(null);
 
-    			    if (nearest == null) continue;
-    			    mob.setCustomNameVisible(RayCastUtils.isMobVisible(nearest, mob, 35, 90));
+    			    if (nearest == null)
+    			    {
+    			    	mob.setCustomNameVisible(false);
+    			    	continue;
+    			    }
+
+    			    mob.setCustomNameVisible(RayCastUtils.isMobVisible(nearest, mob, NAMEPLATE_RANGE, 90));
     			}
     		}
     	}, 0L, 5L);
     }
-
 }

@@ -28,7 +28,7 @@ public class EchoRepairPage extends ObsGui
 	
 	public EchoRepairPage(Player player)
 	{
-		super(player, "Ability Equip Confirmation", 27, Set.of(10,13,16));
+		super(player, Symbols.EOL+"Repair Page", 27, Set.of(10,13,16));
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class EchoRepairPage extends ObsGui
 		GuiButton.button(Material.GRAY_STAINED_GLASS_PANE)
 		.setName("Place wand here")
 		.setLore("&r&fClick this panel with your &b&lEcho&r&f to repair it.",
-				"&r&cNote: Repairs cost 50 &6"+Symbols.SCRAP+"&f, and will automatically",
+				"&r&cNote&f: Repairs cost &l50 &r&6"+Symbols.SCRAP+"&f, and will automatically",
 				"&r&fconsume the amount once your &b&lEcho&r&f is placed here.")
 		.place(this, 13, e->
 		{

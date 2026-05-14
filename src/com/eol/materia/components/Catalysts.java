@@ -1,6 +1,7 @@
 package com.eol.materia.components;
 
 
+import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Sword14;
@@ -196,5 +197,23 @@ public class Catalysts
 				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lAxe&r"+PrintUtils.color(ObsColors.COSMO)+"&o. Materia: &lNetherite"+PrintUtils.color(ObsColors.COSMO)+". "+PrintUtils.color(ObsColors.COSMO)+"&oAuxiliary binding: &lString&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
 				PrintUtils.color(ObsColors.COSMO)+"&oMalware Annihilation Protocol: &lAuthorized&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
 				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into "+Symbols.EOL+"choic object. Awaiting administrative orders.."), new Axe84().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.AERO)+Symbols.EOL+"cho of Kelligir",
+				"echo_of_kelligir",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.AERO)+"&oFantasian Academy Dossier — Kelligir of Dundragard",
+				PrintUtils.color(ObsColors.AERO)+"&oClassification: &lAero"+PrintUtils.color(ObsColors.AERO)+"&o-Attuned Marksman | Origin: Dundragard Archipelago",
+				PrintUtils.color(ObsColors.AERO)+"&oKelligir was among the foremost hunters of the Dundragard Archipelago,",
+				PrintUtils.color(ObsColors.AERO)+"&odistinguished not by raw power, but by an almost ceremonial precision.",
+				PrintUtils.color(ObsColors.AERO)+"&oHe favoured compact &lShortbows"+PrintUtils.color(ObsColors.AERO)+"&o, believing larger draws introduced error —",
+				PrintUtils.color(ObsColors.AERO)+"&oa philosophy rooted in the Aero tenet: clarity of motion, clarity of mind.",
+				PrintUtils.color(ObsColors.AERO)+"&oHis &lbowstrings"+PrintUtils.color(ObsColors.AERO)+" &owere sourced exclusively from high-grade cordage,",
+				PrintUtils.color(ObsColors.AERO)+"&oand as fellow islanders regarded him with quiet reverence;",
+				PrintUtils.color(ObsColors.AERO)+"&ohis name became shorthand among them for a clean, uncontested kill."), new BowOfKelligir().getInternalName());
 	}
 }

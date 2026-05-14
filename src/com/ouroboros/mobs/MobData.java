@@ -100,7 +100,7 @@ public class MobData
 	    setBreak(false);
 	    setLocation(entity.getLocation());
 	    entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
-	    entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, uuid.toString()); // add this
+	    entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, uuid.toString());
 	    save();
 	}
 	
@@ -113,7 +113,7 @@ public class MobData
 		int armor = Math.min(1000, Math.max((int)(hp * 0.3), 10));
 	    
 		setUUID(uuid);
-		setName(customName);          // stored directly, nameplate reads this back
+		setName(customName);
 		setEntityType(entity.getType());
 		setLevel(level);
 		setHp(Math.ceil(hp), true);
@@ -123,6 +123,7 @@ public class MobData
 		setBreak(false);
 		setLocation(entity.getLocation());
 		entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, serialize());
+		entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, uuid.toString());
 		entity.getPersistentDataContainer().set(MobNameplate.customMob, PersistentDataType.STRING, customName);
 		save();
 	}
@@ -225,37 +226,68 @@ public class MobData
 	
 	public static MobData rehydrate(LivingEntity entity, String serialized, Server server)
 	{
-	    MobData snapshot = deserialize(serialized, server);
-	    if (snapshot == null) return null;
+		String[] segments = serialized.split("\\|");
+		if (segments.length != 10)
+		{
+			PrintUtils.OBSConsoleError("rehydrate: bad segment count (" + segments.length + ") for: " + serialized);
+			return null;
+		}
 
-	    UUID uuid = entity.getUniqueId();
-	    File newFile = new File(getDataFolder(), "mobs/data/" + uuid + ".yml");
-	    YamlConfiguration newConfig = new YamlConfiguration();
+		try
+		{
+			// Snapshot values from the serialized string (old entity's data)
+			EntityType eType   = EntityType.valueOf(segments[1].trim().toUpperCase().replace(" ", "_"));
+			String     name    = segments[2];
+			int        level   = Integer.parseInt(segments[3]);
+			double     baseHp  = Double.parseDouble(segments[4]);
+			double     currHp  = Double.parseDouble(segments[5]);
+			int        baseAr  = Integer.parseInt(segments[6]);
+			int        currAr  = Integer.parseInt(segments[7]);
+			boolean    broken  = Boolean.parseBoolean(segments[8]);
 
-	    MobData data = new MobData(uuid, newFile, newConfig);
-	    data.setUUID(uuid);
-	    data.setName(snapshot.getName());
-	    data.setEntityType(snapshot.getEntityType());
-	    data.setLevel(snapshot.getLevel());
-	    data.setHp(snapshot.getHp(true),  true);
-	    data.setHp(snapshot.getHp(false), false);
-	    data.setArmor(snapshot.getArmor(true),  true);
-	    data.setArmor(snapshot.getArmor(false), false);
-	    data.setBreak(snapshot.isBreak());
-	    data.setLocation(entity.getLocation());
+			// Use the NEW entity's UUID for everything going forward
+			UUID newUUID = entity.getUniqueId();
 
-	    String correctSerialized = data.serialize();
-	    entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, correctSerialized);
-	    entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, uuid.toString());
+			// Build data file under the new UUID path
+			File               newFile   = new File(getDataFolder(), "mobs/data/" + newUUID + ".yml");
+			YamlConfiguration  newConfig = new YamlConfiguration();
+			MobData            data      = new MobData(newUUID, newFile, newConfig);
 
-	    dataMap.put(uuid, data);
+			// Populate config from snapshot values
+			data.setUUID(newUUID);
+			data.setName(name);
+			data.setEntityType(eType);
+			data.setLevel(level);
+			data.setHp(baseHp, true);
+			data.setHp(currHp,  false);
+			data.setArmor(baseAr, true);
+			data.setArmor(currAr, false);
+			data.setBreak(broken);
+			data.setLocation(entity.getLocation()); // use actual spawn location
 
-	    dataMap.remove(snapshot.uuid);
-	    File staleFile = new File(getDataFolder(), "mobs/data/" + snapshot.uuid + ".yml");
-	    if (staleFile.exists()) staleFile.delete();
+			// Stamp PDC on the entity so getMob() and surveil work immediately
+			String correctSerialized = data.serialize();
+			entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, correctSerialized);
+			entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, newUUID.toString());
 
-	    data.save();
-	    return data;
+			// Register in dataMap and persist to disk
+			dataMap.put(newUUID, data);
+			data.save();
+
+			if (Ouroboros.debug)
+				PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oRehydrate&r&f -- &aOK&f" +
+					" &7|| UUID: &b" + newUUID +
+					" &7|| &fLv: &b" + level +
+					" &7|| HP: &a" + currHp + "&7/&f" + baseHp);
+
+			return data;
+		}
+		catch (Exception ex)
+		{
+			PrintUtils.OBSConsoleError("rehydrate: failed to parse serialized data: " + serialized);
+			ex.printStackTrace();
+			return null;
+		}
 	}
 	
 	public Location getLocation()
@@ -618,10 +650,26 @@ public class MobData
 	{
 		File mobDataFolder = new File(getDataFolder(), "mobs");
 		if (!mobDataFolder.exists()) mobDataFolder.mkdirs();
+		File mobDataSubFolder = new File(getDataFolder(), "mobs/data");
+		if (!mobDataSubFolder.exists()) mobDataSubFolder.mkdirs();
 	}
 	
 	public static File getDataFolder() 
 	{
 		return Ouroboros.instance.getDataFolder();
+	}
+
+	public String debugDump()
+	{
+		return "&7[MobData Dump]&f" +
+			"\n  UUID:    &b" + uuid +
+			"\n  Name:    &f" + getName() +
+			"\n  Type:    &f" + getEntityType() +
+			"\n  Level:   &b" + getLevel() +
+			"\n  HP:      &a" + getHp(false) + "&7/&f" + getHp(true) +
+			"\n  Armor:   &e" + getArmor(false) + "&7/&f" + getArmor(true) +
+			"\n  Break:   " + (isBreak() ? "&cTRUE" : "&aFALSE") +
+			"\n  In Map:  " + (dataMap.containsKey(uuid) ? "&aYES" : "&cNO") +
+			"\n  File:    " + (file.exists() ? "&aEXISTS" : "&cMISSING");
 	}
 }

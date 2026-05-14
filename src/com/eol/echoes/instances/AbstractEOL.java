@@ -74,7 +74,7 @@ public abstract class AbstractEOL
             List<Modifier> modifiers,
             EchoData echoData,
             @Nullable String lockedAbilityKey,
-            String... description)
+            @Nullable String... description)
     {
         this.displayName      	 = displayName;
         this.internalName        = internalName;

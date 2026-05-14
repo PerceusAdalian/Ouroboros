@@ -77,8 +77,8 @@ public class Ouroboros extends JavaPlugin
 		MobDeathEvent.register(instance);
 		MobDamageEvent.register(instance);
 		
-		MobManager.respawnAll();
 		MobManager.clearLegacyMobs();
+		MobManager.respawnAll();
 		MobNameplate.registerTaskHandler(instance);
 		MobManager.convertLegacyMobsTask(instance);
 		
@@ -147,6 +147,7 @@ public class Ouroboros extends JavaPlugin
 		PlayerData.saveAll();
 		MobData.saveAll();
 		MobManager.despawnAll();
+		MobManager.clearLegacyMobs();
 		PrintUtils.OBSConsolePrint("&fΩuroboros -- &b&oDisabling..");
 	}
 }

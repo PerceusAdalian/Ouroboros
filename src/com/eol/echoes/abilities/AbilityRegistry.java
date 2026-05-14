@@ -18,6 +18,7 @@ import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.eol.echoes.abilities.instances.special.Annihilate;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
+import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
@@ -43,7 +44,8 @@ public class AbilityRegistry
             SpatialRend.class,
             BjornsGlaciate.class,
             BloodFolliedBlade.class,
-            Annihilate.class);
+            Annihilate.class,
+            KelligirAeroMastery.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {
