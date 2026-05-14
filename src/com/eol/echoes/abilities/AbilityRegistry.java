@@ -21,6 +21,7 @@ import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
+import com.eol.echoes.abilities.instances.special.PlaguesPrimer;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
@@ -45,7 +46,8 @@ public class AbilityRegistry
             BjornsGlaciate.class,
             BloodFolliedBlade.class,
             Annihilate.class,
-            KelligirAeroMastery.class);
+            KelligirAeroMastery.class,
+            PlaguesPrimer.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

@@ -18,6 +18,7 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
+import com.eol.echoes.instances.mortio.Plague;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
 
@@ -138,7 +139,8 @@ public final class EOLRegistry
            AxeOfBjorn.class,
            GeneralFalricStave.class,
            Axe84.class,
-           BowOfKelligir.class
+           BowOfKelligir.class,
+           Plague.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 

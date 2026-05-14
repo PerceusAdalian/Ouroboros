@@ -8,6 +8,7 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
+import com.eol.echoes.instances.mortio.Plague;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
@@ -215,5 +216,25 @@ public class Catalysts
 				PrintUtils.color(ObsColors.AERO)+"&oHis &lbowstrings"+PrintUtils.color(ObsColors.AERO)+" &owere sourced exclusively from high-grade cordage,",
 				PrintUtils.color(ObsColors.AERO)+"&oand as fellow islanders regarded him with quiet reverence;",
 				PrintUtils.color(ObsColors.AERO)+"&ohis name became shorthand among them for a clean, uncontested kill."), new BowOfKelligir().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.MORTIO)+Symbols.EOL+"cho of The Plague",
+				"echo_of_plague",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.MORTIO)+"&oFantasian Academy Dossier — The Fantasian Plague",
+				PrintUtils.color(ObsColors.MORTIO)+"&oClassification: Epidemiological Incident | Status: Unresolved",
+				PrintUtils.color(ObsColors.MORTIO)+"&oOn an eve some decades ago, a viral contagion breached the walls of Fantasia Prime.",
+				PrintUtils.color(ObsColors.MORTIO)+"&oUnlike any pathogen documented in prior Academy archives, physicians were alerted",
+				PrintUtils.color(ObsColors.MORTIO)+"&oand began work in desperation, yet thousands perished before dawn. As official",
+				PrintUtils.color(ObsColors.MORTIO)+"containment measures began, it spread throughout "+PrintUtils.color(ObsColors.CELESTIO)+"&oHer Courtship"+PrintUtils.color(ObsColors.MORTIO)+"&o, lasting 23 days.",
+				PrintUtils.color(ObsColors.MORTIO)+"&oSome among "+PrintUtils.color(ObsColors.CELESTIO)+"&oThe Academy"+PrintUtils.color(ObsColors.MORTIO)+" suspected "+PrintUtils.color(ObsColors.HERESIO)+"&oAnti-Light Legion"+PrintUtils.color(ObsColors.MORTIO)+" &oinvolvement,",
+				PrintUtils.color(ObsColors.MORTIO)+"&othough this is merely speculative, no suspect was actually found and apprehended.",
+				PrintUtils.color(ObsColors.MORTIO)+"&o— Addendum: Certain accounts describe a &lCrossbow "+PrintUtils.color(ObsColors.MORTIO)+"&oof unusual construction,",
+				PrintUtils.color(ObsColors.MORTIO)+"&oits &lstring"+PrintUtils.color(ObsColors.MORTIO)+" &osewn in a manner consistent with &lMortian "+PrintUtils.color(ObsColors.MORTIO)+"&ocraft. Origin unverified."), new Plague().getInternalName());
+		
 	}
 }

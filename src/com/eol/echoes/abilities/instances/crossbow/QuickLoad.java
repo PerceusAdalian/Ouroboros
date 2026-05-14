@@ -1,6 +1,8 @@
 package com.eol.echoes.abilities.instances.crossbow;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -13,6 +15,7 @@ import com.eol.enums.EchoForm;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class QuickLoad extends EchoAbility
 {
@@ -28,12 +31,25 @@ public class QuickLoad extends EchoAbility
 	{
 		Player p = e.getPlayer();
 		ItemStack item = e.getItem();
-		if (item.getType() != Material.CROSSBOW) return -1;
+		if (!playAbilityEffect(p, item)) return -1;
+		return 0;
+	}
 
+	@Override
+	public int getFinalDurabilityCost() 
+	{
+		
+		return 0;
+	}
+	
+	public static boolean playAbilityEffect(Player p, ItemStack item)
+	{
+		if (item.getType() != Material.CROSSBOW) return false;
+		
 		CrossbowMeta meta = (CrossbowMeta) item.getItemMeta();
 		Inventory inv = p.getInventory();
 
-		if (!inv.contains(Material.ARROW)) return -1;
+		if (!inv.contains(Material.ARROW)) return false;
 		for (ItemStack itemStack : inv.getContents())
 		{
 		    if (itemStack == null || !itemStack.getType().equals(Material.ARROW)) continue;
@@ -46,16 +62,9 @@ public class QuickLoad extends EchoAbility
 		    meta.addChargedProjectile(projectile);
 		    break;
 		}
-
+		EntityEffects.playSound(p, Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, SoundCategory.AMBIENT);
 		item.setItemMeta(meta);
-		return 0;
-	}
-
-	@Override
-	public int getFinalDurabilityCost() 
-	{
-		
-		return 0;
+		return true;
 	}
 
 }

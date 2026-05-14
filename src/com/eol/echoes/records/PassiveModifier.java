@@ -54,12 +54,12 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
         // Simple key-to-display mapping. Extend as effects are added.
         return switch (effectKey)
         {
-            case EXPOSE           -> "Attacks Apply Expose";
-            case BURNING          -> "Attacks Inflict Burn";
-            case POISONOUS        -> "Attacks Are Corrosive";
-            case SLOWING  	 	  -> "Attacks Inflict Slowness";
-            case FATIGUING   	  -> "Attacks Inflict Fatigue";
-            case STUNNING      	  -> "Attacks Inflict Stun";
+            case EXPOSE           -> "Attacks Apply Expose: "+(int)(magnitude * 100) + "%";
+            case BURNING          -> "Attacks Inflict Burn: "+(int)(magnitude * 100) + "%";
+            case POISONOUS        -> "Attacks Are Corrosive: "+(int)(magnitude * 100) + "%";
+            case SLOWING  	 	  -> "Attacks Inflict Slowness: "+(int)(magnitude * 100) + "%";
+            case FATIGUING   	  -> "Attacks Inflict Fatigue: "+(int)(magnitude * 100) + "%";
+            case STUNNING      	  -> "Attacks Inflict Stun: "+(int)(magnitude * 100) + "%";
             case IGNORE_ARROW     -> "Optimized Quiver: "+(int)(magnitude * 100) + "%";
             case RECYCLE_ARROWS   -> "Recyclable Arrows";
             case SET_ATTACK_RATE  -> "Atk Rate becomes " + magnitude;
