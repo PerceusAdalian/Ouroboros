@@ -50,6 +50,8 @@ public class MobDamageEvent implements Listener
 			    if (!(target instanceof LivingEntity)) return;
 			    if (!target.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
 			    if (target.hasMetadata("ouroboros_dying")) return;
+			    if (MobData.isDying(target.getUniqueId())) return;
+
 			    MobData data = MobData.getMob(target.getUniqueId());
 			    if (data == null) return;
 
@@ -71,16 +73,19 @@ public class MobDamageEvent implements Listener
 			        }
 
 			        element = ResolveCombatElement.getFromMaterial(echo.getType());
-			        
-			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+
+			        if (ResolveEchoInteract.celestio_armament.contains(p.getUniqueId())) element = ElementType.CELESTIO;
+			        if (ResolveEchoInteract.mortio_armament.contains(p.getUniqueId())) element = ElementType.MORTIO;
+			        if (ResolveEchoInteract.inferno_armament.contains(p.getUniqueId())) element = ElementType.INFERNO;
+			        if (ResolveEchoInteract.glacio_armament.contains(p.getUniqueId())) element = ElementType.GLACIO;
+			        if (ResolveEchoInteract.aero_armament.contains(p.getUniqueId())) element = ElementType.AERO;
+			        if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
 			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
+			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
 			        
 			        EchoData echoData = codec.baseStats();
 
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
-			        
-//			        float charge = p.getAttackCooldown();
-//			        dmg *= 0.1 + (0.9 * charge);
 			        
 			        if (InfernoEffects.isImbuedPlayer.containsKey(p.getUniqueId()))
 			        {
@@ -128,15 +133,21 @@ public class MobDamageEvent implements Listener
 			        EchoManifest codec = EchoManager.getCodec(echo);
 			        if (codec == null) return;
 			        
-			        // Only intercept if they're actually holding a bow echo
 			        if (codec.echoForm() != EchoForm.BOW && codec.echoForm() != EchoForm.CROSSBOW) return;
 			        
 			        e.setDamage(0);
 			        
 			        EchoData echoData = codec.baseStats();
 			        element = ElementType.PUNCTURE;
-			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        
+			        if (ResolveEchoInteract.celestio_armament.contains(p.getUniqueId())) element = ElementType.CELESTIO;
+			        if (ResolveEchoInteract.mortio_armament.contains(p.getUniqueId())) element = ElementType.MORTIO;
+			        if (ResolveEchoInteract.inferno_armament.contains(p.getUniqueId())) element = ElementType.INFERNO;
+			        if (ResolveEchoInteract.glacio_armament.contains(p.getUniqueId())) element = ElementType.GLACIO;
+			        if (ResolveEchoInteract.aero_armament.contains(p.getUniqueId())) element = ElementType.AERO;
+			        if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
 			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
+			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
 			        
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
 			        
@@ -213,46 +224,47 @@ public class MobDamageEvent implements Listener
 					}
 				}
 				
-			    // --- Handle Nameplate Update, Data Saving, and Death Calls ---
-			    if (target.getCustomName() == null)
-			    {
-			        MobNameplate.build((LivingEntity) target, true);
-			        MobNameplate.update((LivingEntity) target);
-			    }
-			    else MobNameplate.update((LivingEntity) target);
+			    // --- Nameplate, Save, Death ---
 
 			    data.save();
+
+			    if (Ouroboros.debug) 
+			    {
+			    	String name = target.getCustomName();
+			    	PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
+			    			(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+
+			    			"\n                          &7&f- Damage Dealt: &c"+
+			    			dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
+			    			(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
+			    					data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
+			    			"\n                          &b&o> DamageType&r&f: "+element.getKey()+
+			    			"\n                          &b&o- Weakness Damage&r&f: "+(EntityCategories.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+			    			"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+			    			"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
+			    }
 
 			    if (data.isDead())
 			    {
 			        LivingEntity le = (LivingEntity) target;
-			        MobNameplate.remove(le);
 			        data.save();
 			        e.setDamage(0);
+
+			        MobData.dyingRegistry.add(le.getUniqueId());
 			        le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
 
 			        if (e instanceof EntityDamageByEntityEvent damageEvent && damageEvent.getDamager() instanceof Player killer)
 			            le.setMetadata("ouroboros_killer", new FixedMetadataValue(Ouroboros.instance, killer.getUniqueId().toString()));
 
-			        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
-			            le.damage(le.getHealth() + 1.0), 1L);
+			        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.damage(le.getHealth() + 1.0), 1L);
 			        return;
 			    }
 				
-				if (Ouroboros.debug) 
+				if (target.getCustomName() == null && !MobData.isDying(target.getUniqueId()))
 				{
-					String name = target.getCustomName();
-					PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 || &fMob: "+
-							(name!=null?name:PrintUtils.getFancyEntityName(data.getEntityType()))+
-							"\n                          &7&f- Damage Dealt: &c"+
-							dmg+"&7 || &aHP: &f"+data.getHp(false)+"&7/&f"+data.getHp(true)+
-							(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
-							data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
-							"\n                          &b&o> DamageType&r&f: "+element.getKey()+
-							"\n                          &b&o- Weakness Damage&r&f: "+(EntityCategories.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
-							"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
-							"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
+					MobNameplate.build((LivingEntity) target, true);
+					MobNameplate.update((LivingEntity) target);
 				}
+				else MobNameplate.update((LivingEntity) target);
 			}
 		}, plugin);
 	}

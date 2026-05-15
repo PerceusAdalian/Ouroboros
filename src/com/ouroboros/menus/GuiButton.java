@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.EchoAbility;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;

@@ -1,14 +1,11 @@
 package com.lol.spells.instances;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -26,14 +23,11 @@ import com.ouroboros.utils.PrintUtils;
 
 public abstract class Spell 
 {
-	private final File file;
-	private final YamlConfiguration config;
-	
 	private String name;
 	private String internalName;
 	private Material icon;
-	private SpellType sType;
-	private SpellementType eType;
+	private SpellType spellType;
+	private SpellementType spellementType;
 	private CastConditions castCondition;
 	private int manacost;
 	private double cooldown;
@@ -46,14 +40,31 @@ public abstract class Spell
 	public static final NamespacedKey LOLSPELLBOOK = new NamespacedKey(Ouroboros.instance, "lolspellbook");
 	public static final NamespacedKey LOLSPELLSHARD = new NamespacedKey(Ouroboros.instance, "lolspellshard");
 	
-	public Spell(String name, String internalName, Material icon, SpellType sType, SpellementType eType, CastConditions castCondition, Rarity spellTier, int manacost, double cooldown, 
-			boolean pvpCompatible, boolean wandOnly, String...spellDescription)
+	public enum SpellGenerateCondition
+	{
+		BOOK,
+		ICON,
+		SHARD;
+	}
+	
+	public Spell(String name, 
+			String internalName, 
+			Material icon, 
+			SpellType spellType, 
+			SpellementType spellementType, 
+			CastConditions castCondition, 
+			Rarity spellTier, 
+			int manacost, 
+			double cooldown, 
+			boolean pvpCompatible, 
+			boolean wandOnly, 
+			String...spellDescription)
 	{
 		this.name = name;
 		this.internalName = internalName;
 		this.icon = icon;
-		this.sType = sType;
-		this.eType = eType;
+		this.spellType = spellType;
+		this.spellementType = spellementType;
 		this.castCondition = castCondition;
 		this.spellTier = spellTier;
 		this.manacost = manacost;
@@ -61,60 +72,21 @@ public abstract class Spell
 		this.spellDescription = spellDescription;
 		this.pvpCompatible = pvpCompatible;
 		this.wandOnly = wandOnly;
-		
-		this.file = new File(getDataFolder(), "spells/"+internalName+".yml");
-		this.config = YamlConfiguration.loadConfiguration(file);
-		
-		if (!file.exists())
-		{
-			setInfo();
-			save();
-		}
-	}
-	
-	public void setInfo()
-	{
-		config.set("spell_name", name);
-		config.set("internal_name", internalName);
-		config.set("icon_material", icon.toString());
-		config.set("spell_type", sType.toString());
-		config.set("element_type", eType.name());
-		config.set("description", spellDescription);
-		config.set("manacost", manacost);
-		config.set("cooldown", cooldown);
-		config.set("pvpCompatible", pvpCompatible);
-	}
-	
-	public void save()
-	{
-		try
-		{
-			config.save(file);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public static File getDataFolder() 
-	{
-		return Ouroboros.instance.getDataFolder();
 	}
 	
 	public String getName() 
 	{
-		return config.getString("spell_name");
+		return name;
 	}
 	
 	public String getInternalName()
 	{
-		return config.getString("internal_name");
+		return internalName;
 	}
 
 	public Material getIcon() 
 	{
-		return Material.getMaterial(config.getString("icon_material"));
+		return icon;
 	}
 
 	public String getInternalNameAsID() 
@@ -129,12 +101,12 @@ public abstract class Spell
 	
 	public SpellementType getElementType() 
 	{
-		return SpellementType.fromString(config.getString("element_type"));
+		return spellementType;
 	}
 	
 	public SpellType getSpellType()
 	{
-		return SpellType.fromString(config.getString("spell_type"));
+		return spellType;
 	}
 
 	public CastConditions getCastCondition() 
@@ -144,12 +116,12 @@ public abstract class Spell
 
 	public int getManacost() 
 	{
-		return config.getInt("manacost");
+		return manacost;	
 	}
 
 	public double getCooldown() 
 	{
-		return config.getDouble("cooldown");
+		return cooldown;
 	}
 	
 	public Rarity getRarity()
@@ -196,8 +168,8 @@ public abstract class Spell
 		String displayName = switch(condition)
 		{
 			case ICON -> "&r&f" + name;
-			case BOOK -> "&b&lOld Spellbook&r&f: " + PrintUtils.getElementTypeColor(eType) + "&l" + name;
-			case SHARD -> PrintUtils.color(ObsColors.COSMO) + "&lSpell Shard&r&f: " + PrintUtils.getElementTypeColor(eType) + "&l" + name;
+			case BOOK -> "&b&lOld Spellbook&r&f: " + PrintUtils.getElementTypeColor(spellementType) + "&l" + name;
+			case SHARD -> PrintUtils.color(ObsColors.COSMO) + "&lSpell Shard&r&f: " + PrintUtils.getElementTypeColor(spellementType) + "&l" + name;
 		};
 		
 		meta.setDisplayName(PrintUtils.ColorParser(displayName));
@@ -208,7 +180,7 @@ public abstract class Spell
 		if (condition == SpellGenerateCondition.ICON)
 		{       
 			if (pvpCompatible) PrintUtils.assignPVPCompatible();
-			lore.add(PrintUtils.assignSpellType(sType));
+			lore.add(PrintUtils.assignSpellType(spellType));
 		    lore.add(PrintUtils.assignCastCondition(castCondition));
 		    lore.add("");        
 		    lore.add(PrintUtils.ColorParser("&r&f&oDescription: \n"));
@@ -276,9 +248,9 @@ public abstract class Spell
 		    // PAGE 3: Stats
 		    StringBuilder page3 = new StringBuilder();
 		    page3.append("§l§nSpell Details§r\n\n");
-		    String elementType = PrintUtils.assignElementType(eType).replace("&", "§").replace("§f", "§0");
+		    String elementType = PrintUtils.assignElementType(spellementType).replace("&", "§").replace("§f", "§0");
 		    page3.append(elementType).append("\n\n");
-		    page3.append(PrintUtils.assignSpellType(sType).replace("&", "§").replace("§f", "§0")).append("\n");		    
+		    page3.append(PrintUtils.assignSpellType(spellType).replace("&", "§").replace("§f", "§0")).append("\n");		    
 		    page3.append(PrintUtils.assignCastCondition(castCondition).replace("&", "§").replace("§f", "§0")).append("\n\n");
 		    page3.append("§9§lMana Cost§0: ").append(manacost).append("\n");
 		    page3.append("§0§lCooldown§0: ").append(cooldown).append(" second(s)");
@@ -304,8 +276,8 @@ public abstract class Spell
 				lore.add("");				
 				lore.add(PrintUtils.ColorParser("&r&f- Other Details:"));
 				if (pvpCompatible) lore.add(PrintUtils.assignPVPCompatible());
-				lore.add(PrintUtils.assignElementType(eType));
-				lore.add(PrintUtils.assignSpellType(sType));
+				lore.add(PrintUtils.assignElementType(spellementType));
+				lore.add(PrintUtils.assignSpellType(spellType));
 				lore.add(PrintUtils.assignCastCondition(castCondition));
 				lore.add("");
 			}
@@ -318,12 +290,5 @@ public abstract class Spell
 		stack.setItemMeta(meta);
 
 		return stack;
-	}
-	
-	public enum SpellGenerateCondition
-	{
-		BOOK,
-		ICON,
-		SHARD;
 	}
 }

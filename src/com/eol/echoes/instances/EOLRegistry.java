@@ -12,13 +12,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.cosmo.Axe84;
+import com.eol.echoes.instances.cosmo.Bow97;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
 import com.eol.echoes.instances.mortio.Plague;
+import com.eol.echoes.instances.mortio.ScytheOfBelial;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
 
@@ -140,7 +143,10 @@ public final class EOLRegistry
            GeneralFalricStave.class,
            Axe84.class,
            BowOfKelligir.class,
-           Plague.class
+           Plague.class,
+           Celestia.class,
+           ScytheOfBelial.class,
+           Bow97.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 

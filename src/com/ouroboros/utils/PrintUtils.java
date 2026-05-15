@@ -16,7 +16,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import com.eol.echoes.abilities.enums.AbilityType;
+import com.eol.echoes.abilities.AbilityType;
 import com.eol.enums.EchoForm;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;

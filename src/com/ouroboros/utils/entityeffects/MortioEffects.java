@@ -44,6 +44,21 @@ public class MortioEffects
 		EntityEffects.add(target, PotionEffectType.BLINDNESS, seconds * 20, 0, false);
 	}
 	
+	public static Set<UUID> hasHaze = new HashSet<>();
+	
+	public static void addHaze(LivingEntity target, int seconds)
+	{
+		UUID uuid = target.getUniqueId();
+		if (hasHaze.contains(uuid)) return;
+		hasHaze.add(uuid);
+		
+		ObsTimer.runWithCancel(Ouroboros.instance, (e) ->
+		{
+			if (MobData.isDying(uuid) || target.isDead() || target == null) e.cancel();
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.LARGE_SMOKE, null);
+		}, 20, seconds * 20);
+	}
+	
 	public static Map<UUID, Integer> nightShifted = new HashMap<>();
 	/*
 	  "&r&4Night-Shift &eEffect&f: Increased &b&oSpeed&r&f and &b&oStrength&r&f",

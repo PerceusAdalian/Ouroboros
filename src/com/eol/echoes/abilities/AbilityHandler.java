@@ -2,8 +2,6 @@ package com.eol.echoes.abilities;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.eol.echoes.abilities.instances.EchoAbility;
-
 public class AbilityHandler 
 {
     private final EchoAbility ability;

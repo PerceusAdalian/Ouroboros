@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 
 import com.eol.echoes.abilities.AbilityHandler;
 import com.eol.echoes.abilities.AbilityRegistry;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.EchoAbility;
 import com.lol.spells.SpellDataHandler;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;

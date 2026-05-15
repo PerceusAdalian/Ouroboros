@@ -94,17 +94,18 @@ public class Pneuma extends Spell
 				DivineFavorData data = CelestioEffects.divineFavorRegistry.get(p.getUniqueId());
 				int divineFavorStacks = data != null ? data.magnitude : 0;
 				
+				CelestioEffects.divineFavorRegistry.remove(p.getUniqueId());
+				p.removePotionEffect(PotionEffectType.ABSORPTION);
+				p.removePotionEffect(PotionEffectType.RESISTANCE);
+
 				if (!RayCastUtils.createHitBox(p, 6, 5, 30, entity -> 
 				{
-					if (!(entity instanceof LivingEntity)) return;
+					if (!(entity instanceof LivingEntity) || entity instanceof Player) return;
 					
 					MobData.damageUnnaturally(p, (LivingEntity) entity, (10 * divineFavorStacks) + 10, true, true, ElementType.CELESTIO, null);
 					CelestioEffects.addExposed((LivingEntity) entity, 30);
 				})) return;
-				
-				CelestioEffects.divineFavorRegistry.remove(p.getUniqueId());
-				p.removePotionEffect(PotionEffectType.ABSORPTION);
-				p.removePotionEffect(PotionEffectType.RESISTANCE);
+			
 			}, 15);
 			
 			if (Ouroboros.debug == false)

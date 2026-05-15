@@ -95,7 +95,8 @@ public class ResolveEchoInteract
 		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
 		        case STUNNING  -> data.setBreak();
 		        case KNOCKBACK, IGNORE_ARROW, RECYCLE_ARROWS, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
-		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT, COSMO_ARMAMENT -> { /* handled elsewhere */ }
+		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT, COSMO_ARMAMENT, CELESTIO_ARMAMENT,
+		        MORTIO_ARMAMENT, GEO_ARMAMENT, GLACIO_ARMAMENT, AERO_ARMAMENT, INFERNO_ARMAMENT -> { /* handled elsewhere */ }
 	        }
 	    }
 	}
@@ -110,8 +111,14 @@ public class ResolveEchoInteract
 	public static Set<UUID> negate_arrow_consumption = new HashSet<>();
 	public static Set<UUID> nightsight = new HashSet<>();
 	public static Set<UUID> vampire = new HashSet<>();
-	public static Set<UUID> heresio_armament = new HashSet<>();
+	public static Set<UUID> celestio_armament = new HashSet<>();
+	public static Set<UUID> mortio_armament = new HashSet<>();
+	public static Set<UUID> inferno_armament = new HashSet<>();
+	public static Set<UUID> glacio_armament = new HashSet<>();
+	public static Set<UUID> aero_armament = new HashSet<>();
+	public static Set<UUID> geo_armament = new HashSet<>();
 	public static Set<UUID> cosmo_armament = new HashSet<>();
+	public static Set<UUID> heresio_armament = new HashSet<>();
 	
 	public static void resolveHeldEffects(PassiveModifier mod, Player p)
 	{
@@ -128,8 +135,14 @@ public class ResolveEchoInteract
 			case INFINITY -> negate_arrow_consumption.add(uuid);
 			case NIGHTSIGHT -> nightsight.add(uuid);
 			case VAMPIRE -> vampire.add(uuid);
-			case HERESIO_ARMAMENT -> heresio_armament.add(uuid);
+			case CELESTIO_ARMAMENT -> celestio_armament.add(uuid);
+			case MORTIO_ARMAMENT -> mortio_armament.add(uuid);
+			case INFERNO_ARMAMENT -> inferno_armament.add(uuid);
+			case GLACIO_ARMAMENT -> glacio_armament.add(uuid);
+			case GEO_ARMAMENT -> geo_armament.add(uuid);
+			case AERO_ARMAMENT -> aero_armament.add(uuid);
 			case COSMO_ARMAMENT -> cosmo_armament.add(uuid);
+			case HERESIO_ARMAMENT -> heresio_armament.add(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}
@@ -149,8 +162,14 @@ public class ResolveEchoInteract
 			case INFINITY -> negate_arrow_consumption.remove(uuid);
 			case NIGHTSIGHT -> nightsight.remove(uuid);
 			case VAMPIRE -> vampire.remove(uuid);
-			case HERESIO_ARMAMENT -> heresio_armament.remove(uuid);
+			case CELESTIO_ARMAMENT -> celestio_armament.remove(uuid);
+			case MORTIO_ARMAMENT -> mortio_armament.remove(uuid);
+			case INFERNO_ARMAMENT -> inferno_armament.remove(uuid);
+			case GLACIO_ARMAMENT -> glacio_armament.remove(uuid);
+			case GEO_ARMAMENT -> geo_armament.remove(uuid);
+			case AERO_ARMAMENT -> aero_armament.remove(uuid);
 			case COSMO_ARMAMENT -> cosmo_armament.remove(uuid);
+			case HERESIO_ARMAMENT -> heresio_armament.remove(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}
@@ -159,17 +178,23 @@ public class ResolveEchoInteract
 	{
 		UUID uuid = p.getUniqueId();
 	    ignore_arrow.remove(uuid);
+	    recycle_arrows.remove(uuid);
+	    negate_arrow_consumption.remove(uuid);
 	    increase_movement_speed.remove(uuid);
 	    decrease_movement_speed.remove(uuid);
 	    has_protected.remove(uuid);
 	    has_lucky.remove(uuid);
 	    has_nimble.remove(uuid);
-	    negate_arrow_consumption.remove(uuid);
 	    nightsight.remove(uuid);
 	    vampire.remove(uuid);
-	    heresio_armament.remove(uuid);
-	    cosmo_armament.remove(uuid);
-	    recycle_arrows.remove(uuid);
+		celestio_armament.remove(uuid);
+		mortio_armament.remove(uuid);
+		inferno_armament.remove(uuid);
+		glacio_armament.remove(uuid);
+		geo_armament.remove(uuid);
+		aero_armament.remove(uuid);
+		cosmo_armament.remove(uuid);
+		heresio_armament.remove(uuid);
 	}
 	
 	

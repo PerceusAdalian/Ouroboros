@@ -1,4 +1,4 @@
-package com.eol.echoes.abilities.enums;
+package com.eol.echoes.abilities;
 
 public enum AbilityType 
 {

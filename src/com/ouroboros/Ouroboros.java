@@ -7,6 +7,7 @@ import com.eol.echoes.EchoHeldEvent;
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.AbilityCastHandler;
 import com.eol.echoes.abilities.AbilityRegistry;
+import com.eol.echoes.abilities.instances.special.MarkedForDeath;
 import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.instances.EOLRegistry;
 import com.eol.materia.Materia;
@@ -115,6 +116,7 @@ public class Ouroboros extends JavaPlugin
 		Warp.registerSpellHelper(instance);
 		Fly.registerSpellHelper(instance);
 		Sigil.registerSpellHelper(instance);
+		MarkedForDeath.registerAbilityHelper(instance);
 		
 		MateriaCastHandler.register(instance);
 		Catalysts.load();

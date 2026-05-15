@@ -18,7 +18,6 @@ import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.EchoManifestCodec;
 import com.eol.echoes.EchoManager.DurabilityOperation;
-import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.utils.ObsParticles;

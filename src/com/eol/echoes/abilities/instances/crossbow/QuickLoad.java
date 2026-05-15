@@ -9,8 +9,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CrossbowMeta;
 
-import com.eol.echoes.abilities.enums.AbilityType;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.AbilityType;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.enums.EchoForm;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;

@@ -2,8 +2,11 @@ package com.ouroboros.mobs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -44,6 +47,7 @@ import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.GeoEffects;
 import com.ouroboros.utils.entityeffects.HeresioEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
+import com.ouroboros.utils.entityeffects.MortioEffects;
 
 public class MobData 
 {
@@ -52,6 +56,7 @@ public class MobData
 	private final YamlConfiguration config;
 
 	private static final Map<UUID, MobData> dataMap = new HashMap<>();
+	public static final Set<UUID> dyingRegistry = Collections.synchronizedSet(new HashSet<>());
 
 	public MobData(LivingEntity entity) 
 	{
@@ -76,6 +81,11 @@ public class MobData
 	public static MobData getMob(UUID uuid) 
 	{
 		return dataMap.get(uuid);
+	}
+
+	public static boolean isDying(UUID uuid)
+	{
+		return dyingRegistry.contains(uuid);
 	}
 	
 	public void initialize(LivingEntity entity)
@@ -131,7 +141,7 @@ public class MobData
 	public static void convertLegacyMob(LivingEntity entity)
 	{
 	    UUID uuid = entity.getUniqueId();
-
+	    if (isDying(uuid)) return;
 	    if (entity.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY, PersistentDataType.STRING)) return;
 	    if (dataMap.containsKey(uuid)) return;
 
@@ -172,16 +182,13 @@ public class MobData
 			   loc.getX() + "," + 
 			   loc.getY() + "," +
 			   loc.getZ();
-			   
 	}
 	
 	public static MobData deserialize(String data, Server server)
 	{
-		//Parse segments
 		String[] segments = data.split("\\|");
 		if (segments.length != 10) return null;
 		
-		//Data IDs
 		UUID uuid = UUID.fromString(segments[0]);
 		EntityType eType = EntityType.valueOf(segments[1].trim().toUpperCase().replace(" ", "_"));
 		String name = segments[2];
@@ -192,7 +199,6 @@ public class MobData
 		int currentArmor = Integer.parseInt(segments[7]);
 		boolean isBroken = Boolean.parseBoolean(segments[8]);
 		
-		//Loc IDs
 		String[] locSegments = segments[9].split(",");
 		World world = server.getWorld(locSegments[0]);
 		double x = Double.parseDouble(locSegments[1]);
@@ -200,12 +206,10 @@ public class MobData
         double z = Double.parseDouble(locSegments[3]);
         Location loc = new Location(world,x,y,z);
         
-        //Generate new MobData file and reconstruct the config
         File mobFile = new File(getDataFolder(), "mobs/data/"+uuid+".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(mobFile);
         MobData mobData = new MobData(uuid, mobFile, config);
         
-        //Setting the data in their config from the deserialization
         mobData.setUUID(uuid);
         mobData.setName(name);
         mobData.setEntityType(eType);
@@ -217,7 +221,6 @@ public class MobData
         mobData.setBreak(isBroken);
         mobData.setLocation(loc);
         
-        //Load the mob into the data map, and save their file
         dataMap.put(uuid, mobData);
         mobData.save();
         
@@ -235,7 +238,6 @@ public class MobData
 
 		try
 		{
-			// Snapshot values from the serialized string (old entity's data)
 			EntityType eType   = EntityType.valueOf(segments[1].trim().toUpperCase().replace(" ", "_"));
 			String     name    = segments[2];
 			int        level   = Integer.parseInt(segments[3]);
@@ -245,15 +247,12 @@ public class MobData
 			int        currAr  = Integer.parseInt(segments[7]);
 			boolean    broken  = Boolean.parseBoolean(segments[8]);
 
-			// Use the NEW entity's UUID for everything going forward
 			UUID newUUID = entity.getUniqueId();
 
-			// Build data file under the new UUID path
-			File               newFile   = new File(getDataFolder(), "mobs/data/" + newUUID + ".yml");
-			YamlConfiguration  newConfig = new YamlConfiguration();
-			MobData            data      = new MobData(newUUID, newFile, newConfig);
+			File              newFile   = new File(getDataFolder(), "mobs/data/" + newUUID + ".yml");
+			YamlConfiguration newConfig = new YamlConfiguration();
+			MobData           data      = new MobData(newUUID, newFile, newConfig);
 
-			// Populate config from snapshot values
 			data.setUUID(newUUID);
 			data.setName(name);
 			data.setEntityType(eType);
@@ -263,14 +262,12 @@ public class MobData
 			data.setArmor(baseAr, true);
 			data.setArmor(currAr, false);
 			data.setBreak(broken);
-			data.setLocation(entity.getLocation()); // use actual spawn location
+			data.setLocation(entity.getLocation());
 
-			// Stamp PDC on the entity so getMob() and surveil work immediately
 			String correctSerialized = data.serialize();
 			entity.getPersistentDataContainer().set(MobManager.MOB_DATA_KEY, PersistentDataType.STRING, correctSerialized);
 			entity.getPersistentDataContainer().set(MobManager.MOB_UUID_KEY, PersistentDataType.STRING, newUUID.toString());
 
-			// Register in dataMap and persist to disk
 			dataMap.put(newUUID, data);
 			data.save();
 
@@ -329,7 +326,6 @@ public class MobData
 	
 	public ElementType getAffinity(boolean getWeakness)
 	{
-		
 		return getWeakness ? ElementType.valueOf(config.getString("mob.affinity")) : ElementType.valueOf(config.getString("mob.affinity.weakness"));
 	}
 	
@@ -378,11 +374,6 @@ public class MobData
 		config.set(path, value);
 	}
 	
-	/**
-	 * @param value
-	 * @param damageArmor
-	 * @param element
-	 */
 	public void damage(double value, boolean damageArmor, @Nullable ElementType element)
 	{
 		MobData data = MobData.getMob(uuid);
@@ -390,21 +381,21 @@ public class MobData
 		
 		if (element == null) element = ElementType.PURE;
 		
+		if (CelestioEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
+		if (InfernoEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.25;
+		if (AeroEffects.hasShock.contains(uuid) && element == ElementType.AERO) value *= 1.25;
+		if (HeresioEffects.isIntimidated.contains(uuid) && element == ElementType.HERESIO) value *= 1.20;
+		if (MortioEffects.hasHaze.contains(uuid) && element == ElementType.MORTIO) value *= 1.25;
+		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
+		if (GeoEffects.hasVulnerable.contains(uuid) && ElementType.physical.contains(element)) value *= 1.5;
+		
 		if (!CosmoEffects.isVoidedRegistry.containsKey(uuid))
 		{
 			if (EntityCategories.parseUniversalImmunity(entity, element)) value = 0;
 			else if (EntityCategories.parseUniversalResistance(entity, element)) value *= 0.5;
 			else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
 		}
-		
-		//Damage Bonuses From Effects
-		if (CelestioEffects.hasHumility.contains(uuid) && element == ElementType.CELESTIO) value *= 1.15;
-		if (InfernoEffects.hasCharred.contains(uuid) && element == ElementType.INFERNO) value *= 1.25;
-		if (AeroEffects.hasShock.contains(uuid) && element == ElementType.AERO) value *= 1.25;
-		if (HeresioEffects.isIntimidated.contains(uuid) && element == ElementType.HERESIO) value *= 1.20;
-		if (ArcanoEffects.hasEtherOverload.contains(uuid) && ElementType.elemental.contains(element)) value *= 1.5;
-		if (GeoEffects.hasVulnerable.contains(uuid) && ElementType.physical.contains(element)) value *= 1.5;
-		
+
 		if (element == ElementType.SLASH && data.isBreak()) value *= 1.5;
 		if (element == ElementType.SEVER && data.isBreak()) value *= 2;
 		
@@ -433,8 +424,7 @@ public class MobData
 	
 	public void healArmor(double value, boolean setMax)
 	{
-		if (isBreak()) 
-			setBreak(false);
+		if (isBreak()) setBreak(false);
 		setArmor(setMax ? getArmor(true) : (getArmor(false) + (int) value), false);
 		Entity entity = Bukkit.getEntity(uuid);
 		MobNameplate.update((LivingEntity) entity);
@@ -479,24 +469,10 @@ public class MobData
 			else 
 				data.damage(value, true, element);
 			
-			data.save();
-
-			MobNameplate.update((LivingEntity) target);
-			
 			if (codec != null && player != null)
-	            ResolveEchoInteract.resolvePassiveEffect(codec, player, (LivingEntity) target);
-			
-			if (data.isDead()) 
-			{
-			    LivingEntity le = (LivingEntity) target;
-			    MobNameplate.remove(le);
-			    data.save();
-			    le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
-			    if (player != null) le.setMetadata("ouroboros_killer", new FixedMetadataValue(Ouroboros.instance, player.getUniqueId().toString()));
-			    
-			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
-			        le.damage(le.getHealth() + 1.0), 1L);
-			}
+				ResolveEchoInteract.resolvePassiveEffect(codec, player, (LivingEntity) target);
+
+			data.save();
 		}
 
 		((LivingEntity) target).playHurtAnimation(0);
@@ -524,16 +500,38 @@ public class MobData
 					"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
 					"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 		}
+
+		if (data.isDead()) 
+		{
+			LivingEntity le = (LivingEntity) target;
+			MobNameplate.remove(le);
+			data.save();
+			
+			dyingRegistry.add(le.getUniqueId());
+			
+			le.setMetadata("ouroboros_dying", new FixedMetadataValue(Ouroboros.instance, true));
+			if (player != null) le.setMetadata("ouroboros_killer", new FixedMetadataValue(Ouroboros.instance, player.getUniqueId().toString()));
+			le.setHealth(0);
+			return value;
+		}
+
+		if (target.getCustomName() == null && !MobData.isDying(target.getUniqueId()))
+		{
+			MobNameplate.build((LivingEntity) target, true);
+			MobNameplate.update((LivingEntity) target);
+		}
+		else MobNameplate.update((LivingEntity) target);
 		
 		return value;
 	}
 	
 	public void kill()
 	{
+		dyingRegistry.add(uuid);
 		damage(getHp(false), false, ElementType.PURE);
 		Entity entity = Bukkit.getEntity(uuid);
 		LivingEntity le = (LivingEntity) entity;
-		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> le.setHealth(0), 5L);
+		le.setHealth(0);
 		MobNameplate.remove(le);
 		deleteFile();
 	}
@@ -543,17 +541,11 @@ public class MobData
 		return config.getBoolean("mob.broken_status");
 	}
 	
-	/**
-	 * @param bool Sets the status break in the config of the mob.
-	 */
 	public void setBreak(boolean bool) 
 	{
 		config.set("mob.broken_status", bool);
 	}
 	
-	/**
-	 * @return Sets the mob's break status and depletes the mob's AR, directly causing a break. 
-	 */
 	public void setBreak()
 	{
 		if (getMob(uuid) == null) return;
@@ -621,6 +613,7 @@ public class MobData
 	public static MobData loadMobData(LivingEntity entity) 
 	{
 		UUID uuid = entity.getUniqueId();
+		if (isDying(uuid)) return null;
 		if (!dataMap.containsKey(uuid)) dataMap.put(uuid, new MobData(entity));
 		return dataMap.get(uuid);
 	}
@@ -669,6 +662,7 @@ public class MobData
 			"\n  HP:      &a" + getHp(false) + "&7/&f" + getHp(true) +
 			"\n  Armor:   &e" + getArmor(false) + "&7/&f" + getArmor(true) +
 			"\n  Break:   " + (isBreak() ? "&cTRUE" : "&aFALSE") +
+			"\n  Dying:   " + (dyingRegistry.contains(uuid) ? "&cTRUE" : "&aFALSE") +
 			"\n  In Map:  " + (dataMap.containsKey(uuid) ? "&aYES" : "&cNO") +
 			"\n  File:    " + (file.exists() ? "&aEXISTS" : "&cMISSING");
 	}

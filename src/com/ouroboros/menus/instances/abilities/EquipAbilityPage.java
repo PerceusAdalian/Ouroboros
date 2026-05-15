@@ -15,7 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.EchoManifestCodec;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.enums.ElementType;

@@ -1,4 +1,4 @@
-package com.eol.echoes.abilities.instances;
+package com.eol.echoes.abilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.eol.echoes.abilities.AbilityRegistry;
-import com.eol.echoes.abilities.enums.AbilityType;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;

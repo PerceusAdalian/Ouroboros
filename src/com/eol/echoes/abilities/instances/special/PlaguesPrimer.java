@@ -9,8 +9,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.eol.echoes.abilities.enums.AbilityType;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.AbilityType;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.echoes.abilities.instances.crossbow.QuickLoad;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;

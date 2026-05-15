@@ -15,8 +15,8 @@ import org.bukkit.util.Vector;
 
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.EchoManager.DurabilityOperation;
-import com.eol.echoes.abilities.enums.AbilityType;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.AbilityType;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
@@ -42,7 +42,7 @@ public class Annihilate extends EchoAbility
 				"&r&fIf the target dies, &arestore &b&oDurability&r&f by the difference in negative &cHP&f.","",
 				"&r&3Voided &eEffect&f: Neutralizes elemental affinity.");
 	}
-	// TODO : Fix adding durability
+	
 	@Override
 	public int cast(PlayerInteractEvent e)
 	{

@@ -3,7 +3,7 @@ package com.eol.echoes;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.records.ActiveModifier;
 import com.eol.echoes.records.EchoManifest;
@@ -47,7 +47,7 @@ public final class EchoLoreBuilder
     public static List<String> build(EchoManifest manifest, EchoMaterial echoMaterial)
     {
         List<String> lore = new ArrayList<>();
-        boolean isBow = echoMaterial == EchoMaterial.BOW;
+        boolean isBow = echoMaterial == EchoMaterial.BOW || echoMaterial == EchoMaterial.CROSSBOW;
         
         MaterialStatRange range = EchoConfig.get().getMaterialStats(echoMaterial);
  
@@ -60,7 +60,7 @@ public final class EchoLoreBuilder
  
         EchoData stats = manifest.baseStats();
         
-        lore.add(statLine(isBow ? "Puncture Damage" : "Attack Damage",
+        lore.add(statLine(isBow ? "Ranged Damage" : "Attack Damage",
                 rollQualityColor(stats.getAttack(), range.baseAttackMin(), range.baseAttackMax())
                 + formatStat(stats.getAttack(), false)));
  

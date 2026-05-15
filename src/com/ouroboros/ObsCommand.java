@@ -30,7 +30,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.EchoForge;
 import com.eol.echoes.abilities.AbilityRegistry;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
@@ -557,6 +557,13 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				}
 				InventoryUtils.add(p, echo);
 				PrintUtils.OBSFormatDebug(p, "Echo Generated Successfully!", "Echo Generation");
+			}
+			
+			if (args[1].equals("debugtarget"))
+			{
+				ItemStack echo = EchoForge.forge(Materia.get("echo_of_bow97").getAsItemStack(), Materia.get("bow_limb_1"), Materia.get("string_1"), Materia.get("cosmo_core"));
+				InventoryUtils.add(p, echo);
+				return true;
 			}
 			
 		}

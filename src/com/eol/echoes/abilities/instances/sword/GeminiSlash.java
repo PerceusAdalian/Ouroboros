@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.eol.echoes.EchoManager;
-import com.eol.echoes.abilities.enums.AbilityType;
-import com.eol.echoes.abilities.instances.EchoAbility;
+import com.eol.echoes.abilities.AbilityType;
+import com.eol.echoes.abilities.EchoAbility;
 import com.eol.enums.EchoForm;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;

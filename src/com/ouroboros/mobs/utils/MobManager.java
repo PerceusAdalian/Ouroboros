@@ -251,6 +251,7 @@ public class MobManager
 	                {
 	                    if (!(e instanceof LivingEntity mob) || e instanceof Player) continue;
 	                    if (MobData.getMob(mob.getUniqueId()) != null) continue;
+	                    if (MobData.isDying(mob.getUniqueId())) continue;
 	                    
 	                    if (mob.getPersistentDataContainer().has(MOB_DATA_KEY, PersistentDataType.STRING))
 	                    {

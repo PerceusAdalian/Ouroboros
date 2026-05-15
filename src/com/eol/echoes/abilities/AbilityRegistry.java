@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eol.echoes.abilities.instances.EchoAbility;
 import com.eol.echoes.abilities.instances.armament.Riptide;
 import com.eol.echoes.abilities.instances.bow.Launch;
 import com.eol.echoes.abilities.instances.crossbow.QuickLoad;
@@ -19,9 +18,12 @@ import com.eol.echoes.abilities.instances.special.Annihilate;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
+import com.eol.echoes.abilities.instances.special.LuminasRadiance;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
+import com.eol.echoes.abilities.instances.special.MarkedForDeath;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
 import com.eol.echoes.abilities.instances.special.PlaguesPrimer;
+import com.eol.echoes.abilities.instances.special.SpatialDistortion;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
@@ -47,7 +49,10 @@ public class AbilityRegistry
             BloodFolliedBlade.class,
             Annihilate.class,
             KelligirAeroMastery.class,
-            PlaguesPrimer.class);
+            PlaguesPrimer.class,
+            LuminasRadiance.class,
+            MarkedForDeath.class,
+            SpatialDistortion.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

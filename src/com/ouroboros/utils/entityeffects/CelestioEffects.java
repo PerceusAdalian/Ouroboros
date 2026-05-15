@@ -77,9 +77,9 @@ public class CelestioEffects
 	 * @Description Ward Effect: grants Absorption, Fire Resistance, and Resistance&r&f equal to the magnitude of Ward.
 	 * 
 	 */
-	public static void addWard(Player target, int magnitude, int seconds)
+	public static boolean addWard(Player target, int magnitude, int seconds)
 	{
-		if (hasWard.contains(target.getUniqueId())) return;
+		if (hasWard.contains(target.getUniqueId())) return false;
 		hasWard.add(target.getUniqueId());
 		
 		EntityEffects.add(target, PotionEffectType.ABSORPTION, seconds * 20, magnitude, false);
@@ -92,6 +92,7 @@ public class CelestioEffects
 			PrintUtils.PrintToActionBar(target, "&e&oWard&r&7&o wore off..");
 			hasWard.remove(target.getUniqueId());
 		}, seconds * 20);
+		return true;
 	}
 	
 	public static Map<UUID, DivineFavorData> divineFavorRegistry = new HashMap<>();

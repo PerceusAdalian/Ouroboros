@@ -54,26 +54,32 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
         // Simple key-to-display mapping. Extend as effects are added.
         return switch (effectKey)
         {
-            case EXPOSE           -> "Attacks Apply Expose: "+(int)(magnitude * 100) + "%";
-            case BURNING          -> "Attacks Inflict Burn: "+(int)(magnitude * 100) + "%";
-            case POISONOUS        -> "Attacks Are Corrosive: "+(int)(magnitude * 100) + "%";
-            case SLOWING  	 	  -> "Attacks Inflict Slowness: "+(int)(magnitude * 100) + "%";
-            case FATIGUING   	  -> "Attacks Inflict Fatigue: "+(int)(magnitude * 100) + "%";
-            case STUNNING      	  -> "Attacks Inflict Stun: "+(int)(magnitude * 100) + "%";
-            case IGNORE_ARROW     -> "Optimized Quiver: "+(int)(magnitude * 100) + "%";
-            case RECYCLE_ARROWS   -> "Recyclable Arrows";
-            case SET_ATTACK_RATE  -> "Atk Rate becomes " + magnitude;
+            case EXPOSE            		   -> "Attacks Apply Expose: "+(int)(magnitude * 100) + "%";
+            case BURNING           		   -> "Attacks Inflict Burn: "+(int)(magnitude * 100) + "%";
+            case POISONOUS         		   -> "Attacks Apply Erosion: "+(int)(magnitude * 100) + "%";
+            case SLOWING  	 	           -> "Attacks Inflict Slowness: "+(int)(magnitude * 100) + "%";
+            case FATIGUING   	           -> "Attacks Inflict Fatigue: "+(int)(magnitude * 100) + "%";
+            case STUNNING      	           -> "Attacks Inflict Stun: "+(int)(magnitude * 100) + "%";
+            case IGNORE_ARROW              -> "Optimized Quiver: "+(int)(magnitude * 100) + "%";
+            case RECYCLE_ARROWS            -> "Recyclable Arrows";
+            case SET_ATTACK_RATE           -> "Atk Rate becomes " + magnitude;
             case INCREASED_MOVEMENT_SPEED  -> "Swift Footed";
             case DECREASED_MOVEMENT_SPEED  -> "Heavy Weapon";
-            case PROTECTIVE	      -> "Protective Armament";
-            case KNOCKBACK        -> "Increased Knockback";
-            case LUCKY 			  -> "Increased Collection Luck";
-            case NIMBLE           -> "Nimble Footed";
-            case INFINITY         -> "Optimized Quiver";
-            case NIGHTSIGHT		  -> "Grants Nightvision";
-            case VAMPIRE          -> "Vampiric Weapon";
-            case HERESIO_ARMAMENT -> "Attacks Deal Heresio Damage";
-            case COSMO_ARMAMENT   -> "Attacks Deal Cosmo Damage";
+            case PROTECTIVE	               -> "Protective Armament";
+            case KNOCKBACK                 -> "Increased Knockback";
+            case LUCKY 			           -> "Increased Collection Luck";
+            case NIMBLE                    -> "Nimble Footed";
+            case INFINITY                  -> "Optimized Quiver";
+            case NIGHTSIGHT		           -> "Grants Nightvision";
+            case VAMPIRE                   -> "Vampiric Attacks";
+            case HERESIO_ARMAMENT          -> "Heresian Armament";
+            case COSMO_ARMAMENT            -> "Cosmic Armament";
+            case CELESTIO_ARMAMENT         -> "Celestian Armament";
+            case MORTIO_ARMAMENT		   -> "Mortian Armament";
+            case INFERNO_ARMAMENT		   -> "Infernal Armament";
+            case GLACIO_ARMAMENT		   -> "Glacian Armament";
+            case GEO_ARMAMENT			   -> "Geo Armament";
+            case AERO_ARMAMENT 			   -> "Aero Armament";
         };
     }
 

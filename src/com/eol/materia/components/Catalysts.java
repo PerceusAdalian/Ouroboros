@@ -2,13 +2,16 @@ package com.eol.materia.components;
 
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.cosmo.Axe84;
+import com.eol.echoes.instances.cosmo.Bow97;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
 import com.eol.echoes.instances.mortio.Plague;
+import com.eol.echoes.instances.mortio.ScytheOfBelial;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
@@ -110,7 +113,7 @@ public class Catalysts
 				"echo_of_luminus",
 				MateriaType.CATALYST,
 				MateriaComponent.CATALYST,
-				Rarity.FIVE,
+				Rarity.SIX,
 				false,
 				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
 				"&r&7&oThere's a memory engram encoded within:",
@@ -121,6 +124,26 @@ public class Catalysts
 				"&r&e&oYou were so patient teaching me the prayers of &r&e&l&nCelestio&r&e&o,",
 				"&r&e&othe same magic you devoted yourself to until the very end.",
 				"&r&e&oI carry these memories like a forge carries heat. I miss you, sister.."), new LuminusBroadsword().getInternalName());
+
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.CELESTIO)+Symbols.EOL+"cho Of Celestia",
+				"echo_of_celestia",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SIX,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.CELESTIO)+"&o(Her Highness' Dresser) Your Majesty, the coronation",
+				PrintUtils.color(ObsColors.CELESTIO)+"is about to commence — come, you mustn't be late!",
+				PrintUtils.color(ObsColors.CELESTIO)+"&o'Worry yourself not, my dear. I promise I'm on my way, just a little more preparation..'",
+				PrintUtils.color(ObsColors.CELESTIO)+"&oBut you've been in there for hours! Can't you proceed any quicker?",
+				PrintUtils.color(ObsColors.CELESTIO)+"&o(A Steward) Your Majesty? 'You may enter..'",
+				PrintUtils.color(ObsColors.CELESTIO)+"Your Majesty.. His Highness awaits your presence.",
+				PrintUtils.color(ObsColors.CELESTIO)+"&oYour &lBow&r"+PrintUtils.color(ObsColors.CELESTIO)+" &ois ready — with the finest &lString"+PrintUtils.color(ObsColors.CELESTIO)+"&o,",
+				PrintUtils.color(ObsColors.CELESTIO)+"as you'd requested; the very image of &lCelestio&r"+PrintUtils.color(ObsColors.CELESTIO)+"&o.",
+				PrintUtils.color(ObsColors.CELESTIO)+"&o'I know! I'm overjoyed my Father commissioned what I'd asked..",
+				PrintUtils.color(ObsColors.CELESTIO)+"it makes all of this so much more worth it, don't you think?'",
+				PrintUtils.color(ObsColors.CELESTIO)+"&o'They ought know I am but a servant in light of this.. I care for them all deeply.'"), new Celestia().getInternalName());
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.GEO)+Symbols.EOL+"cho Of Nidus",
 				"echo_of_nidus",
@@ -235,6 +258,41 @@ public class Catalysts
 				PrintUtils.color(ObsColors.MORTIO)+"&othough this is merely speculative, no suspect was actually found and apprehended.",
 				PrintUtils.color(ObsColors.MORTIO)+"&o— Addendum: Certain accounts describe a &lCrossbow "+PrintUtils.color(ObsColors.MORTIO)+"&oof unusual construction,",
 				PrintUtils.color(ObsColors.MORTIO)+"&oits &lstring"+PrintUtils.color(ObsColors.MORTIO)+" &osewn in a manner consistent with &lMortian "+PrintUtils.color(ObsColors.MORTIO)+"&ocraft. Origin unverified."), new Plague().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.MORTIO)+Symbols.EOL+"cho of Belial",
+				"echo_of_belial",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SEVEN,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.HERESIO)+"&lTwilight Legion Dossier &r"+PrintUtils.color(ObsColors.MORTIO)+"&o— Belial, Death Incarnate",
+				PrintUtils.color(ObsColors.MORTIO)+"&oClassification: Emanator of &lMortio&r"+PrintUtils.color(ObsColors.MORTIO)+"&o | Rank: General Officer",
+				PrintUtils.color(ObsColors.MORTIO)+"&oGeneral Belial serves as left-hand to Sithis, "+PrintUtils.color(ObsColors.HERESIO)+"&oKing of the Twilight"+PrintUtils.color(ObsColors.MORTIO)+"&o,",
+				PrintUtils.color(ObsColors.MORTIO)+"&oand as Emanator of Mortio, the appointed arbiter of death. He's responsible for",
+				PrintUtils.color(ObsColors.MORTIO)+"&oreceiving, processing, and shepherding the deceased to their final station.",
+				PrintUtils.color(ObsColors.MORTIO)+"&oHe operates with a &lNetherite&r"+PrintUtils.color(ObsColors.MORTIO)+"&o-forged Scythe, with &lPelt&r "+PrintUtils.color(ObsColors.MORTIO)+"&oofferings placed at his Fantasian",
+				PrintUtils.color(ObsColors.MORTIO)+"&oshrine serving as sanctioned wards against death. Of all forces within the Legion,",
+				PrintUtils.color(ObsColors.MORTIO)+"&oBelial stands as a gentle reminder of life and inevitability to all."), new ScytheOfBelial().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.COSMO)+"System Log 97",
+				"echo_of_bow97",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SIX,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.COSMO)+"[ Log 97 : System Diagnostic 1632:7:21-23:11:42 ]",
+				"&r&c&lERROR: "+PrintUtils.color(ObsColors.COSMO)+"&oSpatial Anomalies Source Tracked. Instance: "+PrintUtils.color(ObsColors.CELESTIO)+"&oLumina&r&f",
+				PrintUtils.color(ObsColors.COSMO)+"&ooverwrote previously to alias: &lThe Nihility&r"+PrintUtils.color(ObsColors.COSMO)+"&o - bypassed system firewalls.",
+				PrintUtils.color(ObsColors.COSMO)+"&oConfirmed Linked Incident: System overseer in branch 'Avum Totalis' breached",
+				PrintUtils.color(ObsColors.COSMO)+"&ocontainment and injected itself into test branch 'Fantasia' for unknown cause.",
+				PrintUtils.color(ObsColors.COSMO)+"&oIt still isn't aware of what it truly is - overwrote primary element as &lCosmo&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
+				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lBow&r"+PrintUtils.color(ObsColors.COSMO)+" &owith auxiliary binding: &lString&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
+				PrintUtils.color(ObsColors.COSMO)+"&oWith message: 'I just want to help my people, why do you keep interrupting me!'.",
+				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into supposed placeholder "+Symbols.EOL+"choic object.. Will continue to monitor."), new Bow97().getInternalName());
 		
 	}
 }

@@ -36,6 +36,7 @@ import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobManager;
+import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.MoneyHandler;
 import com.ouroboros.objects.instances.AeroEssence;
@@ -70,6 +71,7 @@ public class MobDeathEvent implements Listener
 			    if (!le.getPersistentDataContainer().has(MobManager.MOB_DATA_KEY)) return;
 			    le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(1);
 			    MobData data = MobData.getMob(le.getUniqueId());
+			    
 			    if (data == null) return;
 			    
 			    EntityCategory mobCategory = EntityCategoryToSpellement.getMobCategory(e.getEntityType());
@@ -104,8 +106,7 @@ public class MobDeathEvent implements Listener
 			        {
 			            EchoManifest codec = EchoManager.getCodec(held);
 			            if (codec != null) 
-			            	sType = (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW)
-			                	? StatType.RANGED : StatType.MELEE;
+			            	sType = (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW) ? StatType.RANGED : StatType.MELEE;
 			        }
 			        else if (held.getType().isAir()) 
 			        	sType = StatType.MELEE;
@@ -146,14 +147,12 @@ public class MobDeathEvent implements Listener
 			                EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
 			        	PrintUtils.PrintToActionBar(p, "&r&e+&r&f&l" + xp + " &r&b" + PrintUtils.printStatType(sType));
 			    	}
-			    	
 			    }
 			    
 			    // Tear Drop
 			    if (overrideDrops == false && Chance.of(Math.min(75 + chanceBonus, 100)))
 			    		e.getDrops().add(new TearOfLumina().toItemStack());
-			    
-			    
+
 			    // Money Drop
 			    if (overrideDrops == false)
 			    	e.getDrops().add(MoneyHandler.of(level*10).build());
@@ -234,10 +233,14 @@ public class MobDeathEvent implements Listener
 			    if (Ouroboros.debug) 
 			    {
 			        String mobName = le.getCustomName() != null ? le.getCustomName() : le.getType().name();
-			        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oDamageEvent&r&f -- &aOK&7 Mob: " + mobName + " || &c&oDied Successfully");
+			        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oMobDeathEvent&r&f -- &aOK&7 Mob: " + mobName + " || &c&oDied Successfully");
 			    }
-			    
-			    if(data != null) data.deleteFile();
+		        
+			    MobNameplate.remove(le);
+			    data.deleteFile();
+			    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+		        	MobData.dyingRegistry.remove(le.getUniqueId()), 1L);
+
 			}
 		},plugin);
 	}
