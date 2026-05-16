@@ -11,8 +11,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 

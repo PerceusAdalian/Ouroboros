@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.bukkit.entity.EntityType;
 
-import com.ouroboros.utils.EntityCategories;
+import com.ouroboros.mobs.EntityCategories;
 
 public enum EntityCategory 
 {

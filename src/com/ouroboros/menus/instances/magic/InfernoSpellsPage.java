@@ -15,6 +15,7 @@ import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
 import com.lol.spells.instances.inferno.Primer;
+import com.lol.spells.instances.inferno.Smog;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
@@ -39,17 +40,18 @@ public class InfernoSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Confringo(), 12, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Ignite(), 13, this);
+		GuiButton.placeSpellButton(player, new Smog(), 13, this);
+		GuiButton.placeSpellButton(player, new Ignite(), 14, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new Meteor(), 14, this);
-		GuiButton.placeSpellButton(player, new Bombarda(), 15, this);
-		GuiButton.placeSpellButton(player, new Explosion(), 16, this);
+		GuiButton.placeSpellButton(player, new Meteor(), 15, this);
+		GuiButton.placeSpellButton(player, new Bombarda(), 16, this);
+		GuiButton.placeSpellButton(player, new Explosion(), 19, this);
 		
 		// 5
 		
 		// 6
-		GuiButton.placeSpellButton(player, new AspectOfAighil(), 19, this);
+		GuiButton.placeSpellButton(player, new AspectOfAighil(), 20, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

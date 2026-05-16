@@ -1,4 +1,4 @@
-package com.ouroboros.utils;
+package com.lol.spells;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.utils.ObsTimer;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ComboData

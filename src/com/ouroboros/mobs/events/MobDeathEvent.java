@@ -26,6 +26,7 @@ import com.eol.materia.Materia;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
@@ -34,6 +35,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.EntityCategory;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.mobs.EntityCategoryToSpellement;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
@@ -50,7 +52,6 @@ import com.ouroboros.objects.instances.InfernoEssence;
 import com.ouroboros.objects.instances.MortioEssence;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.Chance;
-import com.ouroboros.utils.EntityCategoryToSpellement;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.Symbols;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -100,53 +101,57 @@ public class MobDeathEvent implements Listener
 			    	if (PrismaOuroborealis.arcane_prisma_registry.contains(p.getUniqueId())) chanceBonus += 20;
 			    	PlayerData pData = PlayerData.getPlayer(p.getUniqueId());
 			    	
+			    	StatType sType = null;
 			    	ItemStack held = p.getInventory().getItemInMainHand();
-			        StatType sType = null;
-			        if (EchoManager.isEcho(held))
-			        {
-			            EchoManifest codec = EchoManager.getCodec(held);
-			            if (codec != null) 
-			            	sType = (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW) ? StatType.RANGED : StatType.MELEE;
-			        }
-			        else if (held.getType().isAir()) 
-			        	sType = StatType.MELEE;
-
+			    	if (EchoManager.isEcho(held))
+			    	{
+			    	    EchoManifest codec = EchoManager.getCodec(held);
+			    	    if (codec != null) 
+			    	        sType = (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW) 
+			    	            ? StatType.RANGED : StatType.MELEE;
+			    	}
+			    	else if (held.getType().isAir()) 
+			    	    sType = StatType.MELEE;
+			    	else if (Wand.isWand(held))
+			    	    sType = StatType.MAGIC;
+			    	
 			        int xp = XpUtils.getXp(le);
 			        if (sType != null) PlayerData.addXP(p, sType, xp);
 			    	
-			    	if (pData.doAutoCollectLootDrops())
-			    	{
-			    		overrideDrops = true;
-			    		int tears = 0;
-			    		if (Chance.of(Math.min(75 + chanceBonus, 100))) tears++;
-			    		int moneyAmount = level * 10;
-			    		int essenceAmount = 0;
-			    		for (int i = 0; i <= maxEssenceDrops; i++) 
-			        	{
-			        		if (!Chance.of(Math.min(30 + chanceBonus, 100))) continue;
-			        		essenceAmount++;
-			        	}
-			    		
-			    		PlayerData.addLuminite(p, tears);
-			    		PlayerData.addMoney(p, moneyAmount);
-			    		ElementType element = ElementType.getFromEntityCategory(mobCategory);
-			    		if (element != null) PlayerData.addEssence(p, element, essenceAmount);
-			    		PlayerHud.update(p);
-			    		
-			    		if (pData.doLevelUpSound())
+			        if (pData.doAutoCollectLootDrops())
+			        {
+			            overrideDrops = true;
+			            int tears = 0;
+			            if (Chance.of(Math.min(75 + chanceBonus, 100))) tears++;
+			            int moneyAmount = level * 10;
+			            int essenceAmount = 0;
+			            for (int i = 0; i <= maxEssenceDrops; i++) 
+			            {
+			                if (!Chance.of(Math.min(30 + chanceBonus, 100))) continue;
+			                essenceAmount++;
+			            }
+			            
+			            PlayerData.addLuminite(p, tears);
+			            PlayerData.addMoney(p, moneyAmount);
+			            ElementType element = ElementType.getFromEntityCategory(mobCategory);
+			            if (element != null) PlayerData.addEssence(p, element, essenceAmount);
+			            PlayerHud.update(p);
+			            
+			            if (pData.doLevelUpSound())
 			                EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
 			            PrintUtils.PrintToActionBar(p, 
-			    				(pData.doXpNotification()?"&r&e+&r&f&l" + xp + " &r&b" + PrintUtils.printStatType(sType)+"&r&7&l | ":"")
-			    				+("&r&e+&f&l"+moneyAmount+"&e"+Symbols.MONEY)
-			    				+(tears > 0 ? " &r&e+&f&l" + tears + "&r&b" + Symbols.LUMINITE : "")
-			    				+(essenceAmount > 0 ? " &r&e+&f&l" + essenceAmount + "&r" + PrintUtils.getElementTypeColor(element) + Symbols.ESSENCE : ""));
-			    	}
-			    	else 
-			    	{
-			    		if (pData.doLevelUpSound())
+			                (pData.doXpNotification() && sType != null ? "&r&e+&r&f&l" + xp + " &r&b" + PrintUtils.printStatType(sType) + "&r&7&l | " : "")
+			                + ("&r&e+&f&l" + moneyAmount + "&e" + Symbols.MONEY)
+			                + (tears > 0 ? " &r&e+&f&l" + tears + "&r&b" + Symbols.LUMINITE : "")
+			                + (essenceAmount > 0 ? " &r&e+&f&l" + essenceAmount + "&r" + PrintUtils.getElementTypeColor(element) + Symbols.ESSENCE : ""));
+			        }
+			        else 
+			        {
+			            if (pData.doLevelUpSound())
 			                EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
-			        	PrintUtils.PrintToActionBar(p, "&r&e+&r&f&l" + xp + " &r&b" + PrintUtils.printStatType(sType));
-			    	}
+			            if (pData.doXpNotification() && sType != null)
+			                PrintUtils.PrintToActionBar(p, "&r&e+&r&f&l" + xp + " &r&b" + PrintUtils.printStatType(sType));
+			        }
 			    }
 			    
 			    // Tear Drop

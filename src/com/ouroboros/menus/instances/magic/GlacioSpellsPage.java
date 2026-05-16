@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.glacio.Chill;
+import com.lol.spells.instances.glacio.Contaminate;
 import com.lol.spells.instances.glacio.Freeze;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
@@ -40,10 +41,11 @@ public class GlacioSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Scald(), 14, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new IcyWind(), 15, this);
+		GuiButton.placeSpellButton(player, new Contaminate(), 15, this);
+		GuiButton.placeSpellButton(player, new IcyWind(), 16, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new GlacialFlood(), 16, this);
+		GuiButton.placeSpellButton(player, new GlacialFlood(), 19, this);
 		
 		// 5
 		

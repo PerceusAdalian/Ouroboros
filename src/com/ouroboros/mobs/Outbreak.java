@@ -19,7 +19,6 @@ import com.ouroboros.enums.EntityCategory;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.OutbreakManager;
 import com.ouroboros.utils.Chance;
-import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.PrintUtils;
 
 

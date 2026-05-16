@@ -1,4 +1,4 @@
-package com.ouroboros.utils;
+package com.ouroboros.mobs;
 
 import org.bukkit.entity.EntityType;
 

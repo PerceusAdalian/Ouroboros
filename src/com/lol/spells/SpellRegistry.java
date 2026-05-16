@@ -45,12 +45,14 @@ import com.lol.spells.instances.celestio.MagicMissile;
 import com.lol.spells.instances.celestio.MinorBlessing;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
+import com.lol.spells.instances.celestio.Radiate;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.celestio.Satiate;
 import com.lol.spells.instances.celestio.SolarExpanse;
 import com.lol.spells.instances.cosmo.Antimatter;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.lol.spells.instances.cosmo.Collapse;
+import com.lol.spells.instances.cosmo.Disintegrate;
 import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
@@ -63,11 +65,13 @@ import com.lol.spells.instances.geo.Dracomorph;
 import com.lol.spells.instances.geo.Dynamorph;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
+import com.lol.spells.instances.geo.Infect;
 import com.lol.spells.instances.geo.Magemorph;
 import com.lol.spells.instances.geo.Metalmorph;
 import com.lol.spells.instances.geo.PetrificusTotalis;
 import com.lol.spells.instances.geo.SandBlast;
 import com.lol.spells.instances.glacio.Chill;
+import com.lol.spells.instances.glacio.Contaminate;
 import com.lol.spells.instances.glacio.Freeze;
 import com.lol.spells.instances.glacio.GlacialFlood;
 import com.lol.spells.instances.glacio.Glacius;
@@ -93,6 +97,7 @@ import com.lol.spells.instances.inferno.Ignite;
 import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
 import com.lol.spells.instances.inferno.Primer;
+import com.lol.spells.instances.inferno.Smog;
 import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
@@ -102,6 +107,7 @@ import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.Sleuth;
 import com.lol.spells.instances.mortio.Voodoo;
+import com.lol.spells.instances.mortio.Wither;
 
 public class SpellRegistry 
 {
@@ -115,19 +121,19 @@ public class SpellRegistry
         		//Celestio
         		AssertOrder.class,Lumos.class,Diagnosis.class,Cure.class,Expell.class,Pneuma.class,Ascension.class,
         		SolarExpanse.class,Satiate.class,Lumina.class,MinorBlessing.class,Heal.class,MagicMissile.class,
-        		Revelio.class,Protego.class,
+        		Revelio.class,Protego.class,Radiate.class,
         		
         		//Mortio
         		Haunt.class,Sew.class,Reap.class,SeethingSkull.class,Siphon.class,
-        		Demonform.class,Shroud.class,Voodoo.class,Sleuth.class,
+        		Demonform.class,Shroud.class,Voodoo.class,Sleuth.class,Wither.class,
         		
         		//Inferno
         		Incendio.class,Bombarda.class,Ignite.class,Confringo.class,Meteor.class,AspectOfAighil.class,
-        		Primer.class,Explosion.class,
+        		Primer.class,Explosion.class,Smog.class,
         		
         		//Glacio
         		Glacius.class, GlacialFlood.class, Riptide.class, Freeze.class, IcyWind.class, Scald.class,
-        		Chill.class,
+        		Chill.class,Contaminate.class,
         		
         		//Aero
         		Diffindo.class, Levioso.class, Smite.class, Thunderbolt.class, Charge.class, Thunderstorm.class,
@@ -136,11 +142,11 @@ public class SpellRegistry
         		
         		//Geo
         		Expelliarmus.class, SandBlast.class, Geomorph.class, PetrificusTotalis.class, Metalmorph.class,
-        		Magemorph.class, Dynamorph.class, Dracomorph.class, Cultivate.class,
+        		Magemorph.class, Dynamorph.class, Dracomorph.class, Cultivate.class,Infect.class,
         		
         		//Cosmo
         		ArrestoMomentum.class, Gate.class, Nullify.class, ElementalConfinement.class, Reconfigure.class,
-        		Antimatter.class, VoidForm.class, Teleport.class, Warp.class, Collapse.class,
+        		Antimatter.class, VoidForm.class, Teleport.class, Warp.class, Collapse.class,Disintegrate.class,
         		
         		//Heresio
         		Hex.class, AvadaKedavra.class, Mania.class, Penance.class, Beguile.class, Axiom.class,

@@ -15,8 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;

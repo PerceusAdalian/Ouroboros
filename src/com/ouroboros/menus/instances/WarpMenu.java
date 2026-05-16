@@ -15,6 +15,7 @@ import com.lol.spells.instances.cosmo.Warp;
 import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.accounts.WarpData;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -23,7 +24,6 @@ import com.ouroboros.menus.instances.magic.CollectWandData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
-import com.ouroboros.utils.WarpData;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class WarpMenu extends ObsGui

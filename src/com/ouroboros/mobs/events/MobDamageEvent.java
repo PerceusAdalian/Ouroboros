@@ -26,11 +26,11 @@ import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.mobs.MobAffinity;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.Chance;
-import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
@@ -240,9 +240,9 @@ public class MobDamageEvent implements Listener
 			    			(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
 			    					data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
 			    			"\n                          &b&o> DamageType&r&f: "+element.getKey()+
-			    			"\n                          &b&o- Weakness Damage&r&f: "+(EntityCategories.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
-			    			"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
-			    			"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
+			    			"\n                          &b&o- Weakness Damage&r&f: "+(MobAffinity.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+			    			"\n                          &b&o- Resistance Damage&r&f: "+(MobAffinity.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+			    			"\n                          &b&o- Immunity Damage&r&f: "+(MobAffinity.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 			    }
 
 			    if (data.isDead())

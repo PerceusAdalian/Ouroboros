@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.lol.spells.instances.cosmo.Antimatter;
 import com.lol.spells.instances.cosmo.ArrestoMomentum;
 import com.lol.spells.instances.cosmo.Collapse;
+import com.lol.spells.instances.cosmo.Disintegrate;
 import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
 import com.lol.spells.instances.cosmo.Nullify;
@@ -42,15 +43,17 @@ public class CosmoSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new ArrestoMomentum(), 13, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new ElementalConfinement(), 14, this);
-		GuiButton.placeSpellButton(player, new Collapse(), 15, this);
-		GuiButton.placeSpellButton(player, new Teleport(), 16, this);
+		GuiButton.placeSpellButton(player, new Disintegrate(), 14, this);
+		GuiButton.placeSpellButton(player, new ElementalConfinement(), 15, this);
+		GuiButton.placeSpellButton(player, new Collapse(), 16, this);
+		GuiButton.placeSpellButton(player, new Teleport(), 19, this);
+		
 		// 4
-		GuiButton.placeSpellButton(player, new VoidForm(), 19, this);
-		GuiButton.placeSpellButton(player, new Gate(), 20, this);
+		GuiButton.placeSpellButton(player, new VoidForm(), 20, this);
+		GuiButton.placeSpellButton(player, new Gate(), 21, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Warp(), 21, this);
+		GuiButton.placeSpellButton(player, new Warp(), 22, this);
 		
 		
 		//Exits

@@ -1,4 +1,4 @@
-package com.ouroboros.utils;
+package com.ouroboros.accounts;
 
 import org.bukkit.Location;
 

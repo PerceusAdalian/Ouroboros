@@ -19,6 +19,7 @@ import com.lol.spells.instances.celestio.MagicMissile;
 import com.lol.spells.instances.celestio.MinorBlessing;
 import com.lol.spells.instances.celestio.Pneuma;
 import com.lol.spells.instances.celestio.Protego;
+import com.lol.spells.instances.celestio.Radiate;
 import com.lol.spells.instances.celestio.Revelio;
 import com.lol.spells.instances.celestio.Satiate;
 import com.lol.spells.instances.celestio.SolarExpanse;
@@ -50,17 +51,18 @@ public class CelestioSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new MagicMissile(), 19, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Lumos(), 20, this);
-		GuiButton.placeSpellButton(player, new Revelio(), 21, this);
-		GuiButton.placeSpellButton(player, new Cure(), 22, this);
+		GuiButton.placeSpellButton(player, new Radiate(), 20, this);
+		GuiButton.placeSpellButton(player, new Lumos(), 21, this);
+		GuiButton.placeSpellButton(player, new Revelio(), 22, this);
+		GuiButton.placeSpellButton(player, new Cure(), 23, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new AssertOrder(), 23, this);
-		GuiButton.placeSpellButton(player, new SolarExpanse(), 24, this);
+		GuiButton.placeSpellButton(player, new AssertOrder(), 24, this);
+		GuiButton.placeSpellButton(player, new SolarExpanse(), 25, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Ascension(), 25, this);
-		GuiButton.placeSpellButton(player, new Pneuma(), 28, this);
+		GuiButton.placeSpellButton(player, new Ascension(), 28, this);
+		GuiButton.placeSpellButton(player, new Pneuma(), 29, this);
 		
 		// 6
 		

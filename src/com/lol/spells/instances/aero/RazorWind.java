@@ -29,7 +29,7 @@ public class RazorWind extends Spell
 
 	public RazorWind()
 	{
-		super("Razor Wind", "razor_wind", Material.WIND_CHARGE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 3, false, true,
+		super("Razor Wind", "razor_wind", Material.GREEN_DYE, SpellType.OFFENSIVE, SpellementType.AERO, CastConditions.RIGHT_CLICK_AIR, Rarity.THREE, 100, 3, false, true,
 				"&r&fDeal 20&c♥&f "+PrintUtils.color(ObsColors.AERO)+"&lAero&r&f damage to &6target&f inflicting "+PrintUtils.color(ObsColors.CORROSIVE)+"&oErosion &r&7(30m, 20s)","",
 				PrintUtils.color(ObsColors.CORROSIVE)+"Erosion &r&eEffect&f: Applies a "+PrintUtils.color(ObsColors.CORROSIVE)+"&oCorrosive &r&dDOT&f dealing",
 				"&r&f5&6"+Symbols.ARMOR+"&f dmg/s, and automatically &c&oends&r&f on &6Break&f.");
@@ -54,6 +54,7 @@ public class RazorWind extends Spell
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				EntityEffects.playSound(p, Sound.ENTITY_BREEZE_WHIRL, SoundCategory.AMBIENT);
+				ObsParticles.drawAeroCastSigil(le);
 				MobData.damageUnnaturally(p, le, 20, true, false, ElementType.AERO, null);
 				EntityEffects.addErosion(le, 20);
 			}, 12);

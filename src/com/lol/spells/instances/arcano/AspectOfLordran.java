@@ -23,6 +23,7 @@ import org.bukkit.potion.PotionEffect;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
+import com.lol.spells.ComboData;
 import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.celestio.Cure;
 import com.ouroboros.Ouroboros;
@@ -31,7 +32,6 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.utils.ComboData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;

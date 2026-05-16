@@ -86,7 +86,7 @@ public class EntityEffects
 		    }
 
 		    ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.BLOCK_CRUMBLE, Material.EMERALD_BLOCK.createBlockData());
-		    data.damageArmor(5, ElementType.CORROSIVE);
+		    data.damageArmor(5, ElementType.PURE);
 		    MobNameplate.update(target);
 		    data.save();
 

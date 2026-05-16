@@ -12,6 +12,7 @@ import com.lol.spells.instances.geo.Dracomorph;
 import com.lol.spells.instances.geo.Dynamorph;
 import com.lol.spells.instances.geo.Expelliarmus;
 import com.lol.spells.instances.geo.Geomorph;
+import com.lol.spells.instances.geo.Infect;
 import com.lol.spells.instances.geo.Magemorph;
 import com.lol.spells.instances.geo.Metalmorph;
 import com.lol.spells.instances.geo.PetrificusTotalis;
@@ -42,14 +43,15 @@ public class GeoSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new PetrificusTotalis(), 14, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Magemorph(), 15, this);
-		GuiButton.placeSpellButton(player, new Expelliarmus(), 16, this);
+		GuiButton.placeSpellButton(player, new Infect(), 15, this);
+		GuiButton.placeSpellButton(player, new Magemorph(), 16, this);
+		GuiButton.placeSpellButton(player, new Expelliarmus(), 19, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new Dynamorph(), 19, this);
+		GuiButton.placeSpellButton(player, new Dynamorph(), 20, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Dracomorph(), 20, this);
+		GuiButton.placeSpellButton(player, new Dracomorph(), 21, this);
 		
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->

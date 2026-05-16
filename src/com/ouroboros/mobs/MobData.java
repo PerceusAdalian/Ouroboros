@@ -35,7 +35,6 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.MobManager;
 import com.ouroboros.mobs.utils.MobNameplate;
-import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -394,9 +393,9 @@ public class MobData
 		
 		if (!CosmoEffects.isVoidedRegistry.containsKey(uuid))
 		{
-			if (EntityCategories.parseUniversalImmunity(entity, element)) value = 0;
-			else if (EntityCategories.parseUniversalResistance(entity, element)) value *= 0.5;
-			else if (EntityCategories.parseUniversalWeakness(entity, element)) value *= 1.5;
+			if (MobAffinity.parseUniversalImmunity(entity, element)) value = 0;
+			else if (MobAffinity.parseUniversalResistance(entity, element)) value *= 0.5;
+			else if (MobAffinity.parseUniversalWeakness(entity, element)) value *= 1.5;
 		}
 
 		if (element == ElementType.SLASH && data.isBreak()) value *= 1.5;
@@ -499,9 +498,9 @@ public class MobData
 					(data.isBreak()?" &7|| &6Break&f: &aTRUE&f":("&7 || &6Break&f: &cFALSE&7 || &6AR&f: "+
 					data.getArmor(false)+"&7/&f"+data.getArmor(true)))+
 					"\n                          &b&o> DamageType&r&f: "+element.getKey()+
-					"\n                          &b&o- Weakness Damage&r&f: "+(EntityCategories.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
-					"\n                          &b&o- Resistance Damage&r&f: "+(EntityCategories.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
-					"\n                          &b&o- Immunity Damage&r&f: "+(EntityCategories.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
+					"\n                          &b&o- Weakness Damage&r&f: "+(MobAffinity.parseUniversalWeakness(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+					"\n                          &b&o- Resistance Damage&r&f: "+(MobAffinity.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
+					"\n                          &b&o- Immunity Damage&r&f: "+(MobAffinity.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 		}
 
 		if (data.isDead()) 

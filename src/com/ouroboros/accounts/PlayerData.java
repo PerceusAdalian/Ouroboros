@@ -26,7 +26,6 @@ import com.ouroboros.enums.GateCodes;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
-import com.ouroboros.utils.WarpData;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class PlayerData 

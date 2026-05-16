@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Raider;
 
 import com.ouroboros.enums.EntityCategory;
+import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.utils.BiomeUtils;
-import com.ouroboros.utils.EntityCategories;
 import com.ouroboros.utils.Nullable;
 
 public enum WeaponModifierCondition

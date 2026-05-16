@@ -16,6 +16,7 @@ import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
 import com.lol.spells.instances.mortio.Sleuth;
 import com.lol.spells.instances.mortio.Voodoo;
+import com.lol.spells.instances.mortio.Wither;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
@@ -40,14 +41,15 @@ public class MortioSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Shroud(), 13, this);
 		GuiButton.placeSpellButton(player, new Sleuth(), 14, this);
 		// 3
-		GuiButton.placeSpellButton(player, new Demonform(), 15, this);
+		GuiButton.placeSpellButton(player, new Wither(), 15, this);
+		GuiButton.placeSpellButton(player, new Demonform(), 16, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new SeethingSkull(), 16, this);
+		GuiButton.placeSpellButton(player, new SeethingSkull(), 19, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Haunt(), 19, this);
-		GuiButton.placeSpellButton(player, new Voodoo(), 20, this);
+		GuiButton.placeSpellButton(player, new Haunt(), 20, this);
+		GuiButton.placeSpellButton(player, new Voodoo(), 21, this);
 		//Exits
 		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
 		{
