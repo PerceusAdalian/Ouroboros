@@ -32,8 +32,8 @@ public class LuminusBroadsword extends AbstractEOL
 				new EchoData(35, 2.5, .50, 3, 1000, 1000),
 				new LuminusRadiance().getInternalName(), 
 				"My beloved sister—she who never failed to make me smile.",
-				"his blade she entrusted to me, that I might repel the darkness of "+PrintUtils.color(ObsColors.HERESIO)+"Twilight&7",
-				"nd the darkness that festers within my own soul. I carry it in her name,",
+				"this blade she entrusted to me, that I might repel the darkness of "+PrintUtils.color(ObsColors.HERESIO)+"Twilight&7",
+				"and the darkness that festers within my own soul. I carry it in her name,",
 				"and await the day I may stand beside her again.",
 				"&o'&r"+PrintUtils.color(ObsColors.CELESTIO)+"&oGlory to Her Majesty&r&7&o'...");
 	}
@@ -46,7 +46,7 @@ public class LuminusBroadsword extends AbstractEOL
             new ActiveModifier(WeaponModifierCondition.UNDEAD, CombatStat.CRIT_RATE, 0.30, true, false),
             new ActiveModifier(WeaponModifierCondition.DURING_NIGHT, CombatStat.CRIT_MODIFIER, 1.5, false, false),
             new ActiveModifier(WeaponModifierCondition.LIVING, CombatStat.ATTACK, -0.90, true, true),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.EXPOSE, 70),
+            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.EXPOSE, .15),
             new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.PROTECTIVE, 1));
     }
 	

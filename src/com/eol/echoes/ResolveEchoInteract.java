@@ -96,7 +96,8 @@ public class ResolveEchoInteract
 		        case STUNNING  -> data.setBreak();
 		        case KNOCKBACK, IGNORE_ARROW, RECYCLE_ARROWS, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
 		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT, COSMO_ARMAMENT, CELESTIO_ARMAMENT,
-		        MORTIO_ARMAMENT, GEO_ARMAMENT, GLACIO_ARMAMENT, AERO_ARMAMENT, INFERNO_ARMAMENT -> { /* handled elsewhere */ }
+		        MORTIO_ARMAMENT, GEO_ARMAMENT, GLACIO_ARMAMENT, AERO_ARMAMENT, INFERNO_ARMAMENT,
+		        ARCANO_ARMAMENT -> { /* handled elsewhere */ }
 	        }
 	    }
 	}
@@ -119,6 +120,7 @@ public class ResolveEchoInteract
 	public static Set<UUID> geo_armament = new HashSet<>();
 	public static Set<UUID> cosmo_armament = new HashSet<>();
 	public static Set<UUID> heresio_armament = new HashSet<>();
+	public static Set<UUID> arcane_armament = new HashSet<>();
 	
 	public static void resolveHeldEffects(PassiveModifier mod, Player p)
 	{
@@ -143,6 +145,7 @@ public class ResolveEchoInteract
 			case AERO_ARMAMENT -> aero_armament.add(uuid);
 			case COSMO_ARMAMENT -> cosmo_armament.add(uuid);
 			case HERESIO_ARMAMENT -> heresio_armament.add(uuid);
+			case ARCANO_ARMAMENT -> arcane_armament.add(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}
@@ -170,6 +173,7 @@ public class ResolveEchoInteract
 			case AERO_ARMAMENT -> aero_armament.remove(uuid);
 			case COSMO_ARMAMENT -> cosmo_armament.remove(uuid);
 			case HERESIO_ARMAMENT -> heresio_armament.remove(uuid);
+			case ARCANO_ARMAMENT -> arcane_armament.remove(uuid);
 			case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING, STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
 		}
 	}
@@ -195,6 +199,7 @@ public class ResolveEchoInteract
 		aero_armament.remove(uuid);
 		cosmo_armament.remove(uuid);
 		heresio_armament.remove(uuid);
+		arcane_armament.remove(uuid);
 	}
 	
 	

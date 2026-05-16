@@ -326,7 +326,10 @@ public class MobData
 	
 	public ElementType getAffinity(boolean getWeakness)
 	{
-		return getWeakness ? ElementType.valueOf(config.getString("mob.affinity")) : ElementType.valueOf(config.getString("mob.affinity.weakness"));
+	    String key = getWeakness ? "mob.affinity.weakness" : "mob.affinity";
+	    String value = config.getString(key);
+	    if (value == null) return null;
+	    return ElementType.valueOf(value);
 	}
 	
 	public int getLevel() 

@@ -37,21 +37,16 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
     @Override
     public String loreLabel()
     {
-        // Passive modifier lore uses the ">" prefix convention seen in the mockups.
-        // The effectKey is transformed into a human-readable label here.
-        // For hand-authored EOL modifiers, this can be overridden by supplying
-        // a custom display string via PassiveModifier.withLabel().
-        String base = ">" + formatEffect();
+        String base = "&b>)&r&f " + formatEffect();
 
         if (condition != WeaponModifierCondition.PASSIVE)
-            base += " (" + formatCondition() + ")";
+            base += " &r&7(" + formatCondition()+")";
 
         return base;
     }
 
     private String formatEffect()
     {
-        // Simple key-to-display mapping. Extend as effects are added.
         return switch (effectKey)
         {
             case EXPOSE            		   -> "Attacks Apply Expose: "+(int)(magnitude * 100) + "%";
@@ -80,6 +75,7 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
             case GLACIO_ARMAMENT		   -> "Glacian Armament";
             case GEO_ARMAMENT			   -> "Geo Armament";
             case AERO_ARMAMENT 			   -> "Aero Armament";
+            case ARCANO_ARMAMENT		   -> "Arcane Armament";
         };
     }
 
@@ -89,29 +85,29 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
         {
             case PVE       		-> "PVE";
             case PVP       		-> "PVP";
-            case PASSIVE   		-> "Passive";
+            case PASSIVE  		-> "Passive";
             case UNDEAD    		-> "PVE: Undead";
             case LIVING    		-> "PVE: Living";
-            case FLYING    		-> "PVE: Flying";
+            case FLYING    		-> "PVE: Arial";
             case GLACIAL   		-> "PVE: Glacial";
             case INFERNAL 		-> "PVE: Infernal";
             case GROUNDED		-> "PVE: Grounded";
             case COSMIC			-> "PVE: Cosmic";
             case OCCULTIC		-> "PVE: Occultic";
+            case ELEMENTAL 		-> "PVE: Elementals";
             case BUGS      		-> "PVE: Bugs";
             case RAID      		-> "PVE: Raid";
-            case OVERWORLD 		-> "Overworld: Any Condition";
+            case OVERWORLD 		-> "Overworld";
             case DURING_DAY   	-> "Overworld: Daytime";
-            case DURING_NIGHT 	-> "Overworld: Nighttime";
+            case DURING_NIGHT	-> "Overworld: Nighttime";
             case CLEAR_WEATHER  -> "Overworld: Clear";
             case RAINY_WEATHER  -> "Overworld: Rain";
             case STORMY_WEATHER -> "Overworld: Storm";
             case NETHER       	-> "World: The Nether";
-            case END          	-> "World: The End";
+            case END            -> "World: The End";
             case COLDBIOMES   	-> "Biome: Cold";
             case HOTBIOMES    	-> "Biome: Hot";
-            case GENERICBIOMES 	-> "Biome";
-            case ELEMENTAL 		-> "Elemental";
+            case GENERICBIOMES 	-> "Biome: Any";
         };
     }
 

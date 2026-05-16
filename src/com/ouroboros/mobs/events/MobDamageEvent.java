@@ -82,6 +82,7 @@ public class MobDamageEvent implements Listener
 			        if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
 			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
 			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        if (ResolveEchoInteract.arcane_armament.contains(p.getUniqueId())) element = ElementType.ARCANO;
 			        
 			        EchoData echoData = codec.baseStats();
 
@@ -148,6 +149,7 @@ public class MobDamageEvent implements Listener
 			        if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
 			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
 			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        if (ResolveEchoInteract.arcane_armament.contains(p.getUniqueId())) element = ElementType.ARCANO;
 			        
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
 			        

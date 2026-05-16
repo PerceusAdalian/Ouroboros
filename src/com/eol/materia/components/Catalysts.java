@@ -117,13 +117,13 @@ public class Catalysts
 				false,
 				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
 				"&r&7&oThere's a memory engram encoded within:",
-				"&r&e&oMy sweet sister.. thank you for watching over me, even from beyond.",
-				"&r&e&oSince we were children, &r&e&l&ngold&r&e&o was always the metal I admired most--",
-				"&r&e&oyou always said it reminded you of morning light. Do you remember",
-				"&r&e&othe day Father took us into the woods to hunt for &r&e&l&nrabbit pelt&r&e&o?",
-				"&r&e&oYou were so patient teaching me the prayers of &r&e&l&nCelestio&r&e&o,",
-				"&r&e&othe same magic you devoted yourself to until the very end.",
-				"&r&e&oI carry these memories like a forge carries heat. I miss you, sister.."), new LuminusBroadsword().getInternalName());
+				PrintUtils.color(ObsColors.CELESTIO)+"&oMy sweet sister.. thank you for watching over me, even from beyond.",
+				PrintUtils.color(ObsColors.CELESTIO)+"&oSince we were children, &lGold&r"+PrintUtils.color(ObsColors.CELESTIO)+"&o was always the metal I admired most--",
+				PrintUtils.color(ObsColors.CELESTIO)+"&oyou always said it reminded you of the morning light. Do you remember",
+				PrintUtils.color(ObsColors.CELESTIO)+"&othe day Father took us into the woods to hunt for &lRabbit Pelt&r"+PrintUtils.color(ObsColors.CELESTIO)+"&o?",
+				PrintUtils.color(ObsColors.CELESTIO)+"&oYou were so patient teaching me the prayers of &lCelestian Magik&r"+PrintUtils.color(ObsColors.CELESTIO)+"&e&o,",
+				PrintUtils.color(ObsColors.CELESTIO)+"&othe same magic you devoted yourself to until the very end.",
+				PrintUtils.color(ObsColors.CELESTIO)+"&oI carry these memories like a forge carries heat. I miss you, sister.."), new LuminusBroadsword().getInternalName());
 
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.CELESTIO)+Symbols.EOL+"cho Of Celestia",
 				"echo_of_celestia",

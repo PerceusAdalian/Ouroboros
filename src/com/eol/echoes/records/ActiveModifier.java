@@ -30,12 +30,12 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
     @Override
     public String loreLabel()
     {
-        String sign = magnitude >= 0 ? "+" : "";
+        String sign = magnitude >= 0 ? "&a+" : "&c-";
         String mag  = isPercent
-                ? sign + (int)(magnitude * 100) + "% "
-                : sign + (magnitude == (long) magnitude ? String.valueOf((long) magnitude) : String.valueOf(magnitude)) + " ";
+                ? sign + ")&f " + (int)(Math.abs(magnitude) * 100) + "% "
+                : sign + ")&f " + (magnitude == (long) magnitude ? String.valueOf((long) Math.abs(magnitude)) : String.valueOf(Math.abs(magnitude))) + " ";
  
-        return mag + combatStat.getDisplayName() + " (" + formatCondition() + ")";
+        return mag +"&f"+ combatStat.getDisplayName() + " &7(" + formatCondition()+")";
     }
  
     /**

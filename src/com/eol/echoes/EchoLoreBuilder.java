@@ -86,7 +86,7 @@ public final class EchoLoreBuilder
         {
             lore.add(PrintUtils.ColorParser("&r&f&lModifiers&r&f:"));
             for (Modifier mod : manifest.modifiers())
-                lore.add(colorModifier(mod));
+                lore.add(PrintUtils.ColorParser(mod.loreLabel()));
             lore.add("");
         }
  
@@ -96,7 +96,7 @@ public final class EchoLoreBuilder
             String slotLabel = manifest.slotType().getElement();
             lore.add(PrintUtils.ColorParser("&r&f&lElementium Slot&r&f: " + slotLabel));
         }
- 
+        
         // --- Locked Ability (EOL only) ---
         if (manifest.hasLockedAbility())
         {
@@ -163,7 +163,7 @@ public final class EchoLoreBuilder
         {
             lore.add(PrintUtils.ColorParser("&r&f&lModifiers&r&f:"));
             for (Modifier mod : manifest.modifiers())
-                lore.add(colorModifier(mod));
+                lore.add(PrintUtils.ColorParser(mod.loreLabel()));
             lore.add("");
         }
  
@@ -265,7 +265,8 @@ public final class EchoLoreBuilder
      * Active modifiers: green (stat bonuses, matching the mockup)
      * Passive modifiers: purple (side effects/triggers, matching the mockup)
      */
-    private static String colorModifier(Modifier mod)
+    @Deprecated
+    public static String colorModifier(Modifier mod)
     {
         String label = mod.loreLabel();
         String color;

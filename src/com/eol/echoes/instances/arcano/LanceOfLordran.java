@@ -1,0 +1,49 @@
+package com.eol.echoes.instances.arcano;
+
+import java.util.List;
+
+import com.eol.echoes.EchoData;
+import com.eol.echoes.abilities.instances.special.SpatialDistortion;
+import com.eol.echoes.instances.AbstractEOL;
+import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.EOLRecipe;
+import com.eol.echoes.records.Modifier;
+import com.eol.echoes.records.PassiveModifier;
+import com.eol.enums.CombatStat;
+import com.eol.enums.EchoForm;
+import com.eol.enums.ElementiumSlotType;
+import com.eol.enums.MateriaType;
+import com.eol.enums.PassiveEchoEffect;
+import com.eol.enums.WeaponModifierCondition;
+import com.ouroboros.enums.ObsColors;
+import com.ouroboros.utils.PrintUtils;
+
+public class LanceOfLordran extends AbstractEOL
+{
+
+	public LanceOfLordran()
+	{
+		super("&r&e&lΣOL&r&f: &oLance of Lordran "+PrintUtils.color(ObsColors.ARCANO)+"✦", 
+				"bow_97", true, 
+				new EOLRecipe(MateriaType.IRON, MateriaType.PELT, null), 
+				EchoForm.POLEARM, 
+				ElementiumSlotType.COSMO, 
+				buildModifiers(),
+				new EchoData(0, 4.5, .40, 1.5, 1500, 1500),
+				new SpatialDistortion().getInternalName(),
+				null);
+	}
+
+	@SuppressWarnings("null")
+	private static List<Modifier> buildModifiers()
+    {
+        return List.of(
+    		new ActiveModifier(WeaponModifierCondition.ELEMENTAL, CombatStat.ATTACK, 0.80, true, false),
+    		new ActiveModifier(WeaponModifierCondition.ELEMENTAL, CombatStat.CRIT_RATE, 0.35, true, false),
+    		new ActiveModifier(WeaponModifierCondition.ELEMENTAL, CombatStat.CRIT_MODIFIER, 3.5, false, false),
+    		new PassiveModifier(WeaponModifierCondition.DURING_DAY, PassiveEchoEffect.BURNING, 0.75),
+    		new PassiveModifier(WeaponModifierCondition.DURING_NIGHT, PassiveEchoEffect.EXPOSE, 0.75),
+            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.ARCANO_ARMAMENT, 1));
+    }
+	
+}
