@@ -16,6 +16,7 @@ import com.eol.echoes.abilities.AbilityType;
 import com.eol.echoes.abilities.EchoAbility;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
@@ -36,12 +37,12 @@ public class BloodFolliedBlade extends EchoAbility
 		super("Blood-Follied Blade", "blood_follied_blade", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.HERESIO,
 				CastConditions.MIXED, EchoForm.SWORD, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
-				"&r&2Blood-Follied Blade&f: &2&oFoul Play&r&f -- Deal 2&c"+Symbols.HP+" &fto &6Self&f",
+				"&r&2Blood-Follied Blade&f: &2&oFoul Play&r&f -- Deal 25&c"+Symbols.HP+" &fto &6Self&f",
 				"&r&fRush towards &6target &dMob&f dealing &b&o200% &r&f&oBase Attack&r&f as "+PrintUtils.color(ObsColors.HERESIO)+"&lHeresio&r&f damage,",
 				"&r&finflicting &2Intimidate&f, and on kill, grants a stack of "+PrintUtils.color(ObsColors.MORTIO)+"Jinx&f to &6self &7(15m, 10s)","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&2Blood-Follied Blade&f: &2&oRegal Penance&r&f --",
-				"&r&aRestore &cHP&f and &b&oDurability&r&f equal to stacks of "+PrintUtils.color(ObsColors.MORTIO)+"Jinx&f.");
+				"&r&aRestore &cHP&f and &b&oDurability&r&f scaled with stacks of "+PrintUtils.color(ObsColors.MORTIO)+"Jinx&f.");
 	}
 
 	@Override
@@ -59,8 +60,8 @@ public class BloodFolliedBlade extends EchoAbility
 				ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 4, 0.7, 20, 0.3, Particle.WARPED_SPORE, null);
 				ObsParticles.drawWave(Ouroboros.instance, p.getLocation(), 3, 0.7, 17, 0.4, Particle.BLOCK_CRUMBLE, Material.WARPED_WART_BLOCK);
 				
-				EntityEffects.heal(p, jinxStacks);
-				EchoManager.modifyDurability(p, e.getItem(), DurabilityOperation.ADD, jinxStacks, false);
+				PlayerData.heal(p, jinxStacks * 50, false);
+				EchoManager.modifyDurability(p, e.getItem(), DurabilityOperation.ADD, jinxStacks * 50, false);
 				MortioEffects.jinxRegistry.remove(p.getUniqueId());
 			}, 12);
 			return 0;
@@ -92,7 +93,7 @@ public class BloodFolliedBlade extends EchoAbility
 					
 					MobData.damageUnnaturally(p, le, damage, true, true, ElementType.HERESIO, EchoManager.getCodec(e.getItem()));
 					HeresioEffects.addIntimidate(le, 0, 10);
-					MobData.damageUnnaturally(p, p, 2, false, false, null, EchoManager.getCodec(e.getItem()));
+					PlayerData.damageUnnaturally(p, p, 25, false, ElementType.PURE, null);
 					if (fatal)
 					{
 						MortioEffects.addJinxStacks(p, 1);

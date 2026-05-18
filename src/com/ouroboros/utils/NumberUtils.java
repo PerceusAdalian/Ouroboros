@@ -12,4 +12,14 @@ public class NumberUtils
     {
         return floor + (ceiling - floor) * t;
     }
+	
+	public static int clamp(int val, int min, int max)
+	{
+		return Math.max(min, Math.min(val, max));
+	}
+	
+	public static double clamp(double val, double min, double max)
+	{
+		return Math.max(min, Math.min(val, max));
+	}
 }

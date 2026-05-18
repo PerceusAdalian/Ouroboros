@@ -13,6 +13,7 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.ObsParticles;
@@ -25,7 +26,7 @@ public class Heal extends Spell
 	public Heal()
 	{
 		super("Heal", "heal", Material.EMERALD, SpellType.CANTRIP, SpellementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.ONE, 10, 1, true, false,
-				"&r&aHeal &6self&f/&6target &b&oPlayer&r&f for 10&c♥ &7(25m)");
+				"&r&aHeal &6self&f/&6target &b&oPlayer&r&f for 150&c♥ &7(25m)");
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class Heal extends Spell
 		if (target == null || !(target instanceof Player))
 		{
 			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
-			EntityEffects.heal(p, 10);
+			PlayerData.heal(p, 150, false);
 			return 25;
 		}
 		else if (target instanceof Player pTarget)
@@ -48,7 +49,7 @@ public class Heal extends Spell
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
 				ObsParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
-				EntityEffects.heal(pTarget, 10);
+				PlayerData.heal(pTarget, 150, false);
 			}, 15);
 			return 25;
 		}

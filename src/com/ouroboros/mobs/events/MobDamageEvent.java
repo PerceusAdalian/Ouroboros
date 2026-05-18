@@ -25,6 +25,7 @@ import com.eol.echoes.ResolveEchoInteract;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobAffinity;
 import com.ouroboros.mobs.MobData;
@@ -54,7 +55,6 @@ public class MobDamageEvent implements Listener
 
 			    MobData data = MobData.getMob(target.getUniqueId());
 			    if (data == null) return;
-
 			    ElementType element = ElementType.PURE;
 			    double dmg;
 
@@ -101,7 +101,7 @@ public class MobDamageEvent implements Listener
 			            InfernoEffects.hasCharred.remove(target.getUniqueId());
 			        }
 			        
-			        boolean crit = false;
+			        boolean crit 		= false;
 			        double critRate     = ResolveEchoInteract.resolveCritRate(p, (LivingEntity) target, codec, echoData.getCritRate());
 			        double critModifier = ResolveEchoInteract.resolveCritModifier(p, (LivingEntity) target, codec, echoData.getCritModifier());
 			        if (Chance.of(critRate * 100))
@@ -113,7 +113,8 @@ public class MobDamageEvent implements Listener
 			        }
 			        
 			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
-
+			        
+			        if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
 			        
@@ -121,7 +122,7 @@ public class MobDamageEvent implements Listener
 			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
 			        {
 			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
-			            EntityEffects.heal(p, 2);
+			            PlayerData.heal(p, 25, crit);
 			        }
 			    }
 
@@ -165,7 +166,8 @@ public class MobDamageEvent implements Listener
 			        }
 			        
 			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
-
+			        
+			        if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
 			        
@@ -173,7 +175,7 @@ public class MobDamageEvent implements Listener
 			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
 			        {
 			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
-			            EntityEffects.heal(p, 2);
+			        	PlayerData.heal(p, 25, crit);
 			        }
 			    }
 
@@ -182,7 +184,8 @@ public class MobDamageEvent implements Listener
 			    {
 			        dmgEvent.setDamage(1);
 			        dmg = dmgEvent.getFinalDamage();
-
+			        
+			        if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
 			    }

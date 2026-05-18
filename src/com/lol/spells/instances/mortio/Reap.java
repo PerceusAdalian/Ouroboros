@@ -16,6 +16,7 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
@@ -34,8 +35,8 @@ public class Reap extends Spell
 	public Reap() 
 	{
 		super("Reap", "reap", Material.OPEN_EYEBLOSSOM, SpellType.OFFENSIVE, SpellementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, Rarity.TWO, 25, 2, true, false,
-				"&r&fSlash your target within &b&o12 meters&r&f dealing 3&c♥&f &e&lSever&r&f damage.",
-				"&r&fIf that target is &4Cursed&f, remove it, and deal 6&c♥&f "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage instead:",
+				"&r&fSlash your target within &b&o12 meters&r&f dealing 25&c♥&f &e&lSever&r&f damage.",
+				"&r&fIf that target is &4Cursed&f, remove it, and deal 50&c♥&f "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage instead:",
 				"&r&aRestore &b&o50%&r&f of the damage to self, and inflict &4Doom &r&bI &7(30s | &cPVP&7: &c75%&7, &cDoom II&7)","",
 				"&r&4Doom &eEffect&f: Doom applies a &dDOT&f effect equal to it's &b&omagnitude&r&f.",
 				"&r&fAfflicted take &b&o1.25x &r&4&lMortio&r&f damage, and reapplying instantly kills them &7(NONPVP)",
@@ -76,14 +77,15 @@ public class Reap extends Spell
 			}
 			
 			HeresioEffects.isCursed.remove(target.getUniqueId());
-			MobData.damageUnnaturally(p, target, 6, true, true, ElementType.MORTIO, null);
-			EntityEffects.heal(p, target instanceof Player ? (6 * .75) : 3);
+			MobData.damageUnnaturally(p, target, 50, true, true, ElementType.MORTIO, null);
+			PlayerData.heal(p, target instanceof Player ? 37.5 : 25, false);
 			MortioEffects.addDoom((LivingEntity) target, target instanceof Player ? 2 : 0, 30);
 			
 			return this.getManacost();
 		}
 		
-		MobData.damageUnnaturally(p, target, 3, true, true, ElementType.SEVER, null);
+		MobData.damageUnnaturally(p, target, 25, true, true, ElementType.SEVER, null);
+		PlayerData.heal(p, target instanceof Player ? 18.75 : 12.5, false);
 		return this.getManacost();
 	}
 	

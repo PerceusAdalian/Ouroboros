@@ -22,7 +22,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.mobs.MobData;
+import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
@@ -68,8 +68,7 @@ public class LuminusRadiance extends EchoAbility
 
 		        CelestioEffects.addExposed(le, 20);
 
-		        MobData data = MobData.getMob(le.getUniqueId());
-		        if (data != null && data.getAffinity(false) == ElementType.MORTIO)
+		        if (EntityCategories.mortio_mobs.contains(le.getType()))
 		        {
 		            ObsParticles.drawLine(to, p.getLocation(), 0.8, 0.3, Particle.DUST_PILLAR, Material.GLOWSTONE.createBlockData());
 		            count.getAndIncrement();

@@ -31,6 +31,7 @@ import org.bukkit.util.Vector;
 import com.eol.echoes.ResolveEchoInteract;
 import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.utils.LevelTable;
 import com.ouroboros.mobs.utils.MobManager;
@@ -323,14 +324,6 @@ public class MobData
 		config.set("mob.entity_type", eType.name());
 	}
 	
-	public ElementType getAffinity(boolean getWeakness)
-	{
-	    String key = getWeakness ? "mob.affinity.weakness" : "mob.affinity";
-	    String value = config.getString(key);
-	    if (value == null) return null;
-	    return ElementType.valueOf(value);
-	}
-	
 	public int getLevel() 
 	{
 		return config.getInt("mob.level");
@@ -456,6 +449,12 @@ public class MobData
 	@SuppressWarnings("null")
 	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element, @Nullable EchoManifest codec)
 	{
+		if (target instanceof Player targetPlayer)
+		{
+		    PlayerData.damageUnnaturally(player, targetPlayer, value, doHurtAnimation, element, codec);
+		    return value;
+		}
+		
 		MobData data = MobData.getMob(target.getUniqueId());
 		
 		if (data == null)

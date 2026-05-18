@@ -11,21 +11,29 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.eol.echoes.abilities.AbilityHandler;
 import com.eol.echoes.abilities.AbilityRegistry;
 import com.eol.echoes.abilities.EchoAbility;
+import com.eol.echoes.records.EchoManifest;
 import com.lol.spells.SpellDataHandler;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.GateCodes;
+import com.ouroboros.enums.LegacyColor;
 import com.ouroboros.enums.StatType;
+import com.ouroboros.utils.Nullable;
+import com.ouroboros.utils.NumberUtils;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.Symbols;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class PlayerData 
@@ -33,13 +41,11 @@ public class PlayerData
 	protected final UUID uuid;
 	protected File file;
 	private final YamlConfiguration config;
-	public static final int baseXP = 225, fundsIntegerMax = 99999999;
-	public static final int MAXMAGIC = 7;
-	public static final int maxLuminite = 9999;
-	public static final int maxEssence = 9999;
-	public static final int maxScrap = 9999;
-	public static final int maxShards = 999;
+	public static final int baseXP = 225, fundsIntegerMax = 99999999, MAXMAGIC = 7,
+			maxLuminite = 9999, maxEssence = 9999, maxScrap = 9999, maxShards = 999;
 	private static final double ExpMultiplier = 1.18;
+	private static final double playerHpMax = 10000, playerHpMin = 500;
+	private static final int playerArmorMax = 1000, playerArmorMin = 100;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
 	public PlayerData(UUID uuid) 
@@ -60,7 +66,8 @@ public class PlayerData
 		return file;
 	}
 
-	public void setFile(File file) {
+	public void setFile(File file) 
+	{
 		this.file = file;
 	}
 
@@ -80,6 +87,13 @@ public class PlayerData
 	    {
 	    	setAccountLevel(0);
 	    	initializeAbilities();
+	    	
+	    	// Stats
+	    	setDefaultHP(playerHpMin);
+	    	setDefaultArmor(playerArmorMin);
+	    	setHP(getDefaultHP());
+	    	setArmor(getDefaultArmor());
+	    	setBreak(false);
 	    	
 	    	//Currencies
 	    	setFunds(true, 0);
@@ -132,7 +146,7 @@ public class PlayerData
 	    	
 	    	doLevelUpSound(true);
 	    	doXpNotification(true);
-	    	doAutoCollectLootDrops(false);
+	    	doAutoCollectLootDrops(true);
 	    	setAbilityPoints(0);
 	    	setPrestigePoints(0);
 	    	initializeWarpLocations();
@@ -149,8 +163,227 @@ public class PlayerData
 	    	
 	    	setMagicProficiency(0);
 	    	setKitClaimed(false);
+	    	setFavoriteColor(LegacyColor.WHITE);
 	    }
 	    return;
+	}
+	
+	public void setHP(double value)
+	{
+		config.set("hp.current", value);
+	}
+	
+	public double getHP()
+	{
+		return config.getDouble("hp.current");
+	}
+	
+	public void setDefaultHP(double value)
+	{
+		config.set("hp.default", NumberUtils.clamp(value, playerHpMin, playerHpMax));
+	}
+	
+	public double getDefaultHP()
+	{
+		return config.getDouble("hp.default");
+	}
+	
+	public static boolean heal(Player player, double value, boolean restoreArmor)
+	{
+		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
+		if (data.getHP() == data.getDefaultHP()) return false;
+		if (data.getHP() + value > data.getDefaultHP()) data.setHP(data.getDefaultHP());
+		else data.setHP(data.getHP() + value);
+		ObsParticles.drawWisps(player.getLocation(), 3, 3, 5, Particle.HAPPY_VILLAGER, null);
+		if(restoreArmor) 
+		{
+			data.setArmor(data.getDefaultArmor());
+			ObsParticles.drawWisps(player.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
+		}
+		PlayerData.syncVanillaHealth(player);
+		PlayerHud.update(player);
+		data.save();
+		return true;
+	}
+	
+	public void setArmor(int value)
+	{
+		config.set("armor.current", value);
+	}
+	
+	public int getArmor()
+	{
+		return config.getInt("armor.current");
+	}
+	
+	public void setDefaultArmor(int value)
+	{
+		config.set("armor.default", NumberUtils.clamp(value, playerArmorMin, playerArmorMax));
+	}
+	
+	public int getDefaultArmor()
+	{
+		return config.getInt("armor.default");
+	}
+	
+	public static void restoreArmor(Player player, int value)
+	{
+		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
+		if (data.getArmor() + value > data.getDefaultArmor()) data.setArmor(data.getDefaultArmor());
+		else data.setArmor(data.getArmor() + value);
+		ObsParticles.drawWisps(player.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
+		data.save();
+	}
+	
+	public boolean isBreak()
+	{
+		return config.getBoolean("playerbroken");
+	}
+	
+	public void setBreak(boolean var)
+	{
+		config.set("playerbroken", var);
+	}
+	
+	public void setBreak()
+	{
+		if (isBreak()) return;
+		
+		Player p = Bukkit.getPlayer(uuid);
+		setArmor(0);
+		setBreak(true);
+		EntityEffects.playSound(p, Sound.ITEM_SHIELD_BREAK, SoundCategory.MASTER);
+		ObsParticles.drawWisps(p.getLocation(), 4, 4, 7, Particle.END_ROD, null);
+		PrintUtils.PrintToActionBar(p, "&6"+Symbols.ARMOR+" &c&l&oBreak&r&f!");
+		EntityEffects.add(p, PotionEffectType.SLOWNESS, 300, 2, false);
+		EntityEffects.add(p, PotionEffectType.MINING_FATIGUE, 300, 2, false);
+		PlayerHud.update(p);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
+		{
+			setBreak(false);
+			setArmor(getDefaultArmor());
+			if (!p.isDead() && p.isOnline())
+			{				
+				EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.MASTER);
+				ObsParticles.drawWisps(p.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
+				PrintUtils.PrintToActionBar(p, "&6"+Symbols.ARMOR+" &a&oRestored&r&f!");
+			}
+			PlayerHud.update(p);
+			save();
+		}, 300);
+		save();
+	}
+	
+	public void damage(double value, ElementType element)
+	{
+	    Player player = Bukkit.getPlayer(uuid);
+
+	    double mx = switch (element)
+	    {
+	    	case MORTIO 			-> 1.5;
+	        case INFERNO, COMBUST, 
+	        COSMO, HERESIO 			-> 1.25;
+	        case CELESTIO,SEVER, 
+            IMPALE, CRUSH, BLAST    -> 0.5;
+	        default                 -> 1.0;
+	    };
+
+	    double remaining = value * mx;
+
+	    if (!isBreak())
+	    {
+	        double armorMX = switch (element)
+	        {
+	            case CORROSIVE        -> 2.0;
+	            case PIERCE, PUNCTURE -> 1.5;
+	            default               -> 0.5;
+	        };
+
+	        int newArmor = (int) (getArmor() - remaining * armorMX);
+
+	        if (newArmor < 0)
+	        {
+	            // Overflow: recover how much raw damage punched through
+	            double overflow = (-newArmor) / armorMX;
+	            setArmor(0);
+	            setBreak(); // triggers sound, effects, scheduler for restore
+
+	            double breakMX = switch (element)
+	            {
+		            case INFERNO, COMBUST, MORTIO,
+		            COSMO, HERESIO,SEVER, 
+		            IMPALE, CRUSH, BLAST                    -> 1.5;
+	                case SLASH                              -> 1.25;
+	                case CELESTIO 							-> 0.5;
+	                default                                 -> 1.0;
+	            };
+	            remaining = overflow * breakMX;
+	        }
+	        else
+	        {
+	            setArmor(newArmor);
+	            remaining = 0; // fully absorbed
+	        }
+	    }
+
+	    setHP(getHP() - remaining);
+
+	    if (getHP() <= 0)
+	    {
+	        setHP(0);
+	        syncVanillaHealth(player);
+	        PlayerHud.update(player);
+	        player.setHealth(0);
+	        return;
+	    }
+
+	    syncVanillaHealth(player);
+	    PlayerHud.update(player);
+	    save();
+	}
+	
+	public static void damageUnnaturally(@Nullable Player attacker, Player target, double value, boolean doHurtAnimation, @Nullable ElementType element, @Nullable EchoManifest codec)
+	{
+		PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+		
+		if (element == null) element = ElementType.PURE;
+		
+		data.damage(value, element);
+		
+		target.playHurtAnimation(0);
+		
+		if (doHurtAnimation && attacker != null)
+		{
+			Vector kb = target.getLocation().toVector().subtract(attacker.getLocation().toVector());
+			if (kb.lengthSquared() > 0.001)
+			{
+				Vector direction = kb.normalize().multiply(0.4);
+				target.setVelocity(direction.setY(0.4));
+			}
+		}
+		
+		if (Ouroboros.debug)
+		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oPlayerDamageUnnaturally&r&f -- &aOK&7 || &fTarget: &f" + target.getName()
+			+ (attacker != null ? " &7|| &fAttacker: &f" + attacker.getName() : "")
+			+ " &7|| &fDamage: &c" + value
+			+ " &7|| &6Element&f: " + element.getKey()
+			+ " &7|| &aHP&f: " + getPlayer(target.getUniqueId()).getHP()
+			+ "&7/&f" + getPlayer(target.getUniqueId()).getDefaultHP()
+			+ (getPlayer(target.getUniqueId()).isBreak()
+			? " &7|| &6Break&f: &cTRUE"
+			: " &7|| &6AR&f: " + getPlayer(target.getUniqueId()).getArmor()
+			+ "&7/&f" + getPlayer(target.getUniqueId()).getDefaultArmor())
+			+ " &7|| &o&7END");
+	}
+	
+	public static void syncVanillaHealth(Player player)
+	{
+	    PlayerData data = PlayerData.getPlayer(player.getUniqueId());
+	    if (data == null) return;
+	    double ratio = data.getHP() / data.getDefaultHP();
+	    double scaled = NumberUtils.clamp(ratio * 20.0, 0.1, 20.0);
+	    player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(20.0);
+	    player.setHealth(scaled);
 	}
 	
 	/**
@@ -641,6 +874,16 @@ public class PlayerData
 	public void setKitClaimed(boolean bool)
 	{
 		config.set("kitclaimed", bool);
+	}
+	
+	public LegacyColor getFavoriteColor()
+	{
+		return LegacyColor.valueOf(config.getString("favoritecolor"));
+	}
+	
+	public void setFavoriteColor(LegacyColor color)
+	{
+		config.set("favoritecolor", color.name());
 	}
 	
 	public static void initializeDataFolder() 

@@ -14,6 +14,7 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
@@ -63,7 +64,7 @@ public class Siphon extends Spell
 			ObsParticles.drawArcLine(target.getLocation(), p.getLocation(), 0.3, 3, Particle.ASH, null);
 			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 			EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
-			EntityEffects.heal(p, target instanceof Player ? damage * 0.3d : damage * 0.5d);			
+			PlayerData.heal(p, target instanceof Player ? damage * 0.3d : damage * 0.5d, false);			
 		}, 15);
 		
 		return this.getManacost();

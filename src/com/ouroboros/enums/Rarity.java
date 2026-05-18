@@ -25,12 +25,12 @@ public enum Rarity
 	
 	public static int getRarityForMobLevel(int mobLevel)
 	{
-		if (mobLevel >= 100)     return 7; 
-		else if (mobLevel >= 80) return 6; 
-	    else if (mobLevel >= 50) return 5; 
-	    else if (mobLevel >= 40) return 4; 
-	    else if (mobLevel >= 30) return 3; 
-	    else if (mobLevel >= 20) return 2; 
-	    else                     return 1;
+		if (mobLevel >= 100)     return 7; // Apex, Bosses, and High-Level Mobs
+		else if (mobLevel >= 80) return 6; // "Royals"
+	    else if (mobLevel >= 50) return 5; // Elites
+	    else if (mobLevel >= 40) return 4; // Mid-range, Average
+	    else if (mobLevel >= 30) return 3; // Uncommon
+	    else if (mobLevel >= 20) return 2; // Common
+	    else                     return 1; // Fodder
 	}
 }

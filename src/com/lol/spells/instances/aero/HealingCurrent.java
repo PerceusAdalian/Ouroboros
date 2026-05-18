@@ -12,6 +12,7 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.ObsParticles;
@@ -55,16 +56,17 @@ public class HealingCurrent extends Spell
 	
 	public static void playSpellEffect(Player caster, Player target, boolean targetted)
 	{
+		PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 		if (WeatherUtils.checkWeather(target.getWorld(), WeatherUtils.WeatherType.STORMING))
 		{
-			EntityEffects.heal(target);
+			PlayerData.heal(target, data.getDefaultHP(), false);
 			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 			if (!targetted)
 				EntityEffects.playSound(caster, caster == target ? Sound.BLOCK_BEACON_POWER_SELECT : Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			target.getWorld().strikeLightningEffect(target.getLocation());
 			return;
 		}
-		EntityEffects.heal(target, target.getHealth() * 0.5);
+		PlayerData.heal(target, data.getHP() * .5, false);
 		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.HAPPY_VILLAGER, null);
 		EntityEffects.playSound(caster, caster == target ? Sound.BLOCK_BEACON_POWER_SELECT : Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		ObsParticles.drawWave(Ouroboros.instance, target.getLocation(), 7, 0.5, 20, 0.2, Particle.BLOCK_CRUMBLE, Material.AMETHYST_CLUSTER.createBlockData());

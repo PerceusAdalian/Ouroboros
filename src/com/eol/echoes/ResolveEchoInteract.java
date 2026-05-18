@@ -13,6 +13,7 @@ import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
 import com.eol.enums.CombatStat;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
@@ -83,6 +84,31 @@ public class ResolveEchoInteract
 		for (Modifier mod : codec.getPassiveModifiers())
 	    {
 	        if (!mod.condition().satisfies(p, target, p.getWorld())) continue;
+	        if (!Chance.of(mod.getMagnitude()*100)) continue;
+	        
+	        int seconds = 30;
+	        switch (((PassiveModifier) mod).effectKey())
+	        {
+		        case EXPOSE -> CelestioEffects.addExposed(target, seconds);
+		        case BURNING -> InfernoEffects.addBurn(target, seconds);
+		        case POISONOUS -> EntityEffects.addErosion(target, 10);
+		        case SLOWING  -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 0, false);
+		        case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
+		        case STUNNING  -> data.setBreak();
+		        case KNOCKBACK, IGNORE_ARROW, RECYCLE_ARROWS, SET_ATTACK_RATE, INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
+		        LUCKY,NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE, HERESIO_ARMAMENT, COSMO_ARMAMENT, CELESTIO_ARMAMENT,
+		        MORTIO_ARMAMENT, GEO_ARMAMENT, GLACIO_ARMAMENT, AERO_ARMAMENT, INFERNO_ARMAMENT,
+		        ARCANO_ARMAMENT -> { /* handled elsewhere */ }
+	        }
+	    }
+	}
+	
+	public static void resolvePassiveEffectToPlayer(EchoManifest codec, Player source, Player target)
+	{
+		PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+		for (Modifier mod : codec.getPassiveModifiers())
+	    {
+	        if (!mod.condition().satisfies(source, target, source.getWorld())) continue;
 	        if (!Chance.of(mod.getMagnitude()*100)) continue;
 	        
 	        int seconds = 30;

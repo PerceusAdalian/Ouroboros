@@ -26,6 +26,7 @@ import com.lol.enums.SpellementType;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.LegacyColor;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
@@ -316,6 +317,24 @@ public class PrintUtils
 	    };
 	    return ColorParser(raw);
 	}
+	
+	public static String getFavoriteColor(PlayerData data)
+    {
+    	LegacyColor lc = data.getFavoriteColor();
+        String color = switch(lc)
+		{
+	        case WHITE -> "&f";
+	        case RED -> "&c";
+	        case ORANGE -> "&6";
+	        case YELLOW -> "&e";
+	        case GREEN -> "&a";
+	        case BLUE -> "&9";
+	        case LIGHTBLUE -> "&b";
+	        case PURPLE -> "&d";
+			default -> "&f";
+		};
+		return color;
+    }
 	
 	public static String assignSpellType(SpellType type)
 	{

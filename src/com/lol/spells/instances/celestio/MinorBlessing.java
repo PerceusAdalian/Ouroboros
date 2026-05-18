@@ -13,6 +13,7 @@ import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
 import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.ObsParticles;
@@ -83,28 +84,29 @@ public class MinorBlessing extends Spell
 			Entity target = RayCastUtils.getEntity(p, 25);
 			if (target == null || !(target instanceof Player))
 			{
-				if (CelestioEffects.hasWard.contains(p.getUniqueId())) return -1;
+				if (!CelestioEffects.addWard(p, 2, 30)) return -1;
+				PlayerData data = PlayerData.getPlayer(p.getUniqueId());
 				ObsParticles.drawCylinder(p.getLocation(), p.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
-				CelestioEffects.addWard(p, 2, 30);
-				EntityEffects.heal(p, p.getHealth()*0.5);
+				PlayerData.heal(p, data.getHP()*0.5, false);
 				return 25;
 			}
-			else if (target instanceof Player pTarget)
+			else if (target instanceof Player pTarget2)
 			{		
-				if (CelestioEffects.hasWard.contains(pTarget.getUniqueId())) 
+				if (CelestioEffects.hasWard.contains(pTarget2.getUniqueId())) 
 				{
 					PrintUtils.PrintToActionBar(p, "&7&oPlayer already buffed..");
 					return -1;		
 				}
-				ObsParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
-				ObsParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
+				ObsParticles.drawLine(p.getLocation(), pTarget2.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
+				ObsParticles.drawSinLine(p.getLocation(), pTarget2.getLocation(), 0.6, Particle.END_ROD, null);
 				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 				{
-					EntityEffects.playSound(pTarget, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
-					ObsParticles.drawCelestioCastSigil(pTarget);
-					ObsParticles.drawCylinder(pTarget.getLocation(), pTarget.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
-					CelestioEffects.addWard(pTarget, 2, 20);
-					EntityEffects.heal(pTarget, pTarget.getHealth()*0.65);
+					PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+					EntityEffects.playSound(pTarget2, Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.AMBIENT);
+					ObsParticles.drawCelestioCastSigil(pTarget2);
+					ObsParticles.drawCylinder(pTarget2.getLocation(), pTarget2.getWidth(), 3, 6, 0.5, 0.5, Particle.ENCHANT, null);
+					CelestioEffects.addWard(pTarget2, 2, 20);
+					PlayerData.heal(pTarget2, data.getHP()*0.65, false);
 				}, 15);
 				return 25;
 			}

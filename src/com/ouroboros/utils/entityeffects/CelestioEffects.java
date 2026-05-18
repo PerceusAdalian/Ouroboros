@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.utils.MobNameplate;
@@ -61,6 +62,20 @@ public class CelestioEffects
 				}
 				EntityEffects.add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
 			}
+		}
+	}
+	
+	public static void addExposed(Player target, int seconds)
+	{
+		PlayerData data = PlayerData.getPlayer(target.getUniqueId());
+		if (data != null) 
+		{
+			if (!data.isBreak()) 
+			{
+				data.setBreak();
+				MobNameplate.update(target);
+			}
+			EntityEffects.add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
 		}
 	}
 

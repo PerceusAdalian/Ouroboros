@@ -28,7 +28,10 @@ import com.lol.spells.instances.cosmo.Teleport;
 import com.lol.spells.instances.cosmo.Warp;
 import com.lol.wand.WandRegistry;
 import com.ouroboros.accounts.ExpHandler;
+import com.ouroboros.accounts.PlayerDamageEvent;
 import com.ouroboros.accounts.PlayerData;
+import com.ouroboros.accounts.PlayerSaturationTask;
+import com.ouroboros.accounts.RestoreArmorTask;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.store.ShopItemContainer;
 import com.ouroboros.mobs.MobData;
@@ -70,14 +73,16 @@ public class Ouroboros extends JavaPlugin
 		
 		EchoConfig.load();
 		
-		PlayerData.initializeDataFolder();
-		MobData.initializeDataFolder();	
 		GeneralEvents.register(instance);
+		PlayerData.initializeDataFolder();
+		PlayerDamageEvent.register(instance);
+		PlayerSaturationTask.start(instance);
+		RestoreArmorTask.start(instance);
+		MobData.initializeDataFolder();	
 		EchoManager.registerEventHelpers(instance);
 		MobGenerateEvent.register(instance);
 		MobDeathEvent.register(instance);
 		MobDamageEvent.register(instance);
-		
 		MobManager.clearLegacyMobs();
 		MobManager.respawnAll();
 		MobNameplate.registerTaskHandler(instance);

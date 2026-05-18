@@ -42,6 +42,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.enums.ElementType;
+import com.ouroboros.enums.LegacyColor;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.instances.ObsMainMenu;
@@ -65,7 +66,7 @@ import com.ouroboros.utils.entityeffects.EntityEffects;
 public class ObsCommand implements CommandExecutor, TabCompleter
 {
 	
-	@SuppressWarnings("null")
+	@SuppressWarnings({ "null", "unused" })
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) 
 	{
@@ -132,6 +133,18 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			if (!p.isOp()) data.setKitClaimed(true);
 			data.save();
 			
+			return true;
+		}
+		
+		if (args[0].equals("setFavoriteColor") && args.length == 2)
+		{
+			LegacyColor color = LegacyColor.valueOf(args[1]);
+			if (color == null) return false;
+			
+			PlayerData data = PlayerData.getPlayer(uuid);
+			data.setFavoriteColor(color);
+			PrintUtils.OBSFormatPrint(p, "Favorite Color Set To: "+PrintUtils.getFavoriteColor(data)+"&l"+PrintUtils.formatEnumName(color.name())+"&r&f!");
+			PlayerHud.update(p);
 			return true;
 		}
 		
@@ -902,7 +915,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			case 1 ->
 			{
 				// All players see general-use commands.
-				List<String> cmds = new ArrayList<>(List.of("menu", "stats", "welcomekit", "spellbook", "recoverwand", "wand"));
+				List<String> cmds = new ArrayList<>(List.of("menu", "stats", "welcomekit", "spellbook", "recoverwand", "wand", "setFavoriteColor"));
 				
 				// OP-only commands are hidden from regular players.
 				if (isOp) cmds.addAll(List.of("debug", "debugspells", "version", "generate", "money", "register",
@@ -930,6 +943,8 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						if (isOp) statSubs.addAll(List.of("set", "reset", "addXp"));
 						yield statSubs;
 					}
+					case "setFavoriteColor" -> Arrays.stream(LegacyColor.values()).map(Enum::name).collect(Collectors.toList());
+
 					// General-use commands with no further completions.
 					case "spellbook", "recoverwand", "wand", "debug", "menu", "welcomekit" -> List.of();
 					default -> List.of();

@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -92,22 +91,6 @@ public class EntityEffects
 
 		}, 20, seconds * 20);
 		
-	}
-	
-	public static boolean heal(Player p, double value) 
-	{
-	    if (p == null || !p.isOnline() || value <= 0) return false;
-	
-	    double maxHealth = p.getAttribute(Attribute.MAX_HEALTH).getValue();
-	    
-	    p.setHealth(Math.min(p.getHealth() + value, maxHealth));
-	    return true;
-	}
-	
-	public static void heal(Player p)
-	{
-		if (p == null || !p.isOnline()) return;
-		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue());	
 	}
 	
 	public static void playSound(Player source, Location loc, Sound sound, SoundCategory soundCategory, float magnitude, float magnitude2) 

@@ -10,12 +10,9 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -28,17 +25,13 @@ import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.arcano.Sigil;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerHud;
-import com.ouroboros.enums.ElementType;
-import com.ouroboros.mobs.MobData;
+import com.ouroboros.accounts.RestoreArmorTask;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
-import com.ouroboros.utils.entityeffects.GeoEffects;
 import com.ouroboros.utils.entityeffects.HeresioEffects;
-import com.ouroboros.utils.entityeffects.InfernoEffects;
-import com.ouroboros.utils.entityeffects.MortioEffects;
 import com.ouroboros.utils.entityeffects.helpers.WildcardData;
 
 public class GeneralEvents implements Listener
@@ -77,7 +70,7 @@ public class GeneralEvents implements Listener
         		}
         		
         		PlayerData.loadPlayer(p.getUniqueId());
-        		PlayerHud.create(p);
+    	    	PlayerHud.create(p);
         	}
         	
         	@EventHandler
@@ -115,6 +108,13 @@ public class GeneralEvents implements Listener
         	public void playerRespawn(PlayerRespawnEvent e)
         	{
         		Player p = e.getPlayer();
+        		
+        		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        		data.setHP(data.getDefaultHP());
+        		data.setArmor(data.getDefaultArmor());
+        		data.setBreak(false);
+        		playerDeathRegistry.remove(p.getUniqueId());
+        		PlayerHud.update(p);
         		if (HeresioEffects.isHexed.containsKey(p.getUniqueId()))
         		{
         			PrintUtils.PrintToActionBar(p, "&2&oThe Hex Came Back!");
@@ -125,8 +125,8 @@ public class GeneralEvents implements Listener
         				ObsParticles.drawHeresioCastSigil(p);
         				EntityEffects.playSound(p, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.MASTER);
         				
-        				WildcardData data = HeresioEffects.isHexed.get(p.getUniqueId());
-        				p.addPotionEffect(new PotionEffect(data.effect, PotionEffect.INFINITE_DURATION, data.magnitude, true, true, true));
+        				WildcardData wcData = HeresioEffects.isHexed.get(p.getUniqueId());
+        				p.addPotionEffect(new PotionEffect(wcData.effect, PotionEffect.INFINITE_DURATION, wcData.magnitude, true, true, true));
         			}, 20);
         		}
         	}
@@ -150,54 +150,7 @@ public class GeneralEvents implements Listener
         		
         		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
         		ObsTimer.cancelCountdown(p);
-        	}
-        	
-        	@EventHandler
-        	public void playerDamage(EntityDamageEvent e)
-        	{
-        		if (e.getEntity() instanceof Player p)
-        		{
-        		    double finalDamage = e.getFinalDamage();
-
-        		    if (GeoEffects.isBarbed.containsKey(p.getUniqueId()) && e.getDamageSource() instanceof LivingEntity le) // Mitigation on barbed
-        		    {
-        		        int barbedDamage = GeoEffects.isBarbed.get(p.getUniqueId());
-        		        MobData.damageUnnaturally(p, le, barbedDamage, false, true, ElementType.GEO, null);
-        		        finalDamage = Math.max(0, finalDamage - barbedDamage);
-        		    }
-
-        		    if (InfernoEffects.hasInfernalBody.contains(p.getUniqueId()) && e.getDamageSource() instanceof LivingEntity le)
-        		    {
-        		    	InfernoEffects.addBurn(le, 10);
-        		    }
-        		    
-        		    if (GeoEffects.guarded_registry.containsKey(p.getUniqueId())) // Remove guarded stack
-        		    {
-        		        finalDamage *= 0.5;
-        		        GeoEffects.subGuarded(p);
-        		    }
-        		    
-        		    e.setDamage(finalDamage); // final damage for the player while guard is up + barbed is {finalDamage = (finalDamage - barbedDamage) * 0.5}
-        		}
-        		if (e.getCause().equals(DamageCause.FALL) && e.getEntity() instanceof Player p)
-        		{
-        			double initialFallDamage = e.getFinalDamage();
-        			double mitigatedFallDamage = 0;
-        			
-        			if (MortioEffects.nightShifted.containsKey(p.getUniqueId()))
-        			{
-        				double finalFallDamage = initialFallDamage * (0.1 * MortioEffects.nightShifted.get(p.getUniqueId()));
-        				e.setDamage(finalFallDamage);
-        				mitigatedFallDamage += initialFallDamage - finalFallDamage;
-        			}
-        			
-        			if (Ouroboros.debug)
-        			{
-        				PrintUtils.OBSConsoleDebug("Entity Damage Event: Fall Damage -- "+p.getName()+ ": took "+initialFallDamage+" fall damage."
-        						+"\nPlayer was Night-Shifted: "+MortioEffects.nightShifted.containsKey(p.getUniqueId()) + " | Mitigated "+mitigatedFallDamage+" damage.");
-        			}
-        		}
-        		
+        		RestoreArmorTask.lastHitTime.remove(p.getUniqueId());
         	}
         	
         }, plugin);
