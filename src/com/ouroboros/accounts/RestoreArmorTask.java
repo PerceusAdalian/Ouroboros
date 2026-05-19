@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -19,30 +20,37 @@ import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class RestoreArmorTask
 {
-    // Call RestoreArmorTask.markHit(player) from PlayerDamageEvent after any damage lands
-    public static final Map<UUID, Long> lastHitTime = new ConcurrentHashMap<>();
+    public static final Map<UUID, Long> lastHitTick = new ConcurrentHashMap<>();
+    private static long currentTick = 0L;
 
-    private static final long COOLDOWN_MS = 60000L; // 1 minute
+    private static final long COOLDOWN_TICKS = 1200L;
 
     public static void markHit(Player p)
     {
-        lastHitTime.put(p.getUniqueId(), System.currentTimeMillis());
+    	if (lastHitTick.containsKey(p.getUniqueId())) lastHitTick.remove(p.getUniqueId());
+        lastHitTick.put(p.getUniqueId(), currentTick);
     }
 
-    @SuppressWarnings("null")
-	public static void start(Plugin plugin)
+    public static void start(Plugin plugin)
     {
-        Bukkit.getScheduler().runTaskTimer(plugin, () ->
+    	Bukkit.getScheduler().runTaskTimer(plugin, () ->
         {
+            currentTick++;
+
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-                if (data == null) continue;
-                if (data.isBreak()) continue;
-                if (data.getArmor() >= data.getDefaultArmor()) continue;
+            	if (p == null) continue;
 
-                long lastHit = lastHitTime.getOrDefault(p.getUniqueId(), 0L);
-                if (System.currentTimeMillis() - lastHit < COOLDOWN_MS) continue;
+            	if (p.isDead()) continue;
+                if (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR) continue;
+                
+            	PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+            	if (data == null) continue;
+            	if (data.getArmor() >= data.getDefaultArmor()) continue;
+            	if (data.isBreak()) continue;
+
+                long lastHit = lastHitTick.getOrDefault(p.getUniqueId(), 0L);
+                if (currentTick - lastHit < COOLDOWN_TICKS) continue;
 
                 data.setArmor(data.getDefaultArmor());
                 data.save();
@@ -56,6 +64,6 @@ public class RestoreArmorTask
                     PrintUtils.OBSConsoleDebug("&e&lTask&r&f: &b&oRestoreArmor&r&f -- &aOK&7 (Player: "
                         + p.getName() + " | AR restored to " + data.getDefaultArmor() + ")");
             }
-        }, 0L, 20L);
+        }, 0L, 1L); 
     }
 }

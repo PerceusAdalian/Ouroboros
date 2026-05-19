@@ -33,9 +33,6 @@ import com.eol.echoes.records.EchoManifest;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.mobs.utils.LevelTable;
-import com.ouroboros.mobs.utils.MobManager;
-import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
@@ -451,7 +448,7 @@ public class MobData
 	{
 		if (target instanceof Player targetPlayer)
 		{
-		    PlayerData.damageUnnaturally(player, targetPlayer, value, doHurtAnimation, element, codec);
+		    PlayerData.damageUnnaturally(player, targetPlayer, value, doHurtAnimation, damageArmor, element, codec);
 		    return value;
 		}
 		
@@ -563,14 +560,18 @@ public class MobData
 	    ObsParticles.drawDisc(entity.getLocation(), entity.getWidth(), 1, 7, 0.1, Particle.CRIMSON_SPORE, null);
 		ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 8, Particle.LARGE_SMOKE, null);
 		
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Ouroboros.instance, ()->
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
+			MobData data = MobData.getMob(uuid);
+			if (data == null || data.isDead() || entity.isDead()) return;
 			((Mob) entity).setAI(true);
 		    setArmor(getArmor(true), false);
 			setBreak(false);
 			MobNameplate.update((LivingEntity) entity);
 			ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
+			save();
 		}, 400);
+		save();
 	}
 	
 	public boolean isDead()

@@ -1,4 +1,4 @@
-package com.ouroboros.mobs.utils;
+package com.ouroboros.mobs;
 
 import java.util.Comparator;
 
@@ -11,8 +11,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.mobs.EntityCategories;
-import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;
 

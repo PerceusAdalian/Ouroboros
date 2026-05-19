@@ -46,6 +46,7 @@ public class GeneralEvents implements Listener
         	public void onJoin(PlayerJoinEvent e) 
         	{
         		Player p = e.getPlayer();
+        		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
         		
         		if (p.isOp()) 
         		{
@@ -61,7 +62,6 @@ public class GeneralEvents implements Listener
         		else 
         		{        			
         			PrintUtils.OBSFormatPrint(p, "Welcome Back "+p.getName());
-        			PlayerData data = PlayerData.getPlayer(p.getUniqueId());
         			if (data != null && !data.hasKitClaimed())
         			{
         				PrintUtils.OBSFormatPrint(p, "You have an unclaimed &b&okit&r&f! Type &b&o/obs welcomekit&r&f to claim!");
@@ -70,13 +70,31 @@ public class GeneralEvents implements Listener
         		}
         		
         		PlayerData.loadPlayer(p.getUniqueId());
-    	    	PlayerHud.create(p);
+
+        		if (data != null && data.getHP() <= 0) 
+        		{
+        		    data.setHP(data.getDefaultHP());
+        		    data.setArmor(data.getDefaultArmor());
+        		    data.setBreak(false);
+        		    data.save();
+        		}
+
+        		Bukkit.getScheduler().runTaskLater(plugin, () -> PlayerData.syncVanillaHealth(p), 1L);
+
+        		PlayerHud.create(p);
         	}
         	
         	@EventHandler
         	public void onDeath(PlayerDeathEvent e)
         	{
-        		playerDeathRegistry.put(e.getEntity().getUniqueId(), System.currentTimeMillis());
+        	    Player p = e.getEntity();
+        	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        	    if (data != null)
+        	    {
+        	        data.setBreak(false);
+        	        data.save();
+        	    }
+        	    playerDeathRegistry.put(p.getUniqueId(), System.currentTimeMillis());
         	}
         	
         	@EventHandler
@@ -105,17 +123,28 @@ public class GeneralEvents implements Listener
         	}
         	
         	@EventHandler
-        	public void playerRespawn(PlayerRespawnEvent e)
+        	public void playerRespawn(PlayerRespawnEvent e) 
         	{
-        		Player p = e.getPlayer();
-        		
-        		PlayerData data = PlayerData.getPlayer(p.getUniqueId());
-        		data.setHP(data.getDefaultHP());
-        		data.setArmor(data.getDefaultArmor());
-        		data.setBreak(false);
-        		playerDeathRegistry.remove(p.getUniqueId());
-        		PlayerHud.update(p);
-        		if (HeresioEffects.isHexed.containsKey(p.getUniqueId()))
+        	    Player p = e.getPlayer();
+        	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        	    if (data == null) return;
+
+        	    data.setHP(data.getDefaultHP());
+        	    data.setArmor(data.getDefaultArmor());
+        	    data.setBreak(false);
+        	    data.save();
+        	    playerDeathRegistry.remove(p.getUniqueId());
+
+        	    Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () -> 
+        	    {
+        	        if (p.isOnline())
+        	        {
+        	            PlayerData.syncVanillaHealth(p);
+        	            PlayerHud.update(p);
+        	        }
+        	    }, 1L);
+
+        	    if (HeresioEffects.isHexed.containsKey(p.getUniqueId()))
         		{
         			PrintUtils.PrintToActionBar(p, "&2&oThe Hex Came Back!");
         			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
@@ -150,7 +179,7 @@ public class GeneralEvents implements Listener
         		
         		PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oOnQuit&r&f -- &aOK&7 || &o"+p.getName()+" left the server.");
         		ObsTimer.cancelCountdown(p);
-        		RestoreArmorTask.lastHitTime.remove(p.getUniqueId());
+        		RestoreArmorTask.lastHitTick.remove(p.getUniqueId());
         	}
         	
         }, plugin);

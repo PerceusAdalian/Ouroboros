@@ -1,5 +1,7 @@
 package com.ouroboros.accounts;
 
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -47,6 +49,12 @@ public class PlayerDamageEvent
         	{
         	    if (!(e.getEntity() instanceof Player p)) return;
 
+        	    if (p.hasMetadata("ouroboros_death"))
+        	    {
+        	        p.removeMetadata("ouroboros_death", Ouroboros.instance);
+        	        return;
+        	    }
+        	    
         	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
         	    if (data == null) return;
         	    
@@ -194,12 +202,12 @@ public class PlayerDamageEvent
         	    	element = EntityCategories.parseElementType(le.getType());
         	    	dmg = switch (Rarity.getRarityForMobLevel(mData.getLevel()))
 	    			{
-		    			case 1 -> NumberUtils.lerp(1,   20,  mData.getLevel(), 1,  19);
-		    		    case 2 -> NumberUtils.lerp(15,  40,  mData.getLevel(), 20, 29);
-		    		    case 3 -> NumberUtils.lerp(35,  75,  mData.getLevel(), 30, 39);
-		    		    case 4 -> NumberUtils.lerp(70,  100, mData.getLevel(), 40, 49);
-		    		    case 5 -> NumberUtils.lerp(150, 450, mData.getLevel(), 50, 79);
-		    		    case 6 -> NumberUtils.lerp(500, 750, mData.getLevel(), 80, 99);
+		    			case 1 -> NumberUtils.lerp(10,   50,  mData.getLevel(), 1,  19);
+		    		    case 2 -> NumberUtils.lerp(55,  100,  mData.getLevel(), 20, 29);
+		    		    case 3 -> NumberUtils.lerp(110,  175,  mData.getLevel(), 30, 39);
+		    		    case 4 -> NumberUtils.lerp(200,  350, mData.getLevel(), 40, 49);
+		    		    case 5 -> NumberUtils.lerp(400, 750, mData.getLevel(), 50, 79);
+		    		    case 6 -> NumberUtils.lerp(800, 950, mData.getLevel(), 80, 99);
 	    			    case 7 -> 1000;
 	    			    
 	    			    default -> 1;
@@ -217,19 +225,41 @@ public class PlayerDamageEvent
         	            case DRAGON_BREATH, CRAMMING, WORLD_BORDER,
         	                 VOID, SONIC_BOOM                       -> ElementType.COSMO;
         	            case DROWNING, SUFFOCATION, WITHER,
-        	                 DRYOUT, STARVATION                     -> ElementType.MORTIO;
+        	                 DRYOUT                                 -> ElementType.MORTIO;
         	            case FREEZE                                 -> ElementType.GLACIO;
         	            case FLY_INTO_WALL, LIGHTNING               -> ElementType.AERO;
         	            case POISON                                 -> ElementType.CORROSIVE;
         	            case MAGIC                                  -> ElementType.ARCANO;
         	            default                                     -> ElementType.PURE;
         	        };
-        	        
+
         	        dmg = e.getFinalDamage();
+        	        e.setDamage(0);
+
+        	        dmg = EntityEffects.resolveEffectModifiedDamage(p, element, dmg, cause);
+        	        if (dmg < 0) return;
+
+        	        if (CRITICAL_DAMAGE_CAUSES.contains(cause)) dmg = 150;
+        	        if (BYPASS_ARMOR_CAUSES.contains(cause))
+        	            PlayerData.damageUnnaturally(null, p, dmg, false, false, element, null);
+        	        else
+        	            PlayerData.damageUnnaturally(null, p, dmg, false, true, element, null);
+
+        	        if (data.getHP() > 0)
+        	        {
+        	            PlayerData.syncVanillaHealth(p);
+        	            PlayerHud.update(p);
+        	        }
+        	        RestoreArmorTask.markHit(p);
+        	        return;
         	    }
 
-        	    // --- Pre-damage modifiers ---
-
+		    	// Resolve general effect mitigated damage (Fire Resistance, Resistance, Absorption, Etc)
+		    	dmg = EntityEffects.resolveEffectModifiedDamage(p, element, dmg, cause);
+		    	if (dmg < 0) return;
+		    	
+        	 	// --- Pre-damage modifiers (Barbed, Guarded, etc.) ---
+        	    
         	    // Barbed: reflect a portion back to the attacker before taking damage
         	    if (GeoEffects.isBarbed.containsKey(p.getUniqueId())
         	        && e instanceof EntityDamageByEntityEvent dmgEvent
@@ -260,11 +290,18 @@ public class PlayerDamageEvent
         	    	dmg = dmg * (0.1 * MortioEffects.nightShifted.get(p.getUniqueId()));
 
         	    // --- Route through PlayerData damage contract ---
-        	    PlayerData.damageUnnaturally(null, p, dmg, false, element, null);
-        	    PlayerData.syncVanillaHealth(p);
-        	    PlayerHud.update(p);
-        	    RestoreArmorTask.markHit(p);
-        	    
+    	        if (BYPASS_ARMOR_CAUSES.contains(cause)) 
+    	        	PlayerData.damageUnnaturally(null, p, dmg, false, false, element, null);
+    	        else
+    	        	PlayerData.damageUnnaturally(null, p, dmg, false, true, element, null);
+    	        
+    	        if (data.getHP() > 0)
+    	        {
+    	            PlayerData.syncVanillaHealth(p);
+    	            PlayerHud.update(p);
+    	        }
+    	        RestoreArmorTask.markHit(p);
+    	        
         	    if (Ouroboros.debug)
         	        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oPlayerDamageEvent&r&f -- &aOK&7 || &fPlayer: &f" + p.getName()
         	            + " &7|| &fDamage: &c" + dmg
@@ -275,4 +312,21 @@ public class PlayerDamageEvent
         	}
 		}, plugin);
 	}
+	
+	private static final Set<DamageCause> BYPASS_ARMOR_CAUSES = Set.of(
+			DamageCause.FALL,
+		    DamageCause.WITHER,
+		    DamageCause.POISON,
+		    DamageCause.STARVATION,
+		    DamageCause.DRYOUT,
+		    DamageCause.FREEZE,
+		    DamageCause.MAGIC
+		);
+	
+	private static final Set<DamageCause> CRITICAL_DAMAGE_CAUSES = Set.of(
+		    DamageCause.DROWNING,
+		    DamageCause.SUFFOCATION,
+		    DamageCause.CRAMMING,
+		    DamageCause.VOID,
+		    DamageCause.WORLD_BORDER);
 }

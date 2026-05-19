@@ -17,7 +17,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.mobs.MobNameplate;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.helpers.DivineFavorData;

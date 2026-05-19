@@ -1,4 +1,4 @@
-package com.ouroboros.mobs.events;
+package com.ouroboros.mobs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
@@ -27,10 +27,6 @@ import com.eol.enums.EchoForm;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
-import com.ouroboros.mobs.MobAffinity;
-import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.MobManager;
-import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;

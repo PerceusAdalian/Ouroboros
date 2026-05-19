@@ -1,8 +1,9 @@
-package com.ouroboros.mobs.events;
+package com.ouroboros.mobs;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -35,10 +36,6 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.EntityCategory;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
-import com.ouroboros.mobs.EntityCategoryToSpellement;
-import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.MobManager;
-import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.MoneyHandler;
 import com.ouroboros.objects.instances.AeroEssence;
@@ -115,7 +112,7 @@ public class MobDeathEvent implements Listener
 			    	else if (Wand.isWand(held))
 			    	    sType = StatType.MAGIC;
 			    	
-			        int xp = XpUtils.getXp(le);
+			        int xp = XpUtils.getScaledXP(le, level, sType, p.getUniqueId());
 			        if (sType != null) PlayerData.addXP(p, sType, xp);
 			    	
 			        if (pData.doAutoCollectLootDrops())
@@ -123,13 +120,15 @@ public class MobDeathEvent implements Listener
 			            overrideDrops = true;
 			            int tears = 0;
 			            if (Chance.of(Math.min(75 + chanceBonus, 100))) tears++;
-			            int moneyAmount = level * 10;
+			            
 			            int essenceAmount = 0;
 			            for (int i = 0; i <= maxEssenceDrops; i++) 
 			            {
 			                if (!Chance.of(Math.min(30 + chanceBonus, 100))) continue;
 			                essenceAmount++;
 			            }
+			            
+			            int moneyAmount = getMoney(level);
 			            
 			            PlayerData.addLuminite(p, tears);
 			            PlayerData.addMoney(p, moneyAmount);
@@ -160,7 +159,7 @@ public class MobDeathEvent implements Listener
 
 			    // Money Drop
 			    if (overrideDrops == false)
-			    	e.getDrops().add(MoneyHandler.of(level*10).build());
+			    	e.getDrops().add(MoneyHandler.of(getMoney(level)).build());
 			    
 			    // Spell, Shard, & Essence drops
 			    if (mobCategory != null)
@@ -248,5 +247,14 @@ public class MobDeathEvent implements Listener
 
 			}
 		},plugin);
+	}
+	
+	private static int getMoney(int mobLevel)
+	{
+		double t = Math.min(1.0, (double)(mobLevel - 1) / 99.0);
+        int bonus = Chance.of(mobLevel) ? ThreadLocalRandom.current().nextInt(10, (int)(100 + t * t * 900)) : 0;
+        int moneyAmount = (int)(10 + (t * t) * (5000 - 10)) + bonus;
+        
+        return moneyAmount;
 	}
 }

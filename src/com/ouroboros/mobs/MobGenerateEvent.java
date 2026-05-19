@@ -1,4 +1,4 @@
-package com.ouroboros.mobs.events;
+package com.ouroboros.mobs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +17,6 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ouroboros.Ouroboros;
-import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.MobNameplate;
 import com.ouroboros.utils.PrintUtils;
 
 public class MobGenerateEvent implements Listener

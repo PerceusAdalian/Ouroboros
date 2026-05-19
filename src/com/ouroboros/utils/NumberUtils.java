@@ -22,4 +22,19 @@ public class NumberUtils
 	{
 		return Math.max(min, Math.min(val, max));
 	}
+	
+	public static int percent(double percent, int val)
+	{
+		return (int) (percent / 100.0) * val;
+	}
+	
+	public static double percent(double percent, double val)
+	{
+		return (percent / 100.0) * val;
+	}
+	
+	public static long percent(double percent, long val)
+	{
+		return (long) ((percent / 100.0) * val);
+	}
 }

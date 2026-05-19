@@ -16,8 +16,6 @@ import org.bukkit.plugin.Plugin;
 
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.EntityCategory;
-import com.ouroboros.mobs.utils.LevelTable;
-import com.ouroboros.mobs.utils.OutbreakManager;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.PrintUtils;
 

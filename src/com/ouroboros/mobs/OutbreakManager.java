@@ -1,12 +1,10 @@
-package com.ouroboros.mobs.utils;
+package com.ouroboros.mobs;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.mobs.MobSummoner;
-import com.ouroboros.mobs.Outbreak;
 import com.ouroboros.mobs.Outbreak.OutbreakEntry;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.RayCastUtils;

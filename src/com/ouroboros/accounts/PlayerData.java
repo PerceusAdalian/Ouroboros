@@ -14,6 +14,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -170,7 +171,7 @@ public class PlayerData
 	
 	public void setHP(double value)
 	{
-		config.set("hp.current", value);
+	    config.set("hp.current", Math.max(0, Math.min(value, getDefaultHP())));
 	}
 	
 	public double getHP()
@@ -260,21 +261,21 @@ public class PlayerData
 		PlayerHud.update(p);
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
+			Player playerRef = Bukkit.getPlayer(uuid);
+		    if (playerRef == null || !playerRef.isOnline() || playerRef.isDead()) return;
+		    
 			setBreak(false);
 			setArmor(getDefaultArmor());
-			if (!p.isDead() && p.isOnline())
-			{				
-				EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.MASTER);
-				ObsParticles.drawWisps(p.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
-				PrintUtils.PrintToActionBar(p, "&6"+Symbols.ARMOR+" &a&oRestored&r&f!");
-			}
-			PlayerHud.update(p);
+			EntityEffects.playSound(playerRef, Sound.ITEM_BONE_MEAL_USE, SoundCategory.MASTER);
+			ObsParticles.drawWisps(playerRef.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
+			PrintUtils.PrintToActionBar(playerRef, "&6"+Symbols.ARMOR+" &a&oRestored&r&f!");
+			PlayerHud.update(playerRef);
 			save();
 		}, 300);
 		save();
 	}
 	
-	public void damage(double value, ElementType element)
+	public void damage(double value, ElementType element, boolean routeArmorDamage)
 	{
 	    Player player = Bukkit.getPlayer(uuid);
 
@@ -289,8 +290,8 @@ public class PlayerData
 	    };
 
 	    double remaining = value * mx;
-
-	    if (!isBreak())
+	    
+	    if (!isBreak() && routeArmorDamage)
 	    {
 	        double armorMX = switch (element)
 	        {
@@ -300,40 +301,56 @@ public class PlayerData
 	        };
 
 	        int newArmor = (int) (getArmor() - remaining * armorMX);
-
+	        
 	        if (newArmor < 0)
 	        {
-	            // Overflow: recover how much raw damage punched through
 	            double overflow = (-newArmor) / armorMX;
+	            overflow = Math.min(overflow, getHP());
 	            setArmor(0);
-	            setBreak(); // triggers sound, effects, scheduler for restore
+	            setBreak();
 
 	            double breakMX = switch (element)
 	            {
 		            case INFERNO, COMBUST, MORTIO,
 		            COSMO, HERESIO,SEVER, 
-		            IMPALE, CRUSH, BLAST                    -> 1.5;
-	                case SLASH                              -> 1.25;
-	                case CELESTIO 							-> 0.5;
-	                default                                 -> 1.0;
+		            IMPALE, CRUSH, BLAST -> 1.5;
+	                case SLASH           -> 1.25;
+	                case CELESTIO 		 -> 0.5;
+	                default              -> 1.0;
 	            };
 	            remaining = overflow * breakMX;
 	        }
 	        else
 	        {
 	            setArmor(newArmor);
-	            remaining = 0; // fully absorbed
+	            remaining = 0;
 	        }
 	    }
-
+	    
 	    setHP(getHP() - remaining);
 
 	    if (getHP() <= 0)
 	    {
 	        setHP(0);
-	        syncVanillaHealth(player);
-	        PlayerHud.update(player);
-	        player.setHealth(0);
+	        setBreak(false);
+	        save();
+	        
+	        if (player != null)
+	        {
+	            PlayerHud.update(player);
+	            Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+	            {
+	                if (player.isOnline() && !player.isDead())
+                	Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+                	{
+                	    if (player.isOnline() && !player.isDead())
+                	    {
+                	        player.setMetadata("ouroboros_death", new FixedMetadataValue(Ouroboros.instance, true));
+                	        player.setHealth(0);
+                	    }
+                	}, 1L);
+	            }, 1L);
+	        }
 	        return;
 	    }
 
@@ -342,13 +359,13 @@ public class PlayerData
 	    save();
 	}
 	
-	public static void damageUnnaturally(@Nullable Player attacker, Player target, double value, boolean doHurtAnimation, @Nullable ElementType element, @Nullable EchoManifest codec)
+	public static void damageUnnaturally(@Nullable Player attacker, Player target, double value, boolean doHurtAnimation, boolean routeArmorDamage, @Nullable ElementType element, @Nullable EchoManifest codec)
 	{
 		PlayerData data = PlayerData.getPlayer(target.getUniqueId());
 		
 		if (element == null) element = ElementType.PURE;
 		
-		data.damage(value, element);
+		data.damage(value, element, routeArmorDamage);
 		
 		target.playHurtAnimation(0);
 		
@@ -380,6 +397,11 @@ public class PlayerData
 	{
 	    PlayerData data = PlayerData.getPlayer(player.getUniqueId());
 	    if (data == null) return;
+	    if (data.getHP() <= 0)
+	    {
+	        player.setHealth(0);
+	        return;
+	    }
 	    double ratio = data.getHP() / data.getDefaultHP();
 	    double scaled = NumberUtils.clamp(ratio * 20.0, 0.1, 20.0);
 	    player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(20.0);

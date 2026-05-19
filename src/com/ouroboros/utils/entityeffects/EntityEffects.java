@@ -12,6 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -20,7 +21,7 @@ import org.bukkit.util.Vector;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.mobs.MobData;
-import com.ouroboros.mobs.utils.MobNameplate;
+import com.ouroboros.mobs.MobNameplate;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 
@@ -108,5 +109,48 @@ public class EntityEffects
 		Vector v1 = target.getLocation().toVector();
 		Vector v2 = source.getLocation().toVector();
 		source.setVelocity(v1.subtract(v2).normalize().multiply(magnitude));
+	}
+	
+	public static double resolveEffectModifiedDamage(Player p, ElementType element, double dmg, DamageCause cause)
+	{
+	    double modifiedDamage = dmg;
+
+	    // Fire Resistance: nullify all fire-typed damage
+	    if (element == ElementType.INFERNO && p.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE))
+	        return -1;
+
+	    // Resistance: 20% reduction per level (level 5 = full immunity)
+	    if (p.hasPotionEffect(PotionEffectType.RESISTANCE))
+	    {
+	        int level = p.getPotionEffect(PotionEffectType.RESISTANCE).getAmplifier() + 1;
+	        modifiedDamage *= Math.max(0, 1.0 - (0.2 * level));
+	        if (modifiedDamage <= 0) return -1;
+	    }
+
+	    // Slow Falling: negate all fall damage
+	    if (cause == DamageCause.FALL && p.hasPotionEffect(PotionEffectType.SLOW_FALLING))
+	        return -1;
+
+	    // Conduit Power: negate drowning damage
+	    if (cause == DamageCause.DROWNING && p.hasPotionEffect(PotionEffectType.CONDUIT_POWER))
+	        return -1;
+
+	    // --- Absorption: consumed as a buffer before armor/HP ---
+	    if (p.getAbsorptionAmount() > 0)
+	    {
+	        double absorb = p.getAbsorptionAmount();
+	        if (absorb >= modifiedDamage)
+	        {
+	            p.setAbsorptionAmount(absorb - modifiedDamage);
+	            return -1;
+	        }
+	        else
+	        {
+	            modifiedDamage -= absorb;
+	            p.setAbsorptionAmount(0);
+	        }
+	    }
+
+	    return modifiedDamage;
 	}
 }

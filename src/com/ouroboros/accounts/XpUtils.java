@@ -2,6 +2,7 @@ package com.ouroboros.accounts;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -10,6 +11,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
+
+import com.ouroboros.enums.StatType;
 
 public class XpUtils 
 {
@@ -48,6 +51,21 @@ public class XpUtils
 			
 			default                            -> 5;
 		};
+	}
+	
+	public static int getScaledXP(LivingEntity entity, int mobLevel, StatType sType, UUID playerUUID)
+	{
+	    int base = getXp(entity);
+	    double t = Math.min(1.0, (double)(mobLevel - 1) / 99.0);
+	    
+	    // Scale mob XP quadratically with mob level (1x to 20x)
+	    double mobScaled = base * (1.0 + t * t * 19.0);
+	    
+	    // Slight bonus for killing mobs above your current stat level
+	    int statLevel = PlayerData.getPlayer(playerUUID).getStat(sType, true);
+	    double levelDelta = Math.max(1.0, 1.0 + (0.02 * (mobLevel - statLevel)));
+	    
+	    return (int)(mobScaled * levelDelta);
 	}
 	
 	//Mining/WoodCutting

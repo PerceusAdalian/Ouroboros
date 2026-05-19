@@ -4,8 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
-import com.ouroboros.mobs.events.MobGenerateEvent;
-import com.ouroboros.mobs.events.MobGenerateEvent.SummonRequest;
+import com.ouroboros.mobs.MobGenerateEvent.SummonRequest;
 
 public class MobSummoner
 {
