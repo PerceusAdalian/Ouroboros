@@ -7,7 +7,7 @@ package com.eol.echoes.records;
  * StatResolver reads this to roll the base EchoData for a forged Echo.
  * Attack Rating and Durability are NOT here — those come from BindingStatBlock.
  */
-public record MaterialStatRange(
+public record MaterialStatBlock(
 	    double baseAttackMin,
 	    double baseAttackMax,
 	    double baseAttackRateMin,
@@ -16,19 +16,19 @@ public record MaterialStatRange(
 	    double critModifierCeiling,
 	    int    durabilityMin,
 	    int    durabilityMax)
-	{
-	    public double rollBaseAttack()
-	    {
-	        return baseAttackMin + (Math.random() * (baseAttackMax - baseAttackMin));
-	    }
+{
+    public double rollBaseAttack()
+    {
+        return baseAttackMin + (Math.random() * (baseAttackMax - baseAttackMin));
+    }
 
-	    public double rollCritModifier()
-	    {
-	        return 1.0 + (Math.random() * (critModifierCeiling - 1.0));
-	    }
+    public double rollCritModifier()
+    {
+        return 1.0 + (Math.random() * (critModifierCeiling - 1.0));
+    }
 
-	    public int rollDurability()   // ADD
-	    {
-	        return durabilityMin + (int)(Math.random() * (durabilityMax - durabilityMin + 1));
-	    }
-	}
+    public int rollDurability()
+    {
+        return durabilityMin + (int)(Math.random() * (durabilityMax - durabilityMin + 1));
+    }
+}

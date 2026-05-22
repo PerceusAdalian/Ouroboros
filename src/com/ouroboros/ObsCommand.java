@@ -31,6 +31,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.echoes.EchoForge;
 import com.eol.echoes.abilities.AbilityRegistry;
 import com.eol.echoes.abilities.EchoAbility;
+import com.eol.enums.EchoForm;
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
@@ -66,7 +67,6 @@ import com.ouroboros.utils.entityeffects.EntityEffects;
 public class ObsCommand implements CommandExecutor, TabCompleter
 {
 	
-	@SuppressWarnings({ "null", "unused" })
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) 
 	{
@@ -540,7 +540,6 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			if (args[1].equals("echo") && args.length == 6)
 			{
 				Materia catalyst = null;
-				
 				Materia base = null;
 				Materia binding = null;
 				Materia element_core = null;
@@ -570,6 +569,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				}
 				InventoryUtils.add(p, echo);
 				PrintUtils.OBSFormatDebug(p, "Echo Generated Successfully!", "Echo Generation");
+				return true;
 			}
 			
 			if (args[1].equals("debugtarget"))
@@ -579,7 +579,42 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 				return true;
 			}
 			
+			if (args[1].equals("armorecho") && args.length == 6)
+			{
+				Materia  catalyst = null;
+				Materia  base     = null;
+				Materia  binding  = null;
+				EchoForm form  	  = EchoForm.fromString(args[5]);
+				
+				if (Materia.get(args[2]) != null) catalyst = Materia.get(args[2]);
+				if (Materia.get(args[3]) != null) base = Materia.get(args[3]);
+				if (Materia.get(args[4]) != null) binding = Materia.get(args[4]);
+				
+				if (catalyst.getMateriaComponent() != MateriaComponent.CATALYST)
+					PrintUtils.OBSFormatError(p, "Catalyst Invalid: "+catalyst == null ? "null" : catalyst.getInternalName() + ", "+catalyst.getMateriaComponent().getLabel());
+				
+				if (base.getMateriaComponent() != MateriaComponent.BASE)
+					PrintUtils.OBSFormatError(p, "Base Invalid: "+base == null ? "null" : base.getInternalName() + ", "+base.getMateriaComponent().getLabel());
+				
+				if (binding.getMateriaComponent() != MateriaComponent.BINDING)
+					PrintUtils.OBSFormatError(p, "Binding Invalid: "+ binding == null ? "null" : binding.getInternalName() + ", "+binding.getMateriaComponent().getLabel());
+				
+				if (form != null && !EchoForm.armor_forms.contains(form))
+					PrintUtils.OBSFormatError(p, "Form Invalid: "+ form == null ? "null" : form.toString() + ", valid inputs: HELMET, CHESTPLATE, LEGGINGS, BOOTS.");
+				
+				ItemStack echo = EchoForge.forgeArmorEcho(catalyst, base, binding, form);
+				if (echo == null)
+				{
+					PrintUtils.OBSConsoleError("Forge Failed -- generated echo returned null!");
+				    return true;
+				}
+				
+				InventoryUtils.add(p, echo);
+				PrintUtils.OBSFormatDebug(p, "Echo Generated Successfully!", "Echo Generation");
+				return true;
+			}
 		}
+		
 		
 		if (args[0].equals("money")) 
 		{
@@ -933,7 +968,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "register" ->
 						isOp ? List.of("spell", "ability") : List.of();
 					case "generate" ->
-						isOp ? List.of("object", "spell", "materia", "wand", "mob", "echo") : List.of();
+						isOp ? List.of("object", "spell", "materia", "wand", "mob", "echo", "armorecho") : List.of();
 					case "money" ->
 						isOp ? List.of("add", "subtract", "setMaxMoney", "setMaxDebt", "resetMoney") : List.of();
 					// Stats sub-commands: some are OP-only.
@@ -961,7 +996,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "wand" -> isOp ? new ArrayList<>(Wand.wand_registry.keySet()) : List.of();
 					case "materia" -> isOp ? List.of("catalyst", "element_core", "component") : List.of();
 					case "mob" -> isOp ? EntityCategories.asList() : List.of();
-					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
+					case "echo","armorecho" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.CATALYST)
 							.map(Materia::getInternalName)
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					case "set", "reset", "addXp" ->
@@ -993,7 +1028,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 						.collect(Collectors.toCollection(ArrayList::new));
 						default -> List.of();
 					} : List.of();
-					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.BASE)
+					case "echo","armorecho" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.BASE)
 							.map(Materia::getInternalName)
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					case "set", "addXp" ->
@@ -1024,7 +1059,7 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 						default -> List.of();
 					} : List.of();
-					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.BINDING)
+					case "echo","armorecho" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.BINDING)
 							.map(Materia::getInternalName)
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					case "mob" -> isOp ? List.of("<custom name>") : List.of();
@@ -1041,6 +1076,10 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 					case "set" -> isOp ? List.of("<value>") : List.of();
 					case "echo" -> isOp ? Materia.materia_registry.values().stream().filter(m -> m.getMateriaComponent() == MateriaComponent.ELEMENT_CORE)
 							.map(Materia::getInternalName)
+							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
+					case "armorecho" -> isOp ? Arrays.stream(EchoForm.values())
+							.filter(form -> EchoForm.armor_forms.contains(form))
+							.map(EchoForm::name)
 							.collect(Collectors.toCollection(ArrayList::new)) : List.of();
 					default -> List.of();
 				};

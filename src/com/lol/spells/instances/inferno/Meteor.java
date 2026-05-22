@@ -65,7 +65,6 @@ public class Meteor extends Spell
 		return 100;
 	}
 	
-	@SuppressWarnings("null")
 	public static void summonMeteor(Player p, Location loc, int baseYield, boolean temperatureBonus, int bonusModifier, boolean isIncendiary, MeteorSize meteorSize)
 	{
 	    Location spawnLoc = loc.clone().add(0, 45, 0);

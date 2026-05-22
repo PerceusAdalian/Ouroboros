@@ -9,16 +9,15 @@ import com.eol.enums.MateriaType;
  * to the Echo system's EchoMaterial and ElementiumSlotType enums.
  *
  * This is the single authoritative mapping between the two systems.
- * All forge pipeline stages call through here rather than doing their
- * own ad-hoc switches.
+ * All forge pipeline stages call through here rather than doing their own ad-hoc switches.
  */
 public final class MateriaTypeResolver
 {
     private MateriaTypeResolver() {}
 
     /**
-     * Maps a BASE Materia's MateriaType to the corresponding EchoMaterial tier.
-     * Returns null if the MateriaType is not a valid weapon base material.
+     * Maps a BASE Materia's MateriaType to the corresponding weapon/tool EchoMaterial tier.
+     * Returns null if the MateriaType is not a valid weapon base (e.g. LEATHER).
      */
     public static EchoMaterial toEchoMaterial(MateriaType type)
     {
@@ -33,9 +32,26 @@ public final class MateriaTypeResolver
             case NETHERITE -> EchoMaterial.NETHERITE;
             case HAMMER    -> EchoMaterial.HAMMER;
             case ARMAMENT  -> EchoMaterial.ARMAMENT;
-            case BOW 	   -> EchoMaterial.BOW;
+            case BOW       -> EchoMaterial.BOW;
             case CROSSBOW  -> EchoMaterial.CROSSBOW;
-            default        -> null; // LEATHER, COPPER, STRING, PELT, element types — not weapon bases
+            default        -> null; // LEATHER and element types route elsewhere
+        };
+    }
+
+    /**
+     * Maps a BASE Materia's MateriaType to the corresponding armor EchoMaterial tier.
+     * Returns null if the MateriaType is not a valid armor base.
+     */
+    public static EchoMaterial toArmorEchoMaterial(MateriaType type)
+    {
+        return switch (type)
+        {
+            case LEATHER   -> EchoMaterial.LEATHER;
+            case IRON      -> EchoMaterial.IRON;
+            case GOLD      -> EchoMaterial.GOLDEN;
+            case DIAMOND   -> EchoMaterial.DIAMOND;
+            case NETHERITE -> EchoMaterial.NETHERITE;
+            default        -> null;
         };
     }
 
@@ -59,19 +75,28 @@ public final class MateriaTypeResolver
         };
     }
 
-    /**
-     * Returns true if the given MateriaType is a valid weapon base.
-     */
-    public static boolean isValidBase(MateriaType type)
+    /** Returns true if the given MateriaType is a valid weapon/tool base. */
+    public static boolean isValidWeaponBase(MateriaType type)
     {
         return toEchoMaterial(type) != null;
     }
 
-    /**
-     * Returns true if the given MateriaType is a valid element core.
-     */
+    /** Returns true if the given MateriaType is a valid armor base. */
+    public static boolean isValidArmorBase(MateriaType type)
+    {
+        return toArmorEchoMaterial(type) != null;
+    }
+
+    /** Returns true if the given MateriaType is a valid element core. */
     public static boolean isValidElementCore(MateriaType type)
     {
         return toElementiumSlot(type) != ElementiumSlotType.NO_SLOT;
+    }
+
+    /** @deprecated Use {@link #isValidWeaponBase(MateriaType)} instead. */
+    @Deprecated
+    public static boolean isValidBase(MateriaType type)
+    {
+        return isValidWeaponBase(type);
     }
 }

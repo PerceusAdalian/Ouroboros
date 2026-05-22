@@ -200,3 +200,81 @@ binding_stats:
     durability_multiplier: 1.75
     crit_rate_bonus: -0.1
     attack_bonus: 10
+
+# ============================================================
+# ARMOR ECHO STAT RANGES
+# Paste this block into echo_config.yml alongside material_stats.
+#
+# Each key must match an EchoMaterial enum name (case-insensitive).
+# Durability ranges here feed into ArmorStatRange; the binding's
+# durability_multiplier is applied on top during stat resolution.
+#
+# Stat reference:
+#   armor_rating        — flat damage reduction points (analogous to vanilla armor value)
+#   block_rate          — [0.0, 1.0] fraction of incoming hits that trigger the block mitigation path
+#   crit_armor_rating   — additional armor rating applied only against critical hits
+#   crit_block_rate     — [0.0, 1.0] chance to fully negate a critical hit's bonus damage
+#   durability          — raw durability before the binding multiplier is applied
+# ============================================================
+
+armor_stats:
+
+  LEATHER:
+    armor_rating_min:       5
+    armor_rating_max:       10
+    block_rate_min:         0.01
+    block_rate_max:         0.05
+    crit_armor_rating_min:  1
+    crit_armor_rating_max:  10
+    crit_block_rate_min:    0.01
+    crit_block_rate_max:    0.05
+    durability_min:         100
+    durability_max:         150
+
+  IRON:
+    armor_rating_min:       15
+    armor_rating_max:       50
+    block_rate_min:         0.01
+    block_rate_max:         0.15
+    crit_armor_rating_min:  5
+    crit_armor_rating_max:  15
+    crit_block_rate_min:    0.05
+    crit_block_rate_max:    0.10
+    durability_min:         250
+    durability_max:         400
+
+  GOLDEN:
+    armor_rating_min:       20
+    armor_rating_max:       35
+    block_rate_min:         0.05
+    block_rate_max:         0.10
+    crit_armor_rating_min:  5
+    crit_armor_rating_max:  25
+    crit_block_rate_min:    0.10
+    crit_block_rate_max:    0.25
+    durability_min:         100
+    durability_max:         250
+
+  DIAMOND:
+    armor_rating_min:       50
+    armor_rating_max:       100
+    block_rate_min:         0.10
+    block_rate_max:         0.25
+    crit_armor_rating_min:  10
+    crit_armor_rating_max:  30
+    crit_block_rate_min:    0.10
+    crit_block_rate_max:    0.30
+    durability_min:         450
+    durability_max:         750
+
+  NETHERITE:
+    armor_rating_min:       75
+    armor_rating_max:       200
+    block_rate_min:         0.15
+    block_rate_max:         0.35
+    crit_armor_rating_min:  15
+    crit_armor_rating_max:  50
+    crit_block_rate_min:    0.10
+    crit_block_rate_max:    0.45
+    durability_min:         500
+    durability_max:         1000

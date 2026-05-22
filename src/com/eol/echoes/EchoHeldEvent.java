@@ -35,9 +35,10 @@ public class EchoHeldEvent
 			{
 			    Player p = e.getPlayer();
 			    PlayerInventory inv = p.getInventory();
-
+			    
 			    // Remove effects from previously held item
 			    ItemStack prev = inv.getItem(e.getPreviousSlot());
+			    if (EchoManager.isArmorEcho(prev)) return;
 			    if (EchoManager.isEcho(prev))
 			    {
 			        EchoManifest prevCodec = EchoManager.getCodec(prev);
@@ -78,7 +79,8 @@ public class EchoHeldEvent
 				
 				ItemStack stack = e.getItemDrop().getItemStack();
 				if (!EchoManager.isEcho(stack)) return;
-				
+				if (EchoManager.isArmorEcho(stack)) return;
+			    
 				EchoManifest codec = EchoManager.getCodec(stack);
 				if(codec == null) return;
 				
@@ -94,7 +96,8 @@ public class EchoHeldEvent
 				if (!(e.getEntity() instanceof Player p)) return;
 				ItemStack stack = e.getItem().getItemStack();
 				if (!EchoManager.isEcho(stack)) return;
-				
+				if (EchoManager.isArmorEcho(stack)) return;
+			    
 				Bukkit.getScheduler().runTaskLater(plugin, () ->
 			    {
 			        ItemStack held = p.getInventory().getItemInMainHand();
@@ -121,7 +124,6 @@ public class EchoHeldEvent
 		}, plugin);
 	}
 	
-	@SuppressWarnings("null")
 	public static void queueBuffTask(Plugin plugin)
 	{
 		Bukkit.getScheduler().runTaskTimer(plugin, () ->

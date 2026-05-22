@@ -2,6 +2,7 @@ package com.eol.enums;
 
 public enum EchoMaterial 
 {
+	LEATHER,
 	WOODEN,
 	STONE,
 	COPPER,

@@ -427,7 +427,6 @@ public class PrintUtils
 	    return buffer.toString().replace("&", "§");
 	}
 
-	@SuppressWarnings("null")
 	private static final Map<ChatColor, Color> LEGACY_COLORS = new EnumMap<>(ChatColor.class);
 	static
 	{

@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.eol.enums.MateriaComponent;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.instances.protocolecho.ArmorForgeFormTargetPage;
 import com.ouroboros.menus.instances.protocolecho.EchoForgePage;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -41,22 +42,32 @@ public class MateriaCastHandler implements Listener
 		
         PersistentDataContainer pdc = held.getItemMeta().getPersistentDataContainer();
         
-        boolean validInteractMethod = CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR)
-    			|| CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_BLOCK)
-    			|| CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR)
-    			|| CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_BLOCK);
-        
         if (pdc.has(Materia.materiaKey) && pdc.has(Materia.componentKey)) 
         {
             String component = pdc.get(Materia.componentKey, PersistentDataType.STRING);
             if (component == null || !component.equals(MateriaComponent.CATALYST.getKey())) return;
             
-            if (validInteractMethod)
+            
+            if (CastConditions.isValidAction(e, CastConditions.SHIFT_RIGHT_CLICK_AIR))
             {
+            	e.setCancelled(true);
+            	EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.AMBIENT);
+            	ObsParticles.drawLandingWave(p);
+            	ObsParticles.drawCylinder(p.getLocation(), 2.5, 3, 15, 0.4, 0.1, Particle.ENCHANT, null);
+                GuiHandler.open(p, new ArmorForgeFormTargetPage(p, e.getItem()));
+            }
+            else if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
+            {
+            	e.setCancelled(true);
             	EntityEffects.playSound(p, Sound.BLOCK_CONDUIT_ACTIVATE, SoundCategory.AMBIENT);
             	ObsParticles.drawLandingWave(p);
             	ObsParticles.drawCylinder(p.getLocation(), 2.5, 3, 15, 0.4, 0.1, Particle.ENCHANT, null);
                 GuiHandler.open(p, new EchoForgePage(p, e.getItem()));
+            }
+            else
+            {
+            	e.setCancelled(true);
+            	return;
             }
         }
         

@@ -5,7 +5,7 @@ import java.util.List;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.instances.AbstractEOL;
-import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.EOLRecipe;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
@@ -14,7 +14,7 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.PassiveEchoEffect;
-import com.eol.enums.WeaponModifierCondition;
+import com.eol.enums.ModifierCondition;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -30,6 +30,7 @@ public class AxeOfBjorn extends AbstractEOL
 				ElementiumSlotType.GLACIO, 
 				buildModifiers(),
 				new EchoData(75, 2.5, .40, 2.5, 3000, 3000), 
+				null,
 				new BjornsGlaciate().getInternalName(), 
 				"Thou who takes up my axe -- hear me, and be not afraid.",
 				"My element, "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&7&o, is not the Cold of Death.",
@@ -39,14 +40,13 @@ public class AxeOfBjorn extends AbstractEOL
 				"I protect the creatures of the Forest.");
 	}
 
-	@SuppressWarnings("null")
 	private static List<Modifier> buildModifiers()
     {
         return List.of(
-        	new ActiveModifier(WeaponModifierCondition.HOTBIOMES, CombatStat.ATTACK, 0.45, true, false),
-            new ActiveModifier(WeaponModifierCondition.INFERNAL, CombatStat.CRIT_MODIFIER, 3, false, false),
-            new ActiveModifier(WeaponModifierCondition.INFERNAL, CombatStat.CRIT_RATE, 0.20, true, false),
-            new ActiveModifier(WeaponModifierCondition.GLACIAL, CombatStat.ATTACK, -0.90, true, true),
-            new PassiveModifier(WeaponModifierCondition.COLDBIOMES, PassiveEchoEffect.PROTECTIVE, 0));
+        	new ActiveEchoModifier(ModifierCondition.HOTBIOMES, CombatStat.ATTACK, 0.45, true, false),
+            new ActiveEchoModifier(ModifierCondition.INFERNAL, CombatStat.CRIT_MODIFIER, 3, false, false),
+            new ActiveEchoModifier(ModifierCondition.INFERNAL, CombatStat.CRIT_RATE, 0.20, true, false),
+            new ActiveEchoModifier(ModifierCondition.GLACIAL, CombatStat.ATTACK, -0.90, true, true),
+            new PassiveModifier(ModifierCondition.COLDBIOMES, PassiveEchoEffect.PROTECTIVE, 0));
     }
 }

@@ -267,7 +267,6 @@ public class RefinementPage extends ObsGui
 	// Lightweight result carrier
 	public record RefinementResult(Rarity rarity, boolean failed, int xp) {}
 	
-	@SuppressWarnings("null")
 	private void addResult(UUID uuid, ItemStack item, int xp)
 	{
 	    refineryResult.computeIfAbsent(uuid, k -> new HashMap<>()).merge(item, 1, Integer::sum);

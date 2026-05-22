@@ -9,16 +9,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.ActiveArmorModifier;
+import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
+import com.eol.enums.ArmorStat;
 import com.eol.enums.CombatStat;
 import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
+import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
-import com.eol.enums.WeaponModifierCondition;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -28,114 +30,126 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.Rarity;
 
 /**
- * EchoManifestCodec handles all serialization and deserialization of EchoManifest
+ * EchoManifestCodec handles serialization and deserialization of EchoManifest
  * to and from the item's PersistentDataContainer.
  *
- * The manifest is stored as a single JSON string under the key "echo:manifest".
- * This keeps the PDC footprint to one key regardless of modifier count.
+ * The manifest is stored as a single JSON string under the key "echo_manifest".
  *
- * JSON structure:
- * {
- *   "echoId":   "string",
- *   "rarity":   "LEGENDARY",
- *   "slotType": "INFERNO",
- *   "baseStats": {
- *     "attack": 15.0, "attackRating": 0.75, "critRate": 0.25, "critModifier": 2.0
- *   },
- *   "modifiers": [
- *     { "type": "active",  "condition": "UNDEAD", "statType": "MELEE",  "magnitude": 0.50, "isPercent": true },
- *     { "type": "passive", "condition": "PASSIVE","effectKey": "apply_expose", "magnitude": 0.0 }
- *   ]
- * }
+ * Modifier type tags:
+ *   "active_weapon" — ActiveEchoModifier  (CombatStat,  weapon/tool echoes)
+ *   "active_armor"  — ActiveArmorModifier (ArmorStat,   armor echoes)
+ *   "passive"       — PassiveModifier     (both types)
+ *
+ * Legacy manifests written with "active" are deserialized as ActiveEchoModifier
+ * so existing weapon echoes on existing items keep working.
  */
 public class EchoManifestCodec
 {
     private static final Gson GSON = new GsonBuilder().create();
- 
+
     public static final NamespacedKey MANIFEST_KEY = new NamespacedKey(Ouroboros.instance, "echo_manifest");
- 
+
     // -------------------------------------------------------------------------
     // Write
     // -------------------------------------------------------------------------
- 
-    /**
-     * Serializes the manifest to JSON and writes it into the item's PDC.
-     * Returns the same ItemStack for chaining.
-     */
+
     public static ItemStack write(ItemStack item, EchoManifest manifest)
     {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
- 
+
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
         pdc.set(MANIFEST_KEY, PersistentDataType.STRING, toJson(manifest));
- 
+
         item.setItemMeta(meta);
         return item;
     }
- 
+
     // -------------------------------------------------------------------------
     // Read
     // -------------------------------------------------------------------------
- 
-    /**
-     * Reads and deserializes the manifest from the item's PDC.
-     * Returns null if the item has no manifest (i.e. is not an Echo).
-     */
+
     public static EchoManifest read(ItemStack item)
     {
         if (item == null) return null;
-        
+
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
- 
+
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
         if (!pdc.has(MANIFEST_KEY, PersistentDataType.STRING)) return null;
- 
+
         String json = pdc.get(MANIFEST_KEY, PersistentDataType.STRING);
         return fromJson(json);
     }
- 
+
     // -------------------------------------------------------------------------
     // Serialization
     // -------------------------------------------------------------------------
- 
+
     public static String toJson(EchoManifest manifest)
     {
         JsonObject root = new JsonObject();
- 
-        root.addProperty("echoId",           manifest.echoId());
-        root.addProperty("rarity",           manifest.rarity().name());
-        root.addProperty("slotType",         manifest.slotType().name());
-        root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey());
-        root.addProperty("equippedAbility",  manifest.equippedAbilityKey());
-        root.addProperty("echoForm",     	 manifest.echoForm()     != null ? manifest.echoForm().name()     : null);
-        root.addProperty("echoMaterial", 	 manifest.echoMaterial() != null ? manifest.echoMaterial().name() : null);
-        
-        // Base stats
-        JsonObject stats = new JsonObject();
-        EchoData data = manifest.baseStats();
-        stats.addProperty("attack",        data.getAttack());
-        stats.addProperty("attackRating",  data.getAttackRating());
-        stats.addProperty("critRate",      data.getCritRate());
-        stats.addProperty("critModifier",  data.getCritModifier());
-        stats.addProperty("maxDurability",     data.getMaxDurability());
-        stats.addProperty("currentDurability", data.getCurrentDurability());
-        root.add("baseStats", stats);
- 
-        // Modifiers
+
+        root.addProperty("echoId",       manifest.echoId());
+        root.addProperty("rarity",       manifest.rarity().name());
+        root.addProperty("echoType",     manifest.isArmorEcho() ? "ARMOR" : "WEAPON");
+        root.addProperty("slotType",     manifest.slotType().name());
+        root.addProperty("echoForm",     manifest.echoForm()     != null ? manifest.echoForm().name()     : null);
+        root.addProperty("echoMaterial", manifest.echoMaterial() != null ? manifest.echoMaterial().name() : null);
+
+        // Stat block — only the relevant one is written
+        if (manifest.isArmorEcho())
+        {
+            ArmorData a = manifest.armorStats();
+            JsonObject armorStats = new JsonObject();
+            armorStats.addProperty("armorRating",         a.getArmorRating());
+            armorStats.addProperty("blockRate",           a.getBlockRate());
+            armorStats.addProperty("criticalArmorRating", a.getCriticalArmorRating());
+            armorStats.addProperty("criticalBlockRate",   a.getCriticalBlockRate());
+            armorStats.addProperty("maxDurability",       a.getMaxDurability());
+            armorStats.addProperty("currentDurability",   a.getCurrentDurability());
+            root.add("armorStats", armorStats);
+        }
+        else
+        {
+            EchoData d = manifest.baseStats();
+            JsonObject baseStats = new JsonObject();
+            baseStats.addProperty("attack",            d.getAttack());
+            baseStats.addProperty("attackRating",      d.getAttackRating());
+            baseStats.addProperty("critRate",          d.getCritRate());
+            baseStats.addProperty("critModifier",      d.getCritModifier());
+            baseStats.addProperty("maxDurability",     d.getMaxDurability());
+            baseStats.addProperty("currentDurability", d.getCurrentDurability());
+            root.add("baseStats", baseStats);
+
+            root.addProperty("lockedAbilityKey", manifest.lockedAbilityKey());
+            root.addProperty("equippedAbility",  manifest.equippedAbilityKey());
+        }
+
+        // Modifiers — type tag distinguishes the three concrete Modifier subtypes
         JsonArray mods = new JsonArray();
         for (Modifier mod : manifest.modifiers())
         {
             JsonObject m = new JsonObject();
-            if (mod instanceof ActiveModifier active)
+
+            if (mod instanceof ActiveArmorModifier armor)
             {
-                m.addProperty("type",       "active");
-                m.addProperty("condition",  active.condition().name());
-                m.addProperty("combatStat", active.combatStat().name());
-                m.addProperty("magnitude",  active.magnitude());
-                m.addProperty("isPercent",  active.isPercent());
-                m.addProperty("isNegative", active.isNegative());
+                m.addProperty("type",       "active_armor");
+                m.addProperty("condition",  armor.condition().name());
+                m.addProperty("armorStat",  armor.armorStat().name());
+                m.addProperty("magnitude",  armor.magnitude());
+                m.addProperty("isPercent",  armor.isPercent());
+                m.addProperty("isNegative", armor.isNegative());
+            }
+            else if (mod instanceof ActiveEchoModifier weapon)
+            {
+                m.addProperty("type",       "active_weapon");
+                m.addProperty("condition",  weapon.condition().name());
+                m.addProperty("combatStat", weapon.combatStat().name());
+                m.addProperty("magnitude",  weapon.magnitude());
+                m.addProperty("isPercent",  weapon.isPercent());
+                m.addProperty("isNegative", weapon.isNegative());
             }
             else if (mod instanceof PassiveModifier passive)
             {
@@ -144,86 +158,116 @@ public class EchoManifestCodec
                 m.addProperty("effectKey", passive.effectKey().name());
                 m.addProperty("magnitude", passive.magnitude());
             }
+
             mods.add(m);
         }
         root.add("modifiers", mods);
 
         return GSON.toJson(root);
     }
- 
+
     // -------------------------------------------------------------------------
     // Deserialization
     // -------------------------------------------------------------------------
- 
-    @SuppressWarnings("null")
-	public static EchoManifest fromJson(String json)
+
+    public static EchoManifest fromJson(String json)
     {
         JsonObject root = GSON.fromJson(json, JsonObject.class);
- 
-        String             echoId   	= root.get("echoId").getAsString();
-        Rarity             rarity   	= Rarity.valueOf(root.get("rarity").getAsString());
-        ElementiumSlotType slot     	= ElementiumSlotType.valueOf(root.get("slotType").getAsString());
-        
-        JsonElement echoFormElement = root.get("echoForm");
-        EchoForm echoForm = (echoFormElement == null || echoFormElement.isJsonNull())
-                ? null 
-                : EchoForm.valueOf(echoFormElement.getAsString());
 
-        JsonElement echoMaterialElement = root.get("echoMaterial");
-        EchoMaterial echoMaterial = (echoMaterialElement == null || echoMaterialElement.isJsonNull())
-                ? null 
-                : EchoMaterial.valueOf(echoMaterialElement.getAsString());
-        
-        JsonElement lockedEl = root.get("lockedAbilityKey");
-        String lockedAbilityKey = (lockedEl == null || lockedEl.isJsonNull())
-                ? null 
-                : lockedEl.getAsString();
- 
-        JsonElement equippedAbility = root.get("equippedAbility");
-        String abilityKey = (equippedAbility == null || equippedAbility.isJsonNull())
-        		? null 
-        		: equippedAbility.getAsString();
-        
-        JsonObject statsObj = root.getAsJsonObject("baseStats");
-        
-        JsonElement maxDurabilityElement = statsObj.get("maxDurability");
-        int maxDurability = (maxDurabilityElement == null || maxDurabilityElement.isJsonNull()) ? 200 : maxDurabilityElement.getAsInt();
+        String             echoId = root.get("echoId").getAsString();
+        Rarity             rarity = Rarity.valueOf(root.get("rarity").getAsString());
+        ElementiumSlotType slot   = ElementiumSlotType.valueOf(root.get("slotType").getAsString());
 
-        JsonElement currentDurabilityElement = statsObj.get("currentDurability");
-        int currentDurability = (currentDurabilityElement == null || currentDurabilityElement.isJsonNull()) ? maxDurability : currentDurabilityElement.getAsInt();
+        JsonElement echoTypeEl = root.get("echoType");
+        boolean isArmor = echoTypeEl != null && !echoTypeEl.isJsonNull()
+                && "ARMOR".equals(echoTypeEl.getAsString());
 
-        EchoData baseStats = new EchoData(
-                statsObj.get("attack").getAsDouble(),
-                statsObj.get("attackRating").getAsDouble(),
-                statsObj.get("critRate").getAsDouble(),
-                statsObj.get("critModifier").getAsDouble(),
-                maxDurability,
-                currentDurability);
- 
+        JsonElement echoFormEl = root.get("echoForm");
+        EchoForm echoForm = (echoFormEl == null || echoFormEl.isJsonNull())
+                ? null : EchoForm.valueOf(echoFormEl.getAsString());
+
+        JsonElement echoMaterialEl = root.get("echoMaterial");
+        EchoMaterial echoMaterial = (echoMaterialEl == null || echoMaterialEl.isJsonNull())
+                ? null : EchoMaterial.valueOf(echoMaterialEl.getAsString());
+
+        // Modifiers
         List<Modifier> modifiers = new ArrayList<>();
         JsonArray modsArr = root.getAsJsonArray("modifiers");
         for (JsonElement el : modsArr)
         {
-            JsonObject m = el.getAsJsonObject();
-            String type = m.get("type").getAsString();
-            WeaponModifierCondition condition = WeaponModifierCondition.valueOf(m.get("condition").getAsString());
- 
-            if (type.equals("active"))
+            JsonObject m    = el.getAsJsonObject();
+            String     type = m.get("type").getAsString();
+            ModifierCondition condition = ModifierCondition.valueOf(m.get("condition").getAsString());
+
+            switch (type)
             {
-                CombatStat combatStat = CombatStat.valueOf(m.get("combatStat").getAsString());
-                double     magnitude  = m.get("magnitude").getAsDouble();
-                boolean    isPercent  = m.get("isPercent").getAsBoolean();
-                boolean    isNegative = m.get("isNegative").getAsBoolean();
-                modifiers.add(new ActiveModifier(condition, combatStat, magnitude, isPercent, isNegative));
-            }
-            else if (type.equals("passive"))
-            {
-                PassiveEchoEffect effectKey = PassiveEchoEffect.valueOf(m.get("effectKey").getAsString());
-                double magnitude = m.get("magnitude").getAsDouble();
-                modifiers.add(new PassiveModifier(condition, effectKey, magnitude));
+                case "active_armor" ->
+                {
+                    ArmorStat armorStat = ArmorStat.valueOf(m.get("armorStat").getAsString());
+                    double    magnitude = m.get("magnitude").getAsDouble();
+                    boolean   isPercent = m.get("isPercent").getAsBoolean();
+                    boolean   isNegative = m.get("isNegative").getAsBoolean();
+                    modifiers.add(new ActiveArmorModifier(condition, armorStat, magnitude, isPercent, isNegative));
+                }
+                // "active_weapon" and legacy "active" both deserialize as ActiveEchoModifier
+                case "active_weapon", "active" ->
+                {
+                    CombatStat combatStat = CombatStat.valueOf(m.get("combatStat").getAsString());
+                    double     magnitude  = m.get("magnitude").getAsDouble();
+                    boolean    isPercent  = m.get("isPercent").getAsBoolean();
+                    boolean    isNegative = m.get("isNegative").getAsBoolean();
+                    modifiers.add(new ActiveEchoModifier(condition, combatStat, magnitude, isPercent, isNegative));
+                }
+                case "passive" ->
+                {
+                    PassiveEchoEffect effectKey = PassiveEchoEffect.valueOf(m.get("effectKey").getAsString());
+                    double magnitude = m.get("magnitude").getAsDouble();
+                    modifiers.add(new PassiveModifier(condition, effectKey, magnitude));
+                }
             }
         }
- 
-        return new EchoManifest(echoId, rarity, baseStats, modifiers, slot, abilityKey, lockedAbilityKey, echoForm, echoMaterial);
+
+        if (isArmor)
+        {
+            JsonObject a = root.getAsJsonObject("armorStats");
+
+            JsonElement maxDurEl  = a.get("maxDurability");
+            JsonElement curDurEl  = a.get("currentDurability");
+            int maxDurability     = (maxDurEl == null || maxDurEl.isJsonNull())  ? 200 : maxDurEl.getAsInt();
+            int currentDurability = (curDurEl == null || curDurEl.isJsonNull())  ? maxDurability : curDurEl.getAsInt();
+
+            ArmorData armorStats = new ArmorData(
+                    a.get("armorRating").getAsInt(),
+                    a.get("blockRate").getAsDouble(),
+                    a.get("criticalArmorRating").getAsInt(),
+                    a.get("criticalBlockRate").getAsDouble(),
+                    maxDurability, currentDurability);
+
+            return new EchoManifest(echoId, rarity, armorStats, modifiers, echoForm, echoMaterial);
+        }
+        else
+        {
+            JsonObject s = root.getAsJsonObject("baseStats");
+
+            JsonElement maxDurEl  = s.get("maxDurability");
+            JsonElement curDurEl  = s.get("currentDurability");
+            int maxDurability     = (maxDurEl == null || maxDurEl.isJsonNull())  ? 200 : maxDurEl.getAsInt();
+            int currentDurability = (curDurEl == null || curDurEl.isJsonNull())  ? maxDurability : curDurEl.getAsInt();
+
+            EchoData baseStats = new EchoData(
+                    s.get("attack").getAsDouble(),
+                    s.get("attackRating").getAsDouble(),
+                    s.get("critRate").getAsDouble(),
+                    s.get("critModifier").getAsDouble(),
+                    maxDurability, currentDurability);
+
+            JsonElement lockedEl   = root.get("lockedAbilityKey");
+            JsonElement equippedEl = root.get("equippedAbility");
+            String lockedAbilityKey = (lockedEl   == null || lockedEl.isJsonNull())   ? null : lockedEl.getAsString();
+            String abilityKey       = (equippedEl == null || equippedEl.isJsonNull()) ? null : equippedEl.getAsString();
+
+            return new EchoManifest(echoId, rarity, baseStats, null, modifiers, slot,
+                    abilityKey, lockedAbilityKey, echoForm, echoMaterial);
+        }
     }
 }

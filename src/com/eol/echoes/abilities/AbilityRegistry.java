@@ -33,7 +33,6 @@ public class AbilityRegistry
 {
 	public static final Map<String, EchoAbility> abilityRegistry = new HashMap<>();
     
-	@SuppressWarnings("null")
 	public static void abilityInit() 
     {
         List<Class<? extends EchoAbility>> itemClasses = Arrays.asList(

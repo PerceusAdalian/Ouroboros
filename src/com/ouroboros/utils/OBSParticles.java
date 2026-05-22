@@ -416,7 +416,6 @@ public class ObsParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+2, 1, 6,0.1,Particle.GLOW_SQUID_INK, null);
 	}
 	
-	@SuppressWarnings("null")
 	public static void drawAstralCastSigil(LivingEntity entity, boolean isDay)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, isDay ? Particle.DUST : Particle.CRIT, isDay ? new DustOptions(Color.RED, 1.0f) : null);

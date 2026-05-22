@@ -14,5 +14,4 @@ public record BindingStatBlock(
     double attackRatingMax,
     double durabilityMultiplier,
     double critRateBonus,
-    double attackBonus
-) {}
+    double attackBonus) {}

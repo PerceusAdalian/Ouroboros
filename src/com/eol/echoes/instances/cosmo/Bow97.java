@@ -5,7 +5,7 @@ import java.util.List;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.SpatialDistortion;
 import com.eol.echoes.instances.AbstractEOL;
-import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.EOLRecipe;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
@@ -14,7 +14,7 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.PassiveEchoEffect;
-import com.eol.enums.WeaponModifierCondition;
+import com.eol.enums.ModifierCondition;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -30,6 +30,7 @@ public class Bow97 extends AbstractEOL
 				ElementiumSlotType.COSMO, 
 				buildModifiers(),
 				new EchoData(100, 5.0, .45, 3.0, 2000, 2000),
+				null,
 				new SpatialDistortion().getInternalName(),
 				"&r&7[ System Log 97 ]",
 				"..Critical system errors causing spatial distortion anomalies..",
@@ -40,16 +41,15 @@ public class Bow97 extends AbstractEOL
 				"&r&7[ Log End 1632:7:22-12:12:01]");
 	}
 
-	@SuppressWarnings("null")
 	private static List<Modifier> buildModifiers()
     {
         return List.of(
-    		new ActiveModifier(WeaponModifierCondition.OVERWORLD, CombatStat.ATTACK, 0.80, true, false),
-    		new ActiveModifier(WeaponModifierCondition.NETHER, CombatStat.CRIT_RATE, 0.25, true, false),
-    		new ActiveModifier(WeaponModifierCondition.END, CombatStat.CRIT_MODIFIER, 4.0, false, false),
-    		new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.INCREASED_MOVEMENT_SPEED, 1),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.INFINITY, 1),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.COSMO_ARMAMENT, 1));
+    		new ActiveEchoModifier(ModifierCondition.OVERWORLD, CombatStat.ATTACK, 0.80, true, false),
+    		new ActiveEchoModifier(ModifierCondition.NETHER, CombatStat.CRIT_RATE, 0.25, true, false),
+    		new ActiveEchoModifier(ModifierCondition.END, CombatStat.CRIT_MODIFIER, 4.0, false, false),
+    		new PassiveModifier(ModifierCondition.PASSIVE, PassiveEchoEffect.INCREASED_MOVEMENT_SPEED, 1),
+            new PassiveModifier(ModifierCondition.PASSIVE, PassiveEchoEffect.INFINITY, 1),
+            new PassiveModifier(ModifierCondition.PASSIVE, PassiveEchoEffect.COSMO_ARMAMENT, 1));
     }
 	
 }

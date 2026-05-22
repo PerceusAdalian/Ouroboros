@@ -8,7 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
@@ -28,7 +28,7 @@ public class ResolveEchoInteract
 
 	    for (Modifier mod : codec.getActiveModifiers())
 	    {
-	        if (!(mod instanceof ActiveModifier active)) continue;
+	        if (!(mod instanceof ActiveEchoModifier active)) continue;
 	        if (!active.condition().satisfies(p, target, p.getWorld())) continue;
 
 	        switch (active.combatStat())
@@ -52,7 +52,7 @@ public class ResolveEchoInteract
 	    
 	    for (Modifier mod : codec.getActiveModifiers())
 	    {
-	        if (!(mod instanceof ActiveModifier active)) continue;
+	        if (!(mod instanceof ActiveEchoModifier active)) continue;
 	        if (!active.condition().satisfies(p, target, p.getWorld())) continue;
 	        
 	        if (active.combatStat() == CombatStat.CRIT_RATE)
@@ -68,7 +68,7 @@ public class ResolveEchoInteract
 	    
 	    for (Modifier mod : codec.getActiveModifiers())
 	    {
-	        if (!(mod instanceof ActiveModifier active)) continue;
+	        if (!(mod instanceof ActiveEchoModifier active)) continue;
 	        if (!active.condition().satisfies(p, target, p.getWorld())) continue;
 	        
 	        if (active.combatStat() == CombatStat.CRIT_MODIFIER)

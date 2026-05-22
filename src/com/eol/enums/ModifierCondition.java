@@ -10,7 +10,7 @@ import com.ouroboros.mobs.EntityCategories;
 import com.ouroboros.utils.BiomeUtils;
 import com.ouroboros.utils.Nullable;
 
-public enum WeaponModifierCondition
+public enum ModifierCondition
 {
 	//generic conditions
 	PVE,

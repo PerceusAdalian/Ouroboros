@@ -7,6 +7,9 @@ public class Symbols
 	
 	public static String HP       = "♥";
 	public static String ARMOR    = "⛨";
+	public static String CRITICAL = "💢";
+	public static String BOW      = "🏹";
+	public static String SWORDS   = "⚔";
 	public static String TARGET   = "⌖";
 	public static String MONEY    = "₪";
 	public static String DEBT     = "Ж";

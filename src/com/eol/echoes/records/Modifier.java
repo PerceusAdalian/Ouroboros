@@ -1,6 +1,6 @@
 package com.eol.echoes.records;
 
-import com.eol.enums.WeaponModifierCondition;
+import com.eol.enums.ModifierCondition;
 
 /**
  * Modifier is the sealed polymorphic base for all Echo modifiers.
@@ -14,13 +14,13 @@ import com.eol.enums.WeaponModifierCondition;
  * Sealed so the compiler enforces exhaustive handling in switch expressions
  * throughout the combat pipeline.
  */
-public sealed interface Modifier permits ActiveModifier, PassiveModifier
+public sealed interface Modifier permits ActiveEchoModifier, ActiveArmorModifier, PassiveModifier
 {
     /**
      * The condition under which this modifier applies.
      * e.g. PVE, DURING_NIGHT, UNDEAD, OVERWORLD
      */
-    WeaponModifierCondition condition();
+    ModifierCondition condition();
 
     /**
      * Human-readable label used for lore generation on the item.

@@ -241,7 +241,8 @@ public class Materia
 		{
 			case CATALYST -> List.of(
 					PrintUtils.ColorParser("&r&fA catalyst of infinite possibilities&r&f."),
-					PrintUtils.ColorParser("&d&oRight-Click&r&f to initialize &bProtocol&f: &eΣ&f.C.H.O."));
+					PrintUtils.ColorParser("&d&oRight-Click&r&f to initialize &bProtocol&f: &eΣ&f.C.H.O. for &b&oWeapons/Tools&r&f."),
+					PrintUtils.ColorParser("&r&d&oShift_Right-Click&r&f to intialize &bProtocol&f: &eΣ&f.C.H.O. for &6&oArmor&r&f."));
 			case NORMAL -> List.of(
 					PrintUtils.ColorParser("&r&fA coherent, harmonic object. It hums with potential."),
 					PrintUtils.ColorParser("&r&fCan be used as a valid &bcomponent&f in &bProtocol&f: &eΣ&f.C.H.O."));
@@ -283,7 +284,6 @@ public class Materia
 	}
 
 	/* Converts relevant items from MateriaType respective to each item in inventory to the unrefined counterpart */
-	@SuppressWarnings("null")
 	public static void convertItemsTask(Plugin plugin)
 	{
 		Bukkit.getScheduler().runTaskTimer(plugin, () ->

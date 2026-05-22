@@ -31,7 +31,6 @@ public class EchoForgePage extends ObsGui
 		this.stack = stack;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	protected void build()
 	{
@@ -88,7 +87,7 @@ public class EchoForgePage extends ObsGui
 		//Exits
 		GuiButton.button(Material.GREEN_STAINED_GLASS_PANE)
 		.setName("&a&lConfirm Forge")
-		.setLore("Click to return to confirm forging with present","materials in each receptacle. If they're valid, forging will commence.")
+		.setLore("Click to &a&lConfirm Forge&r&f.","&c&lWarning&r&f: consumed materials may not be recovered.")
 		.place(this, 16, e->
 		{
 		    Player p = (Player) e.getWhoClicked();
@@ -155,7 +154,7 @@ public class EchoForgePage extends ObsGui
 	private static void rejectForge(Player p)
 	{
 		EntityEffects.playSound(p, Sound.BLOCK_VAULT_EJECT_ITEM, SoundCategory.AMBIENT);
-		PrintUtils.OBSFormatError(p, "One or all Materia were not valid. Please try again.");
+		PrintUtils.OBSFormatError(p, "One or all &3Materia&f were not valid. Please try again.");
 		GuiHandler.close(p);
 	}
 	

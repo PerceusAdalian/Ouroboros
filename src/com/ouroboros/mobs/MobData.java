@@ -443,7 +443,6 @@ public class MobData
 	    save();
 	}
 	
-	@SuppressWarnings("null")
 	public static double damageUnnaturally(@Nullable Player player, Entity target, double value, boolean doHurtAnimation, boolean damageArmor, @Nullable ElementType element, @Nullable EchoManifest codec)
 	{
 		if (target instanceof Player targetPlayer)

@@ -21,8 +21,7 @@ public class PlayerSaturationTask
     private static final double HUNGRY_REGEN   = 0.02; // 2%
     private static final double STARVING_REGEN = 0.005; // 0.5%
     
-    @SuppressWarnings("null")
-	public static void start(JavaPlugin plugin)
+    public static void start(JavaPlugin plugin)
     {
         Bukkit.getScheduler().runTaskTimer(plugin, () ->
         {

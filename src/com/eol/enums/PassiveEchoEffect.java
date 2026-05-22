@@ -37,5 +37,9 @@ public enum PassiveEchoEffect
 	GEO_ARMAMENT,
 	COSMO_ARMAMENT,
 	HERESIO_ARMAMENT,
-	ARCANO_ARMAMENT
+	ARCANO_ARMAMENT,
+
+	// Armor Passives
+	
+	;
 }

@@ -1,7 +1,7 @@
 package com.eol.echoes.records;
 
 import com.eol.enums.PassiveEchoEffect;
-import com.eol.enums.WeaponModifierCondition;
+import com.eol.enums.ModifierCondition;
 
 /**
  * PassiveModifier triggers a side effect when its condition is satisfied.
@@ -21,7 +21,7 @@ import com.eol.enums.WeaponModifierCondition;
  *   ">Atk Rate become 2.0 in The End"         -> effectKey="set_attack_rate", magnitude=2.0,  condition=END
  *   ">Increased Movement Speed (Nether)"      -> effectKey="movement_speed",  magnitude=0.0,  condition=NETHER
  */
-public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffect effectKey, double magnitude) implements Modifier
+public record PassiveModifier(ModifierCondition condition, PassiveEchoEffect effectKey, double magnitude) implements Modifier
 {
     @Override
     public boolean isActive()
@@ -39,7 +39,7 @@ public record PassiveModifier(WeaponModifierCondition condition, PassiveEchoEffe
     {
         String base = "&b>)&r&f " + formatEffect();
 
-        if (condition != WeaponModifierCondition.PASSIVE)
+        if (condition != ModifierCondition.PASSIVE)
             base += " &r&7(" + formatCondition()+")";
 
         return base;

@@ -15,11 +15,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import com.eol.echoes.ArmorData;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoManager;
+import com.eol.echoes.EchoManager.DurabilityOperation;
 import com.eol.echoes.ResolveEchoInteract;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
@@ -47,27 +50,31 @@ public class PlayerDamageEvent
 			@EventHandler(priority = EventPriority.HIGHEST)
         	public void playerDamage(EntityDamageEvent e)
         	{
-        	    if (!(e.getEntity() instanceof Player p)) return;
+        	    if (!(e.getEntity() instanceof Player target)) return;
 
-        	    if (p.hasMetadata("ouroboros_death"))
+        	    if (target.hasMetadata("ouroboros_death"))
         	    {
-        	        p.removeMetadata("ouroboros_death", Ouroboros.instance);
+        	        target.removeMetadata("ouroboros_death", Ouroboros.instance);
         	        return;
         	    }
         	    
-        	    PlayerData data = PlayerData.getPlayer(p.getUniqueId());
+        	    PlayerData data = PlayerData.getPlayer(target.getUniqueId());
         	    if (data == null) return;
         	    
+        	    Player pSourceFinal = null;
         	    DamageCause cause = e.getCause();
         	    ElementType element = ElementType.PURE;
         	    double dmg = 0;
-
+        	    boolean criticalPlayerAttack = false;
         	    // --- Resolve PVP Echoes & Spells ---
         	    
         	    // --- Melee Echoes ---
-        	    if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player pSource && EchoManager.isEcho(pSource.getInventory().getItemInMainHand()))
+        	    if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player pSource
+        	    		&& EchoManager.isEcho(pSource.getInventory().getItemInMainHand()) && EchoManager.isWeaponEcho(pSource.getInventory().getItemInMainHand()))
         	    {
-        	    	ItemStack echo = p.getInventory().getItemInMainHand();
+        	    	pSourceFinal = pSource;
+        	    	
+        	    	ItemStack echo = pSource.getInventory().getItemInMainHand();
         	    	EchoManifest codec = EchoManager.getCodec(echo);
         	    	if (codec == null) return;
         	    	if (codec.echoForm() == EchoForm.BOW || codec.echoForm() == EchoForm.CROSSBOW)
@@ -90,40 +97,41 @@ public class PlayerDamageEvent
 			        
 			        EchoData echoData = codec.baseStats();
 			        
-			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(pSource, p, codec, echoData.getAttack());
+			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(pSource, target, codec, echoData.getAttack());
 			        
 			        if (InfernoEffects.isImbuedPlayer.containsKey(pSource.getUniqueId()))
 			        {
 			            element = ElementType.INFERNO;
 			            dmg *= 1.1;
-			            p.setFireTicks(100);
+			            target.setFireTicks(100);
 			        }
 			        
-			        if (InfernoEffects.hasCharred.contains(p.getUniqueId()) && Chance.of(10))
+			        if (InfernoEffects.hasCharred.contains(target.getUniqueId()) && Chance.of(10))
 			        {
-			            InfernoEffects.addBurn((LivingEntity) p, 20);
-			            InfernoEffects.hasCharred.remove(p.getUniqueId());
+			            InfernoEffects.addBurn((LivingEntity) target, 20);
+			            InfernoEffects.hasCharred.remove(target.getUniqueId());
 			        }
 			        
 			        boolean crit 		= false;
-			        double critRate     = ResolveEchoInteract.resolveCritRate(pSource, p, codec, echoData.getCritRate());
-			        double critModifier = ResolveEchoInteract.resolveCritModifier(pSource, p, codec, echoData.getCritModifier());
+			        double critRate     = ResolveEchoInteract.resolveCritRate(pSource, target, codec, echoData.getCritRate());
+			        double critModifier = ResolveEchoInteract.resolveCritModifier(pSource, target, codec, echoData.getCritModifier());
 			        if (Chance.of(critRate * 100))
 			        {
 			            crit = true;
-			            ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.CRIMSON_SPORE, null);
-			            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
+			            criticalPlayerAttack = true;
+			            ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+			            EntityEffects.playSound(target, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
 			            dmg *= critModifier;
 			        }
 			        
-			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
+			        EchoManager.modifyDurability(target, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 			        
 			        if (PlayerData.getPlayer(pSource.getUniqueId()).isBreak()) dmg *= 0.5;
 			        
-			        ResolveEchoInteract.resolvePassiveEffect(codec, pSource, p);
-			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
+			        ResolveEchoInteract.resolvePassiveEffect(codec, pSource, target);
+			        if (ResolveEchoInteract.vampire.contains(pSource.getUniqueId())) 
 			        {
-			        	ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
 			        	PlayerData.heal(pSource, 25, crit);
 			        }
         	    }
@@ -131,8 +139,10 @@ public class PlayerDamageEvent
         	    // --- Ranged Echoes ---
         	    else if (e instanceof EntityDamageByEntityEvent dmgEvent
         	    		&& dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player pSource
-        	    		&& EchoManager.isEcho(pSource.getInventory().getItemInMainHand()))
+        	    		&& EchoManager.isEcho(pSource.getInventory().getItemInMainHand()) && EchoManager.isWeaponEcho(pSource.getInventory().getItemInMainHand()))
         	    {
+        	    	pSourceFinal = pSource;
+        	    	
         	    	ItemStack echo = pSource.getInventory().getItemInMainHand();
         	    	EchoManifest codec = EchoManager.getCodec(echo);
         	    	
@@ -154,26 +164,27 @@ public class PlayerDamageEvent
 			        if (ResolveEchoInteract.heresio_armament.contains(pSource.getUniqueId())) element = ElementType.HERESIO;
 			        if (ResolveEchoInteract.arcane_armament.contains(pSource.getUniqueId())) element = ElementType.ARCANO;
 			        
-			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(pSource, p, codec, echoData.getAttack());
+			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(pSource, target, codec, echoData.getAttack());
 			        boolean crit = false;
-			        double critRate     = ResolveEchoInteract.resolveCritRate(pSource, p, codec, echoData.getCritRate());
-			        double critModifier = ResolveEchoInteract.resolveCritModifier(pSource, p, codec, echoData.getCritModifier());
+			        double critRate     = ResolveEchoInteract.resolveCritRate(pSource, target, codec, echoData.getCritRate());
+			        double critModifier = ResolveEchoInteract.resolveCritModifier(pSource, target, codec, echoData.getCritModifier());
 			        if (Chance.of(critRate * 100))
 			        {
 			            crit = true;
-			            ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.CRIT, null);
-			            EntityEffects.playSound(p, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
+			            criticalPlayerAttack = true;
+			            ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIT, null);
+			            EntityEffects.playSound(pSource, Sound.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.AMBIENT);
 			            dmg *= critModifier;
 			        }
 			        
-			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
+			        EchoManager.modifyDurability(pSource, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 			        
 			        if (PlayerData.getPlayer(pSource.getUniqueId()).isBreak()) dmg *= 0.5;
 			        
-			        ResolveEchoInteract.resolvePassiveEffect(codec, pSource, p);
-			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
+			        ResolveEchoInteract.resolvePassiveEffect(codec, pSource, target);
+			        if (ResolveEchoInteract.vampire.contains(pSource.getUniqueId())) 
 			        {
-			        	ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 5, Particle.CRIMSON_SPORE, null);
+			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
 			        	PlayerData.heal(pSource, 25, crit);
 			        }
         	    }
@@ -183,9 +194,11 @@ public class PlayerDamageEvent
         	    		&& dmgEvent.getDamager() instanceof Player pSource
         	    		&& !EchoManager.isEcho(pSource.getInventory().getItemInMainHand()))
         	    {
+        	    	pSourceFinal = pSource;
+        	    	
         	    	e.setDamage(0);
         	    	dmg = dmgEvent.getFinalDamage();
-        	    	if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
+        	    	if (PlayerData.getPlayer(target.getUniqueId()).isBreak()) dmg *= 0.5;
         	    }
         	    
         	    // --- Direct Melee Mob-Damage Hit ---
@@ -236,42 +249,42 @@ public class PlayerDamageEvent
         	        dmg = e.getFinalDamage();
         	        e.setDamage(0);
 
-        	        dmg = EntityEffects.resolveEffectModifiedDamage(p, element, dmg, cause);
+        	        dmg = EntityEffects.resolveEffectModifiedDamage(target, element, dmg, cause);
         	        if (dmg < 0) return;
 
         	        if (CRITICAL_DAMAGE_CAUSES.contains(cause)) dmg = 150;
         	        if (BYPASS_ARMOR_CAUSES.contains(cause))
-        	            PlayerData.damageUnnaturally(null, p, dmg, false, false, element, null);
+        	            PlayerData.damageUnnaturally(null, target, dmg, false, false, element, null);
         	        else
-        	            PlayerData.damageUnnaturally(null, p, dmg, false, true, element, null);
+        	            PlayerData.damageUnnaturally(null, target, dmg, false, true, element, null);
 
         	        if (data.getHP() > 0)
         	        {
-        	            PlayerData.syncVanillaHealth(p);
-        	            PlayerHud.update(p);
+        	            PlayerData.syncVanillaHealth(target);
+        	            PlayerHud.update(target);
         	        }
-        	        RestoreArmorTask.markHit(p);
+        	        RestoreArmorTask.markHit(target);
         	        return;
         	    }
 
 		    	// Resolve general effect mitigated damage (Fire Resistance, Resistance, Absorption, Etc)
-		    	dmg = EntityEffects.resolveEffectModifiedDamage(p, element, dmg, cause);
+		    	dmg = EntityEffects.resolveEffectModifiedDamage(target, element, dmg, cause);
 		    	if (dmg < 0) return;
 		    	
         	 	// --- Pre-damage modifiers (Barbed, Guarded, etc.) ---
         	    
         	    // Barbed: reflect a portion back to the attacker before taking damage
-        	    if (GeoEffects.isBarbed.containsKey(p.getUniqueId())
+        	    if (GeoEffects.isBarbed.containsKey(target.getUniqueId())
         	        && e instanceof EntityDamageByEntityEvent dmgEvent
         	        && dmgEvent.getDamager() instanceof LivingEntity attacker)
         	    {
-        	        int barbedDamage = GeoEffects.isBarbed.get(p.getUniqueId());
-        	        MobData.damageUnnaturally(p, attacker, barbedDamage, false, true, ElementType.GEO, null);
+        	        int barbedDamage = GeoEffects.isBarbed.get(target.getUniqueId());
+        	        MobData.damageUnnaturally(target, attacker, barbedDamage, false, true, ElementType.GEO, null);
         	        dmg = Math.max(0, dmg - barbedDamage);
         	    }
 
         	    // Infernal Body: ignite the attacker
-        	    if (InfernoEffects.hasInfernalBody.contains(p.getUniqueId())
+        	    if (InfernoEffects.hasInfernalBody.contains(target.getUniqueId())
         	        && e instanceof EntityDamageByEntityEvent dmgEvent
         	        && dmgEvent.getDamager() instanceof LivingEntity attacker)
         	    {
@@ -279,36 +292,114 @@ public class PlayerDamageEvent
         	    }
 
         	    // Guarded: reduce incoming damage and consume a stack
-        	    if (GeoEffects.guarded_registry.containsKey(p.getUniqueId()))
+        	    if (GeoEffects.guarded_registry.containsKey(target.getUniqueId()))
         	    {
         	    	dmg *= 0.5;
-        	        GeoEffects.subGuarded(p);
+        	        GeoEffects.subGuarded(target);
         	    }
 
         	    // Night Shift: fall damage mitigation
-        	    if (cause == DamageCause.FALL && MortioEffects.nightShifted.containsKey(p.getUniqueId()))
-        	    	dmg = dmg * (0.1 * MortioEffects.nightShifted.get(p.getUniqueId()));
+        	    if (cause == DamageCause.FALL && MortioEffects.nightShifted.containsKey(target.getUniqueId()))
+        	    	dmg = dmg * (0.1 * MortioEffects.nightShifted.get(target.getUniqueId()));
 
+        	    // --- Echo Armor Calculations ---
+        	    double mitigatedDmgTotal = 0;
+        	    double mitigatedCriticalDmg = 0;
+        	    double blockChance = 0;
+        	    double criticalBlockChance = 0;
+        	    int durabilityTotal = 1;
+        	    boolean blocked = false;
+        	    
+        	    ItemStack helmet = target.getInventory().getHelmet();
+        	    ItemStack chestplate = target.getInventory().getChestplate();
+        	    ItemStack leggings = target.getInventory().getLeggings();
+        	    ItemStack boots = target.getInventory().getBoots();
+        	    
+        	    if (EchoManager.isArmorEcho(helmet))
+        	    {
+        	    	ArmorData helmetData = EchoManager.getArmorData(helmet);
+        	    	mitigatedDmgTotal += helmetData.getArmorRating();
+        	    	mitigatedCriticalDmg += helmetData.getCriticalArmorRating();
+        	    	blockChance += helmetData.getBlockRate();
+        	    	criticalBlockChance += helmetData.getCriticalBlockRate();
+        	    }
+        	    if (EchoManager.isArmorEcho(chestplate))
+        	    {
+        	    	ArmorData chestplateData = EchoManager.getArmorData(chestplate);
+        	    	mitigatedDmgTotal += chestplateData.getArmorRating();
+        	    	mitigatedCriticalDmg += chestplateData.getCriticalArmorRating();
+        	    	blockChance += chestplateData.getBlockRate();
+        	    	criticalBlockChance += chestplateData.getCriticalBlockRate();
+        	    }
+        	    if (EchoManager.isArmorEcho(leggings))
+        	    {
+        	    	ArmorData leggingsData = EchoManager.getArmorData(leggings);
+        	    	mitigatedDmgTotal += leggingsData.getArmorRating();
+        	    	mitigatedCriticalDmg += leggingsData.getCriticalArmorRating();
+        	    	blockChance += leggingsData.getBlockRate();
+        	    	criticalBlockChance = leggingsData.getCriticalBlockRate();
+        	    }
+        	    if (EchoManager.isArmorEcho(boots))
+        	    {
+        	    	ArmorData bootsData = EchoManager.getArmorData(boots);
+        	    	mitigatedDmgTotal += bootsData.getArmorRating();
+        	    	mitigatedCriticalDmg += bootsData.getCriticalArmorRating();
+        	    	blockChance += bootsData.getBlockRate();
+        	    	criticalBlockChance += bootsData.getCriticalBlockRate();
+        	    }
+        	    
+        	    if (criticalPlayerAttack && Chance.of(criticalBlockChance * 100))
+        	    {
+        	    	mitigatedDmgTotal += mitigatedCriticalDmg;
+        	    	EntityEffects.playSound(target, Sound.BLOCK_METAL_STEP, SoundCategory.MASTER);
+        	    	if (pSourceFinal != null) EntityEffects.playSound(pSourceFinal, Sound.BLOCK_METAL_HIT, SoundCategory.MASTER);
+        	    	durabilityTotal++;
+        	    }
+        	    if (Chance.of(blockChance * 100))
+        	    {
+        	    	blocked = true;
+        	    	EntityEffects.playSound(target, Sound.ITEM_SHIELD_BLOCK, SoundCategory.AMBIENT);
+        	    	durabilityTotal++;
+        	    }
+        	    
         	    // --- Route through PlayerData damage contract ---
-    	        if (BYPASS_ARMOR_CAUSES.contains(cause)) 
-    	        	PlayerData.damageUnnaturally(null, p, dmg, false, false, element, null);
+    	        if (BYPASS_ARMOR_CAUSES.contains(cause)) // Damage mitigation (Armor) doesn't apply here.
+    	        	PlayerData.damageUnnaturally(pSourceFinal, target, dmg, false, false, element, null);
     	        else
-    	        	PlayerData.damageUnnaturally(null, p, dmg, false, true, element, null);
+    	        {
+    	        	// Only Armor Applicable Damage Calculations are eligible for mitigation via Defending Player's Echo Armor.
+    	        	dmg = blocked ? 0 : dmg - mitigatedDmgTotal;
+            	    if (dmg < 0) dmg = 0;
+    	        	PlayerData.damageUnnaturally(pSourceFinal, target, dmg, false, true, element, null);
+    	        }
+    	        
+    	        // Finally, deduct durability from applicable Echo Armor:
+    	        ItemStack helmetRebuild = EchoManager.modifyDurabilityAndReturn(helmet, DurabilityOperation.SUBTRACT, durabilityTotal);
+    	        ItemStack chestplateRebuild = EchoManager.modifyDurabilityAndReturn(chestplate, DurabilityOperation.SUBTRACT, durabilityTotal);
+    	        ItemStack leggingsRebuild = EchoManager.modifyDurabilityAndReturn(leggings, DurabilityOperation.SUBTRACT, durabilityTotal);
+    	        ItemStack bootsRebuild = EchoManager.modifyDurabilityAndReturn(boots, DurabilityOperation.SUBTRACT, durabilityTotal);
+    	        
+    	        EntityEquipment armor = target.getEquipment();
+    	        armor.setHelmet(helmetRebuild);
+    	        armor.setChestplate(chestplateRebuild);
+    	        armor.setLeggings(leggingsRebuild);
+    	        armor.setBoots(bootsRebuild);
     	        
     	        if (data.getHP() > 0)
     	        {
-    	            PlayerData.syncVanillaHealth(p);
-    	            PlayerHud.update(p);
+    	            PlayerData.syncVanillaHealth(target);
+    	            PlayerHud.update(target);
     	        }
-    	        RestoreArmorTask.markHit(p);
+    	        RestoreArmorTask.markHit(target);
     	        
         	    if (Ouroboros.debug)
-        	        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oPlayerDamageEvent&r&f -- &aOK&7 || &fPlayer: &f" + p.getName()
+        	        PrintUtils.OBSConsoleDebug("&e&lEvent&r&f: &b&oPlayerDamageEvent&r&f -- &aOK&7 || &fPlayer: &f" + target.getName()
         	            + " &7|| &fDamage: &c" + dmg
         	            + " &7|| &6Element&f: " + (element == null ? ElementType.PURE.getKey() : element.getKey())
         	            + " &7|| &aHP&f: " + data.getHP() + "&7/&f" + data.getDefaultHP()
         	            + (data.isBreak() ? " &7|| &6Break&f: &cTRUE" : " &7|| &6AR&f: " + data.getArmor() + "&7/&f" + data.getDefaultArmor())
         	            + " &7|| &o&7END");
+        	    	
         	}
 		}, plugin);
 	}

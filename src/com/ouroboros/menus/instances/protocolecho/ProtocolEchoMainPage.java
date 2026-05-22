@@ -11,6 +11,7 @@ import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.instances.ObsMainMenu;
+import com.ouroboros.utils.Symbols;
 
 public class ProtocolEchoMainPage extends ObsGui
 {
@@ -23,6 +24,14 @@ public class ProtocolEchoMainPage extends ObsGui
 	@Override
 	protected void build() 
 	{
+		
+		GuiButton.button(Material.PHANTOM_MEMBRANE).setName("&e&lProtocol &6Φ &r&f- &b&oScrap").setLore("Click to &6&oScrap&r&f "+Symbols.EOL+"choic objects.").place(this, 11, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.BLOCK_SMITHING_TABLE_USE, SoundCategory.MASTER, 1, 1);
+			e.setCancelled(true);
+		});
+		
 		GuiButton.button(Material.ANVIL).setName("&e&lProtocol &bδ &r&f- &b&oRepair Echoes&r&f").setLore("Click to &arepair&f a damaged &b&lEcho&r&f.").place(this, 12, e->
 		{
 			Player p = (Player) e.getWhoClicked();

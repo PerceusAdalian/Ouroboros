@@ -5,7 +5,7 @@ import java.util.List;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
 import com.eol.echoes.instances.AbstractEOL;
-import com.eol.echoes.records.ActiveModifier;
+import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.EOLRecipe;
 import com.eol.echoes.records.Modifier;
 import com.eol.echoes.records.PassiveModifier;
@@ -14,7 +14,7 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.PassiveEchoEffect;
-import com.eol.enums.WeaponModifierCondition;
+import com.eol.enums.ModifierCondition;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -33,6 +33,7 @@ public class Sword14 extends AbstractEOL
 			ElementiumSlotType.COSMO, 
 			buildModifiers(),
 			new EchoData(100, 4.5, .50, 2.5, 2000, 2000),
+			null,
 			new SpatialRend().getInternalName(),
 			"[ System Log 14 ]",
 			"..Construction records nominal. Waveform stability: unresolved..",
@@ -42,15 +43,14 @@ public class Sword14 extends AbstractEOL
 			"[ Log End 1616:4:30-17:26:34]");
 	}
 	
-	@SuppressWarnings("null")
 	private static List<Modifier> buildModifiers()
     {
         return List.of(
-    		new ActiveModifier(WeaponModifierCondition.OVERWORLD, CombatStat.ATTACK, 0.30, true, false),
-    		new ActiveModifier(WeaponModifierCondition.NETHER, CombatStat.CRIT_MODIFIER, 1.5, false, false),
-            new ActiveModifier(WeaponModifierCondition.END, CombatStat.CRIT_RATE, 0.25, true, false),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.FATIGUING, 1),
-            new PassiveModifier(WeaponModifierCondition.PASSIVE, PassiveEchoEffect.INCREASED_MOVEMENT_SPEED, 0));
+    		new ActiveEchoModifier(ModifierCondition.OVERWORLD, CombatStat.ATTACK, 0.30, true, false),
+    		new ActiveEchoModifier(ModifierCondition.NETHER, CombatStat.CRIT_MODIFIER, 1.5, false, false),
+            new ActiveEchoModifier(ModifierCondition.END, CombatStat.CRIT_RATE, 0.25, true, false),
+            new PassiveModifier(ModifierCondition.PASSIVE, PassiveEchoEffect.FATIGUING, 1),
+            new PassiveModifier(ModifierCondition.PASSIVE, PassiveEchoEffect.INCREASED_MOVEMENT_SPEED, 0));
     }
 
 }

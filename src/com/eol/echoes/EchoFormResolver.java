@@ -27,6 +27,7 @@ public final class EchoFormResolver
 
     public static EchoForm fromBukkitMaterial(Material material)
     {
+        // Weapons and tools
     	if (swords.contains(material)) return EchoForm.SWORD;
     	if (spears.contains(material)) return EchoForm.POLEARM;
     	if (axes.contains(material)) return EchoForm.HATCHET;
@@ -36,6 +37,12 @@ public final class EchoFormResolver
     	if (bows.contains(material)) return EchoForm.BOW;
     	if (material == Material.TRIDENT) return EchoForm.ARMAMENT;
     	if (material == Material.MACE) return EchoForm.HAMMER;
+
+        // Armor pieces
+        if (helmets.contains(material)) return EchoForm.HELMET;
+        if (chestplates.contains(material)) return EchoForm.CHESTPLATE;
+        if (leggings.contains(material)) return EchoForm.LEGGINGS;
+        if (boots.contains(material)) return EchoForm.BOOTS;
 		return null;
     }
     
@@ -43,6 +50,7 @@ public final class EchoFormResolver
     {
         return switch (form)
         {
+            // Weapons and tools
             case SWORD    -> toSword(material);
             case HATCHET  -> toAxe(material);
             case POLEARM  -> toSpear(material);
@@ -53,6 +61,13 @@ public final class EchoFormResolver
             case ARMAMENT -> toTrident(material);
             case BOW      -> toBow(material);
             case CROSSBOW -> toCrossBow(material);
+
+            // Armor pieces
+            case HELMET   -> toHelmet(material);
+            case CHESTPLATE -> toChestplate(material);
+            case LEGGINGS -> toLeggings(material);
+            case BOOTS    -> toBoots(material);
+            default -> throw new IllegalArgumentException("Unexpected value: " + form);
         };
     }
 
@@ -171,6 +186,58 @@ public final class EchoFormResolver
     	if (material == EchoMaterial.CROSSBOW) return Material.CROSSBOW;
     	return null;
     }
+
+    private static Material toHelmet(EchoMaterial material)
+    {
+        return switch (material)
+        {
+            case LEATHER   -> Material.LEATHER_HELMET;
+            case IRON      -> Material.IRON_HELMET;
+            case GOLDEN    -> Material.GOLDEN_HELMET;
+            case DIAMOND   -> Material.DIAMOND_HELMET;
+            case NETHERITE -> Material.NETHERITE_HELMET;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
+        };
+    }
+
+    private static Material toChestplate(EchoMaterial material)
+    {
+        return switch (material)
+        {
+            case LEATHER   -> Material.LEATHER_CHESTPLATE;
+            case IRON      -> Material.IRON_CHESTPLATE;
+            case GOLDEN    -> Material.GOLDEN_CHESTPLATE;
+            case DIAMOND   -> Material.DIAMOND_CHESTPLATE;
+            case NETHERITE -> Material.NETHERITE_CHESTPLATE;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
+        };
+    }
+
+    private static Material toLeggings(EchoMaterial material)
+    {
+        return switch (material)
+        {
+            case LEATHER   -> Material.LEATHER_LEGGINGS;
+            case IRON      -> Material.IRON_LEGGINGS;
+            case GOLDEN    -> Material.GOLDEN_LEGGINGS;
+            case DIAMOND   -> Material.DIAMOND_LEGGINGS;
+            case NETHERITE -> Material.NETHERITE_LEGGINGS;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
+        };
+    }
+
+    private static Material toBoots(EchoMaterial material)
+    {
+        return switch (material)
+        {
+            case LEATHER   -> Material.LEATHER_BOOTS;
+            case IRON      -> Material.IRON_BOOTS;
+            case GOLDEN    -> Material.GOLDEN_BOOTS;
+            case DIAMOND   -> Material.DIAMOND_BOOTS;
+            case NETHERITE -> Material.NETHERITE_BOOTS;
+            default -> throw new IllegalArgumentException("Unexpected value: " + material);
+        };
+    }
     
     public static final Set<Material> swords = EnumSet.of(
 			Material.WOODEN_SWORD,Material.STONE_SWORD,Material.IRON_SWORD,Material.GOLDEN_SWORD,
@@ -192,6 +259,20 @@ public final class EchoFormResolver
 			Material.DIAMOND_HOE, Material.NETHERITE_HOE);
 	public static final Set<Material> bows = EnumSet.of(Material.BOW, Material.CROSSBOW);
 	
+	public static final Set<Material> helmets = EnumSet.of(
+            Material.LEATHER_HELMET, Material.IRON_HELMET, Material.GOLDEN_HELMET,
+            Material.DIAMOND_HELMET, Material.NETHERITE_HELMET);
+    public static final Set<Material> chestplates = EnumSet.of(
+            Material.LEATHER_CHESTPLATE, Material.IRON_CHESTPLATE, Material.GOLDEN_CHESTPLATE,
+            Material.DIAMOND_CHESTPLATE, Material.NETHERITE_CHESTPLATE);
+    public static final Set<Material> leggings = EnumSet.of(
+            Material.LEATHER_LEGGINGS, Material.IRON_LEGGINGS, Material.GOLDEN_LEGGINGS,
+            Material.DIAMOND_LEGGINGS, Material.NETHERITE_LEGGINGS);
+    public static final Set<Material> boots = EnumSet.of(
+            Material.LEATHER_BOOTS, Material.IRON_BOOTS, Material.GOLDEN_BOOTS,
+            Material.DIAMOND_BOOTS, Material.NETHERITE_BOOTS);
+	
+	
 	public static final Set<Material> ALL_ECHO_MATERIALS;
 	static
 	{
@@ -205,5 +286,9 @@ public final class EchoFormResolver
 	    ALL_ECHO_MATERIALS.addAll(bows);
 	    ALL_ECHO_MATERIALS.add(Material.TRIDENT);
 	    ALL_ECHO_MATERIALS.add(Material.MACE);
+        ALL_ECHO_MATERIALS.addAll(helmets);
+        ALL_ECHO_MATERIALS.addAll(chestplates);
+        ALL_ECHO_MATERIALS.addAll(leggings);
+        ALL_ECHO_MATERIALS.addAll(boots);
 	}
 }

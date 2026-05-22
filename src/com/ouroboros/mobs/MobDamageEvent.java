@@ -53,9 +53,10 @@ public class MobDamageEvent implements Listener
 			    if (data == null) return;
 			    ElementType element = ElementType.PURE;
 			    double dmg;
-
+			    
 			    // --- Echo Melee ---
-			    if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			    if (e instanceof EntityDamageByEntityEvent dmgEvent && dmgEvent.getDamager() instanceof Player p 
+			    		&& EchoManager.isEcho(p.getInventory().getItemInMainHand()) && EchoManager.isWeaponEcho(p.getInventory().getItemInMainHand()))
 			    {
 			        ItemStack echo = p.getInventory().getItemInMainHand();
 			        EchoManifest codec = EchoManager.getCodec(echo);
@@ -125,7 +126,7 @@ public class MobDamageEvent implements Listener
 			    // --- Echo Bow / Arrow ---
 			    else if (e instanceof EntityDamageByEntityEvent dmgEvent
 			        && dmgEvent.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player p
-			        && EchoManager.isEcho(p.getInventory().getItemInMainHand()))
+			        && EchoManager.isEcho(p.getInventory().getItemInMainHand()) && EchoManager.isWeaponEcho(p.getInventory().getItemInMainHand()))
 			    {
 			        ItemStack echo = p.getInventory().getItemInMainHand();
 			        EchoManifest codec = EchoManager.getCodec(echo);

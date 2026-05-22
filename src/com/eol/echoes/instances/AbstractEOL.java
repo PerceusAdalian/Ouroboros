@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.eol.echoes.ArmorData;
 import com.eol.echoes.EchoData;
 import com.eol.echoes.EchoFormResolver;
 import com.eol.echoes.EchoLoreBuilder;
@@ -58,6 +59,7 @@ public abstract class AbstractEOL
     private final ElementiumSlotType slotType;
     private final List<Modifier> modifiers;
     private final EchoData echoData;
+    private final ArmorData armorData;
     private final String lockedAbilityKey;
     private final String[] description;
     private boolean isIntegrityArmament;
@@ -73,6 +75,7 @@ public abstract class AbstractEOL
             ElementiumSlotType slotType,
             List<Modifier> modifiers,
             EchoData echoData,
+            ArmorData armorData,
             @Nullable String lockedAbilityKey,
             @Nullable String... description)
     {
@@ -83,6 +86,7 @@ public abstract class AbstractEOL
         this.form                = form;
         this.slotType            = slotType;
         this.echoData 			 = echoData;
+        this.armorData 			 = armorData;
         this.modifiers        	 = List.copyOf(modifiers);
         this.lockedAbilityKey 	 = lockedAbilityKey;
         this.description      	 = description;
@@ -111,6 +115,7 @@ public abstract class AbstractEOL
                 buildEchoId(catalyst),
                 rarity,
                 echoData,
+                armorData,
                 modifiers,
                 slotType,
                 null,
@@ -242,9 +247,14 @@ public abstract class AbstractEOL
 		return isIntegrityArmament;
 	}
 	
-	public EchoData getStats()
+	public EchoData getEchoData()
 	{
 		return echoData;
+	}
+	
+	public ArmorData getArmorData()
+	{
+		return armorData;
 	}
 	
 }

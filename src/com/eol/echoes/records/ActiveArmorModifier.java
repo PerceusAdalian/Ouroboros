@@ -1,27 +1,12 @@
 package com.eol.echoes.records;
 
-import com.eol.enums.CombatStat;
-import com.eol.enums.WeaponModifierCondition;
+import com.eol.enums.ArmorStat;
+import com.eol.enums.ModifierCondition;
 
-/**
- * ActiveModifier directly mutates one of the four core combat stats
- * (Attack, AttackRating, CritRate, CritModifier) when its condition is satisfied.
- *
- * magnitude is a signed delta applied to the stat:
- *   - For ATTACK:        flat bonus (isPercent=false) or % of base (isPercent=true)
- *   - For ATTACK_RATING: flat delta on the multiplier (e.g. +0.25)
- *   - For CRIT_RATE:     percentage point delta (e.g. 0.15 = +15%)
- *   - For CRIT_MODIFIER: additive multiplier delta (e.g. 1.0 = +1.0x)
- *
- * Examples from the mockups:
- *   "+50% Atk (PVE: Undead)"   → condition=UNDEAD, combatStat=ATTACK,        magnitude=0.50, isPercent=true
- *   "+15% Crit% (PVE: Undead)" → condition=UNDEAD, combatStat=CRIT_RATE,     magnitude=0.15, isPercent=true
- *   "+5 Atk (PVE: The End)"    → condition=END,    combatStat=ATTACK,        magnitude=5.0,  isPercent=false
- *   "+0.5x Crit Mod"           → condition=PASSIVE,combatStat=CRIT_MODIFIER, magnitude=0.5,  isPercent=false
- */
-public record ActiveModifier(WeaponModifierCondition condition, CombatStat combatStat, double magnitude, boolean isPercent, boolean isNegative) implements Modifier
+public record ActiveArmorModifier(ModifierCondition condition, ArmorStat armorStat, double magnitude, boolean isPercent, boolean isNegative) implements Modifier
 {
-    @Override
+
+	@Override
     public boolean isActive()
     {
         return true;
@@ -35,7 +20,7 @@ public record ActiveModifier(WeaponModifierCondition condition, CombatStat comba
                 ? sign + ")&f " + (int)(Math.abs(magnitude) * 100) + "% "
                 : sign + ")&f " + (magnitude == (long) magnitude ? String.valueOf((long) Math.abs(magnitude)) : String.valueOf(Math.abs(magnitude))) + " ";
  
-        return mag +"&f"+ combatStat.getDisplayName() + " &7(" + formatCondition()+")";
+        return mag +"&f"+ armorStat.getDisplayName() + " &7(" + formatCondition()+")";
     }
  
     /**
