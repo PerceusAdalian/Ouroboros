@@ -337,7 +337,7 @@ public class PlayerDamageEvent
         	    	mitigatedDmgTotal += leggingsData.getArmorRating();
         	    	mitigatedCriticalDmg += leggingsData.getCriticalArmorRating();
         	    	blockChance += leggingsData.getBlockRate();
-        	    	criticalBlockChance = leggingsData.getCriticalBlockRate();
+        	    	criticalBlockChance += leggingsData.getCriticalBlockRate();
         	    }
         	    if (EchoManager.isArmorEcho(boots))
         	    {

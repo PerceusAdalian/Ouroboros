@@ -3,6 +3,7 @@ package com.ouroboros;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.eol.echoes.ArmorEquipEvent;
 import com.eol.echoes.EchoHeldEvent;
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.AbilityCastHandler;
@@ -136,6 +137,7 @@ public class Ouroboros extends JavaPlugin
 		
 		EchoHeldEvent.register(instance);
 		EchoHeldEvent.queueBuffTask(instance);
+		ArmorEquipEvent.register(instance);
 		
 		PrintUtils.OBSConsoleDebug("&fLoaded Abilities -- &e"+AbilityRegistry.abilityRegistry.size());
 		PrintUtils.OBSConsolePrint("&fLoaded Spells -- &d"+SpellRegistry.spellRegistry.size());
