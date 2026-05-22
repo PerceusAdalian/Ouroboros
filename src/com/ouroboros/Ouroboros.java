@@ -163,7 +163,12 @@ public class Ouroboros extends JavaPlugin
  * Concept: Σ.C.H.O. (Engram Conversion to Harmonic Object) Protocol
  * Project Notes:
  * + WHAT TO DO NEXT:
- * High Priority: Fix force breaking
+ * High Priority:
+ * 
+ * -- Develop the ArmorEquipEvent, and ResolveEchoInteract to work as necessary for Armor Echoes.
+ * -- Add passives for armor specifically.
+ * -- Update AbstractEOL to allow for armor pieces.
+ * 
  * - Add GUI framework for each stat and representation.
  *   > Make a reward system for leveling up stats every 10 levels. 
  *   > Implement prestige system.
