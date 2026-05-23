@@ -24,6 +24,7 @@ import com.eol.echoes.EchoManager;
 import com.eol.echoes.ResolveEchoInteract;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
+import com.lol.spells.instances.arcano.Prisma;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
@@ -112,6 +113,13 @@ public class MobDamageEvent implements Listener
 			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 			        
 			        if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
+
+			        if (Prisma.scriedElement.containsKey(p.getUniqueId()))
+			        {
+			        	element = Prisma.scriedElement.get(p.getUniqueId());
+			        	Prisma.scriedElement.remove(p.getUniqueId());
+			        }
+			        
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
 			        
@@ -165,6 +173,13 @@ public class MobDamageEvent implements Listener
 			        EchoManager.modifyDurability(p, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 			        
 			        if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
+
+			        if (Prisma.scriedElement.containsKey(p.getUniqueId()))
+			        {
+			        	element = Prisma.scriedElement.get(p.getUniqueId());
+			        	Prisma.scriedElement.remove(p.getUniqueId());
+			        }
+			        
 			        if (data.isBreak()) data.breakDamage(dmg, element);
 			        else                data.damage(dmg, true, element);
 			        
@@ -181,6 +196,12 @@ public class MobDamageEvent implements Listener
 			    {
 			        dmgEvent.setDamage(1);
 			        dmg = dmgEvent.getFinalDamage();
+
+			        if (Prisma.scriedElement.containsKey(p.getUniqueId()))
+			        {
+			        	element = Prisma.scriedElement.get(p.getUniqueId());
+			        	Prisma.scriedElement.remove(p.getUniqueId());
+			        }
 			        
 			        if (PlayerData.getPlayer(p.getUniqueId()).isBreak()) dmg *= 0.5;
 			        if (data.isBreak()) data.breakDamage(dmg, element);
@@ -244,7 +265,7 @@ public class MobDamageEvent implements Listener
 			    			"\n                          &b&o- Resistance Damage&r&f: "+(MobAffinity.parseUniversalResistance(target, element)?"&aTRUE&f ":"&cFALSE&f ")+
 			    			"\n                          &b&o- Immunity Damage&r&f: "+(MobAffinity.parseUniversalImmunity(target, element)?"&aTRUE&f ":"&cFALSE&f ")+"|| &o&7END");
 			    }
-
+			    
 			    if (data.isDead())
 			    {
 			        LivingEntity le = (LivingEntity) target;

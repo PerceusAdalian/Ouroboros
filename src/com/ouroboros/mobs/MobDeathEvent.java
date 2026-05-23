@@ -72,7 +72,7 @@ public class MobDeathEvent implements Listener
 			    
 			    if (data == null) return;
 			    
-			    EntityCategory mobCategory = EntityCategoryToSpellement.getMobCategory(e.getEntityType());
+			    EntityCategory mobCategory = EntityCategories.getMobCategory(e.getEntityType());
 			    
 			    final int maxSpellDrops = 1;
 			    final int maxSpellShardDrops = 1;
@@ -167,7 +167,7 @@ public class MobDeathEvent implements Listener
 			        for (Spell spell : SpellRegistry.spellRegistry.values())
 			        {
 			        	if (currentSpellDrops >= maxSpellDrops) break;
-			        	if (!EntityCategoryToSpellement.isElementMatch(spell.getElementType(), mobCategory)) continue;
+			        	if (!EntityCategories.isElementMatch(spell.getElementType(), mobCategory)) continue;
 			        	if (!Chance.of(Math.min(1.5 + chanceBonus, 100))) continue;
 			            if (spell.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
 			            if (spellDropsRegistry.getOrDefault(spell, false)) continue;
@@ -180,7 +180,7 @@ public class MobDeathEvent implements Listener
 			        for (Spell shard : SpellRegistry.spellRegistry.values())
 			        {
 			        	if (currentSpellShardDrops >= maxSpellShardDrops) break;
-			        	if (!EntityCategoryToSpellement.isElementMatch(shard.getElementType(), mobCategory)) continue;
+			        	if (!EntityCategories.isElementMatch(shard.getElementType(), mobCategory)) continue;
 			        	if (!Chance.of(Math.min(9.5 + chanceBonus, 100))) continue;
 			            if (shard.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
 			            if (spellShardDropsRegistry.getOrDefault(shard, false)) continue;

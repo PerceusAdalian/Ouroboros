@@ -66,5 +66,21 @@ public class MobAffinity
 		{
 		    return matchesCategory(entity, IMMUNITIES, eType);
 		}
+		
+		public static ElementType parseCoreWeakness(EntityCategory category)
+		{
+			return switch(category)
+			{
+				case CELESTIO_MOBS -> ElementType.MORTIO;
+				case MORTIO_MOBS -> ElementType.CELESTIO;
+				case INFERNO_MOBS -> ElementType.GLACIO;
+				case GLACIO_MOBS -> ElementType.INFERNO;
+				case AERO_MOBS -> ElementType.GEO;
+				case GEO_MOBS -> ElementType.AERO;
+				case COSMO_MOBS -> ElementType.ARCANO;
+				case HERESIO_MOBS -> ElementType.ARCANO;
+				default -> ElementType.PURE;
+			};
+		}
 
 }
