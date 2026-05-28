@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.eol.echoes.EchoData;
 import com.eol.echoes.abilities.instances.special.PlaguesPrimer;
-import com.eol.echoes.instances.AbstractEOL;
+import com.eol.echoes.instances.AbstractEOLWeapon;
 import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.EOLRecipe;
 import com.eol.echoes.records.Modifier;
@@ -13,12 +13,12 @@ import com.eol.enums.CombatStat;
 import com.eol.enums.EchoForm;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
-import com.eol.enums.PassiveEchoEffect;
 import com.eol.enums.ModifierCondition;
+import com.eol.enums.PassiveEchoEffect;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
-public class Plague extends AbstractEOL
+public class Plague extends AbstractEOLWeapon
 {
 
 	public Plague()

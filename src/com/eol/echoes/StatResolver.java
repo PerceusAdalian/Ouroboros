@@ -1,10 +1,7 @@
-package com.eol.echoes.config;
+package com.eol.echoes;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.eol.echoes.ArmorData;
-import com.eol.echoes.EchoData;
-import com.eol.echoes.MateriaTypeResolver;
 import com.eol.echoes.records.ArmorStatBlock;
 import com.eol.echoes.records.BindingStatBlock;
 import com.eol.echoes.records.MaterialStatBlock;

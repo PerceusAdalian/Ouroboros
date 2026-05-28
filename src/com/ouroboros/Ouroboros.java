@@ -3,20 +3,23 @@ package com.ouroboros;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+<<<<<<< Updated upstream
 import com.eol.echoes.ArmorEquipEvent;
+=======
+import com.eol.echoes.EchoConfig;
+>>>>>>> Stashed changes
 import com.eol.echoes.EchoHeldEvent;
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.AbilityCastHandler;
 import com.eol.echoes.abilities.AbilityRegistry;
 import com.eol.echoes.abilities.instances.special.MarkedForDeath;
-import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.instances.EOLRegistry;
+import com.eol.materia.Bases;
+import com.eol.materia.Bindings;
+import com.eol.materia.Catalysts;
+import com.eol.materia.ElementCores;
 import com.eol.materia.Materia;
 import com.eol.materia.MateriaCastHandler;
-import com.eol.materia.components.Bases;
-import com.eol.materia.components.Bindings;
-import com.eol.materia.components.Catalysts;
-import com.eol.materia.components.ElementCores;
 import com.lol.spells.SpellCastHandler;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.aero.Fly;

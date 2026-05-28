@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eol.echoes.abilities.EchoAbility;
-import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.records.ArmorStatBlock;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.MaterialStatBlock;

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.eol.echoes.config.EchoConfig;
 import com.eol.echoes.records.ActiveArmorModifier;
 import com.eol.echoes.records.ActiveEchoModifier;
 import com.eol.echoes.records.Modifier;

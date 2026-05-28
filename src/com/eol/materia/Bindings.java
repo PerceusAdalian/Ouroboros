@@ -1,8 +1,7 @@
-package com.eol.materia.components;
+package com.eol.materia;
 
 import com.eol.enums.MateriaComponent;
 import com.eol.enums.MateriaType;
-import com.eol.materia.Materia;
 import com.ouroboros.enums.Rarity;
 
 public class Bindings 

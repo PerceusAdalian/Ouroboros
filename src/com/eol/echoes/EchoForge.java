@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.eol.echoes.config.StatResolver;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.instances.EOLRegistry;
 import com.eol.echoes.records.EchoManifest;

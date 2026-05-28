@@ -1,4 +1,4 @@
-package com.eol.echoes.config;
+package com.eol.echoes;
 
 import java.io.File;
 import java.io.IOException;
