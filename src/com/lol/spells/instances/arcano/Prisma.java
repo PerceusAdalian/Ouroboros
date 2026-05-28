@@ -38,10 +38,10 @@ public class Prisma extends Spell
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Prisma&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oScry Element&r&f --",
 				"&r&f1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob&f's core weakness &7(30m)",
-				"&r&f2. Cycle through the eight elements to set your Prisma selection.",
+				"&r&f2. Cycle through the eight elements to set gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordran&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return&r&f --",
-				"&r&f1. Absorb a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob's&f &e&oAffinity &r&7(30m)",
+				"&r&f1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob's&f &e&oAffinity &r&7(30m)",
 				"&r&f2. Confirm selected element and gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.","",
 				PrintUtils.color(ObsColors.ARCANO)+"Prisma &eEffect&f: Override next outgoing damage type to the scried element.","",
 				"&r&bEchoic Disonance&f: Mana Cost becomes 100 when gaining a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.");
