@@ -1,6 +1,7 @@
 package com.eol.echoes.records;
 
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.utils.Symbols;
 import com.eol.enums.ModifierCondition;
 
 /**
@@ -59,7 +60,7 @@ public record PassiveModifier(ModifierCondition condition, PassiveEchoEffect eff
             case RECYCLE_ARROWS            -> "Recyclable Arrows";
             case SET_ATTACK_RATE           -> "Atk Rate becomes " + magnitude;
             case INCREASED_MOVEMENT_SPEED  -> "Swift Footed";
-            case DECREASED_MOVEMENT_SPEED  -> "Heavy Weapon";
+            case DECREASED_MOVEMENT_SPEED  -> "Heavy Armament";
             case PROTECTIVE	               -> "Protective Armament";
             case KNOCKBACK                 -> "Increased Knockback";
             case LUCKY 			           -> "Increased Collection Luck";
@@ -86,6 +87,7 @@ public record PassiveModifier(ModifierCondition condition, PassiveEchoEffect eff
             case PVE       		-> "PVE";
             case PVP       		-> "PVP";
             case PASSIVE  		-> "Passive";
+            case INCOMING_DAMAGE-> "PVX: "+Symbols.INCOMING+" "+Symbols.SWORDS;
             case UNDEAD    		-> "PVE: Undead";
             case LIVING    		-> "PVE: Living";
             case FLYING    		-> "PVE: Arial";

@@ -1,9 +1,15 @@
 package com.eol.materia;
 
 
+import java.util.List;
+
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.celestio.Celestia;
+import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.celestio.LuminusChestplate;
+import com.eol.echoes.instances.celestio.LuminusHelmet;
+import com.eol.echoes.instances.celestio.LuminusLeggings;
 import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Bow97;
 import com.eol.echoes.instances.cosmo.Sword14;
@@ -122,7 +128,9 @@ public class Catalysts
 				PrintUtils.color(ObsColors.CELESTIO)+"&othe day Father took us into the woods to hunt for &lRabbit Pelt&r"+PrintUtils.color(ObsColors.CELESTIO)+"&o?",
 				PrintUtils.color(ObsColors.CELESTIO)+"&oYou were so patient teaching me the prayers of &lCelestian Magik&r"+PrintUtils.color(ObsColors.CELESTIO)+"&e&o,",
 				PrintUtils.color(ObsColors.CELESTIO)+"&othe same magic you devoted yourself to until the very end.",
-				PrintUtils.color(ObsColors.CELESTIO)+"&oI carry these memories like a forge carries heat. I miss you, sister.."), new LuminusBroadsword().getInternalName());
+				PrintUtils.color(ObsColors.CELESTIO)+"&oI carry these memories like a forge carries heat. I miss you, sister.."), 
+				new LuminusBroadsword().getInternalName(),
+				List.of(new LuminusHelmet().getInternalName(), new LuminusChestplate().getInternalName(), new LuminusLeggings().getInternalName(), new LuminusBoots().getInternalName()));
 
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.CELESTIO)+Symbols.EOL+"cho Of Celestia",
 				"echo_of_celestia",

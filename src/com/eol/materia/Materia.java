@@ -40,6 +40,10 @@ public class Materia
 	public static final NamespacedKey materiaStateKey = new NamespacedKey(Ouroboros.instance, "materia_state");
 	public static final NamespacedKey componentKey = new NamespacedKey(Ouroboros.instance, "materia_component");
 	public static final NamespacedKey materiaTypeKey = new NamespacedKey(Ouroboros.instance, "materia_type");
+
+	public static final Map<String, Materia> materia_registry = new HashMap<>();
+	public static final Map<String, String> eol_catalyst_registry = new HashMap<>();
+	public static final Map<String, List<String>> eol_armor_catalyst_registry = new HashMap<>();
 	
 	private String name;
 	private String internalName;
@@ -124,10 +128,7 @@ public class Materia
 			lore.add(PrintUtils.ColorParser(line));
 		return lore;
 	}
-
-	public static final Map<String, Materia> materia_registry = new HashMap<>();
-	public static final Map<String, String> eol_catalyst_registry = new HashMap<>();
-		
+	
 	public static void register(Materia materia)
 	{
 		materia_registry.put(materia.getInternalName(), materia);
@@ -137,6 +138,13 @@ public class Materia
 	{
 	    materia_registry.put(materia.getInternalName(), materia);
 	    eol_catalyst_registry.put(materia.getInternalName(), eolInternalName);
+	}
+
+	public static void register(Materia materia, String weaponEOLName, List<String> armorEOLNames)
+	{
+	    materia_registry.put(materia.getInternalName(), materia);
+	    eol_catalyst_registry.put(materia.getInternalName(), weaponEOLName);
+	    eol_armor_catalyst_registry.put(materia.getInternalName(), armorEOLNames);
 	}
 
 	public static Materia get(String internalName)
@@ -172,11 +180,15 @@ public class Materia
 		stack.setItemMeta(meta);
 
 		if (state == MateriaState.CATALYST)
-	    {
-	        String eolTarget = eol_catalyst_registry.get(internalName);
-	        if (eolTarget != null)
-	        	EOLRegistry.markCatalyst(stack, eolTarget);
-	    }
+		{
+		    String weaponTarget = eol_catalyst_registry.get(internalName);
+		    if (weaponTarget != null)
+		        EOLRegistry.markCatalyst(stack, weaponTarget);
+
+		    List<String> armorTargets = eol_armor_catalyst_registry.get(internalName);
+		    if (armorTargets != null)
+		        EOLRegistry.markArmorCatalyst(stack, armorTargets);
+		}
 		
 		return stack;
 	}

@@ -15,7 +15,7 @@ import com.ouroboros.utils.Nullable;
  */
 public record EOLRecipe(MateriaType requiredBase, MateriaType requiredBinding, @Nullable MateriaType requiredCore)
 {
-    /**
+    	/**
      * Validates the provided Materia against this recipe.
      * Returns true only if all three types match exactly.
      * elementCore may be null — valid only if requiredCore is also null.
@@ -46,3 +46,5 @@ public record EOLRecipe(MateriaType requiredBase, MateriaType requiredBinding, @
         return new EOLRecipe(base, binding, core);
     }
 }
+
+

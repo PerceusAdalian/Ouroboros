@@ -94,7 +94,9 @@ public class EchoManifestCodec
         root.addProperty("echoId",       manifest.echoId());
         root.addProperty("rarity",       manifest.rarity().name());
         root.addProperty("echoType",     manifest.isArmorEcho() ? "ARMOR" : "WEAPON");
-        root.addProperty("slotType",     manifest.slotType().name());
+        root.addProperty("slotType", manifest.slotType() != null 
+                ? manifest.slotType().name() 
+                : ElementiumSlotType.NO_SLOT.name());
         root.addProperty("echoForm",     manifest.echoForm()     != null ? manifest.echoForm().name()     : null);
         root.addProperty("echoMaterial", manifest.echoMaterial() != null ? manifest.echoMaterial().name() : null);
 

@@ -2,6 +2,7 @@ package com.eol.echoes.records;
 
 import com.eol.enums.CombatStat;
 import com.eol.enums.ModifierCondition;
+import com.ouroboros.utils.Symbols;
 
 /**
  * ActiveModifier directly mutates one of the four core combat stats
@@ -44,6 +45,7 @@ public record ActiveEchoModifier(ModifierCondition condition, CombatStat combatS
             case PVE       		-> "PVE";
             case PVP       		-> "PVP";
             case PASSIVE  		-> "Passive";
+            case INCOMING_DAMAGE-> "PVX: "+Symbols.INCOMING+" "+Symbols.SWORDS;
             case UNDEAD    		-> "PVE: Undead";
             case LIVING    		-> "PVE: Living";
             case FLYING    		-> "PVE: Arial";

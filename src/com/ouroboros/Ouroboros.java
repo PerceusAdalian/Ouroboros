@@ -2,12 +2,8 @@ package com.ouroboros;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-
-<<<<<<< Updated upstream
 import com.eol.echoes.ArmorEquipEvent;
-=======
 import com.eol.echoes.EchoConfig;
->>>>>>> Stashed changes
 import com.eol.echoes.EchoHeldEvent;
 import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.AbilityCastHandler;

@@ -13,7 +13,11 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.celestio.Celestia;
+import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
+import com.eol.echoes.instances.celestio.LuminusChestplate;
+import com.eol.echoes.instances.celestio.LuminusHelmet;
+import com.eol.echoes.instances.celestio.LuminusLeggings;
 import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Bow97;
 import com.eol.echoes.instances.cosmo.Sword14;
@@ -22,6 +26,7 @@ import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
+import com.eol.enums.MateriaState;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
 
@@ -46,7 +51,9 @@ public final class EOLRegistry
     private EOLRegistry() {}
 
     public static final NamespacedKey EOL_TARGET_KEY = new NamespacedKey(Ouroboros.instance, "echo_eol_target");
+    public static final NamespacedKey EOL_ARMOR_TARGET_KEY = new NamespacedKey(Ouroboros.instance, "echo_eol_armor_targets");
     
+
     public static final Map<String, AbstractEOL> registry = new HashMap<>();
 
     // -------------------------------------------------------------------------
@@ -107,7 +114,7 @@ public final class EOLRegistry
     public static AbstractEOL resolveFromCatalyst(Materia catalyst)
     {
         if (catalyst == null) return null;
-        ItemStack stack = catalyst.getAsItemStack();
+        ItemStack stack = catalyst.getAsItemStack(MateriaState.CATALYST);
         String target = getEOLTarget(stack);
         if (target == null) return null;
         return get(target);
@@ -132,21 +139,76 @@ public final class EOLRegistry
         
         return stack;
     }
+
+	public static ItemStack markArmorCatalyst(ItemStack stack, List<String> eolNames)
+	{
+	    ItemMeta meta = stack.getItemMeta();
+	    if (meta == null) return stack;
+	    meta.getPersistentDataContainer().set(
+	        EOL_ARMOR_TARGET_KEY, 
+	        PersistentDataType.STRING, 
+	        String.join(",", eolNames));
+	    stack.setItemMeta(meta);
+	    return stack;
+	}
+
+	public static List<AbstractEOLArmor> resolveArmorSetFromCatalyst(Materia catalyst)
+	{
+	    if (catalyst == null) return List.of();
+	    ItemStack stack = catalyst.getAsItemStack(MateriaState.CATALYST);
+	    ItemMeta meta = stack.getItemMeta();
+	    if (meta == null) return List.of();
+
+	    String raw = meta.getPersistentDataContainer()
+	        .get(EOL_ARMOR_TARGET_KEY, PersistentDataType.STRING);
+	    if (raw == null) return List.of();
+
+	    return Arrays.stream(raw.split(","))
+	        .map(EOLRegistry::get)
+	        .filter(eol -> eol instanceof AbstractEOLArmor)
+	        .map(eol -> (AbstractEOLArmor) eol)
+	        .toList();
+	}
     
     public static void itemInit() 
     {
         List<Class<? extends AbstractEOL>> itemClasses = Arrays.asList(
+           // Weapons
+        		
+           // Celestio
            LuminusBroadsword.class,
-           HammerOfNidus.class,
-           Sword14.class,
-           AxeOfBjorn.class,
-           GeneralFalricStave.class,
-           Axe84.class,
-           BowOfKelligir.class,
-           Plague.class,
            Celestia.class,
+
+           // Mortio
+           Plague.class,
            ScytheOfBelial.class,
-           Bow97.class
+
+           // Inferno
+           
+           // Glacio
+           AxeOfBjorn.class,
+
+           // Aero
+           BowOfKelligir.class,
+           
+           // Geo
+           HammerOfNidus.class,
+
+           // Cosmo
+           Sword14.class,
+           Axe84.class,
+           Bow97.class,
+           
+           // Heresio
+           GeneralFalricStave.class,
+           
+           // Armor
+           
+           // Set: Luminus
+           LuminusHelmet.class,
+           LuminusChestplate.class,
+           LuminusLeggings.class,
+           LuminusBoots.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 

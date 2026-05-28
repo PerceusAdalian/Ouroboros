@@ -2,6 +2,7 @@ package com.eol.echoes.records;
 
 import com.eol.enums.ArmorStat;
 import com.eol.enums.ModifierCondition;
+import com.ouroboros.utils.Symbols;
 
 public record ActiveArmorModifier(ModifierCondition condition, ArmorStat armorStat, double magnitude, boolean isPercent, boolean isNegative) implements Modifier
 {
@@ -35,6 +36,7 @@ public record ActiveArmorModifier(ModifierCondition condition, ArmorStat armorSt
             case PVE       		-> "PVE";
             case PVP       		-> "PVP";
             case PASSIVE  		-> "Passive";
+            case INCOMING_DAMAGE-> "PVX: "+Symbols.INCOMING+" "+Symbols.SWORDS;
             case UNDEAD    		-> "PVE: Undead";
             case LIVING    		-> "PVE: Living";
             case FLYING    		-> "PVE: Arial";

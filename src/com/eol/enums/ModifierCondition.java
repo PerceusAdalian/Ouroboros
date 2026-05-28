@@ -17,6 +17,9 @@ public enum ModifierCondition
 	PVP,
 	PASSIVE,
 	
+	//armor conditions
+	INCOMING_DAMAGE,
+	
 	//world restrictions
 	OVERWORLD,
 	DURING_DAY,
@@ -50,6 +53,7 @@ public enum ModifierCondition
 	        // Generic
 	        case PVE     -> target != null && !(target instanceof Player);
 	        case PVP     -> target instanceof Player;
+	        case INCOMING_DAMAGE -> target != null;
 	        case PASSIVE -> true;
 
 	        // World

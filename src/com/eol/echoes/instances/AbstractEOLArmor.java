@@ -33,16 +33,15 @@ public abstract class AbstractEOLArmor extends AbstractEOL
     public AbstractEOLArmor(
             String displayName,
             String internalName,
-            boolean isIntegrityArmament,
             EOLRecipe recipe,
-            EchoForm form,
-            ElementiumSlotType slotType,
-            List<Modifier> modifiers,
             ArmorData armorData,
+            EchoForm form,
+            List<Modifier> modifiers,
+            boolean isIntegrityArmament,
             @Nullable String... description)
     {
-        super(displayName, internalName, isIntegrityArmament,
-              recipe, form, slotType, modifiers, null, description);
+        super(displayName, internalName, isIntegrityArmament, recipe, form, 
+        		null, modifiers, null, description);
         this.armorData = armorData;
     }
 
@@ -58,7 +57,7 @@ public abstract class AbstractEOLArmor extends AbstractEOL
                 null,
                 armorData,
                 getModifiers(),
-                getSlotType(),
+                ElementiumSlotType.NO_SLOT,
                 null,
                 null,
                 getForm(),

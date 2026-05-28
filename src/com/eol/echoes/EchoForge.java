@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.eol.echoes.instances.AbstractEOL;
+import com.eol.echoes.instances.AbstractEOLArmor;
 import com.eol.echoes.instances.EOLRegistry;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
@@ -115,7 +116,7 @@ public final class EchoForge
      */
     public static ItemStack forgeArmorEcho(Materia catalyst, Materia base, Materia binding, EchoForm armorForm)
     {
-        if (!validate(catalyst, MateriaComponent.CATALYST, "catalyst")) return null;
+    	if (!validate(catalyst, MateriaComponent.CATALYST, "catalyst")) return null;
         if (!validate(base,     MateriaComponent.BASE,     "base"))     return null;
         if (!validate(binding,  MateriaComponent.BINDING,  "binding"))  return null;
 
@@ -128,6 +129,20 @@ public final class EchoForge
         Rarity rarity = catalyst.getRarity();
         if (rarity == Rarity.NONE) { warn("Catalyst has NONE rarity. Cannot forge armor Echo."); return null; }
 
+        // EOL armor check — mirrors the weapon EOL check in forge()
+        List<AbstractEOLArmor> armorSet = EOLRegistry.resolveArmorSetFromCatalyst(catalyst);
+        if (!armorSet.isEmpty())
+        {
+            AbstractEOLArmor match = armorSet.stream()
+                .filter(eol -> eol.getForm() == armorForm
+                            && eol.getRecipe().matches(base, binding, null))
+                .findFirst()
+                .orElse(null);
+
+            if (match != null)
+                return match.forge(catalyst, base, match.isIntegrityArmament());
+        }
+        
         EchoMaterial echoMaterial = MateriaTypeResolver.toArmorEchoMaterial(base.getMateriaType());
         if (echoMaterial == null)
         {

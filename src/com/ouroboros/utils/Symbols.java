@@ -16,4 +16,6 @@ public class Symbols
 	public static String LUMINITE = "۞";
 	public static String SCRAP 	  = "♻";
 	public static String ESSENCE  = "⚛";
+	
+	public static String INCOMING = "📥";
 }

@@ -66,8 +66,8 @@ public abstract class AbstractEOL
         this.lockedAbilityKey    = lockedAbilityKey;
         this.description         = description;
     }
-
-    // Subclasses own forge()
+    
+	// Subclasses own forge()
     public abstract ItemStack forge(Materia catalyst, Materia base, boolean isIntegrityArmament);
 
     // -------------------------------------------------------------------------
