@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
+import com.ouroboros.menus.instances.ObsMainMenu;
 
 public class SpellBookMainPage extends ObsGui
 {
@@ -36,19 +37,9 @@ public class SpellBookMainPage extends ObsGui
 			GuiHandler.changeMenu(p, new SpecialSpellBookPage(p));
 		});
 		
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Magic Main Page").place(this, 10, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHISELED_BOOKSHELF_INSERT_ENCHANTED, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new MagicMainPage(p));
-		});
+		GuiButton.placeGoBack(10, this, new ObsMainMenu(player));
+		GuiButton.placeExit(16, this);
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
 		paint();
 	}
 

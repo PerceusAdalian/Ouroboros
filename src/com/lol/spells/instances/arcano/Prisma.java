@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ElementType;
@@ -33,16 +33,16 @@ public class Prisma extends Spell
 
 	public Prisma() 
 	{
-		super("Prisma", "prisma", Material.NETHER_STAR, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.MIXED, Rarity.FOUR, 0, 1, false,
+		super("Prisma", "prisma", Material.NETHER_STAR, SpellType.UTILITY, SpellementType.ARCANO, CastConditions.MIXED, Rarity.THREE, 0, 1, false,
 				true, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Prisma&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oScry Element&r&f --",
-				"&r&f1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob&f's core weakness &7(30m)",
-				"&r&f2. Cycle through the eight elements to set gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.",
+				"&r&f  - 1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob&f's core weakness &7(30m)",
+				"&r&f  - 2. Cycle through the eight elements.","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordran&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return&r&f --",
-				"&r&f1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob's&f &e&oAffinity &r&7(30m)",
-				"&r&f2. Confirm selected element and gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.","",
+				"&r&f  - 1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob&f's &e&oAffinity &r&7(30m)",
+				"&r&f  - 2. Confirm selected element and gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.","",
 				PrintUtils.color(ObsColors.ARCANO)+"Prisma &eEffect&f: Override next outgoing damage type to the scried element.","",
 				"&r&bEchoic Disonance&f: Mana Cost becomes 100 when gaining a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.");
 				
@@ -90,53 +90,48 @@ public class Prisma extends Spell
 		}
 		
 		if (CastConditions.isValidAction(e, CastConditions.RIGHT_CLICK_AIR))
-		{			
-			if (RayCastUtils.getEntity(p, 30, target ->
-			{
-				if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return;
-				
-				EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
-				double theta = ObsParticles.deriveDegreeTheta(p.getLocation(), le.getLocation());
-				ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 8, theta, 0.2, Particle.GLOW_SQUID_INK, null);
-				Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
-				{
-					EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
-					ObsParticles.drawArcanoCastSigil(le);
-					ObsParticles.drawLine(le.getLocation(), p.getLocation(), 0.5, 0.4, Particle.GLOW_SQUID_INK, null);
-					ObsParticles.drawLine(le.getLocation(), p.getLocation(), 0.5, 0.4, Particle.CRIT, null);
-					ElementType element = MobAffinity.parseCoreWeakness(EntityCategories.getMobCategory(le.getType()));
-					scriedElement.put(p.getUniqueId(), element);
-					PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO)+"&oScried Element&r&f: "+PrintUtils.getElementTypeColor(element)+element.getType());
-				}, 12);
-			})) return 100;
-			else
-			{
-				
-				EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.AMBIENT);
-				if (!cycledElements.containsKey(p.getUniqueId()))
-				{
-					cycledElements.put(p.getUniqueId(), ElementType.CELESTIO);
-					PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO)+"&oCycled Element&r&f: "+PrintUtils.getElementTypeColor(ElementType.CELESTIO)+ElementType.CELESTIO.getType());
-					return 0;
-				}
-				
-				ElementType newElement = switch (cycledElements.get(p.getUniqueId()))
-				{
-					case CELESTIO -> ElementType.MORTIO;
-					case MORTIO -> ElementType.INFERNO;
-					case INFERNO -> ElementType.GLACIO;
-					case GLACIO -> ElementType.AERO;
-					case AERO -> ElementType.GEO;
-					case GEO -> ElementType.COSMO;
-					case COSMO -> ElementType.HERESIO;
-					case HERESIO -> ElementType.CELESTIO;
-					default -> ElementType.CELESTIO;
-				};
-				
-				cycledElements.put(p.getUniqueId(), ElementType.CELESTIO);
-				PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO)+"&oCycled Element&r&f: "+PrintUtils.getElementTypeColor(newElement)+newElement.getType());
-				return 0;
-			}
+		{
+		    if (RayCastUtils.getEntity(p, 30, target ->
+		    {
+		        if (target == null || !(target instanceof LivingEntity le) || target instanceof Player) return;
+
+		        EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
+		        double theta = ObsParticles.deriveDegreeTheta(p.getLocation(), le.getLocation());
+		        ObsParticles.drawAngledArcLine(p.getLocation(), le.getLocation(), 0.7, 8, theta, 0.2, Particle.GLOW_SQUID_INK, null);
+		        Bukkit.getScheduler().runTaskLater(Ouroboros.instance, () ->
+		        {
+		            EntityEffects.playSound(p, Sound.ITEM_BONE_MEAL_USE, SoundCategory.AMBIENT);
+		            ObsParticles.drawArcanoCastSigil(le);
+		            ObsParticles.drawLine(le.getLocation(), p.getLocation(), 0.5, 0.4, Particle.GLOW_SQUID_INK, null);
+		            ObsParticles.drawLine(le.getLocation(), p.getLocation(), 0.5, 0.4, Particle.CRIT, null);
+		            ElementType element = MobAffinity.parseCoreWeakness(EntityCategories.getMobCategory(le.getType()));
+		            scriedElement.put(p.getUniqueId(), element);
+		            PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO) + "&oScried Element&r&f: "
+		                + PrintUtils.getElementTypeColor(element) + element.getType());
+		        }, 12);
+		    })) return 100;
+		    else
+		    {
+		        EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.AMBIENT);
+		        ElementType current = cycledElements.get(p.getUniqueId());
+		        ElementType next = (current == null) ? ElementType.CELESTIO : switch (current)
+		        {
+		            case CELESTIO -> ElementType.MORTIO;
+		            case MORTIO   -> ElementType.INFERNO;
+		            case INFERNO  -> ElementType.GLACIO;
+		            case GLACIO   -> ElementType.AERO;
+		            case AERO     -> ElementType.GEO;
+		            case GEO      -> ElementType.COSMO;
+		            case COSMO    -> ElementType.HERESIO;
+		            case HERESIO  -> ElementType.CELESTIO;
+		            default       -> ElementType.CELESTIO;
+		        };
+
+		        cycledElements.put(p.getUniqueId(), next);
+		        PrintUtils.PrintToActionBar(p, PrintUtils.color(ObsColors.ARCANO) + "&oCycled Element&r&f: "
+		            + PrintUtils.getElementTypeColor(next) + next.getType());
+		        return 0;
+		    }
 		}
 		
 		return 0;

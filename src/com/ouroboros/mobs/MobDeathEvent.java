@@ -24,9 +24,9 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.MateriaState;
 import com.eol.enums.MateriaType;
 import com.eol.materia.Materia;
+import com.lol.spells.Spell;
 import com.lol.spells.SpellRegistry;
-import com.lol.spells.instances.Spell;
-import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.spells.instances.arcano.Fortune;
 import com.lol.wand.Wand;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
@@ -95,7 +95,7 @@ public class MobDeathEvent implements Listener
 			    }
 			    if (p != null)
 			    {
-			    	if (PrismaOuroborealis.arcane_prisma_registry.contains(p.getUniqueId())) chanceBonus += 20;
+			    	if (Fortune.arcane_prisma_registry.contains(p.getUniqueId())) chanceBonus += 20;
 			    	PlayerData pData = PlayerData.getPlayer(p.getUniqueId());
 			    	
 			    	StatType sType = null;
@@ -111,9 +111,15 @@ public class MobDeathEvent implements Listener
 			    	    sType = StatType.MELEE;
 			    	else if (Wand.isWand(held))
 			    	    sType = StatType.MAGIC;
-			    	
-			        int xp = XpUtils.getScaledXP(le, level, sType, p.getUniqueId());
-			        if (sType != null) PlayerData.addXP(p, sType, xp);
+					else if (held.getItemMeta().getPersistentDataContainer().has(Spell.LOLSPELLSHARD))
+						sType = StatType.MAGIC;
+
+			    	int xp = 0;
+			    	if (sType != null)
+			    	{
+			    		xp = XpUtils.getScaledXP(le, level, sType, p.getUniqueId());
+			    		PlayerData.addXP(p, sType, xp);
+			    	}
 			    	
 			        if (pData.doAutoCollectLootDrops())
 			        {

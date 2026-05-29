@@ -30,7 +30,6 @@ public class Bow97 extends AbstractEOLWeapon
 				ElementiumSlotType.COSMO, 
 				buildModifiers(),
 				new EchoData(100, 5.0, .45, 3.0, 2000, 2000),
-				null,
 				new SpatialDistortion().getInternalName(),
 				"&r&7[ System Log 97 ]",
 				"..Critical system errors causing spatial distortion anomalies..",

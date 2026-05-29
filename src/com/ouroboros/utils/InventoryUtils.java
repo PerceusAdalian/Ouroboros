@@ -35,4 +35,17 @@ public class InventoryUtils
 		leftover.values().forEach(drop -> p.getWorld().dropItemNaturally(p.getLocation(), drop));
 	}
 	
+	public static void addRecursively(Player p, ItemStack stack, int amount)
+	{
+		int maxStack = stack.getMaxStackSize();
+		while (amount > 0)
+		{
+			int chunk = Math.min(amount, maxStack);
+			ItemStack portion = stack.clone();
+			portion.setAmount(chunk);
+			add(p, portion);
+			amount -= chunk;
+		}
+	}
+	
 }

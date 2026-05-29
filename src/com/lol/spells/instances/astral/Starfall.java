@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.lol.spells.instances.inferno.Meteor;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;

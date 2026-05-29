@@ -30,7 +30,6 @@ public class Axe84 extends AbstractEOLWeapon
 				ElementiumSlotType.COSMO, 
 				buildModifiers(),
 				new EchoData(100, 4, .45, 3, 4500, 4500),
-				null,
 				new Annihilate().getInternalName(),
 				"&r&7[ System Log 84 ]",
 				"..Errors flooding the system, unnable to restore from backups..",

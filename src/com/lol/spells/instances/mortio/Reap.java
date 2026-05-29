@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;

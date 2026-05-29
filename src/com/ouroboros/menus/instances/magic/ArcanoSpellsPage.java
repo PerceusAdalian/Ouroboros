@@ -2,24 +2,21 @@ package com.ouroboros.menus.instances.magic;
 
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.AspectOfLordran;
+import com.lol.spells.instances.arcano.ExtractEther;
+import com.lol.spells.instances.arcano.Fortune;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
-import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.spells.instances.arcano.Prisma;
 import com.lol.spells.instances.arcano.Reparo;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class ArcanoSpellsPage extends ObsGui
 {
@@ -38,37 +35,28 @@ public class ArcanoSpellsPage extends ObsGui
 		
 		// 2
 		GuiButton.placeSpellButton(player, new ArcaneBolt(), 12, this);
+		GuiButton.placeSpellButton(player, new Prisma(), 13, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Reparo(), 13, this);
+		GuiButton.placeSpellButton(player, new Reparo(), 14, this);
+		GuiButton.placeSpellButton(player, new ExtractEther(), 15, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new Mute(), 14, this);
+		GuiButton.placeSpellButton(player, new Mute(), 16, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Freecast(), 15, this);
-		GuiButton.placeSpellButton(player, new PrismaOuroborealis(), 16, this);
+		GuiButton.placeSpellButton(player, new Freecast(), 19, this);
+		GuiButton.placeSpellButton(player, new Fortune(), 20, this);
 		
 		// 6
 		
 		// 7
-		GuiButton.placeSpellButton(player, new AspectOfLordran(), 19, this);
-		GuiButton.placeSpellButton(player, new OuroborosPrime(), 20, this);
+		GuiButton.placeSpellButton(player, new AspectOfLordran(), 21, this);
+		GuiButton.placeSpellButton(player, new OuroborosPrime(), 22, this);
 
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(37, this, new SpecialSpellBookPage(player));
+		GuiButton.placeExit(43, this);
 		
 		paint();
 		

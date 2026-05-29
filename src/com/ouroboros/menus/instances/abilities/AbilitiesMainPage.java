@@ -106,36 +106,11 @@ public class AbilitiesMainPage extends ObsGui
 		});
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Obs Main Page").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new ObsMainMenu(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(37, this, new ObsMainMenu(player));
+		GuiButton.placeExit(43, this);
 		
 		paint();
 	}
-
-//	public void renderAbilities(Player player, Set<Integer> whitelistedSlots) 
-//	{
-//	    Iterator<Integer> validSlots = whitelistedSlots.iterator();
-//	    
-//	    for (AbstractOBSAbility ability : AbilityRegistry.abilityRegistry.values()) 
-//	    {
-//	        if (!validSlots.hasNext()) break;
-//	        int slot = validSlots.next();
-//	        if (slot == 37 || slot == 43) slot = validSlots.next();
-//	        placeAbilityButton(player, ability, slot);
-//	    }
-//	}
-//	
 
 }
 

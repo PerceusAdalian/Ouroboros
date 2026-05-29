@@ -13,19 +13,25 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.abilities.EchoAbility;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.menus.instances.abilities.EquipAbilityPage;
 import com.ouroboros.menus.instances.magic.CollectWandData;
+import com.ouroboros.menus.instances.store.ObsShopGui;
+import com.ouroboros.menus.instances.store.ShopCost;
+import com.ouroboros.menus.instances.store.ShopEntry;
+import com.ouroboros.menus.instances.store.ShopGuiItemConfirm;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.Symbols;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class GuiButton 
@@ -39,6 +45,12 @@ public class GuiButton
         item = new ItemStack(material);
         meta = item.getItemMeta();
     }
+    
+    public GuiButton(ItemStack stack)
+	{
+    	item = stack.clone();
+    	meta = item.getItemMeta();
+	}
     
     public static GuiButton button(Material material) 
     {
@@ -71,10 +83,37 @@ public class GuiButton
     
     public void place(ObsGui gui, int slot, Consumer<InventoryClickEvent> action) 
     {
+    	meta.getItemFlags().add(ItemFlag.HIDE_ATTRIBUTES);
+    	meta.getItemFlags().add(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
     	meta.setLore(lore);
         item.setItemMeta(meta);
         gui.getInventory().setItem(slot, item);
         gui.clickActions.put(slot, action);
+    }
+    
+    public static GuiButton fromStack(ItemStack stack)
+    {
+        return new GuiButton(stack);
+    }
+    
+    public static void placeExit(int slot, ObsGui gui)
+    {
+    	GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").place(gui, slot, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
+			GuiHandler.close(p);
+		});
+    }
+    
+    public static void placeGoBack(int slot, ObsGui gui, ObsGui to)
+    {
+    	GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to '&b&o"+to.guiTitle+"&r&f'.").place(gui, slot, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
+			GuiHandler.changeMenu(p, to);
+		});
     }
     
     public static void placeAbilityButton(Player player, EchoAbility ability, int slot, ObsGui gui)
@@ -162,8 +201,8 @@ public class GuiButton
                 obfuscatedLore.add(PrintUtils.ColorParser("&7&k" + plainText));
             }
             obfuscatedLore.add("");
-            obfuscatedLore.add("&r&fClick with &n50&r&f "+PrintUtils.getElementTypeColor(spell.getElementType())+spell.getName()+PrintUtils.color(ObsColors.COSMO)+
-            		" &lSpell Shards&r&f to &a&ocraft&r&f this &eSpell&f.");
+            obfuscatedLore.add("&r&fClick with &n50&r&f "+spell.getName()+PrintUtils.color(ObsColors.COSMO)+
+            		" &lSpell Shards&r&f to craft this spell.");
             
             GuiButton.button(Material.PAPER)
             .setName("&cLocked Spell&f: "+PrintUtils.getElementTypeColor(spell.getElementType())+"&l"+spellIcon.getItemMeta().getDisplayName())
@@ -276,4 +315,60 @@ public class GuiButton
 		});
 	}
     
+    public static void placeShopButton(Player player, ShopEntry entry, int slot, ObsGui gui)
+    {
+        List<String> lore = buildShopLore(entry.getCost());
+        
+        GuiButton.button(entry.getMaterial())
+	        .setName("&r&f" + entry.getDisplayName() + " &r&7(x"+entry.getAmount()+")&f")
+	        .setLore(lore)
+	        .place(gui, slot, e ->
+	        {
+	            Player p = (Player) e.getWhoClicked();
+	            e.setCancelled(true);
+	            p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER, 1, 1);
+	            ObsShopGui.confirmBuyer.put(p.getUniqueId(), entry.getMaterial());
+	            GuiHandler.changeMenu(p, new ShopGuiItemConfirm(p, entry));
+	        });
+    }
+ 
+    /**
+     * Builds the cost lore lines for a ShopCost.
+     * Called by placeShopButton and ShopGuiItemConfirm so they always match.
+     *
+     * Skips any currency whose value is 0.
+     */
+    public static List<String> buildShopLore(ShopCost cost)
+    {
+        return buildShopLore(cost, 1);
+    }
+ 
+    /**
+     * Builds cost lore with an optional multiplier (e.g. 16× or 32× stacks).
+     */
+    public static List<String> buildShopLore(ShopCost cost, int multiplier)
+    {
+        List<String> lore = new ArrayList<>();
+        lore.add(PrintUtils.ColorParser("&r&7Cost:"));
+ 
+        if (cost.getMoney() > 0)
+            lore.add(PrintUtils.ColorParser("&r&f  &e₪ &f" + (cost.getMoney() * multiplier) + " &eLuminite"));
+ 
+        if (cost.getLuminaTears() > 0)
+        	lore.add(PrintUtils.ColorParser("&r&f  &b۞ &f" + (cost.getLuminaTears() * multiplier) + " &bTears"));
+ 
+        for (Map.Entry<ElementType, Integer> e : cost.getAllEssenceCosts().entrySet())
+        {
+            if (e.getValue() <= 0) continue;
+            String color = PrintUtils.getElementTypeColor(e.getKey());
+            lore.add(PrintUtils.ColorParser("&r&f  " + color + "⚛ &f" + (e.getValue() * multiplier)
+                + " " + color + e.getKey().getType() + "&r" + color + " Essence"));
+        }
+ 
+        if (cost.getScrap() > 0)
+        	lore.add(PrintUtils.ColorParser("&r&f  &6"+Symbols.SCRAP+" &f" + (cost.getScrap() * multiplier) + " &6Scrap"));
+
+        return lore;
+    }
+
 }

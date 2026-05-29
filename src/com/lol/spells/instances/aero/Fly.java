@@ -21,8 +21,8 @@ import org.bukkit.plugin.Plugin;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
+import com.lol.spells.Spell;
 import com.lol.spells.SpellCastHandler;
-import com.lol.spells.instances.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;

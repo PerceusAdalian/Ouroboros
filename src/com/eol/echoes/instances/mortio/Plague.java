@@ -30,7 +30,6 @@ public class Plague extends AbstractEOLWeapon
 				ElementiumSlotType.MORTIO, 
 				buildModifiers(), 
 				new EchoData(100, 4.0, .25, 3, 1500, 1500),
-				null,
 				new PlaguesPrimer().getInternalName(), 
 				null);
 	}

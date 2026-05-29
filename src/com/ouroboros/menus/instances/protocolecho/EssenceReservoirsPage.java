@@ -10,9 +10,8 @@ import org.bukkit.entity.Player;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -102,19 +101,8 @@ public class EssenceReservoirsPage extends ObsGui
 		});
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to \"&bProtocol&f: &e&lΣ&r&f&l.C.H.O.&r&f\" Main Page.").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_BOOK_PUT, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new ProtocolEchoMainPage(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_BOOK_PUT, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(37, this, new ProtocolEchoMainPage(player));
+		GuiButton.placeExit(43, this);
 		
 		paint();
 	}

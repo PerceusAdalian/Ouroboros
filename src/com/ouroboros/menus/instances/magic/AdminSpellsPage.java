@@ -2,16 +2,11 @@ package com.ouroboros.menus.instances.magic;
 
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.admin.RemoveEntity;
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.menus.ObsGui;
 
 public class AdminSpellsPage extends ObsGui
 {
@@ -28,19 +23,8 @@ public class AdminSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new RemoveEntity(), 10, this);
 		
 		//Exits
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeExit(37, this);
+		GuiButton.placeExit(43, this);
 		
 		paint();
 	}

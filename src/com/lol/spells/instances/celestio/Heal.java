@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.CastConditions;
@@ -35,15 +35,19 @@ public class Heal extends Spell
 		Player p = e.getPlayer();
 		Entity target = RayCastUtils.getEntity(p, 25);
 		
-		EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 		if (target == null || !(target instanceof Player))
 		{
+			if(!PlayerData.heal(p, 150, false)) return -1;
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
-			PlayerData.heal(p, 150, false);
 			return 25;
 		}
 		else if (target instanceof Player pTarget)
 		{		
+			PlayerData data = PlayerData.getPlayer(pTarget.getUniqueId());
+			if (data.getHP() == data.getDefaultHP()) return -1;
+			
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.AMBIENT);
 			ObsParticles.drawLine(p.getLocation(), pTarget.getLocation(), 0.4, 0.4, Particle.CLOUD, null);
 			ObsParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->

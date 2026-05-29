@@ -54,19 +54,8 @@ public class WandCraftPage extends ObsGui
 		});
 				
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Wand Main Page'").place(this, 10, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new WandMainPage(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(10, this, new WandMainPage(player));
+		GuiButton.placeExit(16, this);
 		paint();
 	}
 

@@ -30,7 +30,6 @@ public class GeneralFalricStave extends AbstractEOLWeapon
 				ElementiumSlotType.HERESIO, 
 				buildModifiers(),
 				new EchoData(95, 4, .35, 3.5, 3500, 3500),
-				null,
 				new BloodFolliedBlade().getInternalName(),
 				"Some dead guy:",
 				"\"Excuse me, but did that knight just use his own "+PrintUtils.color(ObsColors.HERESIO)+"&oblood&r&7&o to attack?",

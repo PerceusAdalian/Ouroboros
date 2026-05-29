@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.lol.wand.Wand;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;

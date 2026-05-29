@@ -30,7 +30,6 @@ public class ScytheOfBelial extends AbstractEOLWeapon
 				ElementiumSlotType.MORTIO, 
 				buildModifiers(), 
 				new EchoData(85, 5, .40, 2.5, 2000, 2000),
-				null,
 				new MarkedForDeath().getInternalName(), 
 				null);
 	}

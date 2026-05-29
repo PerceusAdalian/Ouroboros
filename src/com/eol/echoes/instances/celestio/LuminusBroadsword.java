@@ -30,7 +30,6 @@ public class LuminusBroadsword extends AbstractEOLWeapon
 				ElementiumSlotType.CELESTIO, 
 				buildModifiers(), 
 				new EchoData(35, 2.5, .50, 3, 1000, 1000),
-				null,
 				new LuminusRadiance().getInternalName(), 
 				"My beloved sister—she who never failed to make me smile.",
 				"this blade she entrusted to me, that I might repel the darkness of "+PrintUtils.color(ObsColors.HERESIO)+"Twilight&7",

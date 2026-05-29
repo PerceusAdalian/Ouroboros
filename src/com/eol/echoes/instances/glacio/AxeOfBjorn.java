@@ -30,7 +30,6 @@ public class AxeOfBjorn extends AbstractEOLWeapon
 				ElementiumSlotType.GLACIO, 
 				buildModifiers(),
 				new EchoData(75, 2.5, .40, 2.5, 3000, 3000), 
-				null,
 				new BjornsGlaciate().getInternalName(), 
 				"Thou who takes up my axe -- hear me, and be not afraid.",
 				"My element, "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&7&o, is not the Cold of Death.",

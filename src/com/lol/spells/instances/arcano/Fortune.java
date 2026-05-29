@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
@@ -23,12 +23,12 @@ import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class PrismaOuroborealis extends Spell
+public class Fortune extends Spell
 {
 
-	public PrismaOuroborealis()
+	public Fortune()
 	{
-		super("Prisma Ouroborealis", "prisma_ouroborealis", Material.NETHER_STAR, SpellType.BUFF, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 350, 240, false, false,
+		super("Fortune's Fate", "fortune", Material.NETHER_STAR, SpellType.BUFF, SpellementType.ARCANO, CastConditions.RIGHT_CLICK_AIR, Rarity.FIVE, 350, 240, false, false,
 				"&r&fGrants "+PrintUtils.color(ObsColors.ARCANO)+"Arcane Prisma&r&f to &6self&f for &b&o30 seconds&r&f.","",
 				"&r"+PrintUtils.color(ObsColors.ARCANO)+"Arcane Prisma &eEffect&f: Boosts drop rate of certain items by &b&o20%&r&f.");
 	}

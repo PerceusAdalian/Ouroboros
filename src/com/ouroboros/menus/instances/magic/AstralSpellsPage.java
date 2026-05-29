@@ -2,16 +2,11 @@ package com.ouroboros.menus.instances.magic;
 
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.astral.Starfall;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class AstralSpellsPage extends ObsGui
 {
@@ -36,19 +31,8 @@ public class AstralSpellsPage extends ObsGui
 
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(37, this, new SpecialSpellBookPage(player));
+		GuiButton.placeExit(43, this);
 		
 		paint();
 		

@@ -83,19 +83,8 @@ public class ArmorForgeFormTargetPage extends ObsGui
 		});
 
 		//Exits
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 10, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeExit(37, this);
+		GuiButton.placeExit(43, this);
 		paint();
 	}
 

@@ -7,9 +7,8 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class CodexElementsPage extends ObsGui
@@ -270,20 +269,9 @@ public class CodexElementsPage extends ObsGui
         });        
         
         //Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Codex Main Page").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new CodexMainPage(p));
-		});
+        GuiButton.placeGoBack(37, this, new CodexMainPage(player));
+		GuiButton.placeExit(43, this);
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
-        
 		paint();
     }
     

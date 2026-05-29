@@ -55,7 +55,8 @@ public class MobManager
 	            MobData data = MobData.getMob(e.getUniqueId());
 	            if (data == null)
 	            {
-	            	PrintUtils.OBSConsoleError("despawnAll: orphaned mob " + e.getUniqueId() +
+	            	if (Ouroboros.debug) 
+	            		PrintUtils.OBSConsoleError("despawnAll: orphaned mob " + e.getUniqueId() +
 	            		" has PDC key but no dataMap entry — removing without saving.");
 	            	e.remove();
 	            	orphan++;

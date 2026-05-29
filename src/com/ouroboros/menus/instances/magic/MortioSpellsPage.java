@@ -2,9 +2,6 @@ package com.ouroboros.menus.instances.magic;
 
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.spells.instances.mortio.Demonform;
@@ -18,9 +15,7 @@ import com.lol.spells.instances.mortio.Sleuth;
 import com.lol.spells.instances.mortio.Voodoo;
 import com.lol.spells.instances.mortio.Wither;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class MortioSpellsPage extends ObsGui
 {
@@ -50,20 +45,10 @@ public class MortioSpellsPage extends ObsGui
 		// 5
 		GuiButton.placeSpellButton(player, new Haunt(), 20, this);
 		GuiButton.placeSpellButton(player, new Voodoo(), 21, this);
-		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to 'Spellbook Page'").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new ElementalSpellBookPage(p));
-		});
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		//Exits
+		GuiButton.placeGoBack(37, this, new ElementalSpellBookPage(player));
+		GuiButton.placeExit(43, this);
 		
 		paint();	
 	}

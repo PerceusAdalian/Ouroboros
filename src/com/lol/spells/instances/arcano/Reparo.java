@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.eol.echoes.EchoManager;
 import com.lol.enums.SpellType;
 import com.lol.enums.SpellementType;
-import com.lol.spells.instances.Spell;
+import com.lol.spells.Spell;
 import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;

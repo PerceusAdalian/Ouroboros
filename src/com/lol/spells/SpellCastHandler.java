@@ -22,7 +22,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.OuroborosPrime;
@@ -268,8 +267,10 @@ public class SpellCastHandler implements Listener
         }
         else wand.subtractMana(actualCost);
         
-        if (data.doXpNotification()) PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + currentSpell.getManacost() + " &b&o" + PrintUtils.printStatType(StatType.MAGIC));
-        if (data.doLevelUpSound()) EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
+        if (data.doXpNotification() && currentSpell.getManacost() > 0) 
+        	PrintUtils.PrintToActionBar(p, "&r&e&l+&r&f" + currentSpell.getManacost() + " &b&o" + PrintUtils.printStatType(StatType.MAGIC));
+        if (data.doLevelUpSound() && currentSpell.getManacost() > 0) 
+        	EntityEffects.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER);
         PlayerData.addXP(p, StatType.MAGIC, currentSpell.getManacost());
         ObsParticles.playCastSigil(p, currentSpell.getElementType());
 

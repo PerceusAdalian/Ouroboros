@@ -30,7 +30,6 @@ public class HammerOfNidus extends AbstractEOLWeapon
 				ElementiumSlotType.GEO, 
 				buildModifiers(), 
 				new EchoData(200, 2.5, 0, 1.5, 2000, 2000),
-				null,
 				new NidusPreservation().getInternalName(), 
 				"Thou who wouldst beckon the earth itself -- listen well.",
 				"My element, "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&7&o, is neither gift nor curse.",

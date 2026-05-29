@@ -1,4 +1,4 @@
-package com.lol.spells.instances;
+package com.lol.spells;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +144,7 @@ public abstract class Spell
 		List<String> lore = new ArrayList<>();
 		for (String line : spellDescription) 
 		{
-			lore.add(PrintUtils.ColorParser(line));
+			lore.add(PrintUtils.ColorParser("&r&f"+line));
 		}
 		return lore;
 	}
@@ -188,7 +188,7 @@ public abstract class Spell
 		    List<String> parsedDescriptionLines = new ArrayList<>();
 		    for (String line : spellDescription) 
 		    {
-		        parsedDescriptionLines.add(PrintUtils.ColorParser(line));
+		        parsedDescriptionLines.add(PrintUtils.ColorParser("&r&f"+line));
 		    }
 		    lore.addAll(parsedDescriptionLines);
 		    
@@ -270,7 +270,7 @@ public abstract class Spell
 				List<String> parsedDescriptionLines = new ArrayList<>();
 				for (String line : spellDescription) 
 				{
-					parsedDescriptionLines.add(PrintUtils.ColorParser(line));
+					parsedDescriptionLines.add(PrintUtils.ColorParser("&r&f"+line));
 				}
 				lore.addAll(parsedDescriptionLines);
 				lore.add("");				

@@ -2,6 +2,7 @@ package com.ouroboros;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import com.eol.echoes.ArmorEquipEvent;
 import com.eol.echoes.EchoConfig;
 import com.eol.echoes.EchoHeldEvent;
@@ -20,6 +21,7 @@ import com.lol.spells.SpellCastHandler;
 import com.lol.spells.SpellRegistry;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Tailwind;
+import com.lol.spells.instances.arcano.ExtractEther;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Pneuma;
@@ -33,7 +35,6 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.accounts.PlayerSaturationTask;
 import com.ouroboros.accounts.RestoreArmorTask;
 import com.ouroboros.menus.GuiHandler;
-import com.ouroboros.menus.instances.store.ShopItemContainer;
 import com.ouroboros.mobs.MobDamageEvent;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.mobs.MobDeathEvent;
@@ -98,8 +99,6 @@ public class Ouroboros extends JavaPlugin
 		
 		AbilityCastHandler.register(instance);
 		AbilityRegistry.abilityInit();		
-		
-		ShopItemContainer.init();
 
 		TrainingWandRecipe.init();
 		TrainingWandRecipe.register();
@@ -121,6 +120,7 @@ public class Ouroboros extends JavaPlugin
 		Warp.registerSpellHelper(instance);
 		Fly.registerSpellHelper(instance);
 		Sigil.registerSpellHelper(instance);
+		ExtractEther.registerSpellHelper(instance);
 		MarkedForDeath.registerAbilityHelper(instance);
 		
 		MateriaCastHandler.register(instance);

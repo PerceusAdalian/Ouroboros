@@ -6,18 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.lol.spells.instances.Spell;
 import com.lol.spells.instances.admin.RemoveEntity;
 import com.lol.spells.instances.aero.ChainLightning;
 import com.lol.spells.instances.aero.Charge;
+import com.lol.spells.instances.aero.Depulso;
 import com.lol.spells.instances.aero.Diffindo;
-import com.lol.spells.instances.aero.RazorWind;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.aero.Galeforce;
 import com.lol.spells.instances.aero.GalvanicNeedle;
-import com.lol.spells.instances.aero.Depulso;
 import com.lol.spells.instances.aero.HealingCurrent;
 import com.lol.spells.instances.aero.Levioso;
+import com.lol.spells.instances.aero.RazorWind;
 import com.lol.spells.instances.aero.Smite;
 import com.lol.spells.instances.aero.Tailwind;
 import com.lol.spells.instances.aero.Thunderbolt;
@@ -25,10 +24,12 @@ import com.lol.spells.instances.aero.Thunderstorm;
 import com.lol.spells.instances.aero.Vaporize;
 import com.lol.spells.instances.arcano.ArcaneBolt;
 import com.lol.spells.instances.arcano.AspectOfLordran;
+import com.lol.spells.instances.arcano.ExtractEther;
+import com.lol.spells.instances.arcano.Fortune;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.Mute;
 import com.lol.spells.instances.arcano.OuroborosPrime;
-import com.lol.spells.instances.arcano.PrismaOuroborealis;
+import com.lol.spells.instances.arcano.Prisma;
 import com.lol.spells.instances.arcano.Reparo;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
@@ -98,10 +99,10 @@ import com.lol.spells.instances.inferno.Incendio;
 import com.lol.spells.instances.inferno.Meteor;
 import com.lol.spells.instances.inferno.Primer;
 import com.lol.spells.instances.inferno.Smog;
-import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Demonform;
 import com.lol.spells.instances.mortio.Haunt;
 import com.lol.spells.instances.mortio.Reap;
+import com.lol.spells.instances.mortio.SeethingSkull;
 import com.lol.spells.instances.mortio.Sew;
 import com.lol.spells.instances.mortio.Shroud;
 import com.lol.spells.instances.mortio.Siphon;
@@ -152,8 +153,9 @@ public class SpellRegistry
         		Postulate.class, Hypothesis.class, Lemma.class, Theorem.class, Corollary.class,
         		
         		//Arcano
-        		Mute.class, ArcaneBolt.class, Surveil.class, Freecast.class, PrismaOuroborealis.class,
+        		Mute.class, ArcaneBolt.class, Surveil.class, Freecast.class, Fortune.class,
         		OuroborosPrime.class, AspectOfLordran.class, Sigil.class, Reparo.class,
+        		ExtractEther.class, Prisma.class,
         		
         		//Astral
         		Starfall.class,

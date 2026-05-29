@@ -31,7 +31,6 @@ public class Celestia extends AbstractEOLWeapon
 				ElementiumSlotType.CELESTIO, 
 				buildModifiers(), 
 				new EchoData(65, 5.0, .20, 2.5, 1000, 1000),
-				null,
 				new LuminasRadiance().getInternalName(), 
 				"My bow, that which was bestowed unto me upon my coronation, I named "+PrintUtils.color(ObsColors.CELESTIO)+"&oCelestia&r&7&o.",
 				"I now give it to you, as an &b&o"+Symbols.EOL+"cho &r&7&oof its former glory.",

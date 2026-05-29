@@ -25,12 +25,11 @@ public class BowOfKelligir extends AbstractEOLWeapon
 	{
 		super("&r&e&lΣOL&r&f: &oBow of Kelligir "+PrintUtils.color(ObsColors.AERO)+"✦", 
 				"bow_of_kelligir", true,
-				new EOLRecipe(MateriaType.BOW, MateriaType.STRING, MateriaType.AERO), 
+				EOLRecipe.of(MateriaType.BOW, MateriaType.STRING, MateriaType.AERO), 
 				EchoForm.BOW, 
 				ElementiumSlotType.AERO, 
 				buildModifiers(), 
 				new EchoData(50, 4.5, .15, 5, 1000, 1000),
-				null,
 				new KelligirAeroMastery().getInternalName(), 
 				null);
 	}

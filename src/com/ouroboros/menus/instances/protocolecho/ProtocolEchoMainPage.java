@@ -29,7 +29,7 @@ public class ProtocolEchoMainPage extends ObsGui
 		{
 			Player p = (Player) e.getWhoClicked();
 			p.playSound(p.getLocation(), Sound.BLOCK_SMITHING_TABLE_USE, SoundCategory.MASTER, 1, 1);
-			e.setCancelled(true);
+			GuiHandler.changeMenu(p, new ScrapPage(p));
 		});
 		
 		GuiButton.button(Material.ANVIL).setName("&e&lProtocol &bδ &r&f- &b&oRepair Echoes&r&f").setLore("Click to &arepair&f a damaged &b&lEcho&r&f.").place(this, 12, e->
@@ -61,19 +61,9 @@ public class ProtocolEchoMainPage extends ObsGui
 		});
 
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Ouroboros Main Page").place(this, 10, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new ObsMainMenu(p));
-		});
+		GuiButton.placeGoBack(10, this, new ObsMainMenu(player));
+		GuiButton.placeExit(16, this);
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
 		paint();
 	}
 

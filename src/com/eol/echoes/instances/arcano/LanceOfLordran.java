@@ -30,7 +30,6 @@ public class LanceOfLordran extends AbstractEOLWeapon
 				ElementiumSlotType.COSMO, 
 				buildModifiers(),
 				new EchoData(0, 4.5, .40, 1.5, 1500, 1500),
-				null,
 				new SpatialDistortion().getInternalName(),
 				null);
 	}

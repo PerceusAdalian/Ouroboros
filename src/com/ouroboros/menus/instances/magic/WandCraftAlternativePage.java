@@ -2,14 +2,10 @@ package com.ouroboros.menus.instances.magic;
 
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.lol.wand.Wand;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
 
 public class WandCraftAlternativePage  extends ObsGui
@@ -49,19 +45,8 @@ public class WandCraftAlternativePage  extends ObsGui
 		WandCraftPage.placeWandButton(player, Wand.get("twilight_catalyst"), 41, this);
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to the previous page.").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new WandCraftPage(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(37, this, new WandCraftPage(player));
+		GuiButton.placeExit(43, this);
 		paint();
 	}
 

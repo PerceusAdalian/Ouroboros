@@ -6,8 +6,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,6 +13,7 @@ import com.lol.wand.Wand;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
+import com.ouroboros.menus.instances.ObsMainMenu;
 
 public class CollectWandData extends ObsGui
 {
@@ -83,19 +82,9 @@ public class CollectWandData extends ObsGui
 		});
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to your the Magic Main Page").place(this, 10, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new MagicMainPage(p));
-		});
+		GuiButton.placeGoBack(10, this, new ObsMainMenu(player));
+		GuiButton.placeExit(16, this);
 		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 16, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
 		paint();
 	}
 

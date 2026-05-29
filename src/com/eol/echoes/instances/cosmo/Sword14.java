@@ -30,7 +30,6 @@ public class Sword14 extends AbstractEOLWeapon
 			ElementiumSlotType.COSMO, 
 			buildModifiers(),
 			new EchoData(100, 4.5, .50, 2.5, 2000, 2000),
-			null,
 			new SpatialRend().getInternalName(),
 			"[ System Log 14 ]",
 			"..Construction records nominal. Waveform stability: unresolved..",

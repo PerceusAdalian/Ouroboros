@@ -2,7 +2,6 @@ package com.lol.spells;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.lol.spells.instances.Spell;
 import com.ouroboros.accounts.PlayerData;
 
 public class SpellDataHandler 

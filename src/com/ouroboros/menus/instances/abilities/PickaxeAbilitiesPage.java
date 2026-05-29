@@ -2,16 +2,11 @@ package com.ouroboros.menus.instances.abilities;
 
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.eol.echoes.abilities.instances.pickaxe.HeavySwing;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
-import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class PickaxeAbilitiesPage extends ObsGui
 {
@@ -28,19 +23,8 @@ public class PickaxeAbilitiesPage extends ObsGui
 		GuiButton.placeAbilityButton(player, new HeavySwing(), 10, this);
 		
 		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to Abilities Main Page").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
-			GuiHandler.changeMenu(p, new AbilitiesMainPage(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			EntityEffects.playSound(p, Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER);
-			GuiHandler.close(p);
-		});
+		GuiButton.placeGoBack(37, this, new AbilitiesMainPage(player));
+		GuiButton.placeExit(43, this);
 		
 		paint();
 	}

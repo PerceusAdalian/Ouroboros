@@ -6,68 +6,41 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-import com.ouroboros.menus.ObsGui;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.menus.GuiButton;
-import com.ouroboros.menus.GuiHandler;
+import com.ouroboros.menus.ObsGui;
 import com.ouroboros.menus.instances.ObsMainMenu;
-import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.objects.instances.HealthCrystal;
+import com.ouroboros.utils.Symbols;
 
 public class ObsShopGui extends ObsGui
 {
-	public static Map<UUID, Material> confirmBuyer = new HashMap<>();
 
-	public ObsShopGui(Player player) 
-	{
-		super(player, "Nexus Shop", 54, Set.of(21,22,23,37,43));
-	}
+    public ObsShopGui(Player player)
+    {
+        super(player, Symbols.OBS + "uroboros Shop", 54, Set.of());
+    }
 
-	@Override
-	protected void build() 
-	{
-		
-		GuiButton.button(Material.DIRT).setLore(PrintUtils.setCost(ShopItemContainer.itemTable.get(Material.DIRT))).place(this, 21, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER, 1, 1);
-			confirmBuyer.put(p.getUniqueId(), Material.DIRT);
-			GuiHandler.changeMenu(p, new ShopGuiItemConfirm(p));
-		});
-		
-		GuiButton.button(Material.OAK_WOOD).setLore(PrintUtils.setCost(ShopItemContainer.itemTable.get(Material.OAK_WOOD))).place(this, 22, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER, 1, 1);
-			confirmBuyer.put(p.getUniqueId(), Material.OAK_WOOD);
-			GuiHandler.changeMenu(p, new ShopGuiItemConfirm(p));
-		});
-		
-		GuiButton.button(Material.BREAD).setLore(PrintUtils.setCost(ShopItemContainer.itemTable.get(Material.BREAD))).place(this, 23, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER, 1, 1);
-			confirmBuyer.put(p.getUniqueId(), Material.BREAD);
-			GuiHandler.changeMenu(p, new ShopGuiItemConfirm(p));
-		});
-		
-		//Exits
-		GuiButton.button(Material.YELLOW_STAINED_GLASS_PANE).setName("<- &e&lGo Back").setLore("Click to return to the Main Page").place(this, 37, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER, 1, 1);
-			GuiHandler.changeMenu(p, new ObsMainMenu(p));
-		});
-		
-		GuiButton.button(Material.RED_STAINED_GLASS_PANE).setName("&c&lExit Menu").setLore("").place(this, 43, e->
-		{
-			Player p = (Player) e.getWhoClicked();
-			p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, SoundCategory.MASTER, 1, 1);
-			GuiHandler.close(p);
-		});
-		paint();
-	}
+    public static final Map<UUID, Material> confirmBuyer = new HashMap<>();
 
+    @Override
+    protected void build()
+    {
+        GuiButton.placeShopButton(player, ShopEntry.of(Material.DIRT).cost(ShopCost.builder().money(5).build()).build(), 10, this);
+        GuiButton.placeShopButton(player, ShopEntry.of(new HealthCrystal().toItemStack()).cost(ShopCost.builder().money(150).build()).build(), 11, this);
+        
+        GuiButton.placeShopButton(player, 
+        		ShopEntry.of(Material.LADDER)
+        		.displayName("Bundle of Ladders")
+        		.amount(4)
+        		.cost(ShopCost.builder().money(5).essence(ElementType.GEO, 1).luminaTears(1).build())
+        		.build(), 12, this);
+        
+        GuiButton.placeGoBack(37, this, new ObsMainMenu(player));
+        GuiButton.placeExit(43, this);
+
+        paint();
+    }
 }
