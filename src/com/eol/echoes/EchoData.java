@@ -33,4 +33,11 @@ public class EchoData
     public double getCritModifier()      { return critModifier; }
     public int    getMaxDurability()     { return maxDurability; }
     public int    getCurrentDurability() { return currentDurability; }
+    
+    public EchoData setAttack(double attack) { return new EchoData(attack, attackRating, critRate, critModifier, maxDurability, currentDurability); }
+    public EchoData setAttackRating(double attackRating) { return new EchoData(attack, attackRating, critRate, critModifier, maxDurability, currentDurability); }
+    public EchoData setCritRate(double critRate) { return new EchoData(attack, attackRating, critRate, critModifier, maxDurability, currentDurability); }
+    public EchoData setCritModifier(double critModifier) { return new EchoData(attack, attackRating, critRate, critModifier, maxDurability, currentDurability); }
+    public EchoData setMaxDurability(int maxDurability) { return new EchoData(attack, attackRating, critRate, critModifier, maxDurability, currentDurability); }
+    public EchoData setCurrentDurability(int currentDurability) { return new EchoData(attack, attackRating, critRate, critModifier, maxDurability, currentDurability); }
 }

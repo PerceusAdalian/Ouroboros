@@ -35,6 +35,7 @@ import com.ouroboros.utils.NumberUtils;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.Symbols;
+import com.ouroboros.utils.entityeffects.CosmoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
 public class PlayerData 
@@ -278,16 +279,21 @@ public class PlayerData
 	public void damage(double value, ElementType element, boolean routeArmorDamage)
 	{
 	    Player player = Bukkit.getPlayer(uuid);
-
-	    double mx = switch (element)
+	    
+	    double mx = 1.0;
+	    
+	    if (!CosmoEffects.isVoidedRegistry.containsKey(player.getUniqueId()))
 	    {
-	    	case MORTIO 			-> 1.5;
-	        case INFERNO, COMBUST, 
-	        COSMO, HERESIO 			-> 1.25;
-	        case CELESTIO,SEVER, 
-            IMPALE, CRUSH, BLAST    -> 0.5;
-	        default                 -> 1.0;
-	    };
+	    	mx = switch (element)
+			{
+			case MORTIO 			-> 1.5;
+			case INFERNO, COMBUST, 
+			COSMO, HERESIO 			-> 1.25;
+			case CELESTIO,SEVER, 
+			IMPALE, CRUSH, BLAST    -> 0.5;
+			default                 -> 1.0;
+			};
+	    }
 
 	    double remaining = value * mx;
 	    

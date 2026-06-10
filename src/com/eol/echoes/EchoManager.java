@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -264,6 +265,49 @@ public class EchoManager
     }
 
     // -------------------------------------------------------------------------
+    // EchoData mutation + rebuild
+    // -------------------------------------------------------------------------
+
+    /**
+     * Applies a stat patch to a weapon Echo's {@link EchoData}, writes the updated
+     * manifest to PDC, and rebuilds the lore/item in-place.
+     *
+     * <p>The operator receives the current {@link EchoData} and must return the
+     * desired one using its wither methods. The item reference itself is mutated
+     * and returned for convenience.
+     *
+     * <pre>{@code
+     * // Stance override example
+     * EchoManager.modifyEchoData(item, data -> data.setAttack(stanceAttack)
+     *                                              .setAttackRating(stanceSpeed));
+     *
+     * // Single-field patch
+     * EchoManager.modifyEchoData(item, data -> data.setCritRate(0.35));
+     * }</pre>
+     *
+     * @param item  The Echo ItemStack to modify (must be a weapon Echo)
+     * @param patch A {@link UnaryOperator} that receives the current EchoData and returns the patched one
+     * @return The mutated item, or null if the item is not a valid weapon Echo
+     */
+    public static ItemStack modifyEchoData(ItemStack item, UnaryOperator<EchoData> patch)
+    {
+        if (item == null || patch == null) return null;
+
+        EchoManifest manifest = EchoManifestCodec.read(item);
+        if (manifest == null)       return null;
+        if (manifest.isArmorEcho()) return null;
+
+        EchoData patched         = patch.apply(manifest.baseStats());
+        EchoManifest updated     = withEchoData(manifest, patched);
+        ItemStack rebuilt        = EchoForge.rebuild(updated);
+        if (rebuilt == null) return null;
+
+        item.setType(rebuilt.getType());
+        item.setItemMeta(rebuilt.getItemMeta());
+        return item;
+    }
+
+    // -------------------------------------------------------------------------
     // Internal helpers
     // -------------------------------------------------------------------------
 
@@ -335,6 +379,15 @@ public class EchoManager
             }
         }
         meta.setLore(lore);
+    }
+
+    private static EchoManifest withEchoData(EchoManifest manifest, EchoData data)
+    {
+        return new EchoManifest(
+                manifest.echoId(), manifest.rarity(), data, null,
+                manifest.modifiers(), manifest.slotType(),
+                manifest.equippedAbilityKey(), manifest.lockedAbilityKey(),
+                manifest.echoForm(), manifest.echoMaterial());
     }
 
     private static EchoManifest withEquippedAbility(EchoManifest old, String abilityKey)

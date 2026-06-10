@@ -4,7 +4,10 @@ import java.util.Set;
 
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.astral.Attenuate;
+import com.lol.spells.instances.astral.CollectiveUnconscious;
 import com.lol.spells.instances.astral.Starfall;
+import com.lol.spells.instances.astral.TemporalDistortion;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.ObsGui;
 
@@ -22,13 +25,19 @@ public class AstralSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Starfall(), 10, this);
 		
 		// 2
+		GuiButton.placeSpellButton(player, new Attenuate(), 11, this);
 		
 		// 3
 
 		// 4
+		GuiButton.placeSpellButton(player, new CollectiveUnconscious(), 12, this);
 		
 		// 5
 
+		// 6
+		
+		// 7
+		GuiButton.placeSpellButton(player, new TemporalDistortion(), 13, this);
 		
 		//Exits
 		GuiButton.placeGoBack(37, this, new SpecialSpellBookPage(player));

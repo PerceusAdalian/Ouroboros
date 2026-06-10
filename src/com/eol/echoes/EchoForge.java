@@ -195,8 +195,7 @@ public final class EchoForge
     // ItemStack construction — weapon
     // -------------------------------------------------------------------------
 
-    private static ItemStack buildWeaponItem(EchoManifest manifest, EchoForm form,
-                                              EchoMaterial echoMaterial, Rarity baseRarity)
+    private static ItemStack buildWeaponItem(EchoManifest manifest, EchoForm form, EchoMaterial echoMaterial, Rarity baseRarity)
     {
         Material material = EchoFormResolver.toBukkitMaterial(form, echoMaterial);
         if (material == null)
@@ -339,8 +338,7 @@ public final class EchoForge
 
     private static boolean isArmorForm(EchoForm form)
     {
-        return form == EchoForm.HELMET || form == EchoForm.CHESTPLATE
-                || form == EchoForm.LEGGINGS || form == EchoForm.BOOTS;
+        return form == EchoForm.HELMET || form == EchoForm.CHESTPLATE || form == EchoForm.LEGGINGS || form == EchoForm.BOOTS;
     }
 
     private static boolean validate(Materia materia, MateriaComponent expected, String label)

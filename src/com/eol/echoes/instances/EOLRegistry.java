@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.arcano.LanceOfLordran;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
@@ -201,6 +202,9 @@ public final class EOLRegistry
            
            // Heresio
            GeneralFalricStave.class,
+           
+           // Arcano
+           LanceOfLordran.class,
            
            // Armor
            

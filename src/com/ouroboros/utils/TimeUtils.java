@@ -19,4 +19,13 @@ public class TimeUtils
             case Timeframe.NIGHT -> time >= 13000;
         };
     }
+    
+    public static void setTime(World world, Timeframe timeframe)
+    {
+    	switch (timeframe)
+    	{
+	    	case DAY -> world.setTime(6000);
+	    	case NIGHT -> world.setTime(18000);
+    	}
+    }
 }

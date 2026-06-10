@@ -33,7 +33,10 @@ import com.lol.spells.instances.arcano.Prisma;
 import com.lol.spells.instances.arcano.Reparo;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
+import com.lol.spells.instances.astral.Attenuate;
+import com.lol.spells.instances.astral.CollectiveUnconscious;
 import com.lol.spells.instances.astral.Starfall;
+import com.lol.spells.instances.astral.TemporalDistortion;
 import com.lol.spells.instances.celestio.Ascension;
 import com.lol.spells.instances.celestio.AssertOrder;
 import com.lol.spells.instances.celestio.Cure;
@@ -158,7 +161,7 @@ public class SpellRegistry
         		ExtractEther.class, Prisma.class,
         		
         		//Astral
-        		Starfall.class,
+        		Starfall.class, Attenuate.class, TemporalDistortion.class, CollectiveUnconscious.class,
         		
         		//Admin Spells
         		RemoveEntity.class

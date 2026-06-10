@@ -15,6 +15,7 @@ import com.eol.echoes.abilities.instances.pickaxe.HeavySwing;
 import com.eol.echoes.abilities.instances.polearm.Lunge;
 import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.eol.echoes.abilities.instances.special.Annihilate;
+import com.eol.echoes.abilities.instances.special.ArcaneOrder;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
@@ -51,7 +52,8 @@ public class AbilityRegistry
             PlaguesPrimer.class,
             LuminasRadiance.class,
             MarkedForDeath.class,
-            SpatialDistortion.class);
+            SpatialDistortion.class,
+            ArcaneOrder.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

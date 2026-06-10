@@ -4,6 +4,7 @@ package com.eol.materia;
 import java.util.List;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.arcano.LanceOfLordran;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
@@ -301,5 +302,23 @@ public class Catalysts
 				PrintUtils.color(ObsColors.COSMO)+"&oWith message: 'I just want to help my people, why do you keep interrupting me!'.",
 				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into supposed placeholder "+Symbols.EOL+"choic object.. Will continue to monitor."), new Bow97().getInternalName());
 		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.ARCANO)+Symbols.EOL+"cho of Lordran",
+				"echo_of_lordran",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SEVEN,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.ARCANO) + "&oFantasian Academy Dossier — Lordran, The Forgotten King",
+				PrintUtils.color(ObsColors.ARCANO) + "&oA noble of a land swallowed by time, crowned in regal soverance, Lordran,",
+				PrintUtils.color(ObsColors.ARCANO) + "&owas the sole arbiter and inventor of &lArcanaean&r" + PrintUtils.color(ObsColors.ARCANO) + "&o magick.",
+				PrintUtils.color(ObsColors.ARCANO) + "&oHe ruled from a castle hewn and bejeweled in &lIron&r" + PrintUtils.color(ObsColors.ARCANO) + "&o, clothed in &lPelt",
+				PrintUtils.color(ObsColors.ARCANO) + "&ofit only for a King's commission. Many sought his tutelage, for Arcanaean magick",
+				PrintUtils.color(ObsColors.ARCANO) + "&oproved learnable only by those of the most refined and untainted spirit.",
+				PrintUtils.color(ObsColors.ARCANO) + "&oLordran held that the soul was the wellspring of all ether — that in harnessing",
+				PrintUtils.color(ObsColors.ARCANO) + "&othe very fabric of magic, one ascends toward true wisdom. His teachings were",
+				PrintUtils.color(ObsColors.ARCANO) + "&onot meant for common minds, yet would you have stood before him, you'd find",
+				PrintUtils.color(ObsColors.ARCANO) + "&onot a tyrant, but a king who prized loyalty and integrity above all mortal powers."), new LanceOfLordran().getInternalName());
 	}
 }

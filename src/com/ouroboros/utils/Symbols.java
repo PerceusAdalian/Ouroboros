@@ -18,4 +18,5 @@ public class Symbols
 	public static String ESSENCE  = "⚛";
 	
 	public static String INCOMING = "📥";
+	public static String OUTGOING = "📤";
 }

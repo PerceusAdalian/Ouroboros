@@ -111,6 +111,13 @@ public class EntityEffects
 		source.setVelocity(v1.subtract(v2).normalize().multiply(magnitude));
 	}
 	
+	public static void disengageEntity(Player source, LivingEntity target, double magnitude)
+	{
+		Vector v1 = target.getLocation().toVector();
+		Vector v2 = source.getLocation().toVector();
+		source.setVelocity(v2.subtract(v1).normalize().multiply(magnitude));
+	}
+	
 	public static double resolveEffectModifiedDamage(Player p, ElementType element, double dmg, DamageCause cause)
 	{
 	    double modifiedDamage = dmg;

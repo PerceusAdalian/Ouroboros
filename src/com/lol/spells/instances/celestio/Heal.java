@@ -52,8 +52,7 @@ public class Heal extends Spell
 			ObsParticles.drawSinLine(p.getLocation(), pTarget.getLocation(), 0.6, Particle.END_ROD, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 			{
-				ObsParticles.drawWisps(pTarget.getLocation(), pTarget.getWidth(), pTarget.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
-				PlayerData.heal(pTarget, 150, false);
+				playSpellEffect(pTarget, 150);
 			}, 15);
 			return 25;
 		}
@@ -64,6 +63,13 @@ public class Heal extends Spell
 	public int getTotalManaCost()
 	{
 		return 10;
+	}
+	
+	public static boolean playSpellEffect(Player target, double health)
+	{
+		if (!PlayerData.heal(target, health, false)) return false;
+		ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 7, Particle.HAPPY_VILLAGER, null);
+		return true;
 	}
 
 }
