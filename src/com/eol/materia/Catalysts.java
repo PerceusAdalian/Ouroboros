@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
+import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
@@ -17,6 +18,7 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
+import com.eol.echoes.instances.inferno.BowOfAgni;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
 import com.eol.enums.MateriaComponent;
@@ -320,5 +322,41 @@ public class Catalysts
 				PrintUtils.color(ObsColors.ARCANO) + "&othe very fabric of magic, one ascends toward true wisdom. His teachings were",
 				PrintUtils.color(ObsColors.ARCANO) + "&onot meant for common minds, yet would you have stood before him, you'd find",
 				PrintUtils.color(ObsColors.ARCANO) + "&onot a tyrant, but a king who prized loyalty and integrity above all mortal powers."), new LanceOfLordran().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: Protocol " + PrintUtils.color(ObsColors.CELESTIO) + "&lA.I.O.N.",
+			    "echo_of_aion",
+			    MateriaType.CATALYST,
+			    MateriaComponent.CATALYST,
+			    Rarity.SEVEN,
+			    false,
+			    "&r&7&oAn echo of the distant past. Harmonic resonance persists.",
+			    "&r&7&oA memory engram is encoded within:",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&o[ CRITICAL ANOMALY REPORT — ORIGIN UNRESOLVABLE ]",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oAn unindexed file has propagated into system logs with no traceable write event.",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oElemental affinity: &lCelestian&r" + PrintUtils.color(ObsColors.CELESTIO) + "&o. Materia binding assumed: &lGold, Leather&r" + PrintUtils.color(ObsColors.CELESTIO) + "&o.",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oDesignation: A.I.O.N. — Artifact Interface to Ordinal Netmask.",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oClassification: Legacy AI Process. Origin Sector: NULL. Permission Tier: UNRESTRICTED.",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oAll clearance fields return highest authorization. No issuing authority on record.",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oThis process should not exist within the simulation boundary.",
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oScheduled for termination at next reset cycle. Setting Warn: 'Do not interact'."), new Aion().getInternalName());
+	
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: Protocol " + PrintUtils.color(ObsColors.INFERNO)+Symbols.EOL+"cho of Agni",
+				"echo_of_agni",
+				MateriaType.CATALYST,
+			    MateriaComponent.CATALYST,
+			    Rarity.SIX,
+			    false,
+			    "&r&7&oAn echo of the distant past. Harmonic resonance persists.",
+			    "&r&7&oA memory engram is encoded within:",
+			    PrintUtils.color(ObsColors.INFERNO)+"&oFantasian Academy Dossier — Émanateur de l'Enfer, Madame Agni",
+			    PrintUtils.color(ObsColors.INFERNO)+"&oAgni, the Emanator of Inferno, stands among the &e&o&lEndless&r"+PrintUtils.color(ObsColors.INFERNO)+"&o —",
+			    PrintUtils.color(ObsColors.INFERNO)+"&oan ancient elemental which holds dominion over the Dunes of Aigisva'ard.",
+			    PrintUtils.color(ObsColors.INFERNO)+"&oVenerated for centuries, her counsel is sought by generals and scholars alike,",
+			    PrintUtils.color(ObsColors.INFERNO)+"&owith her &lInfernal&r"+PrintUtils.color(ObsColors.INFERNO)+"&o magiks widely studied across continental G'yr Arbanaum.",
+			    PrintUtils.color(ObsColors.INFERNO)+"&oShe iconically wields a &lBow&r"+PrintUtils.color(ObsColors.INFERNO)+"&o laced with fine &lString&r"+PrintUtils.color(ObsColors.INFERNO)+"&o, and is regarded as the",
+			    PrintUtils.color(ObsColors.INFERNO)+"&opreeminent master of ranged combat in the eastern reaches of Fantasia.",
+			    PrintUtils.color(ObsColors.INFERNO)+"&oAccounts of her first sighting describe a woman adorned in jewels",
+			    PrintUtils.color(ObsColors.INFERNO)+"said to originate from Feits'heilm, and many who visit her shrine",
+			    PrintUtils.color(ObsColors.INFERNO)+"&obestow such jewels hoping to divine the Queen of War."), new BowOfAgni().getInternalName());
 	}
 }

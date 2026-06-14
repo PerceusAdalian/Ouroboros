@@ -13,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
+import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
@@ -25,6 +26,7 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
+import com.eol.echoes.instances.inferno.BowOfAgni;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
 import com.eol.enums.MateriaState;
@@ -179,12 +181,14 @@ public final class EOLRegistry
            // Celestio
            LuminusBroadsword.class,
            Celestia.class,
-
+           Aion.class,
+           
            // Mortio
            Plague.class,
            ScytheOfBelial.class,
 
            // Inferno
+           BowOfAgni.class,
            
            // Glacio
            AxeOfBjorn.class,

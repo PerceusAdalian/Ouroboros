@@ -66,8 +66,10 @@ public class InfernoEffects
 	public static boolean addInfernalBody(Player p, int seconds)
 	{
 		if (hasInfernalBody.contains(p.getUniqueId())) return false;
+		
 		hasInfernalBody.add(p.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasInfernalBody.remove(p.getUniqueId()), seconds*20);
+		
 		return true;
 	}
 	
@@ -90,6 +92,18 @@ public class InfernoEffects
 			EntityEffects.playSound(p, Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.MASTER);
 			ObsParticles.drawInfernoCastSigil(p);
 		}, 600);
+		
+		return true;
+	}
+	
+	public static Set<UUID> primed = new HashSet<>();
+	public static boolean addPrimer(LivingEntity le, int seconds)
+	{
+		if (primed.contains(le.getUniqueId())) return false;
+		primed.add(le.getUniqueId());
+		
+		ObsParticles.drawWisps(le.getLocation(), le.getWidth(), le.getHeight(), 5, Particle.LAVA, null);
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> primed.remove(le.getUniqueId()), seconds * 20);
 		
 		return true;
 	}

@@ -21,6 +21,7 @@ import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.RayCastUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
+import com.ouroboros.utils.entityeffects.InfernoEffects;
 
 public class Explosion extends Spell
 {
@@ -46,7 +47,7 @@ public class Explosion extends Spell
 			MobData data = MobData.getMob(le.getUniqueId());
 			Location leLoc = le.getLocation();
 			
-			boolean hasPrimed = Primer.primed.contains(le.getUniqueId());
+			boolean hasPrimed = InfernoEffects.primed.contains(le.getUniqueId());
 			boolean doSecondExplosion = false;
 			
 			if (hasPrimed && data.getHp(false) - 45 < 0) doSecondExplosion = true;

@@ -37,7 +37,7 @@ public class MinorBlessing extends Spell
 				"&r&fGrant &6self&f/&6target &c&oPlayer&r &e&oEmpowered&r&b II &7(45s | &cPVP&7: &c30s&7)","",
 				"&r&eWard Effect&r&f: grants &b&oAbsorption&r&f, &b&oFire Resistance&r&f,",
 				"&r&fand &b&oResistance&r&f equal to the magnitude of &eWard&f.","",
-				"&eEmpowered Effect&f: Boosts overall attack &c&odamage&r&f and &b&ospeed&r&f.");
+				"&eEmpowered Effect&f: Boosts overall attack &c&odamage&r&f and &b&omovement speed&r&f.");
 		
 	}
 

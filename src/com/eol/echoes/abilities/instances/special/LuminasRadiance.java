@@ -42,7 +42,7 @@ public class LuminasRadiance extends EchoAbility
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
 				"&r&eLumina's Radiance&f: &e&oPrayer&r&f -- &cRemove &f5 &b&oDurability",
 				"&r&fGrant &eWard &bIII &fand &b&oSwift Footed &r&fto &6self &7(30s)","",
-				"&r&eHumility&r&f: Affected take &b&o15%&r&f more "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage.");
+				"&r&eHumility Effect&r&f: Affected take &b&o15%&r&f more "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage.");
 	}
 
 	@Override

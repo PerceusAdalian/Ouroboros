@@ -1,9 +1,5 @@
 package com.lol.spells.instances.inferno;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -37,8 +33,6 @@ public class Primer extends Spell
 				"&r&fmore "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno &r&fdamage, and may cause &cBurn&f upon hit removing the effect.");
 	}
 
-	public static Set<UUID> primed = new HashSet<>();
-	
 	@Override
 	public int Cast(PlayerInteractEvent e)
 	{
@@ -47,10 +41,8 @@ public class Primer extends Spell
 		if (!RayCastUtils.getEntity(p, 10, target ->
 		{
 			if (!(target instanceof LivingEntity le) || target instanceof Player) return;
-			UUID uuid = le.getUniqueId();
-			if (primed.contains(uuid)) return;
-			primed.add(uuid);
 			
+			InfernoEffects.addPrimer(le, 30);
 			EntityEffects.playSound(p, Sound.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT);
 			ObsParticles.drawSinLine(p.getLocation(), le.getLocation(), 0.4, Particle.FLAME, null);
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
@@ -60,7 +52,6 @@ public class Primer extends Spell
 				InfernoEffects.addCharred(le, 30);
 			}, 15);
 			
-			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> primed.remove(uuid), 600);
 		})) return -1;
 		return 10;
 	}

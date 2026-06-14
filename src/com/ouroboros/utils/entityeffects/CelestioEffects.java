@@ -103,6 +103,7 @@ public class CelestioEffects
 		
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
+			if (!hasWard.contains(target.getUniqueId())) return;
 			EntityEffects.playSound(target, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);
 			PrintUtils.PrintToActionBar(target, "&e&oWard&r&7&o wore off..");
 			hasWard.remove(target.getUniqueId());
@@ -129,6 +130,7 @@ public class CelestioEffects
 		hasEmpowered.add(target.getUniqueId());
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->
 		{
+			if (!hasEmpowered.contains(target.getUniqueId())) return;
 			EntityEffects.playSound(target, Sound.BLOCK_BEACON_DEACTIVATE, SoundCategory.AMBIENT);
 			PrintUtils.PrintToActionBar(target, "&e&oEmpowered&r&7&o wore off..");
 			hasEmpowered.remove(target.getUniqueId());

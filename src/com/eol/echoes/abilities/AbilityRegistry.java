@@ -19,10 +19,12 @@ import com.eol.echoes.abilities.instances.special.ArcaneOrder;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
+import com.eol.echoes.abilities.instances.special.LanceFlammes;
 import com.eol.echoes.abilities.instances.special.LuminasRadiance;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.MarkedForDeath;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
+import com.eol.echoes.abilities.instances.special.PhotonCannon;
 import com.eol.echoes.abilities.instances.special.PlaguesPrimer;
 import com.eol.echoes.abilities.instances.special.SpatialDistortion;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
@@ -53,7 +55,9 @@ public class AbilityRegistry
             LuminasRadiance.class,
             MarkedForDeath.class,
             SpatialDistortion.class,
-            ArcaneOrder.class);
+            ArcaneOrder.class,
+            PhotonCannon.class,
+            LanceFlammes.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {
