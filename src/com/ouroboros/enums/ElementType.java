@@ -41,7 +41,8 @@ public enum ElementType
 	AERO("&lAero&r&f"),
 	GEO("&lGeo&r&f"),
 	COSMO("&lCosmo&r&f"),
-	HERESIO("&lHeresio&r&f");
+	HERESIO("&lHeresio&r&f"),
+	ARDENTIO("&lArdentio&r&f");
 	
 	private final String element;	
 	
@@ -85,6 +86,7 @@ public enum ElementType
 			case HERESIO 	-> ElementType.HERESIO;
 			case INFERNO 	-> ElementType.INFERNO;
 			case MORTIO 	-> ElementType.MORTIO;
+			case ARDENTIO   -> ElementType.ARDENTIO;
 			case NULL 		-> ElementType.NONE;
 			default 		-> ElementType.NONE;	
 			
@@ -141,7 +143,7 @@ public enum ElementType
 	}
 	
 	public static Set<ElementType> physical = Set.of(BLUNT, PIERCE, PUNCTURE, SLASH);
-	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO, ARCANO);
+	public static Set<ElementType> elemental = Set.of(CELESTIO, MORTIO, INFERNO, GLACIO, GEO, AERO, COSMO, HERESIO, ARCANO, ARDENTIO);
 	public static Set<ElementType> almighty = Set.of(CRUSH, SEVER, IMPALE, BLAST);
 	public static Set<ElementType> natural = Set.of(BLUNT, PIERCE, SLASH, COMBUST, PUNCTURE, CORROSIVE);
 }

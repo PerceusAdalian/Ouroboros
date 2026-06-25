@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.lol.enums.SpellementType;
 import com.lol.spells.Spell;
 import com.lol.spells.SpellRegistry;
 import com.ouroboros.Ouroboros;
@@ -19,6 +20,7 @@ import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.Symbols;
 
 public class Wand 
 {
@@ -405,7 +407,9 @@ public class Wand
 	        existingLore.add(PrintUtils.assignElementType(currentSpell.getElementType()));
 	        existingLore.add(PrintUtils.assignSpellType(currentSpell.getSpellType()));
 	        existingLore.add(PrintUtils.assignCastCondition(currentSpell.getCastCondition()));
-	        existingLore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+currentSpell.getManacost()+" &7| &r&f&lCooldown&r&f: "+currentSpell.getCooldown()+" second(s)"));
+	        existingLore.add(PrintUtils.ColorParser((currentSpell.getElementType() == SpellementType.ARDENTIO ? 
+	        		"&r&a&lHP&r&c"+Symbols.HP+" &r&fCost: " : "&r&b&lMana Cost&r&f: ")+currentSpell.getManacost()+" &7| &r&f&lCooldown&r&f: "+currentSpell.getCooldown()));
+		    
 	    }
 	    
 	    existingLore.add("");

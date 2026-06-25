@@ -14,6 +14,7 @@ public enum SpellementType
 	HERESIO("&lHeresio&r&f"),
 	ARCANO("&lArcano&r&f"),
 	ASTRAL("&lAstral&r&f"),
+	ARDENTIO("&lArdentio&r&f"),
 	
 	//Administrator SpellementType
 	NULL("&f&lNone&r&f");

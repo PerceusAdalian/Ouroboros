@@ -29,6 +29,7 @@ public class SpellDataHandler
 			case HERESIO -> pathAlpha = "heresio.";
 			case ARCANO -> pathAlpha = "arcano.";
 			case ASTRAL -> pathAlpha = "astral.";
+			case ARDENTIO -> pathAlpha = "ardentio.";
 			case NULL -> pathAlpha = "nulltype.";
 			
 		};

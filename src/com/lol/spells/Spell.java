@@ -20,6 +20,7 @@ import com.ouroboros.enums.CastConditions;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.PrintUtils;
+import com.ouroboros.utils.Symbols;
 
 public abstract class Spell 
 {
@@ -154,6 +155,8 @@ public abstract class Spell
 	
 	public ItemStack getAsItemStack(SpellGenerateCondition condition)
 	{
+		boolean isArdentioSpell = spellementType == SpellementType.ARDENTIO;
+		
 		Material material = switch(condition)
 		{
 			case ICON -> icon;
@@ -193,7 +196,8 @@ public abstract class Spell
 		    lore.addAll(parsedDescriptionLines);
 		    
 		    lore.add("");
-		    lore.add(PrintUtils.ColorParser("&r&b&lMana Cost&r&f: "+manacost+" &7| &r&f&lCooldown&r&f: "+cooldown));
+		    
+		    lore.add(PrintUtils.ColorParser((isArdentioSpell ? "&r&a&lHP&r&c"+Symbols.HP+" &r&fCost: " : "&r&b&lMana Cost&r&f: ")+manacost+" &7| &r&f&lCooldown&r&f: "+cooldown));
 		    meta.getPersistentDataContainer().set(LOLSPELL, PersistentDataType.STRING, internalName.toString());
 		}
 		else if (condition == SpellGenerateCondition.BOOK)
@@ -252,7 +256,8 @@ public abstract class Spell
 		    page3.append(elementType).append("\n\n");
 		    page3.append(PrintUtils.assignSpellType(spellType).replace("&", "§").replace("§f", "§0")).append("\n");		    
 		    page3.append(PrintUtils.assignCastCondition(castCondition).replace("&", "§").replace("§f", "§0")).append("\n\n");
-		    page3.append("§9§lMana Cost§0: ").append(manacost).append("\n");
+		    if (isArdentioSpell) page3.append("§a§lHP§r§c"+Symbols.HP+" §fCost§0: ").append(manacost).append("\n");
+		    else page3.append("§9§lMana Cost§0: ").append(manacost).append("\n");
 		    page3.append("§0§lCooldown§0: ").append(cooldown).append(" second(s)");
 		    bookMeta.addPage(page3.toString());
 		    bookMeta.getPersistentDataContainer().set(LOLSPELLBOOK, PersistentDataType.STRING, internalName.toString());

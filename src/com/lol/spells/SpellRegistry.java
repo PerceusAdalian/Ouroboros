@@ -33,6 +33,7 @@ import com.lol.spells.instances.arcano.Prisma;
 import com.lol.spells.instances.arcano.Reparo;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
+import com.lol.spells.instances.ardentio.Passion;
 import com.lol.spells.instances.astral.Attenuate;
 import com.lol.spells.instances.astral.CollectiveUnconscious;
 import com.lol.spells.instances.astral.Starfall;
@@ -162,6 +163,9 @@ public class SpellRegistry
         		
         		//Astral
         		Starfall.class, Attenuate.class, TemporalDistortion.class, CollectiveUnconscious.class,
+        		
+        		//Ardentio
+        		Passion.class,
         		
         		//Admin Spells
         		RemoveEntity.class

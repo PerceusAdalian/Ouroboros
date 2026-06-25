@@ -423,6 +423,13 @@ public class ObsParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1, isDay ? Particle.LARGE_SMOKE : Particle.GLOW_SQUID_INK, null);	
 	}
 	
+	public static void drawArdentioCastSigil(LivingEntity entity)
+	{
+		drawDisc(entity.getLocation(), entity.getWidth()+1, 1, 8, 0.25, Particle.CRIT, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+1.25, 1, 6, 0.3, Particle.HAPPY_VILLAGER, null);
+		drawDisc(entity.getLocation(), entity.getWidth()+2, 1, 6,0.1,Particle.BLOCK_CRUMBLE, Material.EMERALD_BLOCK.createBlockData());
+	}
+	
 	public static void drawAdminCastSigil(LivingEntity entity)
 	{
 		drawDisc(entity.getLocation(), entity.getWidth()+1, 2, 8, 0.25, Particle.CRIT, null);
@@ -436,17 +443,18 @@ public class ObsParticles
 		
 		switch (sType)
 		{
-			case NULL -> ObsParticles.drawAdminCastSigil(player);
-			case CELESTIO -> ObsParticles.drawCelestioCastSigil(player);
-			case AERO -> ObsParticles.drawAeroCastSigil(player);
-			case COSMO -> ObsParticles.drawCosmoCastSigil(player);
-			case GEO -> ObsParticles.drawGeoCastSigil(player);
-			case GLACIO -> ObsParticles.drawGlacioCastSigil(player);
-			case HERESIO -> ObsParticles.drawHeresioCastSigil(player);
-			case INFERNO -> ObsParticles.drawInfernoCastSigil(player);
-			case MORTIO -> ObsParticles.drawMortioCastSigil(player);
-			case ARCANO -> ObsParticles.drawArcanoCastSigil(player);
-			case ASTRAL -> ObsParticles.drawAstralCastSigil(player, isDay);
+			case NULL -> drawAdminCastSigil(player);
+			case CELESTIO -> drawCelestioCastSigil(player);
+			case AERO -> drawAeroCastSigil(player);
+			case COSMO -> drawCosmoCastSigil(player);
+			case GEO -> drawGeoCastSigil(player);
+			case GLACIO -> drawGlacioCastSigil(player);
+			case HERESIO -> drawHeresioCastSigil(player);
+			case INFERNO -> drawInfernoCastSigil(player);
+			case MORTIO -> drawMortioCastSigil(player);
+			case ARCANO -> drawArcanoCastSigil(player);
+			case ASTRAL -> drawAstralCastSigil(player, isDay);
+			case ARDENTIO -> drawArdentioCastSigil(player);
 		}
 	}
 	
@@ -454,15 +462,15 @@ public class ObsParticles
 	{
 		switch (eType)
 		{
-			case CELESTIO -> ObsParticles.drawCelestioCastSigil(player);
-			case AERO -> ObsParticles.drawAeroCastSigil(player);
-			case COSMO -> ObsParticles.drawCosmoCastSigil(player);
-			case GEO -> ObsParticles.drawGeoCastSigil(player);
-			case GLACIO -> ObsParticles.drawGlacioCastSigil(player);
-			case HERESIO -> ObsParticles.drawHeresioCastSigil(player);
-			case INFERNO -> ObsParticles.drawInfernoCastSigil(player);
-			case MORTIO -> ObsParticles.drawMortioCastSigil(player);
-			case ARCANO -> ObsParticles.drawArcanoCastSigil(player);
+			case CELESTIO -> drawCelestioCastSigil(player);
+			case AERO -> drawAeroCastSigil(player);
+			case COSMO -> drawCosmoCastSigil(player);
+			case GEO -> drawGeoCastSigil(player);
+			case GLACIO -> drawGlacioCastSigil(player);
+			case HERESIO -> drawHeresioCastSigil(player);
+			case INFERNO -> drawInfernoCastSigil(player);
+			case MORTIO -> drawMortioCastSigil(player);
+			case ARCANO -> drawArcanoCastSigil(player);
 			default -> throw new IllegalArgumentException("Unexpected value: " + eType);
 		}
 	}

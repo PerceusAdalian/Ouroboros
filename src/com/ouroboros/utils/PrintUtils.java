@@ -277,6 +277,7 @@ public class PrintUtils
 	        case MORTIO   -> color(ObsColors.MORTIO);
 	        case ARCANO   -> color(ObsColors.ARCANO);
 	        case ASTRAL   -> color(ObsColors.ASTRAL);
+	        case ARDENTIO -> color(ObsColors.ARDENTIO);
 	        default       -> color(ObsColors.NULL);
 	    };
 	}
@@ -295,6 +296,7 @@ public class PrintUtils
 	        case MORTIO   -> color(ObsColors.MORTIO);
 	        case ARCANO   -> color(ObsColors.ARCANO);
 	        case MODULO   -> color(ObsColors.MODULO);
+	        case ARDENTIO -> color(ObsColors.ARDENTIO);
 	        default       -> color(ObsColors.NULL);
 	    };
 	}
@@ -313,6 +315,7 @@ public class PrintUtils
 	        case MORTIO   -> "&4&lGeneral Falric&r&f, Death's Righthand Man";
 	        case ARCANO   -> "&b&oThe Forgotten King&r&f, His Majesty";
 	        case ASTRAL   -> "&d&oThe Fantasian Archives&r&f, Source of Knowledge and Science";
+	        case ARDENTIO -> "&a&lXyphon&r&f, Verdant Arbiter";
 	        default       -> "&7&oUnknown";
 	    };
 	    return ColorParser(raw);

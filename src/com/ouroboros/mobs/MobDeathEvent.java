@@ -34,12 +34,14 @@ import com.ouroboros.accounts.PlayerHud;
 import com.ouroboros.accounts.XpUtils;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.EntityCategory;
+import com.ouroboros.enums.ObsColors;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.objects.AbstractObsObject;
 import com.ouroboros.objects.MoneyHandler;
 import com.ouroboros.objects.instances.AeroEssence;
 import com.ouroboros.objects.instances.ArcanoEssence;
+import com.ouroboros.objects.instances.ArdentioEssence;
 import com.ouroboros.objects.instances.CelestioEssence;
 import com.ouroboros.objects.instances.CosmoEssence;
 import com.ouroboros.objects.instances.GeoEssence;
@@ -49,6 +51,7 @@ import com.ouroboros.objects.instances.InfernoEssence;
 import com.ouroboros.objects.instances.MortioEssence;
 import com.ouroboros.objects.instances.TearOfLumina;
 import com.ouroboros.utils.Chance;
+import com.ouroboros.utils.NumberUtils;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.Symbols;
 import com.ouroboros.utils.entityeffects.EntityEffects;
@@ -84,6 +87,7 @@ public class MobDeathEvent implements Listener
 			    int currentSpellShardDrops = 0;
 			    int currentCatalystDrops = 0;
 			    boolean overrideDrops = false;
+			    boolean ardentioEssenceDrop = level >= 50 && Chance.of(NumberUtils.lerp(10, 90, level, 50, 100));
 			    
 			    Player p = null;
 			    if (le.getKiller() instanceof Player killer) p = killer;
@@ -140,6 +144,7 @@ public class MobDeathEvent implements Listener
 			            PlayerData.addMoney(p, moneyAmount);
 			            ElementType element = ElementType.getFromEntityCategory(mobCategory);
 			            if (element != null) PlayerData.addEssence(p, element, essenceAmount);
+        				if (ardentioEssenceDrop) PlayerData.addEssence(p, ElementType.ARDENTIO, 1);
 			            PlayerHud.update(p);
 			            
 			            if (pData.doLevelUpSound())
@@ -148,7 +153,8 @@ public class MobDeathEvent implements Listener
 			                (pData.doXpNotification() && sType != null ? "&r&e+&r&f&l" + xp + " &r&b" + PrintUtils.printStatType(sType) + "&r&7&l | " : "")
 			                + ("&r&e+&f&l" + moneyAmount + "&e" + Symbols.MONEY)
 			                + (tears > 0 ? " &r&e+&f&l" + tears + "&r&b" + Symbols.LUMINITE : "")
-			                + (essenceAmount > 0 ? " &r&e+&f&l" + essenceAmount + "&r" + PrintUtils.getElementTypeColor(element) + Symbols.ESSENCE : ""));
+			                + (essenceAmount > 0 ? " &r&e+&f&l" + essenceAmount + "&r" + PrintUtils.getElementTypeColor(element) + Symbols.ESSENCE : "")
+			                + (ardentioEssenceDrop ? " &r&e+&f&l1" + " &r" + PrintUtils.color(ObsColors.ARDENTIO) + Symbols.ESSENCE : ""));
 			        }
 			        else 
 			        {
@@ -203,18 +209,19 @@ public class MobDeathEvent implements Listener
 			        		if (!Chance.of(Math.min(30 + chanceBonus, 100))) continue;
 			        		AbstractObsObject essence = switch (mobCategory) 
 	        				{
-	        				case CELESTIO_MOBS -> new CelestioEssence();
-	        				case MORTIO_MOBS   -> new MortioEssence();
-	        				case INFERNO_MOBS  -> new InfernoEssence();
-	        				case GLACIO_MOBS   -> new GlacioEssence();
-	        				case AERO_MOBS     -> new AeroEssence();
-	        				case GEO_MOBS      -> new GeoEssence();
-	        				case COSMO_MOBS    -> new CosmoEssence();
-	        				case HERESIO_MOBS  -> new HeresioEssence();
-	        				case ARCANO_MOBS   -> new ArcanoEssence();
-	        				default            -> null;
+		        				case CELESTIO_MOBS -> new CelestioEssence();
+		        				case MORTIO_MOBS   -> new MortioEssence();
+		        				case INFERNO_MOBS  -> new InfernoEssence();
+		        				case GLACIO_MOBS   -> new GlacioEssence();
+		        				case AERO_MOBS     -> new AeroEssence();
+		        				case GEO_MOBS      -> new GeoEssence();
+		        				case COSMO_MOBS    -> new CosmoEssence();
+		        				case HERESIO_MOBS  -> new HeresioEssence();
+		        				case ARCANO_MOBS   -> new ArcanoEssence();
+		        				default            -> null;
 	        				};
 	        				if (essence != null) e.getDrops().add(essence.toItemStack());
+	        				if (ardentioEssenceDrop) e.getDrops().add(new ArdentioEssence().toItemStack());
 			        	}
 			        }
 			    }

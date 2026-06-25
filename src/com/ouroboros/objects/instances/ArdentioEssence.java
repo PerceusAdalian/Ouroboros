@@ -17,16 +17,16 @@ import com.ouroboros.utils.PlayerActions;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
-public class ArcanoEssence extends AbstractObsObject
+public class ArdentioEssence extends AbstractObsObject
 {
 
-	public ArcanoEssence() 
+	public ArdentioEssence() 
 	{
-		super(PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&f Essence", "arcano_essence", Material.PINK_DYE, true, false, 
-				PrintUtils.assignRarity(Rarity.ONE),"",
-				"&r&fA simple, refracted essence of "+PrintUtils.color(ObsColors.ARCANO)+"Magic&f.","",
+		super(PrintUtils.color(ObsColors.ARDENTIO)+"&lArdentio&r&f Essence", "arcano_essence", Material.EMERALD, true, false, 
+				PrintUtils.assignRarity(Rarity.FIVE),"",
+				"&r&fA verdant and lustrous essence of "+PrintUtils.color(ObsColors.ARDENTIO)+"Life&f.","",
 				"&r&fUsage: &d&oRight-Click&r&f",
-				"&r&fCharge your "+PrintUtils.color(ObsColors.ARCANO)+"&lArcano&r&f reservoir by consuming all on-hand.","",
+				"&r&fCharge your "+PrintUtils.color(ObsColors.ARDENTIO)+"&lArdentio&r&f reservoir by consuming all on-hand.","",
 				"&r&fThis item is &d&ostackable&r&f and &c&l&odestroyed&r&f upon use.");
 	}
 
@@ -37,10 +37,10 @@ public class ArcanoEssence extends AbstractObsObject
 		if (PlayerActions.rightClickAir(e)) 
 		{
 			e.setCancelled(true);
-			ObsParticles.drawArcanoCastSigil(p);
-			EntityEffects.playSound(p, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, SoundCategory.AMBIENT);
-			PlayerData.addEssence(p, ElementType.ARCANO, e.getItem().getAmount());
-			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r"+PrintUtils.color(ObsColors.ARCANO)+"⚛&f Added");
+			ObsParticles.drawArdentioCastSigil(p);
+			EntityEffects.playSound(p, Sound.BLOCK_COPPER_BULB_BREAK, SoundCategory.AMBIENT);
+			PlayerData.addEssence(p, ElementType.ARDENTIO, e.getItem().getAmount());
+			PrintUtils.PrintToActionBar(p, "&r&e+&f&l"+e.getItem().getAmount()+"&r"+PrintUtils.color(ObsColors.ARDENTIO)+"⚛&f Added");
 			ItemCollector.removeAll(e);
 			return true;
 		}

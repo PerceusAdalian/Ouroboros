@@ -13,7 +13,7 @@ public class MobAffinity
 {
 	private static final Map<EntityCategory, Set<ElementType>> WEAKNESSES = Map.of(
 		    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.MORTIO, ElementType.COSMO, ElementType.HERESIO),
-		    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.CELESTIO, ElementType.COSMO, ElementType.HERESIO),
+		    EntityCategory.MORTIO_MOBS,    EnumSet.of(ElementType.CELESTIO, ElementType.COSMO, ElementType.HERESIO, ElementType.ARDENTIO),
 		    
 		    EntityCategory.INFERNO_MOBS,   EnumSet.of(ElementType.GLACIO, ElementType.GEO),
 		    EntityCategory.GLACIO_MOBS,    EnumSet.of(ElementType.INFERNO, ElementType.BLUNT, ElementType.CORROSIVE, ElementType.COMBUST),
@@ -21,7 +21,7 @@ public class MobAffinity
 		    EntityCategory.GEO_MOBS,       EnumSet.of(ElementType.AERO, ElementType.BLAST),
 		    
 		    EntityCategory.COSMO_MOBS,     EnumSet.of(ElementType.COSMO, ElementType.HERESIO, ElementType.ARCANO),
-		    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.COSMO, ElementType.ARCANO));
+		    EntityCategory.HERESIO_MOBS,   EnumSet.of(ElementType.COSMO, ElementType.ARCANO, ElementType.ARDENTIO));
 
 		private static final Map<EntityCategory, Set<ElementType>> RESISTANCES = Map.of(
 		    EntityCategory.CELESTIO_MOBS,  EnumSet.of(ElementType.INFERNO),

@@ -34,6 +34,14 @@ public class SpecialSpellBookPage extends ObsGui
 			GuiHandler.changeMenu(p, new ArcanoSpellsPage(p));
 		});
 		
+		GuiButton.button(Material.EMERALD).setName(PrintUtils.color(ObsColors.ARDENTIO)+"&lArdentio&r&e Spells")
+		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.ARDENTIO)+"&lArdentio&r&e spells&f.").place(this, 13, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER);
+			GuiHandler.changeMenu(p, new ArdentioSpellsPage(p)); 
+		});
+
 		GuiButton.button(Material.CLOCK).setName(PrintUtils.color(ObsColors.ASTRAL)+"&lAstral&r&e Spells")
 		.setLore("Click to navigate to all "+PrintUtils.color(ObsColors.ASTRAL)+"&lAstral&r&e spells&f.").place(this, 14, e->
 		{
@@ -41,6 +49,7 @@ public class SpecialSpellBookPage extends ObsGui
 			EntityEffects.playSound(p, Sound.ENTITY_EVOKER_CAST_SPELL, SoundCategory.MASTER);
 			GuiHandler.changeMenu(p, new AstralSpellsPage(p)); 
 		});
+		
 		
 		GuiButton.placeGoBack(10, this, new ObsMainMenu(player));
 		GuiButton.placeExit(16, this);

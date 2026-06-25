@@ -22,6 +22,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.lol.enums.SpellementType;
 import com.lol.spells.instances.aero.Fly;
 import com.lol.spells.instances.arcano.Freecast;
 import com.lol.spells.instances.arcano.OuroborosPrime;
@@ -247,7 +248,11 @@ public class SpellCastHandler implements Listener
         	cooldown = 5;
         }
         
-        if (actualCost > wand.getCurrentMana())
+        if(currentSpell.getElementType() == SpellementType.ARDENTIO)
+        {
+        	PlayerData.damageUnnaturally(p, p, actualCost, false, false, ElementType.PURE, null);
+        }
+        else if (actualCost > wand.getCurrentMana())
         {
         	if (recentlyOverloaded.contains(p.getUniqueId()))
         	{
