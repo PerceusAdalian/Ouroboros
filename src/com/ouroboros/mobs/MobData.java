@@ -472,9 +472,9 @@ public class MobData
 			data.save();
 		}
 
-		((LivingEntity) target).playHurtAnimation(0);
 		if (doHurtAnimation && player != null) 
 		{
+			((LivingEntity) target).playHurtAnimation(0);
 			Vector kb = target.getLocation().toVector().subtract(player.getLocation().toVector());
 		    if (kb.lengthSquared() > 0.001)
 		    {

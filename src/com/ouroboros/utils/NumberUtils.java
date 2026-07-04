@@ -2,10 +2,17 @@ package com.ouroboros.utils;
 
 public class NumberUtils
 {
+	public static double lerp(double minVal, double maxVal, int clampValue, int minLevel, int maxLevel, double exponent)
+	{
+	    double t = Math.min(1.0, Math.max(0.0, (double)(clampValue - minLevel) / (maxLevel - minLevel)));
+	    double curved = Math.pow(t, exponent);
+	    return minVal + curved * (maxVal - minVal);
+	}
+
+	// Keep the old signature working as a linear curve (exponent = 1)
 	public static double lerp(double minVal, double maxVal, int clampValue, int minLevel, int maxLevel)
 	{
-	    double t = Math.min(1.0, (double)(clampValue - minLevel) / (maxLevel - minLevel));
-	    return minVal + t * (maxVal - minVal);
+	    return lerp(minVal, maxVal, clampValue, minLevel, maxLevel, 1.0);
 	}
 	
 	public static double lerp(double floor, double ceiling, double t)

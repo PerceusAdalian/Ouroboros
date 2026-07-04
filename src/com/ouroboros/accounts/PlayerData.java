@@ -2,20 +2,27 @@ package com.ouroboros.accounts;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 import org.bukkit.util.Vector;
 
 import com.eol.echoes.abilities.AbilityHandler;
@@ -46,8 +53,8 @@ public class PlayerData
 	public static final int baseXP = 225, fundsIntegerMax = 99999999, MAXMAGIC = 7,
 			maxLuminite = 9999, maxEssence = 9999, maxScrap = 9999, maxShards = 999;
 	private static final double ExpMultiplier = 1.18;
-	private static final double playerHpMax = 10000, playerHpMin = 500;
-	private static final int playerArmorMax = 1000, playerArmorMin = 100;
+	public static final double playerHpMax = 10000, playerHpMin = 250;
+	public static final int playerArmorMax = 1000, playerArmorMin = 50;
 	private static final Map<UUID, PlayerData> dataMap = new HashMap<>();
 	
 	public PlayerData(UUID uuid) 
@@ -203,9 +210,27 @@ public class PlayerData
 			ObsParticles.drawWisps(player.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
 		}
 		PlayerData.syncVanillaHealth(player);
-		PlayerHud.update(player);
 		data.save();
+		PlayerHud.update(player);
 		return true;
+	}
+	
+	public static void fullRestore(Player player)
+	{
+		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
+		data.setHP(data.getDefaultHP());
+		data.setArmor(data.getDefaultArmor());
+		if (data.isBreak())
+		{
+			data.setBreak(false);
+			player.removePotionEffect(PotionEffectType.SLOWNESS);
+			player.removePotionEffect(PotionEffectType.MINING_FATIGUE);
+		}
+		ObsParticles.drawWisps(player.getLocation(), 3, 3, 5, Particle.WAX_ON, null);
+		ObsParticles.drawWisps(player.getLocation(), 3, 3, 5, Particle.HAPPY_VILLAGER, null);
+		PlayerData.syncVanillaHealth(player);
+		data.save();
+		PlayerHud.update(player);
 	}
 	
 	public void setArmor(int value)
@@ -373,10 +398,10 @@ public class PlayerData
 		
 		data.damage(value, element, routeArmorDamage);
 		
-		target.playHurtAnimation(0);
 		
 		if (doHurtAnimation && attacker != null)
 		{
+			target.playHurtAnimation(0);
 			Vector kb = target.getLocation().toVector().subtract(attacker.getLocation().toVector());
 			if (kb.lengthSquared() > 0.001)
 			{
@@ -912,6 +937,44 @@ public class PlayerData
 	public void setFavoriteColor(LegacyColor color)
 	{
 		config.set("favoritecolor", color.name());
+	}
+	
+	public static ItemStack getPlayerHead(Player p)
+	{
+		ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
+		SkullMeta meta = (SkullMeta) head.getItemMeta();
+		if (meta != null)
+		{
+			meta.setOwnerProfile(p.getPlayerProfile());
+			head.setItemMeta(meta);
+		}
+		return head;
+	}
+	
+	public static ItemStack getOfflineHead(UUID uuid, String name, String base64Texture)
+	{
+	    ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
+	    SkullMeta meta = (SkullMeta) head.getItemMeta();
+	    if (meta != null)
+	    {
+	        PlayerProfile profile = Bukkit.createPlayerProfile(uuid, name);
+	        PlayerTextures textures = profile.getTextures();
+	        try
+	        {
+	            byte[] decoded = Base64.getDecoder().decode(base64Texture);
+	            String json = new String(decoded);
+	            String url = json.substring(json.indexOf("\"url\":\"") + 7, json.indexOf("\"", json.indexOf("\"url\":\"") + 7));
+	            textures.setSkin(URI.create(url).toURL());
+	            profile.setTextures(textures);
+	        }
+	        catch (Exception ex)
+	        {
+	            ex.printStackTrace();
+	        }
+	        meta.setOwnerProfile(profile);
+	        head.setItemMeta(meta);
+	    }
+	    return head;
 	}
 	
 	public static void initializeDataFolder() 

@@ -36,6 +36,7 @@ import com.ouroboros.utils.NumberUtils;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.ResolveCombatElement;
+import com.ouroboros.utils.entityeffects.CosmoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.GeoEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
@@ -363,6 +364,13 @@ public class PlayerDamageEvent
         	    }
         	    
         	    // --- Route through PlayerData damage contract ---
+        	    if (CosmoEffects.hasNegate.contains(target.getUniqueId())) // Checks for potential damage negation due to the "Negate" effect.
+        	    {
+        	    	CosmoEffects.hasNegate.remove(target.getUniqueId());
+        	    	EntityEffects.playSound(target, Sound.ITEM_SHIELD_BREAK, SoundCategory.MASTER);
+        	    	dmg = 0;
+        	    }
+        	    
     	        if (BYPASS_ARMOR_CAUSES.contains(cause)) // Damage mitigation (Armor) doesn't apply here.
     	        	PlayerData.damageUnnaturally(pSourceFinal, target, dmg, false, false, element, null);
     	        else

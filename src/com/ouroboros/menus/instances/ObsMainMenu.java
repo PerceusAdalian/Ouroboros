@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.ObsCommand;
+import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
 import com.ouroboros.menus.ObsGui;
@@ -20,6 +21,7 @@ import com.ouroboros.menus.instances.protocolecho.EchoRepairPage;
 import com.ouroboros.menus.instances.protocolecho.ProtocolEchoMainPage;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
 import com.ouroboros.menus.instances.store.ObsShopGui;
+import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.Symbols;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 
@@ -34,6 +36,20 @@ public class ObsMainMenu extends ObsGui
 	@Override
 	protected void build() 
 	{
+		PlayerData data = PlayerData.getPlayer(player.getUniqueId());
+		
+		// Account
+		GuiButton.button(PlayerData.getPlayerHead(player)).setName(data == null ? "Player Account" : PrintUtils.getFavoriteColor(data)+"&l"+player.getDisplayName()+"&r&f's Account")
+		.setLore("Click to view your account data. Available Operations:",
+				"   - &b&lView&r&f, &e&lManage&r&f, and &6&lUpgrade &r&fStats", 
+				"   - &b&lView &r&fand &aEquip &r&6Buffs&f/&ePerks")
+		.place(this, 10, e->
+		{
+			Player p = (Player) e.getWhoClicked();
+			EntityEffects.playSound(p, Sound.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.MASTER);
+			GuiHandler.changeMenu(p, new AccountPanel(p));
+		});
+		
 		// Magic
 		GuiButton.button(Material.STICK).setName("&b&lWand Menu").setLore("Click to view the wand menu. You can:",
 				"   - &a&lCraft&r&f a new wand", 

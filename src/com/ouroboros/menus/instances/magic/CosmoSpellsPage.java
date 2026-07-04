@@ -10,6 +10,7 @@ import com.lol.spells.instances.cosmo.Collapse;
 import com.lol.spells.instances.cosmo.Disintegrate;
 import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
+import com.lol.spells.instances.cosmo.Negate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
@@ -34,21 +35,22 @@ public class CosmoSpellsPage extends ObsGui
 		GuiButton.placeSpellButton(player, new Nullify(), 11, this);
 		
 		// 2
-		GuiButton.placeSpellButton(player, new Antimatter(), 12, this);
-		GuiButton.placeSpellButton(player, new ArrestoMomentum(), 13, this);
+		GuiButton.placeSpellButton(player, new Negate(), 12, this);
+		GuiButton.placeSpellButton(player, new Antimatter(), 13, this);
+		GuiButton.placeSpellButton(player, new ArrestoMomentum(), 14, this);
 		
 		// 3
-		GuiButton.placeSpellButton(player, new Disintegrate(), 14, this);
-		GuiButton.placeSpellButton(player, new ElementalConfinement(), 15, this);
-		GuiButton.placeSpellButton(player, new Collapse(), 16, this);
-		GuiButton.placeSpellButton(player, new Teleport(), 19, this);
+		GuiButton.placeSpellButton(player, new Disintegrate(), 15, this);
+		GuiButton.placeSpellButton(player, new ElementalConfinement(), 16, this);
+		GuiButton.placeSpellButton(player, new Collapse(), 19, this);
+		GuiButton.placeSpellButton(player, new Teleport(), 20, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new VoidForm(), 20, this);
-		GuiButton.placeSpellButton(player, new Gate(), 21, this);
+		GuiButton.placeSpellButton(player, new VoidForm(), 21, this);
+		GuiButton.placeSpellButton(player, new Gate(), 22, this);
 		
 		// 5
-		GuiButton.placeSpellButton(player, new Warp(), 22, this);
+		GuiButton.placeSpellButton(player, new Warp(), 23, this);
 		
 		
 		//Exits

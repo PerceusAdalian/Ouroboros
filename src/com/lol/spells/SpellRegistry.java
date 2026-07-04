@@ -33,7 +33,9 @@ import com.lol.spells.instances.arcano.Prisma;
 import com.lol.spells.instances.arcano.Reparo;
 import com.lol.spells.instances.arcano.Sigil;
 import com.lol.spells.instances.arcano.Surveil;
+import com.lol.spells.instances.ardentio.Empathy;
 import com.lol.spells.instances.ardentio.Passion;
+import com.lol.spells.instances.ardentio.Peace;
 import com.lol.spells.instances.astral.Attenuate;
 import com.lol.spells.instances.astral.CollectiveUnconscious;
 import com.lol.spells.instances.astral.Starfall;
@@ -60,6 +62,7 @@ import com.lol.spells.instances.cosmo.Collapse;
 import com.lol.spells.instances.cosmo.Disintegrate;
 import com.lol.spells.instances.cosmo.ElementalConfinement;
 import com.lol.spells.instances.cosmo.Gate;
+import com.lol.spells.instances.cosmo.Negate;
 import com.lol.spells.instances.cosmo.Nullify;
 import com.lol.spells.instances.cosmo.Reconfigure;
 import com.lol.spells.instances.cosmo.Teleport;
@@ -151,6 +154,7 @@ public class SpellRegistry
         		//Cosmo
         		ArrestoMomentum.class, Gate.class, Nullify.class, ElementalConfinement.class, Reconfigure.class,
         		Antimatter.class, VoidForm.class, Teleport.class, Warp.class, Collapse.class,Disintegrate.class,
+        		Negate.class,
         		
         		//Heresio
         		Hex.class, AvadaKedavra.class, Mania.class, Penance.class, Beguile.class, Axiom.class,
@@ -165,7 +169,7 @@ public class SpellRegistry
         		Starfall.class, Attenuate.class, TemporalDistortion.class, CollectiveUnconscious.class,
         		
         		//Ardentio
-        		Passion.class,
+        		Passion.class, Empathy.class, Peace.class,
         		
         		//Admin Spells
         		RemoveEntity.class

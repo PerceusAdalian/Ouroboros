@@ -4,7 +4,9 @@ import java.util.Set;
 
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.ardentio.Empathy;
 import com.lol.spells.instances.ardentio.Passion;
+import com.lol.spells.instances.ardentio.Peace;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.ObsGui;
 
@@ -24,8 +26,10 @@ public class ArdentioSpellsPage extends ObsGui
 		// 2
 		
 		// 3
-
+		GuiButton.placeSpellButton(player, new Empathy(), 11, this);
+		
 		// 4
+		GuiButton.placeSpellButton(player, new Peace(), 12, this);
 		
 		// 5
 

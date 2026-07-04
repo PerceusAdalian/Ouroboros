@@ -57,6 +57,11 @@ public class GuiButton
         return new GuiButton(material);
     }
     
+    public static GuiButton button(ItemStack stack)
+    {
+    	return new GuiButton(stack);
+    }
+    
     public GuiButton setName(String name) 
     {
         meta.setDisplayName(PrintUtils.ColorParser(name));
