@@ -111,7 +111,8 @@ The special abilities registry showcases the system's flexibility: abilities lik
 A player defeats a mob to obtain a "Creation Catalyst". This is a core component for the entire procedural generation system. The player has two options:
 1. To craft a weapon.
 2. Or craft an Armor piece.
-The player will naturally come across Materia that can be synthesized and refined into 1-5 rarities, while special case instances for Catalysts and Materia only obtainable through certain criteria (Custom Mob Event, Level Ranges, World Conditions, etc).
+
+- The player will naturally come across Materia that can be synthesized and refined into 1-5 rarities, while special case instances for Catalysts and Materia only obtainable through certain criteria (Custom Mob Event, Level Ranges, World Conditions, etc).
 Scrap Materia is obtained through failed attempts to refine Materia, or by intentionally scrapping old Echoes. Either way, this Materia is crucial for crafting certain components, or by purchasing items in the Player Nexus Shop (Ouroboros Branch).
 The cycle is as follows: Kill Mobs to gain XP + Catalysts -> Obtain/Refine Materia -> Craft Stronger Weapons/Armor -> Repeat.  
 ---
@@ -153,7 +154,7 @@ The Legends of Lumina branch started as an experimental question: "Can we suppor
 
 #### Player Experience
 
-The original intention for the player to discover magic would be to follow a Harry-Potter themed progression system. As this branch is heavily inspired by Hogwarts, the player will need to craft a "Training Wand", combining a simple stick and Harry's favourite colour, red as red dye. Once used for the first time, the player will unlock magic by increasing their Gnosis by one. The player may then craft their first wand, unlock cantrips, register and equip spells, and upgrade their wand/spells as possible. When the player upgrades their wand for the first time, and all subsequent times, their Gnosis will yet again increase, unlocking new tiers of magic, wands, etc based on this Gnosis. A player may not use a wand of a rarity they've yet to unlock, likewise with the rarity of the spells they collect. This ensures a balanced, steady, and predictable upgrade schema.
+- The original intention for the player to discover magic would be to follow a Harry-Potter themed progression system. As this branch is heavily inspired by Hogwarts, the player will need to craft a "Training Wand", combining a simple stick and Harry's favourite colour, red as red dye. Once used for the first time, the player will unlock magic by increasing their Gnosis by one. The player may then craft their first wand, unlock cantrips, register and equip spells, and upgrade their wand/spells as possible. When the player upgrades their wand for the first time, and all subsequent times, their Gnosis will yet again increase, unlocking new tiers of magic, wands, etc based on this Gnosis. A player may not use a wand of a rarity they've yet to unlock, likewise with the rarity of the spells they collect. This ensures a balanced, steady, and predictable upgrade schema.
 ---
 
 ## Technical Architecture
