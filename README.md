@@ -18,7 +18,7 @@ Each branch is independently playable but designed to complement the others, all
 
 ## Branch Expansions
 
-### ���� **Ouroboros (Main Branch)**
+### ♾️ **Ωuroboros (Main Branch)**
 
 The core MMO experience that establishes player progression, statistics, and general game systems.
 
@@ -59,7 +59,7 @@ A new player joins and completes a brief tutorial that explains stats and charac
 
 ---
 
-### ⚔️ **Echoes of Lumina (Echoes Branch)**
+### ⚔️ **Σchoes of Lumina (Echoes Branch)**
 
 A combat-focused expansion introducing procedurally-generated weapons and equipment, tied to a dynamic "Echo" system that injects infinite variety into loot.
 
@@ -261,7 +261,8 @@ For questions or discussion, reach out on GitHub issues.
 
 ---
 
-**Project Status:** Active Development  
+**Project Status:** Active Development 
+**Target Release Window:** 2026-2027
 **Language:** Java (100%)  
-**Latest Update:** July 5, 2026  
+**ReadMe Last Updated:** July 5, 2026  
 **License:** See LICENSE file
