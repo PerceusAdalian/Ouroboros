@@ -12,8 +12,6 @@ Ouroboros is organized into **three distinct expansions**, each introducing new 
 2. **Echoes of Lumina** — Combat systems, weapons, and dynamic loot
 3. **Legends of Lumina** — Spell-casting and advanced magic systems
 
-Each branch is independently playable but designed to complement the others, allowing server administrators to choose their level of complexity and features.
-
 ---
 
 ## Branch Expansions
@@ -55,13 +53,14 @@ The foundation branch was architected to be extensible from day one. The modular
 
 #### Player Experience
 
-A new player joins and completes a brief tutorial that explains stats and character creation. They allocate their initial stat points, then enter the world. As they defeat mobs and complete objectives, they earn experience and can reallocate stats at level-up. The early game teaches the feedback loop: defeat mobs → gain XP → level up → grow stronger → tackle harder content.
+A new player joins and immediately is emersed into the action -- Mine, hunt, kill mobs (albeit difficult without proper weaponry), and collect items to go about their journey. Along the way, players will passively increase levels to each of the main stats separated by two categories: General, and Combat. Leveling Combat grants access to abilities for crafted Echoes, while General stats increase overall QOL for the player. As the player defeats mobs and complete objectives, they earn experience and can allocate AP (Ability Points) to respective stat branches to obtain perks and other level-up rewards. The early game teaches the feedback loop: defeat mobs → gain XP → level up → grow stronger → tackle harder content. Crafting Plugin-Specific gear is crucial for content throughout the experience on the server. 
 
 ---
 
 ### ⚔️ **Σchoes of Lumina (Echoes Branch)**
 
-A combat-focused expansion introducing procedurally-generated weapons and equipment, tied to a dynamic "Echo" system that injects infinite variety into loot.
+A combat-focused expansion introducing procedurally-generated weapons and equipment, tied to a dynamic "Echo" system that injects infinite variety into loot. Also includes custom damage types, mob affinities, custom mobs, player and mob huds, and more. 
+We've included the type chart on this repository under Resources.
 
 #### Features
 
@@ -97,7 +96,7 @@ A combat-focused expansion introducing procedurally-generated weapons and equipm
   - Example: Diamond armor rolls 50-100 armor rating with 0.10-0.25 block chance
 
 - **Combat Events and Damage Scaling**
-  - Integrated event listeners for strike calculations
+  - Integrated event listeners for combat instance calculations
   - Modifiers apply dynamically based on Echo stats and player stats (Strength, Dexterity, etc.)
   - Critical hits trigger enhanced damage and crit armor mitigation checks
 
@@ -105,12 +104,16 @@ A combat-focused expansion introducing procedurally-generated weapons and equipm
 
 The Echo system emerged from a design goal: "infinite unique loot without hand-crafting 10,000 items." The config-driven approach (`echo_config.yml`) means the design team can tweak drop rates, modifier chances, and stat ceilings mid-season without a code push. During playtesting, the team discovered that certain material/binding combinations (e.g., String + Netherite) created degenerate playstyles. The binding multipliers were then tuned to trade-off speed for durability, forcing meaningful loadout choices.
 
-The special abilities registry showcases the system's flexibility: abilities like `PhotonCannon`, `LuminasRadiance`, and `SpatialRend` are named after Echo themes (light, preservation, spatial distortion), letting designers create thematic weapon combos and end-game progression paths.
+The special abilities registry showcases the system's flexibility: abilities like `PhotonCannon`, `LuminasRadiance`, and `SpatialRend` are named after Echo themes (light, preservation, spatial distortion), leading to the development of thematic weapon combos and end-game progression paths.
 
 #### Player Experience
 
-A player defeats a mob and receives an Echo sword: *"Flamelash" (Rarity 3, Iron + Pelt, 25 base damage, 3 modifier slots with Burning aura and 15% lifesteal*. They equip it and immediately notice the attack speed differs from their starter weapon. As they level Strength, the weapon's damage scales upward. Later, they find a Rarity 5 Golden Crossbow with a PhotonCannon ability—high crit, low durability, risky but rewarding. Swapping weapons mid-run becomes a strategic choice, and every drop feels potentially valuable because stat ranges are wide and modifiers create emergent playstyles.
-
+A player defeats a mob to obtain a "Creation Catalyst". This is a core component for the entire procedural generation system. The player has two options:
+1. To craft a weapon.
+2. Or craft an Armor piece.
+The player will naturally come across Materia that can be synthesized and refined into 1-5 rarities, while special case instances for Catalysts and Materia only obtainable through certain criteria (Custom Mob Event, Level Ranges, World Conditions, etc).
+Scrap Materia is obtained through failed attempts to refine Materia, or by intentionally scrapping old Echoes. Either way, this Materia is crucial for crafting certain components, or by purchasing items in the Player Nexus Shop (Ouroboros Branch).
+The cycle is as follows: Kill Mobs to gain XP + Catalysts -> Obtain/Refine Materia -> Craft Stronger Weapons/Armor -> Repeat.  
 ---
 
 ### 🔮 **Legends of Lumina (LoL Branch)**
@@ -120,7 +123,7 @@ An advanced expansion introducing spell-casting mechanics, mana systems, and mag
 #### Features
 
 - **Spell-Casting Framework**
-  - Mana pools tied to player Intelligence stat
+  - Spells/Wands tied to player 'Gnosis' stat
   - Spell schools (Evocation, Abjuration, Divination, etc.) with distinct mechanics
   - Cooldown and resource management systems
 
@@ -146,12 +149,11 @@ An advanced expansion introducing spell-casting mechanics, mana systems, and mag
 
 #### Developmental Anecdote
 
-The Legends of Lumina branch started as an experimental question: "Can we support two divergent playstyles (melee vs. magic) without creating balance nightmares?" The answer lay in creating parallel stat channels—Strength for melee, Intelligence for magic—and ensuring the core event systems (damage calculation, cooldown management, stat scaling) were agnostic to the source of power. This modularity meant the spell system could launch as a separate branch without touching the main codebase, reducing regression risk and allowing parallel development. Designer feedback led to mana regeneration being tied to Wisdom rather than a global value, creating interesting stat allocation puzzles (high Intelligence high-damage spells vs. high Wisdom sustained casting).
+The Legends of Lumina branch started as an experimental question: "Can we support two divergent playstyles (melee vs. magic) without creating balance nightmares?" The answer lay in creating parallel stat channels—Melee for, well, melee, and Gnosis for magic—and ensuring the core event systems (damage calculation, cooldown management, stat scaling) were agnostic to the source of power. This modularity meant the spell system could launch as a separate branch without touching the main codebase, reducing regression risk and allowing parallel development. Designer feedback led to mana regeneration being tied to Wisdom rather than a global value, creating interesting stat allocation puzzles (high Intelligence high-damage spells vs. high Wisdom sustained casting).
 
 #### Player Experience
 
-A player chooses a "Mage" character and starts with low Strength but high Intelligence. Their first spell, *Arcane Bolt*, costs 20 mana and deals 25 damage. As they level, they allocate points to Intelligence, and their spell damage grows. They discover *Meteor Storm*, a powerful spell that costs 100 mana and has a 30-second cooldown. They learn to balance burst damage (high Intelligence builds) against sustained casting (high Wisdom regen builds). In group content, mages provide crowd control and area damage, creating role diversity and team strategy—a stark contrast to solo melee grinding.
-
+The original intention for the player to discover magic would be to follow a Harry-Potter themed progression system. As this branch is heavily inspired by Hogwarts, the player will need to craft a "Training Wand", combining a simple stick and Harry's favourite colour, red as red dye. Once used for the first time, the player will unlock magic by increasing their Gnosis by one. The player may then craft their first wand, unlock cantrips, register and equip spells, and upgrade their wand/spells as possible. When the player upgrades their wand for the first time, and all subsequent times, their Gnosis will yet again increase, unlocking new tiers of magic, wands, etc based on this Gnosis. A player may not use a wand of a rarity they've yet to unlock, likewise with the rarity of the spells they collect. This ensures a balanced, steady, and predictable upgrade schema.
 ---
 
 ## Technical Architecture
