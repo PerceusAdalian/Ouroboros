@@ -18,7 +18,8 @@
 #                           (as a decimal: 0.10 = 10%)
 #   magnitude_ceiling     - maximum rolled magnitude for any modifier
 #
-# Rarity 1 = Common, Rarity 5 = Legendary, Rarity 6 = Special EOLs, Rarity 7 = Unique (Story Related)
+# Rarity 1 = Common, etc, Rarity 5 = Legendary,
+# Rarity 6 = Special (Royalty) EOLs, Rarity 7 = Unique (Story Related)
 # ------------------------------------------------------------
 
 rarity_bands:
@@ -203,8 +204,6 @@ binding_stats:
 
 # ============================================================
 # ARMOR ECHO STAT RANGES
-# Paste this block into echo_config.yml alongside material_stats.
-#
 # Each key must match an EchoMaterial enum name (case-insensitive).
 # Durability ranges here feed into ArmorStatRange; the binding's
 # durability_multiplier is applied on top during stat resolution.
