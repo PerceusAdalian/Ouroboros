@@ -49,11 +49,11 @@ The core MMO experience that establishes player progression, statistics, and gen
 
 #### Developer Anecdote
 
-The foundation branch was architected to be extensible from day one. The modular package structure (abilities, accounts, menus, objects, utils) ensures that new features—like the Echoes system or spell-casting—can be grafted on without disrupting core systems. The stat system uses a centralized enum (`EnumStats`) and event-driven handlers, allowing expansions to read and react to stat changes without tight coupling.
+- The foundation branch was architected to be extensible from day one. The modular package structure (abilities, accounts, menus, objects, utils) ensures that new features—like the Echoes system or spell-casting—can be grafted on without disrupting core systems. The stat system uses a centralized enum (`EnumStats`) and event-driven handlers, allowing expansions to read and react to stat changes without tight coupling.
 
 #### Player Experience
 
-A new player joins and immediately is emersed into the action -- Mine, hunt, kill mobs (albeit difficult without proper weaponry), and collect items to go about their journey. Along the way, players will passively increase levels to each of the main stats separated by two categories: General, and Combat. Leveling Combat grants access to abilities for crafted Echoes, while General stats increase overall QOL for the player. As the player defeats mobs and complete objectives, they earn experience and can allocate AP (Ability Points) to respective stat branches to obtain perks and other level-up rewards. The early game teaches the feedback loop: defeat mobs → gain XP → level up → grow stronger → tackle harder content. Crafting Plugin-Specific gear is crucial for content throughout the experience on the server. 
+- A new player joins and immediately is emersed into the action -- Mine, hunt, kill mobs (albeit difficult without proper weaponry), and collect items to go about their journey. Along the way, players will passively increase levels to each of the main stats separated by two categories: General, and Combat. Leveling Combat grants access to abilities for crafted Echoes, while General stats increase overall QOL for the player. As the player defeats mobs and complete objectives, they earn experience and can allocate AP (Ability Points) to respective stat branches to obtain perks and other level-up rewards. The early game teaches the feedback loop: defeat mobs → gain XP → level up → grow stronger → tackle harder content. Crafting Plugin-Specific gear is crucial for content throughout the experience on the server. 
 
 ---
 
@@ -102,7 +102,7 @@ We've included the type chart on this repository under Resources.
 
 #### Developmental Anecdote
 
-The Echo system emerged from a design goal: "infinite unique loot without hand-crafting 10,000 items." The config-driven approach (`echo_config.yml`) means the design team can tweak drop rates, modifier chances, and stat ceilings mid-season without a code push. During playtesting, the team discovered that certain material/binding combinations (e.g., String + Netherite) created degenerate playstyles. The binding multipliers were then tuned to trade-off speed for durability, forcing meaningful loadout choices.
+- The Echo system emerged from a design goal: "infinite unique loot without hand-crafting 10,000 items." The config-driven approach (`echo_config.yml`) means the design team can tweak drop rates, modifier chances, and stat ceilings mid-season without a code push. During playtesting, the team discovered that certain material/binding combinations (e.g., String + Netherite) created degenerate playstyles. The binding multipliers were then tuned to trade-off speed for durability, forcing meaningful loadout choices.
 
 The special abilities registry showcases the system's flexibility: abilities like `PhotonCannon`, `LuminasRadiance`, and `SpatialRend` are named after Echo themes (light, preservation, spatial distortion), leading to the development of thematic weapon combos and end-game progression paths.
 
@@ -114,7 +114,8 @@ A player defeats a mob to obtain a "Creation Catalyst". This is a core component
 
 - The player will naturally come across Materia that can be synthesized and refined into 1-5 rarities, while special case instances for Catalysts and Materia only obtainable through certain criteria (Custom Mob Event, Level Ranges, World Conditions, etc).
 Scrap Materia is obtained through failed attempts to refine Materia, or by intentionally scrapping old Echoes. Either way, this Materia is crucial for crafting certain components, or by purchasing items in the Player Nexus Shop (Ouroboros Branch).
-The cycle is as follows: Kill Mobs to gain XP + Catalysts -> Obtain/Refine Materia -> Craft Stronger Weapons/Armor -> Repeat.  
+
+- The cycle is as follows: Kill Mobs to gain XP + Catalysts -> Obtain/Refine Materia -> Craft Stronger Weapons/Armor -> Repeat.  
 ---
 
 ### 🔮 **Legends of Lumina (LoL Branch)**
@@ -150,7 +151,7 @@ An advanced expansion introducing spell-casting mechanics, mana systems, and mag
 
 #### Developmental Anecdote
 
-The Legends of Lumina branch started as an experimental question: "Can we support two divergent playstyles (melee vs. magic) without creating balance nightmares?" The answer lay in creating parallel stat channels—Melee for, well, melee, and Gnosis for magic—and ensuring the core event systems (damage calculation, cooldown management, stat scaling) were agnostic to the source of power. This modularity meant the spell system could launch as a separate branch without touching the main codebase, reducing regression risk and allowing parallel development. Designer feedback led to mana regeneration being tied to Wisdom rather than a global value, creating interesting stat allocation puzzles (high Intelligence high-damage spells vs. high Wisdom sustained casting).
+- The Legends of Lumina branch started as an experimental question: "Can we support two divergent playstyles (melee vs. magic) without creating balance nightmares?" The answer lay in creating parallel stat channels—Melee for, well, melee, and Gnosis for magic—and ensuring the core event systems (damage calculation, cooldown management, stat scaling) were agnostic to the source of power. This modularity meant the spell system could launch as a separate branch without touching the main codebase, reducing regression risk and allowing parallel development. Designer feedback led to mana regeneration being tied to Wisdom rather than a global value, creating interesting stat allocation puzzles (high Intelligence high-damage spells vs. high Wisdom sustained casting).
 
 #### Player Experience
 
