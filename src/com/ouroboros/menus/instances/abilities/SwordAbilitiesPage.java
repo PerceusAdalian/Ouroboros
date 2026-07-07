@@ -6,7 +6,9 @@ import org.bukkit.entity.Player;
 
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
+import com.eol.echoes.abilities.instances.sword.IcySlash;
 import com.eol.echoes.abilities.instances.sword.ImbueFire;
+import com.eol.echoes.abilities.instances.sword.SerratedBlade;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.ObsGui;
 
@@ -26,6 +28,8 @@ public class SwordAbilitiesPage extends ObsGui
 		GuiButton.placeAbilityButton(player, new Flamelash(), 10, this);
 		GuiButton.placeAbilityButton(player, new GeminiSlash(), 11, this);
 		GuiButton.placeAbilityButton(player, new ImbueFire(), 12, this);
+		GuiButton.placeAbilityButton(player, new IcySlash(), 13, this);
+		GuiButton.placeAbilityButton(player, new SerratedBlade(), 14, this);
 		
 		//Exits
 		GuiButton.placeGoBack(37, this, new AbilitiesMainPage(player));

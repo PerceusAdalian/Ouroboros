@@ -61,8 +61,15 @@ public abstract class AbstractEOLArmor extends AbstractEOL
                 null,
                 null,
                 getForm(),
-                echoMaterial);
+                echoMaterial,
+                getInternalName());
 
+        return rebuildFromManifest(manifest);
+    }
+    
+    public ItemStack rebuildFromManifest(EchoManifest manifest)
+    {
+        EchoMaterial echoMaterial = manifest.echoMaterial();
         Material material = EchoFormResolver.toBukkitMaterial(getForm(), echoMaterial);
         if (material == null) return null;
 
@@ -71,7 +78,7 @@ public abstract class AbstractEOLArmor extends AbstractEOL
         if (meta == null) return null;
 
         meta.setDisplayName(PrintUtils.ColorParser(getDisplayName()));
-        meta.setLore(buildLore(manifest, echoMaterial, isIntegrityArmament));
+        meta.setLore(buildLore(manifest, echoMaterial, isIntegrityArmament()));
         meta.setEnchantmentGlintOverride(true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);

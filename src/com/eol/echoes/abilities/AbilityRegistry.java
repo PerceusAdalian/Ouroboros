@@ -30,7 +30,9 @@ import com.eol.echoes.abilities.instances.special.SpatialDistortion;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
+import com.eol.echoes.abilities.instances.sword.IcySlash;
 import com.eol.echoes.abilities.instances.sword.ImbueFire;
+import com.eol.echoes.abilities.instances.sword.SerratedBlade;
 
 public class AbilityRegistry 
 {
@@ -42,6 +44,7 @@ public class AbilityRegistry
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
             Cleave.class, HeavySwing.class, Lunge.class, HeavyChop.class,
             Riptide.class, Bulwark.class, Launch.class, QuickLoad.class,
+            IcySlash.class, SerratedBlade.class,
             
             // Special
             LuminusRadiance.class,

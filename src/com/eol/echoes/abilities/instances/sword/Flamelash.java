@@ -27,7 +27,7 @@ public class Flamelash extends EchoAbility
 	public Flamelash() 
 	{
 		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 3, 1, 10, AbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
-				"&r&fDeal &l5&r&c♥ &e&lSlash&r&f damage to &6target &dMob&f, inflicting &cBurn &7(7m, 10s)");
+				"&r&fDeal &l35&r&c♥ &e&lSlash&r&f damage to &6target &dMob&f, inflicting &cBurn &7(7m, 10s)");
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class Flamelash extends EchoAbility
 			EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.MASTER);
 			ObsParticles.drawSpiralVortex(target.getLocation(), target.getWidth(), Math.max(Math.min(1, target.getHeight()), 2), 0, Particle.LAVA, null);
 			
-			MobData.damageUnnaturally(p, target, 5, true, true, ElementType.SLASH, EchoManager.getCodec(e.getItem()));
+			MobData.damageUnnaturally(p, target, 35, true, true, ElementType.SLASH, EchoManager.getCodec(e.getItem()));
 			InfernoEffects.addBurn((LivingEntity) target, 10);
 			
 		})) return -1;

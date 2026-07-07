@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.instances.AbstractEOLArmor;
+import com.eol.echoes.instances.AbstractEOLWeapon;
 import com.eol.echoes.instances.EOLRegistry;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.echoes.records.Modifier;
@@ -256,6 +257,15 @@ public final class EchoForge
 
     static ItemStack rebuild(EchoManifest manifest)
     {
+        if (manifest.isEOL())
+        {
+            AbstractEOL eol = EOLRegistry.get(manifest.eolInternalName());
+            if (eol instanceof AbstractEOLWeapon weapon)
+                return weapon.rebuildFromManifest(manifest);
+            if (eol instanceof AbstractEOLArmor armor)
+                return armor.rebuildFromManifest(manifest);
+        }
+
         if (manifest.echoForm() == null || manifest.echoMaterial() == null) return null;
 
         if (manifest.isArmorEcho())

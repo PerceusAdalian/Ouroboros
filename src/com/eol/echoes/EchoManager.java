@@ -347,7 +347,8 @@ public class EchoManager
                     manifest.echoId(), manifest.rarity(), updated, null,
                     manifest.modifiers(), manifest.slotType(),
                     manifest.equippedAbilityKey(), manifest.lockedAbilityKey(),
-                    manifest.echoForm(), manifest.echoMaterial());
+                    manifest.echoForm(), manifest.echoMaterial(),
+                    manifest.eolInternalName());
         }
     }
 
@@ -387,7 +388,8 @@ public class EchoManager
                 manifest.echoId(), manifest.rarity(), data, null,
                 manifest.modifiers(), manifest.slotType(),
                 manifest.equippedAbilityKey(), manifest.lockedAbilityKey(),
-                manifest.echoForm(), manifest.echoMaterial());
+                manifest.echoForm(), manifest.echoMaterial(),
+                manifest.eolInternalName());
     }
 
     private static EchoManifest withEquippedAbility(EchoManifest old, String abilityKey)
@@ -396,7 +398,8 @@ public class EchoManager
                 old.echoId(), old.rarity(), old.baseStats(), null,
                 old.modifiers(), old.slotType(),
                 abilityKey, old.lockedAbilityKey(),
-                old.echoForm(), old.echoMaterial());
+                old.echoForm(), old.echoMaterial(),
+                old.eolInternalName());
     }
 
     // -------------------------------------------------------------------------

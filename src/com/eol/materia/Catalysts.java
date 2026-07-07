@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
+import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
@@ -340,14 +341,14 @@ public class Catalysts
 			    PrintUtils.color(ObsColors.CELESTIO) + "&oThis process should not exist within the simulation boundary.",
 			    PrintUtils.color(ObsColors.CELESTIO) + "&oScheduled for termination at next reset cycle. Setting Warn: 'Do not interact'."), new Aion().getInternalName());
 	
-		Materia.register(new Materia("&e&lCreation Catalyst&r&f: Protocol " + PrintUtils.color(ObsColors.INFERNO)+Symbols.EOL+"cho of Agni",
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: " + PrintUtils.color(ObsColors.INFERNO)+Symbols.EOL+"cho of Agni",
 				"echo_of_agni",
 				MateriaType.CATALYST,
 			    MateriaComponent.CATALYST,
 			    Rarity.SIX,
 			    false,
-			    "&r&7&oAn echo of the distant past. Harmonic resonance persists.",
-			    "&r&7&oA memory engram is encoded within:",
+			    "&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
 			    PrintUtils.color(ObsColors.INFERNO)+"&oFantasian Academy Dossier — Émanateur de l'Enfer, Madame Agni",
 			    PrintUtils.color(ObsColors.INFERNO)+"&oAgni, the Emanator of Inferno, stands among the &e&o&lEndless&r"+PrintUtils.color(ObsColors.INFERNO)+"&o —",
 			    PrintUtils.color(ObsColors.INFERNO)+"&oan ancient elemental which holds dominion over the Dunes of Aigisva'ard.",
@@ -358,5 +359,21 @@ public class Catalysts
 			    PrintUtils.color(ObsColors.INFERNO)+"&oAccounts of her first sighting describe a woman adorned in jewels",
 			    PrintUtils.color(ObsColors.INFERNO)+"said to originate from Feits'heilm, and many who visit her shrine",
 			    PrintUtils.color(ObsColors.INFERNO)+"&obestow such jewels hoping to divine the Queen of War."), new BowOfAgni().getInternalName());
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: " + PrintUtils.color(ObsColors.ARCANO)+Symbols.EOL+"cho of the Elementalist Sword",
+				"echo_of_elemental_sword",
+				MateriaType.CATALYST,
+			    MateriaComponent.CATALYST,
+			    Rarity.FIVE,
+			    false,
+			    "&r&7&oAn echo of the distant past. Resonant harmonic frequencies radiate..",
+                "&r&7&oThere's a memory engram encoded within:",
+                PrintUtils.color(ObsColors.ARCANO)+"&oThe Elements: Earth, Air, Fire, and Water--",
+                PrintUtils.color(ObsColors.ARCANO)+"&othey are what connects life within the realm to all things aethereal.",
+                PrintUtils.color(ObsColors.ARCANO)+"&oMany throughout time, both warriors and smiths, told tales of a Sword..",
+                PrintUtils.color(ObsColors.ARCANO)+"&oThe sword was forged in &lPelt&r"+PrintUtils.color(ObsColors.ARCANO)+" &oand &lIron&r"+PrintUtils.color(ObsColors.ARCANO)+"&o.",
+                PrintUtils.color(ObsColors.ARCANO)+"&oOnly when wrought from the highest quality of such materials, they claimed,",
+                PrintUtils.color(ObsColors.ARCANO)+"&ocould it hold the power of all four natural elements, and abilities unbound.",
+                PrintUtils.color(ObsColors.ARCANO)+"&oIf you hold this Echo, maybe you, too, can be the one to craft it.."), new SwordOfTheElements().getInternalName());
 	}
 }

@@ -34,7 +34,8 @@ public record EchoManifest(
         @Nullable String       equippedAbilityKey,
         @Nullable String       lockedAbilityKey,
         @Nullable EchoForm     echoForm,
-        @Nullable EchoMaterial echoMaterial)
+        @Nullable EchoMaterial echoMaterial,
+        @Nullable String       eolInternalName)
 {
     /** Compact constructor — defensively copies modifiers so the manifest is truly immutable. */
     public EchoManifest
@@ -48,21 +49,19 @@ public record EchoManifest(
 
     /** Weapon / tool Echo (no ability pre-equipped, no locked ability). */
     public EchoManifest(String echoId, Rarity rarity, EchoData baseStats,
-                        List<Modifier> modifiers, ElementiumSlotType slotType,
-                        EchoForm echoForm, EchoMaterial echoMaterial)
-    {
-        this(echoId, rarity, baseStats, null, modifiers, slotType,
-                null, null, echoForm, echoMaterial);
-    }
+            List<Modifier> modifiers, ElementiumSlotType slotType,
+            EchoForm echoForm, EchoMaterial echoMaterial)
+	{
+    	this(echoId, rarity, baseStats, null, modifiers, slotType, null, null, echoForm, echoMaterial, null);
+	}
 
     /** Armor Echo (no abilities, no elementium slot by design). */
     public EchoManifest(String echoId, Rarity rarity, ArmorData armorStats,
-                        List<Modifier> modifiers,
-                        EchoForm echoForm, EchoMaterial echoMaterial)
-    {
-        this(echoId, rarity, null, armorStats, modifiers, ElementiumSlotType.NO_SLOT,
-                null, null, echoForm, echoMaterial);
-    }
+            List<Modifier> modifiers,
+            EchoForm echoForm, EchoMaterial echoMaterial)
+	{
+    	this(echoId, rarity, null, armorStats, modifiers, ElementiumSlotType.NO_SLOT, null, null, echoForm, echoMaterial, null);
+	}
 
     // -------------------------------------------------------------------------
     // Type discrimination
@@ -78,6 +77,11 @@ public record EchoManifest(
     public boolean isWeaponEcho()
     {
         return baseStats != null;
+    }
+    
+    public boolean isEOL()
+    {
+        return eolInternalName != null && !eolInternalName.isBlank();
     }
 
     // -------------------------------------------------------------------------

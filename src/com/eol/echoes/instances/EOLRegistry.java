@@ -13,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
+import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
@@ -209,6 +210,7 @@ public final class EOLRegistry
            
            // Arcano
            LanceOfLordran.class,
+           SwordOfTheElements.class,
            
            // Armor
            

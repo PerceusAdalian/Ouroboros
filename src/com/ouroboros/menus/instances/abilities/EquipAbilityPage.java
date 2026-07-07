@@ -18,6 +18,7 @@ import com.eol.echoes.EchoManifestCodec;
 import com.eol.echoes.abilities.EchoAbility;
 import com.eol.echoes.instances.AbstractEOL;
 import com.eol.echoes.records.EchoManifest;
+import com.eol.enums.ElementiumSlotType;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.menus.GuiButton;
 import com.ouroboros.menus.GuiHandler;
@@ -61,8 +62,12 @@ public class EquipAbilityPage extends ObsGui
 			
 				if (meta.getPersistentDataContainer().has(AbstractEOL.eolKey))
 				{
-					e.setCancelled(true);
-					return;
+				    EchoManifest existing = EchoManifestCodec.read(stack);
+				    if (existing != null && existing.hasLockedAbility())
+				    {
+				        e.setCancelled(true);
+				        return;
+				    }
 				}
 				
 				String echokey = meta.getPersistentDataContainer().get(EchoManifestCodec.MANIFEST_KEY, PersistentDataType.STRING);
@@ -81,16 +86,20 @@ public class EquipAbilityPage extends ObsGui
 				
 				EchoAbility ability = echoEquip.get(p.getUniqueId());
 				
-				boolean isModulo        = ability.getElementType() == ElementType.MODULO;
+				boolean isModulo        = ability.getElementType() == ElementType.MODULO || codec.getElementiumSlotType() == ElementiumSlotType.MODULO;
 				boolean hasSlot         = codec.hasElementiumSlot();
 				boolean formMismatch    = !ability.getEchoForm().equals(codec.getEchoForm());
-				boolean elementMismatch = hasSlot && !ElementType.getFromElementiumSlotType(codec.getElementiumSlotType()).equals(ability.getElementType());
 
 				boolean shouldCancel;
-				// MODULO abilities ignore element matching but still require form match
-				if (isModulo) shouldCancel = !hasSlot || formMismatch ;
-				// Non-MODULO abilities require both element match and form match, and a slot must exist
-				else shouldCancel = elementMismatch || formMismatch || !hasSlot;
+				if (isModulo)
+				{
+				    shouldCancel = formMismatch;
+				}
+				else
+				{
+				    boolean elementMismatch = hasSlot && !ElementType.getFromElementiumSlotType(codec.getElementiumSlotType()).equals(ability.getElementType());
+				    shouldCancel = elementMismatch || formMismatch || !hasSlot;
+				}
 				
 				if (shouldCancel)
 				{
@@ -98,7 +107,6 @@ public class EquipAbilityPage extends ObsGui
 				    return;
 				}
 				
-				// All checks passed, equip the ability
 				if (codec.hasEquippedAbility()) EchoManager.removeAbility(stack);
 				e.setCancelled(true);
 				p.setItemOnCursor(null);

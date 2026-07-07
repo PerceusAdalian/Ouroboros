@@ -99,7 +99,9 @@ public class EchoManifestCodec
                 : ElementiumSlotType.NO_SLOT.name());
         root.addProperty("echoForm",     manifest.echoForm()     != null ? manifest.echoForm().name()     : null);
         root.addProperty("echoMaterial", manifest.echoMaterial() != null ? manifest.echoMaterial().name() : null);
-
+        if (manifest.eolInternalName() != null)
+            root.addProperty("eolInternalName", manifest.eolInternalName());
+        
         // Stat block — only the relevant one is written
         if (manifest.isArmorEcho())
         {
@@ -191,7 +193,10 @@ public class EchoManifestCodec
         JsonElement echoMaterialEl = root.get("echoMaterial");
         EchoMaterial echoMaterial = (echoMaterialEl == null || echoMaterialEl.isJsonNull())
                 ? null : EchoMaterial.valueOf(echoMaterialEl.getAsString());
-
+        
+        JsonElement eolNameEl = root.get("eolInternalName");
+        String eolInternalName = (eolNameEl == null || eolNameEl.isJsonNull()) ? null : eolNameEl.getAsString();
+        
         // Modifiers
         List<Modifier> modifiers = new ArrayList<>();
         JsonArray modsArr = root.getAsJsonArray("modifiers");
@@ -245,7 +250,8 @@ public class EchoManifestCodec
                     a.get("criticalBlockRate").getAsDouble(),
                     maxDurability, currentDurability);
 
-            return new EchoManifest(echoId, rarity, armorStats, modifiers, echoForm, echoMaterial);
+            return new EchoManifest(echoId, rarity, null, armorStats, modifiers, 
+            		ElementiumSlotType.NO_SLOT, null, null, echoForm, echoMaterial, eolInternalName);
         }
         else
         {
@@ -268,8 +274,8 @@ public class EchoManifestCodec
             String lockedAbilityKey = (lockedEl   == null || lockedEl.isJsonNull())   ? null : lockedEl.getAsString();
             String abilityKey       = (equippedEl == null || equippedEl.isJsonNull()) ? null : equippedEl.getAsString();
 
-            return new EchoManifest(echoId, rarity, baseStats, null, modifiers, slot,
-                    abilityKey, lockedAbilityKey, echoForm, echoMaterial);
+            return new EchoManifest(echoId, rarity, baseStats, null, modifiers, slot, 
+            		abilityKey, lockedAbilityKey, echoForm, echoMaterial, eolInternalName);
         }
     }
 }

@@ -69,8 +69,17 @@ public abstract class AbstractEOLWeapon extends AbstractEOL
                 null,
                 getLockedAbilityKey(),
                 getForm(),
-                echoMaterial);
+                echoMaterial,
+                getInternalName());
 
+        return rebuildFromManifest(manifest);
+    }
+
+    /** Rebuilds the ItemStack from an existing manifest (ability equip/remove, durability patch, etc.)
+     * without re-rolling stats. Keeps the EOL's authored name, lore, and eolKey intact. */
+    public ItemStack rebuildFromManifest(EchoManifest manifest)
+    {
+        EchoMaterial echoMaterial = manifest.echoMaterial();
         Material material = EchoFormResolver.toBukkitMaterial(getForm(), echoMaterial);
         if (material == null) return null;
 
@@ -79,7 +88,7 @@ public abstract class AbstractEOLWeapon extends AbstractEOL
         if (meta == null) return null;
 
         meta.setDisplayName(PrintUtils.ColorParser(getDisplayName()));
-        meta.setLore(buildLore(manifest, echoMaterial, isIntegrityArmament));
+        meta.setLore(buildLore(manifest, echoMaterial, isIntegrityArmament()));
         meta.setEnchantmentGlintOverride(true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
@@ -92,7 +101,7 @@ public abstract class AbstractEOLWeapon extends AbstractEOL
 
         return stack;
     }
-
+    
     private void applyAttackSpeed(ItemMeta meta, EchoManifest manifest)
     {
         meta.removeAttributeModifier(Attribute.ATTACK_SPEED);

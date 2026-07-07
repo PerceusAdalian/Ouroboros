@@ -28,7 +28,7 @@ public class EchoRepairPage extends ObsGui
 	
 	public EchoRepairPage(Player player)
 	{
-		super(player, Symbols.EOL+"Repair Page", 27, Set.of(10,13,16));
+		super(player, Symbols.EOL+"cho Repair Page", 27, Set.of(10,13,16));
 	}
 
 	@Override
@@ -91,7 +91,6 @@ public class EchoRepairPage extends ObsGui
 				return;
 			}
 			
-			// All passed, return a repaired echo.
 			PlayerData.subtractScrap(p, 50);
 			p.setItemOnCursor(null);
 			InventoryUtils.add(p, repairedEcho);
