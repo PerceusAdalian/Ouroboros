@@ -97,14 +97,12 @@ We've included the type chart on this repository under Resources.
 
 - **Combat Events and Damage Scaling**
   - Integrated event listeners for combat instance calculations
-  - Modifiers apply dynamically based on Echo stats and player stats (Strength, Dexterity, etc.)
+  - Modifiers apply dynamically based on Echo base stats and other factors (Materia dependent)
   - Critical hits trigger enhanced damage and crit armor mitigation checks
 
 #### Developmental Anecdote
 
 - The Echo system emerged from a design goal: "infinite unique loot without hand-crafting 10,000 items." The config-driven approach (`echo_config.yml`) means the design team can tweak drop rates, modifier chances, and stat ceilings mid-season without a code push. During playtesting, the team discovered that certain material/binding combinations (e.g., String + Netherite) created degenerate playstyles. The binding multipliers were then tuned to trade-off speed for durability, forcing meaningful loadout choices.
-
-The special abilities registry showcases the system's flexibility: abilities like `PhotonCannon`, `LuminasRadiance`, and `SpatialRend` are named after Echo themes (light, preservation, spatial distortion), leading to the development of thematic weapon combos and end-game progression paths.
 
 #### Player Experience
 
@@ -126,13 +124,13 @@ An advanced expansion introducing spell-casting mechanics, mana systems, and mag
 
 - **Spell-Casting Framework**
   - Spells/Wands tied to player 'Gnosis' stat
-  - Spell schools (Evocation, Abjuration, Divination, etc.) with distinct mechanics
+  - Spell schools (Inferno, Glacio, Aero, Geo, Celestio, Mortio, Cosmo, Heresio, and Arcano) with distinct mechanics, effects, and interactions across spells
   - Cooldown and resource management systems
 
 - **Magic Ability Registry**
   - Dedicated spell registries for fast iteration and live rebalancing
   - Spell effects include area-of-effect damage, crowd control, buffs, and debuffs
-  - Scaling tied to Intelligence, Wisdom, and Spell Power stats
+  - Scaling tied to rarity of both spells themselves and the wands wielded (i.e. Some wands carry an "Affinity" in which lowers the overall cost of the respective element type of the spell casted by 20%)
 
 - **Mana and Energy Systems**
   - Natural mana regeneration influenced by Wisdom
@@ -141,7 +139,7 @@ An advanced expansion introducing spell-casting mechanics, mana systems, and mag
 
 - **Dynamic Spell Effects**
   - Particle effects and sound cues tied to spell school
-  - Environmental interactions (fire spells ignite blocks, frost spells create ice, etc.)
+  - Environmental interactions (Almighty damage types)
   - Spell stacking and combo systems for skilled players
 
 - **Integration with Main Branch**
@@ -195,18 +193,13 @@ plugin.yml                  # Spigot configuration
    - Designers can iterate without recompilation
 
 4. **Extensible GUI System**
-   - Abstract base classes for menus (AbstractOBSGui)
+   - Abstract base classes for menus (ObsGui)
    - Menu instances in `menus/instances/` follow a consistent structure
 
 ### Build & Deployment
 
-```bash
-# Compile (from project root)
-javac -cp "lib/paper-1.21.8.jar:lib/spigot-api-1.21.8-R0.1-SNAPSHOT-shaded.jar" -d bin $(find src -name '*.java')
-
-# Deploy
-cp bin/com/ouroboros/Ouroboros.jar ~/minecraft/plugins/
-```
+Please see our License for handling rights.
+Brief: Only authorized developers may have access to and handle code of this project at this time. Unauthorized replication is strictly prohibited. 
 
 ---
 
@@ -214,15 +207,9 @@ cp bin/com/ouroboros/Ouroboros.jar ~/minecraft/plugins/
 
 Players experience the three branches in this natural progression:
 
-1. **Start on Main:** Create a character, allocate stats, understand the progression loop
-2. **Transition to Echoes:** Defeat mobs, receive procedural equipment, discover ability synergies
-3. **Branch to LoL (Optional):** Roll a mage alt, experience a completely different playstyle
-
-Server admins can:
-- Run only **Main** for a pure MMO stat-based experience
-- Run **Main + Echoes** for a loot-driven combat focus
-- Run **Main + LoL** for magic-only progression
-- Run all three for a full, complex MMO
+1. **Start on Main:** Join the server, begin playing, understand the progression loop, and begin crafting as normal
+2. **Engage in Echoe Content:** Defeat mobs, receive procedural equipment, discover ability synergies
+3. **Branch to LoL (Optional):** Craft the training wand to begin. Mobs may drop spells and other resources necessary for wand crafting and spell registration
 
 ---
 
@@ -232,13 +219,13 @@ Server admins can:
 Every system is designed to stand alone or integrate seamlessly. The stat system doesn't know about Echoes; Echoes don't require spells; spells respect the core event framework. This means:
 - A bug fix on Main doesn't require retesting Echoes
 - A new ability type can be added in parallel
-- Server admins can choose their complexity level
+- Server admins can choose their serveillance level and command access rights
 
 **Balance Through Configuration:**
 Hard-coded values are avoided where possible. The `echo_config.yml` exemplifies this: rarity bands, material stats, binding modifiers, and armor ranges are all tunable. This extends design iteration cycles and empowers server customization.
 
 **Infinite Variety:**
-Procedural generation (Echoes) combined with modular progression (stats) and branching playstyles (melee vs. magic) ensures players always encounter fresh challenges. A Rarity 5 Netherite Armament with PhotonCannon + Lifesteal is mechanically different from a Rarity 3 Stone Dagger with Crit aura.
+Procedural generation (Echoes) combined with modular progression (stats) and branching playstyles (melee vs. magic) ensures players always encounter fresh challenges -- alongside other opportunities for randomness including mob outbreaks for easy lower-level XP farming and spell/resource collection. A Rarity 5 Netherite Armament with Serrated Blade + Lifesteal is mechanically different from a Rarity 3 Stone Dagger with Crit aura in both power brackets and effects/mechanics.
 
 ---
 
@@ -246,15 +233,15 @@ Procedural generation (Echoes) combined with modular progression (stats) and bra
 
 - **Instanced Dungeons:** Procedural dungeons with Echo boss drops
 - **PvP Arena:** Stat-balanced combat zones
-- **Crafting & Enchanting:** Player-driven item modification
+- **Crafting & Enchanting:** Player-driven item modification (e.g. of echoes, armor trims, etc)
 - **Guilds & Territory Control:** Faction systems
-- **Seasonal Content:** Time-limited challenges and exclusive Echoes
+- **Seasonal Content:** Time-limited challenges and exclusive Echoes (e.g. Exclusive Echoes granted as rewards, limited time Catalysts, etc)
 
 ---
 
 ## Contributing
 
-This is a solo project by **PerceusAdalian**, built to showcase advanced Minecraft plugin architecture. While primarily for portfolio purposes, the codebase demonstrates:
+This is a solo project by **PerceusAdalian** and select developers, built to showcase advanced Minecraft plugin architecture. While primarily for portfolio purposes, the codebase demonstrates:
 - Professional Java patterns and modularity
 - Configuration-driven game balance
 - Event-driven architecture
@@ -268,5 +255,5 @@ For questions or discussion, reach out on GitHub issues.
 **Project Status:** Active Development 
 **Target Release Window:** 2026-2027
 **Language:** Java (100%)  
-**ReadMe Last Updated:** July 5, 2026  
+**ReadMe Last Updated:** July 7, 2026  
 **License:** See LICENSE file
