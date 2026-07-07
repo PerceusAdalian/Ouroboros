@@ -1,6 +1,7 @@
 package com.ouroboros.mobs;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,6 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eol.echoes.EchoManager;
+import com.eol.echoes.instances.AbstractEOL;
+import com.eol.echoes.instances.EOLRegistry;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
 import com.eol.enums.MateriaState;
@@ -227,17 +230,47 @@ public class MobDeathEvent implements Listener
 			    }
 			    
 			    // Catalyst Drops
-			    if (Chance.of(Math.min(5 + chanceBonus, 100)))
+			    double catalystDropChance = Math.min(10 + chanceBonus, 100);
+			    if (Chance.of(catalystDropChance))
 			    {
-			    	for (Materia materia : Materia.materia_registry.values().stream().filter(m -> m.getMateriaType() == MateriaType.CATALYST).collect(Collectors.toList()))
-			    	{
-			    		if (materia.getRarity().getRarity() > Rarity.getRarityForMobLevel(level)) continue;
-			    		if (currentCatalystDrops >= catalystDrops) break;
-			    		
-			    		ItemStack catalystStack = materia.getAsItemStack(MateriaState.CATALYST);
-			    		if (catalystStack != null) e.getDrops().add(catalystStack);
-			    		currentCatalystDrops++;
-			    	}
+			        int maxRarity = Rarity.getRarityForMobLevel(level);
+			        ElementType mobElement = EntityCategories.parseElementType(e.getEntity().getType());
+			        boolean specialCatalyst = Chance.of(25); 
+
+			        List<Materia> candidates = Materia.materia_registry.values().stream()
+			            .filter(m -> m.getMateriaType() == MateriaType.CATALYST)
+			            .filter(m -> m.getRarity().getRarity() <= maxRarity)
+			            .filter(m -> m.shouldDrop())
+			            .filter(m -> 
+			            {
+			                boolean isSpecial = EOLRegistry.isSpecialCatalyst(m.getAsItemStack(MateriaState.CATALYST));
+			                if (!specialCatalyst) return !isSpecial;
+
+			                if (!isSpecial) return false;
+			                AbstractEOL eol = EOLRegistry.resolveFromCatalyst(m);
+			                return eol != null && eol.getElementType() == mobElement;
+			            })
+			            .collect(Collectors.toList());
+
+			        if (candidates.isEmpty() && specialCatalyst)
+			        {
+			            candidates = Materia.materia_registry.values().stream()
+			                .filter(m -> m.getMateriaType() == MateriaType.CATALYST)
+			                .filter(m -> m.getRarity().getRarity() <= maxRarity)
+			                .filter(m -> !EOLRegistry.isSpecialCatalyst(m.getAsItemStack(MateriaState.CATALYST)))
+			                .collect(Collectors.toList());
+			        }
+
+			        while (currentCatalystDrops < catalystDrops && !candidates.isEmpty())
+			        {
+			            Materia chosen = candidates.get(ThreadLocalRandom.current().nextInt(candidates.size()));
+			            ItemStack catalystStack = chosen.getAsItemStack(MateriaState.CATALYST);
+			            if (catalystStack != null)
+			            {
+			                e.getDrops().add(catalystStack);
+			                currentCatalystDrops++;
+			            }
+			        }
 			    }
 			    
 			    // Clear recently dropped maps after 30 seconds

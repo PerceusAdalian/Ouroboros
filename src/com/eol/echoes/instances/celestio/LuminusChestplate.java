@@ -13,6 +13,7 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -26,6 +27,7 @@ public class LuminusChestplate extends AbstractEOLArmor
 				EOLRecipe.of(MateriaType.GOLD, MateriaType.PELT), 
 				new ArmorData(35, 0.08, 25, 0.1, 1000, 1000), 
 				EchoForm.CHESTPLATE, 
+				ElementType.CELESTIO,
 				buildModifiers(), 
 				true, 
 				null);

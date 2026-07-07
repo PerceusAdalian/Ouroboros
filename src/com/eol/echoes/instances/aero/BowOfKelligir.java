@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -28,6 +29,7 @@ public class BowOfKelligir extends AbstractEOLWeapon
 				EOLRecipe.of(MateriaType.BOW, MateriaType.STRING, MateriaType.AERO), 
 				EchoForm.BOW, 
 				ElementiumSlotType.AERO, 
+				ElementType.AERO,
 				buildModifiers(), 
 				new EchoData(50, 4.5, .15, 5, 1000, 1000),
 				new KelligirAeroMastery().getInternalName(), 

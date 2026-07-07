@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.Symbols;
@@ -29,6 +30,7 @@ public class Celestia extends AbstractEOLWeapon
 				new EOLRecipe(MateriaType.BOW, MateriaType.STRING, MateriaType.CELESTIO), 
 				EchoForm.BOW, 
 				ElementiumSlotType.CELESTIO, 
+				ElementType.CELESTIO,
 				buildModifiers(), 
 				new EchoData(65, 5.0, .20, 2.5, 1000, 1000),
 				new LuminasRadiance().getInternalName(), 

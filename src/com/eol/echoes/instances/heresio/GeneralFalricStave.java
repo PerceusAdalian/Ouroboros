@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -27,7 +28,8 @@ public class GeneralFalricStave extends AbstractEOLWeapon
 				"general_falric_sword", false, 
 				new EOLRecipe(MateriaType.NETHERITE, MateriaType.STRING, MateriaType.HERESIO), 
 				EchoForm.SWORD, 
-				ElementiumSlotType.HERESIO, 
+				ElementiumSlotType.HERESIO,
+				ElementType.HERESIO,
 				buildModifiers(),
 				new EchoData(95, 4, .35, 3.5, 3500, 3500),
 				new BloodFolliedBlade().getInternalName(),

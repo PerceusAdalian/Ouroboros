@@ -14,6 +14,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -26,7 +27,8 @@ public class SwordOfTheElements extends AbstractEOLWeapon
 				"sword_of_the_elements", true,
 				EOLRecipe.of(MateriaType.IRON, MateriaType.PELT, null), 
 				EchoForm.SWORD, 
-				ElementiumSlotType.MODULO, 
+				ElementiumSlotType.MODULO,
+				ElementType.ARCANO,
 				buildModifiers(), 
 				new EchoData(50, 4.0, .25, 2.5, 750, 750),
 				null,

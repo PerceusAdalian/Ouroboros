@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -28,6 +29,7 @@ public class LuminusBroadsword extends AbstractEOLWeapon
 				new EOLRecipe(MateriaType.GOLD, MateriaType.PELT, MateriaType.CELESTIO), 
 				EchoForm.SWORD, 
 				ElementiumSlotType.CELESTIO, 
+				ElementType.CELESTIO,
 				buildModifiers(), 
 				new EchoData(35, 2.5, .50, 3, 1000, 1000),
 				new LuminusRadiance().getInternalName(), 

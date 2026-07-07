@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -27,7 +28,8 @@ public class HammerOfNidus extends AbstractEOLWeapon
 				"hammer_of_nidus", true,
 				new EOLRecipe(MateriaType.HAMMER, MateriaType.LEATHER, MateriaType.GEO), 
 				EchoForm.HAMMER, 
-				ElementiumSlotType.GEO, 
+				ElementiumSlotType.GEO,
+				ElementType.GEO,
 				buildModifiers(), 
 				new EchoData(200, 2.5, 0, 1.5, 2000, 2000),
 				new NidusPreservation().getInternalName(), 

@@ -11,6 +11,7 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
@@ -38,6 +39,7 @@ public abstract class AbstractEOL
     private final EOLRecipe recipe;
     private final EchoForm form;
     private final ElementiumSlotType slotType;
+    private final ElementType eType;
     private final List<Modifier> modifiers;
     private final String lockedAbilityKey;
     private final String[] description;
@@ -52,6 +54,7 @@ public abstract class AbstractEOL
             EOLRecipe recipe,
             EchoForm form,
             ElementiumSlotType slotType,
+            ElementType eType,
             List<Modifier> modifiers,
             @Nullable String lockedAbilityKey,
             @Nullable String... description)
@@ -62,6 +65,7 @@ public abstract class AbstractEOL
         this.recipe              = recipe;
         this.form                = form;
         this.slotType            = slotType;
+        this.eType 				 = eType;
         this.modifiers           = List.copyOf(modifiers);
         this.lockedAbilityKey    = lockedAbilityKey;
         this.description         = description;
@@ -92,6 +96,7 @@ public abstract class AbstractEOL
     public EOLRecipe getRecipe()            { return recipe; }
     public EchoForm getForm()               { return form; }
     public ElementiumSlotType getSlotType() { return slotType; }
+    public ElementType getElementType()     { return eType; }
     public List<Modifier> getModifiers()    { return modifiers; }
     public String getLockedAbilityKey()     { return lockedAbilityKey; }
     public boolean hasLockedAbility()       { return lockedAbilityKey != null && !lockedAbilityKey.isBlank(); }

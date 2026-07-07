@@ -28,6 +28,7 @@ import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.materia.Materia;
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
@@ -43,13 +44,14 @@ public abstract class AbstractEOLWeapon extends AbstractEOL
             EOLRecipe recipe,
             EchoForm form,
             ElementiumSlotType slotType,
+            ElementType eType,
             List<Modifier> modifiers,
             EchoData echoData,
             @Nullable String lockedAbilityKey,
             @Nullable String... description)
     {
         super(displayName, internalName, isIntegrityArmament,
-              recipe, form, slotType, modifiers, lockedAbilityKey, description);
+              recipe, form, slotType, eType, modifiers, lockedAbilityKey, description);
         this.echoData = echoData;
     }
 

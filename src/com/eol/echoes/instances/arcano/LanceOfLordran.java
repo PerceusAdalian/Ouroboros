@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -28,6 +29,7 @@ public class LanceOfLordran extends AbstractEOLWeapon
 				new EOLRecipe(MateriaType.IRON, MateriaType.PELT, null), 
 				EchoForm.POLEARM, 
 				ElementiumSlotType.MODULO, 
+				ElementType.ARCANO,
 				buildModifiers(),
 				new EchoData(0, 4.5, .40, 1.5, 1500, 1500),
 				new ArcaneOrder().getInternalName(),

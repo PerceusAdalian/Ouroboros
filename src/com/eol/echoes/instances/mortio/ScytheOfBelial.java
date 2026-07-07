@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -28,6 +29,7 @@ public class ScytheOfBelial extends AbstractEOLWeapon
 				new EOLRecipe(MateriaType.NETHERITE, MateriaType.PELT, MateriaType.MORTIO), 
 				EchoForm.SCYTHE, 
 				ElementiumSlotType.MORTIO, 
+				ElementType.MORTIO,
 				buildModifiers(), 
 				new EchoData(85, 5, .40, 2.5, 2000, 2000),
 				new MarkedForDeath().getInternalName(), 

@@ -34,6 +34,7 @@ import com.ouroboros.Ouroboros;
 import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.utils.Nullable;
+import com.ouroboros.utils.NumberUtils;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.PrintUtils;
 import com.ouroboros.utils.entityeffects.AeroEffects;
@@ -569,7 +570,7 @@ public class MobData
 			MobNameplate.update((LivingEntity) entity);
 			ObsParticles.drawWisps(entity.getLocation(), entity.getWidth(), entity.getHeight(), 5, Particle.WAX_ON, null);
 			save();
-		}, 400);
+		}, (int) NumberUtils.lerp(5, 30, getLevel(), 1, 100) * 20);
 		save();
 	}
 	

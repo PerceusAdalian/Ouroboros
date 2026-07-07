@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -27,7 +28,8 @@ public class BowOfAgni extends AbstractEOLWeapon
 				"bow_of_agni", true, 
 				new EOLRecipe(MateriaType.BOW, MateriaType.STRING, MateriaType.INFERNO), 
 				EchoForm.BOW, 
-				ElementiumSlotType.INFERNO, 
+				ElementiumSlotType.INFERNO,
+				ElementType.INFERNO,
 				buildModifiers(),
 				new EchoData(50, 5, .30, 2.5, 1250, 1250),
 				new LanceFlammes().getInternalName(),
@@ -41,7 +43,6 @@ public class BowOfAgni extends AbstractEOLWeapon
     		new ActiveEchoModifier(ModifierCondition.HOTBIOMES, CombatStat.ATTACK, .90, true, false),
     		new ActiveEchoModifier(ModifierCondition.HOTBIOMES, CombatStat.CRIT_RATE, 0.45, true, false),
     		new ActiveEchoModifier(ModifierCondition.HOTBIOMES, CombatStat.CRIT_MODIFIER, 1.5, false, false),
-    		new ActiveEchoModifier(ModifierCondition.COLDBIOMES, CombatStat.ATTACK, -.75, true, true),
             new PassiveModifier(ModifierCondition.DURING_DAY, PassiveEchoEffect.BURNING, 0.35),
             new PassiveModifier(ModifierCondition.HOTBIOMES, PassiveEchoEffect.INFINITY, 1));
     }

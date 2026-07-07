@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -27,7 +28,8 @@ public class AxeOfBjorn extends AbstractEOLWeapon
 				"axe_of_bjorn", true, 
 				new EOLRecipe(MateriaType.DIAMOND, MateriaType.LEATHER, MateriaType.GLACIO), 
 				EchoForm.HATCHET, 
-				ElementiumSlotType.GLACIO, 
+				ElementiumSlotType.GLACIO,
+				ElementType.GLACIO,
 				buildModifiers(),
 				new EchoData(75, 2.5, .40, 2.5, 3000, 3000), 
 				new BjornsGlaciate().getInternalName(), 

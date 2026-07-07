@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -27,7 +28,8 @@ public class Bow97 extends AbstractEOLWeapon
 				"bow_97", true, 
 				new EOLRecipe(MateriaType.BOW, MateriaType.STRING, MateriaType.COSMO), 
 				EchoForm.BOW, 
-				ElementiumSlotType.COSMO, 
+				ElementiumSlotType.COSMO,
+				ElementType.COSMO,
 				buildModifiers(),
 				new EchoData(100, 5.0, .45, 3.0, 2000, 2000),
 				new SpatialDistortion().getInternalName(),

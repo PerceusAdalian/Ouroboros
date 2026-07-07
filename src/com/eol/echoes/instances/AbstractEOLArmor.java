@@ -22,6 +22,7 @@ import com.eol.enums.EchoForm;
 import com.eol.enums.EchoMaterial;
 import com.eol.enums.ElementiumSlotType;
 import com.eol.materia.Materia;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
@@ -36,12 +37,12 @@ public abstract class AbstractEOLArmor extends AbstractEOL
             EOLRecipe recipe,
             ArmorData armorData,
             EchoForm form,
+            ElementType eType,
             List<Modifier> modifiers,
             boolean isIntegrityArmament,
             @Nullable String... description)
     {
-        super(displayName, internalName, isIntegrityArmament, recipe, form, 
-        		null, modifiers, null, description);
+        super(displayName, internalName, isIntegrityArmament, recipe, form, null, eType, modifiers, null, description);
         this.armorData = armorData;
     }
 

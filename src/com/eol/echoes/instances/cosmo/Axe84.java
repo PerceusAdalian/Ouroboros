@@ -15,6 +15,7 @@ import com.eol.enums.ElementiumSlotType;
 import com.eol.enums.MateriaType;
 import com.eol.enums.ModifierCondition;
 import com.eol.enums.PassiveEchoEffect;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
 import com.ouroboros.utils.PrintUtils;
 
@@ -27,7 +28,8 @@ public class Axe84 extends AbstractEOLWeapon
 				"axe_84", true, 
 				new EOLRecipe(MateriaType.NETHERITE, MateriaType.STRING, MateriaType.COSMO), 
 				EchoForm.HATCHET, 
-				ElementiumSlotType.COSMO, 
+				ElementiumSlotType.COSMO,
+				ElementType.COSMO,
 				buildModifiers(),
 				new EchoData(100, 4, .45, 3, 4500, 4500),
 				new Annihilate().getInternalName(),

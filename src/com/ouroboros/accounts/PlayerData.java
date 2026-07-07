@@ -297,7 +297,7 @@ public class PlayerData
 			PrintUtils.PrintToActionBar(playerRef, "&6"+Symbols.ARMOR+" &a&oRestored&r&f!");
 			PlayerHud.update(playerRef);
 			save();
-		}, 300);
+		}, 200);
 		save();
 	}
 	
