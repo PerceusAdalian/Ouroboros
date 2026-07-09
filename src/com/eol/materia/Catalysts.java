@@ -19,6 +19,16 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
+import com.eol.echoes.instances.heresio.LegionaireBattleaxe;
+import com.eol.echoes.instances.heresio.LegionaireClub;
+import com.eol.echoes.instances.heresio.LegionaireCrossbow;
+import com.eol.echoes.instances.heresio.LegionaireCuirass;
+import com.eol.echoes.instances.heresio.LegionaireCutlass;
+import com.eol.echoes.instances.heresio.LegionaireGreaves;
+import com.eol.echoes.instances.heresio.LegionaireHelm;
+import com.eol.echoes.instances.heresio.LegionaireLongbow;
+import com.eol.echoes.instances.heresio.LegionairePike;
+import com.eol.echoes.instances.heresio.LegionaireSabatons;
 import com.eol.echoes.instances.inferno.BowOfAgni;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
@@ -133,7 +143,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.CELESTIO)+"&oYou were so patient teaching me the prayers of &lCelestian Magik&r"+PrintUtils.color(ObsColors.CELESTIO)+"&e&o,",
 				PrintUtils.color(ObsColors.CELESTIO)+"&othe same magic you devoted yourself to until the very end.",
 				PrintUtils.color(ObsColors.CELESTIO)+"&oI carry these memories like a forge carries heat. I miss you, sister.."), 
-				new LuminusBroadsword().getInternalName(),
+				List.of(new LuminusBroadsword().getInternalName()),
 				List.of(new LuminusHelmet().getInternalName(), new LuminusChestplate().getInternalName(), new LuminusLeggings().getInternalName(), new LuminusBoots().getInternalName()));
 
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.CELESTIO)+Symbols.EOL+"cho Of Celestia",
@@ -154,7 +164,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.CELESTIO)+"as you'd requested; the very image of &lCelestio&r"+PrintUtils.color(ObsColors.CELESTIO)+"&o.",
 				PrintUtils.color(ObsColors.CELESTIO)+"&o'I know! I'm overjoyed my Father commissioned what I'd asked..",
 				PrintUtils.color(ObsColors.CELESTIO)+"it makes all of this so much more worth it, don't you think?'",
-				PrintUtils.color(ObsColors.CELESTIO)+"&o'They ought know I am but a servant in light of this.. I care for them all deeply.'"), new Celestia().getInternalName());
+				PrintUtils.color(ObsColors.CELESTIO)+"&o'They ought know I am but a servant in light of this.. I care for them all deeply.'"), List.of(new Celestia().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.GEO)+Symbols.EOL+"cho Of Nidus",
 				"echo_of_nidus",
@@ -169,7 +179,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.GEO)+"&oHis icon, the "+PrintUtils.color(ObsColors.GEO)+"&l&nHammer&r"+PrintUtils.color(ObsColors.GEO)+"&o, speaks to his doctrine of preservation:",
 				PrintUtils.color(ObsColors.GEO)+"&oTo shape the world without breaking it, situated on the discipline of Earth Magiks.",
 				PrintUtils.color(ObsColors.GEO)+"&oDevotees laid "+PrintUtils.color(ObsColors.GEO)+"&l&nLeather&r"+PrintUtils.color(ObsColors.GEO)+"&o at his shrine, believing the offering would earn",
-				PrintUtils.color(ObsColors.GEO)+"favor from Father Nature himself."), new HammerOfNidus().getInternalName());
+				PrintUtils.color(ObsColors.GEO)+"favor from Father Nature himself."), List.of(new HammerOfNidus().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.COSMO)+"System Log 14",
 				"echo_of_sword14",
@@ -185,7 +195,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.COSMO)+"&o&lCosmo"+PrintUtils.color(ObsColors.COSMO)+" &oelement flagged for injection -- scheduled post-reset.",
 				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lSword&r"+PrintUtils.color(ObsColors.COSMO)+"&o. Materia: &lNetherite"+PrintUtils.color(ObsColors.COSMO)+".",
 				PrintUtils.color(ObsColors.COSMO)+"&oAuxiliary binding: &lString"+PrintUtils.color(ObsColors.COSMO)+"&o. Combat efficacy expected to normalize.",
-				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into echoic object. Awaiting next confirmed cycle.."), new Sword14().getInternalName());
+				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into echoic object. Awaiting next confirmed cycle.."), List.of(new Sword14().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.GLACIO)+Symbols.EOL+"cho Of Bjorn",
 				"echo_of_bjorn",
@@ -200,7 +210,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.GLACIO)+"&oHis icon, the "+PrintUtils.color(ObsColors.GLACIO)+"&l&nOuran Diamond&r"+PrintUtils.color(ObsColors.GLACIO)+"&o, speaks to his doctrine of stillness:",
 				PrintUtils.color(ObsColors.GLACIO)+"&oTo preserve life beyond time and erosion, grounded in the discipline of the Jötnar.",
 				PrintUtils.color(ObsColors.GLACIO)+"&oDevotees offered "+PrintUtils.color(ObsColors.GLACIO)+"&l&nLeather&r"+PrintUtils.color(ObsColors.GLACIO)+"&o at his shrine, believing the act of restraint",
-				PrintUtils.color(ObsColors.GLACIO)+"&owould earn audience from the Jötunn of the Eternal Freeze."), new AxeOfBjorn().getInternalName());
+				PrintUtils.color(ObsColors.GLACIO)+"&owould earn audience from the Jötunn of the Eternal Freeze."), List.of(new AxeOfBjorn().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.HERESIO)+Symbols.EOL+"cho Of General Falric",
 				"echo_of_general_falric",
@@ -213,7 +223,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.HERESIO)+"&oRight-hand to "+PrintUtils.color(ObsColors.MORTIO)+"&lSithis&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and accreditor",
 				PrintUtils.color(ObsColors.HERESIO)+"of &lHeresian Magik&r"+PrintUtils.color(ObsColors.HERESIO)+"&o for over 2,000 years. Of unknown origin,",
 				PrintUtils.color(ObsColors.HERESIO)+"&oFalric favored &lNetherite&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and &lString&r"+PrintUtils.color(ObsColors.HERESIO)+"&o bound weaponry.",
-				PrintUtils.color(ObsColors.HERESIO)+"&oMany heard of him however few who faced him lived to tell the tale."), new GeneralFalricStave().getInternalName());
+				PrintUtils.color(ObsColors.HERESIO)+"&oMany heard of him however few who faced him lived to tell the tale."), List.of(new GeneralFalricStave().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.COSMO)+"System Log 84",
 				"echo_of_axe84",
@@ -231,7 +241,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.COSMO)+"&o&lCosmo"+PrintUtils.color(ObsColors.COSMO)+" &oelement flagged for emergency injection - dropping in now.",
 				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lAxe&r"+PrintUtils.color(ObsColors.COSMO)+"&o. Materia: &lNetherite"+PrintUtils.color(ObsColors.COSMO)+". "+PrintUtils.color(ObsColors.COSMO)+"&oAuxiliary binding: &lString&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
 				PrintUtils.color(ObsColors.COSMO)+"&oMalware Annihilation Protocol: &lAuthorized&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
-				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into "+Symbols.EOL+"choic object. Awaiting administrative orders.."), new Axe84().getInternalName());
+				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into "+Symbols.EOL+"choic object. Awaiting administrative orders.."), List.of(new Axe84().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.AERO)+Symbols.EOL+"cho of Kelligir",
 				"echo_of_kelligir",
@@ -249,7 +259,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.AERO)+"&oa philosophy rooted in the Aero tenet: clarity of motion, clarity of mind.",
 				PrintUtils.color(ObsColors.AERO)+"&oHis &lbowstrings"+PrintUtils.color(ObsColors.AERO)+" &owere sourced exclusively from high-grade cordage,",
 				PrintUtils.color(ObsColors.AERO)+"&oand as fellow islanders regarded him with quiet reverence;",
-				PrintUtils.color(ObsColors.AERO)+"&ohis name became shorthand among them for a clean, uncontested kill."), new BowOfKelligir().getInternalName());
+				PrintUtils.color(ObsColors.AERO)+"&ohis name became shorthand among them for a clean, uncontested kill."), List.of(new BowOfKelligir().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.MORTIO)+Symbols.EOL+"cho of The Plague",
 				"echo_of_plague",
@@ -268,7 +278,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.MORTIO)+"&oSome among "+PrintUtils.color(ObsColors.CELESTIO)+"&oThe Academy"+PrintUtils.color(ObsColors.MORTIO)+" suspected "+PrintUtils.color(ObsColors.HERESIO)+"&oAnti-Light Legion"+PrintUtils.color(ObsColors.MORTIO)+" &oinvolvement,",
 				PrintUtils.color(ObsColors.MORTIO)+"&othough this is merely speculative, no suspect was actually found and apprehended.",
 				PrintUtils.color(ObsColors.MORTIO)+"&o— Addendum: Certain accounts describe a &lCrossbow "+PrintUtils.color(ObsColors.MORTIO)+"&oof unusual construction,",
-				PrintUtils.color(ObsColors.MORTIO)+"&oits &lstring"+PrintUtils.color(ObsColors.MORTIO)+" &osewn in a manner consistent with &lMortian "+PrintUtils.color(ObsColors.MORTIO)+"&ocraft. Origin unverified."), new Plague().getInternalName());
+				PrintUtils.color(ObsColors.MORTIO)+"&oits &lstring"+PrintUtils.color(ObsColors.MORTIO)+" &osewn in a manner consistent with &lMortian "+PrintUtils.color(ObsColors.MORTIO)+"&ocraft. Origin unverified."), List.of(new Plague().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.MORTIO)+Symbols.EOL+"cho of Belial",
 				"echo_of_belial",
@@ -285,7 +295,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.MORTIO)+"&oreceiving, processing, and shepherding the deceased to their final station.",
 				PrintUtils.color(ObsColors.MORTIO)+"&oHe operates with a &lNetherite&r"+PrintUtils.color(ObsColors.MORTIO)+"&o-forged Scythe, with &lPelt&r "+PrintUtils.color(ObsColors.MORTIO)+"&oofferings placed at his Fantasian",
 				PrintUtils.color(ObsColors.MORTIO)+"&oshrine serving as sanctioned wards against death. Of all forces within the Legion,",
-				PrintUtils.color(ObsColors.MORTIO)+"&oBelial stands as a gentle reminder of life and inevitability to all."), new ScytheOfBelial().getInternalName());
+				PrintUtils.color(ObsColors.MORTIO)+"&oBelial stands as a gentle reminder of life and inevitability to all."), List.of(new ScytheOfBelial().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.COSMO)+"System Log 97",
 				"echo_of_bow97",
@@ -303,7 +313,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.COSMO)+"&oIt still isn't aware of what it truly is - overwrote primary element as &lCosmo&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
 				PrintUtils.color(ObsColors.COSMO)+"&oForm assignment: &lBow&r"+PrintUtils.color(ObsColors.COSMO)+" &owith auxiliary binding: &lString&r"+PrintUtils.color(ObsColors.COSMO)+"&o.",
 				PrintUtils.color(ObsColors.COSMO)+"&oWith message: 'I just want to help my people, why do you keep interrupting me!'.",
-				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into supposed placeholder "+Symbols.EOL+"choic object.. Will continue to monitor."), new Bow97().getInternalName());
+				PrintUtils.color(ObsColors.COSMO)+"&oLog injected into supposed placeholder "+Symbols.EOL+"choic object.. Will continue to monitor."), List.of(new Bow97().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.ARCANO)+Symbols.EOL+"cho of Lordran",
 				"echo_of_lordran",
@@ -322,7 +332,7 @@ public class Catalysts
 				PrintUtils.color(ObsColors.ARCANO) + "&oLordran held that the soul was the wellspring of all ether — that in harnessing",
 				PrintUtils.color(ObsColors.ARCANO) + "&othe very fabric of magic, one ascends toward true wisdom. His teachings were",
 				PrintUtils.color(ObsColors.ARCANO) + "&onot meant for common minds, yet would you have stood before him, you'd find",
-				PrintUtils.color(ObsColors.ARCANO) + "&onot a tyrant, but a king who prized loyalty and integrity above all mortal powers."), new LanceOfLordran().getInternalName());
+				PrintUtils.color(ObsColors.ARCANO) + "&onot a tyrant, but a king who prized loyalty and integrity above all mortal powers."), List.of(new LanceOfLordran().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: Protocol " + PrintUtils.color(ObsColors.CELESTIO) + "&lA.I.O.N.",
 			    "echo_of_aion",
@@ -339,7 +349,7 @@ public class Catalysts
 			    PrintUtils.color(ObsColors.CELESTIO) + "&oClassification: Legacy AI Process. Origin Sector: NULL. Permission Tier: UNRESTRICTED.",
 			    PrintUtils.color(ObsColors.CELESTIO) + "&oAll clearance fields return highest authorization. No issuing authority on record.",
 			    PrintUtils.color(ObsColors.CELESTIO) + "&oThis process should not exist within the simulation boundary.",
-			    PrintUtils.color(ObsColors.CELESTIO) + "&oScheduled for termination at next reset cycle. Setting Warn: 'Do not interact'."), new Aion().getInternalName());
+			    PrintUtils.color(ObsColors.CELESTIO) + "&oScheduled for termination at next reset cycle. Setting Warn: 'Do not interact'."), List.of(new Aion().getInternalName()));
 	
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: " + PrintUtils.color(ObsColors.INFERNO)+Symbols.EOL+"cho of Agni",
 				"echo_of_agni",
@@ -358,7 +368,7 @@ public class Catalysts
 			    PrintUtils.color(ObsColors.INFERNO)+"&opreeminent master of ranged combat in the eastern reaches of Fantasia.",
 			    PrintUtils.color(ObsColors.INFERNO)+"&oAccounts of her first sighting describe a woman adorned in jewels",
 			    PrintUtils.color(ObsColors.INFERNO)+"said to originate from Feits'heilm, and many who visit her shrine",
-			    PrintUtils.color(ObsColors.INFERNO)+"&obestow such jewels hoping to divine the Queen of War."), new BowOfAgni().getInternalName());
+			    PrintUtils.color(ObsColors.INFERNO)+"&obestow such jewels hoping to divine the Queen of War."), List.of(new BowOfAgni().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: " + PrintUtils.color(ObsColors.ARCANO)+Symbols.EOL+"cho of the Elementalist Sword",
 				"echo_of_elemental_sword",
@@ -374,6 +384,34 @@ public class Catalysts
                 PrintUtils.color(ObsColors.ARCANO)+"&oThe sword was forged in &lPelt&r"+PrintUtils.color(ObsColors.ARCANO)+" &oand &lIron&r"+PrintUtils.color(ObsColors.ARCANO)+"&o.",
                 PrintUtils.color(ObsColors.ARCANO)+"&oOnly when wrought from the highest quality of such materials, they claimed,",
                 PrintUtils.color(ObsColors.ARCANO)+"&ocould it hold the power of all four natural elements, and abilities unbound.",
-                PrintUtils.color(ObsColors.ARCANO)+"&oIf you hold this Echo, maybe you, too, can be the one to craft it.."), new SwordOfTheElements().getInternalName());
+                PrintUtils.color(ObsColors.ARCANO)+"&oIf you hold this Echo, maybe you, too, can be the one to craft it.."), List.of(new SwordOfTheElements().getInternalName()));
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+PrintUtils.color(ObsColors.HERESIO)+Symbols.EOL+"cho of a Fallen Anti-Light Legionaire",
+				"echo_of_legionaire",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,"&r&7&oAn echo of the distant past. Dissonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				PrintUtils.color(ObsColors.HERESIO)+"&oKingdom of Twilight Dossier: &lAnti-Light Legionaire",
+				PrintUtils.color(ObsColors.HERESIO)+"&oSpawned from the twilight itself, they come armored",
+				PrintUtils.color(ObsColors.HERESIO)+"&oin &lNetherite&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and sewn in &lPelt&r"+PrintUtils.color(ObsColors.HERESIO)+"&o.",
+				PrintUtils.color(ObsColors.HERESIO)+"&oThey know nothing of morals or empathy — ",
+				PrintUtils.color(ObsColors.HERESIO)+"&oonly the drive to kill and consume any living thing.",
+				"",
+				PrintUtils.color(ObsColors.HERESIO)+"&oLegionaire weaponry is a marvel of engineering,",
+				PrintUtils.color(ObsColors.HERESIO)+"&otaking many forms with all sorts of binding:",
+				PrintUtils.color(ObsColors.HERESIO)+"&o&lBows&r"+PrintUtils.color(ObsColors.HERESIO)+"&o, &lCrossbows&r"+PrintUtils.color(ObsColors.HERESIO)+"&o, and &lHatchets&r"+PrintUtils.color(ObsColors.HERESIO)+"&o bound in string.",
+				PrintUtils.color(ObsColors.HERESIO)+"&o&lClubs&r"+PrintUtils.color(ObsColors.HERESIO)+"&o and &lPikes&r"+PrintUtils.color(ObsColors.HERESIO)+"&o bound in leather.",
+				PrintUtils.color(ObsColors.HERESIO)+"&o&lCutlasses&r"+PrintUtils.color(ObsColors.HERESIO)+"&o bound in pelt.",
+				"",
+				PrintUtils.color(ObsColors.HERESIO)+"&oA legionaire's arsenal is diverse and deadly,",
+				PrintUtils.color(ObsColors.HERESIO)+"&oboasting powerful &lHeresio&r"+PrintUtils.color(ObsColors.HERESIO)+"&o abilities.",
+				PrintUtils.color(ObsColors.HERESIO)+"&oCrossing even one of these agents alone,",
+				PrintUtils.color(ObsColors.HERESIO)+"&oand your death is almost certain.."), 
+				List.of(new LegionaireBattleaxe().getInternalName(), new LegionairePike().getInternalName(), new LegionaireClub().getInternalName(),
+						new LegionaireLongbow().getInternalName(), new LegionaireCrossbow().getInternalName(), new LegionaireCutlass().getInternalName()),
+				List.of(new LegionaireHelm().getInternalName(), new LegionaireCuirass().getInternalName(), 
+						new LegionaireGreaves().getInternalName(), new LegionaireSabatons().getInternalName()));
 	}
 }

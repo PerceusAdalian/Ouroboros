@@ -10,6 +10,7 @@ import com.eol.echoes.EchoManager;
 import com.eol.echoes.abilities.AbilityCastHandler;
 import com.eol.echoes.abilities.AbilityRegistry;
 import com.eol.echoes.abilities.instances.special.ArcaneOrder;
+import com.eol.echoes.abilities.instances.special.CausticArrow;
 import com.eol.echoes.abilities.instances.special.MarkedForDeath;
 import com.eol.echoes.instances.EOLRegistry;
 import com.eol.materia.Bases;
@@ -124,6 +125,7 @@ public class Ouroboros extends JavaPlugin
 		ExtractEther.registerSpellHelper(instance);
 		MarkedForDeath.registerAbilityHelper(instance);
 		ArcaneOrder.registerAbilityHelper(instance);
+		CausticArrow.registerAbilityHelper(instance);
 		
 		MateriaCastHandler.register(instance);
 		Catalysts.load();

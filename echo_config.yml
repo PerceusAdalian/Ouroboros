@@ -220,7 +220,7 @@ armor_stats:
 
   LEATHER:
     armor_rating_min:       5
-    armor_rating_max:       10
+    armor_rating_max:       75
     block_rate_min:         0.01
     block_rate_max:         0.05
     crit_armor_rating_min:  1
@@ -232,7 +232,7 @@ armor_stats:
 
   IRON:
     armor_rating_min:       15
-    armor_rating_max:       50
+    armor_rating_max:       100
     block_rate_min:         0.01
     block_rate_max:         0.15
     crit_armor_rating_min:  5
@@ -246,34 +246,34 @@ armor_stats:
     armor_rating_min:       20
     armor_rating_max:       35
     block_rate_min:         0.05
-    block_rate_max:         0.10
-    crit_armor_rating_min:  5
-    crit_armor_rating_max:  25
+    block_rate_max:         0.20
+    crit_armor_rating_min:  50
+    crit_armor_rating_max:  100
     crit_block_rate_min:    0.10
     crit_block_rate_max:    0.25
-    durability_min:         100
-    durability_max:         250
+    durability_min:         250
+    durability_max:         500
 
   DIAMOND:
     armor_rating_min:       50
-    armor_rating_max:       100
-    block_rate_min:         0.10
-    block_rate_max:         0.25
+    armor_rating_max:       150
+    block_rate_min:         0.05
+    block_rate_max:         0.20
     crit_armor_rating_min:  10
     crit_armor_rating_max:  30
-    crit_block_rate_min:    0.10
-    crit_block_rate_max:    0.30
+    crit_block_rate_min:    0.05
+    crit_block_rate_max:    0.20
     durability_min:         450
     durability_max:         750
 
   NETHERITE:
     armor_rating_min:       75
     armor_rating_max:       200
-    block_rate_min:         0.15
-    block_rate_max:         0.35
+    block_rate_min:         0.10
+    block_rate_max:         0.20
     crit_armor_rating_min:  15
     crit_armor_rating_max:  50
-    crit_block_rate_min:    0.10
-    crit_block_rate_max:    0.45
+    crit_block_rate_min:    0.05
+    crit_block_rate_max:    0.20
     durability_min:         500
     durability_max:         1000

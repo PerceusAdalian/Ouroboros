@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -177,5 +178,23 @@ public class MortioEffects
 		
 		ObsParticles.drawMortioCastSigil(target);
 		jinxRegistry.put(target.getUniqueId(), new JinxData(registerMagnitude));
+	}
+	
+	public static Set<UUID> hasToxin = new HashSet<>();
+	public static boolean addToxin(LivingEntity target, int magnitude, int seconds)
+	{
+		UUID uuid = target.getUniqueId();
+		if (hasToxin.contains(uuid)) return false;
+		hasToxin.add(uuid);
+		
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasToxin.remove(uuid), seconds * 20);
+		ObsTimer.runWithCancel(Ouroboros.instance, c ->
+		{
+			if (target instanceof Player p) if (p.isDead() || !p.isOnline()) { c.cancel(); return; }
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.BLOCK_CRUMBLE, Material.EMERALD_BLOCK.createBlockData());
+		}, 20, seconds * 20);
+		EntityEffects.add(target, PotionEffectType.POISON, magnitude, seconds * 20, true);
+		
+		return true;
 	}
 }

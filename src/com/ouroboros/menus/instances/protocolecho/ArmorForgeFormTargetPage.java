@@ -83,8 +83,8 @@ public class ArmorForgeFormTargetPage extends ObsGui
 		});
 
 		//Exits
-		GuiButton.placeExit(37, this);
-		GuiButton.placeExit(43, this);
+		GuiButton.placeExit(10, this);
+		GuiButton.placeExit(16, this);
 		paint();
 	}
 

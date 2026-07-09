@@ -58,9 +58,14 @@ public final class EchoForge
         ItemStack catalystStack = catalyst.getAsItemStack();
         if (EOLRegistry.isSpecialCatalyst(catalystStack))
         {
-            AbstractEOL eol = EOLRegistry.resolveFromCatalyst(catalyst);
-            if (eol != null && eol.getRecipe().matches(base, binding, elementCore))
-                return eol.forge(catalyst, base, eol.isIntegrityArmament());
+            List<AbstractEOLWeapon> weaponSet = EOLRegistry.resolveWeaponSetFromCatalyst(catalyst);
+            AbstractEOLWeapon match = weaponSet.stream()
+                .filter(eol -> eol.getRecipe().matches(base, binding, elementCore))
+                .findFirst()
+                .orElse(null);
+
+            if (match != null)
+                return match.forge(catalyst, base, match.isIntegrityArmament());
         }
 
         if (base.getMateriaType() == MateriaType.LEATHER)
@@ -89,9 +94,17 @@ public final class EchoForge
 
         if (EOLRegistry.isSpecialCatalyst(markedCatalystStack))
         {
-            AbstractEOL eol = EOLRegistry.get(EOLRegistry.getEOLTarget(markedCatalystStack));
-            if (eol != null && eol.getRecipe().matches(base, binding, elementCore))
-                return eol.forge(catalyst, base, eol.isIntegrityArmament());
+            List<String> targets = EOLRegistry.getEOLTargets(markedCatalystStack);
+            AbstractEOLWeapon match = targets.stream()
+                .map(EOLRegistry::get)
+                .filter(eol -> eol instanceof AbstractEOLWeapon)
+                .map(eol -> (AbstractEOLWeapon) eol)
+                .filter(eol -> eol.getRecipe().matches(base, binding, elementCore))
+                .findFirst()
+                .orElse(null);
+
+            if (match != null)
+                return match.forge(catalyst, base, match.isIntegrityArmament());
         }
 
         return forge(catalyst, base, binding, elementCore);

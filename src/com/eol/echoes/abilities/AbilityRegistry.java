@@ -18,16 +18,21 @@ import com.eol.echoes.abilities.instances.special.Annihilate;
 import com.eol.echoes.abilities.instances.special.ArcaneOrder;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
+import com.eol.echoes.abilities.instances.special.CausticArrow;
+import com.eol.echoes.abilities.instances.special.FoulPlay;
 import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
 import com.eol.echoes.abilities.instances.special.LanceFlammes;
 import com.eol.echoes.abilities.instances.special.LuminasRadiance;
 import com.eol.echoes.abilities.instances.special.LuminusRadiance;
 import com.eol.echoes.abilities.instances.special.MarkedForDeath;
+import com.eol.echoes.abilities.instances.special.Necrosis;
 import com.eol.echoes.abilities.instances.special.NidusPreservation;
 import com.eol.echoes.abilities.instances.special.PhotonCannon;
 import com.eol.echoes.abilities.instances.special.PlaguesPrimer;
 import com.eol.echoes.abilities.instances.special.SpatialDistortion;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
+import com.eol.echoes.abilities.instances.special.SpiritBreak;
+import com.eol.echoes.abilities.instances.special.VexingMalice;
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
 import com.eol.echoes.abilities.instances.sword.IcySlash;
@@ -60,7 +65,12 @@ public class AbilityRegistry
             SpatialDistortion.class,
             ArcaneOrder.class,
             PhotonCannon.class,
-            LanceFlammes.class);
+            LanceFlammes.class,
+            Necrosis.class,
+            FoulPlay.class,
+            SpiritBreak.class,
+            VexingMalice.class,
+            CausticArrow.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

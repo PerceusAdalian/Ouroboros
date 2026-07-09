@@ -70,7 +70,7 @@ public enum ModifierCondition
 
 	        // Entity type restrictions
 	        case UNDEAD    -> target != null && EntityCategories.canAccept(target, EntityCategory.MORTIO_MOBS);
-	        case LIVING    -> target != null && !(target instanceof Player) && EntityCategories.canAccept(target, EntityCategory.CELESTIO_MOBS);
+	        case LIVING    -> target != null && ((target instanceof Player) || EntityCategories.canAccept(target, EntityCategory.CELESTIO_MOBS));
 	        case FLYING    -> target != null && (EntityCategories.canAccept(target, EntityCategory.AERO_MOBS) || player.isFlying());
 	        case GLACIAL   -> target != null && EntityCategories.canAccept(target, EntityCategory.GLACIO_MOBS);
 	        case BUGS      -> target != null && EntityCategories.canAccept(target, EntityCategory.BUGS);

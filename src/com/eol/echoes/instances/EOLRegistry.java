@@ -27,6 +27,16 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
+import com.eol.echoes.instances.heresio.LegionaireBattleaxe;
+import com.eol.echoes.instances.heresio.LegionaireClub;
+import com.eol.echoes.instances.heresio.LegionaireCrossbow;
+import com.eol.echoes.instances.heresio.LegionaireCuirass;
+import com.eol.echoes.instances.heresio.LegionaireCutlass;
+import com.eol.echoes.instances.heresio.LegionaireGreaves;
+import com.eol.echoes.instances.heresio.LegionaireHelm;
+import com.eol.echoes.instances.heresio.LegionaireLongbow;
+import com.eol.echoes.instances.heresio.LegionairePike;
+import com.eol.echoes.instances.heresio.LegionaireSabatons;
 import com.eol.echoes.instances.inferno.BowOfAgni;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
@@ -110,6 +120,17 @@ public final class EOLRegistry
         
         return stack.getItemMeta().getPersistentDataContainer().get(EOL_TARGET_KEY, PersistentDataType.STRING);
     }
+    
+    public static List<String> getEOLTargets(ItemStack stack)
+    {
+        if (!isSpecialCatalyst(stack)) return List.of();
+
+        String raw = stack.getItemMeta().getPersistentDataContainer()
+            .get(EOL_TARGET_KEY, PersistentDataType.STRING);
+        if (raw == null || raw.isBlank()) return List.of();
+
+        return Arrays.stream(raw.split(",")).toList();
+    }
 
     /**
      * Convenience: reads the EOL target from a Materia's ItemStack form.
@@ -123,6 +144,18 @@ public final class EOLRegistry
         if (target == null) return null;
         return get(target);
     }
+    
+    public static List<AbstractEOLWeapon> resolveWeaponSetFromCatalyst(Materia catalyst)
+    {
+        if (catalyst == null) return List.of();
+        ItemStack stack = catalyst.getAsItemStack(MateriaState.CATALYST);
+
+        return getEOLTargets(stack).stream()
+            .map(EOLRegistry::get)
+            .filter(eol -> eol instanceof AbstractEOLWeapon)
+            .map(eol -> (AbstractEOLWeapon) eol)
+            .toList();
+    }
 
     /**
      * Applies the EOL_TARGET_KEY to a catalyst ItemStack, marking it as a special catalyst.
@@ -133,14 +166,17 @@ public final class EOLRegistry
      *   ItemStack catalystItem = luminus.getAsItemStack(MateriaState.CATALYST);
      *   EOLRegistry.markCatalyst(catalystItem, "luminus_broadsword");
      */
-    public static ItemStack markCatalyst(ItemStack stack, String eolInternalName)
+    public static ItemStack markCatalyst(ItemStack stack, List<String> weaponTargets)
     {
         ItemMeta meta = stack.getItemMeta();
         if (meta == null) return stack;
-        
-        meta.getPersistentDataContainer().set(EOL_TARGET_KEY, PersistentDataType.STRING, eolInternalName);
+
+        meta.getPersistentDataContainer().set(
+            EOL_TARGET_KEY,
+            PersistentDataType.STRING,
+            String.join(",", weaponTargets));
         stack.setItemMeta(meta);
-        
+
         return stack;
     }
 
@@ -180,13 +216,10 @@ public final class EOLRegistry
            // Weapons
         		
            // Celestio
-           LuminusBroadsword.class,
-           Celestia.class,
-           Aion.class,
+           LuminusBroadsword.class, Celestia.class, Aion.class,
            
            // Mortio
-           Plague.class,
-           ScytheOfBelial.class,
+           Plague.class, ScytheOfBelial.class,
 
            // Inferno
            BowOfAgni.class,
@@ -201,24 +234,23 @@ public final class EOLRegistry
            HammerOfNidus.class,
 
            // Cosmo
-           Sword14.class,
-           Axe84.class,
-           Bow97.class,
+           Sword14.class, Axe84.class, Bow97.class,
            
            // Heresio
            GeneralFalricStave.class,
            
            // Arcano
-           LanceOfLordran.class,
-           SwordOfTheElements.class,
+           LanceOfLordran.class, SwordOfTheElements.class,
            
            // Armor
            
            // Set: Luminus
-           LuminusHelmet.class,
-           LuminusChestplate.class,
-           LuminusLeggings.class,
-           LuminusBoots.class
+           LuminusHelmet.class, LuminusChestplate.class, LuminusLeggings.class, LuminusBoots.class, 
+           
+           // Set: Legionaires Armorset/Weaponset
+           LegionaireHelm.class, LegionaireCuirass.class, LegionaireGreaves.class, LegionaireSabatons.class,
+           LegionaireCutlass.class, LegionairePike.class, LegionaireLongbow.class, LegionaireCrossbow.class,
+           LegionaireClub.class, LegionaireBattleaxe.class
         );
         
         for (Class<? extends AbstractEOL> clazz : itemClasses) 
