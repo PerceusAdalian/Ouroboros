@@ -28,7 +28,7 @@ public class GeminiSlash extends EchoAbility
 
 	public GeminiSlash() 
 	{
-		super("Gemini Slash", "gemini_slash_ability", Material.ECHO_SHARD, StatType.MELEE, 10, 5, 30, AbilityType.COMBAT, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+		super("Gemini Slash", "gemini_slash_ability", Material.ECHO_SHARD, StatType.MELEE, 10, 5, 30, AbilityType.OFFENSIVE, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fDeal &l35&r&c♥ "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage applying &eExposed &7(5m, 15s)","",
 				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",
 				"&r&fIf those affected are "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f-based, they instantly die.");

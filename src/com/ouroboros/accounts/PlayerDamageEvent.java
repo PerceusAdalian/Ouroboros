@@ -26,6 +26,7 @@ import com.eol.echoes.EchoManager.DurabilityOperation;
 import com.eol.echoes.ResolveEchoInteract;
 import com.eol.echoes.records.EchoManifest;
 import com.eol.enums.EchoForm;
+import com.lol.spells.instances.aero.Tailwind;
 import com.ouroboros.Ouroboros;
 import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.Rarity;
@@ -125,7 +126,7 @@ public class PlayerDamageEvent
 			            dmg *= critModifier;
 			        }
 			        
-			        EchoManager.modifyDurability(target, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
+			        EchoManager.modifyDurability(pSource, echo, EchoManager.DurabilityOperation.SUBTRACT, crit ? 2 : 1, false);
 			        
 			        if (PlayerData.getPlayer(pSource.getUniqueId()).isBreak()) dmg *= 0.5;
 			        
@@ -247,6 +248,13 @@ public class PlayerDamageEvent
         	            default                                     -> ElementType.PURE;
         	        };
 
+        	        if (cause == DamageCause.FALL && Tailwind.tailwindRegistry.contains(target.getUniqueId()))
+        	        {
+        	            Tailwind.tailwindRegistry.remove(target.getUniqueId());
+        	            e.setCancelled(true);
+        	            return;
+        	        }
+        	        
         	        dmg = e.getFinalDamage();
         	        e.setDamage(0);
 
@@ -302,7 +310,7 @@ public class PlayerDamageEvent
         	    // Night Shift: fall damage mitigation
         	    if (cause == DamageCause.FALL && MortioEffects.nightShifted.containsKey(target.getUniqueId()))
         	    	dmg = dmg * (0.1 * MortioEffects.nightShifted.get(target.getUniqueId()));
-
+        	    
         	    // --- Echo Armor Calculations ---
         	    double mitigatedDmgTotal = 0;
         	    double mitigatedCriticalDmg = 0;

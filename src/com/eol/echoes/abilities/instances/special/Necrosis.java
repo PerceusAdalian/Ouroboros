@@ -31,7 +31,7 @@ public class Necrosis extends EchoAbility
 
 	public Necrosis()
 	{
-		super("Necrosis", "necrosis", Material.NETHER_STAR, StatType.MELEE, 0, 0, 20, AbilityType.SPECIALABILITY, ElementType.HERESIO,
+		super("Necrosis", "necrosis", Material.NETHER_STAR, StatType.MELEE, 0, 0, 20, AbilityType.ULTIMATE, ElementType.HERESIO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD, 
 				"&r&fLunge towards &6"+Symbols.TARGET+" &fdealing &l65&r&c"+Symbols.HP,
 				PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage inflicting &4Toxin &bII &7(7m, 30s)","",

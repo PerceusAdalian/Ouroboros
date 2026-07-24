@@ -35,7 +35,7 @@ public class Annihilate extends EchoAbility
 
 	public Annihilate()
 	{
-		super("Annihilate", "annihilate", Material.NETHER_STAR, StatType.MELEE, 0, 0, 500, AbilityType.SPECIALABILITY, ElementType.COSMO,
+		super("Annihilate", "annihilate", Material.NETHER_STAR, StatType.MELEE, 0, 0, 500, AbilityType.ULTIMATE, ElementType.COSMO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.HATCHET,
 				"&r&3Teleport&f to &6target &dMob&f dealing "+PrintUtils.color(ObsColors.COSMO)+"&lCosmo&r&f damage equal to",
 				"&r&b&o350% &r&f&oBase Attack&r&f x &r&f&oBase Crit Modifier&r&f inflicting &3Voided &r&7(25, 10s)",

@@ -26,7 +26,7 @@ public class Flamelash extends EchoAbility
 
 	public Flamelash() 
 	{
-		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 3, 1, 10, AbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+		super("Flamelash", "flamelash", Material.BLAZE_ROD, StatType.MELEE, 3, 1, 10, AbilityType.OFFENSIVE, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fDeal &l35&r&c♥ &e&lSlash&r&f damage to &6target &dMob&f, inflicting &cBurn &7(7m, 10s)");
 	}
 

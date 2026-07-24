@@ -26,7 +26,7 @@ public class NidusPreservation extends EchoAbility
 
 	public NidusPreservation()
 	{
-		super("Nidus' Preservation", "nidus_preservation", Material.NETHER_STAR, StatType.MELEE, 0, 0, 100, AbilityType.SPECIALABILITY, ElementType.GEO, CastConditions.RIGHT_CLICK_AIR, EchoForm.HAMMER, 
+		super("Nidus' Preservation", "nidus_preservation", Material.NETHER_STAR, StatType.MELEE, 0, 0, 100, AbilityType.ULTIMATE, ElementType.GEO, CastConditions.RIGHT_CLICK_AIR, EchoForm.HAMMER, 
 				"&r&fApplies &6Guarded &bX&f and &6Barbed &bX&f to &6self&7 (1min)","",
 				"&r&6Guarded &eEffect&f: Halves incoming damage for 10 instances.",
 				"&r&6Barbed &eEffect&f: Incoming damage is redirected as "+PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f damage",

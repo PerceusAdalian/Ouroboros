@@ -7,6 +7,7 @@ public enum ElementiumSlotType
 {
 	NO_SLOT("No Slot"),
 	MODULO("&r&f&oModulo&r&f"),
+	ASTRAL(PrintUtils.color(ObsColors.ASTRAL)+"&lAstral&r&f"),
 	INFERNO(PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f"),
 	GLACIO(PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f"),
 	GEO(PrintUtils.color(ObsColors.GEO)+"&lGeo&r&f"),

@@ -548,9 +548,15 @@ public class PlayerData
 			String active = ".active";
 			String pathAlpha = switch(a.getAbilityType()) 
 			{
-				case COMBAT -> pathAlpha = "abilities.combat_ability."+a.getInternalName();
-				case SPECIALABILITY -> pathAlpha = "abilities.special_ability."+a.getInternalName();
-				case UTILITY -> pathAlpha = "abilities.utility."+a.getInternalName();
+				case OFFENSIVE -> pathAlpha = "offensive.";
+		    	case DEFENSIVE -> pathAlpha = "defensive.";
+		    	case SUPPORT -> pathAlpha = "support.";
+		    	case UTILITY -> pathAlpha = "utility.";
+		    	case CONTROL -> pathAlpha = "control.";
+		    	case BUFF -> pathAlpha = "buff.";
+		    	case DEBUFF -> pathAlpha = "debuff.";
+		    	case ULTIMATE -> pathAlpha = "ultimate.";
+		    	case SIGNATURE -> pathAlpha = "offensive.";
 			};
 			if (!config.contains(pathAlpha + registered))
 				config.set(pathAlpha + registered, false);

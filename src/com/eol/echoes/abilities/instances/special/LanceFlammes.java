@@ -31,7 +31,7 @@ public class LanceFlammes extends EchoAbility
 
 	public LanceFlammes()
 	{
-		super("Lance Flammes", "lance_flammes", Material.NETHER_STAR, StatType.RANGED, 0, 0, 10, AbilityType.SPECIALABILITY, ElementType.INFERNO,
+		super("Lance Flammes", "lance_flammes", Material.NETHER_STAR, StatType.RANGED, 0, 0, 10, AbilityType.ULTIMATE, ElementType.INFERNO,
 				CastConditions.LEFT_CLICK_AIR, EchoForm.BOW, 
 				"&r&fDeal 70&c"+Symbols.HP+PrintUtils.color(ObsColors.INFERNO)+" &lInferno&r&f damage in a &d&oconal AOE &r&7(20m)",
 				"&r&fapplying &cCharred &fand &cPrimed&f to those hit &7(30s)","",

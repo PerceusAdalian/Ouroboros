@@ -17,9 +17,15 @@ public class AbilityHandler
     {
     	String pathAlpha = switch(ability.getAbilityType()) 
     	{
-	    	case COMBAT -> pathAlpha = "combat_ability.";
+	    	case OFFENSIVE -> pathAlpha = "offensive.";
+	    	case DEFENSIVE -> pathAlpha = "defensive.";
+	    	case SUPPORT -> pathAlpha = "support.";
 	    	case UTILITY -> pathAlpha = "utility.";
-	    	case SPECIALABILITY -> pathAlpha = "special_ability.";
+	    	case CONTROL -> pathAlpha = "control.";
+	    	case BUFF -> pathAlpha = "buff.";
+	    	case DEBUFF -> pathAlpha = "debuff.";
+	    	case ULTIMATE -> pathAlpha = "ultimate.";
+	    	case SIGNATURE -> pathAlpha = "offensive.";
     	};
         return "abilities."+pathAlpha+ability.getInternalName()+s;
     }

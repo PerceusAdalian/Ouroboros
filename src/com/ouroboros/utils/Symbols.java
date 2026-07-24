@@ -11,6 +11,8 @@ public class Symbols
 	public static String BOW      = "🏹";
 	public static String SWORDS   = "⚔";
 	public static String TARGET   = "⌖";
+	public static String AOE 	  = "◎";
+	public static String CONAL    = "∀";
 	public static String MONEY    = "₪";
 	public static String DEBT     = "Ж";
 	public static String LUMINITE = "۞";
@@ -19,4 +21,5 @@ public class Symbols
 	
 	public static String INCOMING = "📥";
 	public static String OUTGOING = "📤";
+	
 }

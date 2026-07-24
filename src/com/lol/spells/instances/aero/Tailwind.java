@@ -10,12 +10,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -45,7 +40,7 @@ public class Tailwind extends Spell
 				"&r&finstance of &d&oFall Damage&r&f for &b&o10 seconds&r&f.");
 	}
 
-	private static Set<UUID> tailwindRegistry = new HashSet<>();
+	public static Set<UUID> tailwindRegistry = new HashSet<>();
 	
 	@Override
 	public int Cast(PlayerInteractEvent e)
@@ -85,23 +80,4 @@ public class Tailwind extends Spell
 			Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->tailwindRegistry.remove(p.getUniqueId()), 200);
 		}
 	}
-	
-	public static void registerSpellHelper(JavaPlugin plugin)
-	{
-		Bukkit.getPluginManager().registerEvents(new Listener() 
-		{
-			@EventHandler
-			public void onFallDamage(EntityDamageEvent e)
-			{
-				if (e.getEntity() instanceof Player p 
-						&& e.getCause() == DamageCause.FALL 
-							&& tailwindRegistry.contains(p.getUniqueId())) 
-				{
-					e.setCancelled(true);
-					tailwindRegistry.remove(p.getUniqueId());
-				}
-			}
-		}, plugin);
-	}
-
 }

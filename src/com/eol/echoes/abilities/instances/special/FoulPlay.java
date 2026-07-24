@@ -31,7 +31,7 @@ public class FoulPlay extends EchoAbility
 
 	public FoulPlay()
 	{
-		super("Foul Play", "foul_play", Material.NETHER_STAR, StatType.MELEE, 0, 0, 10, AbilityType.SPECIALABILITY, ElementType.HERESIO,
+		super("Foul Play", "foul_play", Material.NETHER_STAR, StatType.MELEE, 0, 0, 10, AbilityType.ULTIMATE, ElementType.HERESIO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.POLEARM, 
 				"&r&fLunge towards &6"+Symbols.TARGET+" &fdealing &l250%&r&b&o Base Atk",
 				"&r&fas &e&lImpale&r&f dmg, inflicting &4Toxin &bII &7(7m, 30s)","",

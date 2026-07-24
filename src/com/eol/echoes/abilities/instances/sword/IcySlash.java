@@ -31,7 +31,7 @@ public class IcySlash extends EchoAbility
 
 	public IcySlash() 
 	{
-		super("Icy Slash", "icyslash", Material.ICE, StatType.MELEE, 10, 2, 10, AbilityType.COMBAT, ElementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+		super("Icy Slash", "icyslash", Material.ICE, StatType.MELEE, 10, 2, 10, AbilityType.OFFENSIVE, ElementType.GLACIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fDeal &l45&r&c♥ "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio &r&fdmg to &6"+Symbols.TARGET+"&f, inflicting &bChill I &7(7m, 10s)","",
 				"&r&bChill &eEffect&f: &b&oSlows&r&f while inflicting a "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f DOT effect.",
 				"&r&fReapplying &bChill&f increases the &b&omagnitude&r&f, while keeping initial duration.");

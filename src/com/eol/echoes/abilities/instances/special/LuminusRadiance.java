@@ -35,7 +35,7 @@ public class LuminusRadiance extends EchoAbility
 
 	public LuminusRadiance()
 	{
-		super("Luminus' Radiance", "radiance", Material.NETHER_STAR, StatType.MELEE, 0, 0, 50, AbilityType.SPECIALABILITY, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+		super("Luminus' Radiance", "radiance", Material.NETHER_STAR, StatType.MELEE, 0, 0, 50, AbilityType.ULTIMATE, ElementType.CELESTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fApplies &e&oExposed &r&fto all nearby &dMobs&f in FOV &7(30m, 20s, &6"+Symbols.TARGET+" Limit&7: &630&7)",
 				"&r&fIf at least 10 &dMobs&f died, grant &eWard &bV &fto &6self &7(30s)","",
 				"&r&eExposed Effect&r&f: Reveals an entity's location and &6&oBreaks &r&fthem.",

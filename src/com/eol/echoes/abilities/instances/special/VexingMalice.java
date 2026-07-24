@@ -31,7 +31,7 @@ public class VexingMalice extends EchoAbility
 
 	public VexingMalice()
 	{
-		super("Vexing Malice", "vexing_malice", Material.NETHER_STAR, StatType.MELEE, 0, 0, 10, AbilityType.SPECIALABILITY, ElementType.HERESIO,
+		super("Vexing Malice", "vexing_malice", Material.NETHER_STAR, StatType.MELEE, 0, 0, 10, AbilityType.ULTIMATE, ElementType.HERESIO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.HATCHET, 
 				"&r&fLunge towards &6"+Symbols.TARGET+" &fdealing &l400%&r&b&o Base Atk",
 				"&r&fas "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f dmg, inflicting &4Curse &bIII &7(7m, 45s)","",

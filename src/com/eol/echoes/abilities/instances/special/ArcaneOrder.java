@@ -41,7 +41,7 @@ public class ArcaneOrder extends EchoAbility
 
 	public ArcaneOrder()
 	{
-		super("Arcane Order", "arcane_order", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.ARCANO,
+		super("Arcane Order", "arcane_order", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.ULTIMATE, ElementType.ARCANO,
 				CastConditions.MIXED, EchoForm.POLEARM, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.ARCANO)+"Arcane Order&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oNoble Discernment&r&f --",

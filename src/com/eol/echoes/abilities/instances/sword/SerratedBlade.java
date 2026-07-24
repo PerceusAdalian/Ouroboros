@@ -31,7 +31,7 @@ public class SerratedBlade extends EchoAbility
 
 	public SerratedBlade() 
 	{
-		super("Serrated Blade", "serrated_blade", Material.NETHERITE_SWORD, StatType.MELEE, 15, 5, 10, AbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+		super("Serrated Blade", "serrated_blade", Material.NETHERITE_SWORD, StatType.MELEE, 15, 5, 10, AbilityType.OFFENSIVE, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fDeal &l50&r&c♥ "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio &r&fdmg to &6"+Symbols.TARGET+"&f, inflicting &4Dread &7(7m, 10s)","",
 				"&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 				"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",

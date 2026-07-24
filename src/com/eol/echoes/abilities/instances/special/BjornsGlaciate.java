@@ -33,7 +33,7 @@ public class BjornsGlaciate extends EchoAbility
 
 	public BjornsGlaciate() 
 	{
-		super("Bjorn's Glaciate", "bjorn_glaciate", Material.NETHER_STAR, StatType.MELEE, 0, 0, 50, AbilityType.SPECIALABILITY, ElementType.GLACIO,
+		super("Bjorn's Glaciate", "bjorn_glaciate", Material.NETHER_STAR, StatType.MELEE, 0, 0, 50, AbilityType.ULTIMATE, ElementType.GLACIO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.HATCHET, 
 				"&r&fIn &d&oCold Biomes&r&f, reduce &b&oDurability Cost&r&f to &l10&r&f.",
 				"&r&fInflict &b&o120%&r&f of &oBase Attack&r&f as "+PrintUtils.color(ObsColors.GLACIO)+"&lGlacio&r&f damage",

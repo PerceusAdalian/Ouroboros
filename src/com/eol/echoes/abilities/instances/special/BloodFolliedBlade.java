@@ -34,7 +34,7 @@ public class BloodFolliedBlade extends EchoAbility
 {
 	public BloodFolliedBlade() 
 	{
-		super("Blood-Follied Blade", "blood_follied_blade", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.HERESIO,
+		super("Blood-Follied Blade", "blood_follied_blade", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.ULTIMATE, ElementType.HERESIO,
 				CastConditions.MIXED, EchoForm.SWORD, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&2Blood-Follied Blade&f: &2&oFoul Play&r&f -- Deal 25&c"+Symbols.HP+" &fto &6Self&f",

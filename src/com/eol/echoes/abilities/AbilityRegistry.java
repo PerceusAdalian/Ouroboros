@@ -32,7 +32,9 @@ import com.eol.echoes.abilities.instances.special.PlaguesPrimer;
 import com.eol.echoes.abilities.instances.special.SpatialDistortion;
 import com.eol.echoes.abilities.instances.special.SpatialRend;
 import com.eol.echoes.abilities.instances.special.SpiritBreak;
+import com.eol.echoes.abilities.instances.special.Supernova;
 import com.eol.echoes.abilities.instances.special.VexingMalice;
+import com.eol.echoes.abilities.instances.sword.Bolster;
 import com.eol.echoes.abilities.instances.sword.Flamelash;
 import com.eol.echoes.abilities.instances.sword.GeminiSlash;
 import com.eol.echoes.abilities.instances.sword.IcySlash;
@@ -49,7 +51,7 @@ public class AbilityRegistry
             ImbueFire.class, Flamelash.class, GeminiSlash.class, 
             Cleave.class, HeavySwing.class, Lunge.class, HeavyChop.class,
             Riptide.class, Bulwark.class, Launch.class, QuickLoad.class,
-            IcySlash.class, SerratedBlade.class,
+            IcySlash.class, SerratedBlade.class, Bolster.class,
             
             // Special
             LuminusRadiance.class,
@@ -70,7 +72,7 @@ public class AbilityRegistry
             FoulPlay.class,
             SpiritBreak.class,
             VexingMalice.class,
-            CausticArrow.class);
+            CausticArrow.class, Supernova.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

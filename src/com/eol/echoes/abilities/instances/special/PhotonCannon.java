@@ -38,7 +38,7 @@ public class PhotonCannon extends EchoAbility
 
 	public PhotonCannon()
 	{
-		super("Photon Cannon", "photon_cannon", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.CELESTIO,
+		super("Photon Cannon", "photon_cannon", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.ULTIMATE, ElementType.CELESTIO,
 				CastConditions.MIXED, EchoForm.POLEARM, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				"&r&ePhoton Cannon&f: &e&oCharge&r&f -- &cRemove &f5 &b&oDurability",

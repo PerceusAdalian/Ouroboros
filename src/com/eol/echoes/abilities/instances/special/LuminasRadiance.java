@@ -33,7 +33,7 @@ public class LuminasRadiance extends EchoAbility
 
 	public LuminasRadiance()
 	{
-		super("Lumina's Radiance", "luminas_radiance", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.CELESTIO,
+		super("Lumina's Radiance", "luminas_radiance", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.ULTIMATE, ElementType.CELESTIO,
 				CastConditions.MIXED, EchoForm.BOW, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.LEFT_CLICK_AIR),
 				"&r&eLumina's Radiance&f: &e&oHoly&r&f -- &cRemove &f15 &b&oDurability",

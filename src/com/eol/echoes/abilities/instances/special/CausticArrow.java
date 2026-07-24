@@ -36,7 +36,7 @@ public class CausticArrow extends EchoAbility
 
 	public CausticArrow()
 	{
-		super("Caustic Arrow", "caustic_arrow", Material.NETHER_STAR, StatType.RANGED, 0, 0, 10, AbilityType.SPECIALABILITY, ElementType.HERESIO,
+		super("Caustic Arrow", "caustic_arrow", Material.NETHER_STAR, StatType.RANGED, 0, 0, 10, AbilityType.ULTIMATE, ElementType.HERESIO,
 				CastConditions.LEFT_CLICK_AIR, EchoForm.BOW, 
 				"&r&fLaunch a "+PrintUtils.color(ObsColors.CORROSIVE)+"&oCorrosive&r&f arrow that applies &4Toxin &bII &7(7m, 30s)","",
 				"&r&4Toxin &eEffect&f: Affected are "+PrintUtils.color(ObsColors.CORROSIVE)+"&oPoisoned&r&f in severity",

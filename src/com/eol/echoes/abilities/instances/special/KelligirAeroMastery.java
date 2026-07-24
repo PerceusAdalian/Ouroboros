@@ -26,7 +26,7 @@ public class KelligirAeroMastery extends EchoAbility
 
 	public KelligirAeroMastery()
 	{
-		super("Aero Mastery", "kelligir_wind_shot", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.AERO,
+		super("Aero Mastery", "kelligir_wind_shot", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.ULTIMATE, ElementType.AERO,
 				CastConditions.MIXED, EchoForm.BOW,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.LEFT_CLICK_AIR),
 				"&r&dAero Mastery&f: &d&oWind Shot&r&f -- &cRemove &f5 &b&oDurability",

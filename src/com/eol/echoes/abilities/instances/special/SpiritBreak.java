@@ -31,7 +31,7 @@ public class SpiritBreak extends EchoAbility
 
 	public SpiritBreak()
 	{
-		super("Spirit Break", "spirit_break", Material.NETHER_STAR, StatType.MELEE, 0, 0, 10, AbilityType.SPECIALABILITY, ElementType.HERESIO,
+		super("Spirit Break", "spirit_break", Material.NETHER_STAR, StatType.MELEE, 0, 0, 10, AbilityType.ULTIMATE, ElementType.HERESIO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.HAMMER, 
 				"&r&fLunge towards &6"+Symbols.TARGET+" &fdealing &l300%&r&b&o Base Atk",
 				"&r&fas &e&lCrush&r&f dmg, inflicting &4Toxin &bIII &7(7m, 30s)","",

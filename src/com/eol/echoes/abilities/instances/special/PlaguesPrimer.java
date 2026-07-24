@@ -29,7 +29,7 @@ public class PlaguesPrimer extends EchoAbility
 
 	public PlaguesPrimer()
 	{
-		super("Plague's Corrosive Primer", "plague_corrosive_primer", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.MORTIO,
+		super("Plague's Corrosive Primer", "plague_corrosive_primer", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.ULTIMATE, ElementType.MORTIO,
 				CastConditions.MIXED, EchoForm.CROSSBOW,
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.LEFT_CLICK_AIR),
 				PrintUtils.color(ObsColors.MORTIO)+"Plague's Corrosive Primer&f: "+PrintUtils.color(ObsColors.MORTIO)+"&oQuick Load&r&f --",

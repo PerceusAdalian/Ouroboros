@@ -27,7 +27,7 @@ public class Lunge extends EchoAbility
 
 	public Lunge()
 	{
-		super("Lunge", "lunge_polearm", Material.IRON_SPEAR, StatType.MELEE, 5, 1, 15, AbilityType.COMBAT, ElementType.MODULO, CastConditions.RIGHT_CLICK_AIR, EchoForm.POLEARM,
+		super("Lunge", "lunge_polearm", Material.IRON_SPEAR, StatType.MELEE, 5, 1, 15, AbilityType.OFFENSIVE, ElementType.MODULO, CastConditions.RIGHT_CLICK_AIR, EchoForm.POLEARM,
 				"&r&fLunge at &6target &dMob&f, dealing 50&c"+Symbols.HP+" &e&lImpale&r&f damage &7(15m)");
 	}
 

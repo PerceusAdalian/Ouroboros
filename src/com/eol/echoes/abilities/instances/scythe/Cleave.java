@@ -28,7 +28,7 @@ public class Cleave extends EchoAbility
 
     public Cleave() // Check for functionality
     {
-        super("Cleave", "cleave", Material.BLACK_DYE, StatType.MELEE, 20, 10, 25, AbilityType.COMBAT, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,EchoForm.SCYTHE, 
+        super("Cleave", "cleave", Material.BLACK_DYE, StatType.MELEE, 20, 10, 25, AbilityType.OFFENSIVE, ElementType.MORTIO, CastConditions.RIGHT_CLICK_AIR,EchoForm.SCYTHE, 
                 "&r&fDeal &l30&r&c♥ "+PrintUtils.color(ObsColors.MORTIO)+"&lMortio&r&f damage inflicting &4Dread &7(7m, 15s)","",
                 "&r&4Dread &eEffect&f: Applies a debilitation that causes &b&ohunger&r&f and &b&oblindness&r&f",
 				"&r&fto those afflicted. Dread is &e&ocurable&r&f and does not stack, however",

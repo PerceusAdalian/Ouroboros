@@ -44,7 +44,7 @@ public class MarkedForDeath extends EchoAbility
 
 	public MarkedForDeath()
 	{
-		super("Marked for Death", "marked_for_death", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.MORTIO,
+		super("Marked for Death", "marked_for_death", Material.NETHER_STAR, StatType.MELEE, 0, 0, 0, AbilityType.ULTIMATE, ElementType.MORTIO,
 				CastConditions.MIXED, EchoForm.SCYTHE, 
 				"&r&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.RIGHT_CLICK_AIR),
 				PrintUtils.color(ObsColors.MORTIO)+"Marked for Death&f: "+PrintUtils.color(ObsColors.MORTIO)+"&oVex&r&f --",

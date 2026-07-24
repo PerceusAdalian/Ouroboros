@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
 import com.eol.echoes.instances.arcano.SwordOfTheElements;
+import com.eol.echoes.instances.astral.StarsweptGreatsword;
 import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
 import com.eol.echoes.instances.celestio.LuminusBoots;
@@ -25,6 +26,7 @@ import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Bow97;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
+import com.eol.echoes.instances.geo.KnightsBroadsword;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
 import com.eol.echoes.instances.heresio.LegionaireBattleaxe;
@@ -232,7 +234,8 @@ public final class EOLRegistry
            
            // Geo
            HammerOfNidus.class,
-
+           KnightsBroadsword.class,
+           
            // Cosmo
            Sword14.class, Axe84.class, Bow97.class,
            
@@ -241,6 +244,9 @@ public final class EOLRegistry
            
            // Arcano
            LanceOfLordran.class, SwordOfTheElements.class,
+           
+           // Astral
+           StarsweptGreatsword.class,
            
            // Armor
            

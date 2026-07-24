@@ -20,7 +20,7 @@ public class ImbueFire extends EchoAbility
 	public ImbueFire() 
 	{
 		super("Enchant Blade: "+PrintUtils.color(ObsColors.INFERNO)+"&lImbue Fire&r&f", "imbuefire", Material.BLAZE_POWDER, StatType.MELEE, 3, 1, 15, 
-				AbilityType.COMBAT, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
+				AbilityType.BUFF, ElementType.INFERNO, CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD,
 				"&r&fGrants "+PrintUtils.color(ObsColors.INFERNO)+"Fire Imbued&l&r&f to &6self &7(30s)","",
 				PrintUtils.color(ObsColors.INFERNO)+"Fire Imbued &r&eEffect&f: Outgoing attacks",
 				"&r&fbecome "+PrintUtils.color(ObsColors.INFERNO)+"&lInferno&r&f damage.");

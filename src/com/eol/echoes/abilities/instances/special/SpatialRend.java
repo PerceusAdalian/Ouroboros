@@ -31,7 +31,7 @@ public class SpatialRend extends EchoAbility
 
 	public SpatialRend() 
 	{
-		super("Spatial Rend", "spatial_rend", Material.NETHER_STAR, StatType.MELEE, 0, 0, 30, AbilityType.COMBAT, ElementType.COSMO,
+		super("Spatial Rend", "spatial_rend", Material.NETHER_STAR, StatType.MELEE, 0, 0, 30, AbilityType.ULTIMATE, ElementType.COSMO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.SWORD, 
 				"&r&3Teleport&r&f to &6target &dMob &fand deal 77&c"+Symbols.HP+PrintUtils.color(ObsColors.COSMO)+" &lCosmo&r&f damage &7(30m)",
 				"&r&fIf the target doesn't die, return to previous location.");

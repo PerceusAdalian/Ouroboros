@@ -25,7 +25,7 @@ public class HeavyChop extends EchoAbility
 
 	public HeavyChop()
 	{
-		super("Heavy Chop", "heavy_chop", Material.IRON_AXE, StatType.WOODCUTTING, 5, 1, 15, AbilityType.COMBAT, ElementType.MODULO,
+		super("Heavy Chop", "heavy_chop", Material.IRON_AXE, StatType.WOODCUTTING, 5, 1, 15, AbilityType.OFFENSIVE, ElementType.MODULO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.HATCHET, 
 				"&r&fDeal 50&c"+Symbols.HP+" &fBlunt damage to &6target &dMob &7(6m)");
 	}

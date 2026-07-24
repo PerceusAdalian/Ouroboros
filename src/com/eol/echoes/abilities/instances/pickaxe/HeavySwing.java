@@ -25,7 +25,7 @@ public class HeavySwing extends EchoAbility
 
 	public HeavySwing()
 	{
-		super("Heavy Swing", "heavy_swing", Material.IRON_PICKAXE, StatType.MINING, 5, 1, 15, AbilityType.COMBAT, ElementType.MODULO,
+		super("Heavy Swing", "heavy_swing", Material.IRON_PICKAXE, StatType.MINING, 5, 1, 15, AbilityType.OFFENSIVE, ElementType.MODULO,
 				CastConditions.RIGHT_CLICK_AIR, EchoForm.PICKAXE, 
 				"&r&fDeal 50&c"+Symbols.HP+" &fBlunt damage to &6target &dMob &7(6m)");
 	}

@@ -14,7 +14,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.enums.ObsColors;
+import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 import com.ouroboros.utils.PrintUtils;
@@ -73,6 +75,31 @@ public class CosmoEffects
 				return;
 			}
 			ObsParticles.drawWisps(p.getLocation(), p.getWidth(), p.getHeight(), 6, Particle.DRAGON_BREATH, 0.5f);
+		}, 20, seconds * 20);
+		
+		return true;
+	}
+	
+	public static Set<UUID> hasRadiated = new HashSet<>();
+	public static boolean addRadiated(LivingEntity target, int magnitude, int seconds)
+	{
+		UUID uuid = target.getUniqueId();
+		if (hasRadiated.contains(uuid)) return false;
+		hasRadiated.add(uuid);
+		
+		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasRadiated.remove(uuid), seconds * 20);
+		
+		ObsTimer.runWithCancel(Ouroboros.instance, (r) ->
+		{
+			boolean targetGone = target.isDead() || (target instanceof Player p && !p.isOnline());
+			if (!hasRadiated.contains(uuid) || targetGone) 
+			{
+			    r.cancel();
+			    return;
+			}
+			
+			MobData.damageUnnaturally(null, target, magnitude * 10, true, true, ElementType.COSMO, null);
+			ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 6, Particle.DRAGON_BREATH, 1.0f);
 		}, 20, seconds * 20);
 		
 		return true;

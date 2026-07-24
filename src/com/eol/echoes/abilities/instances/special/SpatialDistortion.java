@@ -35,7 +35,7 @@ public class SpatialDistortion extends EchoAbility
 
 	public SpatialDistortion()
 	{
-		super("Spatial Distortion", "spatial_distortion", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.SPECIALABILITY, ElementType.COSMO,
+		super("Spatial Distortion", "spatial_distortion", Material.NETHER_STAR, StatType.RANGED, 0, 0, 0, AbilityType.ULTIMATE, ElementType.COSMO,
 				CastConditions.MIXED, EchoForm.BOW, 
 				"&e&oPrimary "+PrintUtils.assignCastCondition(CastConditions.LEFT_CLICK_AIR),
 				"&r&3Spatial Distortion&f: &3&oWarp Arrow&r&f -- &cRemove &f5 &b&oDurability",
