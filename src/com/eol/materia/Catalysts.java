@@ -4,6 +4,7 @@ package com.eol.materia;
 import java.util.List;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.aero.SethSpear;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
 import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.astral.StarsweptGreatsword;
@@ -447,5 +448,26 @@ public class Catalysts
 			    astral + "&oGrant me this wish, though it be my own undoing --",
 			    astral + "&oAnd steel my resolve, through lands ne'er trodden,",
 			    astral + "&oto the place my heart is pursuing."), List.of(new StarsweptGreatsword().getInternalName()));
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+aero+Symbols.EOL+"cho of Seð",
+				"echo_of_seth",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				true,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				aero+"&oFantasian Academy Dossier — Seð, the Lingering Storm",
+				aero+"&oClassification: &lAero"+aero+"&o-Emanator | Origin: Dundragard Archipelago",
+				aero+"&oSeð, emanator of "+aero+"&lAero"+aero+"&o, and one of the "+celestio+"&lEndless&r",
+				aero+"&osaid to be without corporeal form, yet manifests as a masculine Djinn.",
+				aero+"&oHe bears a Pitchfork of &lIron"+aero+"&o wrapped in &lLeather"+aero+"&o, in most depictions.",
+				aero+"&oSince the "+celestio+"&lKingdom of Fantasia"+aero+"&o was first established, folklore has told",
+				aero+"&oof a domain in the South-East, where an illusive, lingering",
+				aero+"&ostorm looms on the horizon like a mirage — though these aren't evidential.",
+				aero+"&oMany believed him one of the Djinn of G'yr Arbanaum, though the",
+				aero+"&ostorm is more often seen off the coast of the Isles of Dundragard.",
+				aero+"&oHis name is infamous within the "+celestio+"&oAcademy"+aero+"&o — ",
+				aero+"&omany dub him the Father of Storms, and thus, progenitor of Aero magiks."), List.of(new SethSpear().getInternalName()));
 	}
 }

@@ -18,6 +18,7 @@ import com.eol.echoes.abilities.instances.special.Annihilate;
 import com.eol.echoes.abilities.instances.special.ArcaneOrder;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
+import com.eol.echoes.abilities.instances.special.Boomburst;
 import com.eol.echoes.abilities.instances.special.CausticArrow;
 import com.eol.echoes.abilities.instances.special.FoulPlay;
 import com.eol.echoes.abilities.instances.special.KelligirAeroMastery;
@@ -72,7 +73,8 @@ public class AbilityRegistry
             FoulPlay.class,
             SpiritBreak.class,
             VexingMalice.class,
-            CausticArrow.class, Supernova.class);
+            CausticArrow.class, Supernova.class,
+            Boomburst.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {
