@@ -25,6 +25,7 @@ import com.eol.echoes.instances.celestio.LuminusHelmet;
 import com.eol.echoes.instances.celestio.LuminusLeggings;
 import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Bow97;
+import com.eol.echoes.instances.cosmo.Lance42;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.geo.KnightsBroadsword;
@@ -239,7 +240,7 @@ public final class EOLRegistry
            KnightsBroadsword.class,
            
            // Cosmo
-           Sword14.class, Axe84.class, Bow97.class,
+           Sword14.class, Axe84.class, Bow97.class, Lance42.class,
            
            // Heresio
            GeneralFalricStave.class,

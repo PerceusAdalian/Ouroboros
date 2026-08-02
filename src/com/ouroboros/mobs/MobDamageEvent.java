@@ -127,7 +127,7 @@ public class MobDamageEvent implements Listener
 			        if (ResolveEchoInteract.vampire.contains(p.getUniqueId())) 
 			        {
 			        	ObsParticles.drawWisps(target.getLocation(), target.getWidth(), target.getHeight(), 5, Particle.CRIMSON_SPORE, null);
-			            PlayerData.heal(p, 25, crit);
+			            PlayerData.heal(p, 50, crit);
 			        }
 			    }
 

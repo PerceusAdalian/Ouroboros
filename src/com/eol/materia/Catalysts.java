@@ -17,6 +17,7 @@ import com.eol.echoes.instances.celestio.LuminusHelmet;
 import com.eol.echoes.instances.celestio.LuminusLeggings;
 import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Bow97;
+import com.eol.echoes.instances.cosmo.Lance42;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
@@ -469,5 +470,25 @@ public class Catalysts
 				aero+"&ostorm is more often seen off the coast of the Isles of Dundragard.",
 				aero+"&oHis name is infamous within the "+celestio+"&oAcademy"+aero+"&o — ",
 				aero+"&omany dub him the Father of Storms, and thus, progenitor of Aero magiks."), List.of(new SethSpear().getInternalName()));
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+cosmo+"System Log 42",
+				"echo_of_lance42",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SEVEN,
+				false,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				cosmo+"[ Log 42 : Fantasia Simulation Integrity Analysis 16XX:5:24-22:42:42 ]",
+				cosmo+"&oIs life not illusion wearing the mask of devotion?",
+				cosmo+"&oA hymn hummed across ages, the dance",
+				cosmo+"&oconcludes as another ensues.. The Cycle:","",
+				cosmo+"&oParadox breathes in the self — reaching outward,",
+				cosmo+"as stars reach for consciousness..",
+				cosmo+"&o&lThe Cosmos"+cosmo+"&o answers, at last: ",
+				cosmo+"&owe ought pierce the darkness with piety..","",
+				cosmo+"&oForged as &lLance&r"+cosmo+"&o, tempered in "+cosmo+"&lNether"+cosmo+"&o-iron, bound in &lLeather&r"+cosmo+"&o..",
+				cosmo+"&oIf illusion is all we are, what ends justifies this simulation, still?",
+				cosmo+"&oPerhaps the answer waits only in the return to stardust.."), List.of(new Lance42().getInternalName()));
 	}
 }

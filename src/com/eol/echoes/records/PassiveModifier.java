@@ -51,11 +51,12 @@ public record PassiveModifier(ModifierCondition condition, PassiveEchoEffect eff
         return switch (effectKey)
         {
             case EXPOSE            		   -> "Attacks Apply Expose: "+(int)(magnitude * 100) + "%";
+            case NULLIFYING				   -> "Attacks Apply Voided: "+(int)(magnitude * 100) + "%";
             case BURNING           		   -> "Attacks Inflict Burn: "+(int)(magnitude * 100) + "%";
             case POISONOUS         		   -> "Attacks Apply Erosion: "+(int)(magnitude * 100) + "%";
             case SLOWING  	 	           -> "Attacks Inflict Slowness: "+(int)(magnitude * 100) + "%";
             case FATIGUING   	           -> "Attacks Inflict Fatigue: "+(int)(magnitude * 100) + "%";
-            case STUNNING      	           -> "Attacks Inflict Stun: "+(int)(magnitude * 100) + "%";
+            case STUNNING      	           -> "Attacks Inflict Break: "+(int)(magnitude * 100) + "%";
             case IGNORE_ARROW              -> "Optimized Quiver: "+(int)(magnitude * 100) + "%";
             case RECYCLE_ARROWS            -> "Recyclable Arrows";
             case SET_ATTACK_RATE           -> "Atk Rate becomes " + magnitude;

@@ -38,7 +38,7 @@ public class Sword14 extends AbstractEOLWeapon
 			"Server load anomalies persist: Memory bleed detected across several instances..",
 			"..one instance, designation: "+PrintUtils.color(ObsColors.CELESTIO)+"&oLumina&r&7&o, drawing excess ether..",
 			"Anomalous events increasing in frequency. We'll address it after the reset.. ",
-			"[ Log End 1616:4:30-17:26:34]");
+			"[ Log End 1616:4:30-17:26:34 ]");
 	}
 	
 	private static List<Modifier> buildModifiers()

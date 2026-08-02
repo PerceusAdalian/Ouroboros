@@ -17,6 +17,7 @@ import com.ouroboros.accounts.PlayerData;
 import com.ouroboros.mobs.MobData;
 import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.entityeffects.CelestioEffects;
+import com.ouroboros.utils.entityeffects.CosmoEffects;
 import com.ouroboros.utils.entityeffects.EntityEffects;
 import com.ouroboros.utils.entityeffects.InfernoEffects;
 
@@ -85,12 +86,13 @@ public class ResolveEchoInteract
             int seconds = 30;
             switch (((PassiveModifier) mod).effectKey())
             {
-                case EXPOSE    -> CelestioEffects.addExposed(target, seconds);
-                case BURNING   -> InfernoEffects.addBurn(target, seconds);
-                case POISONOUS -> EntityEffects.addErosion(target, 10);
-                case SLOWING   -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 0, false);
-                case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
-                case STUNNING  -> data.setBreak();
+                case EXPOSE     -> CelestioEffects.addExposed(target, seconds);
+                case NULLIFYING -> CosmoEffects.addVoided(target, seconds);
+                case BURNING    -> InfernoEffects.addBurn(target, seconds);
+                case POISONOUS  -> EntityEffects.addErosion(target, 10);
+                case SLOWING    -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 0, false);
+                case FATIGUING  -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
+                case STUNNING   -> data.setBreak();
                 case KNOCKBACK, IGNORE_ARROW, RECYCLE_ARROWS, SET_ATTACK_RATE,
                      INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
                      LUCKY, NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE,
@@ -111,12 +113,13 @@ public class ResolveEchoInteract
             int seconds = 30;
             switch (((PassiveModifier) mod).effectKey())
             {
-                case EXPOSE    -> CelestioEffects.addExposed(target, seconds);
-                case BURNING   -> InfernoEffects.addBurn(target, seconds);
-                case POISONOUS -> EntityEffects.addErosion(target, 10);
-                case SLOWING   -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 0, false);
-                case FATIGUING -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
-                case STUNNING  -> data.setBreak();
+                case EXPOSE     -> CelestioEffects.addExposed(target, seconds);
+                case NULLIFYING -> CosmoEffects.addVoided(target, seconds);
+                case BURNING    -> InfernoEffects.addBurn(target, seconds);
+                case POISONOUS  -> EntityEffects.addErosion(target, 10);
+                case SLOWING    -> EntityEffects.add(target, PotionEffectType.SLOWNESS, seconds * 20, 0, false);
+                case FATIGUING  -> EntityEffects.add(target, PotionEffectType.MINING_FATIGUE, seconds * 20, 0, false);
+                case STUNNING   -> data.setBreak();
                 case KNOCKBACK, IGNORE_ARROW, RECYCLE_ARROWS, SET_ATTACK_RATE,
                      INCREASED_MOVEMENT_SPEED, DECREASED_MOVEMENT_SPEED, PROTECTIVE,
                      LUCKY, NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE,
@@ -227,26 +230,26 @@ public class ResolveEchoInteract
     {
         switch (mod.effectKey())
         {
-            case LUCKY                 -> has_lucky.add(uuid);
+            case LUCKY                    -> has_lucky.add(uuid);
             case INCREASED_MOVEMENT_SPEED -> increase_movement_speed.add(uuid);
             case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.add(uuid);
-            case PROTECTIVE            -> has_protected.add(uuid);
-            case IGNORE_ARROW          -> ignore_arrow.add(uuid);
-            case RECYCLE_ARROWS        -> recycle_arrows.add(uuid);
-            case NIMBLE                -> has_nimble.add(uuid);
-            case INFINITY              -> negate_arrow_consumption.add(uuid);
-            case NIGHTSIGHT            -> nightsight.add(uuid);
-            case VAMPIRE               -> vampire.add(uuid);
-            case CELESTIO_ARMAMENT     -> celestio_armament.add(uuid);
-            case MORTIO_ARMAMENT       -> mortio_armament.add(uuid);
-            case INFERNO_ARMAMENT      -> inferno_armament.add(uuid);
-            case GLACIO_ARMAMENT       -> glacio_armament.add(uuid);
-            case GEO_ARMAMENT          -> geo_armament.add(uuid);
-            case AERO_ARMAMENT         -> aero_armament.add(uuid);
-            case COSMO_ARMAMENT        -> cosmo_armament.add(uuid);
-            case HERESIO_ARMAMENT      -> heresio_armament.add(uuid);
-            case ARCANO_ARMAMENT       -> arcane_armament.add(uuid);
-            case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING,
+            case PROTECTIVE            	  -> has_protected.add(uuid);
+            case IGNORE_ARROW          	  -> ignore_arrow.add(uuid);
+            case RECYCLE_ARROWS        	  -> recycle_arrows.add(uuid);
+            case NIMBLE                	  -> has_nimble.add(uuid);
+            case INFINITY              	  -> negate_arrow_consumption.add(uuid);
+            case NIGHTSIGHT            	  -> nightsight.add(uuid);
+            case VAMPIRE               	  -> vampire.add(uuid);
+            case CELESTIO_ARMAMENT     	  -> celestio_armament.add(uuid);
+            case MORTIO_ARMAMENT       	  -> mortio_armament.add(uuid);
+            case INFERNO_ARMAMENT      	  -> inferno_armament.add(uuid);
+            case GLACIO_ARMAMENT       	  -> glacio_armament.add(uuid);
+            case GEO_ARMAMENT          	  -> geo_armament.add(uuid);
+            case AERO_ARMAMENT         	  -> aero_armament.add(uuid);
+            case COSMO_ARMAMENT        	  -> cosmo_armament.add(uuid);
+            case HERESIO_ARMAMENT      	  -> heresio_armament.add(uuid);
+            case ARCANO_ARMAMENT       	  -> arcane_armament.add(uuid);
+            case EXPOSE, NULLIFYING, BURNING, POISONOUS, SLOWING, FATIGUING,
                  STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
         }
     }
@@ -255,26 +258,26 @@ public class ResolveEchoInteract
     {
         switch (mod.effectKey())
         {
-            case LUCKY                 -> has_lucky.remove(uuid);
+            case LUCKY                 	  -> has_lucky.remove(uuid);
             case INCREASED_MOVEMENT_SPEED -> increase_movement_speed.remove(uuid);
             case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.remove(uuid);
-            case PROTECTIVE            -> has_protected.remove(uuid);
-            case IGNORE_ARROW          -> ignore_arrow.remove(uuid);
-            case RECYCLE_ARROWS        -> recycle_arrows.remove(uuid);
-            case NIMBLE                -> has_nimble.remove(uuid);
-            case INFINITY              -> negate_arrow_consumption.remove(uuid);
-            case NIGHTSIGHT            -> nightsight.remove(uuid);
-            case VAMPIRE               -> vampire.remove(uuid);
-            case CELESTIO_ARMAMENT     -> celestio_armament.remove(uuid);
-            case MORTIO_ARMAMENT       -> mortio_armament.remove(uuid);
-            case INFERNO_ARMAMENT      -> inferno_armament.remove(uuid);
-            case GLACIO_ARMAMENT       -> glacio_armament.remove(uuid);
-            case GEO_ARMAMENT          -> geo_armament.remove(uuid);
-            case AERO_ARMAMENT         -> aero_armament.remove(uuid);
-            case COSMO_ARMAMENT        -> cosmo_armament.remove(uuid);
-            case HERESIO_ARMAMENT      -> heresio_armament.remove(uuid);
-            case ARCANO_ARMAMENT       -> arcane_armament.remove(uuid);
-            case EXPOSE, BURNING, POISONOUS, SLOWING, FATIGUING,
+            case PROTECTIVE            	  -> has_protected.remove(uuid);
+            case IGNORE_ARROW          	  -> ignore_arrow.remove(uuid);
+            case RECYCLE_ARROWS        	  -> recycle_arrows.remove(uuid);
+            case NIMBLE               	  -> has_nimble.remove(uuid);
+            case INFINITY           	  -> negate_arrow_consumption.remove(uuid);
+            case NIGHTSIGHT           	  -> nightsight.remove(uuid);
+            case VAMPIRE             	  -> vampire.remove(uuid);
+            case CELESTIO_ARMAMENT     	  -> celestio_armament.remove(uuid);
+            case MORTIO_ARMAMENT       	  -> mortio_armament.remove(uuid);
+            case INFERNO_ARMAMENT      	  -> inferno_armament.remove(uuid);
+            case GLACIO_ARMAMENT       	  -> glacio_armament.remove(uuid);
+            case GEO_ARMAMENT          	  -> geo_armament.remove(uuid);
+            case AERO_ARMAMENT         	  -> aero_armament.remove(uuid);
+            case COSMO_ARMAMENT        	  -> cosmo_armament.remove(uuid);
+            case HERESIO_ARMAMENT      	  -> heresio_armament.remove(uuid);
+            case ARCANO_ARMAMENT       	  -> arcane_armament.remove(uuid);
+            case EXPOSE, NULLIFYING, BURNING, POISONOUS, SLOWING, FATIGUING,
                  STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
         }
     }

@@ -39,7 +39,7 @@ public class Bow97 extends AbstractEOLWeapon
 				"Crash suspected to occur at any moment.. enumeration values corrupted..",
 				"..Warn: Unnable to keep up, is the server online? '..thought we patched this!'",
 				"Attempting final emergency reset in 3.. 2.. 1.. 'Hope this works!'",
-				"&r&7[ Log End 1632:7:22-12:12:01]");
+				"&r&7[ Log End 1632:7:22-12:12:01 ]");
 	}
 
 	private static List<Modifier> buildModifiers()
