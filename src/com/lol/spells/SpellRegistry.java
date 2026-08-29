@@ -46,6 +46,7 @@ import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
 import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Heal;
+import com.lol.spells.instances.celestio.Holy;
 import com.lol.spells.instances.celestio.Lumina;
 import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.MagicMissile;
@@ -128,7 +129,7 @@ public class SpellRegistry
         		//Celestio
         		AssertOrder.class,Lumos.class,Diagnosis.class,Cure.class,Expell.class,Pneuma.class,Ascension.class,
         		SolarExpanse.class,Satiate.class,Lumina.class,MinorBlessing.class,Heal.class,MagicMissile.class,
-        		Revelio.class,Protego.class,Radiate.class,
+        		Revelio.class,Protego.class,Radiate.class, Holy.class,
         		
         		//Mortio
         		Haunt.class,Sew.class,Reap.class,SeethingSkull.class,Siphon.class,

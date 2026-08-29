@@ -10,6 +10,7 @@ import com.lol.spells.instances.celestio.Cure;
 import com.lol.spells.instances.celestio.Diagnosis;
 import com.lol.spells.instances.celestio.Expell;
 import com.lol.spells.instances.celestio.Heal;
+import com.lol.spells.instances.celestio.Holy;
 import com.lol.spells.instances.celestio.Lumina;
 import com.lol.spells.instances.celestio.Lumos;
 import com.lol.spells.instances.celestio.MagicMissile;
@@ -54,10 +55,10 @@ public class CelestioSpellsPage extends ObsGui
 		// 4
 		GuiButton.placeSpellButton(player, new AssertOrder(), 24, this);
 		GuiButton.placeSpellButton(player, new SolarExpanse(), 25, this);
-		
+		GuiButton.placeSpellButton(player, new Holy(), 28, this);
 		// 5
-		GuiButton.placeSpellButton(player, new Ascension(), 28, this);
-		GuiButton.placeSpellButton(player, new Pneuma(), 29, this);
+		GuiButton.placeSpellButton(player, new Ascension(), 29, this);
+		GuiButton.placeSpellButton(player, new Pneuma(), 30, this);
 		
 		// 6
 		
