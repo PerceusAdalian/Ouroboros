@@ -10,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.ouroboros.Ouroboros;
+import com.ouroboros.enums.ElementType;
 import com.ouroboros.utils.ObsParticles;
 import com.ouroboros.utils.ObsTimer;
 
@@ -42,9 +43,20 @@ public class ArcanoEffects
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()->hasEtherDisruption.remove(target.getUniqueId()), seconds * 20);
 	}
 	
-	public static void addChroma(LivingEntity target, int seconds)
+	public static void addChroma(LivingEntity target, ElementType eType, int magnitude, int seconds)
 	{
-		// TODO
+		switch (eType) 
+		{
+			case INFERNO -> InfernoEffects.addBurn(target, seconds);
+			case AERO -> AeroEffects.addShock(target, seconds); 
+			case CELESTIO -> CelestioEffects.addExposed(target, seconds);
+			case COSMO -> CosmoEffects.addVoided(target, seconds);
+			case GEO -> GeoEffects.addVulnerable(target, seconds);
+			case GLACIO -> GlacioEffects.addFrosted(target, magnitude, seconds);
+			case HERESIO -> HeresioEffects.addIntimidate(target, magnitude, seconds);
+			case MORTIO -> MortioEffects.addDread(target, seconds);
+			default -> throw new IllegalArgumentException("Unexpected value: " + eType);
+		}
 	}
 	
 }

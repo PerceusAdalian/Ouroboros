@@ -40,7 +40,7 @@ public class Prisma extends Spell
 				"&r&f  - 1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob&f's core weakness &7(30m)",
 				"&r&f  - 2. Cycle through the eight elements.","",
 				"&r&e&oSecondary "+PrintUtils.assignCastCondition(CastConditions.SHIFT_RIGHT_CLICK_AIR),
-				PrintUtils.color(ObsColors.ARCANO)+"Aspect of Lordran&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oThe King's Return&r&f --",
+				PrintUtils.color(ObsColors.ARCANO)+"Prisma&f: "+PrintUtils.color(ObsColors.ARCANO)+"&oKaleidoscope&r&f --",
 				"&r&f  - 1. Gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f from a &6target &dMob&f's &e&oAffinity &r&7(30m)",
 				"&r&f  - 2. Confirm selected element and gain a charge of "+PrintUtils.color(ObsColors.ARCANO)+"&oPrisma&r&f.","",
 				PrintUtils.color(ObsColors.ARCANO)+"Prisma &eEffect&f: Override next outgoing damage type to the scried element.","",

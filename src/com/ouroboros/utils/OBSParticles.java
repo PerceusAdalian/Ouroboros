@@ -11,7 +11,6 @@ import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -437,40 +436,40 @@ public class ObsParticles
 		drawDisc(entity.getLocation(), entity.getWidth()+2,1,6,0.1,Particle.CRIMSON_SPORE, null);
 	}	
 	
-	public static void playCastSigil(Player player, SpellementType sType)
+	public static void playCastSigil(LivingEntity target, SpellementType sType)
 	{
-		boolean isDay = TimeUtils.checkTime(player.getWorld(), Timeframe.DAY);
+		boolean isDay = TimeUtils.checkTime(target.getWorld(), Timeframe.DAY);
 		
 		switch (sType)
 		{
-			case NULL -> drawAdminCastSigil(player);
-			case CELESTIO -> drawCelestioCastSigil(player);
-			case AERO -> drawAeroCastSigil(player);
-			case COSMO -> drawCosmoCastSigil(player);
-			case GEO -> drawGeoCastSigil(player);
-			case GLACIO -> drawGlacioCastSigil(player);
-			case HERESIO -> drawHeresioCastSigil(player);
-			case INFERNO -> drawInfernoCastSigil(player);
-			case MORTIO -> drawMortioCastSigil(player);
-			case ARCANO -> drawArcanoCastSigil(player);
-			case ASTRAL -> drawAstralCastSigil(player, isDay);
-			case ARDENTIO -> drawArdentioCastSigil(player);
+			case NULL -> drawAdminCastSigil(target);
+			case CELESTIO -> drawCelestioCastSigil(target);
+			case AERO -> drawAeroCastSigil(target);
+			case COSMO -> drawCosmoCastSigil(target);
+			case GEO -> drawGeoCastSigil(target);
+			case GLACIO -> drawGlacioCastSigil(target);
+			case HERESIO -> drawHeresioCastSigil(target);
+			case INFERNO -> drawInfernoCastSigil(target);
+			case MORTIO -> drawMortioCastSigil(target);
+			case ARCANO -> drawArcanoCastSigil(target);
+			case ASTRAL -> drawAstralCastSigil(target, isDay);
+			case ARDENTIO -> drawArdentioCastSigil(target);
 		}
 	}
 	
-	public static void playCastSigil(Player player, ElementType eType)
+	public static void playCastSigil(LivingEntity target, ElementType eType)
 	{
 		switch (eType)
 		{
-			case CELESTIO -> drawCelestioCastSigil(player);
-			case AERO -> drawAeroCastSigil(player);
-			case COSMO -> drawCosmoCastSigil(player);
-			case GEO -> drawGeoCastSigil(player);
-			case GLACIO -> drawGlacioCastSigil(player);
-			case HERESIO -> drawHeresioCastSigil(player);
-			case INFERNO -> drawInfernoCastSigil(player);
-			case MORTIO -> drawMortioCastSigil(player);
-			case ARCANO -> drawArcanoCastSigil(player);
+			case CELESTIO -> drawCelestioCastSigil(target);
+			case AERO -> drawAeroCastSigil(target);
+			case COSMO -> drawCosmoCastSigil(target);
+			case GEO -> drawGeoCastSigil(target);
+			case GLACIO -> drawGlacioCastSigil(target);
+			case HERESIO -> drawHeresioCastSigil(target);
+			case INFERNO -> drawInfernoCastSigil(target);
+			case MORTIO -> drawMortioCastSigil(target);
+			case ARCANO -> drawArcanoCastSigil(target);
 			default -> throw new IllegalArgumentException("Unexpected value: " + eType);
 		}
 	}

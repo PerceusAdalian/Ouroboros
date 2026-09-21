@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.aero.SethSpear;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
+import com.eol.echoes.instances.arcano.PainterLance;
 import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.astral.StarsweptGreatsword;
 import com.eol.echoes.instances.celestio.Aion;
@@ -246,7 +247,7 @@ public final class EOLRegistry
            GeneralFalricStave.class,
            
            // Arcano
-           LanceOfLordran.class, SwordOfTheElements.class,
+           LanceOfLordran.class, SwordOfTheElements.class, PainterLance.class,
            
            // Astral
            StarsweptGreatsword.class,

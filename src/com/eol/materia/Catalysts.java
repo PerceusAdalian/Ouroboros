@@ -6,6 +6,7 @@ import java.util.List;
 import com.eol.echoes.instances.aero.BowOfKelligir;
 import com.eol.echoes.instances.aero.SethSpear;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
+import com.eol.echoes.instances.arcano.PainterLance;
 import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.astral.StarsweptGreatsword;
 import com.eol.echoes.instances.celestio.Aion;
@@ -484,11 +485,30 @@ public class Catalysts
 				cosmo+"&oA hymn hummed across ages, the dance",
 				cosmo+"&oconcludes as another ensues.. The Cycle:","",
 				cosmo+"&oParadox breathes in the self — reaching outward,",
-				cosmo+"as stars reach for consciousness..",
+				cosmo+"&oas stars reach for consciousness..",
 				cosmo+"&o&lThe Cosmos"+cosmo+"&o answers, at last: ",
 				cosmo+"&owe ought pierce the darkness with piety..","",
 				cosmo+"&oForged as &lLance&r"+cosmo+"&o, tempered in "+cosmo+"&lNether"+cosmo+"&o-iron, bound in &lLeather&r"+cosmo+"&o..",
 				cosmo+"&oIf illusion is all we are, what ends justifies this simulation, still?",
 				cosmo+"&oPerhaps the answer waits only in the return to stardust.."), List.of(new Lance42().getInternalName()));
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+arcano+Symbols.EOL+"cho of a Chromatic Painter",
+				"echo_of_painter",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SEVEN,
+				true,
+				"&r&7&oAn echo of the near past. Harmonic frequencies radiate...",
+				"&r&7&oWithin, a unique memory engram is encoded:",
+				arcano+"&oFantasian Academy Dossier — Annabelle, the Chromatic Painter",
+				arcano+"&oOrigins unknown, but one of the brightest minds ever to walk the Academy's halls.","",
+				arcano+"&oHer Arcane magik bends the elements and",
+				arcano+"&oextracts 'Chroma', a form of life essence.",
+				arcano+"&oNow a royal painter, she captures life in her 'Chromatic Motifs'.",
+				arcano+"&oIn battle, she wields a Golden Polearm bound with Sewn String.",
+				arcano+"&oNo favorite element, save perhaps Mortio:","",
+				arcano+"&o'Squashing the heads of those cute",
+				arcano+"&ogoblins always gives me my favorite hue of "+mortio+"&lRed&r"+arcano+"&o.'"), List.of(new PainterLance().getInternalName()));
+		
 	}
 }
