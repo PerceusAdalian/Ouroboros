@@ -9,6 +9,7 @@ import java.util.Map;
 import com.ouroboros.objects.instances.AeroEssence;
 import com.ouroboros.objects.instances.ArcanoEssence;
 import com.ouroboros.objects.instances.CelestioEssence;
+import com.ouroboros.objects.instances.CoreCrystal;
 import com.ouroboros.objects.instances.CosmoEssence;
 import com.ouroboros.objects.instances.GeoEssence;
 import com.ouroboros.objects.instances.GlacioEssence;
@@ -51,7 +52,9 @@ public class ObjectRegistry
         	HeresioEssence.class,
         	ArcanoEssence.class,
         	
-        	ScrapMateria.class);
+        	ScrapMateria.class,
+        	
+        	CoreCrystal.class);
         
         for (Class<? extends AbstractObsObject> clazz : itemClasses) 
         {

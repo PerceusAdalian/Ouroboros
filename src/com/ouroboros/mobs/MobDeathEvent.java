@@ -46,6 +46,7 @@ import com.ouroboros.objects.instances.AeroEssence;
 import com.ouroboros.objects.instances.ArcanoEssence;
 import com.ouroboros.objects.instances.ArdentioEssence;
 import com.ouroboros.objects.instances.CelestioEssence;
+import com.ouroboros.objects.instances.CoreCrystal;
 import com.ouroboros.objects.instances.CosmoEssence;
 import com.ouroboros.objects.instances.GeoEssence;
 import com.ouroboros.objects.instances.GlacioEssence;
@@ -230,7 +231,7 @@ public class MobDeathEvent implements Listener
 			    }
 			    
 			    // Catalyst Drops
-			    double catalystDropChance = Math.min(10 + chanceBonus, 100);
+			    double catalystDropChance = Math.min(5 + chanceBonus, 100);
 			    if (Chance.of(catalystDropChance))
 			    {
 			        int maxRarity = Rarity.getRarityForMobLevel(level);
@@ -271,6 +272,12 @@ public class MobDeathEvent implements Listener
 			                currentCatalystDrops++;
 			            }
 			        }
+			    }
+			    else if (Chance.of(Math.min(catalystDropChance + 20, 100))) // Failed a normal catalyst roll, let's try a guarantee (1/4 Chance by Default).
+			    {
+			    	Rarity rarity = Rarity.parseRarityByMobLevel(level);
+			    	ItemStack coreCrystalGuarantee = CoreCrystal.createItem(rarity);
+			    	e.getDrops().add(coreCrystalGuarantee);
 			    }
 			    
 			    // Clear recently dropped maps after 30 seconds

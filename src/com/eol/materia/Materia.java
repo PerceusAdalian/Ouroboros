@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ import com.ouroboros.enums.Rarity;
 import com.ouroboros.enums.StatType;
 import com.ouroboros.menus.instances.protocolecho.RefinementPage;
 import com.ouroboros.objects.AbstractObsObject;
+import com.ouroboros.utils.Chance;
 import com.ouroboros.utils.Nullable;
 import com.ouroboros.utils.PrintUtils;
 
@@ -415,4 +417,43 @@ public class Materia
 		}, plugin);
 	}
 
+	public static Materia getCatalyst(Rarity rarity)
+	{
+		String catalystID = switch(rarity)
+		{
+			case ONE -> "catalyst_1";
+			case TWO -> "catalyst_2";
+			case THREE -> "catalyst_3";
+			case FOUR -> "catalyst_4";
+			case FIVE -> "catalyst_5";
+			case SIX -> "catalyst_6";
+			case SEVEN -> "catalyst_7";
+			
+			default -> "catalyst_1";
+		};
+		
+		return Materia.get(catalystID);
+	}
+	
+	public static Materia randomizeBase(Rarity rarity)
+	{
+		Set<MateriaType> base = Set.of(MateriaType.WOOD, MateriaType.STONE, MateriaType.COPPER, MateriaType.IRON, MateriaType.GOLD, MateriaType.DIAMOND, MateriaType.NETHERITE);
+		Materia randomBase = Materia.refine(base.stream().skip(ThreadLocalRandom.current().nextInt(base.size())).findFirst().orElseThrow(), MateriaComponent.BASE, rarity);
+		return randomBase;
+	}
+	
+	public static Materia randomizeBinding(Rarity rarity)
+	{
+		Set<MateriaType> binding = Set.of(MateriaType.STRING, MateriaType.LEATHER, MateriaType.PELT);
+		Materia randomBinding = Materia.refine(binding.stream().skip(ThreadLocalRandom.current().nextInt(binding.size())).findFirst().orElseThrow(), MateriaComponent.BINDING, rarity);
+		return randomBinding;
+	}
+	
+	public static Materia randomizeElementCore()
+	{
+	    Set<String> cores = Set.of("celestio_core", "mortio_core", "inferno_core", "glacio_core", "geo_core", "aero_core", "cosmo_core", "heresio_core");
+	    if (Chance.of(80)) return null;
+	    return Materia.get(cores.stream().skip(ThreadLocalRandom.current().nextInt(cores.size())).findFirst().orElseThrow());
+	}
+	
 }

@@ -33,4 +33,15 @@ public enum Rarity
 	    else if (mobLevel >= 20) return 2; // Common
 	    else                     return 1; // Fodder
 	}
+	
+	public static Rarity parseRarityByMobLevel(int mobLevel)
+	{
+		if (mobLevel >= 100)     return SEVEN;
+		else if (mobLevel >= 80) return SIX;
+	    else if (mobLevel >= 50) return FIVE;
+	    else if (mobLevel >= 40) return FOUR;
+	    else if (mobLevel >= 30) return THREE;
+	    else if (mobLevel >= 20) return TWO;
+	    else                     return ONE;
+	}
 }
