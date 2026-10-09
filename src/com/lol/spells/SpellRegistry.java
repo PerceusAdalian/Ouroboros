@@ -79,6 +79,7 @@ import com.lol.spells.instances.geo.Magemorph;
 import com.lol.spells.instances.geo.Metalmorph;
 import com.lol.spells.instances.geo.PetrificusTotalis;
 import com.lol.spells.instances.geo.SandBlast;
+import com.lol.spells.instances.glacio.BubbleBeam;
 import com.lol.spells.instances.glacio.Chill;
 import com.lol.spells.instances.glacio.Contaminate;
 import com.lol.spells.instances.glacio.Freeze;
@@ -141,7 +142,7 @@ public class SpellRegistry
         		
         		//Glacio
         		Glacius.class, GlacialFlood.class, Riptide.class, Freeze.class, IcyWind.class, Scald.class,
-        		Chill.class,Contaminate.class,
+        		Chill.class,Contaminate.class,BubbleBeam.class,
         		
         		//Aero
         		Diffindo.class, Levioso.class, Smite.class, Thunderbolt.class, Charge.class, Thunderstorm.class,

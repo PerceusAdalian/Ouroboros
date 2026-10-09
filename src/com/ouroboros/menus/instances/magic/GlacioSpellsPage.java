@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.bukkit.entity.Player;
 
+import com.lol.spells.instances.glacio.BubbleBeam;
 import com.lol.spells.instances.glacio.Chill;
 import com.lol.spells.instances.glacio.Contaminate;
 import com.lol.spells.instances.glacio.Freeze;
@@ -38,9 +39,10 @@ public class GlacioSpellsPage extends ObsGui
 		// 3
 		GuiButton.placeSpellButton(player, new Contaminate(), 15, this);
 		GuiButton.placeSpellButton(player, new IcyWind(), 16, this);
+		GuiButton.placeSpellButton(player, new BubbleBeam(), 19, this);
 		
 		// 4
-		GuiButton.placeSpellButton(player, new GlacialFlood(), 19, this);
+		GuiButton.placeSpellButton(player, new GlacialFlood(), 20, this);
 		
 		// 5
 		

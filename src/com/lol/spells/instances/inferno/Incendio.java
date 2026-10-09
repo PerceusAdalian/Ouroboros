@@ -37,7 +37,8 @@ public class Incendio extends Spell
 		EntityEffects.playSound(p, Sound.ENTITY_BLAZE_SHOOT, SoundCategory.AMBIENT);
 		Fireball fireball = (Fireball) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(1.5)), EntityType.FIREBALL);
 		fireball.setYield(1);
-		fireball.setIsIncendiary(true); 
+		fireball.setIsIncendiary(true);
+
 		return this.getManacost();
 	}
 	
@@ -46,5 +47,5 @@ public class Incendio extends Spell
 	{
 		return this.getManacost();
 	}
-
+	
 }

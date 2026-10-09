@@ -41,7 +41,7 @@ public class Ascension extends Spell
 				"&r&fLanding automatically toggles this &eSpell&f.",
 				"&r&cWarning&f: You may receive fall damage if toggling mid-air.","",
 				"&r&eHumility&r&f: Affected take &b&o15%&r&f more "+PrintUtils.color(ObsColors.CELESTIO)+"&lCelestio&r&f damage.","",
-				"&r&b&oEchoic Disonance&r&f: On toggle, &lCD &r&e-> &b&o30 seconds&r&f");
+				"&r&b&oEchoic Dissonance&r&f: On toggle, &lCD &r&e-> &b&o30 seconds&r&f");
 	}
 
 	@Override

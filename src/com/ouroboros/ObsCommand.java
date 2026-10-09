@@ -426,13 +426,23 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 		{
 			if (affirmOP(p)) return true;
 			
-			if (args[1].equals("spell") && SpellRegistry.spellRegistry.containsKey(args[2]) && args.length == 4)
+			if (args.length >= 2 && args[1].equals("spell"))
 			{
-				Spell spell = SpellRegistry.spellRegistry.get(args[2]);
-				boolean toSpellBook = Boolean.parseBoolean(args[3]);
-				ItemStack stack = spell.getAsItemStack(toSpellBook ? Spell.SpellGenerateCondition.BOOK : Spell.SpellGenerateCondition.SHARD);
-				p.getInventory().addItem(stack);
-				return true;
+			    if (args.length != 4)
+			    {
+			        PrintUtils.OBSFormatError(p, "&7Usage: /obs generate spell <spell> <true=book|false=shard>");
+			        return true;
+			    }
+			    Spell spell = SpellRegistry.spellRegistry.get(args[2]);
+			    if (spell == null)
+			    {
+			        PrintUtils.OBSFormatError(p, "Unknown spell: " + args[2]);
+			        return true;
+			    }
+			    boolean toSpellBook = Boolean.parseBoolean(args[3]);
+			    ItemStack stack = spell.getAsItemStack(toSpellBook ? Spell.SpellGenerateCondition.BOOK : Spell.SpellGenerateCondition.SHARD);
+			    InventoryUtils.add(p, stack);
+			    return true;
 			}
 			
 			if (args[1].equals("wand") && Wand.wand_registry.containsKey(args[2]))
@@ -961,8 +971,10 @@ public class ObsCommand implements CommandExecutor, TabCompleter
 			{
 				yield switch(args[1]) 
 				{
-					case "ability", "spell" ->
-						isOp ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					case "ability" -> isOp && args[0].equals("register") ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of();
+					case "spell" -> isOp
+					        ? (args[0].equals("register") ? Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()) : List.of("true", "false"))
+					        : List.of();
 					case "mob" -> isOp ? List.of("<LEVEL: 1-100>") : List.of();
 					case "materia" -> isOp ? switch(args[2])
 					{
