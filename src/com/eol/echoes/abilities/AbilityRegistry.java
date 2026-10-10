@@ -16,6 +16,7 @@ import com.eol.echoes.abilities.instances.polearm.Lunge;
 import com.eol.echoes.abilities.instances.scythe.Cleave;
 import com.eol.echoes.abilities.instances.special.Annihilate;
 import com.eol.echoes.abilities.instances.special.ArcaneOrder;
+import com.eol.echoes.abilities.instances.special.AspectOfThor;
 import com.eol.echoes.abilities.instances.special.BjornsGlaciate;
 import com.eol.echoes.abilities.instances.special.BloodFolliedBlade;
 import com.eol.echoes.abilities.instances.special.Boomburst;
@@ -76,7 +77,8 @@ public class AbilityRegistry
             SpiritBreak.class,
             VexingMalice.class,
             CausticArrow.class, Supernova.class,
-            Boomburst.class, Eden.class,Chroma.class);
+            Boomburst.class, Eden.class,Chroma.class,
+            AspectOfThor.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

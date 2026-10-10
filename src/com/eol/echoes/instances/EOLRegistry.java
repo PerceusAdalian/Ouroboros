@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.aero.Mjolnir;
 import com.eol.echoes.instances.aero.SethSpear;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
 import com.eol.echoes.instances.arcano.PainterLance;
@@ -235,6 +236,7 @@ public final class EOLRegistry
            // Aero
            BowOfKelligir.class,
            SethSpear.class,
+           Mjolnir.class,
            
            // Geo
            HammerOfNidus.class,

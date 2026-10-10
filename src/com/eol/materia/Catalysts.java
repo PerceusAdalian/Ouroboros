@@ -4,6 +4,7 @@ package com.eol.materia;
 import java.util.List;
 
 import com.eol.echoes.instances.aero.BowOfKelligir;
+import com.eol.echoes.instances.aero.Mjolnir;
 import com.eol.echoes.instances.aero.SethSpear;
 import com.eol.echoes.instances.arcano.LanceOfLordran;
 import com.eol.echoes.instances.arcano.PainterLance;
@@ -472,6 +473,27 @@ public class Catalysts
 				aero+"&oHis name is infamous within the "+celestio+"&oAcademy"+aero+"&o — ",
 				aero+"&omany dub him the Father of Storms, and thus, progenitor of Aero magiks."), List.of(new SethSpear().getInternalName()));
 		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+aero+Symbols.EOL+"cho of Thor",
+				"echo_of_thor",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				false,
+				"&r&7&oAn echo of the distant past. There's a memory engram encoded within:",
+				aero+"&oTwilight Legion Dossier — Thor",
+				aero+"Classification: &lAero"+aero+"&o Calamity-Class | Origin: Wastes of Solthur",
+				aero+"&oGod of "+aero+"&lStorm"+aero+"&o and one of the "+heresio+"&lTwilight Legion Generals&r"+aero+"&o,",
+				aero+"&owithout corporeal form, yet manifest as a humanoid Viking.",
+				aero+"&oHe bears a Hammer wrapped in &lLeather"+aero+"&o, in most depictions.",
+				aero+"&oIn another world the Norse called him &lÞórr"+aero+"&o, son of Odin and",
+				aero+"protector of Midgard, and now, He and Mjölnir serve under the &lTwilight&r"+aero+"&o.",
+				aero+"&oSailors and farmers wore hammer amulets to ward",
+				aero+"&oagainst storms, and his name still marks Thursday.",
+				aero+"&oThe Legion's scholars say he was never flesh,",
+				aero+"&oonly the shape that mortal faith gave the storm.",
+				aero+"&oHis fate was written: to slay &lJörmungandr"+aero+"&o,",
+				aero+"&oonly to then fall nine steps later to its venom."), List.of(new Mjolnir().getInternalName()));
+		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+cosmo+"System Log 42",
 				"echo_of_lance42",
 				MateriaType.CATALYST,
@@ -509,6 +531,8 @@ public class Catalysts
 				arcano+"&oNo favorite element, save perhaps Mortio:","",
 				arcano+"&o'Squashing the heads of those cute",
 				arcano+"&ogoblins always gives me my favorite hue of "+mortio+"&lRed&r"+arcano+"&o.'"), List.of(new PainterLance().getInternalName()));
+		
+		
 		
 	}
 }
