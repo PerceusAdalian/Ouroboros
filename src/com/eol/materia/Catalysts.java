@@ -35,6 +35,7 @@ import com.eol.echoes.instances.heresio.LegionaireLongbow;
 import com.eol.echoes.instances.heresio.LegionairePike;
 import com.eol.echoes.instances.heresio.LegionaireSabatons;
 import com.eol.echoes.instances.inferno.BowOfAgni;
+import com.eol.echoes.instances.mortio.ButchersGreatsword;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
 import com.eol.enums.MateriaComponent;
@@ -532,7 +533,28 @@ public class Catalysts
 				arcano+"&o'Squashing the heads of those cute",
 				arcano+"&ogoblins always gives me my favorite hue of "+mortio+"&lRed&r"+arcano+"&o.'"), List.of(new PainterLance().getInternalName()));
 		
-		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+mortio+Symbols.EOL+"cho of The King's Butcher",
+				"echo_of_kings_butcher",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SIX,
+				true,
+				"&r&7&oAn echo of the distant past. Resonant harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				mortio+"&oTwilight Legion Dossier — The King's Butcher",
+				mortio+"&oClassification: Royal-Class Entity | Elemental Affiliation: &lMortio",
+				"",
+				mortio+"&oHe carves the king's meals and the king's enemies",
+				mortio+"&owith the same patient hands. Few in the Legion",
+				mortio+"&oare trusted at the royal table; fewer still",
+				mortio+"&oare trusted with its war.",
+				"",
+				mortio+"&oHe commands an elite squadron whose sole purpose",
+				mortio+"&ois to be deployed against Lumina's Integrity Squadron.",
+				mortio+"&oHis weapon is the blade he butchers with: a &lNetherite",
+				mortio+"&ogreatsword, its hilt wrapped in worn &lLeather"+mortio+"&o.",
+				mortio+"&oHe is not the strongest of the king's servants,",
+				mortio+"but none has ever mistaken that for mercy."), List.of(new ButchersGreatsword().getInternalName()));
 		
 	}
 }

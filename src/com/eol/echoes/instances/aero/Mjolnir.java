@@ -25,7 +25,7 @@ public class Mjolnir extends AbstractEOLWeapon
 	public Mjolnir()
 	{
 		super("&r&e&lΣOL&r&f: &oMjolnir "+PrintUtils.color(ObsColors.AERO)+"✦", 
-				"mjolnir", true,
+				"mjolnir", false,
 				EOLRecipe.of(MateriaType.HAMMER, MateriaType.LEATHER, MateriaType.AERO), 
 				EchoForm.HAMMER, 
 				ElementiumSlotType.AERO, 
