@@ -32,6 +32,7 @@ import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.geo.KnightsBroadsword;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
+import com.eol.echoes.instances.glacio.YukiOnnaKatana;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
 import com.eol.echoes.instances.heresio.LegionaireBattleaxe;
 import com.eol.echoes.instances.heresio.LegionaireClub;
@@ -232,7 +233,7 @@ public final class EOLRegistry
            BowOfAgni.class,
            
            // Glacio
-           AxeOfBjorn.class,
+           AxeOfBjorn.class, YukiOnnaKatana.class,
 
            // Aero
            BowOfKelligir.class,

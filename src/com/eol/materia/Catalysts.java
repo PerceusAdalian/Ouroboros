@@ -23,6 +23,7 @@ import com.eol.echoes.instances.cosmo.Lance42;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
+import com.eol.echoes.instances.glacio.YukiOnnaKatana;
 import com.eol.echoes.instances.heresio.GeneralFalricStave;
 import com.eol.echoes.instances.heresio.LegionaireBattleaxe;
 import com.eol.echoes.instances.heresio.LegionaireClub;
@@ -228,7 +229,7 @@ public class Catalysts
 				glacio+"&oTo preserve life beyond time and erosion, grounded in the discipline of the Jötnar.",
 				glacio+"&oDevotees offered "+glacio+"&l&nLeather&r"+glacio+"&o at his shrine, believing the act of restraint",
 				glacio+"&owould earn audience from the Jötunn of the Eternal Freeze."), List.of(new AxeOfBjorn().getInternalName()));
-		
+
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+heresio+Symbols.EOL+"cho Of General Falric",
 				"echo_of_general_falric",
 				MateriaType.CATALYST,
@@ -555,6 +556,27 @@ public class Catalysts
 				mortio+"&ogreatsword, its hilt wrapped in worn &lLeather"+mortio+"&o.",
 				mortio+"&oHe is not the strongest of the king's servants,",
 				mortio+"but none has ever mistaken that for mercy."), List.of(new ButchersGreatsword().getInternalName()));
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+glacio+Symbols.EOL+"cho of Yuki Onna",
+				"echo_of_yuki_onna",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.FIVE,
+				true,
+				"&r&7&oAn echo of the distant past. Dormant frequencies hum softly..",
+				"&r&7&oThere's a memory engram encoded within:","",
+				glacio+"&oTwilight Legion Dossier — Yuki Onna ",
+				glacio+"&oClassification: Greater-Frost Daemon",
+				glacio+"&oOrigin: Wastes of Solthur",
+				glacio+"&oElemental Affiliation: &lGlacio","",
+				glacio+"&oThe Maiden of Winter, Yuki Onna, is as infamous as the northern lights.",
+				glacio+"&oShe is the antithesis of Summer, a shadow that blots out the sun.",
+				glacio+"&oIn Niflheimr VI, sightings describe her wrapped",
+				glacio+"in &lPelts"+glacio+"&o, bearing a sword of glassy &lDiamond"+glacio+"&o.",
+				glacio+"&oDrunken miners returning from the deep claim",
+				glacio+"&oto have met her face to face along the rivers of Yotzf'heim,",
+				glacio+"appearing to mourn a child lost to time."), List.of(new YukiOnnaKatana().getInternalName()));
+		
 		
 	}
 }

@@ -83,6 +83,10 @@ public class EntityCategories
 		return EntityCategory.get(category).contains(entity.getType()) ? true : false;
 	}
 		
+	/**
+	 * @param entityType
+	 * @return Parses affinity of target entity.
+	 */
 	public static ElementType parseElementType(EntityType entityType)
 	{
 	    if (celestio_mobs.contains(entityType)) return ElementType.CELESTIO;
