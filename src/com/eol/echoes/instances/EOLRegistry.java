@@ -45,6 +45,7 @@ import com.eol.echoes.instances.heresio.LegionaireLongbow;
 import com.eol.echoes.instances.heresio.LegionairePike;
 import com.eol.echoes.instances.heresio.LegionaireSabatons;
 import com.eol.echoes.instances.inferno.BowOfAgni;
+import com.eol.echoes.instances.inferno.DjinnsCutlass;
 import com.eol.echoes.instances.mortio.ButchersGreatsword;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
@@ -230,7 +231,7 @@ public final class EOLRegistry
            Plague.class, ScytheOfBelial.class, ButchersGreatsword.class,
 
            // Inferno
-           BowOfAgni.class,
+           BowOfAgni.class, DjinnsCutlass.class,
            
            // Glacio
            AxeOfBjorn.class, YukiOnnaKatana.class,

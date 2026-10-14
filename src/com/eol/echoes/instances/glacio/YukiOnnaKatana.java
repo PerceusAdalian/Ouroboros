@@ -31,7 +31,7 @@ public class YukiOnnaKatana extends AbstractEOLWeapon
 				ElementiumSlotType.GLACIO,
 				ElementType.GLACIO,
 				buildModifiers(),
-				new EchoData(200, 4.0, .35, 3.5, 1500, 1500), 
+				new EchoData(125, 4.0, .35, 2.5, 1500, 1500), 
 				new AbsoluteZero().getInternalName(), 
 				null);
 	}

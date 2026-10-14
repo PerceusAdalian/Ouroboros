@@ -36,6 +36,7 @@ import com.eol.echoes.instances.heresio.LegionaireLongbow;
 import com.eol.echoes.instances.heresio.LegionairePike;
 import com.eol.echoes.instances.heresio.LegionaireSabatons;
 import com.eol.echoes.instances.inferno.BowOfAgni;
+import com.eol.echoes.instances.inferno.DjinnsCutlass;
 import com.eol.echoes.instances.mortio.ButchersGreatsword;
 import com.eol.echoes.instances.mortio.Plague;
 import com.eol.echoes.instances.mortio.ScytheOfBelial;
@@ -576,6 +577,31 @@ public class Catalysts
 				glacio+"&oDrunken miners returning from the deep claim",
 				glacio+"&oto have met her face to face along the rivers of Yotzf'heim,",
 				glacio+"appearing to mourn a child lost to time."), List.of(new YukiOnnaKatana().getInternalName()));
+
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: " + inferno+Symbols.EOL+"cho of Kha'zul",
+				"echo_of_khazul",
+				MateriaType.CATALYST,
+			    MateriaComponent.CATALYST,
+			    Rarity.FIVE,
+			    true,
+			    "&r&7&oAn echo of the distant past. Dormant frequencies hum softly..",
+			    "&r&7&oThere's a memory engram encoded within:","",
+			    inferno+"&oTwilight Legion Dossier — Kha'zul, Genie of Mirage",
+			    inferno+"&oClassification: Greater-Fire Daemon",
+			    inferno+"&oOrigin: Dunes of Kha'zul",
+			    inferno+"&oElemental Affiliation: &lInferno","",
+			    inferno+"&oThe sands of the Ashen Deserts carry his name,",
+			    inferno+"&oand few who walk them forget why. Kha'zul is a Djinn who",
+			    inferno+"&owill grant any desire, and he has never once broken his word.",
+			    inferno+"&oWhere other genies twist a wish, he honors its intent to the letter,",
+			    inferno+"&obut every wish carries a cost hidden in its own meaning,",
+			    inferno+"&oone the wisher never thought to read. He is neither cruel nor kind,",
+			    inferno+"&oonly exact. His smile has been called the finest hospitality in the dunes.","",
+			    inferno+"&oSurvivors describe a tall figure in &lGold"+inferno+"&o and",
+			    inferno+"crimson &lPelt"+inferno+"&o, a golden cutlass at his hip,",
+			    inferno+"&owreathed in fiery wisps. He appears as a man,",
+			    inferno+"&oor as an oasis, or as a stranger offering shade.",
+			    inferno+"&o\"I grant what you mean, friend.. That has always been the difficulty.\""), List.of(new DjinnsCutlass().getInternalName()));
 		
 		
 	}
