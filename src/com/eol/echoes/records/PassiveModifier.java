@@ -63,6 +63,7 @@ public record PassiveModifier(ModifierCondition condition, PassiveEchoEffect eff
             case INCREASED_MOVEMENT_SPEED  -> "Swift Footed";
             case DECREASED_MOVEMENT_SPEED  -> "Heavy Armament";
             case PROTECTIVE	               -> "Protective Armament";
+            case PROTECTIVE_ABSOLUTE	   -> "Nihility's Protection";
             case KNOCKBACK                 -> "Increased Knockback";
             case LUCKY 			           -> "Increased Collection Luck";
             case NIMBLE                    -> "Nimble Footed";

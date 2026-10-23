@@ -80,7 +80,7 @@ public class EntityCategories
 
 	public static boolean canAccept(Entity entity, EntityCategory category)
 	{
-		return EntityCategory.get(category).contains(entity.getType()) ? true : false;
+		return EntityCategory.get(category).contains(entity.getType());
 	}
 		
 	/**

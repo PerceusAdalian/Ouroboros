@@ -572,6 +572,7 @@ public class MobData
 			save();
 		}, (int) NumberUtils.lerp(5, 30, getLevel(), 1, 100) * 20);
 		save();
+		if (CelestioEffects.exposedEntity.contains(uuid)) CelestioEffects.exposedEntity.remove(uuid);
 	}
 	
 	public boolean isDead()

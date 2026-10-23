@@ -145,6 +145,9 @@ public class EchoHeldEvent
 	            if (ResolveEchoInteract.has_protected.contains(uuid))
 	            	EntityEffects.add(p, PotionEffectType.RESISTANCE, 100, 0, false);
 	            
+	            if (ResolveEchoInteract.has_protected_absolute.contains(uuid))
+	            	EntityEffects.add(p, PotionEffectType.RESISTANCE, 100, 9, true);
+	            
 	            if (ResolveEchoInteract.nightsight.contains(uuid) && TimeUtils.checkTime(p.getWorld(), Timeframe.NIGHT))
 	            	EntityEffects.add(p, PotionEffectType.NIGHT_VISION, 400, 0, false);
 	            

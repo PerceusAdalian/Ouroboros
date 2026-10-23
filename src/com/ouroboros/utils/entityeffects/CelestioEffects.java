@@ -34,6 +34,7 @@ public class CelestioEffects
 		Bukkit.getScheduler().runTaskLater(Ouroboros.instance, ()-> hasHumility.remove(target.getUniqueId()), seconds * 20);
 	}
 	
+	public static Set<UUID> exposedEntity = new HashSet<>();
 	/**
 	 * @Description Celestio Signature Effect: Exposed will kill any undead mob if
 	 *              it's not a boss.
@@ -45,24 +46,30 @@ public class CelestioEffects
 		"&r&e&oExposed &r&fEffect: Reveals an entity's location and &6&oBreaks &r&fthem.",
 		"&r&fIf those affected are &4&lMortio &r&faffiliated, they instantly die."
 	 */
-	public static void addExposed(LivingEntity target, int seconds) 
+	public static boolean addExposed(LivingEntity target, int seconds) 
 	{
+		if (exposedEntity.contains(target.getUniqueId())) return false;
 		MobData data = MobData.getMob(target.getUniqueId());
 		if (data != null) 
 		{
 			if (EntityCategories.mortio_mobs.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType()))
+			{
+				exposedEntity.remove(target.getUniqueId());
 				data.kill();
+			}
 
 			else if (!EntityCategories.mortio_mobs.contains(target.getType()) && !EntityCategories.calamity.contains(target.getType())) 
 			{
 				if (!data.isBreak()) 
 				{
+					exposedEntity.add(target.getUniqueId());
 					data.setBreak();
 					MobNameplate.update(target);
 				}
 				EntityEffects.add(target, PotionEffectType.GLOWING, seconds * 20, 0, true);
 			}
 		}
+		return true;
 	}
 	
 	public static void addExposed(Player target, int seconds)

@@ -98,7 +98,7 @@ public class ResolveEchoInteract
                      LUCKY, NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE,
                      HERESIO_ARMAMENT, COSMO_ARMAMENT, CELESTIO_ARMAMENT, MORTIO_ARMAMENT,
                      GEO_ARMAMENT, GLACIO_ARMAMENT, AERO_ARMAMENT, INFERNO_ARMAMENT,
-                     ARCANO_ARMAMENT -> { /* handled elsewhere */ }
+                     ARCANO_ARMAMENT,PROTECTIVE_ABSOLUTE -> { /* handled elsewhere */ }
             }
         }
     }
@@ -125,7 +125,7 @@ public class ResolveEchoInteract
                      LUCKY, NIMBLE, INFINITY, NIGHTSIGHT, VAMPIRE,
                      HERESIO_ARMAMENT, COSMO_ARMAMENT, CELESTIO_ARMAMENT, MORTIO_ARMAMENT,
                      GEO_ARMAMENT, GLACIO_ARMAMENT, AERO_ARMAMENT, INFERNO_ARMAMENT,
-                     ARCANO_ARMAMENT -> { /* handled elsewhere */ }
+                     ARCANO_ARMAMENT,PROTECTIVE_ABSOLUTE -> { /* handled elsewhere */ }
             }
         }
     }
@@ -139,6 +139,7 @@ public class ResolveEchoInteract
     public static Set<UUID> increase_movement_speed  = new HashSet<>();
     public static Set<UUID> decrease_movement_speed  = new HashSet<>();
     public static Set<UUID> has_protected            = new HashSet<>();
+    public static Set<UUID> has_protected_absolute   = new HashSet<>();
     public static Set<UUID> has_lucky                = new HashSet<>();
     public static Set<UUID> has_nimble               = new HashSet<>();
     public static Set<UUID> negate_arrow_consumption = new HashSet<>();
@@ -208,6 +209,7 @@ public class ResolveEchoInteract
         increase_movement_speed.remove(uuid);
         decrease_movement_speed.remove(uuid);
         has_protected.remove(uuid);
+        has_protected_absolute.remove(uuid);
         has_lucky.remove(uuid);
         nightsight.remove(uuid);
         // Armament passives can appear on armor pieces once that pool is populated
@@ -234,6 +236,7 @@ public class ResolveEchoInteract
             case INCREASED_MOVEMENT_SPEED -> increase_movement_speed.add(uuid);
             case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.add(uuid);
             case PROTECTIVE            	  -> has_protected.add(uuid);
+            case PROTECTIVE_ABSOLUTE      -> has_protected.add(uuid);
             case IGNORE_ARROW          	  -> ignore_arrow.add(uuid);
             case RECYCLE_ARROWS        	  -> recycle_arrows.add(uuid);
             case NIMBLE                	  -> has_nimble.add(uuid);
@@ -262,6 +265,7 @@ public class ResolveEchoInteract
             case INCREASED_MOVEMENT_SPEED -> increase_movement_speed.remove(uuid);
             case DECREASED_MOVEMENT_SPEED -> decrease_movement_speed.remove(uuid);
             case PROTECTIVE            	  -> has_protected.remove(uuid);
+            case PROTECTIVE_ABSOLUTE      -> has_protected.remove(uuid);
             case IGNORE_ARROW          	  -> ignore_arrow.remove(uuid);
             case RECYCLE_ARROWS        	  -> recycle_arrows.remove(uuid);
             case NIMBLE               	  -> has_nimble.remove(uuid);
@@ -289,6 +293,7 @@ public class ResolveEchoInteract
         negate_arrow_consumption.remove(uuid);
         increase_movement_speed.remove(uuid);
         decrease_movement_speed.remove(uuid);
+        has_protected.remove(uuid);
         has_protected.remove(uuid);
         has_lucky.remove(uuid);
         has_nimble.remove(uuid);

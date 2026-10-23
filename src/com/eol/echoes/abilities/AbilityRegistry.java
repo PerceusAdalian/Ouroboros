@@ -24,6 +24,7 @@ import com.eol.echoes.abilities.instances.special.BloodrotBlade;
 import com.eol.echoes.abilities.instances.special.Boomburst;
 import com.eol.echoes.abilities.instances.special.CausticArrow;
 import com.eol.echoes.abilities.instances.special.Chroma;
+import com.eol.echoes.abilities.instances.special.ConvergenceProtocol;
 import com.eol.echoes.abilities.instances.special.Eden;
 import com.eol.echoes.abilities.instances.special.FoulPlay;
 import com.eol.echoes.abilities.instances.special.GeniesWrath;
@@ -82,7 +83,7 @@ public class AbilityRegistry
             CausticArrow.class, Supernova.class,
             Boomburst.class, Eden.class,Chroma.class,
             AspectOfThor.class, BloodrotBlade.class, AbsoluteZero.class,
-            GeniesWrath.class);
+            GeniesWrath.class, ConvergenceProtocol.class);
         
         for (Class<? extends EchoAbility> clazz : itemClasses) 
         {

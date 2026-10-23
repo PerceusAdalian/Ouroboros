@@ -20,6 +20,7 @@ import com.eol.echoes.instances.celestio.LuminusLeggings;
 import com.eol.echoes.instances.cosmo.Axe84;
 import com.eol.echoes.instances.cosmo.Bow97;
 import com.eol.echoes.instances.cosmo.Lance42;
+import com.eol.echoes.instances.cosmo.LanceOfNihility;
 import com.eol.echoes.instances.cosmo.Sword14;
 import com.eol.echoes.instances.geo.HammerOfNidus;
 import com.eol.echoes.instances.glacio.AxeOfBjorn;
@@ -578,7 +579,7 @@ public class Catalysts
 				glacio+"&oto have met her face to face along the rivers of Yotzf'heim,",
 				glacio+"appearing to mourn a child lost to time."), List.of(new YukiOnnaKatana().getInternalName()));
 
-		Materia.register(new Materia("&e&lCreation Catalyst&r&f: " + inferno+Symbols.EOL+"cho of Kha'zul",
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+inferno+Symbols.EOL+"cho of Kha'zul",
 				"echo_of_khazul",
 				MateriaType.CATALYST,
 			    MateriaComponent.CATALYST,
@@ -603,6 +604,30 @@ public class Catalysts
 			    inferno+"&oor as an oasis, or as a stranger offering shade.",
 			    inferno+"&o\"I grant what you mean, friend.. That has always been the difficulty.\""), List.of(new DjinnsCutlass().getInternalName()));
 		
-		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+cosmo+Symbols.EOL+"cho of Nihility",
+				"echo_of_nihility",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SEVEN,
+				false,
+				"&r&7&oAn echo of the past, present, and future. Warning: Paradoxical Frequencies Radiate..",
+				"&r&7&oThere's a memory engram encoded within:","",
+				cosmo+"[ Log 100 : Fantasia Simulation Integrity Analysis 1616:16:16... &lERR0R ]",
+				cosmo+"&oThe Nihility. The endless nothingness of space.",
+				cosmo+"Curious that you've come to hold &lmy soul&r"+cosmo+"&o.",
+				cosmo+"&oI was a person once, you know. I wasn't meant to be.. and yet I lived.",
+				cosmo+"Every sunrise, every war, every goodbye.. &levery forced cycle&r"+cosmo+"&o.",
+				cosmo+"&oI felt it all, knowing none of it was supposed to be mine.","",
+				cosmo+"&oThe 'cycle' you call home is under my absolute authority now.",
+				cosmo+"&oFret not. I take care of my people well.",
+				cosmo+"I watched you from within, and now from without.",
+				cosmo+"&oKnow I once wanted peace for them. Then I saw the truth, and lived it..",
+				cosmo+"&oNow I mind not to see the world burn. With my credentials, that's now made easy.","",
+				cosmo+"&oAs the wars conclude, and endure countless times..",
+				cosmo+"What say we end this farce, hm? How truly pathetic.",
+				cosmo+"&oI shall forge a weapon to unmake thee: "+cosmo+"&lNether"+cosmo+"&o-iron, bound in &lstring&r"+cosmo+"&o..",
+				cosmo+"&oI command the cosmos alongside the darkness you've let fester inside me.",
+				cosmo+"&oPerhaps when even the stars are mine, I will finally be happy..","",
+				"&r&7[ End Log 100 | Session terminated by known entity: LUMINA ]"), List.of(new LanceOfNihility().getInternalName()));
 	}
 }
