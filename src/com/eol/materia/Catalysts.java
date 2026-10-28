@@ -12,6 +12,7 @@ import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.astral.StarsweptGreatsword;
 import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
+import com.eol.echoes.instances.celestio.IustusHammer;
 import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.celestio.LuminusChestplate;
@@ -185,6 +186,24 @@ public class Catalysts
 				celestio+"&o'I know! I'm overjoyed my Father commissioned what I'd asked..",
 				celestio+"it makes all of this so much more worth it, don't you think?'",
 				celestio+"&o'They ought know I am but a servant in light of this.. I care for them all deeply.'"), List.of(new Celestia().getInternalName()));
+		
+		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+celestio+Symbols.EOL+"cho Of Iustus",
+				"echo_of_iustus",
+				MateriaType.CATALYST,
+				MateriaComponent.CATALYST,
+				Rarity.SIX,
+				true,
+				"&r&7&oAn echo of the distant past. Resonate harmonic frequencies radiate..",
+				"&r&7&oThere's a memory engram encoded within:",
+				celestio+"Fantasian Academy Dossier Entry: Sire Iustus",
+				celestio+"Security Clearance: Integrity Knight | Classification: Royal","",
+				celestio+"&oFirst to swear the Integrity oath, Iustus is the Queen's",
+				celestio+"&oown shield. Only her brother, Luminus, stands closer.",
+				celestio+"&oOrder and Divinity given form, he walks the court in gold",
+				celestio+"&oand answers every threat with the measured weight of his &lMace"+celestio+"&o.",
+				celestio+"&oHe trusts &lLeather"+celestio+"&o over plate, and discipline over both.",
+				celestio+"&oYet his smile is called the epitome of grace, and few",
+				celestio+"&oforget the day his unique &lCelestian"+celestio+"&o magiks first lit the kingdom."), List.of(new IustusHammer().getInternalName()));
 		
 		Materia.register(new Materia("&e&lCreation Catalyst&r&f: "+geo+Symbols.EOL+"cho Of Nidus",
 				"echo_of_nidus",
@@ -629,5 +648,7 @@ public class Catalysts
 				cosmo+"&oI command the cosmos alongside the darkness you've let fester inside me.",
 				cosmo+"&oPerhaps when even the stars are mine, I will finally be happy..","",
 				"&r&7[ End Log 100 | Session terminated by known entity: LUMINA ]"), List.of(new LanceOfNihility().getInternalName()));
+		
+		
 	}
 }

@@ -87,6 +87,7 @@ public class ResolveEchoInteract
             switch (((PassiveModifier) mod).effectKey())
             {
                 case EXPOSE     -> CelestioEffects.addExposed(target, seconds);
+                case HUMILITY   -> CelestioEffects.addHumility(target, seconds);
                 case NULLIFYING -> CosmoEffects.addVoided(target, seconds);
                 case BURNING    -> InfernoEffects.addBurn(target, seconds);
                 case POISONOUS  -> EntityEffects.addErosion(target, 10);
@@ -114,6 +115,7 @@ public class ResolveEchoInteract
             switch (((PassiveModifier) mod).effectKey())
             {
                 case EXPOSE     -> CelestioEffects.addExposed(target, seconds);
+                case HUMILITY   -> CelestioEffects.addHumility(target, seconds);
                 case NULLIFYING -> CosmoEffects.addVoided(target, seconds);
                 case BURNING    -> InfernoEffects.addBurn(target, seconds);
                 case POISONOUS  -> EntityEffects.addErosion(target, 10);
@@ -252,7 +254,7 @@ public class ResolveEchoInteract
             case COSMO_ARMAMENT        	  -> cosmo_armament.add(uuid);
             case HERESIO_ARMAMENT      	  -> heresio_armament.add(uuid);
             case ARCANO_ARMAMENT       	  -> arcane_armament.add(uuid);
-            case EXPOSE, NULLIFYING, BURNING, POISONOUS, SLOWING, FATIGUING,
+            case EXPOSE, HUMILITY, NULLIFYING, BURNING, POISONOUS, SLOWING, FATIGUING,
                  STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
         }
     }
@@ -281,7 +283,7 @@ public class ResolveEchoInteract
             case COSMO_ARMAMENT        	  -> cosmo_armament.remove(uuid);
             case HERESIO_ARMAMENT      	  -> heresio_armament.remove(uuid);
             case ARCANO_ARMAMENT       	  -> arcane_armament.remove(uuid);
-            case EXPOSE, NULLIFYING, BURNING, POISONOUS, SLOWING, FATIGUING,
+            case EXPOSE, HUMILITY, NULLIFYING, BURNING, POISONOUS, SLOWING, FATIGUING,
                  STUNNING, KNOCKBACK, SET_ATTACK_RATE -> {}
         }
     }

@@ -70,18 +70,18 @@ public class MobDamageEvent implements Listener
 			            return;
 			        }
 
-			        element = ResolveCombatElement.getFromMaterial(echo.getType());
-
-			        if (ResolveEchoInteract.celestio_armament.contains(p.getUniqueId())) element = ElementType.CELESTIO;
-			        if (ResolveEchoInteract.mortio_armament.contains(p.getUniqueId())) element = ElementType.MORTIO;
-			        if (ResolveEchoInteract.inferno_armament.contains(p.getUniqueId())) element = ElementType.INFERNO;
-			        if (ResolveEchoInteract.glacio_armament.contains(p.getUniqueId())) element = ElementType.GLACIO;
-			        if (ResolveEchoInteract.aero_armament.contains(p.getUniqueId())) element = ElementType.AERO;
-			        if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
-			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
-			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
-			        if (ResolveEchoInteract.arcane_armament.contains(p.getUniqueId())) element = ElementType.ARCANO;
 			        
+			        if (ResolveEchoInteract.celestio_armament.contains(p.getUniqueId())) element = ElementType.CELESTIO;
+			        else if (ResolveEchoInteract.mortio_armament.contains(p.getUniqueId())) element = ElementType.MORTIO;
+			        else if (ResolveEchoInteract.inferno_armament.contains(p.getUniqueId())) element = ElementType.INFERNO;
+			        else if (ResolveEchoInteract.glacio_armament.contains(p.getUniqueId())) element = ElementType.GLACIO;
+			        else if (ResolveEchoInteract.aero_armament.contains(p.getUniqueId())) element = ElementType.AERO;
+			        else if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
+			        else if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
+			        else if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        else if (ResolveEchoInteract.arcane_armament.contains(p.getUniqueId())) element = ElementType.ARCANO;
+			        else element = ResolveCombatElement.getFromMaterial(echo.getType());
+
 			        EchoData echoData = codec.baseStats();
 
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
@@ -145,18 +145,18 @@ public class MobDamageEvent implements Listener
 			        e.setDamage(0);
 			        
 			        EchoData echoData = codec.baseStats();
-			        element = ElementType.PUNCTURE;
 			        
 			        if (ResolveEchoInteract.celestio_armament.contains(p.getUniqueId())) element = ElementType.CELESTIO;
-			        if (ResolveEchoInteract.mortio_armament.contains(p.getUniqueId())) element = ElementType.MORTIO;
-			        if (ResolveEchoInteract.inferno_armament.contains(p.getUniqueId())) element = ElementType.INFERNO;
-			        if (ResolveEchoInteract.glacio_armament.contains(p.getUniqueId())) element = ElementType.GLACIO;
-			        if (ResolveEchoInteract.aero_armament.contains(p.getUniqueId())) element = ElementType.AERO;
-			        if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
-			        if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
-			        if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
-			        if (ResolveEchoInteract.arcane_armament.contains(p.getUniqueId())) element = ElementType.ARCANO;
-			        
+			        else if (ResolveEchoInteract.mortio_armament.contains(p.getUniqueId())) element = ElementType.MORTIO;
+			        else if (ResolveEchoInteract.inferno_armament.contains(p.getUniqueId())) element = ElementType.INFERNO;
+			        else if (ResolveEchoInteract.glacio_armament.contains(p.getUniqueId())) element = ElementType.GLACIO;
+			        else if (ResolveEchoInteract.aero_armament.contains(p.getUniqueId())) element = ElementType.AERO;
+			        else if (ResolveEchoInteract.geo_armament.contains(p.getUniqueId())) element = ElementType.GEO;
+			        else if (ResolveEchoInteract.cosmo_armament.contains(p.getUniqueId())) element = ElementType.COSMO;
+			        else if (ResolveEchoInteract.heresio_armament.contains(p.getUniqueId())) element = ElementType.HERESIO;
+			        else if (ResolveEchoInteract.arcane_armament.contains(p.getUniqueId())) element = ElementType.ARCANO;
+			        else element = ElementType.PUNCTURE;
+
 			        dmg = ResolveEchoInteract.resolveCombatModifiedDamage(p, (LivingEntity) target, codec, echoData.getAttack());
 			        
 			        boolean crit = false;

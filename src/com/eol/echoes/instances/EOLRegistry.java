@@ -20,6 +20,7 @@ import com.eol.echoes.instances.arcano.SwordOfTheElements;
 import com.eol.echoes.instances.astral.StarsweptGreatsword;
 import com.eol.echoes.instances.celestio.Aion;
 import com.eol.echoes.instances.celestio.Celestia;
+import com.eol.echoes.instances.celestio.IustusHammer;
 import com.eol.echoes.instances.celestio.LuminusBoots;
 import com.eol.echoes.instances.celestio.LuminusBroadsword;
 import com.eol.echoes.instances.celestio.LuminusChestplate;
@@ -226,7 +227,7 @@ public final class EOLRegistry
            // Weapons
         		
            // Celestio
-           LuminusBroadsword.class, Celestia.class, Aion.class,
+           LuminusBroadsword.class, Celestia.class, Aion.class, IustusHammer.class,
            
            // Mortio
            Plague.class, ScytheOfBelial.class, ButchersGreatsword.class,

@@ -11,6 +11,7 @@ public enum PassiveEchoEffect
 	
 	// Melee Passives
 	EXPOSE,
+	HUMILITY,
 	NULLIFYING,
 	BURNING,
 	POISONOUS,

@@ -51,6 +51,7 @@ public record PassiveModifier(ModifierCondition condition, PassiveEchoEffect eff
         return switch (effectKey)
         {
             case EXPOSE            		   -> "Attacks Apply Expose: "+(int)(magnitude * 100) + "%";
+            case HUMILITY				   -> "Attacks Apply Humility: "+(int)(magnitude*100) + "%";
             case NULLIFYING				   -> "Attacks Apply Voided: "+(int)(magnitude * 100) + "%";
             case BURNING           		   -> "Attacks Inflict Burn: "+(int)(magnitude * 100) + "%";
             case POISONOUS         		   -> "Attacks Apply Erosion: "+(int)(magnitude * 100) + "%";
